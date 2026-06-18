@@ -249,6 +249,37 @@ export const isGrade10BSConceptOfQuality = (topicName) => {
     return normalized.includes('concept of quality') || normalized === 'concept-of-quality';
 };
 
+export const isGrade10BSCreativeThinking = (topicName) => {
+    const normalized = normalizeTopicName(topicName);
+    return normalized.includes('creative thinking') || normalized.includes('problem solving');
+};
+
+export const isGrade10BSBusinessOpportunities = (topicName) => {
+    const normalized = normalizeTopicName(topicName);
+    return normalized.includes('business opportunities') || normalized.includes('business opportunity');
+};
+
+export const isGrade10BSBusinessLocation = (topicName) => {
+    const normalized = normalizeTopicName(topicName);
+    return normalized.includes('business location') || normalized.includes('location decision');
+};
+
+export const isGrade10BSContracts = (topicName) => {
+    const normalized = normalizeTopicName(topicName);
+    return normalized === 'contracts' || normalized.includes('contract');
+};
+
+export const isGrade10BSPresentation = (topicName) => {
+    const normalized = normalizeTopicName(topicName);
+    return normalized.includes('presentation of business information')
+        || (normalized.includes('presentation') && normalized.includes('business information'));
+};
+
+export const isGrade10BSBusinessPlans = (topicName) => {
+    const normalized = normalizeTopicName(topicName);
+    return normalized.includes('business plan');
+};
+
 export const isGrade11BSInfluences = (topicName) => {
     const normalized = normalizeTopicName(topicName);
     return normalized.includes('influences on business environments');

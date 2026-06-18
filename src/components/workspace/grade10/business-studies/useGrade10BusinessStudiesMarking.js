@@ -1,113 +1,73 @@
-import { buildApiUrl } from '../../../../utils/apiBaseUrl';
-import { useState, useCallback } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 
 export const useGrade10BusinessStudiesMarking = (config = {}) => {
-    const { apiUrl = buildApiUrl('/api/business-studies/grade10/mark') } = config;
+    const { buildApiUrl, apiUrl } = config;
+    const resolvedApiUrl = useMemo(() => {
+        if (typeof buildApiUrl === 'function') {
+            return buildApiUrl('/api/business-studies/grade10/mark');
+        }
+        return apiUrl;
+    }, [buildApiUrl, apiUrl]);
 
-    // markingMode = 'practice' | 'marking_active' | 'marking_submitted'
-    const [markingMode, setMarkingMode] = useState('practice');
-    const [markingResults, setMarkingResults] = useState(null);
-    const [isSubmitting, setIsSubmitting] = useState(false);
-    const [markingError, setMarkingError] = useState(null);
+    const [status, setStatus] = useState('idle');
+    const [scoreState, setScoreState] = useState({ totalScore: 0, maxScore: 0 });
+    const [error, setError] = useState(null);
 
-    // Accumulated answers across scaffolding steps. 
-    // Format: { [questionId]: answerPayload }
-    const [submittedAnswers, setSubmittedAnswers] = useState({});
-
-    const toggleMarkingMode = useCallback(() => {
-        setMarkingMode((prev) => {
-            if (prev === 'practice') {
-                // Moving to marking_active resets any past submissions
-                setSubmittedAnswers({});
-                setMarkingResults(null);
-                setMarkingError(null);
-                return 'marking_active';
-            }
-            return 'practice';
-        });
+    const resetMarking = useCallback(() => {
+        setStatus('idle');
+        setScoreState({ totalScore: 0, maxScore: 0 });
+        setError(null);
     }, []);
 
-    const registerAnswer = useCallback((questionId, answer) => {
-        if (!questionId) return;
-        setSubmittedAnswers(prev => ({
-            ...prev,
-            [questionId]: answer
-        }));
-    }, []);
-
-    const submitAssessment = useCallback(async (questionsList) => {
-        if (!questionsList || questionsList.length === 0) {
-            setMarkingError('No questions to mark.');
-            return;
+    const markQuestions = useCallback(async (questions, answers) => {
+        if (!questions || questions.length === 0) {
+            return null;
         }
 
-        setIsSubmitting(true);
-        setMarkingError(null);
+        setStatus('marking_active');
+        setError(null);
 
         try {
-            const payload = {
-                questions: questionsList,
-                answers: submittedAnswers
-            };
-
-            const response = await fetch(apiUrl, {
+            const response = await fetch(resolvedApiUrl, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(payload)
+                body: JSON.stringify({
+                    questions,
+                    answers,
+                }),
             });
 
             if (!response.ok) {
                 const errorData = await response.json().catch(() => ({}));
-                throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
+                throw new Error(errorData.error || `HTTP error ${response.status}`);
             }
 
             const data = await response.json();
-
-            if (data) {
-                setMarkingResults(data);
-                setMarkingMode('marking_submitted');
-            } else {
-                throw new Error('Invalid response format from server.');
-            }
+            setScoreState({
+                totalScore: data.total_score || 0,
+                maxScore: data.max_score || 0,
+            });
+            setStatus('marking_submitted');
+            return {
+                results: data.results || null,
+                total_score: data.total_score || 0,
+                max_score: data.max_score || 0,
+            };
         } catch (err) {
-            console.error('Error submitting assessment:', err);
-            setMarkingError(err.message || 'Failed to submit assessment.');
-        } finally {
-            setIsSubmitting(false);
+            console.error('Failed to mark Grade 10 Business Studies questions:', err);
+            setError(err.message || 'Failed to mark questions.');
+            setStatus('idle');
+            return null;
         }
-    }, [apiUrl, submittedAnswers]);
-
-    const getFeedbackForQuestion = useCallback((questionId) => {
-        if (markingMode !== 'marking_submitted' || !markingResults) return null;
-        const res = markingResults.results?.[questionId];
-        if (!res) return null;
-
-        return {
-            kind: res.is_correct ? 'success' : 'error',
-            message: `Score: ${res.score}/${res.max_score}. ${res.feedback}`,
-            score: res.score,
-            maxScore: res.max_score
-        };
-    }, [markingMode, markingResults]);
+    }, [resolvedApiUrl]);
 
     return {
-        markingMode,
-        setMarkingMode,
-        toggleMarkingMode,
-        isMarkingActive: markingMode === 'marking_active',
-        isMarkingSubmitted: markingMode === 'marking_submitted',
-        isPracticeMode: markingMode === 'practice',
-
-        submittedAnswers,
-        registerAnswer,
-
-        submitAssessment,
-        isSubmitting,
-        markingResults,
-        markingError,
-
-        getFeedbackForQuestion
+        status,
+        scoreState,
+        error,
+        resetMarking,
+        markQuestions,
     };
 };

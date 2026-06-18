@@ -1,5 +1,7 @@
-import { h } from 'preact';
+import React from 'react';
 import Grade9EmsScaffold from '../grade9/ems/Grade9EmsScaffold';
+
+const h = React.createElement;
 
 // Wrapper to pass route props
 const Grade9EmsRoute = ({ workspaceMode, ctx }) => {

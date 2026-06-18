@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import MCQOption from '../../../shared/MCQOption';
-import { useEmsMarking } from '../useEmsMarking';
+import MCQOption from '../../shared/MCQOption';
+import { useEmsMarking } from './useEmsMarking';
 
 const normalizeText = (v) => v == null ? '' : String(v).trim().replace(/\s+/g, ' ').toLowerCase();
 

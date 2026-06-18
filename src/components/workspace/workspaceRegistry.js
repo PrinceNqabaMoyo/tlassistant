@@ -6,6 +6,8 @@ import { grade8EmsRegistry } from './registry/grade8EmsRegistry';
 import { grade9Registry } from './registry/grade9Registry';
 import { grade9EmsRegistry } from './registry/grade9EmsRegistry';
 import { grade10Registry } from './registry/grade10Registry';
+import { grade10BusinessStudiesRegistry } from './registry/grade10BusinessStudiesRegistry';
+import { grade10BusinessStudiesTerm3Registry } from './registry/grade10BusinessStudiesTerm3Registry';
 import { grade11Registry } from './registry/grade11Registry';
 import { grade11BusinessStudiesRegistry } from './registry/grade11BusinessStudiesRegistry';
 import { grade12Registry } from './registry/grade12Registry';
@@ -22,6 +24,8 @@ export const workspaceRegistry = {
     ...grade9Registry,
     ...grade9EmsRegistry,
     ...grade10Registry,
+    ...grade10BusinessStudiesRegistry,
+    ...grade10BusinessStudiesTerm3Registry,
     ...grade11Registry,
     ...grade11BusinessStudiesRegistry,
     ...grade12Registry,
