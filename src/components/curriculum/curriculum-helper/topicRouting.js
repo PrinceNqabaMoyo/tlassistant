@@ -36,6 +36,36 @@ import {
     isGrade10BSConceptOfQuality,
     isGrade11BSInfluences,
     isGrade11BSChallenges,
+    isGrade11BSAdapting,
+    isGrade11BSContemporarySocioEconomic,
+    isGrade11BSBusinessSectors,
+    isGrade11BSBenefitsOfCompany,
+    isGrade11BSAvenues,
+    isGrade11BSCreativeThinking,
+    isGrade11BSStressCrisisChange,
+    isGrade11BSMarketingFunction,
+    isGrade11BSProductionFunction,
+    isGrade11BSProfessionalismEthics,
+    isGrade11BSEntrepreneurialAssessment,
+    isGrade11BSCitizenship,
+    isGrade11BSBusinessPlanTransformation,
+    isGrade11BSStartBusinessVenture,
+    isGrade11BSPresentationOfInformation,
+    isGrade12BSCreativeThinking,
+    isGrade12BSEthicsProfessionalism,
+    isGrade12BSMacroEnvironmentStrategies,
+    isGrade12BSImpactOfLegislation,
+    isGrade12BSHumanResourcesFunction,
+    isGrade12BSBusinessSectorsEnvironments,
+    isGrade12BSQualityOfPerformance,
+    isGrade12BSManagementLeadership,
+    isGrade12BSInvestmentSecurities,
+    isGrade12BSInvestmentInsurance,
+    isGrade12BSTeamPerformanceConflict,
+    isGrade12BSHumanRightsInclusivity,
+    isGrade12BSSocialResponsibilityCsr,
+    isGrade12BSPresentationDataResponses,
+    isGrade12BSFormsOfOwnershipSuccess,
     isExponentsSurdsTopic,
     isAnalyticalGeometryTopic,
     isGeoConstructionTopic,
@@ -124,7 +154,40 @@ export const getScaffoldRouteForTopic = (topicName, flags) => {
 
     if (flags.isGrade11BusinessStudies) {
         if (isGrade11BSInfluences(topicName)) return 'grade11_bs_influences_on_business_environments_scaffold';
+        if (isGrade11BSAdapting(topicName)) return 'grade11_bs_adapting_to_challenges_scaffold';
         if (isGrade11BSChallenges(topicName)) return 'grade11_bs_challenges_of_the_business_environments_scaffold';
+        if (isGrade11BSContemporarySocioEconomic(topicName)) return 'grade11_bs_socio_economic_issues_scaffold';
+        if (isGrade11BSBenefitsOfCompany(topicName)) return 'grade11_bs_benefits_of_a_company_scaffold';
+        if (isGrade11BSAvenues(topicName)) return 'grade11_bs_avenues_of_acquiring_businesses_scaffold';
+        if (isGrade11BSBusinessSectors(topicName)) return 'grade11_bs_business_sectors_scaffold';
+        if (isGrade11BSCreativeThinking(topicName)) return 'grade11_bs_creative_thinking_scaffold';
+        if (isGrade11BSStressCrisisChange(topicName)) return 'grade11_bs_stress_crisis_change_scaffold';
+        if (isGrade11BSMarketingFunction(topicName)) return 'grade11_bs_marketing_function_scaffold';
+        if (isGrade11BSProductionFunction(topicName)) return 'grade11_bs_production_function_scaffold';
+        if (isGrade11BSProfessionalismEthics(topicName)) return 'grade11_bs_professionalism_and_ethics_scaffold';
+        if (isGrade11BSEntrepreneurialAssessment(topicName)) return 'grade11_bs_entrepreneurial_assessment_scaffold';
+        if (isGrade11BSCitizenship(topicName)) return 'grade11_bs_citizenship_responsibilities_scaffold';
+        if (isGrade11BSBusinessPlanTransformation(topicName)) return 'grade11_bs_business_plan_transformation_scaffold';
+        if (isGrade11BSStartBusinessVenture(topicName)) return 'grade11_bs_start_business_venture_scaffold';
+        if (isGrade11BSPresentationOfInformation(topicName)) return 'grade11_bs_presentation_of_information_scaffold';
+    }
+
+    if (flags.isGrade12BusinessStudies) {
+        if (isGrade12BSImpactOfLegislation(topicName)) return 'grade12_bs_impact_of_legislation_scaffold';
+        if (isGrade12BSHumanResourcesFunction(topicName)) return 'grade12_bs_human_resources_function_scaffold';
+        if (isGrade12BSCreativeThinking(topicName)) return 'grade12_bs_creative_thinking_problem_solving_scaffold';
+        if (isGrade12BSEthicsProfessionalism(topicName)) return 'grade12_bs_ethics_and_professionalism_scaffold';
+        if (isGrade12BSMacroEnvironmentStrategies(topicName)) return 'grade12_bs_macro_environment_strategies_scaffold';
+        if (isGrade12BSBusinessSectorsEnvironments(topicName)) return 'grade12_bs_business_sectors_environments_scaffold';
+        if (isGrade12BSQualityOfPerformance(topicName)) return 'grade12_bs_quality_of_performance_scaffold';
+        if (isGrade12BSManagementLeadership(topicName)) return 'grade12_bs_management_and_leadership_scaffold';
+        if (isGrade12BSInvestmentSecurities(topicName)) return 'grade12_bs_investment_securities_scaffold';
+        if (isGrade12BSInvestmentInsurance(topicName)) return 'grade12_bs_investment_insurance_scaffold';
+        if (isGrade12BSTeamPerformanceConflict(topicName)) return 'grade12_bs_team_performance_conflict_scaffold';
+        if (isGrade12BSHumanRightsInclusivity(topicName)) return 'grade12_bs_human_rights_inclusivity_scaffold';
+        if (isGrade12BSSocialResponsibilityCsr(topicName)) return 'grade12_bs_social_responsibility_csr_csi_scaffold';
+        if (isGrade12BSPresentationDataResponses(topicName)) return 'grade12_bs_presentation_data_responses_scaffold';
+        if (isGrade12BSFormsOfOwnershipSuccess(topicName)) return 'grade12_bs_forms_of_ownership_success_scaffold';
     }
 
     if (flags.isGrade11Math) {

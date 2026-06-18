@@ -1,46 +1,42 @@
 import math
 import re
 from flask import Blueprint, request, jsonify
-from app.utils.grade11_business_studies.term_1 import influences_on_business_environments_generator
-from app.utils.grade11_business_studies.term_1 import the_challenges_of_the_business_environments_generator
-from app.utils.grade11_business_studies.term_1 import adapting_to_challenges_generator
-from app.utils.grade11_business_studies.term_1 import socio_economic_issues_generator
-from app.utils.grade11_business_studies.term_1 import business_sectors_generator
-from app.utils.grade11_business_studies.term_1 import benefits_of_a_company_generator
-from app.utils.grade11_business_studies.term_1 import avenues_of_acquiring_businesses_generator
-from app.utils.grade11_business_studies.term_2 import creative_thinking_generator
-from app.utils.grade11_business_studies.term_2 import stress_crisis_change_generator
-from app.utils.grade11_business_studies.term_2 import marketing_function_generator
-from app.utils.grade11_business_studies.term_2 import production_function_generator
-from app.utils.grade11_business_studies.term_2 import professionalism_and_ethics_generator
-from app.utils.grade11_business_studies.term_3 import entrepreneurial_assessment_generator
-from app.utils.grade11_business_studies.term_3 import citizenship_responsibilities_generator
-from app.utils.grade11_business_studies.term_3 import business_plan_transformation_generator
-from app.utils.grade11_business_studies.term_3 import start_business_venture_generator
-from app.utils.grade11_business_studies.term_3 import presentation_of_information_generator
+from app.utils.grade12_business_studies.term_1 import creative_thinking_problem_solving_generator
+from app.utils.grade12_business_studies.term_1 import ethics_and_professionalism_generator
+from app.utils.grade12_business_studies.term_1 import macro_environment_strategies_generator
+from app.utils.grade12_business_studies.term_1 import impact_of_legislation_generator
+from app.utils.grade12_business_studies.term_1 import human_resources_function_generator
+from app.utils.grade12_business_studies.term_2 import business_sectors_environments_generator
+from app.utils.grade12_business_studies.term_2 import quality_of_performance_generator
+from app.utils.grade12_business_studies.term_2 import management_and_leadership_generator
+from app.utils.grade12_business_studies.term_2 import investment_securities_generator
+from app.utils.grade12_business_studies.term_2 import investment_insurance_generator
+from app.utils.grade12_business_studies.term_2 import team_performance_conflict_generator
+from app.utils.grade12_business_studies.term_3 import human_rights_inclusivity_generator
+from app.utils.grade12_business_studies.term_3 import social_responsibility_csr_csi_generator
+from app.utils.grade12_business_studies.term_3 import presentation_data_responses_generator
+from app.utils.grade12_business_studies.term_3 import forms_of_ownership_success_generator
 
 
-grade11_business_studies_bp = Blueprint('grade11_business_studies', __name__)
+grade12_business_studies_bp = Blueprint('grade12_business_studies', __name__)
 
 
 GENERATORS = {
-    'grade11_bs_influences_on_business_environments': influences_on_business_environments_generator,
-    'grade11_bs_challenges_of_the_business_environments': the_challenges_of_the_business_environments_generator,
-    'grade11_bs_adapting_to_challenges': adapting_to_challenges_generator,
-    'grade11_bs_socio_economic_issues': socio_economic_issues_generator,
-    'grade11_bs_business_sectors': business_sectors_generator,
-    'grade11_bs_benefits_of_a_company': benefits_of_a_company_generator,
-    'grade11_bs_avenues_of_acquiring_businesses': avenues_of_acquiring_businesses_generator,
-    'grade11_bs_creative_thinking': creative_thinking_generator,
-    'grade11_bs_stress_crisis_change': stress_crisis_change_generator,
-    'grade11_bs_marketing_function': marketing_function_generator,
-    'grade11_bs_production_function': production_function_generator,
-    'grade11_bs_professionalism_and_ethics': professionalism_and_ethics_generator,
-    'grade11_bs_entrepreneurial_assessment': entrepreneurial_assessment_generator,
-    'grade11_bs_citizenship_responsibilities': citizenship_responsibilities_generator,
-    'grade11_bs_business_plan_transformation': business_plan_transformation_generator,
-    'grade11_bs_start_business_venture': start_business_venture_generator,
-    'grade11_bs_presentation_of_information': presentation_of_information_generator,
+    'grade12_bs_creative_thinking_problem_solving': creative_thinking_problem_solving_generator,
+    'grade12_bs_ethics_and_professionalism': ethics_and_professionalism_generator,
+    'grade12_bs_macro_environment_strategies': macro_environment_strategies_generator,
+    'grade12_bs_impact_of_legislation': impact_of_legislation_generator,
+    'grade12_bs_human_resources_function': human_resources_function_generator,
+    'grade12_bs_business_sectors_environments': business_sectors_environments_generator,
+    'grade12_bs_quality_of_performance': quality_of_performance_generator,
+    'grade12_bs_management_and_leadership': management_and_leadership_generator,
+    'grade12_bs_investment_securities': investment_securities_generator,
+    'grade12_bs_investment_insurance': investment_insurance_generator,
+    'grade12_bs_team_performance_conflict': team_performance_conflict_generator,
+    'grade12_bs_human_rights_inclusivity': human_rights_inclusivity_generator,
+    'grade12_bs_social_responsibility_csr_csi': social_responsibility_csr_csi_generator,
+    'grade12_bs_presentation_data_responses': presentation_data_responses_generator,
+    'grade12_bs_forms_of_ownership_success': forms_of_ownership_success_generator,
 }
 
 
@@ -130,7 +126,7 @@ def _score_typed_answer(question, user_answer):
     }
 
 
-@grade11_business_studies_bp.route('/generate', methods=['POST'])
+@grade12_business_studies_bp.route('/generate', methods=['POST'])
 def generate_business_studies_endpoint():
     data = request.json or {}
     topic = data.get('topic')
@@ -148,7 +144,7 @@ def generate_business_studies_endpoint():
         return jsonify({'error': str(exc)}), 500
 
 
-@grade11_business_studies_bp.route('/mark', methods=['POST'])
+@grade12_business_studies_bp.route('/mark', methods=['POST'])
 def mark_business_studies_endpoint():
     data = request.json or {}
     questions = data.get('questions', [])

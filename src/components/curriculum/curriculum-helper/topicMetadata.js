@@ -48,6 +48,21 @@ import {
     isGrade11BSMarketingFunction,
     isGrade11BSProductionFunction,
     isGrade11BSProfessionalismEthics,
+    isGrade12BSCreativeThinking,
+    isGrade12BSEthicsProfessionalism,
+    isGrade12BSMacroEnvironmentStrategies,
+    isGrade12BSImpactOfLegislation,
+    isGrade12BSHumanResourcesFunction,
+    isGrade12BSBusinessSectorsEnvironments,
+    isGrade12BSQualityOfPerformance,
+    isGrade12BSManagementLeadership,
+    isGrade12BSInvestmentSecurities,
+    isGrade12BSInvestmentInsurance,
+    isGrade12BSTeamPerformanceConflict,
+    isGrade12BSHumanRightsInclusivity,
+    isGrade12BSSocialResponsibilityCsr,
+    isGrade12BSPresentationDataResponses,
+    isGrade12BSFormsOfOwnershipSuccess,
     isExponentsSurdsTopic,
     isAnalyticalGeometryTopic,
     isGeoConstructionTopic,
@@ -264,6 +279,22 @@ export const getCoveredTopicIndex = (topicName, flags) => {
     if (flags.isGrade11BusinessStudies && isGrade11BSProductionFunction(topicName)) return 11;
     if (flags.isGrade11BusinessStudies && isGrade11BSProfessionalismEthics(topicName)) return 12;
 
+    if (flags.isGrade12BusinessStudies && isGrade12BSCreativeThinking(topicName)) return 1;
+    if (flags.isGrade12BusinessStudies && isGrade12BSEthicsProfessionalism(topicName)) return 2;
+    if (flags.isGrade12BusinessStudies && isGrade12BSMacroEnvironmentStrategies(topicName)) return 3;
+    if (flags.isGrade12BusinessStudies && isGrade12BSImpactOfLegislation(topicName)) return 4;
+    if (flags.isGrade12BusinessStudies && isGrade12BSHumanResourcesFunction(topicName)) return 5;
+    if (flags.isGrade12BusinessStudies && isGrade12BSBusinessSectorsEnvironments(topicName)) return 6;
+    if (flags.isGrade12BusinessStudies && isGrade12BSQualityOfPerformance(topicName)) return 7;
+    if (flags.isGrade12BusinessStudies && isGrade12BSManagementLeadership(topicName)) return 8;
+    if (flags.isGrade12BusinessStudies && isGrade12BSInvestmentSecurities(topicName)) return 9;
+    if (flags.isGrade12BusinessStudies && isGrade12BSInvestmentInsurance(topicName)) return 10;
+    if (flags.isGrade12BusinessStudies && isGrade12BSTeamPerformanceConflict(topicName)) return 11;
+    if (flags.isGrade12BusinessStudies && isGrade12BSHumanRightsInclusivity(topicName)) return 12;
+    if (flags.isGrade12BusinessStudies && isGrade12BSSocialResponsibilityCsr(topicName)) return 13;
+    if (flags.isGrade12BusinessStudies && isGrade12BSPresentationDataResponses(topicName)) return 14;
+    if (flags.isGrade12BusinessStudies && isGrade12BSFormsOfOwnershipSuccess(topicName)) return 15;
+
     if (flags.isGrade10Math && isPatternsSequencesTopic(topicName)) return 3;
     if (flags.isGrade10Math && isAlgebraicExpressionsTopic(topicName)) return 1;
     if (flags.isGrade10Math && isExponentsTopic(topicName)) return 2;
@@ -356,6 +387,24 @@ export const getTopicTerm = (topicName, flags) => {
         if (isGrade11BSMarketingFunction(topicName)) return 'Term 2';
         if (isGrade11BSProductionFunction(topicName)) return 'Term 2';
         if (isGrade11BSProfessionalismEthics(topicName)) return 'Term 2';
+    }
+
+    if (flags.isGrade12BusinessStudies) {
+        if (isGrade12BSImpactOfLegislation(topicName)) return 'Term 1';
+        if (isGrade12BSHumanResourcesFunction(topicName)) return 'Term 1';
+        if (isGrade12BSCreativeThinking(topicName)) return 'Term 1';
+        if (isGrade12BSEthicsProfessionalism(topicName)) return 'Term 1';
+        if (isGrade12BSMacroEnvironmentStrategies(topicName)) return 'Term 1';
+        if (isGrade12BSBusinessSectorsEnvironments(topicName)) return 'Term 2';
+        if (isGrade12BSQualityOfPerformance(topicName)) return 'Term 2';
+        if (isGrade12BSManagementLeadership(topicName)) return 'Term 2';
+        if (isGrade12BSInvestmentSecurities(topicName)) return 'Term 2';
+        if (isGrade12BSInvestmentInsurance(topicName)) return 'Term 2';
+        if (isGrade12BSTeamPerformanceConflict(topicName)) return 'Term 2';
+        if (isGrade12BSHumanRightsInclusivity(topicName)) return 'Term 3';
+        if (isGrade12BSSocialResponsibilityCsr(topicName)) return 'Term 3';
+        if (isGrade12BSPresentationDataResponses(topicName)) return 'Term 3';
+        if (isGrade12BSFormsOfOwnershipSuccess(topicName)) return 'Term 3';
     }
 
     if (flags.isGrade11Accounting) {

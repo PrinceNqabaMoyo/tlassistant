@@ -10,7 +10,9 @@ import { grade10BusinessStudiesRegistry } from './registry/grade10BusinessStudie
 import { grade10BusinessStudiesTerm3Registry } from './registry/grade10BusinessStudiesTerm3Registry';
 import { grade11Registry } from './registry/grade11Registry';
 import { grade11BusinessStudiesRegistry } from './registry/grade11BusinessStudiesRegistry';
+import { grade11BusinessStudiesExtraRegistry } from './registry/grade11BusinessStudiesExtraRegistry';
 import { grade12Registry } from './registry/grade12Registry';
+import { grade12BusinessStudiesRegistry } from './registry/grade12BusinessStudiesRegistry';
 import WorkspaceModeShell from './shared/WorkspaceModeShell';
 import EvaluatedWorkspaceModeShell from './shared/EvaluatedWorkspaceModeShell';
 
@@ -28,7 +30,9 @@ export const workspaceRegistry = {
     ...grade10BusinessStudiesTerm3Registry,
     ...grade11Registry,
     ...grade11BusinessStudiesRegistry,
+    ...grade11BusinessStudiesExtraRegistry,
     ...grade12Registry,
+    ...grade12BusinessStudiesRegistry,
 };
 
 export const renderFromRegistry = ({ workspaceMode, ctx }) => {
@@ -59,6 +63,7 @@ export const renderFromRegistry = ({ workspaceMode, ctx }) => {
         || workspaceMode.includes('accounting')
         || workspaceMode.includes('grade10_bs_')
         || workspaceMode.includes('grade11_bs_')
+        || workspaceMode.includes('grade12_bs_')
     ) {
         return routeResult;
     }

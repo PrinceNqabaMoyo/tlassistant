@@ -9,8 +9,13 @@ def _rng(seed=None):
     return random.Random(seed)
 
 
+def _item_difficulties(item):
+    data = item[1] if isinstance(item, tuple) else item
+    return data.get('difficulties', ['easy', 'medium', 'hard'])
+
+
 def _select_items(rng, pool, count, difficulty):
-    filtered = [item for item in pool if difficulty in item.get('difficulties', ['easy', 'medium', 'hard'])]
+    filtered = [item for item in pool if difficulty in _item_difficulties(item)]
     working = filtered or pool
     if not working:
         return []
