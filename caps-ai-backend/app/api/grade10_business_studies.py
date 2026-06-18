@@ -47,24 +47,9 @@ GENERATORS = {
     'grade10_bs_business_plans': business_plans_generator.generate_business_plans,
 }
 
-_LLM_GENERATOR_MODULES = (
-    business_functions_generator,
-    market_environment_generator,
-    macro_environment_generator,
-    interrelationship_generator,
-    business_sectors_generator,
-    socio_economic_issues_generator,
-    social_responsibility_generator,
-    entrepreneurial_qualities_generator,
-    forms_of_ownership_generator,
-    concept_of_quality_generator,
-    creative_thinking_generator,
-    business_opportunities_generator,
-    business_location_generator,
-    contracts_generator,
-    presentation_generator,
-    business_plans_generator,
-)
+# All Grade 10 Business Studies generators are now deterministic (seeded RNG +
+# curated CAPS content banks). No LLM modules remain.
+_LLM_GENERATOR_MODULES = ()
 
 
 def _extract_json_payload(raw_text):
