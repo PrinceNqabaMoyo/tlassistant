@@ -342,6 +342,36 @@ export const isGrade11BSProfessionalismEthics = (topicName) => {
         || (normalized.includes('professionalism') && normalized.includes('ethics'));
 };
 
+export const isGrade11BSEntrepreneurialAssessment = (topicName) => {
+    const normalized = normalizeTopicName(topicName);
+    return normalized.includes('assessment of entrepreneurial')
+        || (normalized.includes('entrepreneurial') && normalized.includes('qualit'));
+};
+
+export const isGrade11BSCitizenship = (topicName) => {
+    const normalized = normalizeTopicName(topicName);
+    return normalized.includes('citizenship');
+};
+
+export const isGrade11BSBusinessPlanTransformation = (topicName) => {
+    const normalized = normalizeTopicName(topicName);
+    return normalized.includes('transformation of a business plan')
+        || normalized.includes('business plan into an action plan')
+        || (normalized.includes('business plan') && normalized.includes('action plan'));
+};
+
+export const isGrade11BSStartBusinessVenture = (topicName) => {
+    const normalized = normalizeTopicName(topicName);
+    return normalized.includes('start a business venture')
+        || normalized.includes('business venture based on an action plan');
+};
+
+export const isGrade11BSPresentationOfInformation = (topicName) => {
+    const normalized = normalizeTopicName(topicName);
+    return normalized.includes('presentation of business information')
+        || (normalized.includes('presentation') && normalized.includes('business information'));
+};
+
 export const isExponentsSurdsTopic = (topicName) => {
     const normalized = normalizeLooseTopicName(topicName);
     return normalized.includes('exponents and surds')

@@ -3,6 +3,21 @@ import re
 from flask import Blueprint, request, jsonify
 from app.utils.grade11_business_studies.term_1 import influences_on_business_environments_generator
 from app.utils.grade11_business_studies.term_1 import the_challenges_of_the_business_environments_generator
+from app.utils.grade11_business_studies.term_1 import adapting_to_challenges_generator
+from app.utils.grade11_business_studies.term_1 import socio_economic_issues_generator
+from app.utils.grade11_business_studies.term_1 import business_sectors_generator
+from app.utils.grade11_business_studies.term_1 import benefits_of_a_company_generator
+from app.utils.grade11_business_studies.term_1 import avenues_of_acquiring_businesses_generator
+from app.utils.grade11_business_studies.term_2 import creative_thinking_generator
+from app.utils.grade11_business_studies.term_2 import stress_crisis_change_generator
+from app.utils.grade11_business_studies.term_2 import marketing_function_generator
+from app.utils.grade11_business_studies.term_2 import production_function_generator
+from app.utils.grade11_business_studies.term_2 import professionalism_and_ethics_generator
+from app.utils.grade11_business_studies.term_3 import entrepreneurial_assessment_generator
+from app.utils.grade11_business_studies.term_3 import citizenship_responsibilities_generator
+from app.utils.grade11_business_studies.term_3 import business_plan_transformation_generator
+from app.utils.grade11_business_studies.term_3 import start_business_venture_generator
+from app.utils.grade11_business_studies.term_3 import presentation_of_information_generator
 
 
 grade11_business_studies_bp = Blueprint('grade11_business_studies', __name__)
@@ -11,6 +26,21 @@ grade11_business_studies_bp = Blueprint('grade11_business_studies', __name__)
 GENERATORS = {
     'grade11_bs_influences_on_business_environments': influences_on_business_environments_generator,
     'grade11_bs_challenges_of_the_business_environments': the_challenges_of_the_business_environments_generator,
+    'grade11_bs_adapting_to_challenges': adapting_to_challenges_generator,
+    'grade11_bs_socio_economic_issues': socio_economic_issues_generator,
+    'grade11_bs_business_sectors': business_sectors_generator,
+    'grade11_bs_benefits_of_a_company': benefits_of_a_company_generator,
+    'grade11_bs_avenues_of_acquiring_businesses': avenues_of_acquiring_businesses_generator,
+    'grade11_bs_creative_thinking': creative_thinking_generator,
+    'grade11_bs_stress_crisis_change': stress_crisis_change_generator,
+    'grade11_bs_marketing_function': marketing_function_generator,
+    'grade11_bs_production_function': production_function_generator,
+    'grade11_bs_professionalism_and_ethics': professionalism_and_ethics_generator,
+    'grade11_bs_entrepreneurial_assessment': entrepreneurial_assessment_generator,
+    'grade11_bs_citizenship_responsibilities': citizenship_responsibilities_generator,
+    'grade11_bs_business_plan_transformation': business_plan_transformation_generator,
+    'grade11_bs_start_business_venture': start_business_venture_generator,
+    'grade11_bs_presentation_of_information': presentation_of_information_generator,
 }
 
 
