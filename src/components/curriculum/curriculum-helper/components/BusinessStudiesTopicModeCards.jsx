@@ -20,6 +20,21 @@ import {
     isGrade10BSBusinessPlans,
     isGrade11BSInfluences,
     isGrade11BSChallenges,
+    isGrade11BSAdapting,
+    isGrade11BSContemporarySocioEconomic,
+    isGrade11BSBusinessSectors,
+    isGrade11BSBenefitsOfCompany,
+    isGrade11BSAvenues,
+    isGrade11BSCreativeThinking,
+    isGrade11BSStressCrisisChange,
+    isGrade11BSMarketingFunction,
+    isGrade11BSProductionFunction,
+    isGrade11BSProfessionalismEthics,
+    isGrade11BSEntrepreneurialAssessment,
+    isGrade11BSCitizenship,
+    isGrade11BSBusinessPlanTransformation,
+    isGrade11BSStartBusinessVenture,
+    isGrade11BSPresentationOfInformation,
 } from '../topicMatchers';
 
 const BusinessStudiesTopicModeCards = ({ selectedTopic, selectedTopicDisplayName, getTopicTerm, navigateToWorkspaceWithMode, flags }) => {
@@ -193,6 +208,31 @@ const BusinessStudiesTopicModeCards = ({ selectedTopic, selectedTopicDisplayName
                 : 'grade11_bs_challenges_of_the_business_environments_practice',
             practiceLabel: `${selectedTopicDisplayName} • Practice`,
         },
+        ...[
+            { match: isGrade11BSAdapting, prefix: 'grade11_bs_adapting_to_challenges', title: 'Adapting to Challenges', term: 'Term 1' },
+            { match: isGrade11BSContemporarySocioEconomic, prefix: 'grade11_bs_socio_economic_issues', title: 'Contemporary Socio-economic Issues', term: 'Term 1' },
+            { match: isGrade11BSBenefitsOfCompany, prefix: 'grade11_bs_benefits_of_a_company', title: 'Benefits of a Company', term: 'Term 1' },
+            { match: isGrade11BSAvenues, prefix: 'grade11_bs_avenues_of_acquiring_businesses', title: 'Avenues of Acquiring Businesses', term: 'Term 1' },
+            { match: isGrade11BSBusinessSectors, prefix: 'grade11_bs_business_sectors', title: 'Business Sectors', term: 'Term 1' },
+            { match: isGrade11BSCreativeThinking, prefix: 'grade11_bs_creative_thinking', title: 'Creative Thinking & Problem Solving', term: 'Term 2' },
+            { match: isGrade11BSStressCrisisChange, prefix: 'grade11_bs_stress_crisis_change', title: 'Stress, Crisis & Change Management', term: 'Term 2' },
+            { match: isGrade11BSMarketingFunction, prefix: 'grade11_bs_marketing_function', title: 'The Marketing Function', term: 'Term 2' },
+            { match: isGrade11BSProductionFunction, prefix: 'grade11_bs_production_function', title: 'The Production Function', term: 'Term 2' },
+            { match: isGrade11BSProfessionalismEthics, prefix: 'grade11_bs_professionalism_and_ethics', title: 'Professionalism & Ethics', term: 'Term 2' },
+            { match: isGrade11BSEntrepreneurialAssessment, prefix: 'grade11_bs_entrepreneurial_assessment', title: 'Assessment of Entrepreneurial Qualities', term: 'Term 3' },
+            { match: isGrade11BSCitizenship, prefix: 'grade11_bs_citizenship_responsibilities', title: 'Citizenship & Responsibilities', term: 'Term 3' },
+            { match: isGrade11BSBusinessPlanTransformation, prefix: 'grade11_bs_business_plan_transformation', title: 'Business Plan into an Action Plan', term: 'Term 3' },
+            { match: isGrade11BSStartBusinessVenture, prefix: 'grade11_bs_start_business_venture', title: 'Starting a Business Venture', term: 'Term 3' },
+            { match: isGrade11BSPresentationOfInformation, prefix: 'grade11_bs_presentation_of_information', title: 'Presentation of Business Information', term: 'Term 3' },
+        ].map((t) => ({
+            condition: flags.isGrade11BusinessStudies && t.match(topicName),
+            title: t.title,
+            description: `${t.term}. Choose a mode to begin. Scaffold follows the guided step sequence for concepts, application, and discussion with hints and memo comparison. Practice lets you choose a subskill or use mixed practice for a marked review flow.`,
+            scaffoldMode: `${t.prefix}_scaffold`,
+            scaffoldLabel: `${t.title} • Scaffold`,
+            practiceMode: `${t.prefix}_practice`,
+            practiceLabel: `${t.title} • Practice`,
+        })),
     ];
 
     const card = cards.find((entry) => entry.condition);
