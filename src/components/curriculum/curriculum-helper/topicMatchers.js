@@ -406,3 +406,97 @@ export const isGeoStraightLinesTopic = (topicName) => {
         || normalized.includes('geometry straight lines')
         || normalized === 'geometry of straight lines';
 };
+
+// ----- Grade 12 Business Studies matchers -----
+export const isGrade12BSCreativeThinking = (topicName) => {
+    const normalized = normalizeTopicName(topicName);
+    return normalized.includes('creative thinking') || normalized.includes('problem solving');
+};
+
+export const isGrade12BSEthicsProfessionalism = (topicName) => {
+    const normalized = normalizeTopicName(topicName);
+    return normalized.includes('ethics and professionalism')
+        || (normalized.includes('ethics') && normalized.includes('professionalism'));
+};
+
+export const isGrade12BSMacroEnvironmentStrategies = (topicName) => {
+    const normalized = normalizeTopicName(topicName);
+    return normalized.includes('macro environment')
+        || (normalized.includes('business strateg'));
+};
+
+export const isGrade12BSImpactOfLegislation = (topicName) => {
+    const normalized = normalizeTopicName(topicName);
+    return normalized.includes('bbbee')
+        || normalized.includes('broad-based black economic empowerment')
+        || normalized.includes('broad based black economic empowerment')
+        || normalized.includes('implications of the legislation')
+        || (normalized.includes('legislation') && normalized.includes('human resources'));
+};
+
+export const isGrade12BSHumanResourcesFunction = (topicName) => {
+    const normalized = normalizeTopicName(topicName);
+    return normalized.includes('human resources function')
+        || (normalized.includes('human resource') && !normalized.includes('legislation'));
+};
+
+export const isGrade12BSBusinessSectorsEnvironments = (topicName) => {
+    const normalized = normalizeTopicName(topicName);
+    return normalized.includes('business sectors and their environment')
+        || (normalized.includes('business sectors') && normalized.includes('environment'));
+};
+
+export const isGrade12BSQualityOfPerformance = (topicName) => {
+    const normalized = normalizeTopicName(topicName);
+    return normalized.includes('quality of performance');
+};
+
+export const isGrade12BSManagementLeadership = (topicName) => {
+    const normalized = normalizeTopicName(topicName);
+    return normalized.includes('management and leadership')
+        || (normalized.includes('management') && normalized.includes('leadership'));
+};
+
+export const isGrade12BSInvestmentSecurities = (topicName) => {
+    const normalized = normalizeTopicName(topicName);
+    return normalized.includes('investment securities')
+        || (normalized.includes('investment') && normalized.includes('securities'));
+};
+
+export const isGrade12BSInvestmentInsurance = (topicName) => {
+    const normalized = normalizeTopicName(topicName);
+    return normalized.includes('investment insurance')
+        || (normalized.includes('investment') && normalized.includes('insurance'));
+};
+
+export const isGrade12BSTeamPerformanceConflict = (topicName) => {
+    const normalized = normalizeTopicName(topicName);
+    return normalized.includes('team performance')
+        || (normalized.includes('team') && normalized.includes('conflict'));
+};
+
+export const isGrade12BSHumanRightsInclusivity = (topicName) => {
+    const normalized = normalizeTopicName(topicName);
+    return normalized.includes('human rights')
+        || normalized.includes('inclusivity')
+        || (normalized.includes('human rights') && normalized.includes('environment'));
+};
+
+export const isGrade12BSSocialResponsibilityCsr = (topicName) => {
+    const normalized = normalizeTopicName(topicName);
+    return normalized.includes('social responsibility')
+        || normalized.includes('corporate citizenship')
+        || normalized.includes('corporate social');
+};
+
+export const isGrade12BSPresentationDataResponses = (topicName) => {
+    const normalized = normalizeTopicName(topicName);
+    return normalized.includes('presentation and data responses')
+        || (normalized.includes('presentation') && normalized.includes('data response'));
+};
+
+export const isGrade12BSFormsOfOwnershipSuccess = (topicName) => {
+    const normalized = normalizeTopicName(topicName);
+    return normalized.includes('forms of ownership')
+        || (normalized.includes('ownership') && normalized.includes('success'));
+};

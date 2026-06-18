@@ -27,6 +27,9 @@ export const buildSubjectFlags = ({ selectedGrade, selectedSubject }) => {
         isGrade11BusinessStudies:
             gradeString === '11' &&
             (subjectNameLower.includes('business studies') || subjectNameLower.includes('business')),
+        isGrade12BusinessStudies:
+            gradeString === '12' &&
+            (subjectNameLower.includes('business studies') || subjectNameLower.includes('business')),
         isGrade11Accounting:
             gradeString === '11' && subjectNameLower.includes('accounting'),
         isGrade12Accounting:
@@ -100,6 +103,7 @@ export const hasStructuredTopicOrdering = (flags) => (
     || flags.isGrade10Accounting
     || flags.isGrade10BusinessStudies
     || flags.isGrade11BusinessStudies
+    || flags.isGrade12BusinessStudies
     || flags.isGrade11Accounting
     || flags.isGrade12Accounting
 );

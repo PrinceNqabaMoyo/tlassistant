@@ -49,6 +49,7 @@ def create_app():
     from .api.statistics import stats_bp
     from .api.grade10_business_studies import grade10_business_studies_bp
     from .api.grade11_business_studies import grade11_business_studies_bp
+    from .api.grade12_business_studies import grade12_business_studies_bp
     from .api.agent import agent_bp
     from .api.journals import journals_bp
     from .api.evaluation import evaluation_bp
@@ -67,6 +68,7 @@ def create_app():
     app.register_blueprint(stats_bp, url_prefix='/api/statistics')
     app.register_blueprint(grade10_business_studies_bp, url_prefix='/api/business-studies/grade10')
     app.register_blueprint(grade11_business_studies_bp, url_prefix='/api/business-studies/grade11')
+    app.register_blueprint(grade12_business_studies_bp, url_prefix='/api/business-studies/grade12')
     app.register_blueprint(agent_bp, url_prefix='/api/agent')
     app.register_blueprint(journals_bp, url_prefix='/api/journals')
     app.register_blueprint(evaluation_bp, url_prefix='/api')

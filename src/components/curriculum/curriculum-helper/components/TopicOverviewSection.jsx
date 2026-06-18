@@ -58,7 +58,7 @@ const TopicOverviewSection = ({
                 flags={flags}
             />
 
-            {!flags.isGrade11BusinessStudies && (
+            {!flags.isGrade11BusinessStudies && !flags.isGrade12BusinessStudies && (
                 <>
                     <div className="flex flex-wrap gap-3 mb-6">
                         <button onClick={() => setShowTopicSummary((p) => !p)} className="flex items-center space-x-2 px-4 py-2 bg-blue-500 text-white rounded-full text-sm font-semibold hover:bg-blue-600 shadow-md">
