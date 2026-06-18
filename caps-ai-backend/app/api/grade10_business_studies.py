@@ -14,6 +14,12 @@ from app.utils.grade10_business_studies.term_2 import social_responsibility_gene
 from app.utils.grade10_business_studies.term_2 import entrepreneurial_qualities_generator
 from app.utils.grade10_business_studies.term_2 import forms_of_ownership_generator
 from app.utils.grade10_business_studies.term_2 import concept_of_quality_generator
+from app.utils.grade10_business_studies.term_3 import creative_thinking_generator
+from app.utils.grade10_business_studies.term_3 import business_opportunities_generator
+from app.utils.grade10_business_studies.term_3 import business_location_generator
+from app.utils.grade10_business_studies.term_3 import contracts_generator
+from app.utils.grade10_business_studies.term_3 import presentation_generator
+from app.utils.grade10_business_studies.term_3 import business_plans_generator
 
 grade10_business_studies_bp = Blueprint('grade10_business_studies', __name__)
 
@@ -32,20 +38,18 @@ GENERATORS = {
     'grade10_bs_entrepreneurial_qualities': entrepreneurial_qualities_generator.generate_entrepreneurial_qualities,
     'grade10_bs_forms_of_ownership': forms_of_ownership_generator.generate_forms_of_ownership,
     'grade10_bs_concept_of_quality': concept_of_quality_generator.generate_concept_of_quality,
+    # Term 3
+    'grade10_bs_creative_thinking': creative_thinking_generator.generate_creative_thinking,
+    'grade10_bs_business_opportunities': business_opportunities_generator.generate_business_opportunities,
+    'grade10_bs_business_location': business_location_generator.generate_business_location,
+    'grade10_bs_contracts': contracts_generator.generate_contracts,
+    'grade10_bs_presentation': presentation_generator.generate_presentation,
+    'grade10_bs_business_plans': business_plans_generator.generate_business_plans,
 }
 
-_LLM_GENERATOR_MODULES = (
-    business_functions_generator,
-    market_environment_generator,
-    macro_environment_generator,
-    interrelationship_generator,
-    business_sectors_generator,
-    socio_economic_issues_generator,
-    social_responsibility_generator,
-    entrepreneurial_qualities_generator,
-    forms_of_ownership_generator,
-    concept_of_quality_generator,
-)
+# All Grade 10 Business Studies generators are now deterministic (seeded RNG +
+# curated CAPS content banks). No LLM modules remain.
+_LLM_GENERATOR_MODULES = ()
 
 
 def _extract_json_payload(raw_text):

@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
-import MCQOption from '../../../shared/MCQOption';
-import EnhancedMathKeypad from '../../../../EnhancedMathKeypad';
-import WordBankQuestionUI from '../../../shared/WordBankQuestionUI.jsx';
-import MatchQuestionUI from '../../../shared/MatchQuestionUI.jsx';
-import InlineFillQuestionUI from '../../../shared/InlineFillQuestionUI.jsx';
+import MCQOption from '../../shared/MCQOption';
+import EnhancedMathKeypad from '../../../EnhancedMathKeypad';
+import WordBankQuestionUI from '../../shared/WordBankQuestionUI.jsx';
+import MatchQuestionUI from '../../shared/MatchQuestionUI.jsx';
+import InlineFillQuestionUI from '../../shared/InlineFillQuestionUI.jsx';
 
 const normalizeText = (value) => {
     if (value === null || value === undefined) return '';

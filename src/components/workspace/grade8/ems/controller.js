@@ -237,3 +237,6 @@ export const useGrade10SoleTraderController = ({ workspaceMode, buildApiUrl }) =
     };
 };
 
+
+// Alias to match the name expected by grade8EmsRegistry (module was a copy-paste stub).
+export const useGrade8EmsController = useGrade10SoleTraderController;
