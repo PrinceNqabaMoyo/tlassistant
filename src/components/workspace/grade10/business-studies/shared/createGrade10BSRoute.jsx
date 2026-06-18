@@ -107,9 +107,9 @@ export const createGrade10BSTopicRegistry = (config) => {
                 scaffoldShowHint: controller.scaffoldShowHint, setScaffoldShowHint: controller.setScaffoldShowHint,
                 questionSlotEnabled: true,
                 markScaffoldAnswer: async (q, ans) => {
-                    const payload = await marking.markQuestions([q], { [q.id]: ans });
-                    if (payload?.results && payload.results[q.id]) {
-                        controller.setScaffoldFeedback(payload.results[q.id]);
+                    const resultsObj = await marking.markQuestions([q], { [q.id]: ans });
+                    if (resultsObj && resultsObj[q.id]) {
+                        controller.setScaffoldFeedback(resultsObj[q.id]);
                     }
                 },
             }));
@@ -134,9 +134,9 @@ export const createGrade10BSTopicRegistry = (config) => {
                 questionSlotEnabled: true,
                 markingStatus: marking.status,
                 markPracticeTest: async () => {
-                    const payload = await marking.markQuestions(controller.practiceQuestions, controller.practiceAnswers);
-                    if (payload?.results) {
-                        controller.setPracticeFeedback({ results: payload.results, total_score: payload.total_score, max_score: payload.max_score });
+                    const resultsObj = await marking.markQuestions(controller.practiceQuestions, controller.practiceAnswers);
+                    if (resultsObj) {
+                        controller.setPracticeFeedback({ results: resultsObj, total_score: marking.scoreState.totalScore, max_score: marking.scoreState.maxScore });
                     }
                 },
             }));

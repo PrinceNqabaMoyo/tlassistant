@@ -50,11 +50,7 @@ export const useGrade10BusinessStudiesMarking = (config = {}) => {
                 maxScore: data.max_score || 0,
             });
             setStatus('marking_submitted');
-            return {
-                results: data.results || null,
-                total_score: data.total_score || 0,
-                max_score: data.max_score || 0,
-            };
+            return data.results || null;
         } catch (err) {
             console.error('Failed to mark Grade 10 Business Studies questions:', err);
             setError(err.message || 'Failed to mark questions.');
