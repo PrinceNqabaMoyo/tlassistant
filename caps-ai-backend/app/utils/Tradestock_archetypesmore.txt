@@ -1,0 +1,184 @@
+
+Trading Stock archetypes (MORE) – Implementation spec (deferred)
+==============================================================
+
+Context
+-------
+This file is a safe “parking area” for the remaining Trading Stock Account archetypes.
+Do NOT implement these directly in grade10_sole_trader_generator.py until:
+1) Runtime tests confirm the app is stable.
+2) grade10_sole_trader_generator.py is refactored (split into smaller modules).
+
+Goal
+----
+Add the missing Trading Stock Account archetype generators described in:
+- Trading stock account.md
+- Financial Accounting of a Sole Trader Studio.md (Activity 16)
+
+When implementing later, prefer:
+- Small functions, each producing ONE archetype.
+- Additive patches.
+- Smoke test after each archetype.
+
+
+Shared invariants / accounting rules
+-----------------------------------
+1) Trading stock is recorded at COST price in the Trading Stock account.
+2) Postings expected (typical):
+   - Debit (Dr) side: opening balance b/d, purchases (cash & credit), returns from debtors at cost.
+   - Credit (Cr) side: returns to creditors, cost of sales (cash sales + credit sales), drawings, deficits, etc.
+   - Balance c/d is closing stock.
+3) Returns percentage conventions:
+   - Returns to creditors % = (returns to creditors / credit purchases) × 100.
+   - Returns from debtors % = (returns from debtors at sales price OR cost price?) × 100.
+     NOTE: In our generator, returns from debtors in the Trading Stock account are at cost price.
+     If the question wants sales returns %, it must explicitly state “sales returns” and provide sales price.
+4) Mark-up on cost:
+   - If mark-up is x% on cost, then selling price = cost × (1 + x/100).
+   - So cost = selling price / (1 + x/100).
+5) Trade discount:
+   - If amount PAID is after trade discount d%, then original (before discount) = paid / (1 − d/100).
+
+
+Archetype TS-A: Section 3 multi-part analysis (Typed)
+-----------------------------------------------------
+Purpose:
+- A multi-part conceptual + calculation question (no table), aligned with the “analysis” style in the docs.
+
+Output type:
+- typed question: question_type="typed"
+
+Prompt template:
+- Business name + Month/Year.
+- A numbered list (3.1 … 3.9 or similar) asking for:
+  - Contra accounts for typical trading stock postings.
+  - Where closing stock is shown in financial statements.
+  - Source documents / journals for specific postings (CPJ/CJ/DAJ/CAJ/CRJ/DJ).
+  - One small mark-up conversion (e.g., sales amount given, mark-up given, ask for cost).
+
+Recommended Q items (minimum):
+- Contra account for cash purchases of trading stock.
+- Contra account for credit purchases of trading stock.
+- Contra account for returns to creditors.
+- Contra account for returns from debtors recorded at cost.
+- “Where is closing trading stock shown?”
+- Mark-up conversion: e.g. goods sold for R27 000 on credit; mark-up 25% on cost; calculate cost of sales.
+
+Answer:
+- Provide a sample answer with correct formulas and short phrases.
+
+Random data:
+- Selling price amount: choose multiple of 100/50.
+- Mark-up: choose from [20, 25, 30, 40, 50].
+
+
+Archetype TS-B: Section 4 prepare Trading Stock account + TWO return percentages
+-------------------------------------------------------------------------------
+Purpose:
+- A full Trading Stock account preparation (journal/table question)
+- PLUS calculation of two return percentages.
+
+Output type:
+- journal question: question_type="journal"
+- journal_type="trading_stock_account"
+
+Data generation:
+1) Generate realistic totals:
+   - credit purchases (CJ) > 0
+   - returns to creditors (CAJ) >= 0 (usually smaller)
+   - returns from debtors at cost (DAJ) >= 0
+   - cash purchases (CPJ) > 0
+   - cost of sales cash (CRJ) > 0
+   - cost of sales credit (DJ) > 0
+   - opening stock > 0
+2) Use existing helper that creates the Trading Stock account table rows and correct_map.
+
+Prompt requirements:
+- Provide a “Journal totals (casting)” block.
+- Then “Required:”
+  1) Prepare and balance the Trading Stock account.
+  2) Calculate % returns to creditors on credit purchases.
+  3) Calculate % returns from debtors on cost of sales.
+     NOTE: Since DAJ returns in Trading Stock account are cost, base this % on total cost of sales
+     (cash + credit) unless the curriculum explicitly says otherwise.
+
+Answer expectations:
+- The table correct_map must include all journal postings and balancing.
+- Provide working_map/cell_hints (optional scaffold mode).
+- Provide calculation guidance in the prompt or guidelines:
+  - returns_to_creditors% = (CAJ / CJ)×100
+  - returns_from_debtors% = (DAJ / (CRJ+DJ))×100   (cost-based)
+
+Implementation note:
+- If the platform supports separate answer fields, include correct values in “correct_map” or
+  add a second typed/calc subquestion. If not, embed the percentages as extra editable fields
+  (e.g., a separate “calc” question after the journal).
+
+
+Archetype TS-C: Section 5 markup + trade discount calculations (Typed or Calc)
+-----------------------------------------------------------------------------
+Purpose:
+- A calculation-focused item combining mark-up and trade discount.
+
+Output type:
+- Prefer "calc" if supported; otherwise "typed" with explicit calculation steps in sample answer.
+
+Prompt options (choose one):
+Option 1 (two-step):
+1) A supplier invoice list price is given, a trade discount % is given, ask for cost price.
+2) Mark-up % on cost is given, ask for selling price.
+
+Option 2 (reverse):
+1) Amount paid after trade discount is given, discount % given, ask for original purchases.
+2) Then mark-up given, ask for selling price.
+
+Random data:
+- Paid/price: multiples of 50/100.
+- Discount %: [5, 10, 15].
+- Mark-up %: [25, 30, 50].
+
+Answer:
+- Show formula and final amounts.
+
+
+Archetype TS-D: Section 1 full journal totals “casting” version (Journal)
+-----------------------------------------------------------------------
+Purpose:
+- A full Trading Stock account question where only casted totals are given (no individual entries).
+
+Output type:
+- journal question
+
+Prompt:
+- “Information: Journal totals (casting)” with CPJ, CJ, CAJ, DAJ, CRJ, DJ.
+- “Additional: opening stock balance.”
+- “Required: Prepare and balance the Trading Stock account.”
+
+Implementation note:
+- This archetype is very close to the existing casted-journals function; ensure future refactor retains it.
+
+
+Wiring plan (after refactor)
+----------------------------
+1) Move Trading Stock archetypes into a dedicated module, e.g.:
+   - app/utils/archetypes/trading_stock_archetypes.py
+2) Expose a function that returns a list of question dicts for the pool.
+3) In generate_questions, import the pool builder and only construct pools lazily.
+4) Add the new archetypes to trading_stock_account_pool:
+   - TS-D (casted totals)
+   - TS-A (analysis typed)
+   - TS-B (prepare + two % returns)
+   - TS-C (markup+discount calc)
+
+
+Smoke tests to run after implementation
+--------------------------------------
+1) Import test:
+   - python -c "import random,sys; sys.path.append('caps-ai-backend'); from app.utils.grade10_sole_trader_generator import generate_questions; print('ok')"
+2) Generation test:
+   - generate_questions(... subskill='trading_stock_account', n=10)
+   - Ensure mix contains both 'journal' and 'typed' after TS-A/TS-C are added.
+3) Data sanity:
+   - Ensure totals balance in trading stock account.
+   - Ensure percentage calculations are not divide-by-zero.
+

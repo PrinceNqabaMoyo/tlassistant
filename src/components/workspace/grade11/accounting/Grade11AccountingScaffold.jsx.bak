@@ -1,0 +1,628 @@
+import React from 'react';
+import { getCurriculumNotes, getNotesByQuestionType } from '../../../../utils/curriculumNotesMapping';
+import {
+    buildEmptyBundleAnswer,
+    buildEmptyJournalAnswer,
+    buildEmptyWordbankAnswer,
+    getCorrectMap,
+    getExpectedByCellId,
+    isNumericExpected,
+    normalizeText,
+    toNumber
+} from './utils/accountingHelpers';
+
+import MCQRenderer from './renderers/MCQRenderer';
+import TypedRenderer from './renderers/TypedRenderer';
+import CalcRenderer from './renderers/CalcRenderer';
+import WordbankTableRenderer from './renderers/WordbankTableRenderer';
+import JournalRenderer from './renderers/JournalRenderer';
+import { useGrade11AccountingMarking } from './useGrade11AccountingMarking';
+
+const Grade11AccountingScaffold = ({
+    onBack,
+    subskills,
+
+    g11AcctVisualAidsOpen,
+    setG11AcctVisualAidsOpen,
+
+    g11AcctScaffoldDifficulty,
+    setG11AcctScaffoldDifficulty,
+    g11AcctScaffoldSubskill,
+    setG11AcctScaffoldSubskill,
+    g11AcctScaffoldSeed,
+    setG11AcctScaffoldSeed,
+
+    fetchGrade11AccountingScaffoldQuestion,
+    g11AcctScaffoldLoading,
+    g11AcctScaffoldError,
+    g11AcctScaffoldQuestion,
+
+    g11AcctScaffoldAnswer,
+    setG11AcctScaffoldAnswer,
+    g11AcctScaffoldFeedback,
+    setG11AcctScaffoldFeedback,
+    g11AcctScaffoldShowHint,
+    setG11AcctScaffoldShowHint,
+
+    renderGrade11AccountingVisualAids,
+}) => {
+    const question = g11AcctScaffoldQuestion;
+    const marking = useGrade11AccountingMarking();
+    const isMarkingMode = !marking.isPracticeMode;
+    const isMarkingSubmitted = marking.isMarkingSubmitted;
+    const registerAnswer = marking.registerAnswer;
+    const getFeedbackForQuestion = marking.getFeedbackForQuestion;
+    const [showHelpPanel, setShowHelpPanel] = React.useState(false);
+    const [showMemo, setShowMemo] = React.useState(false);
+    const [bundleActiveIndex, setBundleActiveIndex] = React.useState(0);
+    const [bundleFeedback, setBundleFeedback] = React.useState([]);
+    const [bundleCompleted, setBundleCompleted] = React.useState([]);
+
+    const isBundle = question?.question_type === 'bundle';
+    const bundleParts = isBundle && Array.isArray(question?.parts) ? question.parts : [];
+    const activePart = isBundle ? (bundleParts[bundleActiveIndex] || null) : null;
+    const renderQuestion = isBundle ? (activePart || question) : question;
+
+    React.useEffect(() => {
+        if (!question) return;
+        setShowHelpPanel(false);
+        setBundleActiveIndex(0);
+        if (question.question_type === 'bundle') {
+            const parts = Array.isArray(question?.parts) ? question.parts : [];
+            setG11AcctScaffoldAnswer(buildEmptyBundleAnswer(question));
+            setBundleFeedback(parts.map(() => null));
+            setBundleCompleted(parts.map(() => false));
+            setG11AcctScaffoldFeedback(null);
+            setG11AcctScaffoldShowHint(false);
+            setShowMemo(false);
+            return;
+        }
+        setBundleFeedback([]);
+        setBundleCompleted([]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [question?.id]);
+
+    // Get curriculum notes for current question
+    const getCurrentNotes = () => {
+        if (!renderQuestion) return null;
+        const archetypeKey = renderQuestion?.meta?.archetype_key || renderQuestion?.archetype_key;
+        if (archetypeKey) {
+            return getCurriculumNotes(archetypeKey);
+        }
+        // Fallback to journal type mapping
+        const journalType = renderQuestion?.journal?.journal_type || renderQuestion?.journal_type;
+        return getNotesByQuestionType(renderQuestion.question_type, journalType);
+    };
+
+    const currentNotes = getCurrentNotes();
+
+    const newQuestion = () => {
+        fetchGrade11AccountingScaffoldQuestion({
+            difficulty: g11AcctScaffoldDifficulty,
+            subskill: g11AcctScaffoldSubskill || 'mixed',
+            seed: g11AcctScaffoldSeed,
+        });
+        setShowHelpPanel(false);
+    };
+
+    const setAnswerValue = (value) => {
+        if (isBundle) {
+            const parts = bundleParts;
+            const next = Array.isArray(g11AcctScaffoldAnswer) ? g11AcctScaffoldAnswer.slice() : buildEmptyBundleAnswer(question);
+            next[bundleActiveIndex] = value;
+            setG11AcctScaffoldAnswer(next);
+
+            const fb = Array.isArray(bundleFeedback) ? bundleFeedback.slice() : parts.map(() => null);
+            fb[bundleActiveIndex] = null;
+            setBundleFeedback(fb);
+            return;
+        }
+
+        setG11AcctScaffoldAnswer(value);
+        if (!isMarkingMode) {
+            setG11AcctScaffoldFeedback(null);
+        }
+    };
+
+    React.useEffect(() => {
+        if (isMarkingMode && question && g11AcctScaffoldAnswer) {
+            registerAnswer(question.id, g11AcctScaffoldAnswer);
+        }
+    }, [isMarkingMode, question, g11AcctScaffoldAnswer, registerAnswer]);
+
+    const checkAnswer = () => {
+        if (!renderQuestion) return;
+
+        const q = renderQuestion;
+
+        if (isBundle) {
+            const parts = bundleParts;
+            const ansArr = Array.isArray(g11AcctScaffoldAnswer) ? g11AcctScaffoldAnswer : buildEmptyBundleAnswer(question);
+            const ans = ansArr[bundleActiveIndex];
+
+            const setPartFeedback = (fbObj) => {
+                const fb = Array.isArray(bundleFeedback) ? bundleFeedback.slice() : parts.map(() => null);
+                fb[bundleActiveIndex] = fbObj;
+                setBundleFeedback(fb);
+
+                if (fbObj?.kind === 'success') {
+                    const comp = Array.isArray(bundleCompleted) ? bundleCompleted.slice() : parts.map(() => false);
+                    comp[bundleActiveIndex] = true;
+                    setBundleCompleted(comp);
+                }
+            };
+
+            if (q.question_type === 'mcq') {
+                const ok = String(ans) === String(q.correct_index);
+                setPartFeedback(ok
+                    ? { kind: 'success', message: 'Correct.' }
+                    : { kind: 'error', message: `Not quite. Correct answer: ${q.options?.[q.correct_index] || ''}` });
+                return;
+            }
+
+            if (q.question_type === 'typed') {
+                const user = normalizeText(ans);
+                if (!user) {
+                    setPartFeedback({ kind: 'error', message: 'Write an answer first.' });
+                    return;
+                }
+                setPartFeedback({ kind: 'info', message: 'Answer saved.' });
+                return;
+            }
+
+            if (q.question_type === 'calc') {
+                const userN = toNumber(ans);
+                if (userN === null) {
+                    setPartFeedback({ kind: 'error', message: 'Enter a number first.' });
+                    return;
+                }
+                const correct = Number(q.correct_value);
+                const ok = Number.isFinite(correct) && Math.abs(userN - correct) <= 0.01;
+                setPartFeedback(ok
+                    ? { kind: 'success', message: 'Correct.' }
+                    : { kind: 'error', message: `Not quite. Correct answer: ${q.unit || ''}${correct.toFixed(2)}` });
+                return;
+            }
+
+            if (q.question_type === 'table_wordbank') {
+                const correctMap = getCorrectMap(q);
+                const a = (ans && typeof ans === 'object') ? ans : buildEmptyWordbankAnswer(q);
+                const selections = a?.selections && typeof a.selections === 'object' ? a.selections : {};
+
+                let total = 0;
+                let hit = 0;
+                Object.keys(correctMap).forEach((rowKey) => {
+                    const expected = correctMap?.[rowKey]?.['2'];
+                    if (expected === null || expected === undefined) return;
+                    total += 1;
+                    const got = selections?.[rowKey]?.['2'];
+                    if (String(got) === String(expected)) hit += 1;
+                });
+
+                setPartFeedback(total > 0 && hit === total
+                    ? { kind: 'success', message: 'Correct.' }
+                    : { kind: 'error', message: `Not quite. You matched ${hit}/${total} correctly.` });
+                return;
+            }
+
+            if (q.question_type === 'journal' || q.question_type === 'ledger') {
+                const expectedMap = getExpectedByCellId(q);
+                const a = (ans && typeof ans === 'object') ? ans : buildEmptyJournalAnswer(q);
+                const cells = a?.cells && typeof a.cells === 'object' ? a.cells : {};
+
+                const keys = Object.keys(expectedMap);
+                if (!keys.length) {
+                    setPartFeedback({ kind: 'error', message: 'Nothing to mark for this table.' });
+                    return;
+                }
+
+                let total = 0;
+                let hit = 0;
+                keys.forEach((cellId) => {
+                    const expected = expectedMap[cellId];
+                    if (expected === null || expected === undefined) return;
+                    total += 1;
+                    const got = cells[cellId];
+
+                    if (Array.isArray(expected)) {
+                        const gotNorm = normalizeText(got);
+                        const ok = expected.some((x) => normalizeText(x) === gotNorm);
+                        if (ok) hit += 1;
+                        return;
+                    }
+
+                    if (isNumericExpected(expected)) {
+                        const gotN = toNumber(got);
+                        const expN = typeof expected === 'number' ? expected : toNumber(expected);
+                        if (gotN !== null && expN !== null && Math.abs(gotN - expN) <= 0.01) hit += 1;
+                        return;
+                    }
+
+                    if (normalizeText(got) === normalizeText(expected)) hit += 1;
+                });
+
+                setPartFeedback(hit === total
+                    ? { kind: 'success', message: 'Correct.' }
+                    : { kind: 'error', message: `Not quite. You got ${hit}/${total} correct.` });
+                return;
+            }
+
+            setPartFeedback({ kind: 'error', message: `Unsupported question type: ${q.question_type}` });
+            return;
+        }
+
+        if (q.question_type === 'mcq') {
+            const ok = String(g11AcctScaffoldAnswer) === String(q.correct_index);
+            setG11AcctScaffoldFeedback(ok
+                ? { kind: 'success', message: 'Correct.' }
+                : { kind: 'error', message: `Not quite. Correct answer: ${q.options?.[q.correct_index] || ''}` });
+            return;
+        }
+
+        if (q.question_type === 'typed') {
+            const user = normalizeText(g11AcctScaffoldAnswer);
+            if (!user) {
+                setG11AcctScaffoldFeedback({ kind: 'error', message: 'Write an answer first.' });
+                return;
+            }
+            setG11AcctScaffoldFeedback({ kind: 'info', message: 'Answer saved.' });
+            return;
+        }
+
+        if (q.question_type === 'calc') {
+            const userN = toNumber(g11AcctScaffoldAnswer);
+            if (userN === null) {
+                setG11AcctScaffoldFeedback({ kind: 'error', message: 'Enter a number first.' });
+                return;
+            }
+            const correct = Number(q.correct_value);
+            const ok = Number.isFinite(correct) && Math.abs(userN - correct) <= 0.01;
+            setG11AcctScaffoldFeedback(ok
+                ? { kind: 'success', message: 'Correct.' }
+                : { kind: 'error', message: `Not quite. Correct answer: ${q.unit || ''}${correct.toFixed(2)}` });
+            return;
+        }
+
+        if (q.question_type === 'table_wordbank') {
+            const correctMap = getCorrectMap(q);
+            const ans = (g11AcctScaffoldAnswer && typeof g11AcctScaffoldAnswer === 'object')
+                ? g11AcctScaffoldAnswer
+                : buildEmptyWordbankAnswer(q);
+
+            const selections = ans?.selections && typeof ans.selections === 'object' ? ans.selections : {};
+
+            let total = 0;
+            let hit = 0;
+            Object.keys(correctMap).forEach((rowKey) => {
+                const expected = correctMap?.[rowKey]?.['2'];
+                if (expected === null || expected === undefined) return;
+                total += 1;
+                const got = selections?.[rowKey]?.['2'];
+                if (String(got) === String(expected)) hit += 1;
+            });
+
+            setG11AcctScaffoldFeedback(total > 0 && hit === total
+                ? { kind: 'success', message: 'Correct.' }
+                : { kind: 'error', message: `Not quite. You matched ${hit}/${total} correctly.` });
+            return;
+        }
+
+        if (q.question_type === 'journal' || q.question_type === 'ledger') {
+            const expectedMap = getExpectedByCellId(q);
+            const ans = (g11AcctScaffoldAnswer && typeof g11AcctScaffoldAnswer === 'object')
+                ? g11AcctScaffoldAnswer
+                : buildEmptyJournalAnswer(q);
+            const cells = ans?.cells && typeof ans.cells === 'object' ? ans.cells : {};
+
+            const keys = Object.keys(expectedMap);
+            if (!keys.length) {
+                setG11AcctScaffoldFeedback({ kind: 'error', message: 'Nothing to mark for this table.' });
+                return;
+            }
+
+            let total = 0;
+            let hit = 0;
+            keys.forEach((cellId) => {
+                const expected = expectedMap[cellId];
+                if (expected === null || expected === undefined) return;
+                total += 1;
+                const got = cells[cellId];
+
+                if (Array.isArray(expected)) {
+                    const gotNorm = normalizeText(got);
+                    const ok = expected.some((x) => normalizeText(x) === gotNorm);
+                    if (ok) hit += 1;
+                    return;
+                }
+
+                if (isNumericExpected(expected)) {
+                    const gotN = toNumber(got);
+                    const expN = typeof expected === 'number' ? expected : toNumber(expected);
+                    if (gotN !== null && expN !== null && Math.abs(gotN - expN) <= 0.01) hit += 1;
+                    return;
+                }
+
+                if (normalizeText(got) === normalizeText(expected)) hit += 1;
+            });
+
+            setG11AcctScaffoldFeedback(hit === total
+                ? { kind: 'success', message: 'Correct.' }
+                : { kind: 'error', message: `Not quite. You got ${hit}/${total} correct.` });
+            return;
+        }
+
+        setG11AcctScaffoldFeedback({ kind: 'error', message: `Unsupported question type: ${q.question_type}` });
+    };
+
+    // Determine what feedback to show
+    let displayFeedback = null;
+    let computedFbOpts = {};
+
+    if (isMarkingSubmitted) {
+        displayFeedback = getFeedbackForQuestion(question?.id);
+        if (displayFeedback) {
+            computedFbOpts = displayFeedback;
+        }
+    } else if (!isMarkingMode) {
+        displayFeedback = g11AcctScaffoldFeedback;
+    }
+
+    return (
+        <div className="w-full">
+            {g11AcctScaffoldError && (
+                <div className="p-3 bg-red-50 border border-red-200 text-red-800 rounded-lg text-sm mb-4">
+                    {g11AcctScaffoldError}
+                </div>
+            )}
+
+            {marking.markingError && (
+                <div className="p-3 bg-red-50 border border-red-200 text-red-800 rounded-lg text-sm mb-4">
+                    {marking.markingError}
+                </div>
+            )}
+
+            <div className="flex items-center justify-between mb-4">
+                <h3 className="text-xl font-bold text-slate-800">Scaffold Mode</h3>
+            </div>
+
+            {!question && !g11AcctScaffoldLoading && (
+                <div className="text-sm text-slate-500">
+                    Click "Generate Question" to begin.
+                </div>
+            )}
+
+            {g11AcctScaffoldLoading && (
+                <div className="text-sm text-slate-500">Loading...</div>
+            )}
+
+            {question && (
+                <div className="space-y-4">
+                    {/* Note: Prompt is rendered by WorkspaceModeShell via questionSlot */}
+
+                    {isBundle ? (
+                        <div className="space-y-6">
+                            {(Array.isArray(question.parts) ? question.parts : []).map((part, pIdx) => {
+                                // Only render the active part for pagination style
+                                if (pIdx !== bundleActiveIndex) return null;
+
+                                const currentAns = Array.isArray(g11AcctScaffoldAnswer) ? g11AcctScaffoldAnswer[pIdx] : null;
+
+                                let fb = null;
+                                if (isMarkingSubmitted) {
+                                    // bundle feedback in marking mode? Not explicitly handled per part unless backend does parts, 
+                                    // but backend usually returns whole question success. We'll show whole success.
+                                    if (pIdx === Object.keys(question.parts).length - 1) {
+                                        fb = getFeedbackForQuestion(question.id);
+                                    }
+                                } else if (!isMarkingMode) {
+                                    fb = Array.isArray(bundleFeedback) ? bundleFeedback[pIdx] : null;
+                                }
+
+                                return (
+                                    <div key={pIdx} className="space-y-4">
+                                        <div className="flex items-center justify-between">
+                                            <div className="font-semibold text-slate-800">Part {pIdx + 1} of {question.parts.length}</div>
+                                            <div className="flex gap-2">
+                                                <button
+                                                    onClick={() => setBundleActiveIndex(Math.max(0, bundleActiveIndex - 1))}
+                                                    disabled={bundleActiveIndex === 0}
+                                                    className="px-3 py-1 text-sm border rounded hover:bg-slate-50 disabled:opacity-50"
+                                                >
+                                                    Prev
+                                                </button>
+                                                <button
+                                                    onClick={() => setBundleActiveIndex(Math.min(question.parts.length - 1, bundleActiveIndex + 1))}
+                                                    disabled={bundleActiveIndex === question.parts.length - 1}
+                                                    className="px-3 py-1 text-sm border rounded hover:bg-slate-50 disabled:opacity-50"
+                                                >
+                                                    Next
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                        <div className="text-sm text-slate-700 p-4 border border-slate-200 rounded-xl bg-slate-50/50">
+                                            {part.prompt}
+                                        </div>
+
+                                        <MCQRenderer
+                                            question={part}
+                                            answer={currentAns}
+                                            setAnswer={(val) => setAnswerValue(val)}
+                                            feedback={fb}
+                                        />
+                                        <TypedRenderer
+                                            question={part}
+                                            answer={currentAns}
+                                            setAnswer={(val) => setAnswerValue(val)}
+                                            feedback={fb}
+                                        />
+                                        <CalcRenderer
+                                            question={part}
+                                            answer={currentAns}
+                                            setAnswer={(val) => setAnswerValue(val)}
+                                            feedback={fb}
+                                        />
+                                        <WordbankTableRenderer
+                                            question={part}
+                                            answer={currentAns}
+                                            setAnswer={(val) => setAnswerValue(val)}
+                                            feedback={fb}
+                                        />
+                                        <JournalRenderer
+                                            question={part}
+                                            answer={currentAns}
+                                            setAnswer={(val) => setAnswerValue(val)}
+                                            feedback={fb}
+                                        />
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    ) : (
+                        renderQuestion && (
+                            <div className="space-y-4">
+                                {isMarkingSubmitted && displayFeedback && (
+                                    <div className={`p-4 rounded-xl text-sm ${displayFeedback.kind === 'success' ? 'bg-emerald-50 text-emerald-800 border border-emerald-200' : 'bg-red-50 text-red-800 border border-red-200'}`}>
+                                        <div className="font-semibold mb-1">
+                                            {displayFeedback.kind === 'success' ? '✓ Correct' : '✗ Needs Review'}
+                                        </div>
+                                        <div>{displayFeedback.message}</div>
+                                    </div>
+                                )}
+                                <MCQRenderer
+                                    question={renderQuestion}
+                                    answer={g11AcctScaffoldAnswer}
+                                    setAnswer={setAnswerValue}
+                                    feedback={displayFeedback}
+                                />
+                                <TypedRenderer
+                                    question={renderQuestion}
+                                    answer={g11AcctScaffoldAnswer}
+                                    setAnswer={setAnswerValue}
+                                    feedback={displayFeedback}
+                                />
+                                <CalcRenderer
+                                    question={renderQuestion}
+                                    answer={g11AcctScaffoldAnswer}
+                                    setAnswer={setAnswerValue}
+                                    feedback={displayFeedback}
+                                />
+                                <WordbankTableRenderer
+                                    question={renderQuestion}
+                                    answer={g11AcctScaffoldAnswer}
+                                    setAnswer={setAnswerValue}
+                                    feedback={displayFeedback}
+                                />
+                                <JournalRenderer
+                                    question={renderQuestion}
+                                    answer={g11AcctScaffoldAnswer}
+                                    setAnswer={setAnswerValue}
+                                    feedback={displayFeedback}
+                                />
+                            </div>
+                        )
+                    )}
+
+                    {/* Action Buttons */}
+                    <div className="flex items-center gap-3 pt-4 border-t border-slate-100 flex-wrap">
+                        {isMarkingMode ? (
+                            <div className="flex items-center justify-between w-full">
+                                <span className="text-sm text-amber-700 font-medium bg-amber-50 px-3 py-1 rounded border border-amber-200">
+                                    Marking Mode: Answers are auto-saved. Click Submit when done.
+                                </span>
+                                {!isMarkingSubmitted && question && (
+                                    <button
+                                        onClick={() => marking.submitAssessment([question])}
+                                        disabled={marking.isSubmitting}
+                                        className="px-6 py-2 bg-indigo-600 text-white rounded-xl font-semibold hover:bg-indigo-700 transition-colors disabled:opacity-50"
+                                    >
+                                        {marking.isSubmitting ? 'Submitting...' : 'Submit Assessment'}
+                                    </button>
+                                )}
+                            </div>
+                        ) : (
+                            <>
+                                <button
+                                    onClick={checkAnswer}
+                                    disabled={!question}
+                                    className="bg-indigo-600 text-white px-6 py-2 rounded-xl hover:bg-indigo-700 transition-colors shadow-sm disabled:opacity-50 disabled:cursor-not-allowed font-medium text-sm"
+                                >
+                                    Check Answer
+                                </button>
+                                <button
+                                    onClick={() => {
+                                        setG11AcctScaffoldShowHint(!g11AcctScaffoldShowHint);
+                                        if (!g11AcctScaffoldShowHint) setG11AcctScaffoldFeedback(null);
+                                    }}
+                                    disabled={!question}
+                                    className="bg-white text-slate-700 border border-slate-200 px-4 py-2 rounded-xl hover:bg-slate-50 transition-colors shadow-sm disabled:opacity-50 disabled:cursor-not-allowed text-sm font-medium"
+                                >
+                                    {g11AcctScaffoldShowHint ? 'Hide Hint' : 'Show Hint'}
+                                </button>
+                                {g11AcctScaffoldFeedback && ['typed', 'calc', 'journal', 'ledger'].includes(question?.question_type) && (question?.sample_answer || question?.guidelines?.length > 0) && (
+                                    <button
+                                        onClick={() => setShowMemo(!showMemo)}
+                                        className={`px-4 py-2 rounded-xl text-sm font-semibold transition-all border ${showMemo ? 'bg-indigo-50 border-indigo-200 text-indigo-700' : 'bg-white border-slate-200 hover:bg-slate-50 text-slate-800'}`}
+                                    >
+                                        {showMemo ? 'Hide Memo' : 'Compare / Memo'}
+                                    </button>
+                                )}
+                            </>
+                        )}
+                    </div>
+
+                    {showMemo && ['typed', 'calc', 'journal', 'ledger'].includes(question?.question_type) && (question?.sample_answer || question?.guidelines?.length > 0) && (
+                        <div className="mt-4 p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700">
+                            <div className="font-semibold text-slate-900 mb-2">Compare / Memo</div>
+                            <div className="whitespace-pre-wrap">
+                                {renderQuestion?.sample_answer || renderQuestion?.guidelines?.[0] || 'No sample answer provided.'}
+                            </div>
+                        </div>
+                    )}
+
+                    {!isMarkingMode && g11AcctScaffoldShowHint && question && (
+                        <div className="mt-4 p-4 bg-amber-50 border border-amber-200 rounded-xl text-amber-800 text-sm">
+                            <h4 className="font-semibold mb-1 flex items-center gap-2">
+                                💡 Hint
+                            </h4>
+                            <p>{renderQuestion?.hint || 'No hint available.'}</p>
+                            {currentNotes && (
+                                <div className="mt-3 text-xs opacity-90">
+                                    <strong>Curriculum Note:</strong> {currentNotes}
+                                </div>
+                            )}
+
+                        </div>
+                    )}
+                </div>
+            )}
+
+            {/* Marking Results Overlay/Summary */}
+            {isMarkingSubmitted && marking.markingResults && question && (
+                <div className="mt-6 p-6 bg-indigo-50 border border-indigo-200 rounded-2xl">
+                    <h4 className="text-xl font-bold text-indigo-900 mb-2">Assessment Results</h4>
+                    <div className="flex items-end gap-2 mb-4">
+                        <span className="text-4xl font-black text-indigo-700">
+                            {Math.round((marking.markingResults.total_score / marking.markingResults.max_score) * 100)}%
+                        </span>
+                        <span className="text-sm font-medium text-indigo-600 mb-1">
+                            ({marking.markingResults.total_score} / {marking.markingResults.max_score} marks)
+                        </span>
+                    </div>
+                    <p className="text-indigo-800 text-sm">
+                        Review your specific section answer. The feedback is now displayed securely from the backend!
+                    </p>
+
+                    {/* Specific question feedback from backend for bundles handled mostly inside */}
+                    {getFeedbackForQuestion(question.id) && (
+                        <div className={`mt-4 p-4 rounded-xl border ${getFeedbackForQuestion(question.id).kind === 'success' ? 'bg-green-50 border-green-200 text-green-800' : 'bg-red-50 border-red-200 text-red-800'}`}>
+                            {getFeedbackForQuestion(question.id).message}
+                        </div>
+                    )}
+                </div>
+            )}
+        </div>
+    );
+};
+
+export default Grade11AccountingScaffold;

@@ -1,0 +1,30 @@
+# Validation Findings Refinement Plan
+
+Based on your testing in `Validation logs.md`, here is the plan to address the remaining UI and logical feedback:
+
+## 1. Finding 1: Compare/Memo Toggle on Match & Word Bank
+**Problem:** The `MatchQuestionUI` and `WordBankQuestionUI` do not visually snap to the correct answers when "Compare / Memo" is toggled, unlike the new `InlineFillQuestionUI`.
+**Solution:**
+- We will update `MatchQuestionUI.jsx` and `WordBankQuestionUI.jsx` to intercept the `readOnly` prop (which is driven by `showMemo`). 
+- When `readOnly` is true, the components will explicitly lock into their `correctMap` configurations, visually showing the exact correct pairings instead of just greyed out incorrect ones.
+
+## 2. Finding 3: 'Redo' instead of 'Clear'
+**Problem:** The user lacks a way to safely erase an incorrect attempt without clearing everything, and "Clear" is too destructive/generic.
+**Solution:**
+- Rename/repurpose the `Clear` button logic into a `Redo` button. 
+- The `Redo` button will specifically erase the `showCheckHighlights` (hiding the red feedback) and wipe the input state *for that specific question*, allowing the student a completely fresh attempt before they click "Compare".
+
+## 3. Finding 4: Local Flagging & Spaced Repetition
+**Problem:** The system should track incorrectly answered questions and re-insert them 5 questions later locally, without hitting Firestore. If answered correctly on the 2nd attempt, the flag drops.
+**Solution:**
+- Create a `localSpacedRepetitionQueue` in `localStorage` keyed by subskill.
+- When `checkOne()` validates an answer as incorrect, the full JSON of that question is appended to the queue with a `cooldown = 5`.
+- We will track a global `answeredCount` in `localStorage` as well. For every answer submitted, all items in the queue drop their cooldown by 1.
+- **The Injection:** We will modify the `Grade10AccountingSoleTraderPractice` component so that when a student clicks "Next", if there is a queued question with `cooldown <= 0`, it visually overrides the *next* algorithmic question in the carousel, forcing them to repeat the exact flagged JSON object.
+- If they get it correct, it is spliced out of the `localStorage` queue.
+
+## Open Question on Finding 4
+
+> [!IMPORTANT]
+> Injecting a past question directly into a new practice session sequence can be tricky for the UI progress bar (e.g., Question 6 of 10 suddenly becomes a review of an old question). 
+> **Are you comfortable with the app "hijacking" one of the 10 spots in a practice round to force a repetition, or would you prefer repeats strictly happen at the *end* of an assessment (e.g., an 11th question appears asking you to retry your mistakes)?**

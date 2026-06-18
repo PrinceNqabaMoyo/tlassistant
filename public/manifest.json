@@ -1,0 +1,16 @@
+{
+  "short_name": "Fundile",
+  "name": "Fundile Curriculum-Aligned Learning Assistant",
+  "icons": [
+    {
+      "src": "fundile-favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#13519C",
+  "background_color": "#0B2D57"
+}

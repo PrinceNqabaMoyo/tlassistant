@@ -1,0 +1,62 @@
+# Goal: Enhance Grade 10 Accounting GAAP Topic
+
+The objective is to align the Grade 10 Accounting principles (GAAP) topic with the recent UI and functionality enhancements implemented in the Ethics, Final Accounts, and Sole Trader modules. This involves updating the UI to display "GAAP" on selection cards, implementing the comprehensive hint and memo system, upgrading the practice mode to an 8-question timed review flow, and enriching the generator with content from the curriculum document.
+
+## User Review Required
+> [!IMPORTANT]
+> Please review the proposed subskills for the generator. Currently, the generator has `intro`, `principles`, and `matching_activity`. I plan to keep these logical groupings but expand their pools and ensure `matching_activity` directly uses the "Activity 1" from the curriculum document as a `table_wordbank` interactive activity. Let me know if you would like me to structure these subskills differently.
+
+## Open Questions
+None at this time.
+
+## Proposed Changes
+
+---
+
+### Curriculum Selection Card
+
+#### [MODIFY] `src/components/curriculum/CurriculumHelper.jsx`
+- Update the `isGrade10GAAPTopic` check and its associated logic so that the topic name returned is simply `"GAAP"` instead of `"Accounting principles (GAAP)"`.
+- Update the hardcoded strings in the UI presentation block to display `"3 GAAP"` and `"GAAP • Scaffold" / "GAAP • Practice"`.
+
+*(Note: We will also apply these changes to `CurriculumHelper - Copy.jsx` if necessary to keep backups in sync).*
+
+---
+
+### Backend / Question Generation
+
+#### [MODIFY] `caps-ai-backend/app/utils/grade10_accounting/gaap_generator.py`
+- Expand the existing `intro`, `principles`, and `matching_activity` pools.
+- Ensure `matching_activity` perfectly mirrors "Activity 1 (Accounting principles – Matching columns)" from the provided `Accounting principles (GAAP) Studio.md` document.
+- Add additional MCQs and typed questions using the concepts explained in the curriculum (Historical cost, Prudence, Materiality, Business entity rule, Going concern, Matching).
+
+---
+
+### Frontend Components (GAAP)
+
+#### [MODIFY] `src/components/workspace/grade10/accounting/gaap/controller.js`
+- Ensure `scaffoldSteps` uses descriptive and human-readable names for the GAAP subskills (e.g., `Introduction`, `GAAP Principles`, `Matching Activity`).
+- Set the practice mode question count to 8.
+
+#### [MODIFY] `src/components/workspace/grade10/accounting/gaap/Grade10AccountingGAAPScaffold.jsx`
+- **Hint System:** Add local state `activeCellHint` and logic to render the floating hint panel with `buildTypedHintSections`.
+- **Compare / Memo System:** Add `showCheckHighlights` and `showMemo` states. Implement `buildWordbankMemoRows` and `buildNonTabularMemoItems` to dynamically render the memo below the question when "Compare / Memo" is active.
+- **Action Buttons:** Replace the basic "Check Answer" button with the advanced suite of controls: "Check", "Hint", "Compare / Memo", and "Clear feedback".
+
+#### [MODIFY] `src/components/workspace/grade10/accounting/gaap/Grade10AccountingGAAPPractice.jsx`
+- **Review Mode:** Implement `reviewMode` state and `evaluateQuestion` logic.
+- **Timer Integration:** Add background timers (`liveElapsedSeconds`, `elapsedSecondsByIndex`) to track time spent per question.
+- **Navigation:** Adjust the practice mode flow to allow navigation through the 8 questions, culminating in a "Finish and Review" button on the final question.
+- **Input Locking:** Disable interactive inputs (e.g., Wordbank tokens, textareas) once the user enters `reviewMode`.
+- **Review Feedback Block:** Display detailed scoring and correct answer feedback below each question when in review mode.
+
+## Verification Plan
+
+### Automated Tests
+- N/A
+
+### Manual Verification
+- **Card Name Verification:** Open the Grade 10 Accounting curriculum menu and verify that the third topic is labeled simply as "GAAP".
+- **Scaffold Verification:** Open GAAP Scaffold, navigate through the questions, and verify that the Hint and Compare/Memo buttons function identically to the Ethics module, properly displaying feedback and correct answers.
+- **Wordbank Verification:** Ensure the "Activity 1" matching column wordbank behaves correctly and correctly grades associations.
+- **Practice Verification:** Open GAAP Practice, navigate through 8 questions, verify the timer does not leak, and ensure clicking "Finish and Review" properly evaluates all answers and locks the inputs.

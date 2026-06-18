@@ -1,0 +1,63 @@
+# Implementation Plan: Question Validation, Analytics, & Security
+
+This document outlines the approach to address the 6 primary requirements specified in `Validating questions.txt`.
+
+## User Review Required
+
+> [!IMPORTANT]
+> **Data Harvesting & Analytics:** Tracking real-time "Time spent per topic" requires injecting a telemetry tracker into the Workspace that "pings" your Firestore database periodically or on unmount. We will need to design this schema carefully to avoid huge Firebase bandwidth costs.
+> **Archetype Metadata:** Currently, your React app doesn't know *what* archetypes exist; it only asks your Python backend to generate them. To show "a dashboard with the number of archetypes", we will need to add a new endpoint to your Python backend (e.g., `/api/accounting/metadata`) that returns the available archetypes. For *this plan*, we will build the UI assuming you know the archetype seed, and outline the backend work needed.
+
+## Proposed Changes
+
+---
+
+### Phase A: Question Validation Sandbox (SuperAdmin)
+
+We will build a dedicated "Validation Workspace" inside your Admin dashboard. This will allow you to select a Grade (10/11/12), Subskill, and input a specific Seed ID. It will then fetch the question from your Python backend and render it *exactly* using the student's `Grade12AccountingScaffold` (or equivalent) component.
+
+#### [MODIFY] `src/components/forms/AdminForms.jsx`
+- Add a new `QuestionValidator` component interface.
+- Includes dropdowns for Grade, Subskill, and an input for `Seed`.
+- Introduce a "Test Question" button that fetches the question payload and mounts the actual student workspace component (e.g., `Grade12AccountingScaffold`) inside the Admin panel for true 1:1 evaluation.
+
+#### [MODIFY] `src/components/admin/AdminView.jsx`
+- Add routing for the new `QuestionValidator` view.
+
+---
+
+### Phase B: Analytics Dashboard Updates
+
+We will expand the existing `SystemAnalytics` component to pull real-time subscription counts and layout the foundation for "Time Spent" metrics.
+
+#### [MODIFY] `src/components/forms/AdminForms.jsx` (SystemAnalytics)
+- Query the `users` collection to count active subscriptions vs standard/free users.
+- Add UI placeholder charts for "Average Time per Topic" (which will populate once the telemetry data pipeline is in place).
+
+---
+
+### Phase C: Role Locking & Institutional Separation
+
+Currently, the `Header.jsx` toggle (Student/Teacher/Admin) is *already* exclusively visible to users with `isSuperAdmin: true`. Normal subscribers cannot see this toggle. We will solidify this by implementing stricter Firestore rules and outlining Institutional Admin roles.
+
+#### [NEW] `firestore.rules` (Security Implementation)
+- We need to establish strict server-side rules. Currently, if a tech-savvy student opens Chrome DevTools, they could potentially modify their own `user` document to change their role to `admin` or extend their `subscriptionExpiry`.
+- We will draft secure rules that enforce: only SuperAdmins can write to `subscriptionExpiry` or `role`.
+
+#### Architecture Updates
+- **Role Segregation:** We will formalize 4 roles: `student`, `teacher`, `schooladmin`, and `superadmin`. Your emails are `superadmin`. For future B2B sales, `schooladmin` will get a restricted version of the Admin dashboard (managing only their specific students), completely separated from the Question Validator and global Analytics.
+
+---
+
+## Open Questions
+
+> [!WARNING]
+> 1. **Telemetry:** How granular do you want the "Time Spent" tracking? (e.g., Total time on app, Time per specific subskill like "Cash Flow", or Time per specific Question Seed?)
+> 2. **Backend Archetypes:** To populate a list of available archetypes automatically in the Admin dashboard, we need to update your Python backend API. Do you want me to focus purely on the frontend React tool for testing seeds right now, or should we discuss generating that backend endpoint first?
+
+## Verification Plan
+
+### Automated/Manual Verification
+1. **Validation Sandbox:** Log in as SuperAdmin, open Question Validator, select Grade 12 Accounting -> Cash Flow, enter seed `42`, and verify the Scaffold component renders the exact problem perfectly.
+2. **Security Checks:** Attempt to modify a user's `subscriptionExpiry` using a standard Student account via Firebase console/SDK to ensure the new Firestore rules block the update.
+3. **Analytics:** Verify the "Active Subscribers" count correctly queries the `users` database.

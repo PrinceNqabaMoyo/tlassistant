@@ -1,0 +1,334 @@
+
+## Modularization Template (the exact steps I’ll follow, topic-by-topic)
+
+This template migrates [Workspace.jsx](cci:7://file:///c:/Users/princ/fundile-tlassistant-vite/src/components/workspace/Workspace.jsx:0:0-0:0) into a **small shell** + **per-topic modules** under `grade/<subject>/<topic>/`, starting with **Grade 7 Mathematics**, then Grade 8, Grade 9, Grade 10, and finally the Grade 11 topics you’ve implemented so far.
+
+---
+
+# 0) Target folder layout (fixed convention)
+
+For every migrated topic:
+
+```
+src/components/workspace/
+  grade7/
+    mathematics/
+      exponents/
+        controller.js
+        Scaffold.jsx
+        Practice.jsx
+        index.js
+      straight-lines/
+      ...
+  grade8/
+    mathematics/
+      ...
+```
+
+- **Grade folder**: `grade7`, `grade8`, `grade9`, `grade10`, [grade11](cci:7://file:///c:/Users/princ/fundile-tlassistant-vite/src/components/workspace/grade11:0:0-0:0)
+- **Subject folder**: `mathematics` (later: `accounting`, `ems`, `business-studies`, `technical-maths`)
+- **Topic folder**: kebab-case, e.g. `patterns-sequences`, `exponents`, `straight-lines`
+
+This prevents “topic folder contains grade” and scales cleanly.
+
+---
+
+# 1) Introduce a “Registry” (one-time plumbing)
+
+## 1.1 Create a registry file
+Create:
+
+- `src/components/workspace/workspaceRegistry.js`
+
+It exports a map:
+
+- key: `workspaceMode` (unchanged strings like `grade7_exponents_scaffold`)
+- value: `{ render, getVisualAids? }`
+
+Example shape (conceptually):
+
+- **`render(ctx)`** returns the correct component for that mode
+- `ctx` includes the shared props already used across topics (like `renderMathText`, navigation helpers, etc.)
+
+## 1.2 Workspace.jsx becomes a shell
+In [Workspace.jsx](cci:7://file:///c:/Users/princ/fundile-tlassistant-vite/src/components/workspace/Workspace.jsx:0:0-0:0) we keep only:
+- global UI + layout
+- `workspaceMode` switching
+- shared helpers (like `renderMathText`, any shared modals if they truly are shared)
+- a single selection point:
+
+```
+const entry = workspaceRegistry[workspaceMode];
+return entry ? entry.render(ctx) : <DefaultWorkspace />;
+```
+
+**Rule**: [Workspace.jsx](cci:7://file:///c:/Users/princ/fundile-tlassistant-vite/src/components/workspace/Workspace.jsx:0:0-0:0) should not grow again. New topics go into the registry + a topic folder.
+
+---
+
+# 2) “Controller module” pattern (applies to every topic)
+
+For each topic, create a **controller module** that owns all the state/fetching/effects previously living in [Workspace.jsx](cci:7://file:///c:/Users/princ/fundile-tlassistant-vite/src/components/workspace/Workspace.jsx:0:0-0:0).
+
+## 2.1 Create `controller.js`
+Path example:
+
+- `src/components/workspace/grade7/mathematics/exponents/controller.js`
+
+It exports:
+
+- `useGrade7MathExponentsController(params)`
+
+Where `params` includes only the minimum:
+- `workspaceMode`
+- `renderMathText` (if needed)
+- any shared API base helpers already used
+- optional: `seed` policy if you have one
+
+The controller returns an object:
+
+- **State**
+  - `difficulty`
+  - `loading`
+  - `error`
+  - `questions` (practice set) / `question` (scaffold single)
+  - `answers`, `feedback`
+  - `stepIndex` for scaffold
+  - `visualAidsOpen`, `activeVisualAidTab` (if used)
+
+- **Actions**
+  - `setDifficulty`
+  - `fetchScaffoldQuestion({ subskill, difficulty })`
+  - `fetchPracticeSet({ subskill, difficulty, count })`
+  - [setAnswer(qIndex, value)](cci:1://file:///c:/Users/princ/fundile-tlassistant-vite/src/components/workspace/grade10/Grade10PatternsSequencesPractice.jsx:66:4-74:6) / [checkAnswer()](cci:1://file:///c:/Users/princ/fundile-tlassistant-vite/src/components/workspace/grade11/Grade11PatternsSequencesScaffold.jsx:81:4-91:6) (if this logic lives in Workspace; if it lives in the component already, keep it there)
+
+- **Static config**
+  - `scaffoldSteps` array
+  - `visualAids` (optional)
+
+## 2.2 Move `useEffect` triggers into the controller
+Any logic like:
+- “when workspaceMode becomes `..._scaffold`, fetch the current step”
+- “when stepIndex changes, refetch”
+moves into the controller.
+
+**Rule**: [Workspace.jsx](cci:7://file:///c:/Users/princ/fundile-tlassistant-vite/src/components/workspace/Workspace.jsx:0:0-0:0) should not have per-topic `useEffect` anymore after migration.
+
+---
+
+# 3) Topic UI components become “dumb-ish” (but keep your existing ones)
+
+For each topic folder:
+
+- `Scaffold.jsx` (usually already exists)
+- `Practice.jsx` (usually already exists)
+
+They should accept props from the controller and render UI.
+
+**Rule**: If your existing Grade 7–10 topic components already contain answer checking logic, keep it there. The goal is primarily to remove the massive [Workspace.jsx](cci:7://file:///c:/Users/princ/fundile-tlassistant-vite/src/components/workspace/Workspace.jsx:0:0-0:0) state/fetch/effects.
+
+---
+
+# 4) Add an `index.js` per topic (clean imports)
+
+Each topic folder exports:
+
+- `Scaffold`
+- `Practice`
+- `useController`
+
+So registry imports look like:
+
+```
+import { Grade7MathExponents } from './grade7/mathematics/exponents';
+```
+
+(or named exports per topic)
+
+---
+
+# 5) Migration steps for ONE topic (repeatable checklist)
+
+For each topic (starting Grade 7 Maths), I will do exactly this:
+
+## Step A — create topic folder + controller
+- Create `grade7/mathematics/<topic>/controller.js`
+- Copy the **minimal** chunk from [Workspace.jsx](cci:7://file:///c:/Users/princ/fundile-tlassistant-vite/src/components/workspace/Workspace.jsx:0:0-0:0):
+  - state declarations
+  - fetch functions
+  - steps array
+  - relevant effects
+
+## Step B — wire existing components (or move them)
+- Either:
+  - move existing `src/components/workspace/grade7/<OldTopic>.jsx` into the new folder
+  - or keep file where it is temporarily and just re-export it (less disruption)
+- Prefer moving only when safe.
+
+## Step C — register modes in registry
+Add entries for both modes:
+- `grade7_<topic>_scaffold`
+- `grade7_<topic>_practice`
+
+Registry entry calls controller and renders component.
+
+## Step D — delete old code from Workspace.jsx
+Remove only the migrated topic’s:
+- imports
+- state
+- fetchers
+- effects
+- render branch
+
+## Step E — verify compile (after each topic)
+After every topic migration, we ensure:
+- no dangling references
+- modes still route correctly from CurriculumHelper
+- scaffold/practice still fetch and render
+
+---
+
+# 6) Order of migration (what I will follow)
+
+You requested: **Grade 7 Maths topic-by-topic**, then **Grade 8**, then **Grade 9**, then **Grade 10**, then **Grade 11 (implemented so far)**.
+
+So the migration order is:
+
+## Phase 1: Grade 7 Mathematics (all Term 1 topics you have)
+Migrate one at a time until Grade 7 is fully off [Workspace.jsx](cci:7://file:///c:/Users/princ/fundile-tlassistant-vite/src/components/workspace/Workspace.jsx:0:0-0:0).
+
+## Phase 2: Grade 8 Mathematics
+Same approach.
+
+## Phase 3: Grade 9 Mathematics
+Same approach.
+
+## Phase 4: Grade 10 Mathematics
+Same approach.
+
+## Phase 5: Grade 11 Mathematics (only topics implemented so far)
+- exponents & surds
+- equations & inequalities
+- patterns & sequences / number patterns (once finished)
+
+---
+
+# 7) Non-negotiable invariants (so we don’t break the app)
+
+- **Workspace mode strings do not change**  
+  Example: `grade10_patterns_sequences_scaffold` stays exactly that.  
+  This prevents breaking [CurriculumHelper.jsx](cci:7://file:///c:/Users/princ/fundile-tlassistant-vite/src/components/curriculum/CurriculumHelper.jsx:0:0-0:0).
+
+- **API endpoints do not change** during refactor  
+  Only move code location, not behavior.
+
+- **renderMathText behavior stays centralized**  
+  If there’s a known `'*' -> '×'` policy, keep it in one shared helper and pass it down.
+
+---
+
+# Next action (your call)
+
+Pick one Grade 7 Mathematics topic to migrate first and I’ll apply this template exactly.
+
+If you want the fastest “proof it works” candidate, choose:
+- **`grade7_exponents`** (usually smallest surface area)
+
+If you want the biggest immediate reduction in [Workspace.jsx](cci:7://file:///c:/Users/princ/fundile-tlassistant-vite/src/components/workspace/Workspace.jsx:0:0-0:0), choose:
+- **`grade7_whole`** (largest code, biggest payoff)
+
+---
+
+## Status
+- **Template provided** and will be followed consistently.
+- **No code changes made yet** (waiting for your choice of the first Grade 7 Mathematics topic to migrate).
+
+
+
+
+
+## What I’ll do with topic selection cards that aren’t implemented yet
+
+You’ll inevitably have curriculum cards for Term 2–4 (or future subjects) before the end-to-end engine + UI exists. The right approach is to **keep the cards** (for curriculum visibility) but **gate the launch actions** so users never land in a broken workspace mode.
+
+I’ll implement this as a consistent rule across [CurriculumHelper.jsx](cci:7://file:///c:/Users/princ/fundile-tlassistant-vite/src/components/curriculum/CurriculumHelper.jsx:0:0-0:0).
+
+---
+
+# Recommended policy (best UX + lowest maintenance)
+
+## 1) Keep the topic card visible
+- Card shows topic name + brief syllabus blurb (even if not implemented).
+- This preserves curriculum coverage and roadmap visibility.
+
+## 2) If not implemented, show “Coming soon” and disable launch buttons
+- Replace `Start Scaffold` / `Start Practice` buttons with:
+  - disabled buttons, or
+  - a single `Coming soon` button (disabled), or
+  - `View overview` (enabled) + `Coming soon` badge.
+
+**Important:** do **not** navigate to Workspace in this state.
+
+## 3) Optional fallback: allow “Overview-only mode”
+If you want users to still click something, we can allow:
+- `View overview` button that opens a read-only topic overview panel/page (no generator calls, no workspaceMode).
+This is a nice-to-have; disabling is the simplest safe default.
+
+---
+
+# How it will be implemented (clean + scalable)
+
+## A) Define a single “implemented topics” registry
+Create a small map (in [CurriculumHelper.jsx](cci:7://file:///c:/Users/princ/fundile-tlassistant-vite/src/components/curriculum/CurriculumHelper.jsx:0:0-0:0) or a new `curriculumImplementedTopics.js`):
+
+- key: canonical topic key (e.g. `grade11_mathematics_patterns_sequences`)
+- value: `{ scaffold: true/false, practice: true/false }`
+
+Example entries:
+- Grade 7 Math Term 1 topics: `true/true`
+- Grade 11 Math topics implemented so far: `true/true`
+- Term 2+ topics: `false/false`
+
+Then each card does:
+
+- If implemented:
+  - show normal launch ribbon buttons (navigate to workspace modes)
+- Else:
+  - show disabled ribbon with “Coming soon”
+
+## B) No broken modes in Workspace
+Because navigation is gated, [Workspace.jsx](cci:7://file:///c:/Users/princ/fundile-tlassistant-vite/src/components/workspace/Workspace.jsx:0:0-0:0) won’t be asked to render modes that don’t exist yet.
+
+---
+
+# Alternative policies (if you prefer)
+
+## Option 1: Hide unimplemented topics
+- Cleaner UI, but you lose curriculum visibility.
+- Not recommended given your long roadmap.
+
+## Option 2: Let it open Workspace but show “Not implemented” panel
+- More code in [Workspace.jsx](cci:7://file:///c:/Users/princ/fundile-tlassistant-vite/src/components/workspace/Workspace.jsx:0:0-0:0) (which we’re actively trying to shrink).
+- I don’t recommend this while modularizing.
+
+---
+
+# My default choice (unless you say otherwise)
+- **Show card**
+- **Disable scaffold/practice buttons**
+- Display a **“Coming soon (Term X)”** label
+
+---
+
+## One decision needed from you
+For unimplemented topics, do you want:
+
+1. **Disable buttons + show “Coming soon”** (simple, safest), or  
+2. **Enable “View overview”** (read-only info, no workspace)?
+
+Once you choose, I’ll standardize it across the curriculum cards so the behavior is consistent as we expand to Grade 12 Maths + other subjects.
+
+---
+
+## Status
+- **Strategy decided and ready to implement** (pending your choice between disable-only vs overview).

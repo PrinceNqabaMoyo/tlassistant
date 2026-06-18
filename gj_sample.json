@@ -1,0 +1,929 @@
+[
+  {
+    "id": "acct10_st_journal_450d0a6c1af2",
+    "question_type": "journal",
+    "prompt": "Mzanzi Mart\nGeneral Journal (GJ) for March 2013 (Variant A)\n\nTransactions (in this order):\na 1 March: Written off a bad debt, R800.00.\nb 2 March: Owner took trading stock for personal use, R300.00.\nc 14 March: Discount received from a creditor, R250.00.\nd 15 March: Charged interest on overdue accounts, R650.00.\ne 23 March: Received a donation, R150.00.\nf 29 March: Discount allowed cancelled, R3600.00.\n\nRequired:\nComplete the GJ below in the same order as the transactions.",
+    "journal": {
+      "journal_type": "gj",
+      "table_variant": "studio",
+      "headers": [
+        "Day",
+        "Details",
+        "Fol",
+        "Debit",
+        "Credit",
+        "Debtors\u2019 control debit",
+        "Debtors\u2019 control credit",
+        "Creditors\u2019 control debit",
+        "Creditors\u2019 control credit"
+      ],
+      "rows": [
+        [
+          {
+            "cell_id": "r0_c0",
+            "value": "1",
+            "editable": true
+          },
+          {
+            "cell_id": "r0_c1",
+            "value": "Bad debts",
+            "editable": true
+          },
+          {
+            "cell_id": "r0_c2",
+            "value": "",
+            "editable": true
+          },
+          {
+            "cell_id": "r0_c3",
+            "value": "",
+            "editable": true
+          },
+          {
+            "cell_id": "r0_c4",
+            "value": "",
+            "editable": true
+          },
+          {
+            "cell_id": "r0_c5",
+            "value": "",
+            "editable": true
+          },
+          {
+            "cell_id": "r0_c6",
+            "value": "",
+            "editable": true
+          },
+          {
+            "cell_id": "r0_c7",
+            "value": "",
+            "editable": true
+          },
+          {
+            "cell_id": "r0_c8",
+            "value": "",
+            "editable": true
+          }
+        ],
+        [
+          {
+            "cell_id": "r1_c0",
+            "value": "2",
+            "editable": true
+          },
+          {
+            "cell_id": "r1_c1",
+            "value": "Drawings of stock",
+            "editable": true
+          },
+          {
+            "cell_id": "r1_c2",
+            "value": "",
+            "editable": true
+          },
+          {
+            "cell_id": "r1_c3",
+            "value": "",
+            "editable": true
+          },
+          {
+            "cell_id": "r1_c4",
+            "value": "",
+            "editable": true
+          },
+          {
+            "cell_id": "r1_c5",
+            "value": "",
+            "editable": true
+          },
+          {
+            "cell_id": "r1_c6",
+            "value": "",
+            "editable": true
+          },
+          {
+            "cell_id": "r1_c7",
+            "value": "",
+            "editable": true
+          },
+          {
+            "cell_id": "r1_c8",
+            "value": "",
+            "editable": true
+          }
+        ],
+        [
+          {
+            "cell_id": "r2_c0",
+            "value": "14",
+            "editable": true
+          },
+          {
+            "cell_id": "r2_c1",
+            "value": "Discount received",
+            "editable": true
+          },
+          {
+            "cell_id": "r2_c2",
+            "value": "",
+            "editable": true
+          },
+          {
+            "cell_id": "r2_c3",
+            "value": "",
+            "editable": true
+          },
+          {
+            "cell_id": "r2_c4",
+            "value": "",
+            "editable": true
+          },
+          {
+            "cell_id": "r2_c5",
+            "value": "",
+            "editable": true
+          },
+          {
+            "cell_id": "r2_c6",
+            "value": "",
+            "editable": true
+          },
+          {
+            "cell_id": "r2_c7",
+            "value": "",
+            "editable": true
+          },
+          {
+            "cell_id": "r2_c8",
+            "value": "",
+            "editable": true
+          }
+        ],
+        [
+          {
+            "cell_id": "r3_c0",
+            "value": "15",
+            "editable": true
+          },
+          {
+            "cell_id": "r3_c1",
+            "value": "Interest on overdue accounts",
+            "editable": true
+          },
+          {
+            "cell_id": "r3_c2",
+            "value": "",
+            "editable": true
+          },
+          {
+            "cell_id": "r3_c3",
+            "value": "",
+            "editable": true
+          },
+          {
+            "cell_id": "r3_c4",
+            "value": "",
+            "editable": true
+          },
+          {
+            "cell_id": "r3_c5",
+            "value": "",
+            "editable": true
+          },
+          {
+            "cell_id": "r3_c6",
+            "value": "",
+            "editable": true
+          },
+          {
+            "cell_id": "r3_c7",
+            "value": "",
+            "editable": true
+          },
+          {
+            "cell_id": "r3_c8",
+            "value": "",
+            "editable": true
+          }
+        ],
+        [
+          {
+            "cell_id": "r4_c0",
+            "value": "23",
+            "editable": true
+          },
+          {
+            "cell_id": "r4_c1",
+            "value": "Donation received",
+            "editable": true
+          },
+          {
+            "cell_id": "r4_c2",
+            "value": "",
+            "editable": true
+          },
+          {
+            "cell_id": "r4_c3",
+            "value": "",
+            "editable": true
+          },
+          {
+            "cell_id": "r4_c4",
+            "value": "",
+            "editable": true
+          },
+          {
+            "cell_id": "r4_c5",
+            "value": "",
+            "editable": true
+          },
+          {
+            "cell_id": "r4_c6",
+            "value": "",
+            "editable": true
+          },
+          {
+            "cell_id": "r4_c7",
+            "value": "",
+            "editable": true
+          },
+          {
+            "cell_id": "r4_c8",
+            "value": "",
+            "editable": true
+          }
+        ],
+        [
+          {
+            "cell_id": "r5_c0",
+            "value": "29",
+            "editable": true
+          },
+          {
+            "cell_id": "r5_c1",
+            "value": "Discount allowed cancelled",
+            "editable": true
+          },
+          {
+            "cell_id": "r5_c2",
+            "value": "",
+            "editable": true
+          },
+          {
+            "cell_id": "r5_c3",
+            "value": "",
+            "editable": true
+          },
+          {
+            "cell_id": "r5_c4",
+            "value": "",
+            "editable": true
+          },
+          {
+            "cell_id": "r5_c5",
+            "value": "",
+            "editable": true
+          },
+          {
+            "cell_id": "r5_c6",
+            "value": "",
+            "editable": true
+          },
+          {
+            "cell_id": "r5_c7",
+            "value": "",
+            "editable": true
+          },
+          {
+            "cell_id": "r5_c8",
+            "value": "",
+            "editable": true
+          }
+        ]
+      ],
+      "column_help": {
+        "Day": "Day of the month.",
+        "Details": "Account name / description used in the general journal.",
+        "Fol": "Folio reference to the General Ledger account.",
+        "Debit": "Amount to be debited to the account in Details (if applicable).",
+        "Credit": "Amount to be credited to the account in Details (if applicable).",
+        "Debtors\u2019 control debit": "Amount to be debited to Debtors\u2019 control (if applicable).",
+        "Debtors\u2019 control credit": "Amount to be credited to Debtors\u2019 control (if applicable).",
+        "Creditors\u2019 control debit": "Amount to be debited to Creditors\u2019 control (if applicable).",
+        "Creditors\u2019 control credit": "Amount to be credited to Creditors\u2019 control (if applicable)."
+      },
+      "header_rows": [
+        [
+          {
+            "label": "Day",
+            "rowSpan": 2,
+            "colSpan": 1
+          },
+          {
+            "label": "Details",
+            "rowSpan": 2,
+            "colSpan": 1
+          },
+          {
+            "label": "Fol",
+            "rowSpan": 2,
+            "colSpan": 1
+          },
+          {
+            "label": "Debit",
+            "rowSpan": 2,
+            "colSpan": 1
+          },
+          {
+            "label": "Credit",
+            "rowSpan": 2,
+            "colSpan": 1
+          },
+          {
+            "label": "Debtors\u2019 control",
+            "rowSpan": 1,
+            "colSpan": 2
+          },
+          {
+            "label": "Creditors\u2019 control",
+            "rowSpan": 1,
+            "colSpan": 2
+          }
+        ],
+        [
+          {
+            "label": "Debit",
+            "rowSpan": 1,
+            "colSpan": 1
+          },
+          {
+            "label": "Credit",
+            "rowSpan": 1,
+            "colSpan": 1
+          },
+          {
+            "label": "Debit",
+            "rowSpan": 1,
+            "colSpan": 1
+          },
+          {
+            "label": "Credit",
+            "rowSpan": 1,
+            "colSpan": 1
+          }
+        ]
+      ],
+      "title_fields": [
+        {
+          "cell_id": "title_business",
+          "label": "Business name",
+          "editable": true
+        },
+        {
+          "cell_id": "title_period",
+          "label": "Month/Year",
+          "editable": true
+        }
+      ]
+    },
+    "correct_map": {
+      "r0_c0": [
+        "",
+        "1",
+        "a"
+      ],
+      "r0_c1": "Bad debts",
+      "r0_c3": "800.00",
+      "r0_c4": "",
+      "r0_c5": "",
+      "r0_c6": "800.00",
+      "r0_c7": "",
+      "r0_c8": "",
+      "r1_c0": [
+        "",
+        "2",
+        "b"
+      ],
+      "r1_c1": "Drawings of stock",
+      "r1_c3": "300.00",
+      "r1_c4": "300.00",
+      "r1_c5": "",
+      "r1_c6": "",
+      "r1_c7": "",
+      "r1_c8": "",
+      "r2_c0": [
+        "",
+        "14",
+        "c"
+      ],
+      "r2_c1": "Discount received",
+      "r2_c3": "",
+      "r2_c4": "250.00",
+      "r2_c5": "",
+      "r2_c6": "",
+      "r2_c7": "250.00",
+      "r2_c8": "",
+      "r3_c0": [
+        "",
+        "15",
+        "d"
+      ],
+      "r3_c1": "Interest on overdue accounts",
+      "r3_c3": "",
+      "r3_c4": "650.00",
+      "r3_c5": "650.00",
+      "r3_c6": "",
+      "r3_c7": "",
+      "r3_c8": "",
+      "r4_c0": [
+        "",
+        "23",
+        "e"
+      ],
+      "r4_c1": "Donation received",
+      "r4_c3": "150.00",
+      "r4_c4": "150.00",
+      "r4_c5": "",
+      "r4_c6": "",
+      "r4_c7": "",
+      "r4_c8": "",
+      "r5_c0": [
+        "",
+        "29",
+        "f"
+      ],
+      "r5_c1": "Discount allowed cancelled",
+      "r5_c3": "",
+      "r5_c4": "3600.00",
+      "r5_c5": "",
+      "r5_c6": "3600.00",
+      "r5_c7": "",
+      "r5_c8": "",
+      "title_business": "Mzanzi Mart",
+      "title_period": "March 2013"
+    },
+    "guidelines": [
+      "Write the entries in the same order as the transactions given above.",
+      "Leave transaction references blank if you want, but if you enter them they must match the transaction list."
+    ],
+    "expected_answer_type": "journal"
+  },
+  {
+    "id": "acct10_st_journal_62a0a8c11f39",
+    "question_type": "journal",
+    "prompt": "Durban Deals\nGeneral Journal (GJ) for February 2013 (Variant B)\n\nTransactions (in this order):\n1 1 February: Discount received from a creditor, R800.00.\n2 10 February: Discount allowed cancelled, R200.00.\n3 18 February: Written off a bad debt, R450.00.\n4 22 February: Owner took trading stock for personal use, R1200.00.\n5 29 February: Charged interest on overdue accounts, R250.00.\n\nRequired:\nComplete the GJ below in the same order as the transactions.",
+    "journal": {
+      "journal_type": "gj",
+      "table_variant": "studio",
+      "headers": [
+        "No",
+        "D",
+        "Details",
+        "Fol",
+        "Debit",
+        "Credit",
+        "Debtors\u2019 control debit",
+        "Debtors\u2019 control credit",
+        "Creditors\u2019 control debit",
+        "Creditors\u2019 control credit"
+      ],
+      "rows": [
+        [
+          {
+            "cell_id": "r0_c0",
+            "value": "1",
+            "editable": true
+          },
+          {
+            "cell_id": "r0_c1",
+            "value": "1",
+            "editable": true
+          },
+          {
+            "cell_id": "r0_c2",
+            "value": "Discount received",
+            "editable": true
+          },
+          {
+            "cell_id": "r0_c3",
+            "value": "",
+            "editable": true
+          },
+          {
+            "cell_id": "r0_c4",
+            "value": "",
+            "editable": true
+          },
+          {
+            "cell_id": "r0_c5",
+            "value": "",
+            "editable": true
+          },
+          {
+            "cell_id": "r0_c6",
+            "value": "",
+            "editable": true
+          },
+          {
+            "cell_id": "r0_c7",
+            "value": "",
+            "editable": true
+          },
+          {
+            "cell_id": "r0_c8",
+            "value": "",
+            "editable": true
+          },
+          {
+            "cell_id": "r0_c9",
+            "value": "",
+            "editable": true
+          }
+        ],
+        [
+          {
+            "cell_id": "r1_c0",
+            "value": "2",
+            "editable": true
+          },
+          {
+            "cell_id": "r1_c1",
+            "value": "10",
+            "editable": true
+          },
+          {
+            "cell_id": "r1_c2",
+            "value": "Discount allowed cancelled",
+            "editable": true
+          },
+          {
+            "cell_id": "r1_c3",
+            "value": "",
+            "editable": true
+          },
+          {
+            "cell_id": "r1_c4",
+            "value": "",
+            "editable": true
+          },
+          {
+            "cell_id": "r1_c5",
+            "value": "",
+            "editable": true
+          },
+          {
+            "cell_id": "r1_c6",
+            "value": "",
+            "editable": true
+          },
+          {
+            "cell_id": "r1_c7",
+            "value": "",
+            "editable": true
+          },
+          {
+            "cell_id": "r1_c8",
+            "value": "",
+            "editable": true
+          },
+          {
+            "cell_id": "r1_c9",
+            "value": "",
+            "editable": true
+          }
+        ],
+        [
+          {
+            "cell_id": "r2_c0",
+            "value": "3",
+            "editable": true
+          },
+          {
+            "cell_id": "r2_c1",
+            "value": "18",
+            "editable": true
+          },
+          {
+            "cell_id": "r2_c2",
+            "value": "Bad debts",
+            "editable": true
+          },
+          {
+            "cell_id": "r2_c3",
+            "value": "",
+            "editable": true
+          },
+          {
+            "cell_id": "r2_c4",
+            "value": "",
+            "editable": true
+          },
+          {
+            "cell_id": "r2_c5",
+            "value": "",
+            "editable": true
+          },
+          {
+            "cell_id": "r2_c6",
+            "value": "",
+            "editable": true
+          },
+          {
+            "cell_id": "r2_c7",
+            "value": "",
+            "editable": true
+          },
+          {
+            "cell_id": "r2_c8",
+            "value": "",
+            "editable": true
+          },
+          {
+            "cell_id": "r2_c9",
+            "value": "",
+            "editable": true
+          }
+        ],
+        [
+          {
+            "cell_id": "r3_c0",
+            "value": "4",
+            "editable": true
+          },
+          {
+            "cell_id": "r3_c1",
+            "value": "22",
+            "editable": true
+          },
+          {
+            "cell_id": "r3_c2",
+            "value": "Drawings of stock",
+            "editable": true
+          },
+          {
+            "cell_id": "r3_c3",
+            "value": "",
+            "editable": true
+          },
+          {
+            "cell_id": "r3_c4",
+            "value": "",
+            "editable": true
+          },
+          {
+            "cell_id": "r3_c5",
+            "value": "",
+            "editable": true
+          },
+          {
+            "cell_id": "r3_c6",
+            "value": "",
+            "editable": true
+          },
+          {
+            "cell_id": "r3_c7",
+            "value": "",
+            "editable": true
+          },
+          {
+            "cell_id": "r3_c8",
+            "value": "",
+            "editable": true
+          },
+          {
+            "cell_id": "r3_c9",
+            "value": "",
+            "editable": true
+          }
+        ],
+        [
+          {
+            "cell_id": "r4_c0",
+            "value": "5",
+            "editable": true
+          },
+          {
+            "cell_id": "r4_c1",
+            "value": "29",
+            "editable": true
+          },
+          {
+            "cell_id": "r4_c2",
+            "value": "Interest on overdue accounts",
+            "editable": true
+          },
+          {
+            "cell_id": "r4_c3",
+            "value": "",
+            "editable": true
+          },
+          {
+            "cell_id": "r4_c4",
+            "value": "",
+            "editable": true
+          },
+          {
+            "cell_id": "r4_c5",
+            "value": "",
+            "editable": true
+          },
+          {
+            "cell_id": "r4_c6",
+            "value": "",
+            "editable": true
+          },
+          {
+            "cell_id": "r4_c7",
+            "value": "",
+            "editable": true
+          },
+          {
+            "cell_id": "r4_c8",
+            "value": "",
+            "editable": true
+          },
+          {
+            "cell_id": "r4_c9",
+            "value": "",
+            "editable": true
+          }
+        ]
+      ],
+      "column_help": {
+        "Day": "Day of the month.",
+        "Details": "Account name / description used in the general journal.",
+        "Fol": "Folio reference to the General Ledger account.",
+        "Debit": "Amount to be debited to the account in Details (if applicable).",
+        "Credit": "Amount to be credited to the account in Details (if applicable).",
+        "Debtors\u2019 control debit": "Amount to be debited to Debtors\u2019 control (if applicable).",
+        "Debtors\u2019 control credit": "Amount to be credited to Debtors\u2019 control (if applicable).",
+        "Creditors\u2019 control debit": "Amount to be debited to Creditors\u2019 control (if applicable).",
+        "Creditors\u2019 control credit": "Amount to be credited to Creditors\u2019 control (if applicable).",
+        "No": "",
+        "D": ""
+      },
+      "header_rows": [
+        [
+          {
+            "label": "No",
+            "rowSpan": 2,
+            "colSpan": 1
+          },
+          {
+            "label": "D",
+            "rowSpan": 2,
+            "colSpan": 1
+          },
+          {
+            "label": "Details",
+            "rowSpan": 2,
+            "colSpan": 1
+          },
+          {
+            "label": "Fol",
+            "rowSpan": 2,
+            "colSpan": 1
+          },
+          {
+            "label": "Debit",
+            "rowSpan": 2,
+            "colSpan": 1
+          },
+          {
+            "label": "Credit",
+            "rowSpan": 2,
+            "colSpan": 1
+          },
+          {
+            "label": "Debtors\u2019 control",
+            "rowSpan": 1,
+            "colSpan": 2
+          },
+          {
+            "label": "Creditors\u2019 control",
+            "rowSpan": 1,
+            "colSpan": 2
+          }
+        ],
+        [
+          {
+            "label": "Debit",
+            "rowSpan": 1,
+            "colSpan": 1
+          },
+          {
+            "label": "Credit",
+            "rowSpan": 1,
+            "colSpan": 1
+          },
+          {
+            "label": "Debit",
+            "rowSpan": 1,
+            "colSpan": 1
+          },
+          {
+            "label": "Credit",
+            "rowSpan": 1,
+            "colSpan": 1
+          }
+        ]
+      ],
+      "title_fields": [
+        {
+          "cell_id": "title_business",
+          "label": "Business name",
+          "editable": true
+        },
+        {
+          "cell_id": "title_period",
+          "label": "Month/Year",
+          "editable": true
+        }
+      ]
+    },
+    "correct_map": {
+      "r0_c0": [
+        "",
+        "1"
+      ],
+      "r0_c1": [
+        "",
+        "1"
+      ],
+      "r0_c2": "Discount received",
+      "r0_c4": "",
+      "r0_c5": "800.00",
+      "r0_c6": "",
+      "r0_c7": "",
+      "r0_c8": "800.00",
+      "r0_c9": "",
+      "r1_c0": [
+        "",
+        "2"
+      ],
+      "r1_c1": [
+        "",
+        "10"
+      ],
+      "r1_c2": "Discount allowed cancelled",
+      "r1_c4": "",
+      "r1_c5": "200.00",
+      "r1_c6": "",
+      "r1_c7": "200.00",
+      "r1_c8": "",
+      "r1_c9": "",
+      "r2_c0": [
+        "",
+        "3"
+      ],
+      "r2_c1": [
+        "",
+        "18"
+      ],
+      "r2_c2": "Bad debts",
+      "r2_c4": "450.00",
+      "r2_c5": "",
+      "r2_c6": "",
+      "r2_c7": "450.00",
+      "r2_c8": "",
+      "r2_c9": "",
+      "r3_c0": [
+        "",
+        "4"
+      ],
+      "r3_c1": [
+        "",
+        "22"
+      ],
+      "r3_c2": "Drawings of stock",
+      "r3_c4": "1200.00",
+      "r3_c5": "1200.00",
+      "r3_c6": "",
+      "r3_c7": "",
+      "r3_c8": "",
+      "r3_c9": "",
+      "r4_c0": [
+        "",
+        "5"
+      ],
+      "r4_c1": [
+        "",
+        "29"
+      ],
+      "r4_c2": "Interest on overdue accounts",
+      "r4_c4": "",
+      "r4_c5": "250.00",
+      "r4_c6": "250.00",
+      "r4_c7": "",
+      "r4_c8": "",
+      "r4_c9": "",
+      "title_business": "Durban Deals",
+      "title_period": "February 2013"
+    },
+    "guidelines": [
+      "Write the entries in the same order as the transactions given above.",
+      "Leave transaction references blank if you want, but if you enter them they must match the transaction list."
+    ],
+    "expected_answer_type": "journal"
+  }
+]

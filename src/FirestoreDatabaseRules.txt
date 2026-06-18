@@ -1,0 +1,66 @@
+    // Rule for student submissions (ordered answers)
+    match /submissions/{submissionId} {
+      allow create: if request.auth != null && request.resource.data.studentId == request.auth.uid;
+      allow read: if request.auth != null && resource.data.studentId == request.auth.uid;
+      // Optionally, allow teachers/admins to read for grading
+    }
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // This rule allows a user to read and write their own user document.
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+
+      // Allow user to read/write their own assignments subcollection
+      match /assignments/{assignmentId} {
+        allow read, write: if request.auth != null && request.auth.uid == userId;
+      }
+
+      // Allow user to read/write their own savedProblems subcollection
+      match /savedProblems/{problemId} {
+        allow read, write: if request.auth != null && request.auth.uid == userId;
+      }
+    }
+
+    // This rule governs the shared 'assessments' collection.
+    match /assessments/{assessmentId} {
+      // Any authenticated user (student or teacher) can read an assessment.
+      allow read: if request.auth != null;
+
+      // Only an authenticated user who is the teacher creating the assessment can write it.
+      // We check that the 'teacherId' in the new document matches the user's UID.
+      allow create: if request.auth != null && request.resource.data.teacherId == request.auth.uid;
+
+      // Only the teacher who created the assessment can update or delete it.
+      allow update, delete: if request.auth != null && resource.data.teacherId == request.auth.uid;
+    }
+
+    // UPDATED: This rule for 'chat_histories' now only allows read access.
+    // The client-side App component no longer writes to this collection directly for freeform or practice questions.
+    // Keeping read access in case it's used for loading historical data not explicitly shown.
+    match /artifacts/{appId}/users/{userId}/chat_histories/{subjectKey} {
+      allow read: if request.auth != null && request.auth.uid == userId;
+      allow write: if false; // Explicitly deny write as client no longer uses it for writing
+    }
+
+    // NEW: Rule for 'solved_freeform_problems' collection.
+    // Allows an authenticated user to read and write their own solved freeform problems.
+    match /artifacts/{appId}/users/{userId}/solved_freeform_problems/{problemId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+
+    // NEW: Rule for 'struggling_problems' collection.
+    // Allows an authenticated user to read and write their own struggling problem threads.
+    match /artifacts/{appId}/users/{userId}/struggling_problems/{threadId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+
+    // NEW: Rule for 'chat_rooms' collection.
+    // Allows any authenticated user to read and write messages in the general chat rooms.
+    // This resolves the "Missing or insufficient permissions" error for the `chat_rooms` listener.
+    match /chat_rooms/{chatRoomId}/messages/{messageId} {
+      allow read, write: if request.auth != null;
+    }
+  }
+}

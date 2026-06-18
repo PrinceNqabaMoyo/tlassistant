@@ -1,0 +1,154 @@
+import os
+import re
+from dotenv import load_dotenv
+import google.generativeai as genai
+from langchain_community.document_loaders import PyPDFLoader, CSVLoader
+from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain_google_genai import GoogleGenerativeAIEmbeddings
+from langchain_chroma import Chroma
+from langchain_core.documents import Document
+
+# Load environment variables from .env file
+load_dotenv()
+GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
+
+# Configure Gemini API
+genai.configure(api_key=GOOGLE_API_KEY)
+
+# --- Configuration ---
+# Directory where all your curriculum documents (PDFs and CSVs) are saved.
+DOCS_DIR = "curriculum_docs" 
+# Directory to save your vector database.
+CHROMA_DB_DIR = "chroma_db_langchain"
+
+# Create directories if they don't exist
+os.makedirs(DOCS_DIR, exist_ok=True)
+os.makedirs(CHROMA_DB_DIR, exist_ok=True)
+
+def parse_filename_for_metadata(filename: str) -> dict:
+    """
+    Parses a filename based on the new, detailed naming conventions to extract structured metadata.
+    Handles four patterns: Syllabus, Textbook, Exam, and Topics CSV.
+    """
+    metadata = {'source_filename': filename}
+    base_name = filename.rsplit('.', 1)[0] # Remove file extension
+
+    # Pattern 1: Syllabus Files (e.g., "Syllabus_Mathematics_Gr7-9.pdf")
+    if base_name.startswith("Syllabus_"):
+        parts = base_name.split('_')
+        if len(parts) == 3:
+            metadata['document_type'] = 'Syllabus'
+            metadata['subject'] = parts[1].replace('MathematicalLiteracy', 'Mathematical Literacy').replace('TechnicalMathematics', 'Technical Mathematics')
+            metadata['grade_range'] = parts[2].replace('Gr', '')
+        return metadata
+
+    # Pattern 2: Textbook Chapter Files (e.g., "Textbook_Mathematics_Gr7_Chapter-Title.pdf")
+    elif base_name.startswith("Textbook_"):
+        parts = base_name.split('_')
+        if len(parts) >= 4:
+            metadata['document_type'] = 'Textbook Chapter'
+            metadata['subject'] = parts[1].replace('MathematicalLiteracy', 'Mathematical Literacy').replace('TechnicalMathematics', 'Technical Mathematics')
+            metadata['grade'] = parts[2].replace('Gr', '')
+            metadata['chapter_title'] = ' '.join(parts[3:]).replace('-', ' ')
+        return metadata
+
+    # Pattern 3: Exam Files (e.g., "Gr7_Mathematics_Exam_3.pdf")
+    elif "_Exam_" in base_name and base_name.startswith("Gr"):
+        parts = base_name.split('_')
+        if len(parts) == 4:
+            metadata['document_type'] = 'Exam Paper'
+            metadata['grade'] = parts[0].replace('Gr', '')
+            metadata['subject'] = parts[1].replace('MathematicalLiteracy', 'Mathematical Literacy').replace('TechnicalMathematics', 'Technical Mathematics')
+            metadata['exam_number'] = parts[3]
+        return metadata
+        
+    # Pattern 4: Topics CSV Files (e.g., "Mathematics_Gr9_Topics.csv")
+    elif base_name.endswith("_Topics"):
+        parts = base_name.split('_')
+        if len(parts) == 3:
+            metadata['document_type'] = 'Topic List'
+            metadata['subject'] = parts[0].replace('MathematicalLiteracy', 'Mathematical Literacy').replace('TechnicalMathematics', 'Technical Mathematics')
+            metadata['grade'] = parts[1].replace('Gr', '')
+        return metadata
+
+    # Return basic metadata if no pattern matches
+    return metadata
+
+def ingest_documents(docs_folder_path: str, chroma_db_path: str):
+    """
+    Ingests PDF and CSV documents from a folder, splits them, creates embeddings,
+    and stores them in a Chroma vector database with rich metadata.
+    """
+    all_documents = []
+    print(f"Loading documents from '{docs_folder_path}'...")
+
+    for filename in os.listdir(docs_folder_path):
+        filepath = os.path.join(docs_folder_path, filename)
+        custom_metadata = parse_filename_for_metadata(filename)
+        
+        try:
+            loaded_docs = []
+            # Use the appropriate loader based on file extension
+            if filename.endswith(".pdf"):
+                loader = PyPDFLoader(filepath)
+                loaded_docs = loader.load()
+                # Add page number for PDFs
+                for i, doc in enumerate(loaded_docs):
+                    doc.metadata['page_number'] = i + 1
+                
+            elif filename.endswith(".csv"):
+                loader = CSVLoader(file_path=filepath)
+                loaded_docs = loader.load()
+
+            # Add the rich, parsed metadata to every document (or page/row)
+            for doc in loaded_docs:
+                doc.metadata.update(custom_metadata)
+            
+            all_documents.extend(loaded_docs)
+            print(f"-> Successfully loaded {len(loaded_docs)} documents from '{filename}' with metadata: {custom_metadata}")
+
+        except Exception as e:
+            print(f"xx Error loading '{filename}': {e}. Skipping this file.")
+
+    if not all_documents:
+        print("\n--- ATTENTION ---")
+        print("No documents were loaded. Please ensure:")
+        print(f"1. Your PDF and CSV files are in the '{DOCS_DIR}' folder.")
+        print("2. They follow one of the specified naming conventions.")
+        print("-------------------\n")
+        return
+
+    # Split documents into smaller, manageable chunks for better retrieval
+    text_splitter = RecursiveCharacterTextSplitter(
+        chunk_size=1000,
+        chunk_overlap=200,
+        length_function=len
+    )
+    chunks = text_splitter.split_documents(all_documents)
+    print(f"\nSplit {len(all_documents)} documents into {len(chunks)} chunks.")
+
+    # Create embeddings using Gemini's embedding model
+    embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001", google_api_key=GOOGLE_API_KEY)
+
+    # Create and persist the Chroma vector database
+    print(f"Creating and saving vector database to '{chroma_db_path}'...")
+    vectorstore = Chroma.from_documents(
+        documents=chunks,
+        embedding=embeddings,
+        persist_directory=chroma_db_path,
+        collection_name="caps_curriculum_collection" # Using a more general collection name
+    )
+    
+    print("\nVector database created and saved successfully!")
+    print(f"Total chunks in DB: {vectorstore._collection.count()}")
+
+if __name__ == "__main__":
+    print("--- CAPS AI Agent: Curriculum Ingestion Script ---")
+    print(f"This script will ingest your PDF and CSV documents from the '{DOCS_DIR}' folder.")
+    print("Please ensure your files follow the correct naming conventions.")
+    
+    input("\nPress Enter to start the ingestion process...")
+    
+    ingest_documents(DOCS_DIR, CHROMA_DB_DIR)
+    
+    print("\nIngestion complete. The curriculum data is ready for your AI agent.")

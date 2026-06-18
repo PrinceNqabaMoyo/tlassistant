@@ -1,0 +1,156 @@
+
+GRADE 10 SOLE TRADER GENERATOR REFACTOR PLAN (LOW RISK, STEP-BY-STEP)
+
+Goal
+- Reduce size/complexity of app/utils/grade10_sole_trader_generator.py by extracting cohesive parts into smaller modules.
+- Keep runtime stable: UI generation must continue to work after each step.
+- Avoid sweeping edits; apply incremental changes with smoke tests after each step.
+
+Non-negotiable invariants
+1) Public entrypoint and routing must remain stable.
+   - Backend route currently adapts request payload and calls:
+     generate_questions(r=..., n=..., subskill=..., difficulty=..., mode=..., variant=...)
+   - Do NOT change this signature until we deliberately choose to (and then update the route + frontend together).
+
+2) Question payload schema must remain stable.
+   - question_type values (journal/mcq/typed/calc) must not change.
+   - journal payload shape must not change (headers/rows/correct_map/etc).
+
+3) Determinism must be preserved.
+   - Any generator must rely only on the passed-in random.Random instance (r) so that seeded runs reproduce.
+
+4) Small diffs only.
+   - One extraction at a time; run smoke test after each extraction.
+
+
+PHASE 0 — Baseline + safety rails (no functional change)
+0.1 Confirm we have a backup copy of:
+    - app/utils/grade10_sole_trader_generator.py
+    - app/api/accounting/grade10_sole_trader_routes.py
+
+0.2 Add/confirm a single smoke test command that imports and generates questions.
+    Example (PowerShell):
+    - python -c "import random,sys; sys.path.append('caps-ai-backend'); from app.utils.grade10_sole_trader_generator import generate_questions; r=random.Random(0); qs=generate_questions(r=r,n=2,subskill='trading_stock_account',difficulty='easy',mode='scaffold',variant='mixed'); print(len(qs)); print([q.get('question_type') for q in qs])"
+
+0.3 Define a “done” check after each step:
+    - Import succeeds
+    - Smoke test returns >=1 question
+    - UI scaffold generation returns HTTP 200
+
+
+PHASE 1 — Map the file into sections (analysis only, then minimal scaffolding)
+1.1 Identify sections in grade10_sole_trader_generator.py:
+    - Shared primitives/helpers: _rng, _make_id, _make_mcq/_make_typed/_make_calc, formatting helpers
+    - Journal table helpers: _make_journal, _headers_to_column_help, header builder functions
+    - Generic question generators (concepts, equation, etc.)
+    - Subskill-specific generators:
+      - Journals (CRJ/CPJ/DJ/DAJ/CJ/CAJ/PCJ/GJ)
+      - Ledger / trial balance / reconciliation / control accounts
+      - Trading stock account + analysis archetypes
+    - Pool wiring: pools_by_subskill and selection logic
+    - Entry point: generate_questions
+
+1.2 Decide target module boundaries (minimum viable split):
+    - app/utils/sole_trader/gr10/core.py
+      - ids, formatting, typed/mcq/calc builders
+    - app/utils/sole_trader/gr10/journal_helpers.py
+      - _make_journal, _headers_to_column_help, header row builders
+    - app/utils/sole_trader/gr10/subskills/trading_stock.py
+      - all trading_stock_* generators + pools
+    - app/utils/sole_trader/gr10/subskills/control_accounts.py
+      - control accounts generators
+    - app/utils/sole_trader/gr10/subskills/journals.py
+      - wrappers around imported journal generators, plus any extra journal-based questions
+    - Keep grade10_sole_trader_generator.py as a thin orchestrator.
+
+1.3 Rule for extracting:
+    - Move code first, then import it back.
+    - No behavior change in the moved code.
+
+
+PHASE 2 — Extract “core primitives” first (lowest coupling)
+2.1 Create app/utils/sole_trader/gr10/core.py containing:
+    - _make_id
+    - _make_mcq/_make_typed/_make_calc
+    - _round_money/_fmt_money
+    - any constant lists (BUSINESS_NAMES, PERSON_NAMES, SUPPLIER_NAMES) if they are used widely
+
+2.2 In grade10_sole_trader_generator.py:
+    - Replace local definitions with imports from core.py
+    - Keep names identical initially (either re-export or import-as) to avoid touching many call sites.
+
+2.3 Smoke test.
+
+
+PHASE 3 — Extract journal table helpers (medium coupling but still reusable)
+3.1 Create app/utils/sole_trader/gr10/journal_helpers.py containing:
+    - _make_journal
+    - _headers_to_column_help
+    - any journal header helpers used across subskills
+
+3.2 Update grade10_sole_trader_generator.py to import these functions.
+    - Keep the function signatures exactly the same.
+
+3.3 Smoke test.
+
+
+PHASE 4 — Extract Trading Stock subskill (largest/most risky, do it incrementally)
+4.1 Create app/utils/sole_trader/gr10/subskills/trading_stock.py.
+    - Move ONLY the trading-stock-specific helper(s) first (e.g., trading stock header rows helpers).
+    - Import them back into the main file.
+    - Smoke test.
+
+4.2 Move trading-stock question generators in small batches:
+    Batch A: fill-missing-details and basic prepare questions
+    Batch B: returns percent / discount calc / casted journals
+    Batch C: analysis typed variants
+    After each batch:
+    - Ensure trading_stock_account_pool still references the correct callables
+    - Smoke test subskill='trading_stock_account'
+
+4.3 Keep Tradestock_archetypesmore.txt as the spec for future expansions.
+    - Do not implement new archetypes during refactor; only move existing working ones.
+
+
+PHASE 5 — Extract control accounts + reconciliation
+5.1 Create app/utils/sole_trader/gr10/subskills/control_accounts.py.
+    - Move control accounts generators and their helpers.
+    - Confirm no accidental indentation / missing return regressions.
+
+5.2 Smoke test a control-accounts subskill end-to-end.
+
+
+PHASE 6 — Consolidate pools + selection logic
+6.1 Create app/utils/sole_trader/gr10/pools.py (or keep in main file if small):
+    - Build pools_by_subskill
+    - Any filtering helpers (_maybe_filter)
+    - Any “mixed” selection rules
+
+6.2 Keep generate_questions in grade10_sole_trader_generator.py as the single public entry.
+    - It should call into pools.py / subskill modules and return the list.
+
+6.3 Smoke test multiple subskills with mode='scaffold' and mode='' (practice).
+
+
+PHASE 7 — Add lightweight automated checks (optional but recommended)
+7.1 Add a tiny test module or script (not required if you don’t want new files), but recommended:
+    - import test
+    - generate_questions for a set of subskills and assert non-empty
+
+7.2 Ensure no circular imports.
+    - core.py and journal_helpers.py must not import subskill modules.
+
+
+PHASE 8 — Clean up + naming alignment (after refactor only)
+8.1 Remove duplicated helpers now that modules exist.
+8.2 Standardize naming:
+    - Ensure variant/question_type usage is consistent and documented.
+8.3 Only after everything is stable, consider restoring the older UI-friendly wrapper interface (count/seed/question_type) INSIDE generator, if desired.
+
+
+Acceptance criteria (end state)
+- grade10_sole_trader_generator.py becomes a small orchestrator (imports + generate_questions + pools).
+- All existing subskills generate questions in scaffold/practice without HTTP 500.
+- Trading stock generators remain functionally identical.
+- Deterministic seeds reproduce outputs.
+

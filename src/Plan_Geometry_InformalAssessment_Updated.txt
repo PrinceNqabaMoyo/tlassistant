@@ -1,0 +1,366 @@
+# Grade 7 Geometry Informal Assessment Plan - Updated
+
+## **1. Enhanced Exploration Mode Features**
+- **Interactive Controls**: Size, rotation, position sliders
+- **Property Toggles**: Show/hide angle markers, side lengths, parallel indicators
+- **Comparison Tools**: Side-by-side shape comparison
+- **Measurement Tools**: Interactive protractor, ruler
+- **"What if" Scenarios**: Dynamic property changes
+
+## **2. Visual Improvements**
+- **3x Size Increase**: All shapes and objects scaled up for better visibility
+- **Enhanced Markings**:
+  - Hash marks for equal sides
+  - Angle measurements
+  - Parallel line indicators
+  - Right angle squares
+  - Side length labels
+
+## **3. Question Types (20 questions total for Grade 7)**
+
+**Based on Geometry_Gr7.txt requirements:**
+
+### **Task Type Mapping:**
+- **MCQ**: Multiple choice questions with text options
+- **Binary Choice**: Click/select from pre-drawn elements
+- **Visual Recognition**: Identify/select multiple elements in a shape
+- **Template-Based**: Drag pre-made elements to correct positions
+
+### **A. Angle Questions (6 questions)**
+- **MCQ**: "What type of angle is this?" (acute, right, obtuse, straight, reflex)
+- **Binary Choice**: "Click on the line that is parallel to this one"
+- **Visual Recognition**: "Click on all the right angles in this shape"
+- **Template-Based**: "Drag the hash marks to show equal sides"
+
+### **B. Triangle Questions (6 questions)**
+- **MCQ**: "Classify this triangle by sides and angles"
+- **Binary Choice**: "Choose the correct completion of this triangle"
+- **Visual Recognition**: "Select which sides are equal"
+- **Template-Based**: "Drag the hash marks to show equal sides"
+
+### **C. Quadrilateral Questions (6 questions)**
+- **MCQ**: "What type of quadrilateral is this?"
+- **Binary Choice**: "Click on the line that is parallel to this one"
+- **Visual Recognition**: "Identify the parallel sides"
+- **Template-Based**: "Drag the arrows to mark parallel sides"
+
+### **D. Circle Questions (2 questions)**
+- **MCQ**: "Identify the parts of this circle"
+- **Binary Choice**: "Click on the radius in this circle"
+- **Visual Recognition**: "Select all the chords in this circle"
+
+## **4. Drawing Task Approach (Avoiding Precision Measurement Issues)**
+
+### **Problem with Traditional Drawing Tasks:**
+- Precision measurement is impossible on various screen sizes
+- Even "parallel" lines require tolerance levels
+- Students can't accurately draw specific angles or lengths
+- Evaluation becomes subjective and frustrating
+
+### **Alternative Task Types (No Precision Required):**
+
+#### **A. Binary Choice Tasks Instead of Drawing**
+- "Click on the line that is parallel to this one"
+- "Select which line is perpendicular"
+- "Choose the correct completion of this triangle"
+- "Click on all the right angles in this shape"
+
+#### **B. Template-Based Drawing**
+- Provide pre-drawn elements that students can drag/place
+- "Drag this line to make it parallel"
+- "Place this angle to complete the triangle"
+- "Select the correct side length from these options"
+- "Drag the hash marks to the equal sides"
+
+#### **C. Visual Recognition Tasks**
+- "Click on all the right angles in this shape"
+- "Select which sides are equal"
+- "Identify the parallel sides"
+- "Circle the acute angles"
+
+#### **D. Construction with Guides**
+- Show grid lines or guides
+- Provide snap-to-grid functionality
+- Use visual indicators (like in CAD programs)
+- "Complete this shape using the grid"
+
+#### **E. Marking/Annotation Tasks (Simple)**
+- "Mark the equal sides with hash marks" (drag pre-made marks)
+- "Circle the right angle"
+- "Label the vertices A, B, C" (drag labels)
+
+### **Examples of Practical Tasks:**
+- "Click on the line that is parallel to AB"
+- "Drag the hash marks to show equal sides"
+- "Select which angle is obtuse"
+- "Place the correct label on each vertex"
+- "Choose the line that completes this triangle"
+
+## **5. Response Evaluation Strategy**
+
+### **MCQ Questions**
+- **Method**: Simple string matching
+- **AI Needed**: No
+- **Implementation**: Cached correct answers
+
+### **Drag & Drop Questions**
+- **Method**: Position/placement matching
+- **AI Needed**: No
+- **Implementation**: Cached correct positions
+
+### **Alternative Task Evaluation (No Precision Drawing)**
+
+#### **Binary Choice Tasks**
+- **Method**: Click/selection validation
+- **AI Needed**: No
+- **Implementation**: Cached correct selections
+
+#### **Template-Based Tasks**
+- **Method**: Drag-and-drop position validation
+- **AI Needed**: No
+- **Implementation**: Cached correct positions
+
+#### **Visual Recognition Tasks**
+- **Method**: Element selection validation
+- **AI Needed**: No
+- **Implementation**: Cached correct elements
+
+#### **Grid-Based Construction**
+- **Method**: Grid position validation
+- **AI Needed**: No
+- **Implementation**: Grid coordinate matching
+
+### **Evaluation Examples:**
+```javascript
+// Binary choice evaluation
+const evaluateBinaryChoice = (task, userSelection) => {
+  return userSelection === task.correctElement;
+};
+
+// Template-based evaluation
+const evaluateTemplate = (task, userPlacement) => {
+  return isCorrectPlacement(userPlacement, task.correctPosition);
+};
+
+// Visual recognition evaluation
+const evaluateRecognition = (task, userSelections) => {
+  return arraysEqual(userSelections, task.correctElements);
+};
+```
+
+## **6. Question Structure**
+```javascript
+{
+  id: "gr7_geo_001",
+  type: "MCQ", // or "binary_choice", "visual_recognition", "template_based"
+  topic: "angles",
+  difficulty: "easy", // easy, medium, hard
+  question: "What type of angle is shown?",
+  shapeParams: {
+    type: "angle",
+    angle: 45, // degrees
+    size: 3, // 3x current size
+    showHints: true
+  },
+  options: ["Acute", "Right", "Obtuse", "Straight"],
+  correctAnswer: "Acute",
+  explanation: "An acute angle is less than 90°",
+  hints: ["Look at the angle measurement", "Compare to 90°"],
+  // For alternative tasks
+  taskType: "binary_choice", // or "template_based", "visual_recognition", "grid_construction"
+  correctElements: ["line_AB"], // for binary choice
+  correctPositions: [[1,2], [3,4]], // for template-based
+  correctSelections: ["angle_A", "angle_B"], // for visual recognition
+  gridSnap: true // for grid-based tasks
+}
+```
+
+## **7. User Experience Flow**
+1. **Mode Selection**: Choose "Explore" or "Informal Assessment"
+2. **Question Presentation**: Shape + question + interaction area
+3. **Hint System**: Optional hints before answering (user choice)
+4. **Answer Submission**: MCQ click, binary choice selection, visual recognition, or template-based completion
+5. **Feedback**: Immediate right/wrong + explanation (always shown)
+6. **Progress**: Track completed questions (20 total)
+
+## **8. Technical Implementation Approach**
+
+### **Architecture Overview:**
+- **Enhance Current System**: Add question mode to existing Geometry Studio
+- **Reuse Backend**: Same Python rendering with enhanced parameters (3x size)
+- **New Components**: Question wrapper, hint system, progress tracking, task-specific UI components
+- **Firebase Storage**: 20 questions per grade per visual aid
+- **Evaluation**: Start with rule-based, add AI later for complex tasks
+
+### **Component Architecture:**
+```javascript
+// Main Question Component
+<QuestionWrapper>
+  <GeometryCanvas /> // Existing component
+  <QuestionText />
+  <TaskInterface /> // New: switches based on task type
+  <HintSystem /> // New
+  <ProgressTracker /> // New
+</QuestionWrapper>
+
+// Task-Specific Components
+<MCQInterface /> // Multiple choice buttons
+<BinaryChoiceInterface /> // Clickable elements on canvas
+<VisualRecognitionInterface /> // Multi-select on canvas
+<TemplateBasedInterface /> // Drag-and-drop elements
+```
+
+### **API Endpoints:**
+```javascript
+// Question Management
+GET /api/questions/grade/{grade}/topic/{topic}
+POST /api/questions/submit-answer
+GET /api/questions/hint/{questionId}
+
+// Backend Integration
+GET /api/geometry/generate-diagram (existing)
+POST /api/geometry/evaluate-task
+```
+
+### **UI Component Specifications:**
+
+#### **MCQInterface Component:**
+```javascript
+// Props: { options, correctAnswer, onSelect }
+// Renders: Radio buttons or clickable cards
+// Behavior: Single selection, immediate feedback
+```
+
+#### **BinaryChoiceInterface Component:**
+```javascript
+// Props: { clickableElements, correctElements, onSelect }
+// Renders: Clickable elements overlaid on geometry canvas
+// Behavior: Single click selection, visual highlight on hover
+```
+
+#### **VisualRecognitionInterface Component:**
+```javascript
+// Props: { selectableElements, correctElements, onSelect }
+// Renders: Multi-select elements on geometry canvas
+// Behavior: Multiple selection, visual feedback for each selection
+```
+
+#### **TemplateBasedInterface Component:**
+```javascript
+// Props: { draggableElements, dropZones, correctPositions, onDrop }
+// Renders: Draggable elements + drop zones
+// Behavior: Drag-and-drop with snap-to-zone, visual feedback
+```
+
+### **Data Flow:**
+```javascript
+1. User selects "Informal Assessment" mode
+2. System loads question from Firebase: GET /api/questions/grade/7/topic/angles
+3. Backend generates geometry diagram: GET /api/geometry/generate-diagram
+4. Frontend renders QuestionWrapper with appropriate TaskInterface
+5. User interacts with task (click, drag, select)
+6. Frontend validates locally, shows immediate feedback
+7. System submits answer: POST /api/questions/submit-answer
+8. Backend evaluates: POST /api/geometry/evaluate-task
+9. Frontend shows explanation and loads next question
+```
+
+### **Firebase Database Schema:**
+```javascript
+// Questions Collection
+questions: {
+  [questionId]: {
+    id: "gr7_geo_001",
+    grade: 7,
+    topic: "angles",
+    type: "MCQ", // or "binary_choice", "visual_recognition", "template_based"
+    difficulty: "easy", // easy, medium, hard
+    question: "What type of angle is shown?",
+    shapeParams: {
+      type: "angle",
+      angle: 45,
+      size: 3,
+      showHints: true
+    },
+    // Task-specific data
+    options: ["Acute", "Right", "Obtuse", "Straight"], // for MCQ
+    correctAnswer: "Acute",
+    correctElements: ["line_AB"], // for binary choice
+    correctSelections: ["angle_A", "angle_B"], // for visual recognition
+    correctPositions: [[1,2], [3,4]], // for template-based
+    explanation: "An acute angle is less than 90°",
+    hints: ["Look at the angle measurement", "Compare to 90°"]
+  }
+}
+
+// User Progress Collection
+userProgress: {
+  [userId]: {
+    completedQuestions: ["gr7_geo_001", "gr7_geo_002"],
+    currentGrade: 7,
+    currentTopic: "angles",
+    totalQuestions: 20,
+    lastAccessed: "2024-01-15T10:30:00Z"
+  }
+}
+```
+
+## **9. Grade 7 Specific Requirements**
+Based on Geometry_Gr7.txt:
+- **Angle measurement** with protractor (exploration mode)
+- **Triangle classification** by sides and angles
+- **Quadrilateral properties** (parallel, perpendicular, equal sides)
+- **Circle parts** (radius, diameter, chord, arc)
+- **Geometric constructions** using compass and ruler (no precision required)
+
+## **10. Question Distribution**
+- **Easy (8 questions)**: Basic identification and classification
+- **Medium (8 questions)**: Property recognition and simple construction
+- **Hard (4 questions)**: Complex reasoning and multi-step problems
+
+## **11. Assessment Features**
+- **No Scoring**: Pure learning experience
+- **Progress Tracking**: Visual progress bar
+- **Explanation Focus**: Educational value over testing
+- **Repeatable**: Students can retry questions
+- **Adaptive Hints**: More hints for harder questions
+- **User-Controlled Hints**: Students choose whether to use hints
+
+## **12. Implementation Phases**
+
+### **Phase 1: Enhanced Exploration**
+1. Increase shape sizes to 3x current
+2. Add enhanced markings (hash marks, arrows, etc.)
+3. Add interactive controls (sliders, toggles)
+
+### **Phase 2: Question System**
+1. Create question database for Grade 7
+2. Implement MCQInterface component
+3. Build hint and explanation system
+4. Add progress tracking
+
+### **Phase 3: Alternative Tasks**
+1. Implement BinaryChoiceInterface component
+2. Add VisualRecognitionInterface component
+3. Create TemplateBasedInterface component
+4. Add evaluation logic for each task type
+
+### **Phase 4: Advanced Features**
+1. Add AI evaluation for complex tasks
+2. Expand to other grades
+3. Add advanced exploration features
+4. Add grid-based construction tools
+
+## **13. Key Agreements**
+- ✅ Start with simple tasks (marking, labeling) and gradually add construction tasks
+- ✅ Students see their work in real-time as they create it
+- ✅ Hints should be verbal guidance
+- ✅ Avoid precision measurement issues entirely
+- ✅ Use binary choice, template-based, and visual recognition tasks
+- ✅ Begin with rule-based evaluation, add AI later
+- ✅ 3x size increase for all shapes
+- ✅ Enhance current system rather than create separate tool
+- ✅ 20 questions per grade per visual aid
+- ✅ User choice for hints
+- ✅ Always show explanations
+- ✅ Focus on Grade 7 first as template

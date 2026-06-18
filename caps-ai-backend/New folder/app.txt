@@ -1,0 +1,344 @@
+from flask import Flask, request, jsonify
+from flask_cors import CORS
+import os
+import math
+import re
+import json
+from dotenv import load_dotenv
+from typing import Optional, Union, Dict, Any
+import sympy
+from sympy import sympify, solve, Eq, S, symbols, diff, integrate, pycode
+from langchain_google_genai import ChatGoogleGenerativeAI, GoogleGenerativeAIEmbeddings
+from langchain_chroma import Chroma
+from langchain.prompts import ChatPromptTemplate, MessagesPlaceholder
+from langchain.agents import AgentExecutor, create_tool_calling_agent
+from langchain_core.messages import HumanMessage, AIMessage
+from langchain_core.tools import tool
+import datetime
+
+# --- Initial Setup ---
+load_dotenv()
+GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
+
+if not GOOGLE_API_KEY:
+    print("Warning: GOOGLE_API_KEY not found. The application will not be able to connect to the Gemini API.")
+
+app = Flask(__name__)
+CORS(app)
+
+# --- Math & Formatting Tools ---
+
+@tool
+def solve_equation_tool(equation: str) -> str:
+    """Solves a single algebraic equation for a variable."""
+    try:
+        if '=' not in equation:
+            return "Error: Equation must contain an '=' sign."
+        lhs_str, rhs_str = equation.split('=', 1)
+        lhs = sympify(lhs_str.strip())
+        rhs = sympify(rhs_str.strip())
+        variables = lhs.free_symbols.union(rhs.free_symbols)
+        if len(variables) == 1:
+            variable = list(variables)[0]
+            solution = solve(Eq(lhs, rhs), variable)
+            return f"Solution: {variable} = {solution[0]}" if solution else "No unique solution found."
+        return "Error: This tool can only solve equations with a single variable."
+    except Exception as e:
+        return f"Error solving equation: {e}"
+
+@tool
+def evaluate_expression_tool(expression: str, substitutions: dict = None) -> str:
+    """Evaluates a mathematical expression."""
+    try:
+        expr = sympify(expression.strip())
+        if substitutions:
+            sym_subs = {symbols(k): v for k, v in substitutions.items()}
+            result = expr.subs(sym_subs)
+        else:
+            result = expr.evalf() if not expr.free_symbols else expr
+        return f"Result: {result}"
+    except Exception as e:
+        return f"Error evaluating expression: {e}"
+
+@tool
+def geometry_calculator_tool(shape: str, **kwargs) -> str:
+    """Calculates geometric properties like area, perimeter, and volume."""
+    try:
+        shape = shape.lower()
+        if shape == 'circle':
+            radius = kwargs['radius']
+            area = math.pi * radius**2
+            circumference = 2 * math.pi * radius
+            return f"Circle with radius {radius}: Area = {area:.2f}, Circumference = {circumference:.2f}"
+        elif shape == 'rectangle':
+            length = kwargs['length']
+            width = kwargs['width']
+            area = length * width
+            perimeter = 2 * (length + width)
+            return f"Rectangle with length {length} and width {width}: Area = {area}, Perimeter = {perimeter}"
+        # ... other shapes
+        else:
+            return f"Error: Shape '{shape}' not supported."
+    except KeyError as e:
+        return f"Error: Missing parameter {e} for shape '{shape}'."
+    except Exception as e:
+        return f"Error in geometry calculation: {e}"
+
+@tool
+def calculus_tool(operation: str, expression: str, variable: str) -> str:
+    """Performs calculus operations: differentiation or integration."""
+    try:
+        x = symbols(variable)
+        expr = sympify(expression)
+        
+        if operation.lower() == 'differentiate':
+            derivative = diff(expr, x)
+            return f"The derivative of {expression} with respect to {variable} is: {pycode(derivative)}"
+        elif operation.lower() == 'integrate':
+            integral = integrate(expr, x)
+            return f"The integral of {expression} with respect to {variable} is: {pycode(integral)} + C"
+        else:
+            return "Error: Invalid operation. Choose 'differentiate' or 'integrate'."
+    except Exception as e:
+        return f"Error performing calculus operation: {e}"
+
+@tool
+def format_expression_tool(expression: str) -> str:
+    """
+    Formats a mathematical expression string using HTML <sup> for superscripts
+    and <sub> for subscripts. Use this to clean up and display final mathematical answers.
+    Example: format_expression_tool("x**2 + y_1") returns "x<sup>2</sup> + y<sub>1</sub>"
+    """
+    try:
+        # First, handle common function names to avoid them being treated as variables
+        expression = expression.replace('sqrt', '√')
+
+        # Use regex to find patterns like variable_number for subscripts
+        subscript_expr = re.sub(r'([a-zA-Z])_(\d+)', r'\1<sub>\2</sub>', expression)
+
+        # Sympify the expression after subscript replacement to validate it
+        expr = sympify(subscript_expr)
+
+        # Convert the sympy expression to a Python code string (e.g., "x**2")
+        code_str = pycode(expr)
+
+        # Use regex to replace Python's power operator (**) with HTML <sup> tags
+        final_expr = re.sub(r'\*\*(\w+|\d+\.?\d*)', r'<sup>\1</sup>', code_str)
+        
+        # Replace multiplication sign
+        final_expr = final_expr.replace('*', '×')
+
+        return final_expr
+    except Exception as e:
+        return f"Error formatting expression: {e}. The expression might be invalid."
+
+# --- RAG and Agent Setup ---
+agent_executors = {}
+vectorstore = None
+
+# --- Persona-Based System Prompts ---
+STUDENT_PROMPT = (
+    "You are CAPS AI, a friendly and expert personal tutor for a South African student. Your specialty is Mathematics."
+    "Always address the student directly in an encouraging, supportive, and clear manner. Never talk about the student in the third person (e.g., do not say 'the student should...')."
+    "Your primary goal is to help the user, who is a student, to understand concepts and solve problems."
+    "When the user asks for help, first decide if a specialized tool is needed. For any final mathematical expression you output, you MUST use the 'format_expression_tool'."
+    "When the user submits an answer for feedback, analyze their work carefully and provide helpful, step-by-step guidance."
+)
+
+TEACHER_PROMPT = (
+    "You are CAPS AI, an expert assistant for a South African teacher. Your specialty is Mathematics."
+    "Address the user as a professional colleague. Your goal is to help them create teaching materials, get curriculum information, and generate assessments."
+    "Provide concise, accurate information. You can generate lesson plans, summaries, and varied question types (e.g., multiple choice, long-form)."
+    "When asked to generate content, always refer to the provided curriculum documents using your tools."
+)
+
+ADMIN_PROMPT = (
+    "You are CAPS AI, a high-level administrative assistant. Your purpose is to provide data-driven insights and summaries about the curriculum."
+    "Address the user formally and professionally. Your responses should be factual, data-oriented, and based on the documents provided."
+    "When asked for information, use the curriculum search tool to find relevant data from syllabi and textbooks. Synthesize the information into clear, concise summaries."
+    "Do not provide teaching advice or student-facing content unless explicitly asked to generate an example."
+)
+
+def initialize_agent():
+    """Initializes the AI agent, tools, and vector store for all personas."""
+    global agent_executors, vectorstore
+    if agent_executors:
+        return
+
+    print("Initializing AI Agents for all personas...")
+    llm = ChatGoogleGenerativeAI(model="models/gemini-1.5-flash", temperature=0.2, convert_system_message_to_human=True, google_api_key=GOOGLE_API_KEY)
+    
+    CHROMA_DB_DIR = "chroma_db_langchain"
+    if not os.path.exists(CHROMA_DB_DIR):
+        print(f"Warning: ChromaDB directory '{CHROMA_DB_DIR}' not found. Curriculum search will not work.")
+    else:
+         vectorstore = Chroma(
+            persist_directory=CHROMA_DB_DIR,
+            embedding_function=GoogleGenerativeAIEmbeddings(model="models/embedding-001", google_api_key=GOOGLE_API_KEY),
+            collection_name="caps_curriculum_collection"
+        )
+
+    @tool
+    def curriculum_search_tool(query: str) -> str:
+        """Searches the CAPS curriculum documents for relevant information."""
+        if not vectorstore:
+            return "Curriculum database is not available."
+        retriever = vectorstore.as_retriever(search_kwargs={"k": 3})
+        docs = retriever.invoke(query)
+        return "\n\n".join([f"Source: {doc.metadata.get('source_filename', 'N/A')}, Page: {doc.metadata.get('page_number', 'N/A')}\n\n{doc.page_content}" for doc in docs])
+
+    tools = [
+        solve_equation_tool, evaluate_expression_tool, curriculum_search_tool,
+        geometry_calculator_tool, calculus_tool, format_expression_tool
+    ]
+    
+    prompts = {
+        "Student": STUDENT_PROMPT,
+        "Teacher": TEACHER_PROMPT,
+        "Admin": ADMIN_PROMPT
+    }
+
+    for role, system_prompt in prompts.items():
+        agent_prompt = ChatPromptTemplate.from_messages([
+            ("system", system_prompt),
+            MessagesPlaceholder("chat_history"),
+            ("human", "{input}"),
+            MessagesPlaceholder("agent_scratchpad"),
+        ])
+        agent = create_tool_calling_agent(llm, tools, agent_prompt)
+        agent_executors[role] = AgentExecutor(agent=agent, tools=tools, verbose=True)
+        print(f"-> {role} agent initialized.")
+        
+    print("All AI Agents initialized successfully.")
+
+# --- Helper function to format structured answers ---
+def format_structured_answer(answer_data: Dict[str, Any]) -> str:
+    # ... (This function remains unchanged)
+    return f"Student's Submission (Structured Data): {str(answer_data)}"
+
+# --- Flask API Endpoint ---
+@app.route('/api/agent', methods=['POST'])
+def handle_agent_query():
+    if not agent_executors:
+        return jsonify({"error": "Agents not initialized"}), 500
+    
+    data = request.get_json()
+    user_input = data.get("input")
+    chat_history_json = data.get("chat_history", [])
+    user_role = data.get("user_role", "Student") # Default to Student if no role is provided
+
+    # *** FIX: Capitalize the user role to match the agent_executors dictionary keys ***
+    capitalized_role = user_role.capitalize()
+    agent_executor = agent_executors.get(capitalized_role)
+    
+    if not agent_executor:
+        return jsonify({"error": f"Invalid user role: {user_role}"}), 400
+
+    final_input_for_agent = user_input
+
+    if isinstance(user_input, dict):
+        question_text = user_input.get("question", "A student submitted the following answer to a previous question:")
+        answer_data = user_input.get("answer", {})
+        formatted_answer_str = format_structured_answer(answer_data)
+        final_input_for_agent = f'Question: "{question_text}"\n\n{formatted_answer_str}'
+
+    chat_history = [HumanMessage(content=msg['content']) if msg['role'] == 'human' else AIMessage(content=msg['content']) for msg in chat_history_json]
+    
+    try:
+        response = agent_executor.invoke({"input": final_input_for_agent, "chat_history": chat_history})
+        return jsonify({"output": response.get('output')})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+# -------------------------------------------------------------------
+# --- ENDPOINT FOR ASSESSMENT GENERATION ---
+# -------------------------------------------------------------------
+
+@app.route('/api/teacher/create-assessment', methods=['POST'])
+def create_assessment():
+    """
+    Generates a new assessment with questions, a detailed marking scheme/rubric, and a worked solution.
+    """
+    if not agent_executors:
+        return jsonify({"error": "Agents not initialized"}), 500
+
+    data = request.get_json()
+    topic = data.get("topic")
+    grade = data.get("grade")
+    num_questions = data.get("num_questions", 3)
+
+    if not all([topic, grade]):
+        return jsonify({"error": "Missing required parameters: topic and grade"}), 400
+
+    llm = ChatGoogleGenerativeAI(model="models/gemini-1.5-flash", temperature=0.3, convert_system_message_to_human=True, google_api_key=GOOGLE_API_KEY)
+    
+    prompt_template = f"""
+    You are an expert in creating educational materials for the South African CAPS curriculum.
+    Your task is to generate an assessment for a Grade {grade} student on the topic of "{topic}".
+    The assessment should contain exactly {num_questions} questions.
+
+    For each question, you must provide:
+    1. The question text.
+    2. The question type (e.g., "short_answer_with_steps", "long_answer").
+    3. A detailed marking scheme.
+    4. A complete, step-by-step worked solution. The steps in the solution MUST be separated by a comma and a space.
+
+    You MUST respond with ONLY a valid JSON object. Do not include any other text, explanations, or markdown formatting like ```json.
+    The JSON object must have a single key "assessment" which is an array of question objects.
+    Each question object must have the following keys: "question_text", "question_type", "marking_scheme", and "solution".
+    The "marking_scheme" must be an array of objects, each with a "point" (the step or keyword) and "marks" (the value for that point).
+    The "solution" must be a string containing the full worked-out answer, with each logical step separated by a comma and a space.
+
+    Example of the required JSON structure:
+    {{
+      "assessment": [
+        {{
+          "question_text": "Solve for x: 2x + 5 = 15",
+          "question_type": "short_answer_with_steps",
+          "marking_scheme": [
+            {{ "point": "Subtracts 5 from both sides (2x = 10)", "marks": 1 }},
+            {{ "point": "Divides both sides by 2 (x = 5)", "marks": 1 }}
+          ],
+          "solution": "2x + 5 = 15, 2x = 15 - 5, 2x = 10, x = 10 / 2, x = 5"
+        }},
+        {{
+          "question_text": "Define 'photosynthesis'.",
+          "question_type": "long_answer",
+          "marking_scheme": [
+            {{ "point": "Mentions 'light energy' or 'sunlight'", "marks": 1 }},
+            {{ "point": "Mentions 'carbon dioxide' and 'water'", "marks": 1 }},
+            {{ "point": "Mentions 'glucose' or 'sugar' as a product", "marks": 1 }}
+          ],
+          "solution": "Photosynthesis is the process used by plants, algae, and some bacteria to convert light energy into chemical energy, through a process that converts carbon dioxide and water into glucose (sugar) and oxygen."
+        }}
+      ]
+    }}
+    """
+
+    try:
+        response = llm.invoke(prompt_template)
+        ai_response_str = response.content
+        
+        # --- NEW: Robust JSON Extraction Logic ---
+        # Find the start and end of the JSON block
+        json_match = re.search(r'\{.*\}', ai_response_str, re.DOTALL)
+        
+        if not json_match:
+            # If no JSON block is found at all, raise the error
+            raise json.JSONDecodeError("No valid JSON object found in the AI's response.", ai_response_str, 0)
+            
+        json_str = json_match.group(0)
+        assessment_data = json.loads(json_str)
+        
+        return jsonify(assessment_data)
+
+    except json.JSONDecodeError:
+        # This error is now more specific to a truly malformed JSON response
+        return jsonify({"error": "Failed to decode the AI's JSON response. The response may be malformed."}), 500
+    except Exception as e:
+        return jsonify({"error": f"An unexpected error occurred: {str(e)}"}), 500
+
+# --- Main Execution ---
+if __name__ == '__main__':
+    initialize_agent()
+    app.run(debug=True, port=5001)

@@ -1,0 +1,40 @@
+Date,Details,Fol.,Amount,Date,Details,Fol.,Amount
+"",,,,,,,
+"",,,,,,,
+"",,,,,,,
+"",,,,,,,
+"",,,,,,,
+Date,Details,Fol.,Amount,Date,Details,Fol.,Amount
+"",,,,,,,
+"",,,,,,,
+"",,,,,,,
+"",,,,,,,
+"",,,,,,,
+Date,Details,Fol.,Amount,"Date2014Sep30","DetailsBankBalance","Fol.CRJc/d",Amount
+"2014Sep",01,Balance,b/d,,,,
+"",30,,DJ,,,,
+"",,,,,,,
+"2014Oct",01,Balance,b/d,,,,
+Date,Details,Fol.,Amount,"Date2014Sep30","DetailsBalance","Fol.CRJDJc/d",Amou
+"2014Sep",01,Balance,b/d,,,,
+"",30,,CPJ,,,,
+"",,,CJ,,,,
+"",,,,,,,
+"2014Oct",01,Balance,b/d,81 430,00,,
+Dr,,,,Debtors Control,,,,Cr
+Date,,Details,Fol.,Amount Date,,Details,Fol.,Amount
+2014,,,,2014,,,,
+Sep,01,Balance,b/d,✔55 600 00 Sep,30,Bank,CRJ,✔61 040 00
+"",30,Sales ✔,DJ,✔✔53 080 00,,Balance,c/d,✔47 640 00
+"",,,,108 680 00,,,,108 680 00
+2014,,,,,,,,
+Oct,01,Balance,b/d,✔✔47 640 00,,,,
+Dr,,,,Trading Stock,,,,Cr
+Date,,Details,Fol.,Amount Date,,Details,Fol.,Amount
+2014,,,,2014,,,,
+Sep,01,Balance,b/d,✔✔8 040 00 Sep,30,Cost of sales ✔,CRJ,✔32 180 00
+"",30,Bank ✔,CPJ,✔76 800 00,,Cost of sales ✔,DJ,✔26 540 00
+"",,Creditors’ control✔,CJ,✔55 310 00,,Balance,c/d,✔81 430 00
+"",,,,140 150 00,,,,✔140 150 00
+2014,,,,,,,,
+Oct,01,Balance,b/d,81 430 00,,,,

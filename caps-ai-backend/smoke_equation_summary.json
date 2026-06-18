@@ -1,0 +1,57 @@
+{
+  "question_type": "journal",
+  "headers": [
+    "No.",
+    "Internal Document",
+    "Account debited",
+    "Account credited",
+    "Amount",
+    "Assets",
+    "Equity",
+    "Liabilities"
+  ],
+  "row_count": 3,
+  "correct_map_count": 24,
+  "first_row": [
+    {
+      "cell_id": "t0_r0_c0",
+      "value": "",
+      "editable": true
+    },
+    {
+      "cell_id": "t0_r0_c1",
+      "value": "",
+      "editable": true
+    },
+    {
+      "cell_id": "t0_r0_c2",
+      "value": "",
+      "editable": true
+    },
+    {
+      "cell_id": "t0_r0_c3",
+      "value": "",
+      "editable": true
+    },
+    {
+      "cell_id": "t0_r0_c4",
+      "value": "",
+      "editable": true
+    },
+    {
+      "cell_id": "t0_r0_c5",
+      "value": "",
+      "editable": true
+    },
+    {
+      "cell_id": "t0_r0_c6",
+      "value": "",
+      "editable": true
+    },
+    {
+      "cell_id": "t0_r0_c7",
+      "value": "",
+      "editable": true
+    }
+  ]
+}

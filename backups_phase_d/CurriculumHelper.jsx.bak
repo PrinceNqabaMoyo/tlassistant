@@ -1,0 +1,2363 @@
+import React, { useState, useEffect } from 'react';
+import { FileText, BrainCircuit, ClipboardEdit, FunctionSquare, Target, BookOpen, BookCopy, ChevronLeft, Loader2, X, Briefcase, Atom, Microscope, FlaskConical, Beaker, Landmark, Scale, Calculator, Brain, TestTube, Dna, Rocket, Sigma, DraftingCompass, Percent, AreaChart, BarChart, FileJson, Building, Users } from 'lucide-react';
+
+// Import repositories
+import MathComponentsRepository from '../math/MathComponentsRepository';
+import ChemistryComponentsRepository from '../chemistry/ChemistryComponentsRepository';
+import PhysicsComponentsRepository from '../physics/PhysicsComponentsRepository';
+import CrossDisciplinaryComponentsRepository from '../cross-disciplinary/CrossDisciplinaryComponentsRepository';
+import MathematicalVisualAids from './MathematicalVisualAids';
+import ComponentOverlay from '../shared/ComponentOverlay';
+
+const CurriculumHelper = React.memo(({
+    onClose,
+    getAgentResponse,
+    setPracticeQuestions,
+    selectedGrade,
+    selectedSubject,
+    setWorkspaceMode,
+    setActiveTopic,
+    currentMode,
+    updateHelperNavigationLabel,
+    setView,
+    setNavigationStack,
+    navigationStack,
+    loading,
+    setLoading,
+    chatHistory,
+    setChatHistory,
+    onGoToClasswork,
+    currentUser,
+}) => {
+    const [numQuestions, setNumQuestions] = useState(3);
+    const [showQuestionInput, setShowQuestionInput] = useState(false);
+    const [showTopicSummary, setShowTopicSummary] = useState(false);
+    const [helperView, setHelperView] = useState('topics');
+    const [selectedTopic, setSelectedTopic] = useState(null);
+
+    // Repository state
+    const [showMathComponentsRepository, setShowMathComponentsRepository] = useState(false);
+    const [showChemistryComponentsRepository, setShowChemistryComponentsRepository] = useState(false);
+    const [showPhysicsComponentsRepository, setShowPhysicsComponentsRepository] = useState(false);
+    const [showCrossDisciplinaryComponentsRepository, setShowCrossDisciplinaryComponentsRepository] = useState(false);
+
+    // Component overlay state
+    const [selectedComponent, setSelectedComponent] = useState(null);
+    const [isComponentOverlayVisible, setIsComponentOverlayVisible] = useState(false);
+    const [isComponentFullscreen, setIsComponentFullscreen] = useState(false);
+    const topicColors = [
+        'bg-blue-500', 'bg-green-500', 'bg-yellow-500', 'bg-purple-500', 'bg-pink-500', 'bg-indigo-500', 'bg-red-500', 'bg-gray-500'
+    ];
+
+    const getTopicIcon = (topicName, subjectName) => {
+        const lowerTopic = topicName.toLowerCase();
+        const lowerSubject = subjectName.toLowerCase();
+
+        if (lowerSubject.includes('accounting') || lowerSubject.includes('business') || lowerSubject.includes('economic')) {
+            if (lowerTopic.includes('financ') || lowerTopic.includes('budget')) return AreaChart;
+            if (lowerTopic.includes('control') || lowerTopic.includes('manage')) return Users;
+            if (lowerTopic.includes('gaap') || lowerTopic.includes('principles')) return Landmark;
+            if (lowerTopic.includes('bookkeeping') || lowerTopic.includes('sole trader')) return Building;
+            return BarChart;
+        }
+
+        if (lowerSubject.includes('math')) {
+            if (lowerTopic.includes('algebra') || lowerTopic.includes('functions')) return FunctionSquare;
+            if (lowerTopic.includes('geometry') || lowerTopic.includes('shape')) return DraftingCompass;
+            if (lowerTopic.includes('trigonometry')) return Sigma;
+            if (lowerTopic.includes('exponents') || lowerTopic.includes('number')) return Calculator;
+            if (lowerTopic.includes('probability') || lowerTopic.includes('stats')) return Percent;
+            return Calculator;
+        }
+
+        if (lowerSubject.includes('physical science')) {
+            if (lowerTopic.includes('electric') || lowerTopic.includes('magnet')) return Rocket;
+            if (lowerTopic.includes('wave') || lowerTopic.includes('optic')) return Target;
+            if (lowerTopic.includes('matter') || lowerTopic.includes('atom') || lowerTopic.includes('bond')) return Atom;
+            if (lowerTopic.includes('reaction') || lowerTopic.includes('chemical')) return FlaskConical;
+            return Beaker;
+        }
+
+        // Default icons
+        if (lowerTopic.includes('data') || lowerTopic.includes('report')) return FileJson;
+        if (lowerTopic.includes('brain') || lowerTopic.includes('thinking')) return Brain;
+
+        return BookOpen;
+    };
+
+    const topicIcons = [
+        BookOpen, Atom, Microscope, FlaskConical, Beaker, Landmark, Scale, Calculator, Brain, TestTube, Dna, Rocket, FileText, BrainCircuit, ClipboardEdit, FunctionSquare, Target, BookCopy
+    ];
+
+    // Function to determine which repositories should be available based on subject and grade
+    const getAvailableRepositories = () => {
+        if (!selectedSubject || !selectedGrade) return [];
+
+        const subjectName = selectedSubject.name?.toLowerCase() || '';
+        const gradeNum = parseInt(selectedGrade);
+
+        const repositories = [];
+
+        // Math components for math subjects
+        if (['mathematics', 'mathematical literacy', 'technical mathematics'].includes(subjectName)) {
+            repositories.push({
+                key: 'math',
+                name: 'Math Components',
+                color: 'bg-green-500 hover:bg-green-600',
+                icon: FunctionSquare,
+                onClick: () => setShowMathComponentsRepository(true)
+            });
+        }
+
+        // Chemistry and Physics components for Physical Science (Gr 10-12)
+        if (subjectName === 'physical science' && gradeNum >= 10 && gradeNum <= 12) {
+            repositories.push(
+                {
+                    key: 'chemistry',
+                    name: 'Chemistry Components',
+                    color: 'bg-purple-500 hover:bg-purple-600',
+                    icon: FileText,
+                    onClick: () => setShowChemistryComponentsRepository(true)
+                },
+                {
+                    key: 'physics',
+                    name: 'Physics Components',
+                    color: 'bg-orange-500 hover:bg-orange-600',
+                    icon: Target,
+                    onClick: () => setShowPhysicsComponentsRepository(true)
+                }
+            );
+        }
+
+        // Cross-disciplinary components available for all subjects
+        repositories.push({
+            key: 'cross-disciplinary',
+            name: 'Cross-Disciplinary',
+            color: 'bg-indigo-500 hover:bg-indigo-600',
+            icon: BrainCircuit,
+            onClick: () => setShowCrossDisciplinaryComponentsRepository(true)
+        });
+
+        return repositories;
+    };
+
+    // CORRECTED: Access the 'topics' array from the gradesData object
+    const availableTopicsRaw = selectedSubject?.topicsByGrade?.[selectedGrade]?.topics || []; // Access .topics property
+    let availableTopics = (Array.isArray(availableTopicsRaw) ? availableTopicsRaw : [])
+        .map((t) => (typeof t === 'string' ? t : t?.name))
+        .filter(Boolean);
+
+    // Override for Grade 11 Accounting
+    // Override for Grade 11 Accounting
+    const isGrade11AccountingCheck = String(selectedGrade) === '11' && (selectedSubject?.name?.toLowerCase?.() || '').includes('accounting');
+    if (isGrade11AccountingCheck) {
+        const numberedTopics = [
+            '1. Ethics and Internal Control',
+            '2. Bank Reconciliation',
+            '3. Fixed Tangible Assets',
+            '4. Partnerships: Analysis of Financial Statements'
+        ];
+
+        // Filter out original topics that are covered by the numbered ones to avoid duplicates
+        // We broadly filter keywords associated with the consolidated topics
+        const coveredKeywords = ['ethics', 'internal control', 'reconciliation', 'fixed', 'tangible', 'assets', 'partnership'];
+
+        const otherTopics = availableTopics.filter(t => {
+            const lower = t.toLowerCase();
+            // Keep the topic if it doesn't match any of the covered keywords
+            // But be careful not to remove unrelated topics.
+            // For now, strict filtering on known duplicates is safer?
+            // User says "Ethics and Internal control" (combined), "Bank Reconciliation", "Fixed Tangible Assets", "Partnerships...".
+            // Let's filter conservatively.
+            return !coveredKeywords.some(k => lower.includes(k));
+        });
+
+        availableTopics = [...numberedTopics, ...otherTopics];
+    }
+
+    // Override for Grade 12 Accounting
+    const isGrade12AccountingCheck = String(selectedGrade) === '12' && (selectedSubject?.name?.toLowerCase?.() || '').includes('accounting');
+    if (isGrade12AccountingCheck) {
+        const numberedTopics = [
+            '1. Accounting of companies: Concepts',
+            '2. Bookkeeping and Unique ledger accounts of Companies',
+            '3. Preparation of financial statements of companies',
+            '4. Analysis and Interpretation of Financial Statements',
+            '5. Audits, Corporate governance and shareholding'
+        ];
+        // Replace all topics with these 5
+        availableTopics = numberedTopics;
+    }
+
+    // Check if syllabus info exists for the selected subject and grade
+    const hasSyllabus = selectedSubject?.topicsByGrade?.[selectedGrade]?.syllabus_info || false;
+
+    const normalizeTopicName = (topicName) => String(topicName || '').trim().toLowerCase();
+
+    useEffect(() => {
+        setHelperView('topics');
+        setSelectedTopic(null);
+        setShowQuestionInput(false);
+        setShowTopicSummary(false);
+        updateHelperNavigationLabel('Curriculum Helper > Topics');
+    }, [selectedGrade, selectedSubject, updateHelperNavigationLabel]);
+
+    const handleTopicSelect = (topic) => {
+        const topicName = typeof topic === 'string' ? topic : topic?.name;
+        if (!topicName) return;
+
+        // --- NEW: Try to navigate directly to workspace config (skip overview) ---
+        const scaffoldRoute = getScaffoldRouteForTopic(topicName);
+        if (scaffoldRoute) {
+            const displayName = getTopicDisplayName(topicName);
+            // Default to scaffold route but the Shell will show the config card
+            navigateToWorkspaceWithMode(scaffoldRoute, displayName, { name: topicName });
+            return;
+        }
+
+
+        // Create a temporary topic object for internal state and passing to SelectionCard
+        const topicObject = { name: topicName, overview: "No overview available for this topic yet." };
+        setSelectedTopic(topicObject);
+        setHelperView('topic_overview');
+        setShowQuestionInput(false);
+        setShowTopicSummary(false);
+    };
+
+    /**
+     * Maps a topic name to its scaffold route key (from workspaceRegistry).
+     * Returns null if the topic doesn't have an implemented scaffold route.
+     */
+    const getScaffoldRouteForTopic = (topicName) => {
+        // --- Grade 7 Mathematics ---
+        if (isGrade7Math) {
+            if (isWholeNumbersTopic(topicName)) return 'grade7_whole_scaffold';
+            if (isExponentsTopic(topicName)) return 'grade7_exponents_scaffold';
+            if (isGeoConstructionTopic(topicName)) return 'grade7_geo_construct_scaffold';
+            if (isGeo2DShapesTopic(topicName)) return 'grade7_geo2d_scaffold';
+            if (isGeoStraightLinesTopic(topicName)) return 'grade7_straight_lines_scaffold';
+        }
+
+        // --- Grade 8 Mathematics ---
+        if (isGrade8Math) {
+            if (isWholeNumbersTopic(topicName)) return 'grade8_whole_scaffold';
+            if (isIntegersTopic(topicName)) return 'grade8_integers_scaffold';
+            if (isExponentsTopic(topicName)) return 'grade8_exponents_scaffold';
+            if (isPatternsTopic(topicName)) return 'grade8_patterns_scaffold';
+            if (isFunctionsRelationshipsTopic(topicName)) return 'grade8_functions_1_scaffold';
+            if (isAlgebraicExpressionsTopic(topicName)) return 'grade8_algebraic_expressions_1_scaffold';
+            if (isAlgebraicEquationsTopic(topicName)) return 'grade8_algebraic_equations_1_scaffold';
+        }
+
+        // --- Grade 9 Mathematics ---
+        if (isGrade9Math) {
+            if (isWholeNumbersTopic(topicName)) return 'grade9_whole_scaffold';
+            if (isIntegersTopic(topicName)) return 'grade9_integers_scaffold';
+            if (isFractionsTopic(topicName)) return 'grade9_fractions_scaffold';
+            if (isDecimalNotationTopic(topicName)) return 'grade9_decimal_notation_scaffold';
+            if (isExponentsTopic(topicName)) return 'grade9_exponents_scaffold';
+            if (isPatternsTopic(topicName)) return 'grade9_patterns_scaffold';
+            if (isFunctionsRelationshipsTopic(topicName)) return 'grade9_functions_relationships_1_scaffold';
+            if (isAlgebraicExpressionsTopic(topicName)) return 'grade9_algebraic_expressions_1_scaffold';
+            if (isAlgebraicEquationsTopic(topicName)) return 'grade9_algebraic_equations_1_scaffold';
+        }
+
+        // --- Grade 10 Mathematics ---
+        if (isGrade10Math) {
+            if (isAlgebraicExpressionsTopic(topicName)) return 'grade10_algebraic_expressions_scaffold';
+            if (isExponentsTopic(topicName)) return 'grade10_exponents_scaffold';
+            if (isPatternsSequencesTopic(topicName)) return 'grade10_patterns_sequences_scaffold';
+            if (isEquationsInequalitiesTopic(topicName)) return 'grade10_equations_inequalities_scaffold';
+            if (isTrigonometry1Topic(topicName)) return 'grade10_trigonometry_1_scaffold';
+        }
+
+        // --- Grade 10 Accounting ---
+        if (isGrade10Accounting) {
+            if (isGrade10IndigenousBookkeepingTopic(topicName)) return 'grade10_accounting_indigenous_scaffold';
+            if (isGrade10EthicsTopic(topicName)) return 'grade10_accounting_ethics_scaffold';
+            if (isGrade10GAAPTopic(topicName)) return 'grade10_accounting_gaap_scaffold';
+            if (isGrade10InternalControlsTopic(topicName)) return 'grade10_accounting_internal_control_scaffold';
+            if (isGrade10SoleTraderTopic(topicName)) return 'grade10_accounting_sole_trader_scaffold';
+        }
+
+        // --- Grade 11 Mathematics ---
+        if (isGrade11Math) {
+            if (isExponentsSurdsTopic(topicName)) return 'grade11_exponents_surds_scaffold';
+            if (isEquationsInequalitiesTopic(topicName)) return 'grade11_equations_inequalities_scaffold';
+            if (isPatternsSequencesTopic(topicName)) return 'grade11_patterns_sequences_scaffold';
+            if (isAnalyticalGeometryTopic(topicName)) return 'grade11_analytical_geometry_scaffold';
+        }
+
+        // --- Grade 11 Accounting ---
+        // --- Grade 11 Accounting ---
+        if (isGrade11Accounting) {
+            const normalized = String(topicName || '').toLowerCase();
+            if (normalized.includes('ethics') || normalized.includes('internal control')) return 'grade11_accounting_ethics_internal_control_scaffold';
+            if (normalized.includes('reconciliation')) return 'grade11_accounting_reconciliation_scaffold';
+            if (normalized.includes('fixed') || normalized.includes('tangible') || normalized.includes('assets')) return 'grade11_accounting_fixed_assets_scaffold';
+            if (normalized.includes('partnership')) return 'grade11_accounting_partnerships_scaffold';
+            return 'grade11_accounting_scaffold';
+        }
+
+        // --- Grade 12 Mathematics ---
+        if (isGrade12Math) {
+            if (isPatternsSequencesSeriesTopic(topicName)) return 'grade12_patterns_sequences_series_scaffold';
+            if (isGrade12FunctionsTopic(topicName)) return 'grade12_functions_scaffold';
+            if (isGrade12FinanceTopic(topicName)) return 'grade12_finance_scaffold';
+            if (isGrade12TrigonometryTopic(topicName)) return 'grade12_trigonometry_scaffold';
+        }
+
+        // --- Grade 12 Accounting ---
+        if (isGrade12Accounting) {
+            const normalized = String(topicName || '').toLowerCase();
+            if (normalized.includes('concepts')) return 'grade12_accounting_concepts_scaffold';
+            if (normalized.includes('bookkeeping') || normalized.includes('unique ledger')) return 'grade12_accounting_bookkeeping_scaffold';
+            if (normalized.includes('preparation of financial statements')) return 'grade12_accounting_finance_scaffold';
+            if (normalized.includes('analysis and interpretation')) return 'grade12_accounting_analysis_scaffold';
+            if (normalized.includes('audits') || normalized.includes('corporate governance')) return 'grade12_accounting_audits_scaffold';
+            return 'grade12_accounting_scaffold';
+        }
+
+        // No implemented scaffold route for this topic
+        return null;
+    };
+
+    const isGrade7Math =
+        String(selectedGrade) === '7' &&
+        (selectedSubject?.name?.toLowerCase?.() === 'mathematics' ||
+            selectedSubject?.name?.toLowerCase?.() === 'math');
+
+    const isGrade8Math =
+        String(selectedGrade) === '8' &&
+        (selectedSubject?.name?.toLowerCase?.() === 'mathematics' ||
+            selectedSubject?.name?.toLowerCase?.() === 'math');
+
+    const isGrade9Math =
+        String(selectedGrade) === '9' &&
+        (selectedSubject?.name?.toLowerCase?.() === 'mathematics' ||
+            selectedSubject?.name?.toLowerCase?.() === 'math');
+
+    const isGrade10Math =
+        String(selectedGrade) === '10' &&
+        (selectedSubject?.name?.toLowerCase?.() === 'mathematics' ||
+            selectedSubject?.name?.toLowerCase?.() === 'math');
+
+    const isGrade10Accounting =
+        String(selectedGrade) === '10' &&
+        (() => {
+            const subj = selectedSubject?.name?.toLowerCase?.() || '';
+            return subj.includes('accounting');
+        })();
+
+    const isGrade11Accounting =
+        String(selectedGrade) === '11' &&
+        (() => {
+            const subj = selectedSubject?.name?.toLowerCase?.() || '';
+            return subj.includes('accounting');
+        })();
+
+    const isGrade12Accounting =
+        String(selectedGrade) === '12' &&
+        (() => {
+            const subj = selectedSubject?.name?.toLowerCase?.() || '';
+            return subj.includes('accounting');
+        })();
+
+    const isGrade11Math =
+        parseInt(selectedGrade, 10) === 11 &&
+        (() => {
+            const subj = selectedSubject?.name?.toLowerCase?.() || '';
+            return subj.includes('mathematics') || subj.includes('math');
+        })();
+
+    const isGrade12Math =
+        parseInt(selectedGrade, 10) === 12 &&
+        (() => {
+            const subj = selectedSubject?.name?.toLowerCase?.() || '';
+            return subj.includes('mathematics') || subj.includes('math');
+        })();
+
+    const isWholeNumbersTopic = (topicName) => {
+        const normalized = String(topicName || '').toLowerCase();
+        return normalized.includes('whole numbers') || normalized === 'whole numbers';
+    };
+
+    const isIntegersTopic = (topicName) => {
+        const normalized = String(topicName || '').toLowerCase();
+        return normalized.includes('integers') || normalized === 'integers';
+    };
+
+    const isFractionsTopic = (topicName) => {
+        const normalized = String(topicName || '').toLowerCase();
+        if (normalized.includes('decimal notation')) return false;
+        return normalized.includes('fractions') || normalized === 'fractions';
+    };
+
+    const isDecimalNotationTopic = (topicName) => {
+        const normalized = String(topicName || '').toLowerCase();
+        return normalized.includes('decimal notation');
+    };
+
+    const isExponentsTopic = (topicName) => {
+        const normalized = String(topicName || '').toLowerCase();
+        return normalized.includes('exponents') || normalized === 'exponents';
+    };
+
+    const isPatternsTopic = (topicName) => {
+        const normalized = String(topicName || '').toLowerCase();
+        return normalized.includes('numeric and geometric patterns')
+            || normalized.includes('numeric & geometric patterns')
+            || normalized.includes('patterns')
+            || normalized === 'numeric and geometric patterns';
+    };
+
+    const isPatternsSequencesTopic = (topicName) => {
+        const normalized = String(topicName || '').toLowerCase();
+        return normalized.includes('patterns and sequences')
+            || normalized.includes('patterns & sequences')
+            || normalized.includes('patterns')
+            || normalized.includes('sequences');
+    };
+
+    const isPatternsSequencesSeriesTopic = (topicName) => {
+        const normalized = String(topicName || '')
+            .toLowerCase()
+            .replace(/[-_]+/g, ' ')
+            .replace(/\s+/g, ' ')
+            .trim();
+        const hasSequences = normalized.includes('sequence') || normalized.includes('sequences');
+        const hasSeries = normalized.includes('series');
+        const hasPatterns = normalized.includes('pattern') || normalized.includes('patterns');
+        return hasSeries && (hasSequences || hasPatterns);
+    };
+
+    const isGrade12FunctionsTopic = (topicName) => {
+        const normalized = String(topicName || '')
+            .toLowerCase()
+            .replace(/[-_]+/g, ' ')
+            .replace(/\s+/g, ' ')
+            .trim();
+        if (normalized.includes('algebraic studio')) return true;
+        if (normalized.includes('functions and relations')) return true;
+        if (normalized.includes('functions') || normalized.includes('function')) return true;
+        if (normalized.includes('inverse function') || normalized.includes('inverse functions')) return true;
+        if (normalized.includes('logarithm') || normalized.includes('logarithmic')) return true;
+        if (normalized.includes('exponential')) return true;
+        return false;
+    };
+
+    const isGrade12FinanceTopic = (topicName) => {
+        const normalized = String(topicName || '')
+            .toLowerCase()
+            .replace(/[-_]+/g, ' ')
+            .replace(/\s+/g, ' ')
+            .trim();
+        if (normalized.includes('finance')) return true;
+        if (normalized.includes('growth and decay')) return true;
+        if (normalized.includes('growth') && normalized.includes('decay')) return true;
+        return false;
+    };
+
+    const isGrade12TrigonometryTopic = (topicName) => {
+        const normalized = String(topicName || '')
+            .toLowerCase()
+            .replace(/[-_]+/g, ' ')
+            .replace(/\s+/g, ' ')
+            .trim();
+        if (normalized === 'trigonometry') return true;
+        if (normalized.includes('trigonometry')) return true;
+        if (normalized.includes('trig')) return true;
+        return false;
+    };
+
+    const isFunctionsRelationshipsTopic = (topicName) => {
+        const normalized = String(topicName || '').toLowerCase();
+        return normalized.includes('functions and relationships')
+            || normalized.includes('functions & relationships')
+            || normalized.includes('functions')
+            || normalized.includes('relationships')
+            || normalized === 'functions and relationships';
+    };
+
+    const isAlgebraicExpressionsTopic = (topicName) => {
+        const normalized = String(topicName || '').toLowerCase();
+        return normalized.includes('algebraic expressions')
+            || normalized.includes('algebraic expression')
+            || normalized === 'algebraic expressions';
+    };
+
+    const isAlgebraicEquationsTopic = (topicName) => {
+        const normalized = String(topicName || '').toLowerCase();
+        return normalized.includes('algebraic equations')
+            || normalized.includes('algebraic equation')
+            || normalized === 'algebraic equations';
+    };
+
+    const isEquationsInequalitiesTopic = (topicName) => {
+        const normalized = String(topicName || '')
+            .toLowerCase()
+            .replace(/[-_]+/g, ' ')
+            .replace(/\s+/g, ' ')
+            .trim();
+        return normalized.includes('equations and inequalities')
+            || normalized.includes('equations & inequalities')
+            || (normalized.includes('equations') && normalized.includes('inequal'))
+            || normalized.includes('inequal');
+    };
+
+    const isTrigonometry1Topic = (topicName) => {
+        const normalized = String(topicName || '').toLowerCase();
+        return normalized.includes('trigonometry 1')
+            || normalized.includes('trigonometry1')
+            || normalized === 'trigonometry';
+    };
+
+    const isGrade10IndigenousBookkeepingTopic = (topicName) => {
+        const normalized = String(topicName || '')
+            .toLowerCase()
+            .replace(/[-_]+/g, ' ')
+            .replace(/\s+/g, ' ')
+            .trim();
+        return normalized.includes('informal')
+            || normalized.includes('indigenous')
+            || normalized.includes('bookkeeping');
+    };
+
+    const isGrade10EthicsTopic = (topicName) => {
+        const normalized = String(topicName || '')
+            .toLowerCase()
+            .replace(/[-_]+/g, ' ')
+            .replace(/\s+/g, ' ')
+            .trim();
+        return normalized === 'ethics' || normalized.includes('ethics');
+    };
+
+    const isGrade10GAAPTopic = (topicName) => {
+        const normalized = String(topicName || '')
+            .toLowerCase()
+            .replace(/[-_]+/g, ' ')
+            .replace(/\s+/g, ' ')
+            .trim();
+        return normalized.includes('gaap')
+            || normalized.includes('accounting principles')
+            || normalized.includes('financial information and gaap')
+            || (normalized.includes('principles') && normalized.includes('gaap'));
+    };
+
+    const isGrade10InternalControlsTopic = (topicName) => {
+        const normalized = String(topicName || '')
+            .toLowerCase()
+            .replace(/[-_]+/g, ' ')
+            .replace(/\s+/g, ' ')
+            .trim();
+        return normalized === 'internal control'
+            || normalized === 'internal controls'
+            || normalized.includes('internal control');
+    };
+
+    const isGrade10SoleTraderTopic = (topicName) => {
+        const normalized = String(topicName || '')
+            .toLowerCase()
+            .replace(/[-_]+/g, ' ')
+            .replace(/\s+/g, ' ')
+            .trim();
+        return (normalized.includes('sole trader')
+            || normalized.includes('sole-trader')
+            || normalized.includes('financial accounting of a sole trader'));
+    };
+
+    const isExponentsSurdsTopic = (topicName) => {
+        const normalized = String(topicName || '')
+            .toLowerCase()
+            .replace(/[-_]+/g, ' ')
+            .replace(/\s+/g, ' ')
+            .trim();
+        return normalized.includes('exponents and surds')
+            || normalized.includes('exponents & surds')
+            || (normalized.includes('exponents') && normalized.includes('surd'));
+    };
+
+    const isAnalyticalGeometryTopic = (topicName) => {
+        const normalized = String(topicName || '')
+            .toLowerCase()
+            .replace(/[-_]+/g, ' ')
+            .replace(/\s+/g, ' ')
+            .trim();
+        return normalized.includes('analytical geometry')
+            || normalized.includes('analytic geometry')
+            || (normalized.includes('analytical') && normalized.includes('geometry'));
+    };
+
+    const isGeoConstructionTopic = (topicName) => {
+        const normalized = String(topicName || '').toLowerCase();
+        return normalized.includes('construction of geometric figures')
+            || normalized.includes('construction of geometric figure')
+            || normalized === 'construction of geometric figures';
+    };
+
+    const isGeo2DShapesTopic = (topicName) => {
+        const normalized = String(topicName || '').toLowerCase();
+        return normalized.includes('geometry of 2d shapes')
+            || normalized.includes('geometry of 2d shape')
+            || normalized === 'geometry of 2d shapes';
+    };
+
+    const isGeoStraightLinesTopic = (topicName) => {
+        const normalized = String(topicName || '').toLowerCase();
+        return normalized.includes('geometry of straight lines')
+            || normalized.includes('geometry straight lines')
+            || normalized === 'geometry of straight lines';
+    };
+
+    const getTopicDisplayName = (topicName) => {
+        if (isGrade10Accounting && isGrade10IndigenousBookkeepingTopic(topicName)) {
+            return 'Informal / Indigenous bookkeeping';
+        }
+
+        if (isGrade10Accounting && isGrade10EthicsTopic(topicName)) {
+            return 'Ethics';
+        }
+
+        if (isGrade10Accounting && isGrade10GAAPTopic(topicName)) {
+            return 'Accounting principles (GAAP)';
+        }
+
+        if (isGrade10Accounting && isGrade10InternalControlsTopic(topicName)) {
+            return 'Internal controls';
+        }
+
+        if (isGrade10Accounting && isGrade10SoleTraderTopic(topicName)) {
+            return 'Financial accounting and bookkeeping of a sole trader';
+        }
+
+        if (isGrade10Math && isAlgebraicExpressionsTopic(topicName)) {
+            return 'Algebraic expressions';
+        }
+
+        if (isGrade10Math && isExponentsTopic(topicName)) {
+            return 'Exponents';
+        }
+
+        if (isGrade10Math && isPatternsSequencesTopic(topicName)) {
+            return 'Patterns and sequences';
+        }
+
+        if (isGrade10Math && isEquationsInequalitiesTopic(topicName)) {
+            return 'Equations and inequalities';
+        }
+
+        if (isGrade10Math && isTrigonometry1Topic(topicName)) {
+            return 'Trigonometry 1';
+        }
+
+        if (isGrade11Math && isExponentsSurdsTopic(topicName)) {
+            return 'Exponents and surds';
+        }
+
+        if (isGrade11Math && isAnalyticalGeometryTopic(topicName)) {
+            return 'Analytical geometry';
+        }
+
+        if (isGrade12Math && isPatternsSequencesSeriesTopic(topicName)) {
+            return 'Sequences and series';
+        }
+
+        if (isGrade12Math && isGrade12FunctionsTopic(topicName)) {
+            return 'Functions';
+        }
+
+        if (isGrade12Math && isGrade12FinanceTopic(topicName)) {
+            return 'Finance';
+        }
+
+        if (isGrade12Math && isGrade12TrigonometryTopic(topicName)) {
+            return 'Trigonometry';
+        }
+
+        if (isGrade8Math && isFunctionsRelationshipsTopic(topicName)) {
+            return 'Functions and relationships 1';
+        }
+
+        if (isGrade8Math && isAlgebraicExpressionsTopic(topicName)) {
+            return 'Algebraic expressions 1';
+        }
+
+        if (isGrade9Math && isFunctionsRelationshipsTopic(topicName)) {
+            return 'Functions and relationships 1';
+        }
+
+        if (isGrade9Math && isAlgebraicExpressionsTopic(topicName)) {
+            return 'Algebraic expressions 1';
+        }
+
+        if (isGrade9Math && isAlgebraicEquationsTopic(topicName)) {
+            return 'Algebraic equations 1';
+        }
+
+        if (isGrade8Math && isAlgebraicEquationsTopic(topicName)) {
+            return 'Algebraic equations 1';
+        }
+
+        return topicName;
+    };
+
+    const getCoveredTopicIndex = (topicName) => {
+        const normalized = normalizeTopicName(topicName);
+
+        const mapping = isGrade7Math
+            ? {
+                'working with whole numbers': 1,
+                'whole numbers': 1,
+                'exponents': 2,
+                'construction of geometric figures': 3,
+                'construction of geometric figure': 3,
+                'geometry of 2d shapes': 4,
+                'geometry of straight lines': 5,
+            }
+            : isGrade8Math
+                ? {
+                    'whole numbers': 1,
+                    'integers': 2,
+                    'exponents': 3,
+                    'numeric and geometric patterns': 4,
+                    'functions and relationships': 5,
+                    'functions and relationships 1': 5,
+                    'algebraic expressions': 6,
+                    'algebraic expressions 1': 6,
+                    'algebraic equations': 7,
+                    'algebraic equations 1': 7,
+                }
+                : isGrade9Math
+                    ? {
+                        'whole numbers': 1,
+                        'integers': 2,
+                        'fractions': 3,
+                        'the decimal notation for fractions': 4,
+                        'decimal notation for fractions': 4,
+                        'fractions in decimal notation': 4,
+                        'decimal notation': 4,
+                        'exponents': 5,
+                        'numeric and geometric patterns': 6,
+                        'numeric & geometric patterns': 6,
+                        'patterns': 6,
+                        'functions and relationships': 7,
+                        'functions & relationships': 7,
+                        'algebraic expressions': 8,
+                        'algebraic expressions 1': 8,
+                        'algebraic equations': 9,
+                        'algebraic equations 1': 9,
+                    }
+                    : isGrade10Math
+                        ? {
+                            'algebraic expressions': 1,
+                            'algebraic expression': 1,
+                            'exponents': 2,
+                            'patterns and sequences': 3,
+                            'patterns & sequences': 3,
+                            'patterns': 3,
+                            'sequences': 3,
+                            'equations and inequalities': 4,
+                            'equations & inequalities': 4,
+                            'inequalities': 4,
+                            'trigonometry 1': 5,
+                            'trigonometry1': 5,
+                            'trigonometry': 5,
+                        }
+                        : isGrade11Math
+                            ? {
+                                'exponents and surds': 1,
+                                'exponents & surds': 1,
+                                'exponents surds': 1,
+                                'exponents-and-surds': 1,
+                                'equations and inequalities': 2,
+                                'equations & inequalities': 2,
+                                'equations-and-inequalities': 2,
+                                'patterns and sequences': 3,
+                                'patterns & sequences': 3,
+                                'patterns': 3,
+                                'sequences': 3,
+                                'analytical geometry': 4,
+                                'analytic geometry': 4,
+                                'analytical-geometry': 4,
+                            }
+                            : isGrade12Math
+                                ? {
+                                    'sequences and series': 1,
+                                    'functions': 2,
+                                    'finance': 3,
+                                    'financial mathematics': 3,
+                                    'trigonometry': 4,
+                                    'trigonometry studio': 4,
+                                }
+                                : isGrade10Accounting
+                                    ? {
+                                        'informal bookkeeping': 1,
+                                        'indigenous bookkeeping': 1,
+                                        'ethics': 2,
+                                        'gaap': 3,
+                                        'accounting principles': 3,
+                                        'internal control': 4,
+                                        'internal controls': 4,
+                                        'sole trader': 5,
+                                        'financial accounting of a sole trader': 5,
+                                    }
+                                    : isGrade12Accounting
+                                        ? {
+                                            'accounting of companies: concepts': 1,
+                                            'bookkeeping and unique ledger accounts of companies': 2,
+                                            'preparation of financial statements of companies': 3,
+                                            'analysis and interpretation of financial statements': 4,
+                                            'audits, corporate governance and shareholding': 5,
+                                        }
+                                        : {};
+
+        const hit = mapping[normalized];
+        if (Number.isFinite(hit)) return hit;
+
+        if (isGrade10Accounting && isGrade10IndigenousBookkeepingTopic(topicName)) return 1;
+
+        if (isGrade10Accounting && isGrade10EthicsTopic(topicName)) return 2;
+
+        if (isGrade10Accounting && isGrade10GAAPTopic(topicName)) return 3;
+
+        if (isGrade10Accounting && isGrade10InternalControlsTopic(topicName)) return 4;
+
+        if (isGrade10Accounting && isGrade10SoleTraderTopic(topicName)) return 5;
+
+        if (isGrade10Math && isPatternsSequencesTopic(topicName)) return 3;
+        if (isGrade10Math && isAlgebraicExpressionsTopic(topicName)) return 1;
+        if (isGrade10Math && isExponentsTopic(topicName)) return 2;
+        if (isGrade10Math && isEquationsInequalitiesTopic(topicName)) return 4;
+        if (isGrade10Math && isTrigonometry1Topic(topicName)) return 5;
+
+        if (isGrade11Math && isExponentsSurdsTopic(topicName)) return 1;
+        if (isGrade11Math && isEquationsInequalitiesTopic(topicName)) return 2;
+        if (isGrade11Math && isPatternsSequencesTopic(topicName)) return 3;
+        if (isGrade11Math && isAnalyticalGeometryTopic(topicName)) return 4;
+
+        if (isGrade12Math && isPatternsSequencesSeriesTopic(topicName)) return 1;
+
+        if (isGrade12Math && isGrade12FunctionsTopic(topicName)) return 2;
+
+        if (isGrade12Math && isGrade12FinanceTopic(topicName)) return 3;
+
+        if (isGrade12Math && isGrade12TrigonometryTopic(topicName)) return 4;
+
+        return null;
+    };
+
+    const getOrderedTopicNames = () => {
+        const topics = Array.isArray(availableTopics) ? availableTopics.slice() : [];
+        if (
+            !isGrade7Math
+            && !isGrade8Math
+            && !isGrade9Math
+            && !isGrade10Math
+            && !isGrade11Math
+            && !isGrade12Math
+            && !isGrade10Accounting
+            && !isGrade11Accounting
+            && !isGrade12Accounting
+        ) return topics;
+
+        const ordered = topics.sort((a, b) => {
+            const ia = getCoveredTopicIndex(a);
+            const ib = getCoveredTopicIndex(b);
+
+            if (ia !== null && ib !== null) return ia - ib;
+            if (ia !== null) return -1;
+            if (ib !== null) return 1;
+            return String(a).localeCompare(String(b));
+        });
+
+        const seen = new Set();
+        const deduped = [];
+        for (const topicName of ordered) {
+            const idx = getCoveredTopicIndex(topicName);
+            const displayKey = `display:${normalizeTopicName(getTopicDisplayName(topicName))}`;
+            const key = idx !== null ? `idx:${idx}` : `name:${normalizeTopicName(topicName)}`;
+
+            if (seen.has(displayKey)) continue;
+            if (seen.has(key)) continue;
+
+            seen.add(key);
+            seen.add(displayKey);
+            deduped.push(topicName);
+        }
+
+        return deduped;
+    };
+
+    /**
+     * Returns 'Term 1' or 'Term 2' for accounting topics.
+     * Returns null for non-accounting or if term is unknown.
+     */
+    const getTopicTerm = (topicName) => {
+        const n = normalizeTopicName(topicName);
+
+        // Grade 10 Accounting Term mapping
+        if (isGrade10Accounting) {
+            if (n.includes('informal') || n.includes('indigenous') || n.includes('bookkeeping')) return 'Term 1';
+            if (n.includes('ethics')) return 'Term 1';
+            if (n.includes('gaap') || n.includes('accounting principles')) return 'Term 1';
+            if (n.includes('internal control')) return 'Term 1';
+            if (n.includes('sole trader')) return 'Term 1';
+            if (n.includes('salaries') || n.includes('wages')) return 'Term 2';
+            if (n.includes('final accounts') || n.includes('year-end') || n.includes('year end')) return 'Term 2';
+            if (n.includes('vat') || n.includes('value added tax')) return 'Term 2';
+        }
+
+        // Grade 11 Accounting
+        if (isGrade11Accounting) {
+            if (n.includes('ethics') || n.includes('internal control')) return 'Term 1';
+            if (n.includes('reconciliation')) return 'Term 1';
+            if (n.includes('fixed') || n.includes('tangible') || n.includes('assets')) return 'Term 1';
+            if (n.includes('partnership')) return 'Term 1';
+            if (n.includes('club') || n.includes('non-profit') || n.includes('nonprofit')) return 'Term 2';
+            if (n.includes('analysis') && n.includes('interpretation')) return 'Term 2';
+        }
+
+        // Grade 12 Accounting
+        if (isGrade12Accounting) {
+            if (n.includes('concepts')) return 'Term 1';
+            if (n.includes('bookkeeping') || n.includes('unique ledger')) return 'Term 1';
+            if (n.includes('preparation of financial statements')) return 'Term 1';
+            if (n.includes('analysis and interpretation')) return 'Term 1';
+            if (n.includes('audits') || n.includes('corporate governance')) return 'Term 1';
+            if (n.includes('fixed') || n.includes('tangible assets')) return 'Term 2';
+            if (n.includes('inventory')) return 'Term 2';
+            if (n.includes('reconciliation')) return 'Term 2';
+            if (n.includes('vat') || n.includes('value added tax')) return 'Term 2';
+        }
+
+        return null;
+    };
+
+    const navigateToWorkspaceWithMode = (mode, label, topicData = null) => {
+        if (!setWorkspaceMode || !setView || !setNavigationStack) return;
+
+        setWorkspaceMode(mode);
+
+        const topicToUse = topicData || selectedTopic;
+        if (setActiveTopic && topicToUse) {
+            setActiveTopic(topicToUse);
+        }
+
+        const currentStack = Array.isArray(navigationStack) ? navigationStack : [];
+        const nextStack = [
+            ...currentStack,
+            {
+                view: 'workspace',
+                label,
+                data: {
+                    grade: selectedGrade,
+                    subject: selectedSubject,
+                    topic: selectedTopic
+                }
+            }
+        ];
+        setNavigationStack(nextStack);
+        setView('workspace');
+    };
+
+    const handleGenerateQuestions = async (context) => {
+        if (!selectedSubject || !selectedGrade) return;
+        setLoading(true);
+
+        let topicForPrompt = context.type === 'topic' ? context.data.name : `${selectedTopic.name}: ${context.data}`;
+        let subtopic = context.type === 'subtopic' ? context.data : null;
+
+        try {
+            // Use curriculum question generator (shared across all students)
+            // This would need to be passed as a prop or imported
+            console.log('Generating questions for:', topicForPrompt, subtopic);
+
+            // Placeholder for question generation logic
+            setLoading(false);
+        } catch (error) {
+            console.error('Error generating questions:', error);
+            setLoading(false);
+        }
+    };
+
+    const handleTutorMe = async (context) => {
+        if (!selectedSubject || !selectedGrade) return;
+        setLoading(true);
+
+        try {
+            let topicForPrompt = context.type === 'topic' ? context.data.name : `${selectedTopic.name}: ${context.data}`;
+            let subtopic = context.type === 'subtopic' ? context.data : null;
+
+            // This would need to be passed as a prop or imported
+            console.log('Starting tutoring session for:', topicForPrompt, subtopic);
+
+            setLoading(false);
+        } catch (error) {
+            console.error('Error initiating tutoring session:', error);
+            setLoading(false);
+        }
+    };
+
+    const abbreviateSubjectName = (name) => {
+        const abbreviations = {
+            'Mathematics': 'Math',
+            'Mathematical Literacy': 'Math Lit',
+            'Technical Mathematics': 'Tech Math',
+            'Physical Sciences': 'Physics',
+            'Life Sciences': 'Biology',
+            'Accounting': 'Accounting',
+            'Business Studies': 'Business',
+            'Economic and Management Sciences': 'EMS'
+        };
+        return abbreviations[name] || name;
+    };
+
+    const formatGrade = (grade) => {
+        return `Grade ${grade}`;
+    };
+
+    const SelectionCard = ({ title, description, icon: Icon, onSelect, color = 'bg-indigo-100', badge, locked }) => (
+        <div
+            onClick={locked ? undefined : onSelect}
+            className={`bg-white rounded-xl shadow-lg transform transition-all duration-300 overflow-hidden group relative ${
+                locked ? 'cursor-not-allowed opacity-75' : 'cursor-pointer hover:shadow-2xl hover:-translate-y-2'
+            }`}
+        >
+            <div className={`h-24 ${color} flex items-center justify-center relative`}>
+                <Icon className={`h-12 w-12 text-white/90 transition-transform duration-300 group-hover:scale-110`} />
+                {badge && (
+                    <span className={`absolute top-2 right-2 text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full shadow-sm ${
+                        badge === 'Term 2'
+                            ? 'bg-emerald-500 text-white'
+                            : 'bg-blue-500 text-white'
+                    }`}>
+                        {badge}
+                    </span>
+                )}
+                {locked && (
+                    <div className="absolute inset-0 bg-gray-900/40 flex items-center justify-center">
+                        <span className="text-white text-sm font-bold flex items-center gap-1.5">
+                            🔒 Upgrade
+                        </span>
+                    </div>
+                )}
+            </div>
+            <div className="p-6">
+                <h3 className="text-xl font-bold text-gray-800 mb-2">{title}</h3>
+                <p className="text-gray-600 text-sm">{description}</p>
+            </div>
+        </div>
+    );
+
+    if (!selectedGrade || !selectedSubject) {
+        return (
+            <div className="p-8 text-center bg-white rounded-xl shadow-lg min-h-[60vh] flex flex-col justify-center items-center">
+                <h2 className="text-2xl font-bold text-gray-800 mb-4">Curriculum Helper</h2>
+                <p className="text-gray-600">Please select a curriculum, grade, and subject first.</p>
+                <button onClick={onClose} className="mt-8 bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600">Go Back</button>
+            </div>
+        );
+    }
+
+    const selectedTopicDisplayName = (() => {
+        const name = selectedTopic?.name;
+        if (!name) return '';
+        const idx = getCoveredTopicIndex(name);
+        const displayName = getTopicDisplayName(name);
+        if (!idx) return displayName;
+        if (isGrade10Math) return `${idx} ${displayName}`;
+        if (isGrade11Math) return `${idx} ${displayName}`;
+        if (isGrade12Math) return `${idx} ${displayName}`;
+        return `${idx}. ${displayName}`;
+    })();
+
+    return (
+        <div className="p-4 sm:p-6 lg:p-8 bg-white rounded-xl shadow-xl min-h-[80vh]">
+            {/* Repository Modals */}
+            <MathComponentsRepository
+                isVisible={showMathComponentsRepository}
+                onSelectComponent={(component) => {
+                    setShowMathComponentsRepository(false);
+                    console.log('Selected math component:', component);
+                }}
+                selectedSubject={selectedSubject}
+                selectedGrade={selectedGrade}
+                setView={setView}
+            />
+
+            <ChemistryComponentsRepository
+                isVisible={showChemistryComponentsRepository}
+                onSelectComponent={(component) => {
+                    setShowChemistryComponentsRepository(false);
+                    console.log('Selected chemistry component:', component);
+                }}
+                selectedSubject={selectedSubject}
+                selectedGrade={selectedGrade}
+            />
+
+            <PhysicsComponentsRepository
+                isVisible={showPhysicsComponentsRepository}
+                onSelectComponent={(component) => {
+                    setShowPhysicsComponentsRepository(false);
+                    console.log('Selected physics component:', component);
+                }}
+                selectedSubject={selectedSubject}
+                selectedGrade={selectedGrade}
+            />
+
+            <CrossDisciplinaryComponentsRepository
+                isVisible={showCrossDisciplinaryComponentsRepository}
+                onSelectComponent={(component) => {
+                    setShowCrossDisciplinaryComponentsRepository(false);
+                    console.log('Selected cross-disciplinary component:', component);
+                }}
+                selectedSubject={selectedSubject}
+                selectedGrade={selectedGrade}
+            />
+
+            {helperView === 'topics' && (
+                <>
+                    <div className="flex items-center justify-between mb-8">
+                        <h2 className="text-3xl font-bold text-gray-900">{abbreviateSubjectName(selectedSubject.name)} - {formatGrade(selectedGrade)} Topics</h2>
+                        {onGoToClasswork && (
+                            <button
+                                onClick={onGoToClasswork}
+                                className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 hover:border-gray-400 transition-colors duration-200 shadow-sm"
+                            >
+                                <Briefcase size={16} />
+                                <span>Class Assignments</span>
+                            </button>
+                        )}
+                    </div>
+                    {hasSyllabus && (
+                        <div className="bg-green-50 p-3 rounded-lg border border-green-200 text-green-800 text-sm mb-4 flex items-center">
+                            <FileText className="h-4 w-4 mr-2" />
+                            Syllabus available for this subject and grade.
+                        </div>
+                    )}
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        {availableTopics.length > 0 ? getOrderedTopicNames().map((topicName, index) => ( // Iterate over string topicName
+                            (() => {
+                                const idx = getCoveredTopicIndex(topicName);
+                                const displayName = getTopicDisplayName(topicName);
+                                let title = idx ? `${idx}. ${displayName}` : displayName;
+                                if (isGrade10Math && idx) {
+                                    title = `${idx} ${displayName}`;
+                                }
+                                if (isGrade11Math && idx) {
+                                    title = `${idx} ${displayName}`;
+                                }
+                                if (isGrade12Math && idx) {
+                                    title = `${idx} ${displayName}`;
+                                }
+                                if (isGrade9Math && isPatternsTopic(topicName) && idx === 6) {
+                                    title = `${idx}. Numeric and geometric patterns`;
+                                }
+                                if (isGrade9Math && isFunctionsRelationshipsTopic(topicName) && idx === 7) {
+                                    title = '7 Functions and relationships 1';
+                                }
+                                if (isGrade9Math && isAlgebraicExpressionsTopic(topicName) && idx === 8) {
+                                    title = '8 Algebraic expressions 1';
+                                }
+                                if (isGrade9Math && isAlgebraicEquationsTopic(topicName) && idx === 9) {
+                                    title = '9 Algebraic equations 1';
+                                }
+                                const cardColor = topicColors[index % topicColors.length];
+                                const CardIcon = getTopicIcon(topicName, selectedSubject.name);
+                                const termLabel = getTopicTerm(topicName);
+                                // Grade-lock: check if user has access to this grade
+                                const isGradeLocked = (() => {
+                                    if (!currentUser) return false; // no auth = allow (dev mode)
+                                    if (currentUser.isOwner) return false; // owners bypass
+                                    if (currentUser.subscriptionExpired) return true; // expired = locked
+                                    const grades = currentUser.subscribedGrades || [];
+                                    if (grades.length === 0) return false; // no grades set = allow (free tier)
+                                    return !grades.includes(Number(selectedGrade));
+                                })();
+                                return (
+                                    <SelectionCard
+                                        key={topicName}
+                                        title={title}
+                                        description={selectedSubject.topicsByGrade[selectedGrade]?.overview?.[topicName] || "Click to explore this topic."}
+                                        icon={CardIcon}
+                                        onSelect={() => handleTopicSelect(topicName)}
+                                        color={cardColor}
+                                        badge={termLabel}
+                                        locked={isGradeLocked}
+                                    />
+                                );
+                            })()
+                        )) : (
+                            <p className="text-gray-600 col-span-full text-center">No topics available for this selection.</p>
+                        )}
+                    </div>
+                </>
+            )}
+            {helperView === 'topic_overview' && selectedTopic && (
+                <>
+                    <h3 className="text-3xl font-bold text-gray-800 mb-4 flex items-center">
+                        <button
+                            onClick={() => {
+                                setHelperView('topics');
+                                updateHelperNavigationLabel('Curriculum Helper > Topics');
+                            }}
+                            className="text-gray-600 hover:text-blue-600 font-medium mr-3 group"
+                        >
+                            <ChevronLeft className="h-7 w-7" />
+                        </button>
+                        {selectedTopicDisplayName}
+                    </h3>
+
+                    {isGrade12Math && isPatternsSequencesSeriesTopic(selectedTopic.name) && (
+                        <div className="mb-6 bg-indigo-50 border border-indigo-200 rounded-lg p-4">
+                            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                                <div>
+                                    <h4 className="font-semibold text-indigo-900">1 Sequences and series</h4>
+                                    <p className="text-sm text-indigo-800">Term 1. Choose a mode to begin. Scaffold builds method step-by-step; Practice gives varied questions. Covers arithmetic & geometric sequences, sigma notation, arithmetic series and geometric series.</p>
+                                </div>
+                                <div className="flex flex-col sm:flex-row gap-2">
+                                    <button
+                                        onClick={() => navigateToWorkspaceWithMode('grade12_patterns_sequences_series_scaffold', 'Sequences and series • Scaffold')}
+                                        className="px-4 py-2 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700"
+                                    >
+                                        Start Scaffold
+                                    </button>
+                                    <button
+                                        onClick={() => navigateToWorkspaceWithMode('grade12_patterns_sequences_series_practice', 'Sequences and series • Practice')}
+                                        className="px-4 py-2 bg-white text-indigo-700 border border-indigo-300 rounded-lg font-semibold hover:bg-indigo-50"
+                                    >
+                                        Start Practice
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {isGrade12Math && isGrade12FunctionsTopic(selectedTopic.name) && (
+                        <div className="mb-6 bg-indigo-50 border border-indigo-200 rounded-lg p-4">
+                            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                                <div>
+                                    <h4 className="font-semibold text-indigo-900">2 Functions</h4>
+                                    <p className="text-sm text-indigo-800">Term 1. Inverses, intercepts & domain/range ideas, exponential-log conversions, logarithmic laws and change of base.</p>
+                                </div>
+                                <div className="flex flex-col sm:flex-row gap-2">
+                                    <button
+                                        onClick={() => navigateToWorkspaceWithMode('grade12_functions_scaffold', 'Functions • Scaffold')}
+                                        className="px-4 py-2 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700"
+                                    >
+                                        Start Scaffold
+                                    </button>
+                                    <button
+                                        onClick={() => navigateToWorkspaceWithMode('grade12_functions_practice', 'Functions • Practice')}
+                                        className="px-4 py-2 bg-white text-indigo-700 border border-indigo-300 rounded-lg font-semibold hover:bg-indigo-50"
+                                    >
+                                        Start Practice
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {isGrade12Math && isGrade12FinanceTopic(selectedTopic.name) && (
+                        <div className="mb-6 bg-indigo-50 border border-indigo-200 rounded-lg p-4">
+                            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                                <div>
+                                    <h4 className="font-semibold text-indigo-900">3 Finance</h4>
+                                    <p className="text-sm text-indigo-800">Term 1. Solve for n using logarithms, nominal vs effective rates, future value annuities, and payment calculations.</p>
+                                </div>
+                                <div className="flex flex-col sm:flex-row gap-2">
+                                    <button
+                                        onClick={() => navigateToWorkspaceWithMode('grade12_finance_scaffold', 'Finance • Scaffold')}
+                                        className="px-4 py-2 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700"
+                                    >
+                                        Start Scaffold
+                                    </button>
+                                    <button
+                                        onClick={() => navigateToWorkspaceWithMode('grade12_finance_practice', 'Finance • Practice')}
+                                        className="px-4 py-2 bg-white text-indigo-700 border border-indigo-300 rounded-lg font-semibold hover:bg-indigo-50"
+                                    >
+                                        Start Practice
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {isGrade12Math && isGrade12TrigonometryTopic(selectedTopic.name) && (
+                        <div className="mb-6 bg-indigo-50 border border-indigo-200 rounded-lg p-4">
+                            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                                <div>
+                                    <h4 className="font-semibold text-indigo-900">4 Trigonometry</h4>
+                                    <p className="text-sm text-indigo-800">Term 1. Reduction formulae, exact values, identities and compound angles.</p>
+                                </div>
+                                <div className="flex flex-col sm:flex-row gap-2">
+                                    <button
+                                        onClick={() => navigateToWorkspaceWithMode('grade12_trigonometry_scaffold', 'Trigonometry • Scaffold')}
+                                        className="px-4 py-2 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700"
+                                    >
+                                        Start Scaffold
+                                    </button>
+                                    <button
+                                        onClick={() => navigateToWorkspaceWithMode('grade12_trigonometry_practice', 'Trigonometry • Practice')}
+                                        className="px-4 py-2 bg-white text-indigo-700 border border-indigo-300 rounded-lg font-semibold hover:bg-indigo-50"
+                                    >
+                                        Start Practice
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {isGrade7Math && isWholeNumbersTopic(selectedTopic.name) && (
+                        <div className="mb-6 bg-indigo-50 border border-indigo-200 rounded-lg p-4">
+                            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                                <div>
+                                    <h4 className="font-semibold text-indigo-900">Whole Numbers</h4>
+                                    <p className="text-sm text-indigo-800">Scaffold builds method step-by-step (no calculator). Practice reinforces with mixed question types.</p>
+                                </div>
+                                <div className="flex flex-col sm:flex-row gap-2">
+                                    <button
+                                        onClick={() => navigateToWorkspaceWithMode('grade7_whole_scaffold', 'Whole Numbers • Scaffold')}
+                                        className="px-4 py-2 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700"
+                                    >
+                                        Start Scaffold
+                                    </button>
+                                    <button
+                                        onClick={() => navigateToWorkspaceWithMode('grade7_whole_practice', 'Whole Numbers • Practice')}
+                                        className="px-4 py-2 bg-white text-indigo-700 border border-indigo-300 rounded-lg font-semibold hover:bg-indigo-50"
+                                    >
+                                        Start Practice
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {isGrade8Math && isWholeNumbersTopic(selectedTopic.name) && (
+                        <div className="mb-6 bg-indigo-50 border border-indigo-200 rounded-lg p-4">
+                            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                                <div>
+                                    <h4 className="font-semibold text-indigo-900">1. Whole Numbers</h4>
+                                    <p className="text-sm text-indigo-800">Term 1. Choose a mode to begin. Scaffold builds method step-by-step; Practice gives varied questions (no calculator).</p>
+                                </div>
+                                <div className="flex flex-col sm:flex-row gap-2">
+                                    <button
+                                        onClick={() => navigateToWorkspaceWithMode('grade8_whole_scaffold', 'Whole Numbers • Scaffold')}
+                                        className="px-4 py-2 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700"
+                                    >
+                                        Start Scaffold
+                                    </button>
+                                    <button
+                                        onClick={() => navigateToWorkspaceWithMode('grade8_whole_practice', 'Whole Numbers • Practice')}
+                                        className="px-4 py-2 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700"
+                                    >
+                                        Start Practice
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {isGrade8Math && isIntegersTopic(selectedTopic.name) && (
+                        <div className="mb-6 bg-indigo-50 border border-indigo-200 rounded-lg p-4">
+                            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                                <div>
+                                    <h4 className="font-semibold text-indigo-900">2. Integers</h4>
+                                    <p className="text-sm text-indigo-800">Term 1. Choose a mode to begin. Scaffold builds method step-by-step; Practice gives varied questions (no calculator).</p>
+                                </div>
+                                <div className="flex flex-col sm:flex-row gap-2">
+                                    <button
+                                        onClick={() => navigateToWorkspaceWithMode('grade8_integers_scaffold', 'Integers • Scaffold')}
+                                        className="px-4 py-2 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700"
+                                    >
+                                        Start Scaffold
+                                    </button>
+                                    <button
+                                        onClick={() => navigateToWorkspaceWithMode('grade8_integers_practice', 'Integers • Practice')}
+                                        className="px-4 py-2 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700"
+                                    >
+                                        Start Practice
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {isGrade8Math && isExponentsTopic(selectedTopic.name) && (
+                        <div className="mb-6 bg-indigo-50 border border-indigo-200 rounded-lg p-4">
+                            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                                <div>
+                                    <h4 className="font-semibold text-indigo-900">3. Exponents</h4>
+                                    <p className="text-sm text-indigo-800">Term 1. Choose a mode to begin. Scaffold builds method step-by-step; Practice gives varied questions (no calculator).</p>
+                                </div>
+                                <div className="flex flex-col sm:flex-row gap-2">
+                                    <button
+                                        onClick={() => navigateToWorkspaceWithMode('grade8_exponents_scaffold', 'Exponents • Scaffold')}
+                                        className="px-4 py-2 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700"
+                                    >
+                                        Start Scaffold
+                                    </button>
+                                    <button
+                                        onClick={() => navigateToWorkspaceWithMode('grade8_exponents_practice', 'Exponents • Practice')}
+                                        className="px-4 py-2 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700"
+                                    >
+                                        Start Practice
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {isGrade8Math && isPatternsTopic(selectedTopic.name) && (
+                        <div className="mb-6 bg-indigo-50 border border-indigo-200 rounded-lg p-4">
+                            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                                <div>
+                                    <h4 className="font-semibold text-indigo-900">4. Numeric and geometric patterns</h4>
+                                    <p className="text-sm text-indigo-800">Term 1. Choose a mode to begin. Scaffold builds method step-by-step; Practice gives varied questions (no calculator).</p>
+                                </div>
+                                <div className="flex flex-col sm:flex-row gap-2">
+                                    <button
+                                        onClick={() => navigateToWorkspaceWithMode('grade8_patterns_scaffold', 'Numeric & geometric patterns • Scaffold')}
+                                        className="px-4 py-2 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700"
+                                    >
+                                        Start Scaffold
+                                    </button>
+                                    <button
+                                        onClick={() => navigateToWorkspaceWithMode('grade8_patterns_practice', 'Numeric & geometric patterns • Practice')}
+                                        className="px-4 py-2 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700"
+                                    >
+                                        Start Practice
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {isGrade8Math && isFunctionsRelationshipsTopic(selectedTopic.name) && (
+                        <div className="mb-6 bg-indigo-50 border border-indigo-200 rounded-lg p-4">
+                            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                                <div>
+                                    <h4 className="font-semibold text-indigo-900">5. Functions and relationships 1</h4>
+                                    <p className="text-sm text-indigo-800">Term 1. Choose a mode to begin. Scaffold builds method step-by-step; Practice gives varied questions.</p>
+                                </div>
+                                <div className="flex flex-col sm:flex-row gap-2">
+                                    <button
+                                        onClick={() => navigateToWorkspaceWithMode('grade8_functions_1_scaffold', 'Functions & relationships 1 • Scaffold')}
+                                        className="px-4 py-2 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700"
+                                    >
+                                        Start Scaffold
+                                    </button>
+                                    <button
+                                        onClick={() => navigateToWorkspaceWithMode('grade8_functions_1_practice', 'Functions & relationships 1 • Practice')}
+                                        className="px-4 py-2 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700"
+                                    >
+                                        Start Practice
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {isGrade8Math && isAlgebraicExpressionsTopic(selectedTopic.name) && (
+                        <div className="mb-6 bg-indigo-50 border border-indigo-200 rounded-lg p-4">
+                            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                                <div>
+                                    <h4 className="font-semibold text-indigo-900">6. Algebraic expressions 1</h4>
+                                    <p className="text-sm text-indigo-800">Term 1. Choose a mode to begin. Scaffold builds method step-by-step; Practice gives varied questions.</p>
+                                </div>
+                                <div className="flex flex-col sm:flex-row gap-2">
+                                    <button
+                                        onClick={() => navigateToWorkspaceWithMode('grade8_algebraic_expressions_1_scaffold', 'Algebraic expressions 1 • Scaffold')}
+                                        className="px-4 py-2 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700"
+                                    >
+                                        Start Scaffold
+                                    </button>
+                                    <button
+                                        onClick={() => navigateToWorkspaceWithMode('grade8_algebraic_expressions_1_practice', 'Algebraic expressions 1 • Practice')}
+                                        className="px-4 py-2 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700"
+                                    >
+                                        Start Practice
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {isGrade8Math && isAlgebraicEquationsTopic(selectedTopic.name) && (
+                        <div className="mb-6 bg-indigo-50 border border-indigo-200 rounded-lg p-4">
+                            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                                <div>
+                                    <h4 className="font-semibold text-indigo-900">7. Algebraic equations 1</h4>
+                                    <p className="text-sm text-indigo-800">Term 1. Choose a mode to begin. Scaffold builds method step-by-step; Practice gives varied questions.</p>
+                                </div>
+                                <div className="flex flex-col sm:flex-row gap-2">
+                                    <button
+                                        onClick={() => navigateToWorkspaceWithMode('grade8_algebraic_equations_1_scaffold', 'Algebraic equations 1 • Scaffold')}
+                                        className="px-4 py-2 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700"
+                                    >
+                                        Start Scaffold
+                                    </button>
+                                    <button
+                                        onClick={() => navigateToWorkspaceWithMode('grade8_algebraic_equations_1_practice', 'Algebraic equations 1 • Practice')}
+                                        className="px-4 py-2 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700"
+                                    >
+                                        Start Practice
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {isGrade9Math && isWholeNumbersTopic(selectedTopic.name) && (
+                        <div className="mb-6 bg-indigo-50 border border-indigo-200 rounded-lg p-4">
+                            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                                <div>
+                                    <h4 className="font-semibold text-indigo-900">1. Whole Numbers</h4>
+                                    <p className="text-sm text-indigo-800">Term 1. Choose a mode to begin. Scaffold builds method step-by-step; Practice gives varied questions (no calculator). CSV renders as tables; long division uses ASCII layout.</p>
+                                </div>
+                                <div className="flex flex-col sm:flex-row gap-2">
+                                    <button
+                                        onClick={() => navigateToWorkspaceWithMode('grade9_whole_scaffold', 'Whole Numbers • Scaffold')}
+                                        className="px-4 py-2 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700"
+                                    >
+                                        Start Scaffold
+                                    </button>
+                                    <button
+                                        onClick={() => navigateToWorkspaceWithMode('grade9_whole_practice', 'Whole Numbers • Practice')}
+                                        className="px-4 py-2 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700"
+                                    >
+                                        Start Practice
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {isGrade9Math && isIntegersTopic(selectedTopic.name) && (
+                        <div className="mb-6 bg-indigo-50 border border-indigo-200 rounded-lg p-4">
+                            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                                <div>
+                                    <h4 className="font-semibold text-indigo-900">2. Integers</h4>
+                                    <p className="text-sm text-indigo-800">Term 1. Choose a mode to begin. Scaffold builds method step-by-step; Practice gives varied questions (no calculator). Includes properties table questions (CSV rendered as table).</p>
+                                </div>
+                                <div className="flex flex-col sm:flex-row gap-2">
+                                    <button
+                                        onClick={() => navigateToWorkspaceWithMode('grade9_integers_scaffold', 'Integers • Scaffold')}
+                                        className="px-4 py-2 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700"
+                                    >
+                                        Start Scaffold
+                                    </button>
+                                    <button
+                                        onClick={() => navigateToWorkspaceWithMode('grade9_integers_practice', 'Integers • Practice')}
+                                        className="px-4 py-2 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700"
+                                    >
+                                        Start Practice
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {isGrade9Math && isFractionsTopic(selectedTopic.name) && (
+                        <div className="mb-6 bg-indigo-50 border border-indigo-200 rounded-lg p-4">
+                            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                                <div>
+                                    <h4 className="font-semibold text-indigo-900">3. Fractions</h4>
+                                    <p className="text-sm text-indigo-800">Term 1. Choose a mode to begin. Scaffold builds method step-by-step; Practice gives varied questions (no calculator). Includes equivalent fractions, simplifying, mixed numbers, and add/subtract with common denominators.</p>
+                                </div>
+                                <div className="flex flex-col sm:flex-row gap-2">
+                                    <button
+                                        onClick={() => navigateToWorkspaceWithMode('grade9_fractions_scaffold', 'Fractions • Scaffold')}
+                                        className="px-4 py-2 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700"
+                                    >
+                                        Start Scaffold
+                                    </button>
+                                    <button
+                                        onClick={() => navigateToWorkspaceWithMode('grade9_fractions_practice', 'Fractions • Practice')}
+                                        className="px-4 py-2 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700"
+                                    >
+                                        Start Practice
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {isGrade9Math && isDecimalNotationTopic(selectedTopic.name) && (
+                        <div className="mb-6 bg-indigo-50 border border-indigo-200 rounded-lg p-4">
+                            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                                <div>
+                                    <h4 className="font-semibold text-indigo-900">4. Decimal Notation</h4>
+                                    <p className="text-sm text-indigo-800">Term 1. Choose a mode to begin. Scaffold builds method step-by-step; Practice gives varied questions (no calculator). Includes converting between fractions, decimals and percentages, and calculations with decimals.</p>
+                                </div>
+                                <div className="flex flex-col sm:flex-row gap-2">
+                                    <button
+                                        onClick={() => navigateToWorkspaceWithMode('grade9_decimal_notation_scaffold', 'Decimal Notation • Scaffold')}
+                                        className="px-4 py-2 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700"
+                                    >
+                                        Start Scaffold
+                                    </button>
+                                    <button
+                                        onClick={() => navigateToWorkspaceWithMode('grade9_decimal_notation_practice', 'Decimal Notation • Practice')}
+                                        className="px-4 py-2 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700"
+                                    >
+                                        Start Practice
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {isGrade9Math && isExponentsTopic(selectedTopic.name) && (
+                        <div className="mb-6 bg-indigo-50 border border-indigo-200 rounded-lg p-4">
+                            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                                <div>
+                                    <h4 className="font-semibold text-indigo-900">5. Exponents</h4>
+                                    <p className="text-sm text-indigo-800">Term 1. Choose a mode to begin. Scaffold builds method step-by-step; Practice gives varied questions (no calculator). Includes exponent laws (table), order of operations, zero and negative exponents.</p>
+                                </div>
+                                <div className="flex flex-col sm:flex-row gap-2">
+                                    <button
+                                        onClick={() => navigateToWorkspaceWithMode('grade9_exponents_scaffold', 'Exponents • Scaffold')}
+                                        className="px-4 py-2 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700"
+                                    >
+                                        Start Scaffold
+                                    </button>
+                                    <button
+                                        onClick={() => navigateToWorkspaceWithMode('grade9_exponents_practice', 'Exponents • Practice')}
+                                        className="px-4 py-2 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700"
+                                    >
+                                        Start Practice
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {isGrade9Math && isPatternsTopic(selectedTopic.name) && (
+                        <div className="mb-6 bg-indigo-50 border border-indigo-200 rounded-lg p-4">
+                            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                                <div>
+                                    <h4 className="font-semibold text-indigo-900">6. Numeric and geometric patterns</h4>
+                                    <p className="text-sm text-indigo-800">Term 1. Choose a mode to begin. Scaffold builds method step-by-step; Practice gives varied questions (no calculator). Includes arithmetic/geometric sequences, square numbers, and changing differences.</p>
+                                </div>
+                                <div className="flex flex-col sm:flex-row gap-2">
+                                    <button
+                                        onClick={() => navigateToWorkspaceWithMode('grade9_patterns_scaffold', 'Numeric & geometric patterns • Scaffold')}
+                                        className="px-4 py-2 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700"
+                                    >
+                                        Start Scaffold
+                                    </button>
+                                    <button
+                                        onClick={() => navigateToWorkspaceWithMode('grade9_patterns_practice', 'Numeric & geometric patterns • Practice')}
+                                        className="px-4 py-2 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700"
+                                    >
+                                        Start Practice
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {isGrade9Math && isFunctionsRelationshipsTopic(selectedTopic.name) && (
+                        <div className="mb-6 bg-indigo-50 border border-indigo-200 rounded-lg p-4">
+                            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                                <div>
+                                    <h4 className="font-semibold text-indigo-900">7. Functions and relationships 1</h4>
+                                    <p className="text-sm text-indigo-800">Term 1. Choose a mode to begin. Scaffold builds method step-by-step; Practice gives varied questions. Includes flow diagrams, tables, formulae and graph reading.</p>
+                                </div>
+                                <div className="flex flex-col sm:flex-row gap-2">
+                                    <button
+                                        onClick={() => navigateToWorkspaceWithMode('grade9_functions_relationships_1_scaffold', 'Functions and relationships 1 • Scaffold')}
+                                        className="px-4 py-2 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700"
+                                    >
+                                        Start Scaffold
+                                    </button>
+                                    <button
+                                        onClick={() => navigateToWorkspaceWithMode('grade9_functions_relationships_1_practice', 'Functions and relationships 1 • Practice')}
+                                        className="px-4 py-2 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700"
+                                    >
+                                        Start Practice
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {isGrade9Math && isAlgebraicExpressionsTopic(selectedTopic.name) && (
+                        <div className="mb-6 bg-indigo-50 border border-indigo-200 rounded-lg p-4">
+                            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                                <div>
+                                    <h4 className="font-semibold text-indigo-900">8. Algebraic expressions 1</h4>
+                                    <p className="text-sm text-indigo-800">Next topic. Choose a mode to begin. Scaffold builds method step-by-step; Practice gives varied questions. Covers simplifying, like terms, substitution, and expression building (Term 1 scope).</p>
+                                </div>
+                                <div className="flex flex-col sm:flex-row gap-2">
+                                    <button
+                                        onClick={() => navigateToWorkspaceWithMode('grade9_algebraic_expressions_1_scaffold', 'Algebraic expressions 1 • Scaffold')}
+                                        className="px-4 py-2 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700"
+                                    >
+                                        Start Scaffold
+                                    </button>
+                                    <button
+                                        onClick={() => navigateToWorkspaceWithMode('grade9_algebraic_expressions_1_practice', 'Algebraic expressions 1 • Practice')}
+                                        className="px-4 py-2 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700"
+                                    >
+                                        Start Practice
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {isGrade9Math && isAlgebraicEquationsTopic(selectedTopic.name) && (
+                        <div className="mb-6 bg-indigo-50 border border-indigo-200 rounded-lg p-4">
+                            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                                <div>
+                                    <h4 className="font-semibold text-indigo-900">9. Algebraic equations 1</h4>
+                                    <p className="text-sm text-indigo-800">Next topic. Choose a mode to begin. Scaffold builds method step-by-step; Practice gives varied questions. Covers inspection, inverse operations, solving linear equations (including brackets), and setting up equations from situations (Term 1 scope).</p>
+                                </div>
+                                <div className="flex flex-col sm:flex-row gap-2">
+                                    <button
+                                        onClick={() => navigateToWorkspaceWithMode('grade9_algebraic_equations_1_scaffold', 'Algebraic equations 1 • Scaffold')}
+                                        className="px-4 py-2 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700"
+                                    >
+                                        Start Scaffold
+                                    </button>
+                                    <button
+                                        onClick={() => navigateToWorkspaceWithMode('grade9_algebraic_equations_1_practice', 'Algebraic equations 1 • Practice')}
+                                        className="px-4 py-2 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700"
+                                    >
+                                        Start Practice
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {isGrade10Math && isAlgebraicExpressionsTopic(selectedTopic.name) && (
+                        <div className="mb-6 bg-indigo-50 border border-indigo-200 rounded-lg p-4">
+                            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                                <div>
+                                    <h4 className="font-semibold text-indigo-900">1. Algebraic expressions</h4>
+                                    <p className="text-sm text-indigo-800">Term 1. Choose a mode to begin. Scaffold builds method step-by-step; Practice gives varied questions. Covers real number system, rounding, surds estimation, expanding, and factorisation.</p>
+                                </div>
+                                <div className="flex flex-col sm:flex-row gap-2">
+                                    <button
+                                        onClick={() => navigateToWorkspaceWithMode('grade10_algebraic_expressions_scaffold', 'Algebraic expressions • Scaffold')}
+                                        className="px-4 py-2 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700"
+                                    >
+                                        Start Scaffold
+                                    </button>
+                                    <button
+                                        onClick={() => navigateToWorkspaceWithMode('grade10_algebraic_expressions_practice', 'Algebraic expressions • Practice')}
+                                        className="px-4 py-2 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700"
+                                    >
+                                        Start Practice
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {isGrade10Math && isExponentsTopic(selectedTopic.name) && (
+                        <div className="mb-6 bg-indigo-50 border border-indigo-200 rounded-lg p-4">
+                            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                                <div>
+                                    <h4 className="font-semibold text-indigo-900">2. Exponents</h4>
+                                    <p className="text-sm text-indigo-800">Term 1. Choose a mode to begin. Scaffold builds method step-by-step; Practice gives varied questions. Covers laws of exponents, zero/negative exponents, rational exponents, and simplification strategies.</p>
+                                </div>
+                                <div className="flex flex-col sm:flex-row gap-2">
+                                    <button
+                                        onClick={() => navigateToWorkspaceWithMode('grade10_exponents_scaffold', 'Exponents • Scaffold')}
+                                        className="px-4 py-2 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700"
+                                    >
+                                        Start Scaffold
+                                    </button>
+                                    <button
+                                        onClick={() => navigateToWorkspaceWithMode('grade10_exponents_practice', 'Exponents • Practice')}
+                                        className="px-4 py-2 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700"
+                                    >
+                                        Start Practice
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {isGrade10Math && isPatternsSequencesTopic(selectedTopic.name) && (
+                        <div className="mb-6 bg-indigo-50 border border-indigo-200 rounded-lg p-4">
+                            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                                <div>
+                                    <h4 className="font-semibold text-indigo-900">3 Patterns and sequences</h4>
+                                    <p className="text-sm text-indigo-800">Term 1. Choose a mode to begin. Scaffold builds method step-by-step; Practice gives varied questions. Covers arithmetic and geometric patterns, nth term T_n, and linear patterns from situations.</p>
+                                </div>
+                                <div className="flex flex-col sm:flex-row gap-2">
+                                    <button
+                                        onClick={() => navigateToWorkspaceWithMode('grade10_patterns_sequences_scaffold', 'Patterns and sequences • Scaffold')}
+                                        className="px-4 py-2 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700"
+                                    >
+                                        Start Scaffold
+                                    </button>
+                                    <button
+                                        onClick={() => navigateToWorkspaceWithMode('grade10_patterns_sequences_practice', 'Patterns and sequences • Practice')}
+                                        className="px-4 py-2 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700"
+                                    >
+                                        Start Practice
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {isGrade10Math && isEquationsInequalitiesTopic(selectedTopic.name) && (
+                        <div className="mb-6 bg-indigo-50 border border-indigo-200 rounded-lg p-4">
+                            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                                <div>
+                                    <h4 className="font-semibold text-indigo-900">4 Equations and inequalities</h4>
+                                    <p className="text-sm text-indigo-800">Term 1. Choose a mode to begin. Scaffold builds method step-by-step; Practice gives varied questions. Covers linear equations, solving by factorisation, simultaneous equations, literal equations, and linear inequalities.</p>
+                                </div>
+                                <div className="flex flex-col sm:flex-row gap-2">
+                                    <button
+                                        onClick={() => navigateToWorkspaceWithMode('grade10_equations_inequalities_scaffold', 'Equations and inequalities • Scaffold')}
+                                        className="px-4 py-2 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700"
+                                    >
+                                        Start Scaffold
+                                    </button>
+                                    <button
+                                        onClick={() => navigateToWorkspaceWithMode('grade10_equations_inequalities_practice', 'Equations and inequalities • Practice')}
+                                        className="px-4 py-2 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700"
+                                    >
+                                        Start Practice
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {isGrade10Math && isTrigonometry1Topic(selectedTopic.name) && (
+                        <div className="mb-6 bg-indigo-50 border border-indigo-200 rounded-lg p-4">
+                            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                                <div>
+                                    <h4 className="font-semibold text-indigo-900">5 Trigonometry 1</h4>
+                                    <p className="text-sm text-indigo-800">Term 1. Choose a mode to begin. Scaffold builds method step-by-step (includes calculator procedure); Practice gives varied questions. Covers trig ratios in right-angled triangles, special angles, and solving for sides/angles using inverse trig.</p>
+                                </div>
+                                <div className="flex flex-col sm:flex-row gap-2">
+                                    <button
+                                        onClick={() => navigateToWorkspaceWithMode('grade10_trigonometry_1_scaffold', 'Trigonometry 1 • Scaffold')}
+                                        className="px-4 py-2 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700"
+                                    >
+                                        Start Scaffold
+                                    </button>
+                                    <button
+                                        onClick={() => navigateToWorkspaceWithMode('grade10_trigonometry_1_practice', 'Trigonometry 1 • Practice')}
+                                        className="px-4 py-2 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700"
+                                    >
+                                        Start Practice
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {isGrade10Accounting && isGrade10IndigenousBookkeepingTopic(selectedTopic.name) && (
+                        <div className="mb-6 bg-indigo-50 border border-indigo-200 rounded-lg p-4">
+                            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                                <div>
+                                    <h4 className="font-semibold text-indigo-900">1 Informal / Indigenous bookkeeping</h4>
+                                    <p className="text-sm text-indigo-800">Term 1. Differences between informal and formal bookkeeping; plan an informal business; compare systems using tables.</p>
+                                </div>
+                                <div className="flex flex-col sm:flex-row gap-2">
+                                    <button
+                                        onClick={() => navigateToWorkspaceWithMode('grade10_accounting_indigenous_scaffold', 'Informal / Indigenous bookkeeping • Scaffold')}
+                                        className="px-4 py-2 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700"
+                                    >
+                                        Start Scaffold
+                                    </button>
+                                    <button
+                                        onClick={() => navigateToWorkspaceWithMode('grade10_accounting_indigenous_practice', 'Informal / Indigenous bookkeeping • Practice')}
+                                        className="px-4 py-2 bg-white text-indigo-700 border border-indigo-300 rounded-lg font-semibold hover:bg-indigo-50"
+                                    >
+                                        Start Practice
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {isGrade10Accounting && isGrade10EthicsTopic(selectedTopic.name) && (
+                        <div className="mb-6 bg-indigo-50 border border-indigo-200 rounded-lg p-4">
+                            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                                <div>
+                                    <h4 className="font-semibold text-indigo-900">2 Ethics</h4>
+                                    <p className="text-sm text-indigo-800">Term 1. Code of ethics, principles (integrity, accountability, transparency, objectivity, etc.), and ethical leadership. Includes a matching-columns activity.</p>
+                                </div>
+                                <div className="flex flex-col sm:flex-row gap-2">
+                                    <button
+                                        onClick={() => navigateToWorkspaceWithMode('grade10_accounting_ethics_scaffold', 'Ethics • Scaffold')}
+                                        className="px-4 py-2 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700"
+                                    >
+                                        Start Scaffold
+                                    </button>
+                                    <button
+                                        onClick={() => navigateToWorkspaceWithMode('grade10_accounting_ethics_practice', 'Ethics • Practice')}
+                                        className="px-4 py-2 bg-white text-indigo-700 border border-indigo-300 rounded-lg font-semibold hover:bg-indigo-50"
+                                    >
+                                        Start Practice
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {isGrade10Accounting && isGrade10GAAPTopic(selectedTopic.name) && (
+                        <div className="mb-6 bg-indigo-50 border border-indigo-200 rounded-lg p-4">
+                            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                                <div>
+                                    <h4 className="font-semibold text-indigo-900">3 Accounting principles (GAAP)</h4>
+                                    <p className="text-sm text-indigo-800">Term 1. What GAAP is, why it matters, and the key principles (historical cost, prudence, materiality, business entity, going concern, matching). Includes matching-columns practice.</p>
+                                </div>
+                                <div className="flex flex-col sm:flex-row gap-2">
+                                    <button
+                                        onClick={() => navigateToWorkspaceWithMode('grade10_accounting_gaap_scaffold', 'Accounting principles (GAAP) • Scaffold')}
+                                        className="px-4 py-2 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700"
+                                    >
+                                        Start Scaffold
+                                    </button>
+                                    <button
+                                        onClick={() => navigateToWorkspaceWithMode('grade10_accounting_gaap_practice', 'Accounting principles (GAAP) • Practice')}
+                                        className="px-4 py-2 bg-white text-indigo-700 border border-indigo-300 rounded-lg font-semibold hover:bg-indigo-50"
+                                    >
+                                        Start Practice
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {isGrade10Accounting && isGrade10InternalControlsTopic(selectedTopic.name) && (
+                        <div className="mb-6 bg-indigo-50 border border-indigo-200 rounded-lg p-4">
+                            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                                <div>
+                                    <h4 className="font-semibold text-indigo-900">4 Internal controls</h4>
+                                    <p className="text-sm text-indigo-800">Term 1. Define internal controls, understand the control process, and apply controls to stock, debtors, creditors, fixed assets, consumables, and cash (CRJ/CPJ/PCJ). Includes a delivery-service scenario.</p>
+                                </div>
+                                <div className="flex flex-col sm:flex-row gap-2">
+                                    <button
+                                        onClick={() => navigateToWorkspaceWithMode('grade10_accounting_internal_control_scaffold', 'Internal controls • Scaffold')}
+                                        className="px-4 py-2 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700"
+                                    >
+                                        Start Scaffold
+                                    </button>
+                                    <button
+                                        onClick={() => navigateToWorkspaceWithMode('grade10_accounting_internal_control_practice', 'Internal controls • Practice')}
+                                        className="px-4 py-2 bg-white text-indigo-700 border border-indigo-300 rounded-lg font-semibold hover:bg-indigo-50"
+                                    >
+                                        Start Practice
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {isGrade10Accounting && isGrade10SoleTraderTopic(selectedTopic.name) && (
+                        <div className="mb-6 bg-indigo-50 border border-indigo-200 rounded-lg p-4">
+                            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                                <div>
+                                    <h4 className="font-semibold text-indigo-900">5 Financial accounting and bookkeeping of a sole trader</h4>
+                                    <p className="text-sm text-indigo-800">Term 2. Core accounting concepts and the accounting equation, bookkeeping cycle, and subsidiary journals (CRJ/CPJ/DJ/DAJ/CJ/CAJ/PCJ/GJ). Includes interactive journal practice.</p>
+                                </div>
+                                <div className="flex flex-col sm:flex-row gap-2">
+                                    <button
+                                        onClick={() => navigateToWorkspaceWithMode('grade10_accounting_sole_trader_scaffold', 'Financial accounting and bookkeeping of a sole trader • Scaffold')}
+                                        className="px-4 py-2 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700"
+                                    >
+                                        Start Scaffold
+                                    </button>
+                                    <button
+                                        onClick={() => navigateToWorkspaceWithMode('grade10_accounting_sole_trader_practice', 'Financial accounting and bookkeeping of a sole trader • Practice')}
+                                        className="px-4 py-2 bg-white text-indigo-700 border border-indigo-300 rounded-lg font-semibold hover:bg-indigo-50"
+                                    >
+                                        Start Practice
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {isGrade11Accounting && (
+                        <div className="mb-6 bg-indigo-50 border border-indigo-200 rounded-lg p-4">
+                            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                                <div>
+                                    <h4 className="font-semibold text-indigo-900">Grade 11 Accounting</h4>
+                                    <p className="text-sm text-indigo-800">Choose a mode to begin. Scaffold generates one question at a time with marking and hints; Practice generates a mixed set across Concepts, Fixed assets, Partnerships (ledger & balance sheet), Reconciliation, and Income Statement.</p>
+                                </div>
+                                <div className="flex flex-col sm:flex-row gap-2">
+                                    <button
+                                        onClick={() => navigateToWorkspaceWithMode('grade11_accounting_scaffold', 'Grade 11 Accounting • Scaffold')}
+                                        className="px-4 py-2 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700"
+                                    >
+                                        Start Scaffold
+                                    </button>
+                                    <button
+                                        onClick={() => navigateToWorkspaceWithMode('grade11_accounting_practice', 'Grade 11 Accounting • Practice')}
+                                        className="px-4 py-2 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700"
+                                    >
+                                        Start Practice
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {isGrade12Accounting && (
+                        <div className="mb-6 bg-indigo-50 border border-indigo-200 rounded-lg p-4">
+                            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                                <div>
+                                    <h4 className="font-semibold text-indigo-900">Grade 12 Accounting</h4>
+                                    <p className="text-sm text-indigo-800">Choose a mode to begin. Scaffold generates one question at a time with marking and hints; Practice generates a mixed set across Concepts, Audits/Governance/Shareholding, Company General Ledger, Financial Statements & Notes, Cash Flow, and Analysis & Interpretation.</p>
+                                </div>
+                                <div className="flex flex-col sm:flex-row gap-2">
+                                    <button
+                                        onClick={() => navigateToWorkspaceWithMode('grade12_accounting_scaffold', 'Grade 12 Accounting • Scaffold')}
+                                        className="px-4 py-2 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700"
+                                    >
+                                        Start Scaffold
+                                    </button>
+                                    <button
+                                        onClick={() => navigateToWorkspaceWithMode('grade12_accounting_practice', 'Grade 12 Accounting • Practice')}
+                                        className="px-4 py-2 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700"
+                                    >
+                                        Start Practice
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {isGrade11Math && isExponentsSurdsTopic(selectedTopic.name) && (
+                        <div className="mb-6 bg-indigo-50 border border-indigo-200 rounded-lg p-4">
+                            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                                <div>
+                                    <h4 className="font-semibold text-indigo-900">1 Exponents and surds</h4>
+                                    <p className="text-sm text-indigo-800">Term 1. Choose a mode to begin. Scaffold builds method step-by-step; Practice gives varied questions. Covers laws of exponents, rational exponents, surds, rationalising denominators, and applications of exponentials.</p>
+                                </div>
+                                <div className="flex flex-col sm:flex-row gap-2">
+                                    <button
+                                        onClick={() => navigateToWorkspaceWithMode('grade11_exponents_surds_scaffold', 'Exponents and surds • Scaffold')}
+                                        className="px-4 py-2 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700"
+                                    >
+                                        Start Scaffold
+                                    </button>
+                                    <button
+                                        onClick={() => navigateToWorkspaceWithMode('grade11_exponents_surds_practice', 'Exponents and surds • Practice')}
+                                        className="px-4 py-2 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700"
+                                    >
+                                        Start Practice
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {isGrade11Math && isEquationsInequalitiesTopic(selectedTopic.name) && (
+                        <div className="mb-6 bg-indigo-50 border border-indigo-200 rounded-lg p-4">
+                            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                                <div>
+                                    <h4 className="font-semibold text-indigo-900">2 Equations and inequalities</h4>
+                                    <p className="text-sm text-indigo-800">Term 1. Choose a mode to begin. Scaffold builds method step-by-step; Practice gives varied questions. Covers solving quadratic equations and inequalities (including completing the square and quadratic formula) and simultaneous equations.</p>
+                                </div>
+                                <div className="flex flex-col sm:flex-row gap-2">
+                                    <button
+                                        onClick={() => navigateToWorkspaceWithMode('grade11_equations_inequalities_scaffold', 'Equations and inequalities • Scaffold')}
+                                        className="px-4 py-2 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700"
+                                    >
+                                        Start Scaffold
+                                    </button>
+                                    <button
+                                        onClick={() => navigateToWorkspaceWithMode('grade11_equations_inequalities_practice', 'Equations and inequalities • Practice')}
+                                        className="px-4 py-2 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700"
+                                    >
+                                        Start Practice
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {isGrade11Math && isPatternsSequencesTopic(selectedTopic.name) && (
+                        <div className="mb-6 bg-indigo-50 border border-indigo-200 rounded-lg p-4">
+                            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                                <div>
+                                    <h4 className="font-semibold text-indigo-900">3 Patterns and sequences</h4>
+                                    <p className="text-sm text-indigo-800">Term 1. Choose a mode to begin. Scaffold builds method step-by-step; Practice gives varied questions. Covers arithmetic & quadratic sequences, differences, and nth term T_n.</p>
+                                </div>
+                                <div className="flex flex-col sm:flex-row gap-2">
+                                    <button
+                                        onClick={() => navigateToWorkspaceWithMode('grade11_patterns_sequences_scaffold', 'Patterns and sequences • Scaffold')}
+                                        className="px-4 py-2 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700"
+                                    >
+                                        Start Scaffold
+                                    </button>
+                                    <button
+                                        onClick={() => navigateToWorkspaceWithMode('grade11_patterns_sequences_practice', 'Patterns and sequences • Practice')}
+                                        className="px-4 py-2 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700"
+                                    >
+                                        Start Practice
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {isGrade11Math && isAnalyticalGeometryTopic(selectedTopic.name) && (
+                        <div className="mb-6 bg-indigo-50 border border-indigo-200 rounded-lg p-4">
+                            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                                <div>
+                                    <h4 className="font-semibold text-indigo-900">4 Analytical geometry</h4>
+                                    <p className="text-sm text-indigo-800">Term 1. Choose a mode to begin. Scaffold builds method step-by-step; Practice gives varied questions. Covers distance, midpoint, gradients, equations of straight lines, and parallel/perpendicular lines.</p>
+                                </div>
+                                <div className="flex flex-col sm:flex-row gap-2">
+                                    <button
+                                        onClick={() => navigateToWorkspaceWithMode('grade11_analytical_geometry_scaffold', 'Analytical geometry • Scaffold')}
+                                        className="px-4 py-2 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700"
+                                    >
+                                        Start Scaffold
+                                    </button>
+                                    <button
+                                        onClick={() => navigateToWorkspaceWithMode('grade11_analytical_geometry_practice', 'Analytical geometry • Practice')}
+                                        className="px-4 py-2 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700"
+                                    >
+                                        Start Practice
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {isGrade7Math && isExponentsTopic(selectedTopic.name) && (
+                        <div className="mb-6 bg-indigo-50 border border-indigo-200 rounded-lg p-4">
+                            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                                <div>
+                                    <h4 className="font-semibold text-indigo-900">Exponents</h4>
+                                    <p className="text-sm text-indigo-800">Scaffold builds method step-by-step (no calculator). Practice reinforces with mixed question types.</p>
+                                </div>
+                                <div className="flex flex-col sm:flex-row gap-2">
+                                    <button
+                                        onClick={() => navigateToWorkspaceWithMode('grade7_exponents_scaffold', 'Exponents • Scaffold')}
+                                        className="px-4 py-2 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700"
+                                    >
+                                        Start Scaffold
+                                    </button>
+                                    <button
+                                        onClick={() => navigateToWorkspaceWithMode('grade7_exponents_practice', 'Exponents • Practice')}
+                                        className="px-4 py-2 bg-white text-indigo-700 border border-indigo-300 rounded-lg font-semibold hover:bg-indigo-50"
+                                    >
+                                        Start Practice
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {isGrade7Math && isGeoConstructionTopic(selectedTopic.name) && (
+                        <div className="mb-6 bg-indigo-50 border border-indigo-200 rounded-lg p-4">
+                            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                                <div>
+                                    <h4 className="font-semibold text-indigo-900">Construction of Geometric Figures</h4>
+                                    <p className="text-sm text-indigo-800">Scaffold builds method step-by-step (no calculator). Practice reinforces with mixed question types.</p>
+                                </div>
+                                <div className="flex flex-col sm:flex-row gap-2">
+                                    <button
+                                        onClick={() => navigateToWorkspaceWithMode('grade7_geo_construct_scaffold', 'Construction of Geometric Figures • Scaffold')}
+                                        className="px-4 py-2 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700"
+                                    >
+                                        Start Scaffold
+                                    </button>
+                                    <button
+                                        onClick={() => navigateToWorkspaceWithMode('grade7_geo_construct_practice', 'Construction of Geometric Figures • Practice')}
+                                        className="px-4 py-2 bg-white text-indigo-700 border border-indigo-300 rounded-lg font-semibold hover:bg-indigo-50"
+                                    >
+                                        Start Practice
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {isGrade7Math && isGeo2DShapesTopic(selectedTopic.name) && (
+                        <div className="mb-6 bg-indigo-50 border border-indigo-200 rounded-lg p-4">
+                            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                                <div>
+                                    <h4 className="font-semibold text-indigo-900">Geometry of 2D shapes</h4>
+                                    <p className="text-sm text-indigo-800">Scaffold builds method step-by-step (no calculator). Practice reinforces with mixed question types.</p>
+                                </div>
+                                <div className="flex flex-col sm:flex-row gap-2">
+                                    <button
+                                        onClick={() => navigateToWorkspaceWithMode('grade7_geo2d_scaffold', 'Geometry of 2D shapes • Scaffold')}
+                                        className="px-4 py-2 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700"
+                                    >
+                                        Start Scaffold
+                                    </button>
+                                    <button
+                                        onClick={() => navigateToWorkspaceWithMode('grade7_geo2d_practice', 'Geometry of 2D shapes • Practice')}
+                                        className="px-4 py-2 bg-white text-indigo-700 border border-indigo-300 rounded-lg font-semibold hover:bg-indigo-50"
+                                    >
+                                        Start Practice
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {isGrade7Math && isGeoStraightLinesTopic(selectedTopic.name) && (
+                        <div className="mb-6 bg-indigo-50 border border-indigo-200 rounded-lg p-4">
+                            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                                <div>
+                                    <h4 className="font-semibold text-indigo-900">Geometry of straight lines</h4>
+                                    <p className="text-sm text-indigo-800">Scaffold builds method step-by-step (no calculator). Practice reinforces with mixed question types.</p>
+                                </div>
+                                <div className="flex flex-col sm:flex-row gap-2">
+                                    <button
+                                        onClick={() => navigateToWorkspaceWithMode('grade7_straight_lines_scaffold', 'Geometry of straight lines • Scaffold')}
+                                        className="px-4 py-2 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700"
+                                    >
+                                        Start Scaffold
+                                    </button>
+                                    <button
+                                        onClick={() => navigateToWorkspaceWithMode('grade7_straight_lines_practice', 'Geometry of straight lines • Practice')}
+                                        className="px-4 py-2 bg-white text-indigo-700 border border-indigo-300 rounded-lg font-semibold hover:bg-indigo-50"
+                                    >
+                                        Start Practice
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    <div className="flex flex-wrap gap-3 mb-6">
+                        <button onClick={() => setShowTopicSummary(p => !p)} className="flex items-center space-x-2 px-4 py-2 bg-blue-500 text-white rounded-full text-sm font-semibold hover:bg-blue-600 shadow-md">
+                            <FileText size={16} />
+                            <span>Topic Summary</span>
+                        </button>
+                        <button onClick={() => handleTutorMe({ type: 'topic', data: selectedTopic })} className="flex items-center space-x-2 px-4 py-2 bg-orange-500 text-white rounded-full text-sm font-semibold hover:bg-orange-600 shadow-md">
+                            <BrainCircuit size={16} />
+                            <span>Tutor Me</span>
+                        </button>
+                        {!((
+                            (isGrade7Math && (isWholeNumbersTopic(selectedTopic?.name) || isExponentsTopic(selectedTopic?.name) || isGeoConstructionTopic(selectedTopic?.name) || isGeo2DShapesTopic(selectedTopic?.name) || isGeoStraightLinesTopic(selectedTopic?.name)))
+                            || (isGrade8Math && (isWholeNumbersTopic(selectedTopic?.name) || isIntegersTopic(selectedTopic?.name) || isExponentsTopic(selectedTopic?.name) || isPatternsTopic(selectedTopic?.name) || isFunctionsRelationshipsTopic(selectedTopic?.name) || isAlgebraicExpressionsTopic(selectedTopic?.name) || isAlgebraicEquationsTopic(selectedTopic?.name)))
+                            || (isGrade9Math && (isWholeNumbersTopic(selectedTopic?.name) || isIntegersTopic(selectedTopic?.name) || isFractionsTopic(selectedTopic?.name) || isDecimalNotationTopic(selectedTopic?.name) || isExponentsTopic(selectedTopic?.name) || isPatternsTopic(selectedTopic?.name)))
+                        )) && (
+                                <button onClick={() => setShowQuestionInput(p => !p)} className="flex items-center space-x-2 px-4 py-2 bg-green-500 text-white rounded-full text-sm font-semibold hover:bg-blue-600 shadow-md">
+                                    <ClipboardEdit size={16} />
+                                    <span>Generate Practice Questions</span>
+                                </button>
+                            )}
+                        <button onClick={() => setShowMathComponentsRepository(p => !p)} className="flex items-center space-x-2 px-4 py-2 bg-purple-500 text-white rounded-full text-sm font-semibold hover:bg-purple-600 shadow-md">
+                            <FunctionSquare size={16} />
+                            <span>Mathematical Visual Aids</span>
+                        </button>
+
+                        {/* Component Repository Access - Small, unobtrusive buttons */}
+                        {getAvailableRepositories().length > 0 && (
+                            <div className="p-2 bg-gray-50 rounded border border-gray-200">
+                                <p className="text-xs text-gray-600 mb-2 font-medium">Reference Tools:</p>
+                                <div className="flex flex-wrap gap-2">
+                                    {getAvailableRepositories().map(repo => (
+                                        <button
+                                            key={repo.key}
+                                            onClick={repo.onClick}
+                                            className="flex items-center space-x-1 bg-white text-gray-700 px-2 py-1 rounded border border-gray-300 hover:bg-gray-100 hover:border-gray-400 transition-colors duration-200 text-xs"
+                                            title={`Open ${repo.name}`}
+                                        >
+                                            <repo.icon size={14} />
+                                            <span>{repo.name}</span>
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
+                    </div>
+                    {showTopicSummary && (
+                        <div className="bg-blue-50 p-4 rounded-lg border border-blue-200 mb-6">
+                            <h4 className="font-semibold text-blue-800 mb-2">Summary of {selectedTopicDisplayName}:</h4>
+                            <p className="text-gray-700 text-sm">{selectedTopic.overview || "No summary."}</p>
+                        </div>
+                    )}
+                    <h4 className="font-bold text-gray-800 mt-6 mb-4 text-xl">Subtopics:</h4>
+                    {/* Subtopics are not extracted from filenames, so this will likely be empty for now */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        {selectedTopic.subtopics && selectedTopic.subtopics.length > 0 ? selectedTopic.subtopics.map(subtopic => (
+                            <div key={subtopic} className="bg-gray-50 p-4 rounded-lg border border-gray-200 flex flex-col justify-between">
+                                <p className="font-medium text-gray-800 text-lg mb-3">{subtopic}</p>
+                                <div className="flex flex-wrap gap-2">
+                                    <button
+                                        onClick={() => handleTutorMe({ type: 'subtopic', data: subtopic })}
+                                        className="flex-1 p-2 bg-orange-100 hover:bg-orange-200 rounded-md text-orange-700 text-sm font-semibold flex items-center justify-center space-x-1"
+                                    >
+                                        <BrainCircuit size={16} />
+                                        <span>Tutor Me</span>
+                                    </button>
+                                    <button
+                                        onClick={() => handleGenerateQuestions({ type: 'subtopic', data: subtopic })}
+                                        disabled={loading}
+                                        className="flex-1 p-2 bg-blue-100 hover:bg-blue-200 rounded-md text-blue-700 text-sm font-semibold flex items-center justify-center space-x-1"
+                                    >
+                                        <ClipboardEdit size={16} />
+                                        <span>Generate Questions</span>
+                                    </button>
+                                </div>
+                            </div>
+                        )) : <p>No subtopics.</p>}
+                    </div>
+                </>
+            )}
+
+            {/* Mathematical Visual Aids Repository - Full Screen */}
+            {showMathComponentsRepository && (
+                <div className="fixed inset-0 bg-white z-50 flex flex-col">
+                    <div className="flex items-center justify-between p-6 border-b border-gray-200 bg-white">
+                        <h2 className="text-2xl font-bold text-gray-800">Mathematical Visual Aids</h2>
+                        <button
+                            onClick={() => setShowMathComponentsRepository(false)}
+                            className="flex items-center space-x-2 px-4 py-2 text-gray-600 hover:text-gray-800 hover:bg-gray-100 rounded-lg transition-colors"
+                        >
+                            <X className="h-5 w-5" />
+                            <span>Close</span>
+                        </button>
+                    </div>
+                    <div className="flex-1 overflow-y-auto p-6">
+                        <MathematicalVisualAids
+                            onComponentSelect={(component) => {
+                                // Close the Mathematical Visual Aids modal
+                                setShowMathComponentsRepository(false);
+
+                                // Store the selected component to show in Curriculum Helper
+                                setSelectedComponent(component);
+                                setIsComponentOverlayVisible(true);
+                            }}
+                        />
+                    </div>
+                </div>
+            )}
+
+            {/* Component Overlay */}
+            <ComponentOverlay
+                selectedComponent={selectedComponent}
+                isVisible={isComponentOverlayVisible}
+                isFullscreen={isComponentFullscreen}
+                onClose={() => {
+                    setIsComponentOverlayVisible(false);
+                    setSelectedComponent(null);
+                    setIsComponentFullscreen(false);
+                    // Reopen the Mathematical Visual Aids selection screen
+                    setShowMathComponentsRepository(true);
+                }}
+                onToggleFullscreen={() => setIsComponentFullscreen(!isComponentFullscreen)}
+                setView={setView}
+            />
+        </div>
+    );
+});
+
+export default CurriculumHelper;

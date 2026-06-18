@@ -1,0 +1,543 @@
+import React from 'react';
+import Grade11AccountingScaffold from '../grade11/accounting/Grade11AccountingScaffold';
+import Grade11ExponentsSurdsScaffold from '../grade11/mathematics/exponents-surds/Grade11ExponentsSurdsScaffold';
+import Grade11ExponentsSurdsPractice from '../grade11/mathematics/exponents-surds/Grade11ExponentsSurdsPractice';
+import Grade11EquationsInequalitiesScaffold from '../grade11/mathematics/equations-inequalities/Grade11EquationsInequalitiesScaffold';
+import Grade11EquationsInequalitiesPractice from '../grade11/mathematics/equations-inequalities/Grade11EquationsInequalitiesPractice';
+import Grade11PatternsSequencesScaffold from '../grade11/mathematics/patterns-sequences/Grade11PatternsSequencesScaffold';
+import Grade11PatternsSequencesPractice from '../grade11/mathematics/patterns-sequences/Grade11PatternsSequencesPractice';
+import Grade11AnalyticalGeometryScaffold from '../grade11/mathematics/analytical-geometry/Grade11AnalyticalGeometryScaffold';
+import Grade11AnalyticalGeometryPractice from '../grade11/mathematics/analytical-geometry/Grade11AnalyticalGeometryPractice';
+
+import { useGrade11AccountingController, Grade11AccountingVisualAids } from '../grade11/accounting';
+import { useGrade11ExponentsSurdsController, ExponentsSurdsVisualAids as Grade11ExponentsSurdsVisualAids } from '../grade11/mathematics/exponents-surds';
+import { useGrade11EquationsInequalitiesController, EquationsInequalitiesVisualAids as Grade11EquationsInequalitiesVisualAids } from '../grade11/mathematics/equations-inequalities';
+import { useGrade11PatternsSequencesController, PatternsSequencesVisualAids as Grade11PatternsSequencesVisualAids } from '../grade11/mathematics/patterns-sequences';
+import { useGrade11AnalyticalGeometryController, AnalyticalGeometryVisualAids as Grade11AnalyticalGeometryVisualAids } from '../grade11/mathematics/analytical-geometry';
+
+import WorkspaceModeShell from '../shared/WorkspaceModeShell';
+import EvaluatedWorkspaceModeShell from '../shared/EvaluatedWorkspaceModeShell';
+
+const h = React.createElement;
+
+const Grade11AccountingRoute = ({ workspaceMode, ctx, subskills, defaultSubskill }) => {
+    const controller = useGrade11AccountingController({ workspaceMode, buildApiUrl: ctx.buildApiUrl, subskills, defaultSubskill });
+
+    // State for Practice Navigation
+    const [practiceIndex, setPracticeIndex] = React.useState(0);
+
+    // Reset index when mode or subskill changes
+    React.useEffect(() => {
+        setPracticeIndex(0);
+    }, [workspaceMode, controller.practiceSubskill]);
+
+    // Derived current question for practice
+    const currentPracticeQuestion = controller.practiceQuestions?.[practiceIndex];
+
+    const renderGrade11AccountingVisualAids = () => h(Grade11AccountingVisualAids, {
+        visualAidsTab: controller.visualAidsTab,
+        setVisualAidsTab: controller.setVisualAidsTab,
+        setVisualAidsOpen: controller.setVisualAidsOpen,
+    });
+
+    const commonShellProps = {
+        availableModes: ['scaffold', 'practice', 'marking'],
+        subskills: controller.subskills,
+        difficulty: workspaceMode.endsWith('_scaffold') ? controller.scaffoldDifficulty : controller.practiceDifficulty,
+        setDifficulty: workspaceMode.endsWith('_scaffold') ? controller.setScaffoldDifficulty : controller.setPracticeDifficulty,
+        subskill: workspaceMode.endsWith('_scaffold') ? controller.scaffoldSubskill : controller.practiceSubskill,
+        setSubskill: workspaceMode.endsWith('_scaffold') ? controller.setScaffoldSubskill : controller.setPracticeSubskill,
+        onGenerate: (config) => {
+            if (workspaceMode.endsWith('_scaffold')) {
+                controller.fetchScaffoldQuestion({
+                    difficulty: config.difficulty,
+                    subskill: config.subskill,
+                    seed: controller.scaffoldSeed
+                });
+            } else {
+                controller.fetchPractice({
+                    difficulty: config.difficulty,
+                    subskill: config.subskill,
+                    seed: controller.practiceSeed
+                });
+            }
+        }
+    };
+
+    if (workspaceMode.includes('_accounting_') && (workspaceMode.endsWith('_scaffold') || workspaceMode.endsWith('_marking'))) {
+        return h(EvaluatedWorkspaceModeShell, {
+            workspaceMode,
+            setWorkspaceMode: ctx.setWorkspaceMode,
+            onBack: ctx.onBack,
+            selectedSubject: ctx.selectedSubject,
+            selectedGrade: ctx.selectedGrade,
+            topic: ctx.topic,
+            question: controller.scaffoldQuestion,
+            userAnswersCells: controller.scaffoldAnswer?.cells || {},
+            questionSlot: h('div', { className: "prose prose-sm max-w-none text-gray-900" }, [
+                h('h3', { key: 'title', className: "text-lg font-semibold mb-2" }, controller.scaffoldQuestion?.title || 'Question'),
+                h('div', { key: 'prompt', className: "whitespace-pre-wrap" }, controller.scaffoldQuestion?.prompt)
+            ]),
+            onNext: () => {
+                controller.fetchScaffoldQuestion({
+                    difficulty: controller.scaffoldDifficulty,
+                    subskill: controller.scaffoldSubskill,
+                    seed: Math.random()
+                });
+            },
+            renderVisualAids: renderGrade11AccountingVisualAids,
+
+            ...commonShellProps,
+        }, h(Grade11AccountingScaffold, {
+            isMarkingEnv: workspaceMode.endsWith('_marking'),
+            onBack: ctx.onBack,
+            subskills: controller.subskills,
+            g11AcctVisualAidsOpen: controller.visualAidsOpen,
+            setG11AcctVisualAidsOpen: controller.setVisualAidsOpen,
+            g11AcctScaffoldDifficulty: controller.scaffoldDifficulty,
+            setG11AcctScaffoldDifficulty: controller.setScaffoldDifficulty,
+            g11AcctScaffoldSubskill: controller.scaffoldSubskill,
+            setG11AcctScaffoldSubskill: controller.setScaffoldSubskill,
+            g11AcctScaffoldSeed: controller.scaffoldSeed,
+            setG11AcctScaffoldSeed: controller.setScaffoldSeed,
+            fetchGrade11AccountingScaffoldQuestion: controller.fetchScaffoldQuestion,
+            g11AcctScaffoldLoading: controller.scaffoldLoading,
+            g11AcctScaffoldError: controller.scaffoldError,
+            g11AcctScaffoldQuestion: controller.scaffoldQuestion,
+            g11AcctScaffoldAnswer: controller.scaffoldAnswer,
+            setG11AcctScaffoldAnswer: controller.setScaffoldAnswer,
+            g11AcctScaffoldFeedback: controller.scaffoldFeedback,
+            setG11AcctScaffoldFeedback: controller.setScaffoldFeedback,
+            g11AcctScaffoldShowHint: controller.scaffoldShowHint,
+            setG11AcctScaffoldShowHint: controller.setScaffoldShowHint,
+            renderGrade11AccountingVisualAids,
+            hideConfig: true,
+            // Pass next/prev handlers if Scaffold supports stepping?
+            // Scaffold usually has internal stepping if it's a multi-step problem.
+        }));
+    }
+
+    // State for Practice Navigation
+    if (workspaceMode.includes('_accounting_') && workspaceMode.endsWith('_practice')) {
+        return h(WorkspaceModeShell, {
+            workspaceMode,
+            setWorkspaceMode: ctx.setWorkspaceMode,
+            onBack: ctx.onBack,
+            selectedSubject: ctx.selectedSubject,
+            selectedGrade: ctx.selectedGrade,
+            topic: ctx.topic,
+            ...commonShellProps,
+            renderVisualAids: renderGrade11AccountingVisualAids,
+            questionSlot: h('div', { className: "prose prose-sm max-w-none text-gray-900" }, [
+                h('h3', { className: "text-lg font-semibold mb-2" }, `Question ${practiceIndex + 1}`),
+                h('div', { className: "whitespace-pre-wrap" }, currentPracticeQuestion?.prompt || 'Loading...')
+            ]),
+            onNext: () => {
+                if (controller.practiceQuestions && practiceIndex < controller.practiceQuestions.length - 1) {
+                    setPracticeIndex(prev => prev + 1);
+                }
+            },
+            onPrevious: () => {
+                if (practiceIndex > 0) {
+                    setPracticeIndex(prev => prev - 1);
+                }
+            },
+            // Disable buttons if at ends
+            canGoNext: controller.practiceQuestions && practiceIndex < controller.practiceQuestions.length - 1,
+            canGoPrevious: practiceIndex > 0,
+
+        }, h(Grade11AccountingPractice, {
+            onBack: ctx.onBack,
+            subskills: controller.subskills,
+            g11AcctVisualAidsOpen: controller.visualAidsOpen,
+            setG11AcctVisualAidsOpen: controller.setVisualAidsOpen,
+            g11AcctPracticeDifficulty: controller.practiceDifficulty,
+            setG11AcctPracticeDifficulty: controller.setPracticeDifficulty,
+            g11AcctPracticeSubskill: controller.practiceSubskill,
+            setG11AcctPracticeSubskill: controller.setPracticeSubskill,
+            g11AcctPracticeSeed: controller.practiceSeed,
+            setG11AcctPracticeSeed: controller.setPracticeSeed,
+            fetchGrade11AccountingPractice: (params) => {
+                // When fetching new practice, reset index
+                setPracticeIndex(0);
+                controller.fetchPractice(params);
+            },
+            g11AcctPracticeLoading: controller.practiceLoading,
+            g11AcctPracticeError: controller.practiceError,
+            g11AcctPracticeQuestions: controller.practiceQuestions,
+            g11AcctPracticeAnswers: controller.practiceAnswers,
+            setG11AcctPracticeAnswers: controller.setPracticeAnswers,
+            g11AcctPracticeFeedback: controller.practiceFeedback,
+            setG11AcctPracticeFeedback: controller.setPracticeFeedback,
+            renderGrade11AccountingVisualAids,
+            hideConfig: true,
+            currentIndex: practiceIndex,
+        }));
+    }
+
+    return null;
+};
+
+const Grade11ExponentsSurdsRoute = ({ workspaceMode, ctx }) => {
+    const controller = useGrade11ExponentsSurdsController({ workspaceMode, buildApiUrl: ctx.buildApiUrl });
+
+    const renderGrade11ExpSurdsVisualAids = () => h(Grade11ExponentsSurdsVisualAids);
+
+    if (workspaceMode === 'grade11_exponents_surds_scaffold') {
+        return h(Grade11ExponentsSurdsScaffold, {
+            onBack: ctx.onBack,
+            scaffoldSteps: controller.scaffoldSteps,
+            g11ExpSurdsVisualAidsOpen: controller.visualAidsOpen,
+            setG11ExpSurdsVisualAidsOpen: controller.setVisualAidsOpen,
+            g11ExpSurdsScaffoldDifficulty: controller.scaffoldDifficulty,
+            setG11ExpSurdsScaffoldDifficulty: controller.setScaffoldDifficulty,
+            g11ExpSurdsScaffoldStepIndex: controller.scaffoldStepIndex,
+            setG11ExpSurdsScaffoldStepIndex: controller.setScaffoldStepIndex,
+            fetchGrade11ExpSurdsScaffoldQuestion: controller.fetchScaffoldQuestion,
+            g11ExpSurdsScaffoldLoading: controller.scaffoldLoading,
+            g11ExpSurdsScaffoldError: controller.scaffoldError,
+            g11ExpSurdsScaffoldQuestion: controller.scaffoldQuestion,
+            g11ExpSurdsScaffoldCheckpointIndex: controller.scaffoldCheckpointIndex,
+            setG11ExpSurdsScaffoldCheckpointIndex: controller.setScaffoldCheckpointIndex,
+            g11ExpSurdsScaffoldCheckpointAnswers: controller.scaffoldCheckpointAnswers,
+            setG11ExpSurdsScaffoldCheckpointAnswers: controller.setScaffoldCheckpointAnswers,
+            g11ExpSurdsScaffoldCheckpointFeedback: controller.scaffoldCheckpointFeedback,
+            setG11ExpSurdsScaffoldCheckpointFeedback: controller.setScaffoldCheckpointFeedback,
+            g11ExpSurdsScaffoldAnswer: controller.scaffoldAnswer,
+            setG11ExpSurdsScaffoldAnswer: controller.setScaffoldAnswer,
+            g11ExpSurdsScaffoldFeedback: controller.scaffoldFeedback,
+            setG11ExpSurdsScaffoldFeedback: controller.setScaffoldFeedback,
+            g11ExpSurdsScaffoldShowHint: controller.scaffoldShowHint,
+            setG11ExpSurdsScaffoldShowHint: controller.setScaffoldShowHint,
+            renderGrade11ExpSurdsVisualAids,
+        });
+    }
+
+    if (workspaceMode === 'grade11_exponents_surds_practice') {
+        return h(Grade11ExponentsSurdsPractice, {
+            onBack: ctx.onBack,
+            g11ExpSurdsPracticeQuestions: controller.practiceQuestions,
+            g11ExpSurdsPracticeAnswers: controller.practiceAnswers,
+            setG11ExpSurdsPracticeAnswers: controller.setPracticeAnswers,
+            g11ExpSurdsPracticeFeedback: controller.practiceFeedback,
+            g11ExpSurdsPracticeLoading: controller.practiceLoading,
+            g11ExpSurdsPracticeError: controller.practiceError,
+            g11ExpSurdsPracticeDifficulty: controller.practiceDifficulty,
+            setG11ExpSurdsPracticeDifficulty: controller.setPracticeDifficulty,
+            fetchGrade11ExpSurdsPractice: controller.fetchPractice,
+            g11ExpSurdsVisualAidsOpen: controller.visualAidsOpen,
+            setG11ExpSurdsVisualAidsOpen: controller.setVisualAidsOpen,
+            renderGrade11ExpSurdsVisualAids,
+        });
+    }
+
+    return null;
+};
+
+const Grade11EquationsInequalitiesRoute = ({ workspaceMode, ctx }) => {
+    const controller = useGrade11EquationsInequalitiesController({ workspaceMode, buildApiUrl: ctx.buildApiUrl });
+
+    const renderGrade11EqIneqVisualAids = () => h(Grade11EquationsInequalitiesVisualAids);
+
+    if (workspaceMode === 'grade11_equations_inequalities_scaffold') {
+        return h(Grade11EquationsInequalitiesScaffold, {
+            onBack: ctx.onBack,
+            scaffoldSteps: controller.scaffoldSteps,
+            g11EqIneqVisualAidsOpen: controller.visualAidsOpen,
+            setG11EqIneqVisualAidsOpen: controller.setVisualAidsOpen,
+            g11EqIneqScaffoldDifficulty: controller.scaffoldDifficulty,
+            setG11EqIneqScaffoldDifficulty: controller.setScaffoldDifficulty,
+            g11EqIneqScaffoldStepIndex: controller.scaffoldStepIndex,
+            setG11EqIneqScaffoldStepIndex: controller.setScaffoldStepIndex,
+            fetchGrade11EqIneqScaffoldQuestion: controller.fetchScaffoldQuestion,
+            g11EqIneqScaffoldLoading: controller.scaffoldLoading,
+            g11EqIneqScaffoldError: controller.scaffoldError,
+            g11EqIneqScaffoldQuestion: controller.scaffoldQuestion,
+            g11EqIneqScaffoldCheckpointIndex: controller.scaffoldCheckpointIndex,
+            setG11EqIneqScaffoldCheckpointIndex: controller.setScaffoldCheckpointIndex,
+            g11EqIneqScaffoldCheckpointAnswers: controller.scaffoldCheckpointAnswers,
+            setG11EqIneqScaffoldCheckpointAnswers: controller.setScaffoldCheckpointAnswers,
+            g11EqIneqScaffoldCheckpointFeedback: controller.scaffoldCheckpointFeedback,
+            setG11EqIneqScaffoldCheckpointFeedback: controller.setScaffoldCheckpointFeedback,
+            g11EqIneqScaffoldAnswer: controller.scaffoldAnswer,
+            setG11EqIneqScaffoldAnswer: controller.setG11EqIneqScaffoldAnswer,
+            g11EqIneqScaffoldFeedback: controller.scaffoldFeedback,
+            setG11EqIneqScaffoldFeedback: controller.setG11EqIneqScaffoldFeedback,
+            g11EqIneqScaffoldShowHint: controller.scaffoldShowHint,
+            setG11EqIneqScaffoldShowHint: controller.setScaffoldShowHint,
+            renderGrade11EqIneqVisualAids,
+        });
+    }
+
+    if (workspaceMode === 'grade11_equations_inequalities_practice') {
+        return h(Grade11EquationsInequalitiesPractice, {
+            onBack: ctx.onBack,
+            g11EqIneqVisualAidsOpen: controller.visualAidsOpen,
+            setG11EqIneqVisualAidsOpen: controller.setVisualAidsOpen,
+            g11EqIneqPracticeDifficulty: controller.practiceDifficulty,
+            setG11EqIneqPracticeDifficulty: controller.setPracticeDifficulty,
+            fetchGrade11EqIneqPractice: controller.fetchPractice,
+            g11EqIneqPracticeLoading: controller.practiceLoading,
+            g11EqIneqPracticeError: controller.practiceError,
+            g11EqIneqPracticeQuestions: controller.practiceQuestions,
+            g11EqIneqPracticeAnswers: controller.practiceAnswers,
+            setG11EqIneqPracticeAnswers: controller.setPracticeAnswers,
+            g11EqIneqPracticeFeedback: controller.practiceFeedback,
+            setG11EqIneqPracticeFeedback: controller.setPracticeFeedback,
+            renderGrade11EqIneqVisualAids,
+        });
+    }
+
+    return null;
+};
+
+const Grade11PatternsSequencesRoute = ({ workspaceMode, ctx }) => {
+    const controller = useGrade11PatternsSequencesController({ workspaceMode, buildApiUrl: ctx.buildApiUrl });
+
+    const renderGrade11PatSeqVisualAids = () => h(Grade11PatternsSequencesVisualAids, {
+        visualAidsTab: controller.visualAidsTab,
+        setVisualAidsTab: controller.setVisualAidsTab,
+        setVisualAidsOpen: controller.setVisualAidsOpen,
+    });
+
+    if (workspaceMode === 'grade11_patterns_sequences_scaffold') {
+        return h(Grade11PatternsSequencesScaffold, {
+            onBack: ctx.onBack,
+            scaffoldSteps: controller.scaffoldSteps,
+            g11PatSeqVisualAidsOpen: controller.visualAidsOpen,
+            setG11PatSeqVisualAidsOpen: controller.setVisualAidsOpen,
+            g11PatSeqScaffoldDifficulty: controller.scaffoldDifficulty,
+            setG11PatSeqScaffoldDifficulty: controller.setScaffoldDifficulty,
+            g11PatSeqScaffoldStepIndex: controller.scaffoldStepIndex,
+            setG11PatSeqScaffoldStepIndex: controller.setG11PatSeqScaffoldStepIndex,
+            fetchGrade11PatternsSequencesScaffoldQuestion: controller.fetchScaffoldQuestion,
+            g11PatSeqScaffoldLoading: controller.scaffoldLoading,
+            g11PatSeqScaffoldError: controller.scaffoldError,
+            g11PatSeqScaffoldQuestion: controller.scaffoldQuestion,
+            g11PatSeqScaffoldCheckpointIndex: controller.scaffoldCheckpointIndex,
+            setG11PatSeqScaffoldCheckpointIndex: controller.setScaffoldCheckpointIndex,
+            g11PatSeqScaffoldCheckpointAnswers: controller.scaffoldCheckpointAnswers,
+            setG11PatSeqScaffoldCheckpointAnswers: controller.setScaffoldCheckpointAnswers,
+            g11PatSeqScaffoldCheckpointFeedback: controller.scaffoldCheckpointFeedback,
+            setG11PatSeqScaffoldCheckpointFeedback: controller.setScaffoldCheckpointFeedback,
+            g11PatSeqScaffoldAnswer: controller.scaffoldAnswer,
+            setG11PatSeqScaffoldAnswer: controller.setG11PatSeqScaffoldAnswer,
+            g11PatSeqScaffoldFeedback: controller.scaffoldFeedback,
+            setG11PatSeqScaffoldFeedback: controller.setG11PatSeqScaffoldFeedback,
+            g11PatSeqScaffoldShowHint: controller.scaffoldShowHint,
+            setG11PatSeqScaffoldShowHint: controller.setG11PatSeqScaffoldShowHint,
+            renderGrade11PatternsSequencesVisualAids: renderGrade11PatSeqVisualAids,
+        });
+    }
+
+    if (workspaceMode === 'grade11_patterns_sequences_practice') {
+        return h(Grade11PatternsSequencesPractice, {
+            onBack: ctx.onBack,
+            g11PatSeqVisualAidsOpen: controller.visualAidsOpen,
+            setG11PatSeqVisualAidsOpen: controller.setVisualAidsOpen,
+            g11PatSeqPracticeDifficulty: controller.practiceDifficulty,
+            setG11PatSeqPracticeDifficulty: controller.setPracticeDifficulty,
+            fetchGrade11PatternsSequencesPractice: controller.fetchPractice,
+            g11PatSeqPracticeLoading: controller.practiceLoading,
+            g11PatSeqPracticeError: controller.practiceError,
+            g11PatSeqPracticeQuestions: controller.practiceQuestions,
+            g11PatSeqPracticeAnswers: controller.practiceAnswers,
+            setG11PatSeqPracticeAnswers: controller.setPracticeAnswers,
+            g11PatSeqPracticeFeedback: controller.practiceFeedback,
+            setG11PatSeqPracticeFeedback: controller.setPracticeFeedback,
+            renderGrade11PatternsSequencesVisualAids: renderGrade11PatSeqVisualAids,
+        });
+    }
+
+    return null;
+};
+
+const Grade11AnalyticalGeometryRoute = ({ workspaceMode, ctx }) => {
+    const controller = useGrade11AnalyticalGeometryController({ workspaceMode, buildApiUrl: ctx.buildApiUrl });
+
+    const renderGrade11AnalGeoVisualAids = () => h(Grade11AnalyticalGeometryVisualAids, {
+        visualAidsTab: controller.visualAidsTab,
+        setVisualAidsTab: controller.setVisualAidsTab,
+        setVisualAidsOpen: controller.setVisualAidsOpen,
+    });
+
+    if (workspaceMode === 'grade11_analytical_geometry_scaffold') {
+        return h(Grade11AnalyticalGeometryScaffold, {
+            onBack: ctx.onBack,
+            scaffoldSteps: controller.scaffoldSteps,
+            g11AnalGeoVisualAidsOpen: controller.visualAidsOpen,
+            setG11AnalGeoVisualAidsOpen: controller.setVisualAidsOpen,
+            g11AnalGeoScaffoldDifficulty: controller.scaffoldDifficulty,
+            setG11AnalGeoScaffoldDifficulty: controller.setScaffoldDifficulty,
+            g11AnalGeoScaffoldStepIndex: controller.scaffoldStepIndex,
+            setG11AnalGeoScaffoldStepIndex: controller.setG11AnalGeoScaffoldStepIndex,
+            fetchGrade11AnalGeoScaffoldQuestion: controller.fetchScaffoldQuestion,
+            g11AnalGeoScaffoldLoading: controller.scaffoldLoading,
+            g11AnalGeoScaffoldError: controller.scaffoldError,
+            g11AnalGeoScaffoldQuestion: controller.scaffoldQuestion,
+            g11AnalGeoScaffoldCheckpointIndex: controller.scaffoldCheckpointIndex,
+            setG11AnalGeoScaffoldCheckpointIndex: controller.setScaffoldCheckpointIndex,
+            g11AnalGeoScaffoldCheckpointAnswers: controller.scaffoldCheckpointAnswers,
+            setG11AnalGeoScaffoldCheckpointAnswers: controller.setScaffoldCheckpointAnswers,
+            g11AnalGeoScaffoldCheckpointFeedback: controller.scaffoldCheckpointFeedback,
+            setG11AnalGeoScaffoldCheckpointFeedback: controller.setScaffoldCheckpointFeedback,
+            g11AnalGeoScaffoldAnswer: controller.scaffoldAnswer,
+            setG11AnalGeoScaffoldAnswer: controller.setG11AnalGeoScaffoldAnswer,
+            g11AnalGeoScaffoldFeedback: controller.scaffoldFeedback,
+            setG11AnalGeoScaffoldFeedback: controller.setScaffoldFeedback,
+            g11AnalGeoScaffoldShowHint: controller.scaffoldShowHint,
+            setG11AnalGeoScaffoldShowHint: controller.setG11AnalGeoScaffoldShowHint,
+            renderGrade11AnalGeoVisualAids: renderGrade11AnalGeoVisualAids,
+        });
+    }
+
+    if (workspaceMode === 'grade11_analytical_geometry_practice') {
+        return h(Grade11AnalyticalGeometryPractice, {
+            onBack: ctx.onBack,
+            g11AnalGeoVisualAidsOpen: controller.visualAidsOpen,
+            setG11AnalGeoVisualAidsOpen: controller.setVisualAidsOpen,
+            g11AnalGeoPracticeDifficulty: controller.practiceDifficulty,
+            setG11AnalGeoPracticeDifficulty: controller.setPracticeDifficulty,
+            fetchGrade11AnalGeoPractice: controller.fetchPractice,
+            g11AnalGeoPracticeLoading: controller.practiceLoading,
+            g11AnalGeoPracticeError: controller.practiceError,
+            g11AnalGeoPracticeQuestions: controller.practiceQuestions,
+            g11AnalGeoPracticeAnswers: controller.practiceAnswers,
+            setG11AnalGeoPracticeAnswers: controller.setPracticeAnswers,
+            g11AnalGeoPracticeFeedback: controller.practiceFeedback,
+            setG11AnalGeoPracticeFeedback: controller.setPracticeFeedback,
+            renderGrade11AnalGeoVisualAids: renderGrade11AnalGeoVisualAids,
+        });
+    }
+
+    return null;
+};
+
+export const grade11Registry = {
+    grade11_analytical_geometry_scaffold: {
+        render: (ctx) => h(Grade11AnalyticalGeometryRoute, { workspaceMode: 'grade11_analytical_geometry_scaffold', ctx }),
+    },
+    grade11_analytical_geometry_practice: {
+        render: (ctx) => h(Grade11AnalyticalGeometryRoute, { workspaceMode: 'grade11_analytical_geometry_practice', ctx }),
+    },
+    grade11_patterns_sequences_scaffold: {
+        render: (ctx) => h(Grade11PatternsSequencesRoute, { workspaceMode: 'grade11_patterns_sequences_scaffold', ctx }),
+    },
+    grade11_patterns_sequences_practice: {
+        render: (ctx) => h(Grade11PatternsSequencesRoute, { workspaceMode: 'grade11_patterns_sequences_practice', ctx }),
+    },
+    grade11_equations_inequalities_scaffold: {
+        render: (ctx) => h(Grade11EquationsInequalitiesRoute, { workspaceMode: 'grade11_equations_inequalities_scaffold', ctx }),
+    },
+    grade11_equations_inequalities_practice: {
+        render: (ctx) => h(Grade11EquationsInequalitiesRoute, { workspaceMode: 'grade11_equations_inequalities_practice', ctx }),
+    },
+    grade11_exponents_surds_scaffold: {
+        render: (ctx) => h(Grade11ExponentsSurdsRoute, { workspaceMode: 'grade11_exponents_surds_scaffold', ctx }),
+    },
+    grade11_exponents_surds_practice: {
+        render: (ctx) => h(Grade11ExponentsSurdsRoute, { workspaceMode: 'grade11_exponents_surds_practice', ctx }),
+    },
+
+    // --- GRADE 11 ACCOUNTING ROUTES (Split) ---
+
+    // 1. Ethics and Internal Control
+    grade11_accounting_ethics_internal_control_scaffold: {
+        render: (ctx) => h(Grade11AccountingRoute, {
+            workspaceMode: 'grade11_accounting_ethics_internal_control_scaffold',
+            ctx,
+            subskills: [
+                { key: 'concepts', title: 'Concepts (Ethics, Internal Control)' }
+            ],
+            defaultSubskill: 'concepts'
+        }),
+    },
+    grade11_accounting_ethics_internal_control_practice: {
+        render: (ctx) => h(Grade11AccountingRoute, {
+            workspaceMode: 'grade11_accounting_ethics_internal_control_practice',
+            ctx,
+            subskills: [
+                { key: 'concepts', title: 'Concepts (Ethics, Internal Control)' }
+            ],
+            defaultSubskill: 'concepts'
+        }),
+    },
+
+    // 2. Bank Reconciliation
+    grade11_accounting_reconciliation_scaffold: {
+        render: (ctx) => h(Grade11AccountingRoute, {
+            workspaceMode: 'grade11_accounting_reconciliation_scaffold',
+            ctx,
+            subskills: [
+                { key: 'reconciliation', title: 'Bank Reconciliation' }
+            ],
+            defaultSubskill: 'reconciliation'
+        }),
+    },
+    grade11_accounting_reconciliation_practice: {
+        render: (ctx) => h(Grade11AccountingRoute, {
+            workspaceMode: 'grade11_accounting_reconciliation_practice',
+            ctx,
+            subskills: [
+                { key: 'reconciliation', title: 'Bank Reconciliation' }
+            ],
+            defaultSubskill: 'reconciliation'
+        }),
+    },
+
+    // 3. Fixed Tangible Assets
+    grade11_accounting_fixed_assets_scaffold: {
+        render: (ctx) => h(Grade11AccountingRoute, {
+            workspaceMode: 'grade11_accounting_fixed_assets_scaffold',
+            ctx,
+            subskills: [
+                { key: 'fixed-assets', title: 'Fixed / Tangible Assets' }
+            ],
+            defaultSubskill: 'fixed-assets'
+        }),
+    },
+    grade11_accounting_fixed_assets_practice: {
+        render: (ctx) => h(Grade11AccountingRoute, {
+            workspaceMode: 'grade11_accounting_fixed_assets_practice',
+            ctx,
+            subskills: [
+                { key: 'fixed-assets', title: 'Fixed / Tangible Assets' }
+            ],
+            defaultSubskill: 'fixed-assets'
+        }),
+    },
+
+    // 4. Partnerships: Analysis of Financial Statements
+    grade11_accounting_partnerships_scaffold: {
+        render: (ctx) => h(Grade11AccountingRoute, {
+            workspaceMode: 'grade11_accounting_partnerships_scaffold',
+            ctx,
+            subskills: [
+                { key: 'income-statement', title: 'Income Statement' },
+                { key: 'partnership-balance-sheet', title: 'Balance Sheet' },
+                { key: 'partnership-ledger', title: 'Ledger Accounts' }
+            ],
+            defaultSubskill: 'income-statement'
+        }),
+    },
+    grade11_accounting_partnerships_practice: {
+        render: (ctx) => h(Grade11AccountingRoute, {
+            workspaceMode: 'grade11_accounting_partnerships_practice',
+            ctx,
+            subskills: [
+                { key: 'income-statement', title: 'Income Statement' },
+                { key: 'partnership-balance-sheet', title: 'Balance Sheet' },
+                { key: 'partnership-ledger', title: 'Ledger Accounts' }
+            ],
+            defaultSubskill: 'income-statement'
+        }),
+    },
+
+    // Fallback/Legacy
+    grade11_accounting_scaffold: {
+        render: (ctx) => h(Grade11AccountingRoute, { workspaceMode: 'grade11_accounting_scaffold', ctx }),
+    },
+    grade11_accounting_practice: {
+        render: (ctx) => h(Grade11AccountingRoute, { workspaceMode: 'grade11_accounting_practice', ctx }),
+    },
+};

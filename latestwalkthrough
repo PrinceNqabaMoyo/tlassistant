@@ -1,0 +1,36 @@
+# Implementation Walkthrough — Phases A–E
+
+## Completed Phases
+
+### Phase A: 3-Mode Architecture ✅
+- Restored `practice` mode alongside [scaffold](file:///C:/Users/princ/fundile-tlassistant-vite/caps-ai-backend/app/utils/grade12_accounting/financial_statements_notes_generator.py#44-46) and `marking` in [WorkspaceModeShell.jsx](file:///C:/Users/princ/fundile-tlassistant-vite/src/components/workspace/shared/WorkspaceModeShell.jsx)
+- Marking mode shows 🔒 PRO badge and is disabled for standard-tier users
+- Check + Compare buttons added to answer card footer
+
+### Phase B: Subscription Security ✅
+- **Owner bypass**: [useAuthentication.js](file:///C:/Users/princ/fundile-tlassistant-vite/src/hooks/useAuthentication.js) — `OWNER_EMAILS` array, both emails bypass all restrictions
+- **Firestore fields**: `tier`, `subscribedGrades`, `subscribedSubjects`, `subscriptionExpiry`, `isOwner`
+- **Expiry check**: [checkSubscriptionExpiry()](file:///C:/Users/princ/fundile-tlassistant-vite/src/hooks/useAuthentication.js#15-31) handles Firestore Timestamps, Dates, ISO strings
+- **Dec 1 auto-upgrade**: [getAutoUpgradedGrades()](file:///C:/Users/princ/fundile-tlassistant-vite/src/hooks/useAuthentication.js#32-42) auto-adds next grade and persists to Firestore via `updateDoc`
+- **Grade-lock**: [CurriculumHelper.jsx](file:///C:/Users/princ/fundile-tlassistant-vite/src/components/curriculum/CurriculumHelper.jsx) — [SelectionCard](file:///C:/Users/princ/fundile-tlassistant-vite/src/components/curriculum/CurriculumHelper.jsx#1019-1051) has `locked` prop with 🔒 Upgrade overlay, disabled clicks, reduced opacity
+
+### Phase C: Term Stickers ✅
+- [getTopicTerm()](file:///C:/Users/princ/fundile-tlassistant-vite/src/components/curriculum/CurriculumHelper.jsx#891-935) in CurriculumHelper maps all Gr10/11/12 accounting topics to Term 1 or Term 2
+- [SelectionCard](file:///C:/Users/princ/fundile-tlassistant-vite/src/components/curriculum/CurriculumHelper.jsx#1019-1051) badge prop: **blue** for Term 1, **emerald** for Term 2, positioned top-right on card header
+
+### Phase E: Check/Compare Evaluation UI ✅
+
+| File | Purpose |
+|------|---------|
+| [useEvaluationCheck.js](file:///C:/Users/princ/fundile-tlassistant-vite/src/hooks/useEvaluationCheck.js) | Shared hook: deterministic cell checking, compare toggle, score stats |
+| [EvaluationOverlay.jsx](file:///C:/Users/princ/fundile-tlassistant-vite/src/components/workspace/shared/EvaluationOverlay.jsx) | Modal: Your Answer vs Correct + rubric step-by-step |
+| [EvaluatedWorkspaceModeShell.jsx](file:///C:/Users/princ/fundile-tlassistant-vite/src/components/workspace/shared/EvaluatedWorkspaceModeShell.jsx) | Drop-in wrapper: auto-wires hook + overlay + banner |
+| [evalCellStyle.js](file:///C:/Users/princ/fundile-tlassistant-vite/src/components/workspace/shared/evalCellStyle.js) | Utility: green/red td borders, compare value swap, clickable rubric |
+| Grade10 Sole Trader Scaffold | Reference implementation with eval-aware cell styling |
+
+**Registry updates**: All accounting routes in [grade10Registry.js](file:///C:/Users/princ/fundile-tlassistant-vite/src/components/workspace/registry/grade10Registry.js), [grade11Registry.js](file:///C:/Users/princ/fundile-tlassistant-vite/src/components/workspace/registry/grade11Registry.js), [grade12Registry.js](file:///C:/Users/princ/fundile-tlassistant-vite/src/components/workspace/registry/grade12Registry.js) use [EvaluatedWorkspaceModeShell](file:///C:/Users/princ/fundile-tlassistant-vite/src/components/workspace/shared/EvaluatedWorkspaceModeShell.jsx#6-95) with [question](file:///C:/Users/princ/fundile-tlassistant-vite/caps-ai-backend/app/utils/grade12_accounting/financial_statements_notes_generator.py#1491-1545) + `userAnswersCells` props.
+
+---
+
+## Remaining: Phase D (Term 2 Topics)
+9 new topics across Gr10/11/12 — requires backend generators + frontend scaffolds + archetype configs.

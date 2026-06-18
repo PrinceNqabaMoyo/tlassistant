@@ -1,0 +1,48 @@
+# Grade 10 Accounting Concepts UI & Backend Expansion
+
+This plan addresses the new feedback in `Validation logs.md` concerning missing question variations (forms of ownership, broad asset/liability examples, journals) and missing interactive formats (Drag & Drop Matching and Word Bank).
+
+## Goal Description
+Expand the backend generator to include missing curriculum items (Activity 1 & 3, forms of ownership, comprehensive assets/liabilities, subsidiary journals, mark-up calculations) and introduce three highly engaging, interactive frontend question formats:
+1. **Matching** (side-side columns that users can "float/match")
+2. **Word Bank** ("pick and place" fill in the blanks)
+3. **Calculations** (Cost of sales, Selling Price, Mark-up formulas)
+
+## Proposed Changes
+
+### caps-ai-backend 
+#### [MODIFY] [sole_trader_generator.py](file:///C:/Users/princ/fundile-tlassistant-vite/caps-ai-backend/app/utils/grade10_accounting/sole_trader_generator.py)
+- **Content Expansion**: Inject new dictionary pools for:
+    - Forms of ownership, types of businesses (retail vs service).
+    - Source document to Journal mapping (e.g., duplicate invoice -> Debtors Journal).
+    - Activity 1 & 3 items (comprehensive breakdown of elements like Packing Material, Favourable Bank Balance, etc.).
+- **New Question Type: `match`**
+    - Will generate side-by-side matching sets (4-5 pairs).
+    - Data structure: `left_items: [{id, text}]`, `right_items: [{id, text}]` (shuffled), `matches: {leftId: rightId}`.
+- **New Question Type: `word_bank`**
+    - Will provide a block of text with missing keywords, and a "bank" of pills.
+    - Data structure: `text_parts: [...]`, `blanks: [{id}]`, `word_bank: [words]`, `answers: {blankId: word}`.
+- **New Question Type: `calc`**
+    - Dynamically generated mathematical scenarios for Profit Margin, Selling Price, and Cost of Sales.
+    - E.g. "If cost price is R20,000 and profit margin is 50%, calculate the Selling Price."
+
+### src/components/workspace/grade10/accounting/sole-trader 
+#### [MODIFY] [Grade10AccountingSoleTraderPractice.jsx](file:///C:/Users/princ/fundile-tlassistant-vite/src/components/workspace/grade10/accounting/sole-trader/Grade10AccountingSoleTraderPractice.jsx)
+- **Implement Matching UI** 
+    - Build a responsive two-column grid.
+    - Instead of problematic HTML5 Drag and Drop which routinely fails on mobile and touchscreens, implement a "Select & Snap" mechanism heavily used in modern education apps: user clicks a right-side item, then clicks an empty slot next to a left-side item to snap it in place. (Though if strict drag-and-drop is preferred, we can use native HTML5 drag events).
+- **Implement Word Bank UI**
+    - Render a bank of words as "pills". User selects a pill and selects a blank line to fill it.
+- **Implement Calculation UI**
+    - Add rendering support to capture step-by-step calculations and link to the existing `EnhancedMathKeypad`.
+
+## User Review Required
+
+> [!WARNING]
+> Drag and Drop (DnD) APIs via native HTML5 have historically poor support on mobile devices. I propose building the "Matching" and "Word Bank" interactions as **"Click to Select, Click to Place"** (often referred to as tap-to-move). It feels incredibly fast, snappy, and works beautifully across desktop and mobile without adding external drag-and-drop libraries (like `dnd-kit`). 
+> Are you comfortable substituting "Drag to Drop" with "Tap to Snap/Place"?
+
+## Verification Plan
+1. Start backend python test loop verifying `match`, `word_bank`, and `calc` dict schemas.
+2. Generate all variations locally on Vite Dev Server.
+3. Fully complete a multi-step sequence using the new Custom UI controls to ensure state persists and validation/marking highlights correctly.

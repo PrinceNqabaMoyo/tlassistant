@@ -1,0 +1,202 @@
+# Term 2 Backend Generator Implementation Plan (Updated)
+
+## Folder Structure
+All Term 2 generators go into a `term2/` subfolder for clarity:
+```
+caps-ai-backend/app/utils/
+├── grade10_accounting/
+│   └── term2/
+│       ├── __init__.py
+│       ├── salaries_wages_generator.py     (MOVE existing)
+│       ├── final_accounts_generator.py     (MOVE existing)
+│       └── vat_generator.py                (MOVE existing)
+├── grade11_accounting/
+│   └── term2/
+│       ├── __init__.py
+│       ├── clubs_nonprofit_generator.py    (NEW)
+│       └── analysis_interpretation_generator.py (NEW)
+└── grade12_accounting/
+    └── term2/
+        ├── __init__.py
+        ├── fixed_assets_generator.py       (NEW)
+        ├── inventory_systems_generator.py  (NEW)
+        ├── reconciliation_generator.py     (NEW)
+        └── vat_generator.py               (NEW)
+```
+
+## Archetype Class Coverage Per Topic
+
+### Grade 10
+
+#### Salaries & Wages (99KB archetype)
+| Class | Question Types | Description |
+|-------|---------------|-------------|
+| Salary scale/notch calculation | calc | Given scale notation, compute annual/monthly salary for year N |
+| Gross wage calculation | calc | Normal hours × rate + overtime hours × OT rate |
+| Net salary/wage calculation | calc | Gross – (PAYE + pension + medical + UIF) |
+| Salary/Wage journal completion | table | Fill employee rows: gross, deductions, net, employer contributions |
+| Cost-to-company calculation | calc | Gross + all employer contributions |
+| General ledger posting | table | Post journal totals to T-accounts (creditors, SARS-PAYE, pension, etc.) |
+| CPJ completion | table | Cash payments journal with sundry accounts |
+| Debit/credit identification | mcq/typed | Which account debited/credited for a given transaction |
+| Accounting equation effect | mcq | A/E/L classification per wages/salary entry |
+| Bonus/13th cheque calculation | calc | Monthly salary × bonus % |
+| Ethics & internal control | typed | Internal control procedures for cash received |
+| SDL calculation | calc | 1% of gross salaries/wages |
+
+#### Sole Trader Final Accounts (86KB archetype)
+| Class | Question Types | Description |
+|-------|---------------|-------------|
+| Closing transfer journal entries | table | GJ entries for sales→trading, expenses→P&L, P&L→capital |
+| Trading account (T-account) | table | Sales, cost of sales, gross profit |
+| Profit & loss account | table | Expenses, incomes, net profit transfer |
+| Capital account | table | Drawings, net profit, balance c/d |
+| Year-end adjustments (depreciation) | calc | Straight-line and diminishing balance methods |
+| Asset register completion | table | Annual depreciation, accumulated depreciation, carrying value |
+| Bad debts write-off | calc/typed | Journal entry and calculation |
+| Accruals & prepayments | calc | Accrued expenses, prepaid expenses, income received in advance |
+| Post-closing trial balance | table | Balance sheet items with debit/credit |
+| Tangible assets note | table | Cost, accumulated depreciation, carrying value per asset class |
+| Depreciation concepts | mcq | Difference between depreciation and accumulated depreciation |
+
+#### Value Added Tax (25KB archetype)
+| Class | Question Types | Description |
+|-------|---------------|-------------|
+| VAT inclusive/exclusive calculation | calc | Extract VAT from inclusive amount (×15/115) or add VAT (×15/100) |
+| VAT classification table | table_wordbank | Classify items as taxable/exempt/zero-rated |
+| True/False VAT concepts | mcq | Input vs output, registration thresholds, etc. |
+| Fill-in-the-blank (word bank) | table_wordbank | Choose terms: indirect, output, zero-rated, R1 000 000, etc. |
+| Retailer mark-up with VAT | calc | Cost→selling price→output VAT→total customer pays |
+| VAT definition/explanation | typed | Define VAT, input vs output, zero-rated vs exempt |
+| Ethics scenarios | typed | Tax evasion vs avoidance, unregistered vendor charging VAT |
+| Invoice analysis | calc/typed | Read invoice, identify VAT amount, zero-rated items |
+
+### Grade 11
+
+#### Clubs & Non-profit Organisations (23KB archetype)
+| Class | Question Types | Description |
+|-------|---------------|-------------|
+| Membership fees T-account | table | Accrued income, deferred income, bank receipts, write-offs, honorarium offset |
+| Membership fee income calculation | calc | Members × fee rate – refunds |
+| Member count calculation | calc | Opening + new – expelled – resigned |
+| Stock account (vests/tracksuits/refreshments) | table | Opening stock, purchases, sales, profit, theft/loss, closing stock |
+| Profit on stock items | calc | Sales revenue – cost of sales on refreshments/vests |
+| Stock turnover rate | calc | Average stock ÷ cost of sales × 365 |
+| Statement of receipts & payments | table | Receipts vs payments, opening/closing bank balance |
+| Items NOT in receipts & payments | typed | Identify non-cash items (donations in kind, credit purchases, etc.) |
+| Honorarium account | table | T-account with accrued expense, bank, membership offset |
+| Mark-up percentage calculation | calc | Profit ÷ cost of sales × 100 |
+| Ethical/governance questions | typed | Fee structure fairness, financial benefits of events |
+
+#### Analysis & Interpretation of Financial Statements (92KB archetype)
+| Class | Question Types | Description |
+|-------|---------------|-------------|
+| Profitability ratios | calc | GP%, NP%, operating expenses %, operating profit % |
+| Liquidity ratios | calc | Current ratio, acid test ratio |
+| Stock management ratios | calc | Stock turnover rate, stock holding period |
+| Debtors/creditors periods | calc | Average debtors collection, average creditors payment |
+| Solvency ratio | calc | Total assets : total liabilities |
+| Debt-equity ratio (gearing) | calc | Non-current liabilities : owner's equity |
+| Partner's earnings | calc | Interest on capital + salary + bonus + share of remaining profit |
+| Return on partner's equity | calc | Earnings ÷ average owner's equity × 100 |
+| Return on equity for business | calc | Net profit ÷ average total equity × 100 |
+| Interest rate back-calculation | calc | Given interest amount and capital, find % |
+| Salary increase % calculation | calc | (New – old) ÷ old × 100 |
+| Vehicle profitability analysis | calc | Revenue/km, cost/km, profit/km per vehicle |
+| Asset carrying value & disposal | calc | Cost – accumulated depreciation, profit/loss on sale |
+| Liquidity/solvency commentary | typed | Interpret ratio changes, explain causes |
+| Loan eligibility with gearing | calc | Recalculate debt-equity with proposed loan |
+| Partnership concepts | mcq/typed | Advantages/disadvantages, current account meaning, drawings vs profit |
+| Internal control for fixed assets | typed | Control measures, log books, tracker systems |
+| Ethics of asset misuse | typed | Who bears loss, treatment in books |
+
+### Grade 12
+
+#### Fixed/Tangible Assets (39KB archetype)
+| Class | Question Types | Description |
+|-------|---------------|-------------|
+| Depreciation calculation (straight-line) | calc | Rate × cost price × months/12 |
+| Depreciation calculation (diminishing balance) | calc | Rate × (cost – accumulated depreciation) × months/12 |
+| Asset disposal profit/loss | calc | Selling price – (cost – total accumulated depreciation) |
+| Cost price of assets back-calculation | calc | Closing balance – additions + disposals |
+| Trade-in value calculation | calc | From asset disposal account |
+| Total depreciation for year | calc | Sum of all asset classes including sold assets |
+| Fully depreciated asset handling | calc/typed | Calculate remaining depreciation (carrying value – R1) |
+| Income Statement preparation | table | Full income statement with depreciation, asset disposal, adjustments |
+| Balance Sheet Note 3 (tangible assets) | table | Cost, accumulated depreciation, carrying value movements |
+| CSR/ethics of asset donation | typed | Corporate social responsibility, tax deduction, King Code |
+| Internal control for fixed assets | typed | Log books, trackers, key management |
+| GAAP principles for fixed assets | mcq/typed | Historical cost, matching, depreciation policy |
+
+#### Inventory Systems (96KB archetype)
+| Class | Question Types | Description |
+|-------|---------------|-------------|
+| FIFO closing stock valuation | calc | Value closing stock using most recent purchase prices |
+| Weighted average closing stock | calc | Total cost ÷ total units × closing units |
+| Specific identification valuation | calc | Track individual items at their specific cost |
+| Cost of sales calculation | calc | Opening + purchases – closing stock |
+| Gross profit per method | calc | Sales – cost of sales (compare FIFO vs weighted average) |
+| Stock theft/shortage detection | calc | Expected units vs actual count |
+| Trading account (periodic system) | table | Opening stock, purchases, carriage, customs, closing stock |
+| Stock turnover rate | calc | Cost of sales ÷ average stock |
+| Stock holding period | calc | Average stock ÷ cost of sales × 365 |
+| Mark-up % comparison | calc | Actual vs target mark-up with explanation |
+| Perpetual vs periodic system concepts | mcq/typed | Differences, when to use each |
+| FIFO vs weighted average comparison | typed | Advantages, reasons for using each |
+| Ethics of price manipulation | typed | Specific identification manipulation risk |
+| Internal control for inventory | typed | Regular stock counts, reorder levels |
+
+#### Reconciliations (111KB archetype)
+| Class | Question Types | Description |
+|-------|---------------|-------------|
+| Bank reconciliation statement (BRS) | table | From bank statement balance to bank account balance |
+| CPJ/CRJ corrections | table | Enter missing bank statement items into journals |
+| Outstanding cheques identification | calc/table | Cheques in CPJ not on bank statement |
+| Outstanding deposits | calc/table | Deposits in CRJ not on bank statement |
+| Dishonoured/RD cheques | calc/typed | Treatment of insufficient funds cheques |
+| Post-dated cheques | typed | Treatment issued and received |
+| Stale cheques (>6 months) | typed | Cancellation and re-issue treatment |
+| Lost cheque replacement | table | Cancel in CRJ, re-issue in CPJ, add to BRS |
+| Bank errors correction | table | Wrongly debited/credited items on BRS |
+| Business errors correction | table | Understated/overstated amounts in CPJ/CRJ |
+| Debtors control reconciliation | calc/table | Correct control account balance vs debtors list |
+| Debtors list corrections | calc | Adjust individual debtor balances for errors |
+| Creditors reconciliation | calc/table | Compare creditors statement to creditors account |
+| Over/undercast journal corrections | calc | Effect of journal totalling errors |
+| Age analysis interpretation | typed | Comment on overdue accounts, credit management |
+| Internal control for cash/debtors | typed | Division of duties, authorisation, documentation |
+
+#### Value Added Tax – Grade 12 (33KB archetype)
+| Class | Question Types | Description |
+|-------|---------------|-------------|
+| VAT control account (T-account) | table | Full VAT control with input/output entries, balance |
+| VAT payable/receivable calculation | calc | Output VAT – input VAT ± adjustments |
+| VAT on transactions analysis | calc | Classify each transaction's VAT effect (increase/decrease) |
+| VAT inclusive/exclusive calculations | calc | ×15/115 and ×15/100 with trade discounts |
+| Zero-rated goods in mixed sales | calc | Separate standard-rated from zero-rated in total figure |
+| VAT on bad debts/discount allowed | calc | Claim back VAT portion |
+| VAT on drawings/donations | calc | Output VAT on owner's stock withdrawals |
+| Debit/credit side classification | typed | Which entries go on debit vs credit of VAT control |
+| True/False VAT concepts | mcq | Output VAT is a liability, registration threshold, etc. |
+| Fill-in-the-blank (word bank) | table_wordbank | Choose from: indirect, output, 15%, R1 000 000, etc. |
+| Voluntary registration reasoning | typed | Benefits of registering below R1M threshold |
+| Ethics of misusing VAT collections | typed | Using VAT money for expenses, consequences |
+| Creditors allowance VAT effect | calc | Cancel input VAT on returns to suppliers |
+
+## Route Wiring
+
+### [NEW] `grade10_routes.py`
+- Unified dispatch: `POST /grade10/accounting/generate` + `POST /grade10/accounting/mark`
+- Import from `...utils.grade10_accounting.term2.*`
+- Dispatch keys: `salaries-wages`, `final-accounts`, `vat`
+
+### [MODIFY] `grade11_routes.py`
+- Add imports from `...utils.grade11_accounting.term2.*`
+- Add dispatch keys: `clubs-nonprofit`, `analysis-interpretation`
+
+### [MODIFY] `grade12_routes.py`
+- Add imports from `...utils.grade12_accounting.term2.*`
+- Add dispatch keys: `fixed-assets-t2`, `inventory-systems`, `reconciliation-t2`, `vat`
+
+### [MODIFY] `__init__.py`
+- Add `from . import grade10_routes`

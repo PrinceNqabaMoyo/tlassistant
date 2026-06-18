@@ -1,0 +1,4658 @@
+# Financial accounting of a sole trader
+
+## Accounting equation
+
+The following equation can be deduced from the accounting concepts:
+
+ASSETS = OWNER’S EQUITY + LIABILITIES
+
+OR
+
+OWNER’S EQUITY = ASSETS – LIABILITIES
+
+OR
+
+LIABILITIES = ASSETS – OWNER’S EQUITY
+
+##### Activity 2
+
+Use the accounting equation to work out the missing amounts.
+
+Nr., A, O, L
+
+1, R380 000, R?, R120 000
+
+2, R?, R648 000, R240 000
+
+3, R810 000, R520 000, R?
+
+4, R?, R140 000, R60 000
+
+5, R735 000, R?, R40 000
+
+6, R450 000, R380 000, R?
+
+Answer:
+
+Nr., A, OE, L
+
+1, R380 000,  R260 000, R120 000
+
+2, R888 000, R648 000, R240 000
+
+3, R810 000, R520 000, R290 000
+
+4, R200 000, R140 000, R60 000
+
+5, R735 000, R695 000, R40 000
+
+6, R450 000, R380 000, R70 000
+
+ 
+
+## Subsidiary books/ journals
+
+### Cash receipts journal
+
+Example of a cash receipts journal-
+
+Has 2 rows dedicated for headings. The 1st row has no columns, its all merged into 1 table wide cell, where the name of the subsidiary journal, name of the business and the month on which the journal was prepared. The row is populated as follows:
+
+Cash Receipts Journal of X – Y Z				CRJ...
+
+Where X is the name of the business enterprise, and CRJ is right aligned at the far right end of the row. The triple dots represent the folio reference number. Y is the month and Z is the year.
+
+The second row has 11 major columns. In this second row, the last column has a cell which is itself divided into two rows, the upper part of which has the label 'sundry account' and the bottom row is divided into 3 columns (Amount; Fol; Details). This means that the journal therefore has a total of 13 columns and therefore 13 cells per row for entry input.
+
+The heading for each column is described below in order from the first row to the last.
+
+1. Doc: The relevant source document number.
+2. Day: The specific day of the relevant month (heading May 2010).
+3. Details: This column shows the source of the relevant receipt.
+4. Fol: For each debtor there needs to be a separate account in the Debtors’ Ledger. A folio number will be used to indicate the account the amount will be posted to in the Debtors’ Ledger.
+5. Analysis of Receipts: The analysis column shows the breakdown of the individual amounts received as a separate receipt.
+6. Bank: The bank column shows the total amount received for the day. This amount will be deposited into the business’s bank account.
+7. Sales: This column contains the selling price of trading stock sold for cash.
+8. Cost of Sales: This is a non-cash item but is included in the Cash Receipts Journal to allow for the regular updating of the trading stock account.
+9. Debtors Control: Total amount which the debtors account will be credited (decreases). This amount will be the amount received from the debtor plus discount allowed.
+10. Discount Allowed: This is a non-cash item but is included in the Cash Receipts Journal to see the discount allowed to debtors.
+11. Sundry Accounts:  If there is no specific column for a transaction the sundry account column is used for the transaction.
+12. Amount: (under sundry account) The amount received.
+13. Fol: (Under sundry account) The folio number will be used to indicate the account the amount will be posted to in the General Ledger.
+14. Details: (Under sundry account) The account in the General Ledger
+
+### Activity 5(Cash Receipts Journal)
+
+#### Required
+
+Use the following information from Lonely Traders to prepare the Cash Receipts Journal for June 2010.
+
+Note: The business uses a mark-up of 66⅔% on cost price.
+
+Debtors’ list on 31 May 2010
+
+J. Abrahams R4 500
+
+N. Rossouw R3 800
+
+M. Nelson R2 600
+
+#### Transactions: May 2010
+
+1 The owner, R. Bosch, increased his capital contribution from R185 400 to R210 000 by depositing the money in the business bank account. Issue receipt 142.
+
+4 Receive R12 000 from M. Nkosi (tenant) for the month’s rent. Issue receipt 143. Cash sales according to cash register roll, R15 400.
+
+12 Receive a cheque from M. Nelson for R2 550 in settlement of his account of R2 600. Issue receipt 144.
+
+15 The fixed deposit by Perm Bank matured today. Receive a cheque for R32 500. Included in the amount is interest of R2 500 for the past 6 month’s interest.
+
+23 Cash sales of merchandise, R5 600.Receive a cheque from J. Abrahams to settle his account of the 1 June after 5%
+
+discount. Issue receipt 145.
+
+27 Cash sales of merchandise, R17 000.
+
+30 Receive the bank statement from AB Bank which shows a credit entry for R210 for interest.
+
+#### Answer:
+
+##### Cash Receipts Journal of Lonely Traders – June 2010
+
+Doc, Day, Details, Fol, Analysis of receipts, Bank, Sales, Cost of Sales, Debtors control, Discount allowed, Sundry account\[Amount, Fol, Details]
+
+142, 1, R. Bosch, , 24 600, 24 600, , , , , 24 600, , Capital
+
+143, 4, M. Nkosi, , 12 000, , , , , , 12 000, , Rent Income
+
+CRR, ,Sales, , 15 400, 27 400, 15 400, 9 240, , , , ,
+
+144, 12, M. Nelson, , 2 550, 2 550, , , 2 600, 50, , ,
+
+145, 15, Perm Bank, , 32 500, 32 500, , , , , 30 000, , Fixed deposit: Perm Bank
+
+ , , , , , , , , , 2 500, ,Interest on fixed deposit
+
+CRR, 23, Sales, , 5 600, , 5 600, 3 360, , , , ,
+
+146, , J. Abrahams, , 4 275, 9 875, , , 4 500, 225, , ,
+
+CRR, 27, Sales, , 17 000, 17 000, 17 000, 10 200, , , , ,
+
+B/S, 30, AB Bank, , , 210, , , , , 210, , Interest on current account
+
+ , , , , , 114 135, 38 000, 22 800, 7 100, 275, 69 310, ,
+
+### Debtors Journal
+
+Example of a Debtors Journal
+
+Has 2 rows dedicated for headings. The first row has no columns, its all merged into 1 table wide cell, where the name of the subsidiary journal, name of the business and the month on which the journal was prepared. The row is populated as follows:
+
+Debtors Journal of X - Y Z				DJ...
+
+Where X is the name of the business enterprise, and DJ is right aligned at the far right end of the row. The triple dots represent the folio reference number,  Y is the month and Z is the year.
+
+The second row of headings has 6 columns as follows:
+
+1. Doc: Numbers of invoices issued to the clients. These should be in numerical order.
+2.  Day: Day in which the transaction took place.
+3. Debtors: Name of the debtor (client) to whom the goods were sold on credit.
+4. Fol: Folio numbers of debtors in the Debtors Ledger. Posting to the Debtors Ledger is done on a daily basis.
+5. Sales: Total sales to debtor per transaction in the cell corresponding to the particular day. The credit sales for the month are total at the bottom of this column . The bottom most cell of the column is a Folio references to the General Ledger.
+6. Cost of Sales: Cost price of goods sold to debtor on credit per transaction. The Total cost of sales for credit sales that took place are totalled at the bottom of this column. The bottom most cell of the column is a Folio references to the General Ledger.
+
+### Activity 6 (Debtors Journal)
+
+#### Required
+
+Use the following information from Lonely Traders to prepare the Debtors Journal for
+
+June 2010.
+
+Note: The business uses a mark-up of 66⅔% on cost price.
+
+#### Transactions: June 2010
+
+5 Sell goods on credit to M. Nelson for R1 800. Issue invoice 51.
+
+12 Goods sold to J. Abrahams. The cost price of the goods was R1 200. Issue invoice 52.
+
+17 Sell goods on credit to N. Rossouw for R4 800. Issue invoice 53.
+
+22 Sell goods on credit to J. Abrahams for R1 500. Issue invoice 54.
+
+28 Issue invoice 55 to M. Nelson for goods sold on credit, R480.
+
+#### Answer:
+
+##### Debtors Journal of Lonely Traders – June 2010                         DJ
+
+Doc, Day, Debtors, Fol, Sales, Cost of sales
+
+51, 5, M. Nelson, ,  1 800, 1 080
+
+52, 12, J. Abrahams, , 2 000, 1 200
+
+53, 17, N. Rossouw, ,  4 800, 2 880
+
+54, 22, J. Abrahams, ,  1 500, 900
+
+55, 28, M. Nelson, ,  480, 288
+
+ , , , , 10 580, 6 348
+
+### Debtors Allowances Journal
+
+Example of a Debtors Allowances Journal
+
+Example of a Debtors Journal
+
+Has 2 rows dedicated for headings. The first row has no columns, its all merged into 1 table wide cell, where the name of the subsidiary journal, name of the business and the month on which the journal was prepared. The row is populated as follows:
+
+Debtors Allowance Journal of X - Y Z				DAJ...
+
+Where X is the name of the business enterprise, and DAJ is right aligned at the far right end of the row. The triple dots represent the folio reference number,  Y is the month and Z is the year.
+
+The second row of headings has 6 columns as follows:
+
+1. Doc: Numbers of invoices issued to the clients. These should be in numerical order.
+2. Day: Day on which the transaction took place.
+3. Debtors: Name of the debtor (client) to whom the goods were sold on credit.
+4. Fol: Folio numbers of debtors in the Debtors Ledger. Posting to the Debtors Ledger is done on a daily basis.
+5. Debtors allowances: Total returns from a debtor per transaction for the corresponding day. The total returns/Allowances for the month are summed up at the bottom of this column. The bottom most cell of the column has a Folio reference to the General Ledger .
+6. Cost of sales: Cost price of goods returned by debtor for the corresponding day. Total cost of sales for goods returned that took place in the month are toted up at the bottom of this column. The bottom most cell of the column has a Folio reference to the General Ledger .
+
+### Activity 7 (Debtors Allowances Journal)
+
+#### Required
+
+Use the following information from Lonely Traders to prepare the Debtors Allowances Journal for June 2010.
+
+Note: The business uses a mark-up of 66⅔% on cost price.
+
+#### Transactions : June 2010
+
+8 M. Nelson returned R300 stock previously bought from the business. Issue credit note 24.
+
+22 N. Rossouw demands a discount of R100 on his account. The reason for this is that goods were delivered late to him. The discount was granted. Issue credit note 25.
+
+26 J. Abrahams returned stock to the value of R120. Issue credit note 26.
+
+#### Answer:
+
+Debtors Allowances Journal of Lonely Traders – June 2010    DAJ
+
+Doc, Day, Debtors, Fol, Debtors Allowances, Cost of sales
+
+24, 8, M. Nelson, , 300, 180
+
+25, 22, N. Rossouw, , 100, -
+
+26, 26, J. Abrahams, , 120, 72
+
+ , , , , 520, 252
+
+### Cash Payments Journal
+
+Explanation of a Cash Payments Journal
+
+Has 2 rows dedicated for headings. The 1st row has no columns, its all merged into 1 table wide cell, where the name of the subsidiary journal, name of the business and the month on which the journal was prepared. The row is populated as follows:
+
+Cash Payments Journal of X – Y Z				CPJ...
+
+Where X is the name of the business enterprise, and CRJ is right aligned at the far right end of the row. The triple dots represent the folio reference number. Y is the month and Z is the year.
+
+The second row has 11 major columns. In this second row, the last column has a cell which is itself divided into two rows, the upper part of which has the label 'sundry account' and the bottom row is divided into 3 rows (Amount; Fol; Details). This means that the journal therefore has a total of 13 columns and therefore 13 cells per row for entry input.
+
+The heading for each column is described below in order from the first row to the last.
+
+1. Doc: The relevant source document number is entered here.
+2. Day: The specific day of the relevant month is entered here.
+3. Name of payee: This column shows the source of the relevant payment, in other words, what is written on the cheque.
+4. For each creditor there needs to be a separate account in the Creditors’ Ledger. A folio number will be used to indicate the account the amount will be posted to in the Creditors’ Ledger
+5. Bank: The bank column shows the total amount paid out – the amount on the cheque and must be paid out by the bank for this transaction.
+6. Trading stock: Analysis column for Trading stock purchased for cash.
+7. Creditors control: Total amount which the creditors account will be debited (decreases). This amount will be the amount paid to creditors plus discount received.
+8. Discount Received: This is a non-cash item but is included in the Cash Payments Journal to see the discount received from creditors.
+9. Debtors control: Analysis column for R/D cheques for Debtors.
+10. Wages: Analysis column for wages.
+11. Sundry accounts: If there is no specific column for a transaction the sundry account column is used for the transaction.
+12. Amount: Under Sundry Account for The amount paid out.
+13. Fol: Under Sundry Account. The folio number will be used to indicate the account the amount will be posted to in the General Ledger.
+14. Details: The account in the General Ledger.
+
+#### Discount received from creditors
+
+Bank + Discount received = Creditors’ control
+
+Creditors’ control – Discount received = Bank
+
+Creditors’ control – Bank = Discount received
+
+ 
+
+##### Examples
+
+Pay R3 800 to SNA Distributors in settlement of the business account of R4 000.
+
+Bank, Creditors' control, Discount received
+
+R3 800, R 4 000, R200
+
+Pay Small Traders per cheque after 5% discount has been received. The business owes Small Traders R6 800.
+
+Bank, Creditors’ control, Discount received
+
+R6 460, R6 800, R340
+
+#### Dishonoured cheque
+
+If the business received R380 from M. Naidoo (a debtor) in settlement of his account of R400, this transaction will be entered in the CRJ. If the bank returned the cheque to the business with the remark “R/D – insufficient funds”, a reversal of the transaction in the CRJ must be done.
+
+The amount (R380) received from the debtor, will be entered in the CPJ, but the R20 discount cannot be cancelled in the CRJ. A general Journal entry needs to be done (this will be discussed later in the unit).
+
+Name of payee, Bank, Debtors’ control
+
+M. Naidoo (R/D), 380, 380
+
+The R20 discount allowed will be cancelled in the GJ.
+
+### Activity 8 (Cash Payments Journal)
+
+#### Required
+
+Use the following information from Lonely Traders to prepare the Cash Payments Journal for June 2010.
+
+#### Creditors’ List on 31 May 2011
+
+RN Wholesalers R14 200
+
+Sam Distributors R8 800
+
+Davido Traders R5 600
+
+#### Transactions: May 2011
+
+##### 1
+
+Receive the account statement from RN Wholesalers. Issue cheque 124 to RN Wholesalers in settlement of our account less 5% discount.
+
+##### 3
+
+Issue cheque 125 to Telkom for the telephone account, R2 800.
+
+##### 6
+
+Buy the following from Red Stores and issue cheque 126:
+
+A printer and computer, R12 800 .Paper for the printer, R390
+
+##### 8
+
+Cash cheque 127 for the following: Wages, R1500 To increase the cash float from R800 to R1 000.
+
+##### 9
+
+Issue cheque 128 to Davido Traders as partial payment of the account, R2 000.
+
+##### 12
+
+The owner (P. Loveday) took cheque 129 for R300 to buy flowers for his wife. The flowers were bought from Sunshine Florists.
+
+##### 15
+
+Pay R5 000 with cheque 130 to Sam Distributors towards the business account. Sam Distributors allow R200 discount.
+
+##### 19
+
+Cash cheque 131 for wages, R1 550.
+
+##### 21
+
+Receive the cheque of R1 200 from S. Storm (a debtor) back from the bank with the remark: “R/D – insufficient funds”.
+
+##### 23
+
+Buy stock from SA Traders and pay by cheque 132, R4 100.
+
+##### 24
+
+Pay RD Repairers by cheque 133 for repairs done to the office building, R1 400.
+
+##### 26
+
+Pay SA Loans R22 000 with cheque 134 for the last instalment of the loan. Included in the amount is 10% interest for the past year.
+
+##### 28
+
+Pay the salary of the secretary (R. Rheeder) with cheque 135, R12 000.
+
+##### 30
+
+Receive the bank statement from Perm Bank. The following were debited against our bank account:
+
+Interest, R280
+
+Bank charges, R320.
+
+#### Answer:
+
+##### Cash Payments Journal of Lonely Traders – June 2010          CPJ
+
+Doc, Day, Name of payee, Fol, Bank, Trading Stock, Creditors control, Discount received, Debtors control, Wages, Sundry accounts\[Amount, Fol, Details]
+
+124, 1, RN Wholesalers, ,13 490, , 14 200, 710, , , , ,
+
+125, 3, Telkom, , 2 800, , , , , , 2 800, , Telephone
+
+126, 6, Red Stores, , 13 190, , , , , , 12 800, , Equipment
+
+  , , , , , , , , , , 390, ,Stationery
+
+127, 8, Cash,  , 1 700, , , , , 1500, 200, , Cash float
+
+128, 9, Davido Traders, , 2 000, , 2 000, , , , , ,
+
+129, 12, Sunshine, , , , , ,300, , 300,  ,Drawings
+
+130, 15, Sam Distributors, , 5 000, , 5 200, 200, , , , ,
+
+131, 19, Cash, , 1 550, , , , , 1550, , ,
+
+B/S, 21, S. Storm (R/D), , 1 200, , , , 1 200, , , ,
+
+132, 23, SA Traders, , 4 100, 4 100, , , , , , ,
+
+133, 24, RD Repairers,  , 1 400, , , , , , 1 400, , Repairs
+
+134, 26, SA Loans, , 22 000, , , , , , 20 000, ,  Loan: SA Loans
+
+ , , , , , , , , , , 2 000, ,Stationery
+
+135, 28, R. Rheeder, ,  12 000, , , , , , 12 000, ,  Salaries
+
+B/S, 30, Perm Bank, ,  600, , , , , ,280, , Interest on overdraft
+
+ , , , , , , , , , , 320, ,Bank Charges
+
+ , , , , 81 330, 4 100, 21 400, 910, 1 200, 3 050, 52 490, ,
+
+#### Creditors’ Journal
+
+Example of a Creditors Journal
+
+Explanation of a Creditors Journal
+
+Has 2 rows dedicated for headings. The 1st row has no columns, its all merged into 1 table wide cell, where the name of the subsidiary journal, name of the business and the month on which the journal was prepared. The row is populated as follows:
+
+Creditors' Journal of X – Y Z				CJ...
+
+Where X is the name of the business enterprise, and CJ is right aligned at the far right end of the row. The triple dots represent the folio reference number. Y is the month and Z is the year.
+
+The second row has 8 major columns. In this second row, the last column has a cell which is itself divided into two rows, the upper part of which has the label 'sundry account' and the bottom row is divided into 3 rows (Amount; Fol; Details). This means that the journal therefore has a total of 10 columns and therefore 10 cells per row for entry input.
+
+The heading for each column is described below in order from the first row to the last.
+
+1. Doc: Re-numbered invoices received from suppliers. These should be in numerical order.
+2. Day: Day in which the transaction took place.
+3. Creditor: Name of the creditor (supplier) from whom the business purchased on credit.
+4. Fol: Folio numbers of creditors in the Creditors Ledger. Posting to the Creditors Ledger is done on a daily basis.
+5. Creditors Control: Total amount of purchases on credit per transaction.
+6. Trading Stock: Analysis column for trading stock purchased on credit.
+7. Stationary: Analysis column for stationery bought on credit.
+8. Sundry account: If there is no analysis for a transaction, the transaction will be entered in the sundry column.
+9. Amount: (Under sundry account)Total amount of purchases on credit per transaction
+10. Fol: (Under sundry account) The folio number will be used to indicate the account the amount will be post to in the General Ledger.
+11. Details: (Under sundry account) The account in the General Ledger.
+
+##### Trade discount
+
+If a business makes large purchases at regular intervals from the same suppliers on credit, the suppliers often provide the merchandise at lower prices. This reduction is called trade discount. On the invoice, the articles are indicated at the normal price and the total credit purchase is calculated. A percentage discount is calculated on the total purchases. The trade discount is not entered in the business’s books, but only the net
+
+purchases.
+
+Net purchases = Total purchases – trade discount
+
+Example
+
+Buy goods to the value of R6 800 from Tom Suppliers and receive 20% trade discount.
+
+Trade discount = 20/100 x R6 800 = R1 360
+
+Net purchase = 6 800 – 1 360 = 5 440
+
+The net purchases of R5 440 will be entered in the CJ.
+
+### Activity 9 (Creditors Journal)
+
+#### Required
+
+Use the following information from Lonely Traders to prepare the Creditors Journal for June 2010.
+
+Note: Re-number invoices received from 87.
+
+#### Transactions: June 2010
+
+##### 4
+
+Receive an invoice from RN Wholesalers for trading stock purchased for R12 400 less 20% trade discount.
+
+##### 7
+
+Buy the following on credit from Sam Distributers and receive their invoice:
+
+Three filing cabinets, at R2 000 each.
+
+R300 files at R2 each.
+
+##### 11
+
+Buy packing material from Davido Traders and receive their invoice for R840.
+
+##### 17
+
+Buy trading stock from RN Wholesalers and receive their invoice for R14 000.
+
+ 
+
+##### 23
+
+Receive an invoice from MN Motors for R3 900. The owner took his private vehicle for a service.
+
+##### 28
+
+Buy stationery on credit from Sam Distributers and receive an invoice for R780.
+
+#### Answer:
+
+##### Creditors Journal of Lonely Traders – May 2010                        CJ
+
+Doc, Day, Creditor, Fol, Creditors Control, Trading stock, Stationery, Sundry accounts\[Amount, Fol, Details]
+
+87, 4, RN Wholesalers, ,  9 920, 9 920, , , ,
+
+88, 7, Sam Distributors, ,  6 600,  600, 6 000, ,  Equipment
+
+89, 11, Davido Traders, ,  840, , , 840, , Packing material
+
+90, 17, RN Wholesalers, , 14 000, 14 000, , , ,
+
+91, 23, MN Motors,  ,3 900, , , 3 900, , Drawings
+
+92, 28, Sam Distributors, , 780, , 780, , ,
+
+ , , , , 36 040, 23 920, 1 380, 10 740, ,
+
+ 
+
+## Creditors Allowances Journal
+
+Example of a Creditors Allowances Journal
+
+Has 2 rows dedicated for headings. The 1st row has no columns, its all merged into 1 table wide cell, where the name of the subsidiary journal, name of the business and the month on which the journal was prepared. The row is populated as follows:
+
+Creditors Allowances Journal of X – Y Z				CAJ...
+
+Where X is the name of the business enterprise, and CAJ is right aligned at the far right end of the row. The triple dots represent the folio reference number. Y is the month and Z is the year.
+
+The second row has 8 major columns. In this second row, the last column has a cell which is itself divided into two rows, the upper part of which has the label 'sundry account' and the bottom row is divided into 3 rows (Amount; Fol; Details). This means that the journal therefore has a total of 10 columns and therefore 10 cells per row for entry input.
+
+The heading for each column is described below in order from the first row to the last.
+
+1.  Doc: Debit notes issued to supplies. These should be in numerical order.
+2. Day: Day in which the transaction took place.
+3. Creditor: Name of the creditor (supplier).
+4. Fol: Folio numbers of creditors in the Creditors Ledger. Posting to the Creditors Ledger is done on a daily basis.
+5. Creditors Control: Total amount of returns/Allowances to creditors per transaction.
+6. Trading Stock: Analysis column for Trading stock returns/Allowances.
+7. Stationery: Analysis column for Stationery returns/Allowances.
+8. Sundry Account: If there is no analysis for a transaction, the transaction will be entered in the Sundry column.
+9. Amount: (under sundry account) Total amount of returns/Allowances per transaction
+10. Fol: The folio number will be used to indicate the account the amount will be posted to in the General Ledger.
+11. Details: The account in the General Ledger.
+
+### Activity 10 (Creditors Allowances Journal)
+
+#### Required
+
+Use the following information from Lonely Traders to prepare the Creditors Allowances
+
+Journal for June 2010.
+
+ 
+
+#### Transactions: June 2010
+
+##### 6
+
+Returned trading stock to RN Wholesalers for R800 less 20% trade discount. Issue debit note 45.
+
+##### 14
+
+Send an incorrect order for packing material back to Davido Traders to the value of R80 together with debit note 46.
+
+##### 19
+
+RN Wholesalers did not give trade discount of 20% for goods previously bought to the value of R14 000. RN Wholesalers will correct the mistake. Issue debit note 47 for the trade discount.
+
+##### 30
+
+Returned damaged stationery to the value of R120 to Sam Distributors. Issue debit note 48.
+
+#### Answer:
+
+##### Creditors Allowances Journal of Lonely Traders – May 2010                                                  CAJ
+
+Doc, Day, Creditor, Fol, Creditors control, Trading Stock, Stationery, Sundry accounts \[ Amount, Fol, Details]
+
+45, 6, RN Wholesalers, , 640, 640, , , ,
+
+46, 14, Davido Traders, , 80, , , 80, , Packing material
+
+47, 19, RN Wholesalers, , 2 800, 2 800, , , ,
+
+48, 30, Sam Distributors, , 120, , 120, , ,
+
+ , , , , 3 640, 3 440, 120, 80, ,
+
+ 
+
+## Petty Cash Journal
+
+Example of a Petty Cash Journal
+
+Has 2 rows dedicated for headings. The 1st row has no columns, its all merged into 1 table wide cell, where the name of the subsidiary journal, name of the business and the month on which the journal was prepared. The row is populated as follows:
+
+Petty Cash Journal of X – Y Z				PCJ...
+
+Where X is the name of the business enterprise, and CAJ is right aligned at the far right end of the row. The triple dots represent the folio reference number. Y is the month and Z is the year.
+
+The second row has 8 major columns. In this second row, the last column has a cell which is itself divided into two rows, the upper part of which has the label 'sundry account' and the bottom row is divided into 3 rows (Amount; Fol; Details). This means that the journal therefore has a total of 10 columns and therefore 10 cells per row for entry input.
+
+The heading for each column is described below in order from the first row to the last.
+
+1.  Doc: Petty cash vouchers issued for purchases. These should be in numerical order.
+2. Day: Day in which the transaction took place.
+3. Details: Write down what is paid for out of the petty cash.
+4. Fol: Folio numbers of debtors in the Debtors Ledger. Posting to the Debtors Ledger is done on a daily basis.
+5. Petty Cash: Total amount paid out of the petty cash per transaction.
+6. Postage: Analysis column for Postage.
+7. Stationery: Analysis column for Stationery.
+8. Sundry account: If there is no analysis for a transaction, the transaction will be entered in the Sundry column.
+9. Amount: (Under sundry account) Total amount paid out of the petty cash per transaction
+10. Fol: (under sundry account) The folio number will be used to indicate the account the amount will be posted to in the General Ledger.
+11. Details: (Under sundry account) The account in the General Ledger.
+
+The Petty Cash Journal is used to make small cash payments. Each payment that occurs is written down on a petty cash voucher (source document) and authorised by the petty
+
+cash cashier and senior manager of the business. Where possible, all external source documents should be attached to the petty cash voucher.
+
+When the petty cash cashier needs money for the petty cash box, the head cashier issues a cheque which is recorded in the CPJ. “Cash” will be written on the cheque, because it will be exchanged for cash. The amount will be posted to the debit side of the
+
+petty cash account in the general ledger. The amount is the advance given to the petty cash cashier.
+
+Normally, it is said that an imprest system is used. This means that the opening balance should be the same every month. At the end of the month, a cheque is drawn so that the end total is the same as the opening balance. Sometimes it happens that the cheque is
+
+only drawn at the beginning of the following month.
+
+If too many payments were made from the petty cash during the month, additional money can be requested from the head cashier. A cash cheque is exchanged and put in petty cash. This cheque is entered in the Cash Payments Journal and posted to the petty cash account in the general ledger.
+
+### Activity 11 Petty cash
+
+The aim of this example is to show how to restore the petty cash balance.
+
+#### Transactions: June 2011
+
+##### 1
+
+The business decides to have a petty cash box for small transactions. The head cashier writes out cheque 210 for R500 and gives the money to the petty cash cashier.
+
+##### 15
+
+The petty cash cashier sees that there is not enough money in the kitty and requests a further R200. Write out a cash cheque for R200.
+
+##### 30
+
+The total payments from the Petty Cash Journal were R658.
+
+Write out cheque 267 to restore the petty cash balance.
+
+### Answer
+
+Dr  		Petty Cash 		B8 		Cr
+
+Jun, 1, Bank, CPJ, 500, Jun, 30, Total Payments, PCJ, 658
+
+ , 15, Bank, CPJ, 200, , , Balance, c/d, 500
+
+ , 30, Bank, CPJ, 458, , , , ,
+
+ , , , ,1 158, , , , ,
+
+Jul, 1, Balance, b/d, 500, , , , ,
+
+#### Explanation
+
+1 The amount of R658 on the credit side of the petty cash account is the payments made during the month and entered in the Petty Cash Journal.
+
+2 It is very important that the R500 that was in the kitty at the beginning of the month must be the same as the balance at the end of the month. To get the amount of R500 at the end of the month, one needs to work backwards.
+
+3 Write in balance (c/d) and the balance (b/d).
+
+4 Add the debit side: R500 + R200 = R700.
+
+5 Subtract the debit side from the credit side: R1 158 – R700 = R458.
+
+6 The amount of R458 must be requested from the head cashier to restore the petty cash balance.
+
+### Activity 12 (Petty Cash Journal)
+
+#### Required
+
+Use the following information from Lonely Traders to prepare the Petty Cash Journal for June 2010.
+
+#### Transactions: June 2010
+
+##### 4
+
+Buy stationery for R80 from SNA Traders with money from the petty cash. Issue petty cash voucher 76.
+
+##### 12
+
+Pay R180 out of the petty cash for carriage fees to TS Transporters. This fee was paid on behalf of a debtor (S, Small) for credit sales. The amount must be debited against the debtor’s account. Issue petty cash voucher 77.
+
+##### 21
+
+Pay R78 postage to the Post Office and issue petty cash voucher 78.
+
+##### 24
+
+Buy trading stock from AB Wholesalers for R200 and issue petty cash voucher 79.
+
+##### 27
+
+Buy stationery for R230 from SNA Traders and pay out of the petty cash. Issue petty cash voucher 80.
+
+##### 30
+
+Pay R150 out of the petty cash for a cleaner to wash the office windows. Issue petty cash voucher 81.
+
+#### Answer:
+
+##### Petty Cash Journal of Lonely Traders – June 2010 	PCJ
+
+Doc, Day, Details, Fol, Petty cash, Postage, Stationery, Sundry accounts\[Amount, Fol, Details]
+
+76, 4, Stationery, , 80, , 80, , ,
+
+77, 12, Debtors control, , 180, , , 180, , Debtors control
+
+78, 21, Postage, , 78, 78, , , ,
+
+79, 24, Trading stock, , 200, , , 200, , Trading stock
+
+80, 27, Stationery, , 230, , 230, , ,
+
+81, 30, Wages, , 150, , , 150, , Wages
+
+ , , , , 918, 78, 310, 530, ,
+
+### Activity 12 (Petty Cash account – imprest system)
+
+#### Required
+
+You are the petty cash cashier of Peter Suppliers. You are expected to compile a petty cash account in the General Ledger. Do all the entries directly into the ledger account.
+
+There has to be R700 at the beginning of each month in the petty cash kitty.
+
+#### Transactions: May 2011
+
+##### 1
+
+There is R80 left in the petty cash kitty. The head cashier draws a cheque to restore the petty cash balance of R700.
+
+##### 14
+
+There is not enough money left in the petty cash kitty. Request a further R300 from the head cashier to add to petty cash.
+
+##### 31
+
+The total payments from petty cash for the month are R890. Draw a cheque to restore the petty cash balance.
+
+ 
+
+####  Answer sheet
+
+ 			General ledger of Peter Suppliers
+
+Dr.					Petty Cash 			B8		Cr.
+
+ , , , , , , , , ,
+
+ , , , , , , , , ,
+
+ , , , , , , , , ,
+
+ , , , , , , , , ,
+
+ , , , , , , , , ,
+
+ , , , , , , , , ,
+
+ , , , , , , , , ,
+
+#### Answer:
+
+ 			General ledger of Peter Suppliers
+
+Dr.					Petty Cash 			B8		Cr.
+
+ 2011 May, 1, Bank, CPJ, 620, 2011 May, 31, Total payments, PCJ, 890
+
+ , 14, Bank, CPJ, 300, , , Balance, c/d, 700
+
+ , 31, Bank, CPJ, 670, , , , ,
+
+ , , , , 1 590, , , , , 1 590
+
+ 2011 Jun, 1, Balance, b/d , 700, , , , ,
+
+ , , , , , , , , ,
+
+ , , , , , , , , ,
+
+### General Journal
+
+Example of a General Journal
+
+Explanation of a General Journal
+
+1. Day: The day the transactions occurred.
+2. Details (3rd row, counting includes header row): The account that will be debited in the General Ledger and the subsidiary ledger.
+3. Details (4th row, counting includes header row): The account that will be credited in the General Ledger and the subsidiary ledger.
+4. Details (5th row, counting includes header row): A description of the transaction and the voucher.
+5. Debit column under the Debtors' Control column: The total of the Debtors’ control account that will be debited in the General Ledger. Journal debits/Sundry accounts will be written in the details column.
+6. Credit Column under the Debtors' Control Column: The total of the Debtors’ control account that will be credited in the General Ledger. Journal credits/Sundry accounts will be written in the details column.
+7. Debit column under the Creditors' Control column: The total of the Creditors’ control account that will be debited in the General Ledger. Journal debits/Sundry accounts will be written in the details column.
+8. Credit column under the Creditors' control column: The total of the Creditors’ control account that will be credited in the General Ledger. Journal credits/Sundry accounts will be written in the details column.
+
+##### Summarised General Journal entries
+
+######  
+
+Transaction, Account debited, Account credited
+
+Cancellation of discount on dishonoured cheque,
+
+Debtor’s name and Debtors’ control, Discount allowed
+
+Interest charged on overdue debtors account, Debtor’s name and Debtors’ control, Interest on overdue debtors
+
+Interest paid on overdue creditors account, Interest on overdue
+
+creditors, Creditor’s name and Creditors’ control
+
+Written a debtors’ account off as irrecoverable, Bad debts, Debtor’s name and Debtors’ control
+
+Donation of stock at cost price, Donations, Trading stock
+
+Drawings of trading stock at cost price, Drawings, Trading stock
+
+Drawings of consumables (example: stationery) at cost price, Drawings, Stationery
+
+Capitalisation of interest on loan at MB Bank, Interest on loan, Loan: MB Bank
+
+Capitalisation of interest on fixed deposit at XY Bank, Fixed deposit: XY Bank, Interest on fixed deposit
+
+###### Correction of errors
+
+It may happen that source documents are written into the journals incorrectly or posting errors may be made to the General Ledger, Debtors’ ledger and Creditors’ ledger. It may happen that the errors are not immediately traced because they have been posted to the correct side of the account. These errors are only traced when the books are checked.
+
+In accounting it is not correct simply to draw a line through the recording. Another recording must be done in order to correct the error. Most errors are corrected in the General Journal.
+
+ 
+
+If an error has been made in a subsidiary journal, the following should happen:
+
+* Transaction is omitted = do a recording in the relevant journal.
+* If the amount is too small = put the difference between the amounts in the subsidiary journal.
+* If the amount is too big = put the difference between the amounts in the subsidiary journal.
+
+###### Posting errors
+
+* The wrong amount to the correct account = do a single journal recording.
+* The correct amount to the wrong side of the account = do a single journal recording.
+* If posting to the wrong account = take the amount out of the account and place it in the correct account. This is done in the General Journal.
+
+It is impossible to explain all the errors that may occur. It is important, however, to see where the error has occurred, and do the corrections accordingly. To help you, it would be wise to draw a T-account. Write the error in, and then do the correction.
+
+### Activity 13 (General Journal)
+
+#### Required
+
+Record the following transactions in the General Journal of Davido Traders for May 2011.
+
+Note: Don’t do any narrations.
+
+#### Transactions: May 2011
+
+##### 4
+
+Charge G. Patella’s (a debtor) overdue account with 6% interest per annum for three months. G. Patella owes R8 200.
+
+##### 6
+
+A. Mosterd (a debtor) who owes R1 200 is declared insolvent. Receive a first and final dividend of 30 cents in the rand (this is already recorded in the books). Write his account off as bad debt.
+
+##### 9
+
+Receive R. Ndlovu’s cheque back from the bank with a bank debit note for R980 (this is already recorded in the books). R20 discount was given to R. Ndlovu when he settled his account earlier.
+
+##### 14
+
+The owner, G. Nel takes merchandise for personal use. The selling price of the goods is R500 (cost price, R300).
+
+##### 16
+
+Merchandise bought on credit from Storm Traders for R3 400 has been recorded correctly in the journal, but it was posted to Stork Traders by mistake. Correct the error.
+
+##### 24
+
+Trading stock of R1 600 was bought from Schaik Traders and it was posted to the Stationery account in the General ledger. Correct the error.
+
+##### 28
+
+Donate R4 000 (cost price) worth of trading stock to the local old age home.
+
+#### Answer sheet
+
+General Journal of Davido Traders – May 2011 		GJ
+
+Day, Details, Fol, Debit, Credit, Debtors’ control\[Debit, Credit], Creditors’ control\[Debit, Control]
+
+ , , , , , , , ,
+
+ , , , , , , , ,
+
+ , , , , , , , ,
+
+ , , , , , , , ,
+
+ , , , , , , , ,
+
+ , , , , , , , ,
+
+ , , , , , , , ,
+
+#### Answer:
+
+##### General Journal of Davido Traders – May 2011 		GJ
+
+Day, Details, Fol, Debit, Credit, Debtors’ control\[Debit, Credit], Creditors’ control\[Debit, Credit]
+
+ 4, G. Patella , , 123, , 123, , ,
+
+ , Interest on overdue debtors, , , 123, , , ,
+
+ 6, Bad debts , , 840, , , , ,
+
+ , Mosterd, , 840, , 840, , ,
+
+ 9, R. Ndlovu, , 20, , 20, , ,
+
+ , Discount Allowed, , , 20, , , ,
+
+ 14, Drawings, , 300, , , , ,
+
+ , Trading stock, , , 300, , , ,
+
+ 16, Stork Traders, , 3 400, , , , 3 400,
+
+ , Storm Traders, , , 3 400, , , ,3 400
+
+ 24, Trading stock, , 1 600, , , , ,
+
+ , Stationery, , , 1 600, , , ,
+
+ 28, Donations, , 4 000, , , , ,
+
+ , Trading stock, , , 4 000, , , ,
+
+# Ledger accounts
+
+### 1General ledger
+
+General hints:
+
+* The General ledger is divided into a debit and a credit side.
+* The Accounts need to be divided into Balance sheet accounts and Nominal accounts.
+* To help you remember whether the balances of accounts need to be debit or credit, the acronyms DAX and CIL can be used.
+* DAX stands for Drawings, Assets and Expenses and have debit balances.
+* CIL stands for Capital, Income and Liabilities and have credit balances.
+
+Take note of the following before looking at an account in the General Ledger:
+
+### Explanation of General Ledger
+
+Has 3 rows dedicated to headings. The first row is a single, ledger wide cell with the title of the ledger and name of enterprise in the form: General ledger of X, where X is the name of the business enterprise. The 2nd row is a single, ledger wide cell with Dr left aligned, The Account name is in the middle, then the folio number of the account showing whether the account is a balance sheet
+
+account (B) or a nominal account (N), and then Cr is right aligned.
+
+The 3rd row has 2 sets of 5 rows, that is Month, Day, Details, Fol, Amount, then a double border and then Month, Day, Detail, Fol, Amount. This makes 10 columns.
+
+1. The heading of the General Ledger has to include the name of the business.
+2. The name of the account needs to appear in the centre of the line.
+3. The debit side of the account is indicated with the abbreviation, 'dr.'
+4. The credit side of the account is indicated with the abbreviation, 'cr.'
+5. The month and the year are indicated.
+6. The day on which the transaction took place is indicated. If a column was created in a journal for the account, the date is always the end of the month when the amount is posted over to the General ledger. If there was no column created for the account, the date needs to reflect the date of the transaction.
+7. The details column refers to the contra account.
+8. Fol (folio) refers to the journal from which was posted.
+9. The amount for the transaction need to be reflected.
+
+### Example of a basic General ledger account
+
+Dr. 			 Stationery (1) 			N8(2) 			Cr.
+
+20..Apr, 1, Balance, b/d, (3), 20 Apr, 31, Creditors Control, CAJ, (8)
+
+ , 31, Bank, CPJ, (4), , , Drawings, GJ, (9)
+
+ , , Petty cash, PCJ, (5), , , Balance, c/d, (11)
+
+ , , Creditors Control, CJ, (6), , , , ,
+
+ , , Trading Stock, GJ, (7), , , , ,
+
+ , , , , (10), , , , , (10)
+
+20..May, 1, Balance, b/d, (12), , , , ,
+
+ 
+
+NB\* The numbers is brackets() are for the corresponding explanations below:
+
+### Explanation of a basic General Ledger account
+
+1. The name of the account.
+2. The folio number of the account has to show whether the account is a balance sheet account (B) or a nominal account (N).
+3. The balance at the beginning of the month needs to be brought down. It will depend on the type of account whether the balance will be debit or credit. Stationery is an expense, therefore the balance is debit.
+4. An increase in stationery (if more was bought) is done on the debit side. The contra account is reflected as Bank which means that this was a cash transaction in the Cash Payments Journal. Bank (the contra account) will be credited with the same amount.
+5. An increase in stationery (if more was bought) is done on the debit side. The contra account is reflected as Petty cash which means that this was a cash transaction for which money was taken from the Petty cash box. Petty cash (the contra account) will be credited with the same amount.
+6. An increase in stationery (if more was bought) is done on the debit side. The contra account is reflected as Creditors control which means that this was a credit transaction. Creditors control (the contra account) will be credited with the same amount.
+7. This was taken from the General Journal. It was probably a correction of an error and whether it is a debit or credit entry depends on the error made. The contra account Is Trading stock, which means that Trading stock will be credited with the same amount.
+8. A decrease in stationery (if sent back) is done on the debit side. The contra account is reflected as Creditors control which means that this was stationery bought on credit but for some reason sent back to the supplier. Creditors control (the contra account) will be debited with the same amount.
+9. A decrease in stationery (owner took for personal use) is done on the debit side. The contra account is reflected as Drawings which means that this was stationery taken for personal use by the owner. Drawings (the contra account) will be debited with the same amount.
+10. Both the debit and credit side of the account is now totalled. Write the amounts in pencil. The larger amount is then written in the space reflected as (10).
+11. The fact that the larger amount was written in, will make the account mathematically incorrect. The smaller amount needs to be subtracted from the larger amount. The difference between the amounts is reflected as 'balance'.
+12. The balance is taken over to the other side of the equation to indicate the start of a new month.
+
+### Classification of General ledger accounts
+
+The table (csv) below is a summary of the accounts and their classification:
+
+DAX (Debit accounts), CIL (Credit accounts)
+
+Drawings (OE – Balance sheet), Capital (OE –Balance sheet)
+
+Assets (Balance sheet), Income (Nominal)
+
+Expenses (Nominal), Liabilities (Balance sheet)
+
+The following table (csv) is an expanded version that will give you more information on the various types of accounts under each classification. It is important to know this table so that you can be confident with General ledger accounts and analysis of information
+
+according to the accounting equation, A = OE + L.
+
+All the accounts listed on the debit side start with a debit balance. An increase in these accounts will also be debited and a decrease will be credited, All the accounts listed on the credit side start with a credit balance. An increase in these accounts will also be credited and a decrease will be debited.
+
+### Debit Accounts (DAX)
+
+**Debit Increase**|Debit Decrease
+
+#### Owner’s Equity (Balance Sheet)
+
+Drawings
+
+#### Assets (Balance sheet)
+
+##### Tangible Assets
+
+(Land and buildings; Vehicles; Machinery; Equipment; Computers)], ,
+
+##### Financial Assets
+
+\[e.g Fixed Deposits; Investments; Shares; Unit Trusts];
+
+##### Current Assets
+
+\[Trading Stock; Debtors/ Accounts Receivable; Bank, Cash Float, Petty Cash, Savings Account, Accrued Income, Prepaid Expenses, Consumables on hand]
+
+#### Expenses (Nominal)
+
+Cost of Sales; Interest on loans; Bank Charges; Interest on Overdraft; Debtors Allowances; Other daily or monthly expenses like salaries and wages.. water..electricity..stationery..etc,
+
+### Credit Accounts (CIL)
+
+Debit Decrease-**Credit Increase**
+
+#### Owner’s Equity (Balance Sheet)
+
+Capital
+
+#### Income (Nominal)
+
+\[Sales; Current Income/ Service Fees/ Fee Income; Rent Income; Commission Income; Interest on current bank account; Interest on Investment/ fixed deposits; Interest on savings account]
+
+#### Liabilities (Balance sheet)
+
+Current \[Creditors/ Accounts payable; Bank Overdraft; Loans; Accrued Expenses; Income]; Non Current (Long Term 12 months +) Loans > 12 months.
+
+## Explanation of the procedure for posting to the General ledger from journals.
+
+The journals you have done so far, include:
+
+###### CRJ (Cash Receipts Journal)
+
+* The Bank will be debited and includes all amounts in the CRJ except the Cost of sales amount.
+* This means that all the other accounts (excluding Cost of sales) will be credited.
+* Cost of sales is the exception to the rule and will be debited because it is regarded as an expense. The contra account for Cost of sales will be Trading stock which means that the Trading stock account needs to be credited with the Cost of sales amount.
+
+ 
+
+###### CPJ (Cash Payments Journal)
+
+* The Bank will be credited and includes all amounts in the CPJ.
+* This means that the other accounts will be debited as contra accounts.
+
+###### DJ (Debtors Journal)
+
+* Debtors control will be debited with the Sales amount and Sales will be credited.
+* Cost of sales will be debited as in the CRJ and Trading stock will be credited.
+
+ 
+
+###### DAJ (Debtors Allowances Journal)
+
+* As the DAJ reflects returns or Allowances of debtors, the opposite need to be done in the General ledger as was the case with the Debtors Journal.
+* Debtors control will therefore be credited with the Debtors Allowances amount and Debtors Allowances need to be debited.
+* Cost of sales need to be credited and Trading stock will be debited.
+* Remember that only stock sent back by the debtor will reflect an amount in the Cost of sales column.
+* Items debtors received an allowance for but kept in their possession do not have an amount in the Cost of sales column as it was not taken back into stock.
+
+###### CJ (Creditors Journal)
+
+* Creditors control will be credited. This amount includes the amounts of all the other columns in the Creditors Journal.
+* This means that the other accounts will be debited as contra accounts.
+
+###### PCJ (Petty Cash Journal)
+
+* The Petty Cash Journal is similar to the Cash Payments Journal.
+* The Petty Cash account will be credited and includes all amounts in the PCJ.
+* This means that the other accounts will be debited as contra accounts.
+
+###### GJ (General Journal)
+
+* Debits or credits will depend on the General Journal entry.
+* Whichever account was debited in the General Journal needs to be debited in the General ledger.
+* Whichever account was credited in the General Journal needs to be credited in the General ledger.
+
+#### 2Debtors ledger
+
+##### Explanation of the Debtors ledger
+
+The ledger has 3 rows dedicated to headings. The first is a merged single cell with the name of the business enteprise. The second row has the name and surname of the debtor and  the folio number. The 3rd row has the column headers as show below. The numbers in brackets() correspond to the explanation below the table (csv).
+
+Debtors' ledger of X (1)
+
+M. Samdaan (2)							DL5(3)
+
+Date (4), Details(5), Fol(6), Debit(7), Credit(8), Balance(9)
+
+1. The type of ledger and the name of the business have to be reflected.
+2. The name and surname of the debtor needs to be shown.
+3. The folio number for the debtor needs to be indicated. This will help when compiling a debtors list.
+4. The date of the entry needs to be shown.
+5. In the details column the business can reflect whether the entry was as a result of an invoice, receipt, cheque with the number of the receipt, invoice or cheque next to it. This will help to serve as a cross reference if the original documentation (invoice, cheque, account) is needed. Abbreviations may be used such as INV for invoice, CHQ for cheque.
+6. In the folio column, reference need to be made to the journal where the entry has been recorded.
+7. If a debtors account increases, it is reflected in the debit column. This is normally the result of entries in the Debtors Journal.
+8. If a debtors account decreases, it is reflected in the credit column. This is normally the result of entries in the Debtors Allowances Journal and the Cash Receipts Journal.
+
+### Activity 14 (Debtors ledger)
+
+#### Required
+
+Certain transactions of the business Dhlamini Traders are given. Record these transactions in the following debtors’ ledger account of the business: M. Motaung (D5).
+
+ 
+
+#### Transactions: February 2011
+
+1
+
+The amount owed by M. Motaung, R860
+
+4
+
+Receive a cheque from M. Motaung in settlement of his account after 5% discount was allowed to him. Issue receipt 145.
+
+6
+
+Sell goods on credit to M. Motaung, R2 100. Issue invoice 143.
+
+8
+
+Receive M. Motaung’s (see 4th) cheque back from the bank together with a bank debit note with the remark “R/D – error on cheque”. Issue journal voucher 36.
+
+11
+
+M. Motaung returned damaged goods to the value of R280. Issue credit note 40. Sell goods on credit to M. Motaung, R3 800. Issue invoice 149.
+
+16
+
+Send the sold goods to M. Motaung and pay R200 to SA Transporters from the petty cash. This amount must be debited to M. Motaung’s account. Issue petty cash voucher 76.
+
+25
+
+Issue receipt 151 to M. Motaung for R4 500 in partial payment of his debt. Give R120 discount.
+
+27
+
+Credit sales of merchandise to M. Motaung, R1 340. Issue invoice 153.
+
+#### Answer sheet
+
+Debtors' ledger of Dhlamini Traders
+
+M. Motaung								DL5
+
+Date, Details, Fol, Debit, Credit, Balance
+
+ , , , , ,
+
+ , , , , ,
+
+ , , , , ,
+
+ , , , , ,
+
+ , , , , ,
+
+#### Answer:
+
+##### Debtors' ledger of Dhlamini Traders
+
+M. Motaung								DL5
+
+Date, Details, Fol, Debit, Credit, Balance
+
+ Feb 1, Account rendered, , , , 860
+
+ Feb 4, Receipt 145, CRJ, , 817, 43
+
+ , Receipt 145, CRJ, , 43, -
+
+ Feb 6, Invoice 143, DJ, 2 100, , 2 100
+
+ Feb 8, Dishonoured cheque, CPJ, 817, , 2 917
+
+ , Journal voucher(discount), GJ, 43, , 2 960
+
+ Feb 11, Credit note 40, CAJ, , 280, 2 680
+
+ Feb 16, Invoice 149, DJ, 3 800, , 6 480
+
+ , Petty cash voucher 76, PCJ, 200, , 6 680
+
+ Feb 25, Receipt 151, CRJ, , 4 500, 2 180
+
+ , Receipt 151, CRJ, , 120, 2 060
+
+ Feb 27, Invoice 153, DJ, 1 340, , 3 400
+
+ , , , , ,
+
+#### 3Creditors ledger
+
+Explanation of the Creditors ledger
+
+Creditors' ledger of X (1)
+
+M. Mthuli (2)							DL5(3)
+
+Date (4), Details(5), Fol(6), Debit(7), Credit(8), Balance(9)
+
+1. The type of ledger and the name of the business have to be reflected.
+2. The name and surname of the creditor needs to be shown.
+3. The folio number for the creditor needs to be indicated. This will help when compiling a creditors list.
+4. The date of the entry needs to be shown.
+5. In the details column the business can reflect whether the entry was as a result of an invoice, receipt, cheque with the number of the receipt, invoice or cheque next to it. This will help to serve as a cross reference if the original documentation (invoice, cheque, account) is needed. Abbreviations may be used such as INV for invoice, CHQ for cheque.
+6. In the folio column, reference need to be made to the journal where the entry has been captured.
+7. If a creditors account increases, it is reflected in the credit column. This is normally the result of entries in the Creditors Journal.
+8. If a creditors account decreases, it is reflected in the debit column. This is normally the result of entries in the Creditors Allowances Journal and the Cash Payments Journal.
+
+### Activity 15 (Creditors ledger)
+
+#### Required
+
+Certain transactions of the business Bruto Ltd. are given. Record these transactions directly into the creditor, Solly Wholesalers’ (CL5) account, in the creditors’ ledger.
+
+#### Transactions: May 2011
+
+1 Amount owed by Bruto Ltd. to Solly Wholesalers, R16 200.
+
+4 Receive an invoice from Solly Wholesalers for goods bought on credit, R4 100 minus 20% trade discount. Re-number the invoice to 136.
+
+7 Issue cheque 210 to Solly Wholesalers for the amount owed to them on 1 May 2011 minus 5% discount.
+
+12 Buy the following on credit from Solly Wholesalers:
+
+* Goods, R6 400
+* Paper for the printer, R280
+
+Re-number the invoice to 140.
+
+18 Issue debit note 38 to Solly Wholesalers for goods returned to them, R1 450.
+
+23 Buy goods for R2 600 from Solly Wholesalers and pay with cheque 278.
+
+25 Pay Solly Wholesalers with cheque 282 for partial payment of the business account, R5 200.
+
+#### Answer sheet
+
+#####              Creditors’ ledger of Bruto Ltd.
+
+###### Solly Wholesalers   								 CL5
+
+Date, Details, Fol, Debit, Credit, Balance
+
+ , , , , ,
+
+ , , , , ,
+
+ , , , , ,
+
+ , , , , ,
+
+ , , , , ,
+
+ , , , , ,
+
+ , , , , ,
+
+#### Answer:
+
+#####              Creditors’ ledger of Bruto Ltd.
+
+###### Solly Wholesalers   								 CL5
+
+Date, Details, Fol, Debit, Credit, Balance
+
+ May 1, Account rendered, , , , 16 200
+
+ May 4, Invoice 136, CJ, , 3 280, 19 480
+
+ May 7, Cheque 210, CPJ, 15 390, , 4 090
+
+ , Cheque 210, CPJ, 810, ,3 280
+
+ May 12, Invoice 140, CJ, , 6 680, 9 960
+
+ May 18, Debit note 38, CAJ, 1 450, , 8 510
+
+ May 23, No entry: cash, , , ,
+
+ May 25, Cheque 282, CPJ, 5 200, , 3 310
+
+### Advanced ledger accounts
+
+#####  Trading stock
+
+It is important to remember that amounts shown in the Trading stock account are always at cost price.
+
+Example of a Trading stock account.
+
+The numbers in brackets() correspond to the explanation given below the csv
+
+Dr.				Trading stock			B6				Cr.
+
+20..Apr, 1, Balance, b/d, (1), 20..Apr, 30, Creditors control, CAJ, (5)
+
+ , 30, Bank, CPJ, (2), , , Cost of sales, CRJ, (6)
+
+ , , Creditors control, CJ, (3), , , Cost of sales, DJ, (7)
+
+ , , Petty cash, PCJ, (4), , , Drawings, GJ, (9)
+
+ , , Cost of sales, DAJ, (8), , , Stationery, GJ, (10)
+
+ , , , , , , , Balance, c/d, (11)
+
+ , , , , , , , , ,
+
+20..May, 1, Balance, b/d, (11), , , , ,
+
+Explanation of a Trading stock account
+
+1. Stock on hand at the beginning of the month.
+2. Purchase of stock for cash = Cheque counterfoil
+3. Buy goods on credit from supplier = Original invoice
+4. Buy goods and pay out of the petty cash = Petty cash voucher
+5. Goods previously bought on credit, returned to the supplier = Duplicate Debit note
+6. The cost price of the goods as cash sales, is transferred to the Cost of sales account.
+7. The cost price of the goods sold on credit is transferred to the Cost of sales account.
+8. The cost price of the goods, previously sold on credit to a debtor, is returned and corrected in the books.
+9. The owner took goods at cost price for his own use = Journal voucher
+10. Correction of an error = debit or credit side = Journal voucher
+11. Stock on hand at the end of the month.
+
+## Control Accounts
+
+#### Introduction
+
+The purpose of control accounts is to check the balance in the subsidiary ledgers. The balance of the Debtors’ control account in the General Ledger is checked and confirmed against the total of the debtors’ balances in the Debtors Ledger. In the same way the
+
+balance of the Creditors’ control account in the General Ledger is checked and confirmed against the total of the creditors’ balances in the Creditors’ Ledger.
+
+ 
+
+#### Reconciliation of control account balances with the totals of balances of accounts in the Debtors and Creditors ledger.
+
+The debit balance of the Debtors’ control account in the general ledger has to be reconciled with the totals of debit and credit balance according to the debtors list. The credit balance of the Creditors’ control account in the general ledger has to be reconciled each month with the totals of debit and credit balances according to the
+
+credit balances according to the creditors list.
+
+If the balances are not the same, an investigation needs to be done to reconcile the balances.
+
+##### Tips to reconcile the balances:
+
+* No entry was made = correct in the control account and on the list.
+* Mistake on source document = correct in the control account and on the list.
+* Total of a journal is incorrectly added = correct in the control account.
+* Posting mistake to an individual debtor/creditor account = correct on list.
+* If an amount is posted to the correct account in an individual debtors/creditors account but on the wrong side, double the amount must be put on the other side. Example: M. Visagie (a debtor) bought stock on credit for R240. It was recorded correctly in the DJ but the posting was done to the credit side of the account of M. Visagie. To correct the error, the account of M. Visagie must be debited with R400 (R200 to cancel the credit entry and R200 with the correct recording)
+
+#### Debtors’ control account
+
+Example (Numbers in brackets () correspond to the explanations below the csv)
+
+Dr.					Debtors' control 		B7 			Cr.
+
+20.. Apr, 1, Balance, b/d, (1), 20.. Apr, 30, Bank and discount allowed, CRJ, (6)
+
+ , 30, Sales, DJ, (2), , , Debtors' Allowances, DAJ, (7)
+
+ , , Bank (R/D), CPJ, (3), , , Journal credits, GJ, (8)
+
+ , , Petty cash, PCJ, (4), , , Balance, c/d, (9)
+
+ , , Journal debits, GJ, (5), , , , ,
+
+ , , , , , , , , ,
+
+20..May, 1, Balance, b/d, (9), , , , ,
+
+##### Explanation
+
+1. Amount owed by debtors at the beginning of the month.
+2. Goods sold on credit to debtors = Duplicate invoice
+3. Cheques returned by the bank, because the cheques were dishonoured = bank debit note. Included in this amount there may also be money that the business pays back to the debtor with a credit balance = cheque counterfoil.
+4. Carriage paid for a debtor from the petty cash and is debited against the debtors’ account = petty cash voucher
+5.  Journal debits: Charge interest on a debtors’ overdue account; Discount cancelled on a dishonoured cheque; Transfers between debtors and creditors; Correction of errors.
+6. Money that was received from debtors during the month and discount allowed to debtors = Duplicate receipt
+7. Allowances given to debtors = Duplicate Credit note
+8. Journal credits: Debtors account written off as bad debts; Transfers between debtors and creditors; Correction of errors
+9. Amount owed by debtors at the end of the month.
+
+#### Creditors’ Control Account
+
+Example (numbers in brackets() correspond to explanation below the csv)
+
+Dr.				Creditors control			B6		Cr.
+
+20..Apr, 30, Bank and Discount received, CPJ, (5), 20..Apr, 1, Balance, b/d, (1)
+
+ , , Sundry Allowances, CAJ, (6), , 30, Sundry purchases, CJ, (2)
+
+ , , Journal debits, GJ, (7), , , Journal credits, GJ, (3)
+
+ , , Balance, c/d, (8), , , Bank, CRJ, (4)
+
+ , , , , , , , , ,
+
+ , , , , , 20..May, 1, Balance, b/d, (8)
+
+##### Explanation
+
+1. The amount owed to creditors at the beginning of the month
+2. Credit purchases for the month = Original invoice
+3. Journal credits: A creditor charges interest on the business’ overdue account; Correction of errors; Transfers between debtors and creditors.
+4. Money received from a creditor, e.g. a creditor with a debit balance = duplicate receipt.
+5. Money that was paid to a creditor with a cheque and discount was received = Cheque counterfoil.
+6. Total discount received from creditors for items returned to them during the month = Duplicate debit note.
+7. Journal debits: Transfers between creditors and debtors; Correction of errors
+8. Amount owed to creditors at the end of the month.
+
+### Activity 16 (Analysis - Trading stock account)
+
+#### Required
+
+Analyse the Trading stock account in the books of Sophie Traders for September 2010 and answer the questions that follow. Sophie Traders trades in the purchases and sale of clothes.
+
+#### Information
+
+ 			General ledger of Sophie Traders
+
+Dr.						Trading stock		B6			Cr.
+
+2010 Sep, 1, Balance, b/d, 32 000, 2010 Apr, 30, 4.5, CAJ, 2 800
+
+ , 30, Bank, CPJ, 8 400, , , Cost of sales, CRJ, 28 000
+
+ , , Creditors control, CJ, 24 300, , , Cost of sales, DJ, 22 000
+
+ , , Petty cash, PCJ, 1 200, , , Drawings, GJ, 1 400
+
+ , , 4.4, DAJ, 800, , , Donations, GJ, 600
+
+ , , Stationery, GJ, 420, , , Balance, c/d, ?
+
+ , , , , , , , , ,
+
+2010 Oct, 1, Balance, b/d, ?, , , , ,
+
+#### Questions
+
+16.1 Does the business make use of the perpetual inventory system or periodic inventory system?
+
+16.2 Calculate the balance of stock on hand on 30 September 2010.
+
+16.3 Give a reason why the stock on hand decreased? (Remember it is a clothing business.)
+
+16.4 Give the contra account for the amount of R800 on the debit side.
+
+16.5 Give the contra account for the amount of R2 800 on the credit side.
+
+16.6 If the business’ profit margin is 50% on the cost price, calculate the sales price for the credit recording for the amount of R28 000.
+
+16.7 What is the source document for the debit recording for “Bank, CPJ, R8 400”?
+
+16.8 What is the source document for the credit recording for “Cost of sales, DJ, R22 000”?
+
+16.9 Give a reason for the debit recording of R420?
+
+#### Answers:
+
+16.1 	Perpetual inventory system
+
+16.2 	R12 320
+
+16.3 	It is the beginning of the winter season
+
+16.4 	Cost of sales
+
+16.5 	Creditors control
+
+16.6 	150/100 x 28 000 =R42 000
+
+16.7	 	Cheque counterfoil
+
+16.8 	Duplicate invoice
+
+16.9 	Correction of error
+
+### Activity 17 (Analysis – Debtors control)
+
+#### Required
+
+Analyse the Debtors’ control account in the books of Limpopo Traders for March 2011 and answer the questions that follow.
+
+#### Information
+
+ 			General ledger of Limpopo Traders
+
+Dr				Debtors' control				B7		Cr.
+
+2011 Mar, 1, Balance, b/d, (1), 2011 Mar, 30, Bank and discount allowed, CRJ, 19 300
+
+ , 30, Sales, DJ, 18 200, , , (2), DAJ, 3 100
+
+ , , (3), CPJ, 240, , , Journal credits, GJ, 640
+
+ , , Petty cash, PCJ, 160, , , Balance, c/d, (6)
+
+ , , Journal debits, GJ, 840, , , , ,
+
+ , , , , , , , , ,
+
+2011 Apr, 1, Balance, b/d, , , , , ,
+
+#### Additional information
+
+The Debtors’ list totals on 28 February 2011 are as follows:
+
+Debtors’ list
+
+Debit, Credit
+
+R 14 300, R620
+
+#### Questions
+
+17.1 What is the amount owed by the debtors on 1 March 2011?
+
+17.2 What is the contra account for the amount of R3 100 on the credit side?
+
+17.3 What is the contra account for the amount of R240 on the debit side?
+
+17.4 Give one possible reason for the amount of R160 on the debit side.
+
+17.5 Give one possible reason for the amount of R840 on the debit side.
+
+17.6 Calculate the amount owed by the debtors on 31 March 2011.
+
+17.7 What is the source document for the debit recording: “Sales, DJ, R18 200”?
+
+17.8 What is the source document for the credit recording for: “Journal credits, GJ, R640”?
+
+ 
+
+17.9 Give TWO possible measures that can be taken in order for debtors to pay their debts regularly.
+
+#### Answers:
+
+17.1		 R14 300 – R620 = R13 680
+
+17.2	 Debtors Allowances
+
+17.3 	Bank
+
+17.4 	Carriage on purchase paid on behalf of a debtor and must be debited to his account
+
+17.5
+
+* Cancellation of discount
+* Correction of errors
+* Interest charged on overdue account of debtors
+* Transfers between debtors and creditors
+
+17.6	 R10 080
+
+17.7	 Duplicate invoice
+
+17.8	 Journal voucher
+
+17.9
+
+* Charge interest on overdue accounts
+* Give discount on early payments
+* Send out regular reminders, example account statements every month
+
+### Activity 18 (Analysis – Creditors control)
+
+#### Required
+
+Analyse the creditors’ control account in the books of Patricia Distributors for March
+
+2011 and answer the questions that follows.
+
+#### Information
+
+ 			General ledger of Patricia Distributors
+
+Dr. 				Creditors’ control 				B8 Cr.
+
+2011 Mar,31, (3), CPJ, 35 400, 2011 Mar, 1, Balance, b/d, (1)
+
+ , , Sundry Allowances, CAJ, 2 300, , 31, (2), CJ, 21 800
+
+ , , Journal debits, GJ, 840, , , Journal credits, GJ, 610
+
+ , , Balance, c/d, (4), , , Bank, CRJ, 140
+
+ , , , , , , , , ,
+
+ , , , , , 2011 Apr, 1, Balance, b/d,
+
+#### Additional information
+
+The Creditors’ list totals on 1 March 2011 are as follows:
+
+Debtors’ list
+
+Debit, Credit
+
+R340, R28 600
+
+#### Questions
+
+18.1 What is the amount owed to the creditors on 1 March 2011?
+
+18.2 Show the contra account for the amount of R21 800 on the credit side.
+
+18.3 Show the contra account for the amount of R35 400 on the debit side.
+
+18.4 What is the amount owed to creditors on 31 March 2011?
+
+18.5 Give two possible reasons for the recording “Journal credits, GJ, R610”
+
+18.6 What is the source document for the recording on the debit side: Sundry Allowances, CAJ, R2 300”?
+
+18.7 What is the source document for the recording on the credit side: Bank, CRJ, R140”?
+
+#### Answers:
+
+18.1 	R28 600 – R340 = R28 260
+
+18.2 	Sundry purchases/Total purchases
+
+18.3 	Bank and discount received
+
+18.4 	R12 270
+
+18.5
+
+* Interest charge on overdue accounts
+* Correction of errors
+* Transfers between creditors and debtors
+
+18.6 	Duplicate debit note/original credit note
+
+18.7 	Duplicate receipt
+
+### Activity 20 (Debtors)
+
+The Debtors control account and debtors list supplied were taken from the ledgers of Mashoke Traders by an inexperienced accountant. On investigation, errors and omissions were found.
+
+#### Required
+
+1 Draw up a corrected Debtors control account for September 2010 after all errors, adjustments and omissions have been considered. Balance the account.
+
+2 Prepare the corrected list of debtors at 30 September 2010.
+
+#### Information
+
+#####  			General ledger of Mashoke Traders
+
+Dr. 					Debtor’s control 				B7 Cr.
+
+2010 Sep, 1, Balance, b/d, 21 430, 2010 Sep, 30, 	Bank and discount allowed, CRJ, 28 560
+
+ , 30, Debtors Allowances, DAJ, 960, , , Bank (R/D), CPJ, 300
+
+ , , Sales, DJ, 32 622, , , Journal credits, GJ, 530
+
+ , , Journal debits, GJ, 840, , , Balance, c/d, 26 852
+
+ , , , , 55 852, , , , , 55 852
+
+2010 Oct, 1, Balance, b/d, 26 462, , , , ,
+
+Note: The bookkeeper made posting errors to the Debtors control account.
+
+##### Debtors list with balance
+
+Debtors list on 30 September 2010, Debit, Credit
+
+D. Botha, 7 202,
+
+L. Uys, 5 380,
+
+G. Coetzee, 5 890,
+
+J. van der Linde, 4 520,
+
+B. de Villiers, 1 980,
+
+W. van Jaarsveldt, , 640
+
+G. Haasbroek, 800,
+
+  , 25 572, 640
+
+##### Errors and omissions
+
+1 The list of debtors had the following totals on 1 September 2010:
+
+Total of debtors with debit balances, R21 370
+
+Total of debtors with credit balances, R720
+
+ 
+
+2 The receipt issued to B. De Villiers for R870 cash received, was recorded correctly in the Cash Receipts Journal, but was posted to his account as R780.
+
+3 The total of debtors’ allowances column in the Debtors Allowances Journal was under cast by R20.
+
+4 An entry in respect of sales returns of R100 by G. Haasbroek was correctly entered in the Debtors’ Allowances Journal, but posted to the wrong side of Debtor G. Haasbroek’s account by mistake.
+
+5 The debit column of the debtors’ list was under cast by R200.
+
+6 There was no entry made in the General Ledger for the transfer of the account of W. van Jaarsveldt with a credit balance of R640 from his account in the Creditor’s Ledger.
+
+ 
+
+7 The amounts on the credit side of J. van der Linde’s were under cast by R400.
+
+8 On 30 September R18 postage was paid on behalf of a debtor, G. Coetzee, from the petty cash. The entry was recorded in the Petty Cash Journal, but not posted to the ledger.
+
+9 When L. Uys paid R1 000 on his account he received a 10% discount, which was recorded in the Cash Receipts Journal. However, this discount was not posted to his account.
+
+#### Answer sheet
+
+ 				General ledger of Mashoke Traders
+
+Dr. 					Debtors control 				Cr.
+
+ , , , , , , , , ,
+
+ , , , , , , , , ,
+
+ , , , , , , , , ,
+
+ , , , , , , , , ,
+
+ , , , , , , , , ,
+
+ , , , , , , , , ,
+
+ , , , , , , , , ,
+
+ , , , , , , , , ,
+
+ , , , , , , , , ,
+
+Debtors list on 30 September 2010, Debit, Credit
+
+D. Botha, ,
+
+L. Uys, ,
+
+G. Coetzee, ,
+
+J. van der Linde, ,
+
+B. de Villiers, ,
+
+W. van Jaarsveldt, ,
+
+G. Haasbroek, ,
+
+#### Answer:
+
+#####  				General ledger of Mashoke Traders
+
+Dr. 					Debtors control 				Cr.
+
+ 20.. Sep, 1, Balance (21 370 -720), b/d, 20 650, 20.. Sep, 30, Bank and discount allowed, CRJ, 28 560
+
+ , 30, Petty cash, PCJ, 18, , , Debtors Allowances (960+20), DAJ, 980
+
+ , , Sales, DJ, 32 622, , , Journal credits, GJ, 530
+
+ , , Journal debits, GJ, 840, , , Balance, c/d, 24 360
+
+ , , Bank (R/D), CPJ, 300, , , , ,
+
+ , , , , 54 430, , , , , 54 430
+
+ 20.. Oct, 1, Balance, b/d, 24 360, , , , ,
+
+ , , , , , , , , ,
+
+ , , , , , , , , ,
+
+##### Corrected Debtors list
+
+Debtors list on 30 September 2010, Debit, Credit
+
+D. Botha, 7 202,
+
+L. Uys, 5 280,
+
+G. Coetzee, 5 908,
+
+J. van der Linde, 4 120,
+
+B. de Villiers, 1 890,
+
+W. van Jaarsveldt, , 640
+
+G. Haasbroek, 600,
+
+ , 25 000, 640
+
+Debtors list = R25 000 – R640 = R24 360
+
+### Activity 21 (Creditors)
+
+The net total of the Creditors list, extracted from the Creditors Ledger of Lucia Traders on 30 November 2010, did not correspond with the balance of their Creditors Control Account.
+
+#### Required
+
+Take all the information given below into account in order to reconstruct the following, showing how they would have appeared if the errors and omissions had not occurred:
+
+1 The correct Creditors control account.
+
+2 The correct Creditors list.
+
+3 Discuss what is involved in setting up a good system of internal control over creditors.
+
+Discuss what is involved in setting up a good system of internal control over creditors.
+
+#### Information
+
+Discuss what is involved in setting up a good system of internal control over creditors.
+
+##### 1
+
+On 1 November 2010 Lucia Traders had a balance of R4 283 in the Creditors control account.
+
+##### 2
+
+On 30 November the following amounts were posted to the Creditors control Account:
+
+* Creditors Journal total R42 700
+* Creditors Allowances Journal total R7 108
+* Cash Payments Journal totals: Payments to creditors R30 200;
+
+Discount received from creditors R1 681
+
+* General Journal totals: Debits R3 520; Credits R1 300
+
+##### 3 Creditors list on 30 November 2010
+
+ ,Debit,  Credit
+
+Ducasse Traders, , 689
+
+Lund Stores, , 284
+
+Lind Traders, , 2 065
+
+AB Motors, , 4 460
+
+Marais Traders, 244,
+
+  ,244, 7 507
+
+##### 4 The following errors or omissions:
+
+* An invoice received from Lund Stores for R1 400 was posted to the account of Lind Traders in the Creditors Ledger.
+* Lucia Traders decided to transfer the account of Marais Traders to the Debtors Ledger. No entry has been made in the General Journal.
+* An invoice for R2 200 for goods bought on account from Ducasse Traders was incorrectly entered in the Creditors Journal as R2 020.
+* Vehicle parts to the value of R740 were returned to AB Motors. This was correctly recorded in the Creditors Allowances Journal, but when posted to the account of AB Motors it was posted to the account of AB Motors as a credit purchase.
+* Ducasse Traders both buys from and sells goods to Lucia Traders. The debit balance of R500 on their account in the Debtors ledger is to be transferred to their account in the Creditors Ledger. No entry has been made in the books.
+
+#### Answer sheet
+
+#####  				General ledger of Lucia Traders
+
+Dr. 					Creditors control 				Cr.
+
+ , , , , , , , , ,
+
+ , , , , , , , , ,
+
+ , , , , , , , , ,
+
+ , , , , , , , , ,
+
+ , , , , , , , , ,
+
+ , , , , , , , , ,
+
+ , , , , , , , , ,
+
+ , , , , , , , , ,
+
+ , , , , , , , , ,
+
+##### List of creditors according to Creditors Ledger
+
+  ,Debit, Credit
+
+ , ,
+
+ , ,
+
+ , ,
+
+ , ,
+
+ , ,
+
+ , ,
+
+ , ,
+
+ , ,
+
+#### Answer:
+
+#####  				General ledger of Lucia Traders
+
+###### Dr. 					Creditors control 				Cr.
+
+20.. Nov , 1, Bank + D/R (30 200 + 1 681), CPJ, 31 881, 20.. Nov, 1, Balance, b/d, 4 283
+
+ , 30, Sundry Allowances, CAJ, 7 108, , 30, Sundry purchases (42 700 + 180), CJ, 42 880
+
+ , , Journal debits (3 520 + 500), GJ, 4 020, , , Journal credits (1 300 + 244), GJ, 1 544
+
+ , , Balance, c/d, 5 698, , , , ,
+
+ , , , , 48 707, , , , ,48 707
+
+ , , , , , 20.. Dec, 1, Balance, b/d, 5 698
+
+ , , , , , , , , ,
+
+ , , , , , , , , ,
+
+ , , , , , , , , ,
+
+##### List of creditors according to Creditors Ledger
+
+  ,Debit, Credit
+
+Ducasse Traders (689 + 180 – 500) , , 369
+
+Lund Stores (284 + 1 400) , , 1 684
+
+Lind Stores (2 065 – 1 400) , , 665
+
+AB Motors (4 460 – 1 480) , , 2 980
+
+Marais Traders ( -244 + 244) , , -
+
+ , , 5 698
+
+ , ,
+
+ , ,
+
+##### Discuss what is involved in setting up a good system of internal control over creditors.
+
+All items that are received from a supplier must be accompanied by necessary documentation. The clerk at the warehouse must do the following:
+
+* See that the goods on the invoice correspond with the items that have been delivered.
+* Check whether any goods are damaged.
+* If it happens that problems occur frequently with a supplier, an alternative supplier must be found.
+
+# Activity 22 (Summative activity - Journals, Ledgers, Trial balance)
+
+#### Required
+
+You are required to do the books of Sunshine Traders for April 20..
+
+* Do the recordings of the given transactions in the different journals. Close the journals at the end of the month.
+* Post to the General Ledger. Balance the accounts.
+* Compile a Trial Balance on 30 April 20..
+* Compile a Debtors ledger and debtor’s list.
+* Compile a Creditors ledger and creditor’s list.
+
+Please note:
+
+* Show all the folio and document numbers.
+* The business’ profit margin is CP + 50%.
+* The last journal voucher that was issued in March 20.. is 124.
+
+#### Information
+
+##### Balances from the Trial Balance of Sunshine Traders on 31 March 20..
+
+Capital, R578 640
+
+Drawings, R4 740
+
+Land and buildings, R280 000
+
+Vehicles, R124 000
+
+Equipment, R80 400
+
+Trading Stock, R27 300
+
+Debtors’ Control, R ?
+
+Fixed deposit: Build Bank (10% p.a.), R30 000
+
+Bank (Dr), R18 300
+
+Cash float, R400
+
+Petty Cash, R500
+
+Creditors’ Control, R25 100
+
+Deposit: Rent Income, R5 000
+
+Sales, R75 000
+
+Cost of sales, R50 000
+
+Debtors’ Allowances, R4 200
+
+Stationery, R1 800
+
+Packing Material, R960
+
+Salaries, R24 000
+
+Wages, R21 600
+
+Discount allowed, R240
+
+Discount received, R1 380
+
+Bank charges, R890
+
+Carriage on sales, R435
+
+Interest on current account, R265
+
+Interest on overdue debtors, R180
+
+Interest on overdue creditors, R420
+
+Rent Income, R15 000
+
+Donations, R160
+
+Telephone, R6 300
+
+Water and electricity, R9 300
+
+Bad debts, R1 400
+
+Interest on fixed deposit, R750
+
+Bad debts recovered, R230
+
+ 
+
+##### Balances in the Debtors’ List:
+
+Kromhout Traders R150 (Cr)
+
+S. Moaner, R2 000 (Dr)
+
+G. Gift, R4 800 (Dr)
+
+L. Lona, R5 400 (Dr)
+
+R. Madisha, R2 150 (Dr)
+
+##### Balances in the Creditors’ List:
+
+Kromhout Traders, R3 200 (Cr)
+
+Brom Distributors, R8 400 (Cr)
+
+Santie Limited, R10 500 (Cr)
+
+Mala Manufacturers, R3 000 (Cr)
+
+##### Transactions: April 20..
+
+###### 1
+
+A statement of Sunshine Traders’ account was received from Kromhout Traders. It was decided to transfer the credit balance in the debtors’ ledger to the account in the creditors’ ledger.
+
+###### 3
+
+Issue cheque 312 to Kromhout Traders in payment of Sunshine Traders’ account, after they received R150 discount.
+
+The telephone bill was received from Telkom. Issue cheque 313 to pay the amount of R2 300.
+
+###### 4
+
+Receive a cheque from R. Brown, the owner, to increase his capital contribution to R600 000. Issue receipt 151.
+
+Credit sales of merchandise to:
+
+L. Lona, R1 200 (invoice 88)
+
+R. Madisha, R750 (invoice 89).
+
+ 
+
+###### 6
+
+Pay Santie Ltd. with cheque 314 in payment of Sunshine Traders’ account minus 5% discount.
+
+Issue cheque 315 to the City Hall for the month’s water and electricity of R2 800.
+
+###### 8
+
+Buy goods on credit from Mala Manufacturers for R2 300 minus 20% discount (Renumber invoices from 132).
+
+Brom Distributors charges Sunshine Traders’ overdue account with 7% interest p.a. for three months.
+
+###### 10
+
+Issue Credit Note 56 to L. Lona for merchandise returned, R300.
+
+It has been discovered that Stationery bought by Brom Traders for R280 on credit was posted to the Trading stock account. Correct the error.
+
+Issue cash cheque 316 for:
+
+Wages, R1 800
+
+Cash Float increased to R600.
+
+ 
+
+###### 11
+
+Issue Debit Note 35 to Mala Manufacturers for goods sent back, R450 minus 20% discount.
+
+###### 12 Petty cash payments:
+
+Stationery, R140 (Petty Cash Voucher 86)
+
+Donations, R80 (Petty Cash Voucher 87).
+
+###### 13
+
+Cash sales of merchandise, R9 600.
+
+L. Lona pays his account and receives 5% discount. Issue receipt 152.
+
+Receive a cheque from S. Botha for the rent of part of the building,
+
+R5 000. Issue receipt 153.
+
+###### 15 Buy the following on credit from:
+
+Kromhout Traders, packing material, R180 and stationery, R260.
+
+Mala Manufacturers, equipment R6 400.
+
+Pay R400 from the petty cash for two days’ wages to a worker who washed the windows. Issue petty cash voucher 88.
+
+###### 16
+
+Issue cheque 317 to the petty cash cashier, R500.
+
+Issue invoice 90 to R. Madisha for merchandise sold on credit, R360.
+
+###### 17
+
+Issue cash cheque 318 for wages, R1 800.
+
+###### 18
+
+Issue Debit note 36 to Mala Manufacturers. They have forgotten to give 20% discount for Equipment bought on credit on the 15th.
+
+###### 20
+
+Cash sales of merchandise, R5 400.
+
+Receive a cheque from Build Bank for interest earned monthly on a fixed deposit.
+
+Issue receipt 154.
+
+###### 21
+
+Sell goods on credit to Kromhout Traders for R780. Issue invoice 91.
+
+Issue petty cash voucher 89 to SA Deliveries for merchandise delivered to
+
+Kromhout Traders, R140. Levy the amount against Kromhout Traders’ account.
+
+###### 23
+
+Sell goods on credit to S. Moaner for R2 700. Issue invoice 92.
+
+Receive a cheque from S. Moaner in payment of his account, on 1 April 20.. minus 2½% discount. Issue receipt 155.
+
+###### 25
+
+Issue Credit Note 57 to S. Moaner for Allowances given, R270.
+
+Receive S. Moaner’s cheque back from the bank, with a bank Debit Note and the remark ‘R/D - insufficient funds’.
+
+Charge G. Gift’s overdue account 2½% interest p.a. for two months.
+
+###### 26
+
+The owner takes merchandise for his own use, R390.
+
+Buy the following on credit:
+
+Santie Limited, R3 600 minus 20% discount for goods.
+
+Kromhout Traders R380 for paper for the printer, as well as R150 for packing material.
+
+###### 27
+
+Donate merchandise of R200 at cost price to the local children’s home.
+
+###### 28
+
+Issue Debit Note 37 to Kromhout Traders for packing material of R40 sent back to them.
+
+Issue cash cheque 319 for wages, R1 800.
+
+Pay a day’s wages R100 from the petty cash to the garden worker. Issue petty cash voucher 90.Buy goods for R50 and pay for them from the petty cash. Issue petty cash voucher 91.
+
+ 
+
+###### 29
+
+Sell goods on credit to L. Lona for R540. Issue invoice 93.
+
+Pay SA Deliveries with cheque 320 for delivery of goods bought on credit, R340.
+
+Receive a cheque from G. Pillay of R400. It is for his account that has already been written off as a bad debt. Issue receipt 156.
+
+###### 30
+
+Issue cheque 321 to Brom Distributors in payment of Sunshine Traders’ account, R8 214. Receive R200 discount.
+
+Pay S. Moot’s salary with cheque 322 for the month, R8 000.
+
+Receive the bank statement from Perm Bank, which shows the following:
+
+Service fees, R210
+
+Credit card levies, R340
+
+Interest on credit balance, R110.
+
+Pay Snow Distributors R940 with cheque 323 for goods bought with cash.
+
+G. Gift is declared insolvent. Receive a first and final dividend of 50 cents in the Rand. Write the balance off as a bad debt. Issue receipt 157.
+
+Issue cheque 324 to restore the Petty cash.
+
+ 
+
+ 
+
+####  Cash Receipts Journal of Sunshine Traders – April 20..        CRJ
+
+Doc, Day, Details, Fol, Analysis of receipts, Bank, Sales, Cost of Sales, Debtors' Control, Discount allowed, Sundry Accounts\[Amount, Fol, Details]
+
+ , , , , , , , , , , , ,
+
+ , , , , , , , , , , , ,
+
+ , , , , , , , , , , , ,
+
+ , , , , , , , , , , , ,
+
+ , , , , , , , , , , , ,
+
+ , , , , , , , , , , , ,
+
+ , , , , , , , , , , , ,
+
+ , , , , , , , , , , , ,
+
+ , , , , , , , , , , , ,
+
+ , , , , , , , , , , , ,
+
+ , , , , , , , , , , , ,
+
+ , , , , , , , , , , , ,
+
+ , , , , , , , , , , , ,
+
+##### Answer:
+
+######  Cash Receipts Journal of Sunshine Traders – April 20..        CRJ
+
+Doc, Day, Details, Fol, Analysis of receipts, Bank, Sales, Cost of Sales, Debtors' Control, Discount allowed, Sundry Accounts\[Amount, Fol, Details]
+
+ 151, 4, R. Brown, , 21 360, 21 360, , , , , 21 360, B1, Capital
+
+ CRR, 13, Sales, , 5 400, , 5 400, 3 600, , , , ,
+
+ 152, , L. Lona, D4, 5 985, , , , 6 300, 315, , ,
+
+ 153, , S Botha, , 5 000, 20 585, , , , , 5 000, N15, Rent Income
+
+ CRR, 20, Sales, , 5 400, , 5 400, 3 600, , , , ,
+
+ 154, , Bou Bank, , 250, 5 650, , , , , 250, N20, Interest on fixed deposit
+
+ 155, 23, S. Moaner, D2, 1 950, 1 950, , , 2 000, 50, , ,
+
+ 156, 29, G. Pillay, , 400, , , , , , 400, N21, Bad debts recovered
+
+ CRR, ,Sales , , 3 600, 4 000, 3 600, 2 400, , , , ,
+
+ B/S, 30, Permbank, , -, 110, , , , , 110, N12, Interest on current account
+
+ 157, , G. Gift, D3, 2 410, 2 410, , , 2 410, , , ,
+
+ , , , , -, 56 065, 18 600, 12 400, 10 710, 365, 27 120, ,
+
+ , , , , , B9, N1, B6/N2, B7, N8, , ,
+
+ , , , , , , , , , , , ,
+
+ , , , , , , , , , , , ,
+
+ , , , , , , , , , , , ,
+
+#### Cash Payment Journal of Sunshine Traders – April 20.. 	CPJ
+
+Doc, Day, Name of payee, Fol, Bank, Trading stock, Wages, Debtors control, Creditors control, Discount received, Sundry Accounts\[Amount, Fol, Details]
+
+ , , , , , , , , , , , ,
+
+ , , , , , , , , , , , ,
+
+ , , , , , , , , , , , ,
+
+ , , , , , , , , , , , ,
+
+ , , , , , , , , , , , ,
+
+ , , , , , , , , , , , ,
+
+ , , , , , , , , , , , ,
+
+ , , , , , , , , , , , ,
+
+ , , , , , , , , , , , ,
+
+ , , , , , , , , , , , ,
+
+ , , , , , , , , , , , ,
+
+ , , , , , , , , , , , ,
+
+ , , , , , , , , , , , ,
+
+ , , , , , , , , , , , ,
+
+ , , , , , , , , , , , ,
+
+ , , , , , , , , , , , ,
+
+##### Answer:
+
+###### Cash Payment Journal of Sunshine Traders – April 20.. 	CPJ
+
+Doc, Day, Name of payee, Fol, Bank, Trading stock, Wages, Debtors control, Creditors control, Discount received, Sundry Accounts\[Amount, Fol, Details]
+
+ 312, 3, Kromhout Traders, C1, 3 200, , , , 3 350, 150, , ,
+
+ 313, , Telkom, , 2 30, , , , , , 2 300, N1, Telephone
+
+ 314, 6, Santie Limited, C3, 9 975, , , , 10 500, 525, , ,
+
+ 315, , City Hall, , 2 800, , , , , , 2 800, N18, Water and electricity
+
+ 316, 10, Cash, , 2 000, , 1 800, , , , 200, B10, Cash float
+
+ 317, 16, Cash, , 500, , , , , , 500, B11, Petty cash
+
+ 318, 17, Cash, , 1 800, , 1 800, , , , , ,
+
+ B/S, 25, S. Moaner (r/d), D2, 1 950, , , 1 950, , , , ,
+
+ 319, 28, Cash, , 1 800, , 1 800, , , , , ,
+
+ 320, 29, SA Deliveries, , 340, , , , , , 340, N11, Carriage on sales
+
+ 321, 30, Brom Distributors, C2, 8 214, , , , 8 414, 200, , ,
+
+ 322, , S. Moot, , 8000, , , , , , 8 000, N6, Salaries
+
+ B/S, , Perm Bank, , 550, , , , , , 550, N10, Bank charges
+
+ 323, , Snow Distributors, , 940, 940, , , , , , ,
+
+ 324, , Cash, , 410, , , , , , 410, B11, Petty cash
+
+ , , , , 44 779, 940, 5 400, 1 950, 22 264, 875, 15 100, ,
+
+ , , , , B9, B6, N7, B7, B12, N9, , ,
+
+#### Petty Cash Journal of Sunshine Traders – April 20.. 		PCJ
+
+Doc, Day, Details, Fol, Petty cash, Wages, Stationery, Trading stock, Sundry Accounts\[Amount, Fol, Details]
+
+ , , , , , , , , , ,
+
+ , , , , , , , , , ,
+
+ , , , , , , , , , ,
+
+ , , , , , , , , , ,
+
+ , , , , , , , , , ,
+
+ , , , , , , , , , ,
+
+ , , , , , , , , , ,
+
+ , , , , , , , , , ,
+
+##### Answer
+
+###### Petty Cash Journal of Sunshine Traders – April 20.. 		PCJ
+
+Doc, Day, Details, Fol, Petty cash, Wages, Stationery, Trading stock, Sundry Accounts\[Amount, Fol, Details]
+
+ 86, 12, Stationery, , 140, , 140, , , ,
+
+ 87, , Donations, , 80, , , , 80, N16, Donations
+
+ 88, 15, Wages, , 400, 400, , , , ,
+
+ 89, 21, Carriage, , 140, , , , 140, B7 D1, Kromhout Traders + Debtors' Control
+
+ 90, 28, Wages, , 100, 100, , , , ,
+
+ 91, , Goods, , 50, , , 50, , ,
+
+ , , , , 910, 500, 140, 50, 220, ,
+
+ , , , , B11, N7, N4, B6, , ,
+
+#### Creditors’ Journal of Sunshine Traders – April 20.. 		CJ
+
+Doc, Day, Creditors, Fol, Creditors control, Trading stock, Stationery, Packing material, Sundry Accounts\[Amount, Fol, Details]
+
+ , , , , , , , , , ,
+
+ , , , , , , , , , ,
+
+ , , , , , , , , , ,
+
+ , , , , , , , , , ,
+
+ , , , , , , , , , ,
+
+ , , , , , , , , , ,
+
+ , , , , , , , , , ,
+
+##### Answer
+
+###### Creditors’ Journal of Sunshine Traders – April 20.. 		CJ
+
+Doc, Day, Creditors, Fol, Creditors control, Trading stock, Stationery, Packing material, Sundry Accounts\[Amount, Fol, Details]
+
+ 132, 8, Mala Manufacturers, C4, 1 840, 1 840, , , , ,
+
+ 133, 15, Kromhout Traders, C1, 440, , 260, 180, , ,
+
+ 134, , Mala Manufacturers, C4, 6 400, , , , 6 400, B5, Equipment
+
+ 135, 26, Santie Limited, C3, 2 880, 2 880, , , , ,
+
+ 136, , Kromhout Traders, C1, 530, , 380, 150, , ,
+
+ , , , , 12 090, 4 720, 640, 330, 6 400, ,
+
+ , , , , B12, B6, N4, N5, , ,
+
+#### Creditors’ Allowances Journal of Sunshine Traders – April 20.. CAJ
+
+Doc, Day, Creditors, Fol, Creditors’ Control, Trading Stock, Stationery, Packing material, Sundry Accounts\[Amount, Fol, Details]
+
+ , , , , , , , , , ,
+
+ , , , , , , , , , ,
+
+ , , , , , , , , , ,
+
+ , , , , , , , , , ,
+
+ , , , , , , , , , ,
+
+##### Answer
+
+###### Creditors’ Allowances Journal of Sunshine Traders – April 20.. CAJ
+
+Doc, Day, Creditors, Fol, Creditors’ Control, Trading Stock, Stationery, Packing material, Sundry Accounts\[Amount, Fol, Details]
+
+ 35, 11, Mala Manufacturers, C4, 360, 360, , , , ,
+
+ 36, 18, Mala Manufacturers, C4, 1 280, , , , 1 280, B5, Equipment
+
+ 37, 28, Kromhout traders, C1, 40, , , 40, , ,
+
+ , , , , 1 680, 360, -, 40, 1 280, ,
+
+ , , , , B12, B6, , N5, , ,
+
+#### General Journal of Sunshine Traders – April 20..			GJ
+
+Day, Details, Fol, Debit, Credit, Debtors’ Control\[Debit, Credit], Creditors’ Control\[Debit, Credit]
+
+ , , , , , , , ,
+
+ , , , , , , , ,
+
+ , , , , , , , ,
+
+ , , , , , , , ,
+
+ , , , , , , , ,
+
+ , , , , , , , ,
+
+ , , , , , , , ,
+
+ , , , , , , , ,
+
+ , , , , , , , ,
+
+ , , , , , , , ,
+
+ , , , , , , , ,
+
+ , , , , , , , ,
+
+ , , , , , , , ,
+
+ , , , , , , , ,
+
+ , , , , , , , ,
+
+ , , , , , , , ,
+
+ , , , , , , , ,
+
+ , , , , , , , ,
+
+ , , , , , , , ,
+
+##### Answer
+
+###### General Journal of Sunshine Traders – April 20..			GJ
+
+Day, Details, Fol, Debit, Credit, Debtors’ Control\[Debit, Credit], Creditors’ Control\[Debit, Credit]
+
+ 1, Kromhout Traders, D1, 150, , 150, , ,
+
+ , Kromhout Traders, C1, , 150, , , , 150
+
+ , Transfer balance from debtor to creditor. (Journal voucher 125), , , , , , ,
+
+ 8, Interest on overdue creditors, N14, 147, , , , ,
+
+ ,  Brom Distributors, C2, , 147, , , , 147
+
+ , Creditor charges us with interest  (Journal voucher 126) , , , , , , ,
+
+ 10, Stationery, N4, 280, , , , ,
+
+ , Trading Stock, B6, , 280, , , ,
+
+ , Error corrected (Journal voucher 127), , , , , , ,
+
+ 25, S. Moaner, D2, 50, , 50, , ,
+
+ , Discount allowed, N8, , 50, , , ,
+
+ , Cancel discount on dishonoured cheque  (Journal voucher 127) , , , , , , ,
+
+ 25, G. Gift, D3, 20, , 20, , ,
+
+ ,  Interest on overdue debtors , N13, , 20, , , ,
+
+ , Charge debtor with 2½% interest p.a. for two months. (Journal voucher 128), , , , , , ,
+
+ 26, Drawings, B2, 390, , , , ,
+
+ , Trading stock, B6, , 390, , , ,
+
+ , Owner takes trading stock at cost price for own use  (Journal voucher 129) , , , , , , ,
+
+ 27, Donations, N16, 200, , , , ,
+
+ , Trading Stock, B6, , 200, , , ,
+
+ , Donate Trading Stock (Journal voucher 130) , , , , , , ,
+
+ 30, Bad debts, N19, 2 410, , , , ,
+
+ , G. Gift, D3, , 2 410, , 2 410, ,
+
+ , Debtor is written off as bad debt (Journal voucher 131), , , , , , ,
+
+ , , , , , 220, 2 410, , 297
+
+ , , , , , B7, B7, , B12
+
+#### Debtors Journal of Sunshine Traders – April 20.. 			DJ
+
+Doc, Day, Debtors, Fol, Sales, Cost of sales
+
+ , , , , ,
+
+ , , , , ,
+
+ , , , , ,
+
+ , , , , ,
+
+ , , , , ,
+
+ , , , , ,
+
+ , , , , ,
+
+ , , , , ,
+
+##### Answer
+
+###### Debtors Journal of Sunshine Traders – April 20.. 			DJ
+
+Doc, Day, Debtors, Fol, Sales, Cost of sales
+
+ 88, 4, L. Lona, D4, 1 200, 800
+
+ 89, , R. Madisha, D5, 750, 500
+
+ 90, 16, R. Madisha, D5, 360, 240
+
+ 91, 21, Kromhout Traders, D1, 780, 520
+
+ 92, 23, S. Moaner, D2, 2 700, 1 800
+
+ 93, 29, L. Lona, D4, 540, 360
+
+ , , , , 6 330, 4 220
+
+ , , , , B7/N1, B6/N2
+
+#### Debtors’ Allowances Journal of Sunshine Traders – April 20.. DAJ
+
+Doc, Day, Debtors, Fol Debtors Allowances, Cost of sales
+
+ , , , , ,
+
+ , , , , ,
+
+ , , , , ,
+
+ , , , , ,
+
+ , , , , ,
+
+ , , , , ,
+
+ , , , , ,
+
+ , , , , ,
+
+ 
+
+#####  Answer
+
+###### Debtors’ Allowances Journal of Sunshine Traders – April 20.. DAJ
+
+Doc, Day, Debtors, Fol Debtors Allowances, Cost of sales
+
+ 56, 10, L. Lona, D4, 300, 200
+
+ 57, 25, S. Moaner, D2, 270, -
+
+ , , , , 570, 200
+
+ , , , , B7/N3, B6/N2
+
+ , , , , ,
+
+ , , , , ,
+
+ , , , , ,
+
+ , , , , ,
+
+ 
+
+#### General ledger
+
+##### Answer
+
+ 
+
+###### Dr. 						Capital 					B1 Cr.
+
+ , , , , , , , , ,
+
+ 20..May, 1, Balance, b/d, 9 150, , , Balance, c/d, 15 360
+
+ , , , , 33 210, , , , , 33 210
+
+ , 26, Trading Stock, GJ, 390, , , , ,
+
+ , , , , 5 130, , , , ,
+
+###### Dr. 						Drawings 				B2 Cr
+
+ 20..Apr, 1, Balance, b/d, 4 740, , , , ,
+
+ 20..May, 1, Balance, b/d, 15 360, , , , ,
+
+ , , , , , , , , ,
+
+###### Dr. 					Land and buildings 				B3 Cr
+
+ 20.. Apr, 1, Balance, b/d, 280 000, , , , ,
+
+ , , , , , , , , ,
+
+ , , , , , , , , ,
+
+###### Dr. 						Vehicles 					B4 Cr
+
+ , , , , , , , , ,
+
+ , , , , , , , , ,
+
+ , , , , , , , , ,
+
+###### Dr. 						Equipment 				B5 Cr
+
+ , , , , , , , , ,
+
+ , , , , , , , , ,
+
+ , , , , , , , , ,
+
+###### Dr. 						Trading stock 				B6 Cr
+
+ , , , , , , , , ,
+
+ , , , , , , , , ,
+
+ , , , , , , , , ,
+
+ , , , , , , , , ,
+
+ , , , , , , , , ,
+
+ , , , , , , , , ,
+
+ , , , , , , , , ,
+
+ , , , , , , , , ,
+
+ , , , , , , , , ,
+
+ , , , , , , , , ,
+
+###### Dr. 						Debtors control 			B7 Cr
+
+ , , , , , , , , ,
+
+ , , , , , , , , ,
+
+ , , , , , , , , ,
+
+ , , , , , , , , ,
+
+ , , , , , , , , ,
+
+ , , , , , , , , ,
+
+ , , , , , , , , ,
+
+ , , , , , , , , ,
+
+###### Dr. 					Fixed deposit: Build Bank 		B8 Cr
+
+ 20.. Apr, 1, Balance, b/d, 30 000, , , , ,
+
+ , , , , , , , , ,
+
+###### Dr. 							Bank 				B9 Cr
+
+ 20.. Apr, 1, Balance, b/d, 18 300, 20.. Apr, 30, Total payments, CPJ, 44 779
+
+ , 30, Total receipts, CRJ, 56 065, , , Balance, c/d, 29 586
+
+ , , , , 74 365, , , , , 74 365
+
+ , 1, Balance, b/d, 29 586, , , , ,
+
+###### Dr. 						Cash float 				B10 Cr
+
+ 20.. Apr, 1, Balance, b/d, 400, , , , ,
+
+ , 10, Bank, CPJ, 200, , , , ,
+
+ , , , , 600, , , , ,
+
+###### Dr. 						Petty cash 				B11 Cr
+
+ 20.. Apr, 1, Balance, b/d, 500, 20..Apr, 30, Total payments, PCJ, 910
+
+ , 16, Bank, CPJ, 500, , , Balance, c/d, 500
+
+ , 30, Bank, CPJ, 410, , , , ,
+
+ , , , , 1 410, , , , , 1 410
+
+ 20.. May, 1, Balance, , 500, , , , ,
+
+######  Dr. 						Creditors control 			B12 Cr
+
+ 20.. Apr, 30, Bank and discount received, CPJ, 22 264, 20.. Apr, 1, Balance, b/d, 25 100
+
+ , , Sundry Allowances, CAJ, 1 680, , 30, Sundry purchases, CJ, 12 090
+
+ , , Balance, c/d, 13 543, , , Journal credits, GJ, 297
+
+ , , , , 37 487, , , , , 37 487
+
+ , , , , , 20.. May, 1, Balance, b/d, 13 543
+
+###### Dr. 						Deposit: Rent Income 		B13 Cr
+
+ , , , , , 20.. Apr, 1, Balance, b/d, 5 000
+
+ , , , , , , , , ,
+
+ 
+
+###### Dr. 							Sales 				N1 Cr
+
+ , , , , , 20.. Apr, 1, Balance, b/d, 75 000
+
+ , , , , , , 30, Bank, CRJ, 18 600
+
+ , , , , , , , Debtors' control, DJ, 6 330
+
+ , , , , , , , , ,
+
+###### Dr. 						Cost of sales 				N2 Cr
+
+ 20.. Apr, 1, Balance, b/d, 50 000, 20..Apr, 30, Trading Stock, DAJ, 200
+
+ , 30, Trading Stock, CRJ, 12 400, , , Balance, c/d, 66 420
+
+ , , Trading Stock, DJ, 4 220, , , , ,
+
+ , , , , 66 620, , , , , 66 620
+
+ 20.. May, 1, Balance, b/d, 66 420, , , , ,
+
+###### Dr. 						Debtors Allowances 		N3 Cr
+
+ 20.. Apr, 1, Balance, b/d, 4 200, , , , ,
+
+ , 30, Debtors' control, DAJ, 570, , , , ,
+
+ , , , , 4 770, , , , ,
+
+###### Dr. 						  Stationery 				N4 Cr
+
+ 20.. Apr, 1, Balance, b/d, 1 800, , , , ,
+
+ , 10, Trading Stock, GJ, 280, , , , ,
+
+ , 30, Petty Cash, PCJ, 140, , , , ,
+
+ , , Creditors' Control, CJ, 640, , , , ,
+
+ , , , , 2 860, , , , ,
+
+###### Dr. 						Packing material 			N5 Cr
+
+ 20.. Apr, 1, Balance, b/d, 960, 20.. Apr, 30, Creditors' control, CAJ, 40
+
+ , 30, Creditors' control, CJ, 330, , , Balance, c/d, 1 250
+
+ , , , , 1 290, , , , , 1 290
+
+ 20.. April, 1, Balance, b/d, 1 250, , , , ,
+
+###### Dr. 							Salaries 				N6 Cr
+
+ 20.. Apr, 1, Balance, b/d, 24 000, , , , ,
+
+ , 30, Bank, CPJ, 8 000, , , , ,
+
+ , , , , 32 000, , , , ,
+
+###### Dr. 							Wages 				N7 Cr
+
+ 20..Apr, 1, Balance, b/d, 21 600, , , , ,
+
+ , 30, Bank, CPJ, 5 400, , , , ,
+
+ , , Petty cash, PCJ, 500, , , , ,
+
+ , , , , 27 500, , , , ,
+
+###### Dr. 						Discount allowed 			N8 Cr
+
+ 20.. Apr, 1, Balance, b/d, 240, 20..Apr, 25, S. Moaner, GJ, 50
+
+ , 30, Debtors' Control, CRJ, 365, , 30, Balance, c/d, 555
+
+ , , , , 605, , , , , 605
+
+ , 1, Balance, b/d, 555, , , , ,
+
+###### Dr. 						Discount received 			N9 Cr
+
+ , , , , , 20.. Apr, 1, Balance, b/d, 1 380
+
+ , , , , , , 30, Creditors' Control, CPJ, 875
+
+ , , , , , , , , , 2 255
+
+###### Dr. 						Bank charges 				N10 Cr
+
+ 20.. Apr, 1, Balance, b/d, 890, , , , ,
+
+ , 30, Bank, CPJ, 550, , , , ,
+
+ , , , , 1 440, , , , ,
+
+###### Dr. 						Carriage on sales 			N11 Cr
+
+ 20.. Apr, 1, Balance, b/d, 435, , , , ,
+
+ , 29, Bank, CPJ, 340, , , , ,
+
+ , , , , 775, , , , ,
+
+###### Dr. 				Investment on current account 		N12 Cr
+
+ , , , , , 20..Apr, 1, Balance, b/d, 265
+
+ , , , , , , 30, Bank, CRJ, 110
+
+ , , , , , , , , , 375
+
+###### Dr. 				Interest on overdue debtors 			N13 Cr
+
+ , , , , , 20.. Apr, 1, Balance, b/d, 180
+
+ , , , , , , 25, G. Gift, GJ, 20
+
+ , , , , , , , , , 200
+
+###### Dr. 				Interest on overdue creditors 			N14 Cr
+
+20.. Apr, 1, Balance, b/d, 420, , , , ,
+
+ , 8, From Distributors, GJ, 147, , , , ,
+
+ , , , , 567, , , , ,
+
+###### Dr. 					Rent Income 					N15 Cr
+
+ , , , , , 20.. Apr, 1, Balance, b/d, 15 000
+
+ , , , , , , 13, Bank, CRJ, 5 000
+
+ , , , , , , , , , 20 000
+
+###### Dr. 						Donations 				N16 Cr
+
+ 20.. Apr, 1, Balance, b/d, 160, , , , ,
+
+ , 12, Petty Cash, PCJ, 80, , , , ,
+
+ , 27, Trading Stock, GJ, 200, , , , ,
+
+ , , , , 440, , , , ,
+
+###### Dr. 						Telephone 				N17 Cr
+
+ 20.. Apr, 1, Balance, b/d, 6 300, , , , ,
+
+ , 3, Bank, CPJ, 2 300, , , , ,
+
+ , , , , 8 600, , , , ,
+
+###### Dr. 						Water and electricity   		N18 Cr
+
+ 20.. Apr, 1, Balance, b/d, 9 300, , , , ,
+
+ , 6, Bank, CPJ, 2 800, , , , ,
+
+ , , , , 12 100, , , , ,
+
+###### Dr. 						Bad debts 				N19 Cr
+
+ 20.. Apr, 1, Balance, b/d, 1 400, , , , ,
+
+ , 30, G. Gift, GJ, 2 410, , , , ,
+
+ , , , , 3 810, , , , ,
+
+###### Dr. 					Interest on Fixed deposit 		N20 Cr
+
+ , , , , , 20.. Apr, 1, Balance, b/d, 750
+
+ , , , , , , 29, Bank, CRJ, 250
+
+ , , , , , , , , , 1 000
+
+###### Dr. 					Bad debts recovered 			N21 Cr
+
+ , , , , , 20..Apr, 1, Balance, b/d, 230
+
+ , , , , , , 29, Bank, CRJ, 400
+
+ , , , , , , , , , 630
+
+### Trial Balance of Sunshine Traders on 30 April 20..
+
+Balance Sheet section, Fol., Debit Credit
+
+ , ,
+
+ , ,
+
+ , ,
+
+ , ,
+
+ , ,
+
+ , ,
+
+ , ,
+
+ , ,
+
+ , ,
+
+ , ,
+
+ , ,
+
+ , ,
+
+ , ,
+
+ , ,
+
+ , ,
+
+ , ,
+
+ , ,
+
+ , ,
+
+ , ,
+
+ , ,
+
+ , ,
+
+ , ,
+
+ , ,
+
+ , ,
+
+ , ,
+
+ , ,
+
+ , ,
+
+ , ,
+
+ , ,
+
+ , ,
+
+ , ,
+
+ , ,
+
+ , ,
+
+ , ,
+
+ , ,
+
+ , ,
+
+ , ,
+
+ , ,
+
+ , ,
+
+#### Answer:
+
+##### Trial Balance of Sunshine Traders on 30 April 20..
+
+Balance Sheet section, Fol., Debit, Credit
+
+Capital, B1,  ,600 000
+
+Drawings, B2, 5 130,
+
+Land and buildings, B3, 280 000,
+
+Vehicles, B4, 124 000,
+
+Equipment, B5, 85 520,
+
+Trading Stock, B6, 15 360,
+
+Debtors’ Control, B7, 9 150,
+
+Fixed Deposit: Build Bank (10% p.a.), B8, 30 000,
+
+Bank, B9, 29 586,
+
+Cash Float, B10, 600,
+
+Petty Cash, B11, 500,
+
+Creditors’ Control, B12,  ,13 543
+
+Deposit: Rent Income, B13, , 5 000
+
+Nominal section, Fol, Debit, Credit
+
+Sales, N1,  ,99 930
+
+Cost of sales, N2, 66 420,
+
+Debtors’ Allowances, N3, 4 770,
+
+Stationery, N4, 2 860,
+
+Packing Material, N5, 1 250,
+
+Salaries, N6, 32 000,
+
+Wages, N7, 27 500,
+
+Discount allowed, N8, 555,
+
+Discount received, N9,  , 2 255
+
+Bank charges,N10, 1 440,
+
+Carriage on sales, N11, 775,
+
+Interest on current account,  N12,  ,375
+
+Interest on overdue debtors, N13,  ,200
+
+Interest on overdue creditors, N14, 567,
+
+Rent income, N15,  ,20 000
+
+Donations, N16, 440,
+
+Telephone, N17, 8 600,
+
+Water and electricity, N18, 12 100,
+
+Bad debts, N19, 3 810,
+
+Interest on fixed deposit, N20,  ,1 000
+
+Bad debts recovered, N21, , 630
+
+ , ,742 933 ,742 933
+
+#### Debtors’ Ledger of Sunshine Traders
+
+##### Kromhout Traders 									DL1
+
+Date, Day, Details, Fol, Debit, Credit, Balance
+
+ , , , , , ,
+
+ , , , , , ,
+
+ , , , , , ,
+
+ , , , , , ,
+
+ , , , , , ,
+
+##### S. Moaner 										DL2
+
+Date, Day, Details, Fol, Debit, Credit, Balance
+
+ , , , , , ,
+
+ , , , , , ,
+
+ , , , , , ,
+
+ , , , , , ,
+
+ , , , , , ,
+
+ , , , , , ,
+
+ , , , , , ,
+
+##### G. Gift											DL3
+
+Date, Day, Details, Fol, Debit, Credit, Balance
+
+ , , , , , ,
+
+ , , , , , ,
+
+ , , , , , ,
+
+##### L. Lona 											DL4
+
+Date, Day, Details, Fol, Debit, Credit, Balance
+
+ , , , , , ,
+
+ , , , , , ,
+
+ , , , , , ,
+
+ , , , , , ,
+
+ , , , , , ,
+
+ , , , , , ,
+
+ , , , , , ,
+
+##### R. Madisha 										DL5
+
+Date, Day, Details, Fol, Debit, Credit, Balance
+
+ , , , , , ,
+
+ , , , , , ,
+
+ , , , , , ,
+
+ , , , , , ,
+
+#### Debtors list of Sunshine Traders
+
+Debtors list, Fol, Debit
+
+ , ,
+
+ , ,
+
+ , ,
+
+ , ,
+
+ , ,
+
+ , ,
+
+NB- The Debit column has 1 more row cell at the bottom in the debtors list, I suppose its for the total, but I cant add it in csv without adding more column.
+
+#### Answer:
+
+##### Debtors’ Ledger of Sunshine Traders
+
+###### Kromhout Traders 									DL1
+
+Date, Day, Details, Fol, Debit, Credit, Balance
+
+ 20..Apr, 1, Account rendered, , , , (150)
+
+ , 1, Journal voucher 125, GJ, 150, , -
+
+ , 21, Invoice 91, DJ, 780, , 780
+
+ , 21, Petty cash voucher 89, PCJ, 140, , 920
+
+ , , , , , ,
+
+###### S. Moaner 										DL2
+
+Date, Day, Details, Fol, Debit, Credit, Balance
+
+ 20.. April, 1, Account rendered, , , , 2 000
+
+ , 23, Invoice 92, DJ, 2 700, , 4 700
+
+ , , Receipt 155, CRJ, , 1 950, 2 750
+
+ , , Receipt 155, CRJ, , 50, 2 700
+
+ , 25, Credit note 57, DAJ, , 270, 2 430
+
+ , , Dishonoured cheque, CPJ, 1 950, , 4 380
+
+ , , Journal voucher 128, GJ, 50, , 4 430
+
+ , , , , , ,
+
+###### G. Gift											DL3
+
+Date, Day, Details, Fol, Debit, Credit, Balance
+
+ 20.. Apr, 1, Account rendered, , , , 4 800
+
+ , 25, Journal voucher 129, GJ, 20, , 4 820
+
+ , 30, Receipt 157, CRJ, , 2 410, 2 410
+
+ , , Journal voucher 132, GJ, , 2 410,
+
+ , , , , , ,
+
+###### L. Lona 											DL4
+
+Date, Day, Details, Fol, Debit, Credit, Balance
+
+ 20.. Apr, 1, Account rendered, , , , 5 400
+
+ , 4, Invoice 88, DJ, 1 200, , 6 600
+
+ , 10, Credit note 56, DAJ, , 300, 6 300
+
+ , 13, Receipt 152, CRJ, , 5 985, 315
+
+ , , Receipt 152, CRJ, , 315, -
+
+ , 29, Invoice 93, DJ, 540, , 540
+
+ , , , , , ,
+
+###### R. Madisha 										DL5
+
+Date, Day, Details, Fol, Debit, Credit, Balance
+
+ 20.. Apr, 1, Account rendered, , , , 2 150
+
+ , 4, Invoice 89, DJ, 750, , 2 900
+
+ , 16, Invoice 90, DJ, 360, , 3 260
+
+ , , , , , ,
+
+##### Debtors list of Sunshine Traders
+
+Debtors list, Fol, Debit
+
+ , ,
+
+ , ,
+
+ , ,
+
+ , ,
+
+ , ,
+
+ , ,
+
+#### Answer:
+
+Debtors list of Sunshine Traders
+
+Debtors list, Fol, Debit
+
+Kromhout Traders, D1, 920
+
+S. Moaner, D2, 4 430
+
+G. Gift, D3, –
+
+L. Lona, D4, 540
+
+R. Madisha, D5, 3 260
+
+  , ,9 150
+
+#### Creditors’ Ledger of Sunshine Traders
+
+##### Kromhout Traders 									CL1
+
+Date, Day, Details, Fol, Debit, Credit, Balance
+
+ , , , , , ,
+
+ , , , , , ,
+
+ , , , , , ,
+
+ , , , , , ,
+
+ , , , , , ,
+
+ , , , , , ,
+
+ , , , , , ,
+
+ , , , , , ,
+
+##### Brom Distributors 									CL2
+
+Date, Day, Details, Fol, Debit, Credit, Balance
+
+ , , , , , ,
+
+ , , , , , ,
+
+ , , , , , ,
+
+ , , , , , ,
+
+ , , , , , ,
+
+ , , , , , ,
+
+ , , , , , ,
+
+ , , , , , ,
+
+##### Santie Ltd. 										CL3
+
+Date, Day, Details, Fol, Debit, Credit, Balance
+
+ , , , , , ,
+
+ , , , , , ,
+
+ , , , , , ,
+
+ , , , , , ,
+
+##### Mala Manufacturers 								CL4
+
+Date, Day, Details, Fol, Debit, Credit, Balance
+
+ , , , , , ,
+
+ , , , , , ,
+
+ , , , , , ,
+
+ , , , , , ,
+
+ , , , , , ,
+
+ , , , , , ,
+
+#### Answer:
+
+##### Creditors’ Ledger of Sunshine Traders
+
+###### Kromhout Traders 									CL1
+
+Date, Day, Details, Fol, Debit, Credit, Balance
+
+ 20..Apr, 1, Account, , , , 3 200
+
+ , , Journal voucher 125, GJ, , 150, 3 350
+
+ , 3, Cheque 312, CPJ, 3 200, , 150
+
+ , , Cheque 312, CPJ, 150, , -
+
+ , 15, Invoice 133, CJ, , 440, 440
+
+ , 26, Invoice 136, CJ, , 530, 970
+
+ , 28, Debit not 37, CAJ, 40, , 930
+
+ , , , , , ,
+
+###### Brom Distributors 									CL2
+
+Date, Day, Details, Fol, Debit, Credit, Balance
+
+ 20.. Apr, 1, Account rendered, , , , 8 400
+
+ , 8, Journal voucher 126, GJ, , 147, 8 547
+
+ , 30, Cheque 321, CPJ, 8 214, , 333
+
+ , , Cheque 321, CPJ, 200, , 133
+
+ , , , , , ,
+
+ , , , , , ,
+
+ , , , , , ,
+
+ , , , , , ,
+
+###### Santie Ltd. 										CL3
+
+Date, Day, Details, Fol, Debit, Credit, Balance
+
+ 20.. Apr, 1, Account rendered, , , , 10 500
+
+ , 6, Cheque 314, GJ, 9 975, , 525
+
+ , , Cheque 314, CPJ, 525, , -
+
+ , 26, Invoice 135, CJ, , 2 880, 2 880
+
+###### Mala Manufacturers 								CL4
+
+Date, Day, Details, Fol, Debit, Credit, Balance
+
+20.. Apr, 1, Account rendered, , , , 3 000
+
+ , 8, Invoice 132, CJ, , 1 840, 4 840
+
+ , 11, Debit note 35, CAJ, 360, , 4 480
+
+ , 15, Invoice 134, CJ, , 6 400, 10 880
+
+ , 18, Debit note 36, CAJ, 1 280, , 9 600
+
+#### Creditors list of Sunshine Traders
+
+Creditors list, Fol, Credit
+
+ , ,
+
+ , ,
+
+ , ,
+
+ , ,
+
+ , ,
+
+ 
+
+##### Answer:
+
+###### Creditors list of Sunshine Traders
+
+Creditors list, Fol, Credit
+
+Kromhout Traders, C1, 930
+
+Brom Distributors, C2, 133
+
+Santie Ltd., C3, 2 880
+
+Mala Manufacturers, C4, 9 600
+
+  , ,13 543
+
+## The Accounting equation
+
+####  Introduction
+
+The primary aim of a business is to make a profit through buying and selling merchandise or to gain an income by rendering a service. By means of accounting the businessman can ascertain whether he/she has succeeded in realising that primary aim. The primary aim of accounting is therefore to determine the financial result (net profit or net loss) and the financial position of the enterprise as at a specific date. The financial position of the enterprise is measured by the accounting equation.
+
+#### Accounting equation
+
+The accounting equation basically states that: ASSETS = EQUITY + LIABILITIES.
+
+A feature of this equation is that the equation remains balanced after every transaction entry.
+
+Assets
+
+* An entry on the left-hand (debit) side of an asset account creates or increases an asset value.
+* An entry on the right-hand (credit) side of an asset account decreases the asset value.
+
+Liabilities
+
+* An entry on the credit side of a liability account creates or increases the liability.
+* An entry on the debit side of a liability account decreases the liability.
+
+ 
+
+Equity
+
+* An entry on the credit side of an equity account creates or increases the equity.
+* An entry on the debit side of an equity account decreases the equity.
+* A nominal account indicating a loss or expense decreases equity.
+* A nominal account indicating a profit or income increases equity.
+
+ 
+
+#### Subsidiary journals in Analysis of transactions
+
+##### Cash Receipts Journal
+
+###### Receipt or capital contribution from owner
+
+Source document:, 		Duplicate receipt
+
+Journal: ,				CRJ
+
+Analysis: ,			\[Cash in bank (an asset) increases
+
+ 					Or Bank overdraft (liability) decreases
+
+ 					Capital (equity) is created – increases ]
+
+Double entry:, 		\[Dr. Bank A+ (or L – overdraft)
+
+ 					Cr. Capital E+]
+
+###### Sale of merchandise for cash
+
+Source document: ,		Cash register roll
+
+Journal: ,				CRJ
+
+Analysis: Selling price, 	\[Cash in bank (an asset) increases
+
+ 					Or Bank overdraft (liability) decreases
+
+ 					Sales (income) increases equity]
+
+Cost price, 			\[Cost of merchandise sold (expense) 						decreases equity.
+
+ 					Trading stock (an asset) decreases]
+
+Double entry:
+
+ Selling price, 			\[Dr. Bank A+ (or L – overdraft)
+
+ 					Cr. Sales (an income account) E+]
+
+ Cost price, 			\[Dr. Cost of sales (an expense account) E-					Cr. Trading stock A-]
+
+###### Collection of debtor’s account: receipt of cash
+
+Source document:,			 Duplicate receipt
+
+Journal:,					  CRJ
+
+Analysis: ,				\[Cash in bank (an asset) increases
+
+ 					Or Bank overdraft (a liability) decreases
+
+ 					Debtor (an asset) decreases]
+
+Double entry:, 		\[Dr. Bank A+ (or L – overdraft)
+
+ 					Cr. Debtors control A-
+
+ 					Cr. Debtor’s account in debtors ledger]
+
+ 
+
+###### Discount allowed to debtor
+
+Source document: ,			Duplicate receipt
+
+Journal: ,					CRJ
+
+Analysis: 	,	\[Discount allowed (an expense) decreases equity
+
+ 			Debtor (an asset) decreases]
+
+Double entry:,	\[Dr. Discount allowed E-
+
+ 			Cr. Debtors control A-
+
+ 			Cr. Debtor’s account in debtors ledger.]
+
+###### Rent received from a tenant
+
+Source document:, 	\[Duplicate receipt/Bank statement (if
+
+ 				tenant deposited money directly into bank 					account)]
+
+Journal: ,			CRJ
+
+Analysis: 	,		\[Cash in bank (an asset) increases
+
+ 				Or Bank overdraft (a liability) decreases
+
+ 				Rent income (income) increases equity]
+
+Double entry: ,	\[Dr. Bank A+ (or L- overdraft)
+
+ 				Rent income (an income account) E+]
+
+###### Interest earned on a favourable bank balance
+
+Source document: ,			Bank statement
+
+Journal: 		,			CRJ
+
+Analysis: 	,				\[Cash in bank (an asset) increases
+
+ 						Interest on current account (income) 						increases equity.]
+
+Double entry: ,			\[Dr. Bank A+
+
+ 						Cr. Interest on current account (an 						income account) E+ ]
+
+###### Fixed deposit at SA Bank matured
+
+Source document:, 			\[Duplicate receipt/Bank statement
+
+ 					(if SA Bank deposited money directly
+
+ 					into bank account) ]
+
+Journal:, 				CRJ
+
+Analysis:,				\[Cash in bank (an asset) increases
+
+ 				Or Bank overdraft (a liability) decreases
+
+ 			Fixed Deposit (an asset) decreases ]
+
+Double entry:, 		\[Dr. Bank A+ (or L- overdraft)
+
+ 					Cr. Fixed deposit: SA Bank A-]
+
+###### Earned interest on fixed deposit
+
+Source document: ,	\[Duplicate receipt/Bank statement (if SA 					Bank deposited money directly into bank 					account)]
+
+Journal:,			CRJ
+
+Analysis:	,		\[Cash in bank (an asset) increases
+
+ 				Or Bank overdraft (a liability) decreases
+
+ 				Interest on fixed deposit (income)
+
+ 				increases equity.]
+
+Double entry:,		\[Dr. Bank A+ (or L- overdraft)
+
+ 				Cr. Interest on fixed deposit (an income 					account) E+]
+
+###### Commission earned/ Services rendered
+
+Source document:, 				Cash register roll
+
+Journal: ,						CRJ
+
+Analysis:	,				\[Cash in bank (asset) increases
+
+ 				Or Bank overdraft (a liability) decreases
+
+ 				Current income (income) increases equity]
+
+Double entry:,		\[Dr. Bank A+ (or L- overdraft)
+
+ 				Cr. Current income (an income account) E+]
+
+##### Cash Payments Journal
+
+###### Purchase of a tangible asset by cheque (e.g. vehicles)
+
+Source document:,  		Cheque counterfoil
+
+Journal: 		,		CPJ
+
+Analysis:	,			\[Vehicles (an asset) increases
+
+ 					Cash in bank (an asset) decreases
+
+ 					Or Bank overdraft (liability) increases]
+
+ Double entry: ,		\[Dr. Vehicles A+
+
+ 					Cr. Bank A- (or L+ overdraft)]
+
+###### Purchase of a current asset by cheque (e.g. trading stock)
+
+Source document:		Cheque counterfoil
+
+Journal: 				CPJ
+
+Analysis:				\[Trading stock (an asset) increases
+
+ 					Cash in bank (an asset) decreases
+
+ 					Or Bank overdraft (liability) increases ]
+
+Double entry: 			\[Dr. Trading stock A+
+
+ 					Cr. Bank A- (or L+ overdraft)]
+
+###### Purchase of consumable by cheque (e.g. stationery)
+
+Source document: 		Cheque counterfoil
+
+Journal:				CPJ
+
+Analysis: 				\[An expense e.g. stationery decreases 						equity
+
+ 					Cash in bank (an asset) decreases
+
+ 					Or Bank overdraft (liability) increases]
+
+Double entry:			\[Dr. Expense account e.g. stationery E-
+
+ 					Cr. Bank A- (or L+ overdraft)]
+
+###### Payment of creditor’s account
+
+Source document:		Cheque counterfoil
+
+Journal: 				CPJ
+
+Analysis: 				\[Creditor (a liability) decreases
+
+ 					Cash in bank (an asset) decreases
+
+ 					Or Bank overdraft (liability) increases]
+
+Double entry:			\[Dr. Creditors’ control
+
+ 					Dr. Creditor’s account in creditors ledger
+
+ 					Cr. Bank A- (or L+ overdraft)]
+
+###### Discount received from a creditor
+
+Source document: 		Cheque counterfoil
+
+Journal:				CPJ
+
+Analysis:				\[Creditor (a liability) decreases
+
+ 					Discount received (an income) 							increases equity]
+
+Double entry:			\[Dr. Creditors’ control L-
+
+ 					Dr. Creditor’s account in creditors ledger
+
+ 					Cr. Discount received E+]
+
+###### Dishonoured cheque received from bank (debtor pay his account previously)
+
+Source document:		Bank debit note/Bank statement
+
+Journal: 				CPJ
+
+Analysis:				\[Debtor (an asset) increases
+
+ 					Bank (an asset) decreases
+
+ 					Or bank overdraft (liability) increases ]
+
+Double entry:			\[Dr. Debtors’ control A+
+
+ 					Dr. Debtor’s account in debtors ledger
+
+ 					Cr. Bank A- (or L+ overdraft)]
+
+###### Bank charges
+
+Source document:	Bank statement
+
+Journal:			CPJ
+
+Analysis:       		\[An expense bank charges decreases equity
+
+ 				Cash in bank (an asset) decreases
+
+ 				Or Bank overdraft (liability) increases]
+
+Double entry:		\[Dr. Bank charges E-
+
+ 				Cr. Bank A- (or L+ overdraft)]
+
+###### Interest charged by the bank on an overdraft bank account.
+
+Source document:	Bank statement
+
+Journal:			CPJ
+
+Analysis:			\[An expense interest on bank overdraft 						decreases equity
+
+ 				Bank overdraft (liability) increases]
+
+Double entry:		\[Dr. Interest on bank overdraft E-
+
+ 				Cr. Bank L- (bank is overdrawn)]
+
+###### Payment on Loan to SA Bank
+
+Source document:		Cheque counterfoil/Bank statement (if 						paid by debit order)
+
+Journal: 				CPJ
+
+Analysis:				\[Loan (a liability) decreases
+
+ 					Cash in bank (an asset) decreases
+
+ 					Or Bank overdraft (liability) increases]
+
+Double entry:			\[Dr. Loan: SA Bank L-
+
+ 					Cr. Bank A- (or L+ overdraft)]
+
+###### Pay interest on loan to SA Bank
+
+Source document: 	\[Cheque counterfoil/Bank statement (if 					paid by debit order)]
+
+Journal: 			\[CPJ]
+
+Analysis: 			\[An expense- interest on loan decreases equity
+
+ 				Cash in bank (an asset) decreases
+
+ 				Or Bank overdraft (liability) increases]
+
+Double entry:		\[Dr. Interest on loan E-
+
+ 				Cr. Bank A- (or L+ overdraft) ]
+
+##### Debtors Journal
+
+###### Sale of merchandise on credit
+
+Source document:		Duplicate credit invoice
+
+Journal: 				DJ
+
+Analysis:
+
+ 	Selling price		\[Debtor (an asset) increases (owes money 					to the enterprise)
+
+ 					Sales (income) increases equity ]
+
+ 	Cost price		\[Cost of merchandise sold (expense) 						decreases equity
+
+ 					Trading stock (an asset) decreases]
+
+Double entry:
+
+ 	Selling price		\[Dr. Debtor’s account in debtors ledger
+
+ 					Cr. Sales (income account) E+
+
+ 	Cost price 		Dr. Cost of sales (expense account) E-
+
+ 					Cr. Trading stock A-]
+
+ 
+
+##### Debtors Allowances Journal
+
+###### Debtors’ returns and Allowances: return of goods by a debtor
+
+Source document:		Duplicate credit note
+
+Journal: 				DAJ
+
+Analysis:
+
+ 	Selling price		\[Debtors Allowances decreases equity
+
+ 					Debtor (an asset) decreases]
+
+ 	Cost price		\[Trading stock (an asset) increases
+
+ 					Cost of sales increases equity]
+
+Double entry:
+
+ 	Selling price		\[Dr. Debtors Allowances E-
+
+ 					Cr. Debtors control A-
+
+ 					Cr. Debtor’s account in debtors ledger ]
+
+ 	Cost price		\[Dr. Trading stock A+
+
+ 					Cr. Cost of sales E+]
+
+###### An Allowances given to the debtor on the original recorded selling price
+
+Source document: 		Duplicate credit note
+
+Journal:				DAJ
+
+Analysis:				\[Debtors Allowances decreases equity
+
+ 					Debtor (an asset) decreases]
+
+Double entry: 			\[Dr. Debtors Allowances E-
+
+ 					Cr. Debtors control A-
+
+ 					Cr. Debtor’s account in debtors ledger ]
+
+Note: No double entry for cost of sales
+
+##### Creditors Journal
+
+###### Purchase of tangible asset on credit (e.g. equipment )
+
+Source document:	Original credit invoice
+
+Journal:			CJ
+
+Analysis:			\[Equipment (an asset) increases
+
+ 				Creditor (a liability) increases ]
+
+Double entry:		\[Dr. Equipment A+
+
+ 				Cr. Creditors control L+
+
+ 				Cr. Creditor’s account in creditors ledger]
+
+###### Purchase of current asset on credit (e.g. trading stock)
+
+Source document: 		Original credit invoice
+
+Journal: 				CJ
+
+Analysis:				\[Trading stock (an asset) increases
+
+ 					Creditor (a liability) increases]
+
+Double entry: 			\[Dr. Trading stock A+
+
+ 					Cr. Creditors control L+
+
+ 					Cr. Creditor’s account in creditors ledger ]
+
+###### Purchase a consumable on credit (e.g. stationery)
+
+Source document: 	Original credit invoice
+
+Journal:			CJ
+
+Analysis:			An expense e.g. stationery decreases equity
+
+ 				Creditor (a liability) increases
+
+Double entry:		\[Dr. Expense account e.g. stationery E-
+
+ 				Cr. Creditors control L+
+
+ 				Cr. Creditor’s account in creditors ledger]
+
+##### Creditors Allowances Journal
+
+###### Creditors’ returns and Allowances: Allowances received on purchase of tangible asset (e.g. trade discount omitted)
+
+Source document: 		Duplicate debit note
+
+Journal: 				CAJ
+
+Analysis: 				\[Creditor (a liability) decreases
+
+ 					Tangible asset (e.g. equipment) decreases]
+
+Double entry:			\[Dr. Creditors control L-
+
+ 					Dr. Creditor’s account in creditors ledger
+
+ 					Cr. Equipment A-]
+
+###### Return of/or an Allowances received on merchandised purchased on credit
+
+Source document:		Duplicate debit note
+
+Journal:				CAJ
+
+Analysis:				\[Creditor (a liability) decreases
+
+ 					Trading stock (an asset) decreases]
+
+Double entry:			\[Dr. Creditors control L-
+
+ 					Dr. Creditor’s account in creditors ledger
+
+ 					Cr. Trading stock A-]
+
+###### Return of/or an Allowances received on a consumable purchased on credit
+
+Source document:			Duplicate debit note
+
+Journal: 					CAJ
+
+Analysis:					\[Creditor (a liability) decreases
+
+ 		An expense account (e.g. stationery) increases equity ]
+
+Double entry:				\[Dr. Creditors control L-
+
+ 					Dr. Creditor’s account in creditors ledger
+
+ 					Cr. expense account (e.g. stationery) E+]
+
+##### Petty Cash Journal
+
+###### Buy stock and pay out of the petty cash
+
+Source document: 		Petty cash voucher
+
+Journal:				PCJ
+
+Analysis:				\[Trading stock (an asset) increases
+
+ 					Petty cash (an asset) decreases]
+
+Double entry:			\[Dr. Trading stock A+
+
+ 					Cr. Petty cash A]
+
+###### Pay for carriage on purchases and pay out of the petty cash on behalf of a debtor
+
+Source document: 		Petty cash voucher
+
+Journal: 				PCJ
+
+Analysis:				\[Debtor (an asset) increases
+
+ 					Petty cash (an asset) decreases]
+
+Double entry: 			\[Dr. Debtors control A+
+
+ 					Dr. Debtor’s account in debtors ledger
+
+ 					Cr. Petty cash A-]
+
+###### Purchase of consumable and pay out of the petty cash (e.g. stationery)
+
+Source document:		Petty cash voucher
+
+Journal: 				PCJ
+
+Analysis:			\[An expense e.g. stationery decreases equity
+
+ 				Petty cash (an asset) decreases]
+
+Double entry:		\[Dr. Expense account e.g. wages E-
+
+ 				Cr. Petty cash A-]
+
+##### General Journal
+
+###### Cancellation of discount allowed on a dishonoured cheque
+
+Source document:		Journal voucher
+
+Journal: 				GJ
+
+Analysis:				Debtors control (an asset) increases
+
+ 			Discount allowed (an expense) increases equity]
+
+ Double entry:			\[Dr. Debtors control A+
+
+ 					Dr. Debtor’s account in the debtors ledger
+
+ 					Cr. Discount allowed (expense) E+]
+
+###### Interest charge on overdue debtors account
+
+Source document:		Journal voucher
+
+Journal:				GJ
+
+Analysis:				\[Debtors control (an asset) increases
+
+ 		Interest on overdue debtors (an income) increases equity
+
+ 		Dr. Debtors control A+]
+
+Double entry: 		\[Dr. Debtor’s account in the debtors ledger
+
+ 				Cr. Interest on overdue debtors (income) E+]
+
+###### Interest charged by a creditor on an overdue account
+
+Source document: 		Journal voucher
+
+Journal: 				GJ
+
+Analysis: 				\[Interest on overdue creditors (an 							expense) decreases equity
+
+ 					Creditors control (liability) increases ]
+
+Double entry:	\[Dr. Interest on overdue creditors (expense) E -+
+
+ 			Cr. Creditors control L+
+
+ 			Cr. Creditor’s account in the creditors ledger ]
+
+###### Write a debtors account of as irrecoverable
+
+Source document: 		Journal voucher
+
+Journal:				GJ
+
+Analysis:				\[Bad debts (an expense) decreases equity 					Debtors control
+
+ 					(an asset) decreases]
+
+Double entry:		\[Dr. Bad debts (expense) E-
+
+ 				Cr. Debtors control A-
+
+ 				Cr. Debtor’s account in the debtors ledger ]
+
+###### Donation of trading stock at cost price
+
+Source document: 		Journal voucher
+
+Journal:				GJ
+
+Analysis:				\[Donations (an expense) decreases equity
+
+ 					Trading stock (an asset) decreases ]
+
+Double entry:			\[Dr. Donations (expense) E-
+
+ 					Cr. Trading stock A-]
+
+###### The owner takes trading stock at cost price
+
+Source document:		Journal voucher
+
+Journal: 				GJ
+
+Analysis:				\[Drawings (an expense) decreases equity
+
+ 					Trading stock (an asset) decreases]
+
+Double entry:			\[Dr. Drawings (expense) E-
+
+ 					Cr. Trading stock A-]
+
+###### Capitalisation of interest on loan at MB Bank
+
+Source document:		Journal voucher
+
+Journal: 				GJ
+
+Analysis:			\[Interest on loan (an expense) decreases equity
+
+ 				Loan at MB Bank (liability) increases]
+
+Double entry:		\[Dr. Interest on loan (expense) E-
+
+ 				Cr. Loan: MB Bank L+]
+
+###### Capitalisation of interest on fixed deposit at XY Bank
+
+Source document: 		Journal voucher
+
+Journal:				GJ
+
+Analysis:			\[Fixed deposit at XY Bank (an asset) increases
+
+ 		Interest on fixed deposit (an income) increases equity]
+
+Double entry:		\[Dr. Fixed deposit: XY Bank A+
+
+ 				Cr. Interest on fixed deposit (income) E+]
+
+##### 
+
+### Activity 23 (AOL)
+
+#### Required
+
+Analyse the following transactions under the headings provided. Under account debited and account credited, you must indicate which accounts in the General ledger are debited and credited. In the accounting equation, indicate an increase with a “+”, a
+
+decrease with a “-“before the amounts and no change with a “0”. Assume throughout that the bank has a favourable bank balance.
+
+Hints:
+
+* Draw up T-accounts.
+* Make sure the accounting equation (A = E + L) remains balanced after every transaction entry.
+
+#### Transactions
+
+1. A statement of account was received from Kromhout Traders. It was decided to transfer the credit balance (R150) in the debtors’ ledger to the account in the creditors’ ledger.
+2. The telephone bill was received from Telkom. Issue a cheque to pay the amount of R2 300.
+3. Receive a cheque from R. Brown, the owner, to increase his capital contribution from R578 640 to R600 000.
+4. Pay Santie Ltd. in payment of our account of R10 500 minus 5% discount.
+5. Buy goods on credit from Mala Manufacturers for R2 300 minus 20% trade discount.
+6. Brom Distributers charges our overdue account of R8 400 with 7% interest per annum for three months.
+7. Credit sales of merchandise to L. Lona, R4 200. The cost price of the goods sold was R2 100.
+8. L. Lona returned R300 worth of trading stock back. The cost price of the goods was R150.
+9. Sent goods back to Mala Distributors (creditor) worth R450 minus 20% trade discount.
+10.  It was discovered that stationery bought on credit for R280 from Morne Traders was posted to the trading stock account. Correct the error.
+11. Buy stationery from SNA Distributers for R80 and pay with petty cash.
+12. Cash sales of merchandise, R9 600. The cost price of the goods sold was R4 800.
+13. The owner took merchandise with a selling price of R600 for his own use. The cost price of the goods was R300.
+14. R. Radebe (a debtor) is declared insolvent. Receive a first and final dividend of 20 cent in the Rand. R. Radebe owes the business R1 100.
+15. Pay R400 taken from the petty cash for two days’ wages to a worker who washed the windows.
+16. Receive a cheque from S. Moaner on payment of his account of R2 000 minus 2½% discount.
+17. Receive S. Moaner’s cheque back from the bank with the remark “R/D insufficient funds”. (Look at nr. 16)
+18. Donate merchandise of R200 at cost price to the local children’s home.
+19. Charge G. Gifts (a debtor) overdue account of R4 800 with 2½% interest for two months.
+20. Receive a cheque from G. Pillay for R400. It is for his account that has already been written off as bad debts.
+21. Pay SA Deliveries with a cheque for delivery of goods bought on credit, R340.
+22. The fixed deposit by AB Bank of R30 000 matured today. Received a cheque of R32 500. Included in the amount received is interest on fixed deposit.
+23. Pay S. Moot’s salary for the month, R8 000.
+24. Pay SA Deliveries R140 with petty cash for delivering goods to L. Prinsloo (debtor). The amount must be levied against the debtors’ account.
+25. Receive the bank statement from Perm Bank, reflecting the following:
+* Service fees, R210
+* Credit card levies, R340
+* Interest on credit balance, R110
+
+#### Answer sheet
+
+ 
+
+Nr, Source document, General ledger\[Account debited, Account credited], A, OE, L
+
+ , , , , ,
+
+ , , , , ,
+
+ , , , , ,
+
+ , , , , ,
+
+ , , , , ,
+
+ , , , , ,
+
+ , , , , ,
+
+ , , , , ,
+
+ , , , , ,
+
+ , , , , ,
+
+ , , , , ,
+
+ , , , , ,
+
+ , , , , ,
+
+ , , , , ,
+
+ , , , , ,
+
+ , , , , ,
+
+ , , , , ,
+
+ , , , , ,
+
+ , , , , ,
+
+ , , , , ,
+
+ , , , , ,
+
+#### Answer:
+
+Activity 23
+
+ 
+
+Nr, Source document, General Ledger \[Account debited, Account credited], A, OE, L
+
+1, Journal voucher, Debtors control, Creditors control, +150, 0, +150
+
+2, Cheque counterfoil, Telephone, Bank, -2 300, -2 300, 0
+
+3, Duplicate receipt, Bank, Capital, +21 360, +21 360, 0
+
+4, Cheque counterfoil, Creditors control, Bank, -9 975, 0, -9 975
+
+  , ,Creditors control, Discount received, 0, +525, -525
+
+5, Original invoice, Trading stock, Creditors control, +1 840, 0, +1 840
+
+6, Journal voucher, Interest on overdue cred. account, Creditors control, 0, -147, +147
+
+7, Duplicate invoice, Debtors control, Sales, +4 200, +4 200, 0
+
+  , ,Cost of sales, Trading stock, -2 100, -2 100, 0
+
+8 Duplicate credit note, Debtors Allowances, Debtors control, -300, -300, 0
+
+  , , Trading stock, Cost of sales, +150, +150, 0
+
+9, Duplicate debit note, Creditors control, Trading stock, -360, 0, -360
+
+10, Journal voucher, Stationery, Trading stock, -280, -280, 0
+
+11, Petty cash voucher, Stationery, Petty cash, -80, -80, 0
+
+12, Cash register roll, Bank, Sales, +9 600, +9 600, 0
+
+  , ,Cost of sales, Trading stock, -4 800, -4 800, 0
+
+13, Journal voucher, Drawings, Trading stock, -300, -300, 0
+
+14, Duplicate receipt, Bank, Debtors control, +-220, 0, 0
+
+  , ,Bad debts, Debtors control, -880, -880, 0
+
+15, Petty cash voucher, Wages, Petty cash, -400, -400, 0
+
+16, Duplicate receipt, Bank, Debtors control, +-1 950, 0, 0
+
+  , ,Discount allowed, Debtors control, -50, -50, 0
+
+17, Bank statement, Debtors control, Bank, +-1 950, 0, 0
+
+  ,Journal voucher, Debtors control, Discount allowed, +50, +50, 0
+
+18, Journal voucher, Donations, Trading stock, -200, -200, 0
+
+19, Journal voucher, Debtors control, Interest on overdue deb., +20, +20, 0
+
+20, Duplicate receipt, Bank, Bad debts recovered, +400, +400, 0
+
+21, Cheque counter foil, Trading stock, Bank, +-340, 0, 0
+
+22, Duplicate receipt, Bank, Fixed dep: AB Bank, +-30 000, 0, 0
+
+  , , Bank, Int. on fixed deposit, +2 500, +2 500, 0
+
+23, Cheque counterfoil, Salaries, Bank, -8 000, -8 000, 0
+
+24, Petty cash voucher, Debtors control, Petty cash, +-140, 0, 0
+
+25, Bank statement, Bank charges, Bank, -550, -550, 0
+
+ , , Bank, Interest on current acc., + 110, +110,
+
+### Activity 24 (Transaction analysis)
+
+#### Required
+
+Analyse the following transactions under the headings provided. Under account debited and account credited, you must indicate which accounts in the General ledger are debited and credited. In the accounting equation, indicate an increase with a “+”, a
+
+decrease with a “-“ before the amounts and no change with a “0”. Assume throughout that the bank has a credit balance.
+
+Note: The business profit margin is 150% on cost price.
+
+#### Transactions
+
+1. Cash sales of merchandise. The cost price of the goods were R2 000.
+2. Receive a cheque from S. Abrahams on payment of his account of R4 000 minus 5% discount.
+3. Receive S. Abrahams’ cheque back from the bank with the remark “R/D insufficient funds”. (Look at nr. 2)
+4. Pay Limpopo Traders in payment of the account of R8 500 minus 10% discount.
+5. Buy goods per cheque from Roland Manufacturers for R12 300 minus 20% trade discount.
+6. Pay SA Deliveries with a cheque for delivery of goods bought on credit, R840.
+7. R. Rossouw (a debtor) is declared insolvent. Receive a first and final dividend of 30 cent in the Rand. R. Rossouw owes the business R500.
+8. The owner increased his capital contribution by depositing R20 000 in the business bank account.
+9. Receive the bank statement from Willow Bank, which reflects the following:
+Bank charges, R610
+Interest on bank overdraft, R180
+10. Receive R5 000 rent from the tenant, M. Botha
+
+ 
+
+### Answer sheet
+
+ 
+
+Nr, Source document, General ledger\[Account debited, Account credited], A, OE, L
+
+ , , , , ,
+
+ , , , , ,
+
+ , , , , ,
+
+ , , , , ,
+
+ , , , , ,
+
+ , , , , ,
+
+ , , , , ,
+
+ , , , , ,
+
+ , , , , ,
+
+ , , , , ,
+
+ , , , , ,
+
+ , , , , ,
+
+ , , , , ,
+
+ , , , , ,
+
+ , , , , ,
+
+ , , , , ,
+
+ , , , , ,
+
+ , , , , ,
+
+ , , , , ,
+
+ , , , , ,
+
+ , , , , ,
+
+ , , , , ,
+
+ , , , , ,
+
+ , , , , ,
+
+ , , , , ,
+
+ , , , , ,
+
+ , , , , ,
+
+ , , , , ,
+
+ , , , , ,
+
+ , , , , ,
+
+ , , , , ,
+
+### Answer:
+
+Nr, Source document, General ledger\[Account debited, Account credited], A, OE, L
+
+1, Cash register roll, Bank, Sales, 0, +3 000, -3 000
+
+  , , Cost of sales, Trading stock, -2 000, -2 000, 0
+
+2, Duplicate receipt, Bank Debtors control, -3 800, 0, -3 800
+
+ , ,  Discount allowed, Debtors control, -200, -200, 0
+
+3, Bank statement, Debtors control, Bank, +3 800, 0, +3 800
+
+ , Journal voucher, Debtors control, Discount allowed, +200, +200, 0
+
+4, Cheque counterfoil, Creditors control, Bank, 0, 0, +-7 650
+
+  , , Creditors control, Discount received, 0, +850, -850
+
+5, Cheque counterfoil, Trading stock, Bank, +9 840, 0, -9 840
+
+6, Cheque counterfoil, Trading stock, Bank, +840, 0, -840
+
+7, Duplicate receipt, Bank, Debtors control, -150, 0, -150
+
+  , Journal voucher, Bad debts, Debtors control, -350, -350, 0
+
+8, Duplicate receipt, Bank, Capital, 0, +20 000, -20 000
+
+9, Bank statement, Bank charges, Bank, 0, -610, +610
+
+  , ,Int. on bank overdraft, Bank, 0, -180, +180
+
+10, Duplicate receipt, Bank, Rent income, 0, +5 000, -5 000
+

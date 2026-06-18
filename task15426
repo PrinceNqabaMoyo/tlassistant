@@ -1,0 +1,8 @@
+# Validation Findings Addressed (Scaffold Mode)
+
+- [/] 1. Implementation of `MatchQuestionUI` and `WordBankQuestionUI` Compare Toggles (Finding 1)
+- [ ] 2. Replace "Clear" button with "Redo" logic in Scaffold Mode (Finding 3)
+- [ ] 3. Spaced Repetition Flagging Logic in Scaffold Mode (Finding 4)
+    - [ ] LocalStorage queue for incorrectly answered questions
+    - [ ] Variable tracking for consecutive answers to trigger queue replay
+    - [ ] Injecting queued question back into the scaffold flow after 5 attempts

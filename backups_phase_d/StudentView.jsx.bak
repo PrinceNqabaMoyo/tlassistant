@@ -1,0 +1,313 @@
+import React, { useCallback, useEffect } from 'react';
+import { Workspace } from '../workspace';
+import { CurriculumHelper } from '../curriculum';
+import { CurriculumSelector } from '../forms/StudentForms';
+import { GradeSelector } from '../forms/StudentForms';
+import { SubjectDashboard } from '../forms/StudentForms';
+import { StudyModeSelector } from '../forms/StudentForms';
+import ClassworkView from './ClassworkView';
+import { Loader2 } from 'lucide-react';
+
+const StudentView = ({
+    view, setView, allCurricula, getAgentResponse, navigationStack, setNavigationStack, updateHelperNavigationLabel,
+    isCurriculumPageVisible, setIsCurriculumPageVisible, loading, setLoading, chatHistory, setChatHistory,
+    applyAllTextFormatting,
+    // ADDED FOR CLARITY - Not functionally required due to {...props}
+    currentProblemThreadId,
+    handleStrugglingProblem,
+    // END ADDED
+    curriculumData,
+    ...props
+}) => {
+
+    const handleNavigate = useCallback((newView, newLabel, itemData = null) => {
+        setNavigationStack(prevStack => {
+            let updatedStack = [...prevStack];
+            if (prevStack[prevStack.length - 1]?.view === 'curriculum' && newView === 'grade') {
+                updatedStack.push({ view: newView, label: newLabel, data: itemData });
+                return updatedStack;
+            }
+            const existingIndex = updatedStack.findIndex(item => {
+                if (item.view === newView) {
+                    if (newView === 'curriculum') return !item.data;
+                    if (newView === 'grade') return item.data?.curriculumKey === itemData?.curriculumKey;
+                    if (newView === 'subject') return item.data?.curriculumKey === itemData?.curriculumKey && item.data?.grade === itemData?.grade;
+                    if (newView === 'study_mode') return item.data?.curriculumKey === itemData?.curriculumKey && item.data?.grade === itemData?.grade && item.data?.subject?.id === itemData?.subject?.id;
+                    if (newView === 'workspace') return item.data?.curriculumKey === itemData?.curriculumKey && item.data?.grade === itemData?.grade && item.data?.subject?.id === itemData?.subject?.id && item.data?.topic?.name === itemData?.topic?.name;
+                    if (newView === 'classwork') return true;
+                    if (newView === 'curriculum_helper') return item.label === newLabel;
+                    return true;
+                }
+                return false;
+            });
+            if (existingIndex !== -1) {
+                updatedStack = updatedStack.slice(0, existingIndex + 1);
+                updatedStack[existingIndex] = { view: newView, label: newLabel, data: itemData };
+            } else {
+                updatedStack.push({ view: newView, label: newLabel, data: itemData });
+            }
+            return updatedStack;
+        });
+        setView(newView);
+    }, [setNavigationStack, setView, allCurricula]);
+
+    const handleBack = useCallback(() => {
+        setNavigationStack(prevStack => {
+            if (prevStack.length > 1) {
+                const newStack = prevStack.slice(0, prevStack.length - 1);
+                const lastItem = newStack[newStack.length - 1];
+                // Use setTimeout to avoid setState during render
+                setTimeout(() => {
+                    setView(lastItem.view);
+                    if (isCurriculumPageVisible && lastItem.view !== 'curriculum_helper') setIsCurriculumPageVisible(false);
+                    if (lastItem.view === 'curriculum') { props.setSelectedCurriculumKey(lastItem.data?.key || null); props.setSelectedGrade(null); props.setSelectedSubject(null); props.setActiveTopic(null); }
+                    else if (lastItem.view === 'grade') { props.setSelectedCurriculumKey(lastItem.data?.curriculumKey || null); props.setSelectedGrade(null); props.setSelectedSubject(null); props.setActiveTopic(null); }
+                    else if (lastItem.view === 'subject') { props.setSelectedCurriculumKey(lastItem.data?.curriculumKey || null); props.setSelectedGrade(lastItem.data?.grade || null); props.setSelectedSubject(null); props.setActiveTopic(null); }
+                    else if (lastItem.view === 'study_mode') { props.setSelectedCurriculumKey(lastItem.data?.curriculumKey || null); props.setSelectedGrade(lastItem.data?.grade || null); props.setSelectedSubject(lastItem.data?.subject || null); props.setActiveTopic(null); }
+                    else if (lastItem.view === 'workspace') { props.setSelectedCurriculumKey(lastItem.data?.curriculumKey || null); props.setSelectedGrade(lastItem.data?.grade || null); props.setSelectedSubject(lastItem.data?.subject || null); props.setActiveTopic(lastItem.data?.topic || null); }
+                }, 0);
+                return newStack;
+            } else {
+                setTimeout(() => {
+                    setView('curriculum');
+                }, 0);
+                return [{ view: 'curriculum', label: 'Curricula' }];
+            }
+        });
+    }, [setNavigationStack, setView, isCurriculumPageVisible, setIsCurriculumPageVisible, props]);
+
+    const handleSelectPath = useCallback((index) => {
+        setNavigationStack(prevStack => {
+            const newStack = prevStack.slice(0, index + 1);
+            const targetItem = newStack[newStack.length - 1];
+            // Use setTimeout to avoid setState during render
+            setTimeout(() => {
+                setView(targetItem.view);
+                if (isCurriculumPageVisible && targetItem.view !== 'curriculum_helper') setIsCurriculumPageVisible(false);
+                if (targetItem.view === 'curriculum') { props.setSelectedCurriculumKey(targetItem.data?.key || null); props.setSelectedGrade(null); props.setSelectedSubject(null); props.setActiveTopic(null); }
+                else if (targetItem.view === 'grade') { props.setSelectedCurriculumKey(targetItem.data?.curriculumKey || null); props.setSelectedGrade(null); props.setSelectedSubject(null); props.setActiveTopic(null); }
+                else if (targetItem.view === 'subject') { props.setSelectedCurriculumKey(targetItem.data?.curriculumKey || null); props.setSelectedGrade(targetItem.data?.grade || null); props.setSelectedSubject(null); props.setActiveTopic(null); }
+                else if (targetItem.view === 'study_mode') { props.setSelectedCurriculumKey(targetItem.data?.curriculumKey || null); props.setSelectedGrade(targetItem.data?.grade || null); props.setSelectedSubject(targetItem.data?.subject || null); props.setActiveTopic(null); }
+                else if (targetItem.view === 'workspace') { props.setSelectedCurriculumKey(targetItem.data?.curriculumKey || null); props.setSelectedGrade(targetItem.data?.grade || null); props.setSelectedSubject(targetItem.data?.subject || null); props.setActiveTopic(targetItem.data?.topic || null); }
+            }, 0);
+            return newStack;
+        });
+    }, [setNavigationStack, setView, isCurriculumPageVisible, setIsCurriculumPageVisible, props]);
+
+    const handleSelectCurriculum = useCallback((key) => {
+        props.setSelectedCurriculumKey(key);
+        handleNavigate('grade', `${allCurricula[key].name} Grades`, { curriculumKey: key, grade: null });
+    }, [props, allCurricula, handleNavigate]);
+
+    const handleSelectGrade = useCallback((grade) => {
+        props.setSelectedGrade(grade);
+        handleNavigate('subject', 'Subject', { value: grade, curriculumKey: props.selectedCurriculumKey, grade: grade });
+    }, [props, handleNavigate]);
+
+    const handleSelectSubject = useCallback((subject) => {
+        props.setSelectedSubject(subject);
+        handleNavigate('curriculum_helper', 'Curriculum Helper', { value: 'Curriculum Helper', curriculumKey: props.selectedCurriculumKey, grade: props.selectedGrade, subject: subject });
+    }, [props, handleNavigate]);
+
+    const handleSelectStudyMode = useCallback((mode) => {
+        if (mode === 'curriculum_helper') {
+            handleNavigate('curriculum_helper', 'Curriculum Helper', { value: 'Curriculum Helper', curriculumKey: props.selectedCurriculumKey, grade: props.selectedGrade, subject: props.selectedSubject });
+        } else if (mode === 'classwork') {
+            handleNavigate('classwork', 'Class Work', { value: 'Class Work', curriculumKey: props.selectedCurriculumKey, grade: props.selectedGrade, subject: props.selectedSubject });
+        }
+    }, [props, handleNavigate]);
+
+    let currentSelectedCurriculumKey = props.selectedCurriculumKey;
+    if (view === 'grade' && !currentSelectedCurriculumKey && navigationStack.length > 0) {
+        const currentNavEntry = navigationStack[navigationStack.length - 1];
+        if (currentNavEntry.view === 'grade' && currentNavEntry.data && currentNavEntry.data.key) currentSelectedCurriculumKey = currentNavEntry.data.key;
+        else if (currentNavEntry.view === 'curriculum' && currentNavEntry.data && currentNavEntry.data.key) currentSelectedCurriculumKey = currentNavEntry.data.key;
+    }
+    const selectedCurriculum = currentSelectedCurriculumKey ? allCurricula[currentSelectedCurriculumKey] : null;
+
+    const curriculumHelperProps = {
+        onClose: () => {
+            setIsCurriculumPageVisible(false);
+            setNavigationStack(prevStack => {
+                const filteredStack = prevStack.filter(item => item.view !== 'curriculum_helper');
+                // Use setTimeout to avoid setState during render
+                setTimeout(() => {
+                    if (filteredStack.length > 0) {
+                        setView(filteredStack[filteredStack.length - 1].view);
+                    } else {
+                        setView('curriculum');
+                    }
+                }, 0);
+                return filteredStack;
+            });
+        },
+        getAgentResponse,
+        setPracticeQuestions: props.setPracticeQuestions,
+        selectedGrade: props.selectedGrade,
+        selectedSubject: props.selectedSubject,
+        setWorkspaceMode: props.setWorkspaceMode,
+        setActiveTopic: props.setActiveTopic,
+        currentMode: props.currentUser?.role,
+        updateHelperNavigationLabel: updateHelperNavigationLabel,
+        setView: setView,
+        setNavigationStack: setNavigationStack,
+        navigationStack: navigationStack,
+        loading: loading,
+        setLoading: setLoading,
+        chatHistory: chatHistory,
+        setChatHistory: setChatHistory,
+        applyAllTextFormatting: applyAllTextFormatting,
+        onGoToClasswork: () => {
+            handleNavigate('classwork', 'Class Work', { value: 'Class Work', curriculumKey: props.selectedCurriculumKey, grade: props.selectedGrade, subject: props.selectedSubject });
+        },
+        currentUser: props.currentUser,
+    };
+
+    // Move useEffect hooks outside the switch statement to avoid conditional hook calls
+    useEffect(() => {
+        if (
+            props.currentUser?.role === 'student' &&
+            !props.currentUser?.isSuperAdmin &&
+            props.currentUser?.curriculum &&
+            props.currentUser?.grade
+        ) {
+            props.setSelectedCurriculumKey(props.currentUser.curriculum);
+            props.setSelectedGrade(Number(props.currentUser.grade));
+        }
+    }, [props.currentUser?.curriculum, props.currentUser?.grade, props.currentUser?.role]);
+
+    switch (view) {
+        case 'dashboard':
+        case 'curriculum':
+            // For students, use their stored curriculum and grade preferences
+            if (
+                props.currentUser?.role === 'student' &&
+                !props.currentUser?.isSuperAdmin &&
+                props.currentUser?.curriculum &&
+                props.currentUser?.grade
+            ) {
+                // Navigate directly to subject selection
+                return <SubjectDashboard
+                    curriculum={allCurricula[props.currentUser.curriculum]}
+                    curriculumKey={props.currentUser.curriculum}
+                    grade={Number(props.currentUser.grade)}
+                    onSelect={handleSelectSubject}
+                    db={props.db}
+                    currentUser={props.currentUser}
+                    onContinueProblem={props.handleContinueProblem}
+                    onMarkSolved={props.handleMarkStrugglingProblemSolved}
+                    setMessage={props.setMessage}
+                />;
+            }
+            return <CurriculumSelector curricula={allCurricula} onSelect={handleSelectCurriculum} loadingStates={props.loadingStates || {}} userSubscription={props.userSubscription} />;
+        case 'grade':
+            if (!selectedCurriculum) {
+                return (
+                    <div className="flex items-center justify-center p-16">
+                        <Loader2 className="h-12 w-12 animate-spin text-blue-600" />
+                        <p className="ml-4 text-gray-600">Loading Grades...</p>
+                    </div>
+                );
+            }
+            return <GradeSelector curriculum={selectedCurriculum} onSelect={handleSelectGrade} />;
+        case 'subject':
+            if (!selectedCurriculum || !props.selectedGrade) {
+                return (
+                    <div className="flex items-center justify-center p-16">
+                        <Loader2 className="h-12 w-12 animate-spin text-blue-600" />
+                        <p className="ml-4 text-gray-600">Loading Subjects...</p>
+                    </div>
+                );
+            }
+            return <SubjectDashboard
+                curriculum={selectedCurriculum}
+                curriculumKey={currentSelectedCurriculumKey}
+                grade={props.selectedGrade}
+                onSelect={handleSelectSubject}
+                db={props.db}
+                currentUser={props.currentUser}
+                onContinueProblem={props.handleContinueProblem}
+                onMarkSolved={props.handleMarkStrugglingProblemSolved}
+                setMessage={props.setMessage}
+            />;
+        case 'study_mode':
+            return <StudyModeSelector subject={props.selectedSubject} grade={props.selectedGrade} onSelect={handleSelectStudyMode} />;
+        case 'curriculum_helper':
+            return <CurriculumHelper {...curriculumHelperProps} />;
+        case 'workspace':
+            if (!props.selectedSubject || !props.selectedGrade) {
+                return (
+                    <div className="flex items-center justify-center p-16">
+                        <Loader2 className="h-12 w-12 animate-spin text-blue-600" />
+                        <p className="ml-4 text-gray-600">Loading Workspace...</p>
+                    </div>
+                );
+            }
+            return <Workspace
+                subject={props.selectedSubject}
+                grade={props.selectedGrade}
+                topic={props.activeTopic}
+                onBack={handleBack}
+                getAgentResponse={getAgentResponse}
+                setIsCurriculumPageVisible={setIsCurriculumPageVisible}
+                setNavigationStack={setNavigationStack}
+                setView={setView}
+                loading={loading}
+                setLoading={setLoading}
+                selectedSubject={props.selectedSubject}
+                selectedGrade={props.selectedGrade}
+                chatHistory={chatHistory}
+                setChatHistory={setChatHistory}
+                applyAllTextFormatting={applyAllTextFormatting}
+                currentProblemThreadId={currentProblemThreadId}
+                handleStrugglingProblem={handleStrugglingProblem}
+                practiceQuestions={props.practiceQuestions}
+                setPracticeQuestions={props.setPracticeQuestions}
+                workspaceMode={props.workspaceMode}
+                setWorkspaceMode={props.setWorkspaceMode}
+                freeformWorkAreaRef={props.freeformWorkAreaRef}
+                setActiveEditableRef={props.setActiveEditableRef}
+                currentUser={props.currentUser}
+                isKeypadVisible={props.isKeypadVisible}
+                setIsKeypadVisible={props.setIsKeypadVisible}
+                handleAttempt={props.handleAttempt}
+                handleAnswerInput={props.handleAnswerInput}
+                handleSubmit={props.handleSubmit}
+                activeAssignment={props.activeAssignment}
+                handleAssignmentSubmit={props.handleAssignmentSubmit}
+                handleToggleMathStructure={props.handleToggleMathStructure}
+                addQuestionToChat={props.addQuestionToChat}
+                updateAnswerInChat={props.updateAnswerInChat}
+                handleSendFreeformQuery={props.handleSendFreeformQuery}
+                freeformAnswer={props.freeformAnswer}
+                setFreeformAnswer={props.setFreeformAnswer}
+                setSelectedFreeformTopic={props.setSelectedFreeformTopic}
+            />;
+        case 'classwork':
+            return <ClassworkView db={props.db} currentUser={props.currentUser} onStartAssignment={props.handleStartAssignment} />;
+        default:
+            // For students, use their stored curriculum and grade preferences
+            if (
+                props.currentUser?.role === 'student' &&
+                !props.currentUser?.isSuperAdmin &&
+                props.currentUser?.curriculum &&
+                props.currentUser?.grade
+            ) {
+                // Navigate directly to subject selection
+                return <SubjectDashboard
+                    curriculum={allCurricula[props.currentUser.curriculum]}
+                    curriculumKey={props.currentUser.curriculum}
+                    grade={Number(props.currentUser.grade)}
+                    onSelect={handleSelectSubject}
+                    db={props.db}
+                    currentUser={props.currentUser}
+                    onContinueProblem={props.handleContinueProblem}
+                    onMarkSolved={props.handleMarkStrugglingProblemSolved}
+                    setMessage={props.setMessage}
+                />;
+            }
+            return <CurriculumSelector curricula={allCurricula} onSelect={handleSelectCurriculum} loadingStates={props.loadingStates || {}} userSubscription={props.userSubscription} />;
+    }
+};
+
+export default StudentView;

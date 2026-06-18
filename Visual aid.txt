@@ -1,0 +1,8 @@
+Visual aid
+What is it
+For processes: It is when you ... to achieve...
+What condtiond/scenarios call for it
+What calculations/ methods are used
+Where does the data/values come from (are there other accounting record types connected to this), 
+Where does the data go (are there accounting record types that accept the output of this process)
+Where in the accounting cycle does this process fit in

@@ -1,0 +1,124 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function isOwnerEmail() {
+      return signedIn()
+        && request.auth.token.email != null
+        && (
+          request.auth.token.email == 'princenqaba@gmail.com'
+          || request.auth.token.email == 'princenqabamoyo@outlook.com'
+        );
+    }
+
+    function hasAdminProfile() {
+      return signedIn()
+        && exists(/databases/$(database)/documents/users/$(request.auth.uid))
+        && (
+          get(/databases/$(database)/documents/users/$(request.auth.uid)).data.isSuperAdmin == true
+          || get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin'
+        );
+    }
+
+    function isAdminUser() {
+      return isOwnerEmail() || hasAdminProfile();
+    }
+
+    match /systemStats/{statId} {
+      allow read: if isAdminUser();
+      allow write: if false;
+    }
+
+    match /users/{userId} {
+      allow read, write: if signedIn() && request.auth.uid == userId;
+      allow read, update: if isAdminUser();
+
+      match /assignments/{assignmentId} {
+        allow read, write: if signedIn() && request.auth.uid == userId;
+        allow read, write: if isAdminUser();
+      }
+
+      match /savedProblems/{problemId} {
+        allow read, write: if signedIn() && request.auth.uid == userId;
+        allow read, write: if isAdminUser();
+      }
+
+      match /notifications/{notificationId} {
+        allow read: if signedIn() && request.auth.uid == userId;
+        allow create: if isAdminUser() || (
+          signedIn()
+          && request.auth.uid == userId
+          && notificationId == 'welcome_v1'
+          && request.resource.data.userId == userId
+          && request.resource.data.type == 'welcome'
+        );
+        allow update: if isAdminUser() || (
+          signedIn()
+          && request.auth.uid == userId
+          && request.resource.data.userId == resource.data.userId
+          && request.resource.data.diff(resource.data).changedKeys().hasOnly(['isRead', 'readAt'])
+        );
+        allow delete: if isAdminUser();
+      }
+    }
+
+    match /assessments/{assessmentId} {
+      allow read: if signedIn();
+      allow create: if signedIn() && request.resource.data.teacherId == request.auth.uid;
+      allow update, delete: if signedIn() && resource.data.teacherId == request.auth.uid;
+    }
+
+    match /submissions/{submissionId} {
+      allow create: if signedIn() && request.resource.data.studentId == request.auth.uid;
+      allow read: if signedIn() && (resource.data.studentId == request.auth.uid || isAdminUser());
+      allow update, delete: if isAdminUser();
+    }
+
+    match /pending_payments/{paymentId} {
+      allow create: if signedIn() && request.resource.data.userId == request.auth.uid && request.resource.data.status == 'pending';
+      allow read: if isAdminUser() || (signedIn() && resource.data.userId == request.auth.uid);
+      allow update, delete: if isAdminUser();
+    }
+
+    match /interest_submissions/{submissionId} {
+      allow create: if request.resource.data.name is string
+        && request.resource.data.email is string
+        && request.resource.data.curriculum is string
+        && request.resource.data.requestedGrade is string
+        && request.resource.data.requestedSubject is string
+        && request.resource.data.source is string
+        && request.resource.data.status == 'new'
+        && request.resource.data.name.size() > 0
+        && request.resource.data.name.size() <= 120
+        && request.resource.data.email.size() > 3
+        && request.resource.data.email.size() <= 160
+        && request.resource.data.requestedGrade.size() > 0
+        && request.resource.data.requestedGrade.size() <= 80
+        && request.resource.data.requestedSubject.size() > 0
+        && request.resource.data.requestedSubject.size() <= 120
+        && (!('schoolOrRole' in request.resource.data) || request.resource.data.schoolOrRole is string)
+        && (!('schoolOrRole' in request.resource.data) || request.resource.data.schoolOrRole.size() <= 160);
+      allow read, update, delete: if isAdminUser();
+    }
+
+    match /artifacts/{appId}/users/{userId}/chat_histories/{subjectKey} {
+      allow read: if signedIn() && request.auth.uid == userId;
+      allow write: if false;
+    }
+
+    match /artifacts/{appId}/users/{userId}/solved_freeform_problems/{problemId} {
+      allow read, write: if signedIn() && request.auth.uid == userId;
+    }
+
+    match /artifacts/{appId}/users/{userId}/struggling_problems/{threadId} {
+      allow read, write: if signedIn() && request.auth.uid == userId;
+    }
+
+    match /chat_rooms/{chatRoomId}/messages/{messageId} {
+      allow read, write: if signedIn();
+    }
+  }
+}

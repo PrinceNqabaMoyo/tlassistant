@@ -1,0 +1,1282 @@
+## Q1 (General Journal \& ledger accounts)            \[80]
+
+You are provided with information taken from the books of Union Traders.
+
+### Required:
+
+#### 4.1
+
+Open the General Journal with totals on 30 September 2010 and journalise all the omissions/errors and additional information. Close off the account at the end of the month. You don’t have to do any narrations. (38)
+
+#### 4.2
+
+Draw up the following ledger accounts in the General Ledger:
+
+##### 4.2.1
+
+Trading stock (18)
+
+##### 4.2.2
+
+Creditors control (12)
+
+##### 4.2.3
+
+Stationery (12)
+
+ 
+
+##### Note:
+
+Balance the accounts on 30 September 2010.
+
+### Information:
+
+#### 1 Some balances on 1 September 2010:
+
+* Creditors control, R16 200
+* Trading stock, R20 680
+* Stationery, R1 240
+
+#### 2 Journal totals for September 2010:
+
+##### Cash Receipt Journal
+
+Bank, Debtors control, Discount allowed, Sales, Cost of sales,  Sundry accounts
+
+R23 260, R8 960, R60, R4 960, R2 480, R9 400
+
+##### Cash Payments Journal
+
+Bank, Creditors control, Discount received, Debtors control, Trading stock, Stationery, Sundry accounts
+
+R45 360, R4 690, R90, R468, R18 000, R300, R22 000
+
+##### Debtors Journal
+
+Sales, Cost of Sales
+
+R14 300, R7 150
+
+##### Debtors Allowances Journal
+
+Debtors Allowances, Cost of sales
+
+R1 200, R600
+
+##### Creditors Journal
+
+Creditors control, Trading stock, Equipment, Stationery, Packing material, Sundry accounts
+
+R20 423, R10 361, R6 281, R461, R690, R2 630
+
+##### Creditors Allowances Journal
+
+Creditors control, Trading stock, Equipment, Stationery, Packing material, Sundry accounts
+
+R3 167, R1 890, R804, R74, R151, R248
+
+##### General Journal
+
+ , Debit, Credit
+
+Debtors control, R163, R41
+
+Creditors control, R17, R462
+
+#### 3 Additional information
+
+##### A
+
+Transfer the account of S. Sithole with a debit balance of R25 in the Creditors ledger to the account in the Debtors ledger.
+
+ 
+
+##### B
+
+Goods sold to N. Naidoo in September 2010 for R250 has recorded in the Debtors journal as R450. The cost price was recorded correctly. Correct the error.
+
+##### C
+
+The overdue account of A. Nel, a debtor, who owes R960, must be charged with 17,5% interest for four months.
+
+##### D
+
+Goods returned for R80 by B. Bell, a debtor during August 2010, has been post to the account of BP Bel, a creditor. Correct the error.
+
+ 
+
+##### E
+
+Trading stock has been donated to the local school (cost price, R300; selling price, R400).
+
+##### F
+
+The owner took stationery at a value of R100 for personal use.
+
+ 
+
+##### G
+
+Stationery of R275 purchased from Sper Ltd. for use in the business, was recorded in the Trading stock column in the Creditors Journal. Correct the error.
+
+### Answer:
+
+#### General Journal of Union Traders
+
+Day, Details, Fol, Debit, Credit, Debtors’ control\[Debit, Credit], Creditors’ control\[Debit, Credit]
+
+ , Total, b/d, , , 163, 41, 17, 462
+
+ , , , , , , , ,
+
+ , S. Sithole, , 25, , 25, , ,
+
+ , , , , , , , ,
+
+ , S. Sithole, , , 25, , , , 25
+
+ , , , , , , , ,
+
+ , Sales, , 200, , , , ,
+
+ , N. Naidoo, , , 200, , 200, ,
+
+ , , , , , , , ,
+
+ , A. Nel, , 56, , 56, , ,
+
+ , Interest on overdue debtors, , , 56, , , ,
+
+, , , , , , , ,
+
+, BP Bel, , 80, , , , 80,
+
+, B. Bell, , , 80, , 80, ,
+
+, , , , , , , ,
+
+, Donations, , 300, , , , ,
+
+, Trading stock, B6, , 300, , , ,
+
+, , , , , , , ,
+
+, Drawings, , 100, , , , ,
+
+, Stationery, N8, , 100, , , ,
+
+, , , , , , , ,
+
+, Stationery, N8, 275, , , , ,
+
+, Trading stock, B6, , 275, , , ,
+
+, , , , , 244, 321, 97, 487
+
+, , , , , , , B9, B9
+
+####  			General Ledger of Union Traders
+
+##### Dr. 					Trading stock				B6	Cr.
+
+ Date\[,], Details, Fol., Amount, Date\[,], Details, Fol., Amount
+
+ 2010 Sep, 1, Balance, b/d, 20 680, 2010 Sep, 30, Cost of sales, CRJ, 2 480
+
+ , 30, Bank, CPJ, 18 000, , , Cost of sales, DJ, 7 150
+
+ , , Creditors control, CJ, 10 361, , , Creditors control, CAJ, 1 890
+
+ , , Cost of Sales, DAJ, 600, , , Donations, GJ, 300
+
+ , , , , , , , Stationery, GJ, 275
+
+ , , , , , , , Balance, c/d, 37 546
+
+ , , , , 49 641, , , , , 49 641
+
+ 2010 Oct, 1, Balance, b/d, 37 546, , , , ,
+
+##### Dr. 					Creditors control			B9	Cr.
+
+ Date\[,], Details, Fol., Amount, Date\[,], Details, Fol., Amount
+
+ 2010 Sep, 30, Bank +D/R, CPJ, 4 690, 2010 Sep, 1, Balance, b/d, 16 200
+
+ , , Sundry Allowances, CAJ, 3 167, , 30, Sundry purchases, CJ, 20 423
+
+ , , Journal debits, GJ, 97, , , Journal credits, GJ, 487
+
+ , , Balance, c/d, 29 156, , , , ,
+
+ , , , , 37 110, , , , , 37 110
+
+ , , , , , 2010 Oct, 1, Balance, b/d, 29 156
+
+ , , , , , , , , ,
+
+ , , , , , , , , ,
+
+##### Dr. 					Stationery				N8	Cr.
+
+ Date\[,], Details, Fol., Amount, Date\[,], Details, Fol., Amount
+
+ 2010 Sep, 1, Balance, b/d, 1 240, 2010 Sep, 30, Creditors control, CAJ, 74
+
+ , 30, Bank, CPJ, 300, , , Drawings, GJ, 100
+
+ , , Creditors control, CJ, 461, , , Balance, c/d, 2 102
+
+ , , Trading stock, GJ, 275, , , , ,
+
+ , , , , 2 276, , , , , 2 276
+
+ 2010 Oct, 1, Balance, b/d, 2 102, , , , ,
+
+ , , , , , , , , ,
+
+ , , , , , , , , ,
+
+## Q2:  GENERAL JOURNAL    (23 marks ; 17 minutes)
+
+ The information for December 2021 presented below is taken from the books of Jevon Stores. The business is owned by J. Mahlangu.
+
+ 
+
+ 
+
+### REQUIRED:
+
+Record the transactions in the General Journal for December 2021, and close off the journal properly. (23)
+
+Refer to the INFORMATION below:
+
+ 
+
+NOTE: Narrations are not required.
+
+ 
+
+### INFORMATION
+
+ 
+
+#### A. Provisional totals
+
+#####  				General journal
+
+Debtors' Control\[Debit, Credit], Creditors' Control\[Debit, Credit]
+
+825, 116, 268, 384
+
+ 
+
+#### B. Transactions on 31 December 2021
+
+ 
+
+##### (i)
+
+A debtor, G. Molefe, who owes R2 400, was declared insolvent. His estate paid 40c in the rand. (This has been recorded in the books of the business.)
+
+The remainder must be written off as irrecoverable.
+
+ 
+
+##### (ii)
+
+Transfer a debit balance of R280 in the account of M. Naude from the Debtors’ Ledger to his account in the Creditors’ Ledger. M. Naude is both a customer and supplier to Jevon Stores.
+
+ 
+
+##### (iii)
+
+The owner, J. Mahlangu took trading stock at a cost price of R1 200. The transaction was not recorded yet.
+
+ 
+
+##### (iv)
+
+The business received an amount for R35 000 from RSA Bank via EFT for a fixed deposit that matured on 31 December 2021. Included in the amount is interest on fixed deposit of R3 000. The total amount of R35 000 has been credited to the Fixed Deposit Account. Correct the error.
+
+ 
+
+##### (v)
+
+Goods returned by G. Chetty (a debtor) as per credit note for R280, was incorrectly posted to the account of G. Levy (a debtor).
+
+ 
+
+##### (vi)
+
+Charged interest of 6% per annum for three months to the overdue account of M. Smith, he owes the business R6 800.
+
+### Answer:
+
+#### GENERAL JOURNAL OF JEVON STORES   (Narrations are not required.)
+
+Day, Details, Fol, Debit, Credit, Debtors’ control\[Debit, Credit], Creditors’ control\[Debit, Credit]
+
+ 31, Totals, b/d, , , 825, 116, 268, 384
+
+ 1, Bad debts, , 1 440, , , , ,
+
+ , G. Molefe, , , 1 440, , 1 440, ,
+
+ 2, M. Naude (Creditor), , 280, , , , 280,
+
+ , M. Naude (Debtor), , , 280, , 280, ,
+
+ 3, Drawings, , 1 200, , , , ,
+
+ , Trading stock, , , 1 200, , , ,
+
+ 4, Fixed Deposit: RSA, , 3 000, , , , ,
+
+ , Interest on fixed deposit, , , 3 000 , , , ,
+
+ 5, G. Levy, , 280, , 280, , ,
+
+ , G. Chetty, , , 280, , 280, ,
+
+ 6, M. Smith, , 102, , 102, , ,
+
+ , Interest receivable, , , 102, , , ,
+
+ , , , , , 1 207, 2 116, 548, 384 (1 mark for totals)
+
+ 
+
+## Q3:  GENERAL JOURNAL       (22 marks; 13 minutes)
+
+ 
+
+The information for December 2018 presented below is taken from the books of
+
+Devaan Stores, the business is owned by H. Devaan.
+
+ 
+
+### REQUIRED:
+
+ 
+
+Record the transactions in the General Journal for December 2018, and close off the
+
+journal properly. (22)
+
+ 
+
+Refer to INFORMATION below:
+
+NOTE: Narrations are not required.
+
+ 
+
+### INFORMATION
+
+ 
+
+#### A Provisional totals
+
+ 				General Journal
+
+Debtors' Control\[Debit, Credit], Creditors' Control\[Debit, Credit]
+
+624, 316, 702, 454
+
+ 
+
+#### B Transactions on 31 December 2018
+
+ 
+
+##### 1
+
+A debtor, A. Pondor, who owes R1 200, was declared insolvent. His estate paid 30c in the rand.(This has been recorded in the books of the business.)
+
+The remainder must be written off as irrecoverable.
+
+ 
+
+##### 2
+
+The bank statement reflected a dishonoured cheque of R570 received from J. Klop in settlement of his account of R600.  This has been recorded.  The discount must still be cancelled.
+
+ 
+
+##### 3
+
+The owner, C. Devaan was unhappy with the stock he took home and returned the stock to the business, R170. No entry was recorded.
+
+ 
+
+##### 4
+
+Merchandise costing R640 was purchased and paid for by cheque and correctly recorded in the CPJ.  However, when posting the CPJ, it was incorrectly recorded as Consumable stores.
+
+ 
+
+##### 5
+
+Goods returned by M. Mawema (a debtor) as per credit note for R210 were incorrectly posted to the account of M. Mokwena (a debtor).
+
+ 
+
+##### 6
+
+An amount of R550 received from B. Smith (debtor) in settlement of her account, was incorrectly posted to the account of T. Smith, a creditor.
+
+### Answer:
+
+#### General Journal of DEVAAN STORES (Narrations are not required)
+
+Day, Details, Fol, Debit, Credit, Debtors’ control\[Debit, Credit], Creditors’ control\[Debit, Credit]
+
+31, Totals, b/d, , , 624, 316, 702, 454
+
+, Bad debts, N, 840, , , , ,
+
+, A. Pondor, DL, , 840, , 840, ,
+
+, J. Klop, DL, 30, , 30, , ,
+
+, Discount allowed, N, , 30, , , ,
+
+, Trading stock, B, 640, , , , ,
+
+, Consumable stores, N, , 640, , , ,
+
+, M. Mokwena, DL, 210, , 210, , ,
+
+, M. Mawema, DL, , 210, , 210, ,
+
+, T. Smith, CL, 550, , , , 550,
+
+, B. Smith, DL, , 550, , 550, ,
+
+, , , , , 864, 1 916, 1 252, 454
+
+1 Mark for debtors control totals, 1 Mark for Creditors control totals.
+
+## Q4 General Journal and control accounts
+
+The information provided was extracted from the accounting records of Skhonyane Traders on 30 June 2018. The business is owned by Mdu Ngobese. The business uses a mark up of 40% on cost.
+
+### Required:
+
+1.1	Journalise the transactions provided in the additional information H.
+
+1.2	Prepare the following accounts in the general ledger of Sikhonyane Traders. Balance the accounts on 30 June 2018
+
+### Balances
+
+Name of account, Balances on 1 June 2018
+
+Debtors' control, R35 270
+
+Creditors' control, R30 650
+
+Trading stock, R95 700
+
+### Information:
+
+#### A: Cash Receipts Journal
+
+Bank, Sales, Cost of Sales, Discount allowed, Debtors' control, Sundries
+
+ , 52 920, 37 800, 730, 21 710,
+
+#### B: Cash Payments Journal
+
+Bank, Trading Stock, Discount Received Creditors' control, Debtors' control, Sundries
+
+ , 31 950, 1 090, 25 670, 4 520,
+
+#### C: Debtors' Journal
+
+Sales, Cost of Sales
+
+35 980, 25 700
+
+#### D: Debtors' Allowances Journal
+
+Debtors' Allowances, Cost of Sales
+
+1 710, ?
+
+Note: An amount of R 1 400 for trading stock returned by customers is included in the Debtors Allowances amount of 1 710.
+
+#### E: Creditors' Journal
+
+Creditors' control, Trading Stock, Equipment, Stationery, Sundries
+
+83 720, 67 380, , ,
+
+#### F: Creditors' Allowance Journal
+
+Creditors control, Trading stock, Equipment, Stationery, Sundries
+
+7 120, 6 950, , ,
+
+#### G: General Journal
+
+Debtors' Control\[Dr, Cr], Creditors' Control\[Dr, Cr]
+
+960, 180, 150, 870
+
+#### H: Transactions on 30 June 2018:
+
+##### a
+
+A cheque drawn for R10 720 for Creditors for Wages was incorrectly posted to the Wages account. Correct the error.
+
+##### b
+
+Stock purchased for R1 200 was incorrectly recorded as stationery. Correct the error.
+
+##### c
+
+Accepted a  cash register valued at R5 270 from a Debtor, A. Broke, whose account was previously written off. He owed R6 000.
+
+##### d
+
+An allowance of R300 by a creditor, Sabatini Traders was wrongly posted to Selini Traders.
+
+##### e
+
+A credit note for R265 issued to R. Tan, a debtor, for goods returned by him was recorded in the Debtors Journal and posted accordingly.
+
+##### f
+
+Transfer a credit balance of R1 050 from the account of Pop Traders in the debtors' ledger to his account in the creditors ledger
+
+### Answer:
+
+#### General Journal of SKHONYANE TRADERS FOR JUNE 2018
+
+Doc, D, Details, Fol, Debit, Credit, Debtors’ control\[Debit, Credit], Creditors’ control\[Debit, Credit]
+
+ , 30, Provisional totals, , , , 960, 180, 150, 870
+
+ JV1, a, Creditors for wages, , 10 720, , , , ,
+
+ , , Wages, , , 10 720, , , ,
+
+ JV2, b, Trading stock, , 1 200, , , , ,
+
+ , , Stationery, , , 1 200, , , ,
+
+ JV3, c, Equipment, , 5 270, , , , ,
+
+ , , Bad Debts Recovered, , , 5 270, , , ,
+
+ JV4, d, Sabatini Traders, , 300, , , , 300,
+
+ , , Selini, , , 300, , , , 300
+
+ JV5, e, Debtors' Allowances, , 530, , , , ,
+
+ , , Debtors' control, , 530, , 530, , ,
+
+ JV6, f, Pop Traders, , 1 050, , 1 050, , ,
+
+ , , Pop Traders, , , 1 050, , , , 1 050
+
+ , , Totals, , , , 2 010, 710, 450, 2 220 
+
+(1 mark for the 2 Debtors control totals and 1 mark for the 2 creditors control totals)
+
+####  	GENERAL LEDGER OF SIKHONYANE TRADERS ON 30 JUNE 2018
+
+##### Dr. 					Debtors' control				Cr.
+
+ Jun, 1, Balance, b/d, 35 270, Jun, 30, Bank and discount, CRJ, 21 710
+
+ , 30, Sales, DJ, 35 980, , , Debtors' Allowances, DAJ, 1 710
+
+ , , , , , , , , ,
+
+ , , Bank, CPJ, 4 520, , , Journal credits, GJ, 710
+
+ , , Journal debits, GJ, 2 010, , , Balance, c/d, 53 650
+
+ , , , , 77 780, , , , , 77 780
+
+ Jul, 1, Balance, b/d, 53 650, , , , ,
+
+ , , , , , , , , ,
+
+ , , , , , , , , ,
+
+ , , , , , , , , ,
+
+##### Dr. 					Creditors' control				Cr.
+
+ Jun, 30, Total Allowances, CAJ, 7 120, Jun, 1, Balance, b/d, 30 650
+
+ , , Bank and discount, CPJ, 25 670, , 30, Total purchases, CJ, 83 720
+
+ , , Journal debits, GJ, 450, , , Journal credits, GJ, 2 220
+
+ , , , , , , , , ,
+
+ , , Balance, c/d, 83 350, , , , ,
+
+ , , , , 116 590, , , , , 116 590
+
+ , , , , , Jul, 1, Balance, b/d, 83 350
+
+ , , , , , , , , ,
+
+##### Dr. 					Trading stock				Cr.
+
+ Jun, 1, Balance, b/d, 95 700, 	Jun, 30, Cost of sales, CRJ, 37 800
+
+ , 30, Bank, CPJ, 31 950, , , Cost of sales, DJ, 25 700
+
+ , , Creditors control, CJ, 67 380, , , Creditors control, CAJ, 6 950
+
+ , , Cost of sales, DAJ, 1 000, , , Balance, c/d, 125 580
+
+ , , , , 196 030, , , , , 196 030
+
+ Jul, 1, Balance, b/d, 125 580, , , , ,
+
+ 
+
+## Q5:  GENERAL JOURNAL
+
+                                                                                                       (56 marks;  34 minutes)
+
+ 
+
+The following information was taken from the books of Prowler Stationers.
+
+ 
+
+Take note of the following points when recording:
+
+* Indicate the origin of the transactions by means of folio references.
+* The business uses a mark-up of 100% on cost price.
+* Dates must be clearly stated.
+* Balance or total all General Ledger accounts.
+* Leave out narrations in the General Journal.
+
+ 
+
+ 
+
+### REQUIRED
+
+Record the following transactions given below in the General Journal on 31 July 2017. Provisional totals have been given.
+
+####  				General Journal
+
+Debtors' Control\[Dr, Cr], Creditors' Control\[Dr, Cr]
+
+350, 270, 120, 160
+
+### Transactions for 31 July 2017
+
+#### 1
+
+The owner took stock from the business for a personal gift, marked R400.
+
+ 
+
+#### 2
+
+C. Spender owed R200. Her insolvent estate paid 20c in the rand. This amount has been recorded. The remainder of her debt must still be written off.
+
+ 
+
+#### 3
+
+The dishonoured cheque of R140 was received from M. Baartman. This amount has been recorded.  Discount of R30 must still be cancelled.
+
+ 
+
+#### 4
+
+Stationery purchased from Walter Stationers, R390 was incorrectly recorded as Trading stock.
+
+ 
+
+#### 5
+
+A credit note issued to a debtor, M. Mthembu for R280 was incorrectly posted to the account of a creditor, Mthembu Suppliers.
+
+ 
+
+#### 6
+
+The owner gave a delivery vehicle worth R170 000 as capital contribution to the business.
+
+ 
+
+#### 7
+
+The roof has been repaired at a cost of R5 300.  The amount has been posted to the Land and buildings account in error.
+
+ 
+
+#### 8
+
+The fixed deposit of R100 000 matured.  Received a cheque of R120 000 from Angel Bank.  The accountant posted the full amount to the Fixed Deposit account.
+
+ 
+
+ 
+
+### Answer
+
+#### GENERAL JOURNAL OF PROWLER STATIONERS  (No narrations needed)
+
+Doc, D, Details, Fol, General Ledger\[Dr, Cr], Debtors’ control\[Dr, Cr], Creditors’ control\[Dr, Cr]
+
+, 31, Totals, , , , 350, 270, 120, 160
+
+, , Drawings, , 200, , , , ,
+
+, , Trading stock, , , 200, , , ,
+
+, , Bad debts, , 160, , , , ,
+
+, , C. Spender, , , 160, , 160, ,
+
+, , M. Baartman, , 30, , 30, , ,
+
+, , Discount allowed, , , 30, , , ,
+
+, , Stationery, , 390, , , , ,
+
+, , Trading stock, , , 390, , , ,
+
+, , Mthembu Suppliers, , 280, , , , 280,
+
+, , M. Mthembu, , , 280, , 280, ,
+
+, , Vehicles, , 170 000, , , , ,
+
+, , Capital, , , 170 000, , , ,
+
+, , Repairs, , 5 300, , , , ,
+
+, , Land and buildings, , , 5 300, , , ,
+
+, , Fixed deposit: Angel Bank, , 20 000, , , , ,
+
+, , Interest on Fixed Deposit, , , 20 000, , , ,
+
+, , , , , , 380, 710, 400, 160
+
+(1 mark for the 2 Debtors control totals and 1 mark for the 2 creditors control totals)
+
+ 
+
+## Q6: CONTROL ACCOUNTS  (80 marks; 50 minutes)
+
+ 
+
+The information provided was taken from the accounting records of Jalapeno Traders on 31 March 2017. The business uses a mark-up of 50% on cost.
+
+ 
+
+ 
+
+### Required:
+
+#### 2.1
+
+Record the transactions listed in INFORMATION in the General Journal. (35)
+
+ 
+
+#### 2.2
+
+Prepare the following accounts in the general ledger of Jalapeno Traders. Balance the accounts on 31 March 2017.
+
+#### Accounts, Balances on 1 March 2017
+
+Debtor's control, R85 200
+
+Creditors' control, R100 600
+
+Trading stock, R190 000
+
+### INFORMATION
+
+#### A: Cash Receipts Journal
+
+Bank, Sales,  Cost of Sales, Discount Allowed, Debtors’ Control (Receipts), Sundries
+
+?, 131 700, ?, 1 700, 110 000, ?
+
+#### B: Cash Payments Journal
+
+Bank, Trading Stock, Discount Received, Creditors’ Control, Debtors’ control, Sundries
+
+?, 80 050, 1 000, 155 600, 4 000, ?
+
+#### C: Debtors’ Journal
+
+Sales,  Cost of Sales
+
+135 900, 90 600
+
+#### D:  Debtors’ Allowances Journal
+
+Debtors’ Allowances, Cost of Sales
+
+1 710, ?
+
+#### E:    Creditors’ Journal
+
+Creditors’ control, Trading Stock, Equipment, Consumables, Sundries
+
+180 700, 160 300, , , ?
+
+#### F: Creditors’ Allowances Journal
+
+Creditors’ control, Trading Stock, Equipment,  Stationery, Sundries
+
+28 100, 16 900, ?, ?, ?
+
+#### G:	General Journal
+
+Debtors’ Control\[Dr, Cr], Creditors’ Control\[Dr, Cr]
+
+1 800, 970, 1 150, 70
+
+#### H Transactions on 31 March 2017:
+
+##### 1
+
+Stationery purchased for R1 200 was incorrectly recorded as Trading Stock. Correct the error.
+
+ 
+
+##### 2
+
+A credit note issued to J. Chan, a debtor, for goods returned by him for  R3 700 was recorded in the Debtors’ Journal. Correct the error.
+
+ 
+
+##### 3
+
+Received a cheque for R520 from a debtor, I. M. Broke, as a first and final dividend of 40 cents to the Rand. The money received was properly recorded in the Cash Journal. Write off the balance.
+
+##### 4
+
+Discount received from Mario Stores for R3 000 was incorrectly posted to the account of Marion Traders.
+
+##### 5
+
+Received R500 from G. Hope, a debtor whose account of R500 was previously written off. The entry was recorded in the Debtors’ Control in the CRJ and posted accordingly. Correct the error.
+
+##### 6
+
+Transfer a credit balance of R1 000 from the account of T Pule in the debtors’ ledger to his account in the creditors’ ledger.
+
+### Answer:
+
+#### GENERAL JOURNAL OF JALAPENO TRADERS  (No narrations needed)
+
+Doc, D, Details, Fol, Dr, Cr, Debtors’ control\[Dr, Cr], Creditors’ control\[Dr, Cr]
+
+, 31, Totals, , , , 1 800, 970, 1 150, 70
+
+, 1, Stationery, , 1 200, , , , ,
+
+, , Trading stock, , , 1 200, , , ,
+
+, 2, Debtors' allowances, , 7 400, , , , ,
+
+, , J Chan, , , 7 400, , 7 400, ,
+
+, 3, Bad debts, , 780, , , , ,
+
+, , I M Broke, , , 780, , 780, ,
+
+, 4, Mario Stones, , 3 000, , , , 3 000,
+
+, , Marion Traders, , , 3 000, , , , 3 000
+
+, 5, G Hope, , 500, , 500, , ,
+
+, , Bad debts recovered, , , 500, , , ,
+
+, 6, T Pule, , , 500, , , ,
+
+, , T Pule, , , 1 000, , , , 1 000
+
+, , , , , , 3 300, 9 150, 4 150, 4 070
+
+(1 mark for the 2 Debtors control totals and 1 mark for the 2 creditors control totals)
+
+####  			General Ledger of Jalapeno Traders
+
+##### Dr. 					Debtors' control				Cr.
+
+ Mar, 1, Balance, b/d, 85 200, Mar, 31, Bank, CRJ, 110 000
+
+ , 31, Bank, CPJ, 4 000, , , Discount allowed, CRJ, 1 700
+
+ , , Sales, DJ, 135 900, , , Debtors allowances, DAJ, 1 710
+
+ , , Journal Debits, GJ, 3 300, , , Journal Credits, GJ, 9 150
+
+ , , , , , , , Balance, c/d, 105 840
+
+ , , , , 228 400, , , , , 228 400
+
+ Apr, 1, Balance, b/d, 105 840, , , , ,
+
+ , , , , , , , , ,
+
+ , , , , , , , , ,
+
+##### Dr. 					Creditors' control				Cr.
+
+ Mar, 31, Bank, CPJ, 155 600, Mar, 1, Balance, b/d, 100 600
+
+ , , Discount Received, CPJ, 1 000, , 31, Total Purchase, CJ, 180 700
+
+ , , Total Allowances/ Returns, CAJ, 28 100, , , Journal Credits, GJ, 4 070
+
+ , , Journal Debits, GJ, 4 150, , , , ,
+
+ , , Balance, c/d, 96 520, , , , ,
+
+ , , , , 285 370, , , , , 285 370
+
+ , , , , , Apr, 1, Balance, b/d, 96 520
+
+##### Dr. 					Creditors' control				Cr.
+
+ Mar, 1, Balance, b/d, 190 000, Mar, 31, Cost of Sales, CRJ, 87 800
+
+ , 31, Bank, CPJ, 80 050, , , Cost of Sales, DJ, 90 600
+
+ , , Cost of sales, DAJ, 1 140, , , Creditors control, CAJ, 16 900
+
+ , , Creditors control, CJ, 160 300, , , Balance, c/d, 236 190
+
+ , , , , 431 490, , , , , 431 490
+
+ Apr, 1, Balance, b/d, 236 190, , , , ,
+
+ , , , , , , , , ,
+
+ , , , , , , , , ,
+
+ , , , , , , , , ,
+
+ , , , , , , , , ,
+
+## Q7 – GENERAL JOURNAL
+
+The information for December 2022 presented below is taken from the books of The Adventure Apparel
+
+### REQUIRED:
+
+Record the transactions in the General Journal for December 2022, and close off the journal properly.
+
+NOTE: Narrations are not required.                           (23 Marks)
+
+### INFORMATION:
+
+Transactions on 31 December 2022:
+
+* A debtor, C Stokes, who owes R2 400, was declared insolvent. His estate paid 40c in the rand. (This has been recorded in the books of the business.) The remainder must be written off as irrecoverable.
+* Transfer a debit balance of R280 in the account of M. Maxwell from the Debtors’ Ledger to his account in the Creditors’ Ledger. M. Maxwell is both a customer and supplier to The Adventure Apparel
+* The owner took trading stock at a cost price of R1 200. The transaction was not recorded yet.
+* The business received an amount for R35 000 from ABSA Bank via EFT for a fixed deposit that matured on 31 December 2022. Included in the amount is interest on fixed deposit of R3 000. The total amount of  R35 000 has been credited to the Fixed Deposit Account. Correct the error.
+* Goods returned by J Yates (a debtor) as per credit note for R280, was incorrectly posted to the account of J Young (a debtor).
+* Charged interest of 6% per annum for three months to the overdue account of K. Patton, he owes the business R6 800.
+
+ 
+
+Note Totals are already populated in the answer sheet
+
+### Answer:
+
+#### GENERAL JOURNAL OF THE ADVENTURE APPAREL CO – DECEMBER 2022
+
+D, Details, Fol, Dr, Cr, Debtors’ control\[Dr, Cr], Creditors’ control\[Dr, Cr]
+
+31, Totals, b/d, , , 825, 116, 268, 384
+
+, Bad Debts, , 1 440, , , , ,
+
+, C Stokes, , , 1 440, , 1 440, ,
+
+, M Maxwell (Creditor), , 280, , , , 280,
+
+, M Maxwell (debtor), , , 280, , 280, ,
+
+, Drawings, , 1 200, , , , ,
+
+, Trading stock, , , 1 200, , , ,
+
+, Fixed Deposit: ABSA, , 3 000, , , , ,
+
+, Interest on fixed deposit, , , 3 000, , , ,
+
+, J Young, , 280, , 280, , ,
+
+, J Yales, , , 280, , 280, ,
+
+, K Patton, , 102, , 102, , ,
+
+, Interest receivable, , , 102, , , ,
+
+, , , , , 1 207, 2 116, 548, 348
+
+(1 mark for the 2 Debtors control totals and 1 mark for the 2 creditors control totals)
+
+## Q8: Question General Journal
+
+The information provided was taken from the accounting records of Essack Traders on 30 April 2024. The business uses a mark-up of 100% on cost.
+
+### Required:
+
+Record the transactions listed below in the General Journal of Essack Traders on 30 April 2024.
+
+Note: Provisional totals are already included in the answer book.
+
+### INFORMATION:
+
+#### A
+
+The roof of the building has been repaired for R32 000. The amount was incorrectly recorded in the Land and Buildings account.
+
+#### B
+
+The owner contributed a brand new delivery vehicle costing R500 000 to the business.
+
+#### C
+
+F Patel owes Essack Traders R5 100. Her insolvent estate paid 20 cents for every rand owed. This has been recorded. Write off the remaining debt.
+
+#### D
+
+Charged the overdue account of M de Villiers with interest of 8% p.a. for three months. His current account balance is R4 000.
+
+#### E
+
+A credit note issued to a debtor H Lwazi for R280 was posted in error to the account of a creditor, Mlwazi Wholesalers.
+
+#### F
+
+A credit note issued to J Ndlovu, a debtor, for goods returned by him for R1 700 was recorded as an invoice in his account in the debtors ledger. Correct the error.
+
+### Answer:
+
+#### GENERAL JOURNAL OF ESSACK TRADERS ON 30 APRIL 2024
+
+D, Details, Fol, Debit, Credit, Debtors’ control\[Debit, Credit], Creditors’ control\[Debit, Credit]
+
+30, Totals, , , , 420, 230, 105, 90
+
+A, Repairs, , 32 000, , , , ,
+
+, Land and Buildings, , , 32 000, , , ,
+
+B, Vehicles, , 500 000, , , , ,
+
+, Capital, , , , 500 000, , ,
+
+C, Bad debts, , 4 080, , , , ,
+
+, F Patel, , , 4 080, , 4 080, ,
+
+D, M de Villiers, , 80, , 80, , ,
+
+, Interest on overdue account/ Interest income, , , 80, , , ,
+
+E, Mlwazi Wholesalers, , 280, , , , 280,
+
+, H Lwazi, , , 280, , 280, ,
+
+F, Debtors Allowances, , 3 400, , , , ,
+
+, J Ndlovu, , , 3 400, , 3 400, ,
+
+, , , , , 2 500, 7 990, 385, 90
+
+(1 mark for the 2 Debtors control totals and 1 mark for the 2 creditors control totals)
+
+## Q9: GENERAL JOURNAL AND LEDGER ACCOUNTS (30 marks; 23 minutes)
+
+ 
+
+The information provided was taken from the accounting records of Vicious Traders on 28 February 2023. The business uses a mark-up of 50% on cost.
+
+### REQUIRED:
+
+Record the transactions provided below in the General Journal. Narrations are not necessary.
+
+Provisional totals are already given in the journal.
+
+### Transactions for the month of February 2023:
+
+####  A.
+
+Charged L. Dlamini, a debtor, interest on overdue account at 10% p.a. His balance of R1 500 was two months overdue.
+
+####  B.
+
+Abuilding was repaired for R6 500, the amount was incorrectly posted to the Land and Buildings account.
+
+####  C.
+
+Discount of R600 received from Marie Traders was recorded in the account of a creditor, Mario Brothers in error. Correct the error.
+
+####  D.
+
+A credit note was issued to J.P. Morgan, a debtor, for goods returned by him for R8 600.This entry was omitted from the records.
+
+####  E.
+
+Received R900 from G. Hansen, a debtor whose account was previously written off. The entry was recorded in the Debtors’ Control in the CRJ and posted accordingly. Correct the error.
+
+####  F.
+
+Received an EFT for R2 520 from a debtor, A.B. Villiers, which is a dividend of 40 cents in every rand he owed the business. The money received was properly recorded in the Cash Receipts Journal. Write off the balance.
+
+####  G.
+
+Transfer a credit balance of R750 from the account of J. Michil in the Debtors’ ledger to his account in the Creditors’ Ledger.
+
+####  H.
+
+25% of the goods that were bought by the business for R18 000 were returned to Ray Suppliers, a creditor. The returned goods were incorrectly recorded in the Creditors’ Ledger of Ray Traders.
+
+### Answer:
+
+#### GENERAL JOURNAL OF VICIOUS TRADERS FOR FEBRUARY 2023
+
+No, D, Details, Dr, Cr, Debtors’ control\[Dr, Cr], Creditors’ control\[Dr, Cr]
+
+, 28, Totals, , , 3 800, 960, 1 050, 170
+
+A, , L Dlamini, 25, , 25, , ,
+
+, , Interest on overdue account, , 25, , , ,
+
+B, , Repairs, 6 500, , , , ,
+
+, , Land and Buildings, , 6 500, , , ,
+
+C, , Marie Traders, 600, , , , 600,
+
+, , Mario Brothers, , 600, , , , 600
+
+D, , Debtors' allowances, 8 600, , , , ,
+
+, , J P Morgan, , 8 600, , 8 600, ,
+
+E, , G Hansen, 900, , 900, , ,
+
+, , Bad debts recovered, , 900, , , ,
+
+F, , Bad debts, 3 780, , , , ,
+
+, , A B Villiers, , 3 780, , 3 780, ,
+
+G, , J Michil, 750, , 750, , ,
+
+, , J Michil, , 750, , , , 750
+
+H, , Ray Suppliers, 4 500, , , , 4 500,
+
+, , Ray Traders, , 4 500, , , , 4 500
+
+, , , , , 4 700, 13 340, 7 800, 6 920
+
+(1 mark for the 2 Debtors control totals and 1 mark for the 2 creditors control totals)
+
+## Q10 JOURNALS AND CONTROL ACCOUNTS
+
+The information presented below was drawn from  the books of Super Traders.
+
+### Required:
+
+Complete the general journal for April 2023. Narrations are not necessary.
+
+### Information for completing the General Journal for April 2023:
+
+Day; Transaction
+
+5; Dealer Co (a creditor) charged the overdue account of the business with 15 % p.a. interest for 4 months. The business owes R5 100 to Dealer Co.
+
+7;  Charge 10% p.a. interest on the outstanding account of debtor M Moleki . His account of R1 700 is outstanding for 6 months.
+
+9; The bookkeeper wrongly posted the vehicle repairs amount of R 7000 to the vehicle account in the general ledger. Correct the error.
+
+13; An invoice for 1 300 received from Tiny Tots Ltd. was incorrectly recorded in the Teens Ltd. account
+
+21; Cash purchase of consumables for R3 600, were mistakenly recorded in the Trading Stock column in the CPJ and posted to the Trading Stock account. Rectify the error.
+
+25; A debtor whose name is R Man was declared inslovent. Received 35 cents to the rand from his estate. His debt was R2 800. The balance must be written off as irrecoverable.
+
+29; A credit note of R900 given to Omega Ltd was posted to Game Ltd.
+
+29; The owner took goods for r150 for his personal use
+
+NB-This question does not have the provisional  general journal totals, but has totals for the following Journals: CRJ, CPJ, DJ, DAJ, CJ, CAJ and PCJ. Can the totals of the GJ be derived from these??
+
+### Answer:
+
+#### GENERAL JOURNAL: SUPER TRADERS APRIL 2023
+
+D, Details, General Ledger\[Dr, Cr], Debtors’ control\[Dr, Cr], Creditors’ control\[Dr, Cr]
+
+5, Interest expense, 255, , , , ,
+
+, Dealer Co, , 255, , , , 255
+
+7, M Moleki, 85, , 85, , ,
+
+, Interest income, , 85, , , ,
+
+9, Repairs, 7 000, , , , ,
+
+, Vehicles, , 7 000, , , ,
+
+13, Teens Ltd, 1 300, , , , 1 300,
+
+, Tiny tots Ltd, , 1 300, , , , 1 300
+
+21, Consumables, 3 600, , , , ,
+
+, Trading stock, , 3 600, , , ,
+
+25, Bad debts, 1 820, , , , ,
+
+, R. Man, , 1 820, , 1 820, ,
+
+29, Game Ltd, 900, , 900, , ,
+
+, Omega ltd, , 900, , 900, ,
+
+29, Drawings, 150, , , , ,
+
+, Trading stock, , 150, , , ,
+
+, , , , 985, 2 720, 1 300, 1 555
+
+(1 mark for the 2 Debtors control totals and 1 mark for the 2 creditors control totals)
+
+## Notes:
+
+* Please provide user with an 'i' button on each entry that requires calculations to get to, i.e not provided straight in the transactions list in the scaffold. When clicked it should show how the figure required is to be calculated. this applies to transactions like those where interest charged for debt or credit, irrecoverable debt etc
+* You should enable acceptance of initials and surname with or without a full stop, i.e B. Obama = B Obama. I suppose as with the names of businesses you should create a pool of names from which questions can draw and ensure they are not drawing the same name for a transaction meant for a different person
+* In the scaffold each entry should have a note for the reason its placed there.
+* Explain why General Journal is used to rectify errors in cash journals and ledgers.
+* I would love you to highlight certain terms like Credit note, beacuse it is an accounting document and it may be defined in another section of another grade. Such terms should have annotations like, 'see -name of subskill- in -topic- grade-subject where the term is found.
+* Tables that are in questions a rendered as csv in the docs. Have you been rendering such csvs as proper tables in question generation?
+

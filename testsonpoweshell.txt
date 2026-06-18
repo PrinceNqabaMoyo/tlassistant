@@ -1,0 +1,20 @@
+﻿PS C:\Users\princ> @"
+>> import CurriculumHelperContainer from './curriculum-helper/CurriculumHelperContainer';
+>>
+>> export default CurriculumHelperContainer;
+>> "@ | Set-Content -Encoding UTF8 .\src\components\curriculum\CurriculumHelper.jsx
+Set-Content : Could not find a part of the path 'C:\Users\princ\src\components\curriculum\CurriculumHelper.jsx'.
+At line:5 char:6
++ "@ | Set-Content -Encoding UTF8 .\src\components\curriculum\Curriculu ...
++      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (C:\Users\princ\...culumHelper.jsx:String) [Set-Content], DirectoryNotFo
+   undException
+    + FullyQualifiedErrorId : GetContentWriterDirectoryNotFoundError,Microsoft.PowerShell.Commands.SetContentCommand
+
+PS C:\Users\princ> @"
+>> import CurriculumHelperContainer from './curriculum-helper/CurriculumHelperContainer';
+>>
+>> export default CurriculumHelperContainer;
+>> "@ | Set-Content -Encoding UTF8 "C:\Users\princ\fundile-tlassistant-vite\src\components\curriculum\CurriculumHelper.jsx"
+PS C:\Users\princ>
+

@@ -1,0 +1,15 @@
+# Phase 1: Compare/Memo & TTC Loop (Sole Trader)
+
+## 1. Backend Modifications
+- `[x]` Update `sole_trader_generator.py` to calculate and return `derivation_map` by injecting a post-processor wrapper `generate_questions`. It successfully maps expected values to readable derivations.
+
+## 2. Frontend State & Controller Updates (Sole Trader)
+- `[x]` Inside `Grade10AccountingSoleTraderScaffold.jsx`: Implement `showCheckHighlights` and `showMemo` states.
+- `[x]` Inside `Grade10AccountingSoleTraderPractice.jsx`: Implement `showCheckHighlights` and `showMemo` states.
+- `[x]` In both scaffold & practice: Add `useEffect` to capture `T1` start time, and upon a correct check, capture `T2` and log the `time_to_completion` metrics.
+
+## 3. Renderer Architecture Upgrades
+*(Note: Discovered that Grade 10 Sole Trader uses isolated INLINE renderers, so we upgraded them directly rather than modifying the Grade 11 shared renderers)*
+- `[x]` **Scaffold Inline Renderer**: Paint wrong inputs red. In Memo mode, replace inputs with `correctMap` values, and add derivation tooltips.
+- `[x]` **Practice Inline Renderer**: Paint wrong inputs red. Render specific formula derivation on compare.
+- `[x]` **Simple Inline Components (MCQ/Typed/Calc)**: Support the `showCheckHighlights` flags, turn red/green appropriately.

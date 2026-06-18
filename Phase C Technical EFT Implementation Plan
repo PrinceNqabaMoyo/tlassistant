@@ -1,0 +1,56 @@
+# Phase C: Technical EFT Implementation Plan
+
+This document breaks down the specific technical steps to build the 2-step In-App EFT (Electronic Funds Transfer) Payment workflow we discussed.
+
+## Design Philosophy
+
+The system relies strictly on direct database interactions, bypassing email processors to eliminate friction. 
+*   **Students** will upload their POP directly to your secure Firebase Storage bucket.
+*   **Admins** will get a centralized dashboard to process them in 1-click. 
+
+### User Review Required
+
+> [!IMPORTANT]
+> Please review this technical roadmap. Check if the "Pending Payments" approach in the Admin view makes sense. In addition, I will create a sleek, dynamic modal for the student to upload the document safely. 
+> 
+> **Are you ready for me to execute this Phase C roadmap?**
+
+## Proposed Changes
+
+### 1. Firebase Backend Augmentation
+#### [MODIFY] `src/hooks/useAuthentication.js`
+- Import `getStorage` from `firebase/storage`.
+- Initialize Firebase Storage alongside Auth and Firestore.
+- Export `storage` from the hook so the new modal has access to it for storing PDFs/Images.
+
+### 2. The Student Upgrade Experience
+#### [NEW] `src/components/student/EftUploadModal.jsx`
+- Create a modern, high-quality modal dialog box.
+- Requirements: 
+  - Briefly displays your Bank Name, Account No, and Branch Code (I will leave placeholders for you to fill in).
+  - Explicitly tells the student to use `POP-{theirUID}` or their `email` as a reference.
+  - Features an `<input type="file" />` for PDFs and Images.
+  - Uses `uploadBytes` (Firebase Storage) to securely upload the file to a `/proofs_of_payment` bucket.
+  - Submits a document to a new Firestore collection called `pending_payments`, storing their ID, email, requested grade, timestamp, and a direct URL to the document.
+
+#### [MODIFY] `src/components/curriculum/CurriculumHelper.jsx`
+- Introduce state for `showUpgradeModal` (`useState(false)`).
+- When a student clicks on a **locked** `SelectionCard`, instead of doing nothing, it triggers `setShowUpgradeModal(true)`. 
+- Render the new `EftUploadModal` on top of the curriculum view.
+
+### 3. The Admin Approval Dashboard
+#### [MODIFY] `src/components/forms/AdminForms.jsx`
+- Create a new interactive sub-panel: **"EFT Approvals"**.
+- Queries all documents in the `pending_payments` collection where `status == 'pending'`.
+- Renders a clean table with:
+   - User Email
+   - Target Grade
+   - Link to standard POP uploaded file (opens in new tab)
+- Adds Action Buttons next to each row:
+   1. **Approve 1 Month**: Computes a date 31 days into the future, updates the specific user's `subscriptionExpiry` and `subscribedGrades` in Firestore, and updates the pending payment status to `approved`.
+   2. **Approve 12 Months**: Computes a date 365 days into the future, mirrors the above logic.
+   3. **Reject**: Marks the payment document as `rejected` (does NOT upgrade the user account).
+
+## Verification Plan
+1. **Student Side**: Ensure clicking a padlock opens the new modal seamlessly. Upload a dummy `.jpg` and verify it lands in your database correctly.
+2. **Admin Side**: Log into your Admin account, check the "EFT Approvals" panel, and click a button to test that it successfully modifies the user's `subscriptionExpiry` correctly.

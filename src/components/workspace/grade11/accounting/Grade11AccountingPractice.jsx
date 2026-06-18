@@ -1,0 +1,572 @@
+import React, { useEffect } from 'react';
+import VisualAidsPanel from '../../VisualAidsPanel';
+import {
+    buildEmptyBundleAnswer,
+    buildEmptyJournalAnswer,
+    buildEmptyWordbankAnswer,
+    getCorrectMap,
+    getExpectedByCellId,
+    isNumericExpected,
+    normalizeText,
+    toNumber
+} from './utils/accountingHelpers';
+
+import MCQRenderer from './renderers/MCQRenderer';
+import TypedRenderer from './renderers/TypedRenderer';
+import CalcRenderer from './renderers/CalcRenderer';
+import WordbankTableRenderer from './renderers/WordbankTableRenderer';
+import JournalRenderer from './renderers/JournalRenderer';
+import { useGrade11AccountingMarking } from './useGrade11AccountingMarking';
+
+
+const Grade11AccountingPractice = ({
+    currentIndex = 0, // Received from registry
+    onBack,
+    subskills,
+
+    g11AcctVisualAidsOpen,
+    setG11AcctVisualAidsOpen,
+
+    g11AcctPracticeDifficulty,
+    setG11AcctPracticeDifficulty,
+    g11AcctPracticeSubskill,
+    setG11AcctPracticeSubskill,
+    g11AcctPracticeSeed,
+    setG11AcctPracticeSeed,
+
+    fetchGrade11AccountingPractice,
+    g11AcctPracticeLoading,
+    g11AcctPracticeError,
+    g11AcctPracticeQuestions,
+
+    g11AcctPracticeAnswers,
+    setG11AcctPracticeAnswers,
+    g11AcctPracticeFeedback,
+    setG11AcctPracticeFeedback,
+
+    renderGrade11AccountingVisualAids,
+}) => {
+    const questions = Array.isArray(g11AcctPracticeQuestions) ? g11AcctPracticeQuestions : [];
+    const [memoOpenById, setMemoOpenById] = React.useState({});
+    const marking = useGrade11AccountingMarking();
+    const isMarkingMode = !marking.isPracticeMode;
+    const isMarkingSubmitted = marking.isMarkingSubmitted;
+    const registerAnswer = marking.registerAnswer;
+    const getFeedbackForQuestion = marking.getFeedbackForQuestion;
+
+    useEffect(() => {
+        if (!questions.length) return;
+
+        if (!Array.isArray(g11AcctPracticeAnswers) || g11AcctPracticeAnswers.length !== questions.length) {
+            setG11AcctPracticeAnswers(questions.map((q) => {
+                if (q.question_type === 'bundle') return buildEmptyBundleAnswer(q);
+                if (q.question_type === 'table_wordbank') return buildEmptyWordbankAnswer(q);
+                if (q.question_type === 'journal' || q.question_type === 'ledger') return buildEmptyJournalAnswer(q);
+                return '';
+            }));
+        }
+
+        if (!Array.isArray(g11AcctPracticeFeedback) || g11AcctPracticeFeedback.length !== questions.length) {
+            setG11AcctPracticeFeedback(questions.map((q) => {
+                if (q.question_type === 'bundle') {
+                    const parts = Array.isArray(q?.parts) ? q.parts : [];
+                    return parts.map(() => null);
+                }
+                return null;
+            }));
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [questions.length]);
+
+    const setAnswerAt = (idx, value) => {
+        const next = Array.isArray(g11AcctPracticeAnswers) ? g11AcctPracticeAnswers.slice() : [];
+        next[idx] = value;
+        setG11AcctPracticeAnswers(next);
+
+        if (!isMarkingMode) {
+            const fb = Array.isArray(g11AcctPracticeFeedback) ? g11AcctPracticeFeedback.slice() : [];
+            fb[idx] = null;
+            setG11AcctPracticeFeedback(fb);
+        }
+    };
+
+    const setFeedbackAt = (idx, value) => {
+        const next = Array.isArray(g11AcctPracticeFeedback) ? g11AcctPracticeFeedback.slice() : [];
+        next[idx] = value;
+        setG11AcctPracticeFeedback(next);
+    };
+
+    const setBundleAnswerAt = (qIdx, partIdx, value) => {
+        const next = Array.isArray(g11AcctPracticeAnswers) ? g11AcctPracticeAnswers.slice() : [];
+        const arr = Array.isArray(next[qIdx]) ? next[qIdx].slice() : [];
+        arr[partIdx] = value;
+        next[qIdx] = arr;
+        setG11AcctPracticeAnswers(next);
+
+        if (!isMarkingMode) {
+            const fb = Array.isArray(g11AcctPracticeFeedback) ? g11AcctPracticeFeedback.slice() : [];
+            const fbArr = Array.isArray(fb[qIdx]) ? fb[qIdx].slice() : [];
+            fbArr[partIdx] = null;
+            fb[qIdx] = fbArr;
+            setG11AcctPracticeFeedback(fb);
+        }
+    };
+
+    const setBundleFeedbackAt = (qIdx, partIdx, value) => {
+        const fb = Array.isArray(g11AcctPracticeFeedback) ? g11AcctPracticeFeedback.slice() : [];
+        const fbArr = Array.isArray(fb[qIdx]) ? fb[qIdx].slice() : [];
+        fbArr[partIdx] = value;
+        fb[qIdx] = fbArr;
+        setG11AcctPracticeFeedback(fb);
+    };
+
+    const checkOne = (idx) => {
+        const q = questions[idx];
+        if (!q) return;
+
+        const ans = Array.isArray(g11AcctPracticeAnswers) ? g11AcctPracticeAnswers[idx] : null;
+
+        if (q.question_type === 'bundle') {
+            setFeedbackAt(idx, { kind: 'info', message: 'Check each part below.' });
+            return;
+        }
+
+        if (q.question_type === 'mcq') {
+            const ok = String(ans) === String(q.correct_index);
+            setFeedbackAt(idx, ok
+                ? { kind: 'success', message: 'Correct.' }
+                : { kind: 'error', message: `Not quite. Correct answer: ${q.options?.[q.correct_index] || ''}` });
+            return;
+        }
+
+        if (q.question_type === 'typed') {
+            const user = normalizeText(ans);
+            setFeedbackAt(idx, user
+                ? { kind: 'info', message: 'Answer saved.' }
+                : { kind: 'error', message: 'Write an answer first.' });
+            return;
+        }
+
+        if (q.question_type === 'calc') {
+            const userN = toNumber(ans);
+            if (userN === null) {
+                setFeedbackAt(idx, { kind: 'error', message: 'Enter a number first.' });
+                return;
+            }
+            const correct = Number(q.correct_value);
+            const ok = Number.isFinite(correct) && Math.abs(userN - correct) <= 0.01;
+            setFeedbackAt(idx, ok
+                ? { kind: 'success', message: 'Correct.' }
+                : { kind: 'error', message: `Not quite. Correct answer: ${q.unit || ''}${correct.toFixed(2)}` });
+            return;
+        }
+
+        if (q.question_type === 'table_wordbank') {
+            const correctMap = getCorrectMap(q);
+            const a = (ans && typeof ans === 'object') ? ans : buildEmptyWordbankAnswer(q);
+            const selections = a?.selections && typeof a.selections === 'object' ? a.selections : {};
+
+            let total = 0;
+            let hit = 0;
+            Object.keys(correctMap).forEach((rowKey) => {
+                const expected = correctMap?.[rowKey]?.['2'];
+                if (expected === null || expected === undefined) return;
+                total += 1;
+                const got = selections?.[rowKey]?.['2'];
+                if (String(got) === String(expected)) hit += 1;
+            });
+
+            setFeedbackAt(idx, total > 0 && hit === total
+                ? { kind: 'success', message: 'Correct.' }
+                : { kind: 'error', message: `Not quite. You matched ${hit}/${total} correctly.` });
+            return;
+        }
+
+        if (q.question_type === 'journal' || q.question_type === 'ledger') {
+            const expectedMap = getExpectedByCellId(q);
+            const a = (ans && typeof ans === 'object') ? ans : buildEmptyJournalAnswer(q);
+            const cells = a?.cells && typeof a.cells === 'object' ? a.cells : {};
+            const keys = Object.keys(expectedMap);
+
+            let total = 0;
+            let hit = 0;
+            keys.forEach((cellId) => {
+                const expected = expectedMap[cellId];
+                if (expected === null || expected === undefined) return;
+                total += 1;
+                const got = cells[cellId];
+
+                if (Array.isArray(expected)) {
+                    const gotNorm = normalizeText(got);
+                    const ok = expected.some((x) => normalizeText(x) === gotNorm);
+                    if (ok) hit += 1;
+                    return;
+                }
+
+                if (isNumericExpected(expected)) {
+                    const gotN = toNumber(got);
+                    const expN = typeof expected === 'number' ? expected : toNumber(expected);
+                    if (gotN !== null && expN !== null && Math.abs(gotN - expN) <= 0.01) hit += 1;
+                    return;
+                }
+
+                if (normalizeText(got) === normalizeText(expected)) hit += 1;
+            });
+
+            setFeedbackAt(idx, total > 0 && hit === total
+                ? { kind: 'success', message: 'Correct.' }
+                : { kind: 'error', message: `Not quite. You got ${hit}/${total} correct.` });
+            return;
+        }
+
+        setFeedbackAt(idx, { kind: 'error', message: 'Unsupported question type.' });
+    };
+
+    const checkBundlePart = (qIdx, partIdx) => {
+        const bundle = questions[qIdx];
+        const part = bundle?.parts?.[partIdx];
+        if (!part) return;
+
+        const bundleAns = Array.isArray(g11AcctPracticeAnswers) ? g11AcctPracticeAnswers[qIdx] : null;
+        const ans = Array.isArray(bundleAns) ? bundleAns[partIdx] : null;
+
+        if (part.question_type === 'mcq') {
+            const ok = String(ans) === String(part.correct_index);
+            setBundleFeedbackAt(qIdx, partIdx, ok
+                ? { kind: 'success', message: 'Correct.' }
+                : { kind: 'error', message: `Not quite. Correct answer: ${part.options?.[part.correct_index] || ''}` });
+            return;
+        }
+
+        if (part.question_type === 'typed') {
+            const user = normalizeText(ans);
+            setBundleFeedbackAt(qIdx, partIdx, user
+                ? { kind: 'info', message: 'Answer saved.' }
+                : { kind: 'error', message: 'Write an answer first.' });
+            return;
+        }
+
+        if (part.question_type === 'calc') {
+            const userN = toNumber(ans);
+            if (userN === null) {
+                setBundleFeedbackAt(qIdx, partIdx, { kind: 'error', message: 'Enter a number first.' });
+                return;
+            }
+            const correct = Number(part.correct_value);
+            const ok = Number.isFinite(correct) && Math.abs(userN - correct) <= 0.01;
+            setBundleFeedbackAt(qIdx, partIdx, ok
+                ? { kind: 'success', message: 'Correct.' }
+                : { kind: 'error', message: `Not quite. Correct answer: ${part.unit || ''}${correct.toFixed(2)}` });
+            return;
+        }
+
+        if (part.question_type === 'table_wordbank') {
+            const correctMap = getCorrectMap(part);
+            const a = (ans && typeof ans === 'object') ? ans : buildEmptyWordbankAnswer(part);
+            const selections = a?.selections && typeof a.selections === 'object' ? a.selections : {};
+
+            let total = 0;
+            let hit = 0;
+            Object.keys(correctMap).forEach((rowKey) => {
+                const expected = correctMap?.[rowKey]?.['2'];
+                if (expected === null || expected === undefined) return;
+                total += 1;
+                const got = selections?.[rowKey]?.['2'];
+                if (String(got) === String(expected)) hit += 1;
+            });
+
+            setBundleFeedbackAt(qIdx, partIdx, total > 0 && hit === total
+                ? { kind: 'success', message: 'Correct.' }
+                : { kind: 'error', message: `Not quite. You matched ${hit}/${total} correctly.` });
+            return;
+        }
+
+        if (part.question_type === 'journal' || part.question_type === 'ledger') {
+            const expectedMap = getExpectedByCellId(part);
+            const a = (ans && typeof ans === 'object') ? ans : buildEmptyJournalAnswer(part);
+            const cells = a?.cells && typeof a.cells === 'object' ? a.cells : {};
+            const keys = Object.keys(expectedMap);
+
+            let total = 0;
+            let hit = 0;
+            keys.forEach((cellId) => {
+                const expected = expectedMap[cellId];
+                if (expected === null || expected === undefined) return;
+                total += 1;
+                const got = cells[cellId];
+
+                if (Array.isArray(expected)) {
+                    const gotNorm = normalizeText(got);
+                    const ok = expected.some((x) => normalizeText(x) === gotNorm);
+                    if (ok) hit += 1;
+                    return;
+                }
+
+                if (isNumericExpected(expected)) {
+                    const gotN = toNumber(got);
+                    const expN = typeof expected === 'number' ? expected : toNumber(expected);
+                    if (gotN !== null && expN !== null && Math.abs(gotN - expN) <= 0.01) hit += 1;
+                    return;
+                }
+
+                if (normalizeText(got) === normalizeText(expected)) hit += 1;
+            });
+
+            setBundleFeedbackAt(qIdx, partIdx, total > 0 && hit === total
+                ? { kind: 'success', message: 'Correct.' }
+                : { kind: 'error', message: `Not quite. You got ${hit}/${total} correct.` });
+            return;
+        }
+
+        setBundleFeedbackAt(qIdx, partIdx, { kind: 'error', message: 'Unsupported question type.' });
+    };
+
+    // Auto-save answers in marking mode
+    React.useEffect(() => {
+        if (!isMarkingMode || !questions[currentIndex]) return;
+        const q = questions[currentIndex];
+        const ans = Array.isArray(g11AcctPracticeAnswers) ? g11AcctPracticeAnswers[currentIndex] : null;
+        if (ans) {
+            registerAnswer(q.id, ans);
+        }
+    }, [isMarkingMode, questions, currentIndex, g11AcctPracticeAnswers, registerAnswer]);
+
+    return (
+        <div className="w-full">
+            {g11AcctPracticeLoading && (
+                <div className="text-sm text-slate-500">Loading questions...</div>
+            )}
+
+            {g11AcctPracticeError && (
+                <div className="p-3 bg-red-50 border border-red-200 text-red-800 rounded-lg text-sm mb-4 break-words">
+                    {g11AcctPracticeError}
+                </div>
+            )}
+
+            {marking.markingError && (
+                <div className="p-3 bg-red-50 border border-red-200 text-red-800 rounded-lg text-sm mb-4 break-words">
+                    {marking.markingError}
+                </div>
+            )}
+
+            {!g11AcctPracticeLoading && questions.length > 0 && (
+                <div className="flex items-center justify-between mb-4 mt-2">
+                    <h3 className="text-xl font-bold text-slate-800">Practice Mode</h3>
+                    <div className="flex items-center gap-3 bg-white px-4 py-2 rounded-xl border border-slate-200">
+                        <span className="text-sm font-semibold text-slate-700">Mode:</span>
+                        <button
+                            onClick={marking.toggleMarkingMode}
+                            disabled={marking.isSubmitting}
+                            className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2 ${!marking.isPracticeMode ? 'bg-indigo-600' : 'bg-slate-200'}`}
+                        >
+                            <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${!marking.isPracticeMode ? 'translate-x-6' : 'translate-x-1'}`} />
+                        </button>
+                        <span className="text-sm text-slate-600">
+                            {marking.isPracticeMode ? 'Practice' : 'Marking'}
+                        </span>
+                    </div>
+                </div>
+            )}
+
+            {!g11AcctPracticeLoading && questions.length === 0 && (
+                <div className="text-sm text-slate-500 mt-2">No questions loaded.</div>
+            )}
+
+            {!g11AcctPracticeLoading && questions.length > 0 && (
+                <div className="space-y-4">
+                    {(() => {
+                        const q = questions[currentIndex];
+                        if (!q) return null;
+
+                        const isBundle = q.question_type === 'bundle';
+                        const bundleParts = isBundle ? (Array.isArray(q.parts) ? q.parts : []) : [];
+
+                        if (isBundle) {
+                            return (
+                                <div className="space-y-6">
+                                    {bundleParts.map((part, pIdx) => {
+                                        const ans = (Array.isArray(g11AcctPracticeAnswers) && Array.isArray(g11AcctPracticeAnswers[currentIndex]))
+                                            ? g11AcctPracticeAnswers[currentIndex][pIdx]
+                                            : null;
+
+                                        let fb = null;
+                                        if (isMarkingSubmitted) {
+                                            if (pIdx === bundleParts.length - 1) {
+                                                fb = getFeedbackForQuestion(q.id);
+                                            }
+                                        } else if (!isMarkingMode) {
+                                            fb = (Array.isArray(g11AcctPracticeFeedback) && Array.isArray(g11AcctPracticeFeedback[currentIndex]))
+                                                ? g11AcctPracticeFeedback[currentIndex][pIdx]
+                                                : null;
+                                        }
+
+                                        return (
+                                            <div key={pIdx} className="p-4 border border-slate-200 rounded-xl bg-slate-50/50">
+                                                <div className="font-semibold text-slate-800 mb-2">Part {pIdx + 1}</div>
+                                                <div className="text-sm text-slate-700 mb-3">{part.prompt}</div>
+
+                                                <MCQRenderer
+                                                    question={part}
+                                                    answer={ans}
+                                                    setAnswer={(val) => setBundleAnswerAt(currentIndex, pIdx, val)}
+                                                    feedback={fb}
+                                                />
+                                                <TypedRenderer
+                                                    question={part}
+                                                    answer={ans}
+                                                    setAnswer={(val) => setBundleAnswerAt(currentIndex, pIdx, val)}
+                                                    feedback={fb}
+                                                />
+                                                <CalcRenderer
+                                                    question={part}
+                                                    answer={ans}
+                                                    setAnswer={(val) => setBundleAnswerAt(currentIndex, pIdx, val)}
+                                                    feedback={fb}
+                                                />
+                                                <WordbankTableRenderer
+                                                    question={part}
+                                                    answer={ans}
+                                                    setAnswer={(val) => setBundleAnswerAt(currentIndex, pIdx, val)}
+                                                    feedback={fb}
+                                                    showMemo={memoOpenById[part.id]}
+                                                />
+                                                <JournalRenderer
+                                                    question={part}
+                                                    answer={ans}
+                                                    setAnswer={(val) => setBundleAnswerAt(currentIndex, pIdx, val)}
+                                                    feedback={fb}
+                                                />
+
+                                                {!isMarkingMode && (
+                                                    <div className="mt-3 flex items-center gap-3">
+                                                        <button
+                                                            onClick={() => checkBundlePart(currentIndex, pIdx)}
+                                                            className="px-3 py-1.5 bg-emerald-600 text-white rounded-lg text-sm font-semibold hover:bg-emerald-700"
+                                                        >
+                                                            Check Part
+                                                        </button>
+                                                        {fb && (['typed', 'calc', 'journal', 'ledger'].includes(part.question_type) && (part.sample_answer || part.guidelines?.length > 0) || part.question_type === 'table_wordbank') && (
+                                                            <button
+                                                                onClick={() => setMemoOpenById(prev => ({ ...prev, [part.id]: !prev[part.id] }))}
+                                                                className={`px-3 py-1.5 rounded-lg text-sm font-semibold transition-all border ${memoOpenById[part.id] ? 'bg-indigo-50 border-indigo-200 text-indigo-700' : 'bg-white border-slate-200 hover:bg-slate-50 text-slate-800'}`}
+                                                            >
+                                                                {memoOpenById[part.id] ? 'Hide Memo' : 'Compare / Memo'}
+                                                            </button>
+                                                        )}
+                                                    </div>
+                                                )}
+                                                {memoOpenById[part.id] && ['typed', 'calc', 'journal', 'ledger'].includes(part.question_type) && (part.sample_answer || part.guidelines?.length > 0) && (
+                                                    <div className="mt-4 p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700">
+                                                        <div className="font-semibold text-slate-900 mb-2">Compare / Memo</div>
+                                                        <div className="whitespace-pre-wrap">
+                                                            {part.sample_answer || part.guidelines?.[0] || 'No sample answer provided.'}
+                                                        </div>
+                                                    </div>
+                                                )}
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                            );
+                        }
+
+                        // Single question
+                        const ans = Array.isArray(g11AcctPracticeAnswers) ? g11AcctPracticeAnswers[currentIndex] : null;
+
+                        let displayFeedback = null;
+                        if (isMarkingSubmitted) {
+                            displayFeedback = getFeedbackForQuestion(q.id);
+                        } else if (!isMarkingMode) {
+                            displayFeedback = Array.isArray(g11AcctPracticeFeedback) ? g11AcctPracticeFeedback[currentIndex] : null;
+                        }
+
+                        return (
+                            <div className="space-y-4">
+                                {isMarkingSubmitted && displayFeedback && (
+                                    <div className={`p-4 rounded-xl text-sm ${displayFeedback.kind === 'success' ? 'bg-emerald-50 text-emerald-800 border border-emerald-200' : 'bg-red-50 text-red-800 border border-red-200'}`}>
+                                        <div className="font-semibold mb-1">
+                                            {displayFeedback.kind === 'success' ? '✓ Correct' : '✗ Needs Review'}
+                                        </div>
+                                        <div>{displayFeedback.message}</div>
+                                    </div>
+                                )}
+                                <MCQRenderer
+                                    question={q}
+                                    answer={ans}
+                                    setAnswer={(val) => setAnswerAt(currentIndex, val)}
+                                    feedback={displayFeedback}
+                                />
+                                <TypedRenderer
+                                    question={q}
+                                    answer={ans}
+                                    setAnswer={(val) => setAnswerAt(currentIndex, val)}
+                                    feedback={displayFeedback}
+                                />
+                                <CalcRenderer
+                                    question={q}
+                                    answer={ans}
+                                    setAnswer={(val) => setAnswerAt(currentIndex, val)}
+                                    feedback={displayFeedback}
+                                />
+                                <WordbankTableRenderer
+                                    question={q}
+                                    answer={ans}
+                                    setAnswer={(val) => setAnswerAt(currentIndex, val)}
+                                    feedback={displayFeedback}
+                                    showMemo={memoOpenById[q.id]}
+                                />
+                                <JournalRenderer
+                                    question={q}
+                                    answer={ans}
+                                    setAnswer={(val) => setAnswerAt(currentIndex, val)}
+                                    feedback={displayFeedback}
+                                />
+
+                                {memoOpenById[q.id] && ['typed', 'calc', 'journal', 'ledger'].includes(q.question_type) && (q.sample_answer || q.guidelines?.length > 0) && (
+                                    <div className="mt-4 p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700">
+                                        <div className="font-semibold text-slate-900 mb-2">Compare / Memo</div>
+                                        <div className="whitespace-pre-wrap">
+                                            {q.sample_answer || q.guidelines?.[0] || 'No sample answer provided.'}
+                                        </div>
+                                    </div>
+                                )}
+                                <div className="mt-8 flex justify-end gap-3 pt-4 border-t border-slate-100">
+                                    {marking.isPracticeMode ? (
+                                        <>
+                                            {displayFeedback && (['typed', 'calc', 'journal', 'ledger'].includes(q.question_type) && (q.sample_answer || q.guidelines?.length > 0) || q.question_type === 'table_wordbank') && (
+                                                <button
+                                                    onClick={() => setMemoOpenById(prev => ({ ...prev, [q.id]: !prev[q.id] }))}
+                                                    className={`px-4 py-2 rounded-xl text-sm font-semibold transition-all border ${memoOpenById[q.id] ? 'bg-indigo-50 border-indigo-200 text-indigo-700' : 'bg-white border-slate-200 hover:bg-slate-50 text-slate-800'}`}
+                                                >
+                                                    {memoOpenById[q.id] ? 'Hide Memo' : 'Compare / Memo'}
+                                                </button>
+                                            )}
+                                            <button
+                                                onClick={() => checkOne(currentIndex)}
+                                                className="px-6 py-2 bg-indigo-50 text-indigo-700 rounded-xl font-semibold hover:bg-indigo-100 transition-colors"
+                                            >
+                                                Check Answer
+                                            </button>
+                                        </>
+                                    ) : (
+                                        !marking.isMarkingSubmitted && (
+                                            <button
+                                                onClick={() => marking.submitAssessment(questions)}
+                                                disabled={marking.isSubmitting}
+                                                className="px-6 py-2 bg-indigo-600 text-white rounded-xl font-semibold hover:bg-indigo-700 transition-colors disabled:opacity-50"
+                                            >
+                                                {marking.isSubmitting ? 'Submitting...' : 'Submit Assessment'}
+                                            </button>
+                                        )
+                                    )}
+                                </div>
+                            </div>
+                        );
+                    })()}
+                </div>
+            )}
+        </div>
+    );
+};
+
+export default Grade11AccountingPractice;

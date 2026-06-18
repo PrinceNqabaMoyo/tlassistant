@@ -1,0 +1,696 @@
+import React, { useState, useEffect, useRef, useMemo } from 'react';
+
+const App = () => {
+    const canvasRef = useRef(null);
+    const [shape, setShape] = useState('triangle');
+    const [params, setParams] = useState({
+        triangle: { sideA: 100, sideB: 100, angleC: 90 },
+        quadrilateral: { sideA: 100, sideB: 100, sideC: 100, sideD: 100, angleA: 90, angleB: 90, angleC: 90, angleD: 90 }
+    });
+    const [solveFor, setSolveFor] = useState('none');
+    const [userGuess, setUserGuess] = useState('');
+    const [feedback, setFeedback] = useState(null);
+    const [explanation, setExplanation] = useState('');
+    const [isGenerating, setIsGenerating] = useState(false);
+    const [isReadingAloud, setIsReadingAloud] = useState(false);
+    const [mode, setMode] = useState('manual'); // 'manual' or 'challenge'
+    const [correctAnswer, setCorrectAnswer] = useState('none');
+
+    const audioRef = useRef(null);
+
+    // API Endpoints
+    const API_KEY = "";
+    const TEXT_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${API_KEY}`;
+    const TTS_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-tts:generateContent?key=${API_KEY}`;
+
+    const shapeOptions = useMemo(() => ({
+        triangle: {
+            'Equilateral Triangle': { sideA: 150, sideB: 150, angleC: 60 },
+            'Isosceles Triangle': { sideA: 150, sideB: 150, angleC: 80 },
+            'Scalene Triangle': { sideA: 100, sideB: 150, angleC: 75 },
+            'Right-Angled Triangle': { sideA: 100, sideB: 100, angleC: 90 },
+        },
+        quadrilateral: {
+            'Square': { sideA: 150, sideB: 150, sideC: 150, sideD: 150, angleA: 90, angleB: 90, angleC: 90, angleD: 90 },
+            'Rectangle': { sideA: 180, sideB: 100, sideC: 180, sideD: 100, angleA: 90, angleB: 90, angleC: 90, angleD: 90 },
+            'Rhombus': { sideA: 150, sideB: 150, sideC: 150, sideD: 150, angleA: 70, angleB: 110, angleC: 70, angleD: 110 },
+            'Parallelogram': { sideA: 180, sideB: 100, sideC: 180, sideD: 100, angleA: 70, angleB: 110, angleC: 70, angleD: 110 },
+            'Kite': { sideA: 100, sideB: 150, sideC: 150, sideD: 100, angleA: 90, angleB: 110, angleC: 90, angleD: 70 },
+            'Trapezium': { sideA: 100, sideB: 150, sideC: 120, sideD: 80, angleA: 90, angleB: 90, angleC: 110, angleD: 70 },
+        },
+    }), []);
+
+    const currentParams = params[shape];
+
+    const computedValues = useMemo(() => {
+        const precision = 0.1; // Tolerance for floating point comparisons
+        const checkApproxEqual = (a, b) => Math.abs(a - b) < precision;
+
+        if (shape === 'triangle') {
+            const angleC_rad = currentParams.angleC * Math.PI / 180;
+            const c = Math.sqrt(currentParams.sideA**2 + currentParams.sideB**2 - 2 * currentParams.sideA * currentParams.sideB * Math.cos(angleC_rad));
+
+            let angleA = 0, angleB = 0;
+            if (c > precision) {
+                angleA = Math.acos((currentParams.sideB**2 + c**2 - currentParams.sideA**2) / (2 * currentParams.sideB * c));
+                angleB = Math.acos((currentParams.sideA**2 + c**2 - currentParams.sideB**2) / (2 * currentParams.sideA * c));
+            }
+
+            const area = 0.5 * currentParams.sideA * currentParams.sideB * Math.sin(angleC_rad);
+            const perimeter = currentParams.sideA + currentParams.sideB + c;
+
+            // Determine triangle type based on rules
+            let triangleType = 'Scalene';
+            const sides = [currentParams.sideA, currentParams.sideB, c].sort((a, b) => a - b);
+            const angles = [angleA * 180 / Math.PI, angleB * 180 / Math.PI, currentParams.angleC].sort((a, b) => a - b);
+
+            if (checkApproxEqual(sides[0], sides[1]) && checkApproxEqual(sides[1], sides[2])) {
+                triangleType = 'Equilateral';
+            } else if (checkApproxEqual(sides[0], sides[1]) || checkApproxEqual(sides[1], sides[2])) {
+                triangleType = 'Isosceles';
+            }
+
+            if (Math.abs(angles.reduce((sum, angle) => sum + angle, 0) - 180) > precision * 10) {
+                triangleType = 'Impossible Triangle';
+            } else if (checkApproxEqual(angles[2], 90)) {
+                triangleType = 'Right-Angled ' + triangleType;
+            }
+
+            return {
+                sideC: c,
+                angleA: angles[0],
+                angleB: angles[1],
+                area: area,
+                perimeter: perimeter,
+                triangleType: triangleType,
+            };
+        }
+
+        if (shape === 'quadrilateral') {
+            const { sideA, sideB, sideC, sideD, angleA, angleB, angleC, angleD } = currentParams;
+
+            // Simplified checks based on properties
+            const allAnglesRight = checkApproxEqual(angleA, 90) && checkApproxEqual(angleB, 90) && checkApproxEqual(angleC, 90) && checkApproxEqual(angleD, 90);
+            const allSidesEqual = checkApproxEqual(sideA, sideB) && checkApproxEqual(sideB, sideC) && checkApproxEqual(sideC, sideD);
+            const oppositeSidesEqual = checkApproxEqual(sideA, sideC) && checkApproxEqual(sideB, sideD);
+            const adjacentSidesEqual = checkApproxEqual(sideA, sideB) && checkApproxEqual(sideC, sideD);
+            const twoPairsParallel = checkApproxEqual(angleA, angleC) && checkApproxEqual(angleB, angleD) && checkApproxEqual(angleA + angleB, 180);
+            const onePairParallel = (checkApproxEqual(angleA + angleB, 180) && checkApproxEqual(angleC + angleD, 180)) ||
+                                     (checkApproxEqual(angleA + angleD, 180) && checkApproxEqual(angleB + angleC, 180));
+
+            let type = 'Irregular Quadrilateral';
+            let properties = [];
+
+            // Classification Rules
+            if (allSidesEqual && allAnglesRight) {
+                type = 'Square';
+                properties.push('All sides equal', 'All angles are 90°');
+            } else if (oppositeSidesEqual && allAnglesRight) {
+                type = 'Rectangle';
+                properties.push('Opposite sides equal', 'All angles are 90°');
+            } else if (allSidesEqual && twoPairsParallel) {
+                type = 'Rhombus';
+                properties.push('All sides equal', 'Opposite sides parallel');
+            } else if (oppositeSidesEqual && twoPairsParallel) {
+                type = 'Parallelogram';
+                properties.push('Opposite sides equal', 'Opposite sides parallel');
+            } else if (adjacentSidesEqual && !twoPairsParallel) {
+                type = 'Kite';
+                properties.push('Two pairs of adjacent sides equal');
+            } else if (onePairParallel) {
+                type = 'Trapezium';
+                properties.push('One pair of opposite sides parallel');
+            } else {
+                 properties.push('This is an irregular quadrilateral');
+            }
+
+            return {
+                quadrilateralType: type,
+                properties: properties,
+            };
+        }
+
+        return {};
+    }, [shape, currentParams]);
+
+    useEffect(() => {
+        const canvas = canvasRef.current;
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        ctx.strokeStyle = '#4b5563';
+        ctx.lineWidth = 2;
+        ctx.fillStyle = '#60a5fa';
+
+        const drawTriangle = () => {
+            const angleC_rad = currentParams.angleC * Math.PI / 180;
+            const sideC = computedValues.sideC;
+
+            const p1 = { x: 0, y: 0 };
+            const p2 = { x: currentParams.sideB, y: 0 };
+            const p3 = { x: currentParams.sideB * Math.cos(angleC_rad), y: currentParams.sideB * Math.sin(angleC_rad) };
+
+            const shapeVertices = [p1, p2, p3];
+
+            const minX = Math.min(...shapeVertices.map(p => p.x));
+            const minY = Math.min(...shapeVertices.map(p => p.y));
+            const maxX = Math.max(...shapeVertices.map(p => p.x));
+            const maxY = Math.max(...shapeVertices.map(p => p.y));
+
+            const width = maxX - minX;
+            const height = maxY - minY;
+            const scaleFactor = Math.min((canvas.width - 40) / width, (canvas.height - 40) / height) * 0.7;
+            const offsetX = (canvas.width / 2) - (width / 2) * scaleFactor - minX * scaleFactor;
+            const offsetY = (canvas.height / 2) - (height / 2) * scaleFactor - minY * scaleFactor;
+
+            const scaledVertices = shapeVertices.map(p => ({
+                x: p.x * scaleFactor + offsetX,
+                y: p.y * scaleFactor + offsetY
+            }));
+
+            ctx.beginPath();
+            ctx.moveTo(scaledVertices[0].x, scaledVertices[0].y);
+            scaledVertices.forEach(p => ctx.lineTo(p.x, p.y));
+            ctx.closePath();
+            ctx.stroke();
+            ctx.fill();
+
+            if (mode === 'manual') {
+                ctx.fillStyle = '#1f2937';
+                ctx.font = '14px Inter';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+
+                const midA = { x: (scaledVertices[0].x + scaledVertices[2].x) / 2, y: (scaledVertices[0].y + scaledVertices[2].y) / 2 };
+                ctx.fillText(`A: ${currentParams.sideA.toFixed(1)}`, midA.x, midA.y - 10);
+                const midB = { x: (scaledVertices[0].x + scaledVertices[1].x) / 2, y: (scaledVertices[0].y + scaledVertices[1].y) / 2 };
+                ctx.fillText(`B: ${currentParams.sideB.toFixed(1)}`, midB.x, midB.y + 10);
+                const midC = { x: (scaledVertices[1].x + scaledVertices[2].x) / 2, y: (scaledVertices[1].y + scaledVertices[2].y) / 2 };
+                ctx.fillText(`C: ${sideC.toFixed(1)}`, midC.x, midC.y + 10);
+
+                const angleA_deg = computedValues.angleA;
+                ctx.fillText(`A: ${angleA_deg.toFixed(1)}°`, scaledVertices[2].x, scaledVertices[2].y + 20);
+                const angleB_deg = computedValues.angleB;
+                ctx.fillText(`B: ${angleB_deg.toFixed(1)}°`, scaledVertices[1].x, scaledVertices[1].y + 20);
+                const angleC_deg = currentParams.angleC;
+                ctx.fillText(`C: ${angleC_deg.toFixed(1)}°`, scaledVertices[0].x, scaledVertices[0].y + 20);
+            }
+        };
+
+        const drawQuadrilateral = () => {
+            const { sideA, sideB, sideC, sideD, angleA, angleB, angleC, angleD } = currentParams;
+
+            const p1 = { x: 0, y: 0 };
+            const p2 = { x: sideA, y: 0 };
+            const p3 = {
+                x: sideA + sideB * Math.cos(Math.PI - angleB * Math.PI / 180),
+                y: sideB * Math.sin(Math.PI - angleB * Math.PI / 180)
+            };
+            const p4 = {
+                x: sideD * Math.cos(angleA * Math.PI / 180),
+                y: sideD * Math.sin(angleA * Math.PI / 180)
+            };
+
+            const shapeVertices = [p1, p2, p3, p4];
+            
+            const minX = Math.min(...shapeVertices.map(p => p.x));
+            const minY = Math.min(...shapeVertices.map(p => p.y));
+            const maxX = Math.max(...shapeVertices.map(p => p.x));
+            const maxY = Math.max(...shapeVertices.map(p => p.y));
+            
+            const width = maxX - minX;
+            const height = maxY - minY;
+            const scaleFactor = Math.min((canvas.width - 40) / width, (canvas.height - 40) / height) * 0.7;
+            const offsetX = (canvas.width / 2) - (width / 2) * scaleFactor - minX * scaleFactor;
+            const offsetY = (canvas.height / 2) - (height / 2) * scaleFactor - minY * scaleFactor;
+
+            const scaledVertices = shapeVertices.map(p => ({
+                x: p.x * scaleFactor + offsetX,
+                y: p.y * scaleFactor + offsetY
+            }));
+
+            ctx.beginPath();
+            ctx.moveTo(scaledVertices[0].x, scaledVertices[0].y);
+            scaledVertices.forEach(p => ctx.lineTo(p.x, p.y));
+            ctx.closePath();
+            ctx.stroke();
+            ctx.fill();
+
+            if (mode === 'manual') {
+                ctx.fillStyle = '#1f2937';
+                ctx.font = '14px Inter';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+
+                const sideLabelOffset = 10;
+                ctx.fillText(`A: ${sideA.toFixed(1)}`, (scaledVertices[0].x + scaledVertices[1].x) / 2, (scaledVertices[0].y + scaledVertices[1].y) / 2 - sideLabelOffset);
+                ctx.fillText(`B: ${sideB.toFixed(1)}`, (scaledVertices[1].x + scaledVertices[2].x) / 2 + sideLabelOffset, (scaledVertices[1].y + scaledVertices[2].y) / 2);
+                ctx.fillText(`C: ${sideC.toFixed(1)}`, (scaledVertices[2].x + scaledVertices[3].x) / 2, (scaledVertices[2].y + scaledVertices[3].y) / 2 + sideLabelOffset);
+                ctx.fillText(`D: ${sideD.toFixed(1)}`, (scaledVertices[3].x + scaledVertices[0].x) / 2 - sideLabelOffset, (scaledVertices[3].y + scaledVertices[0].y) / 2);
+            }
+        };
+        
+        if (shape === 'triangle') {
+            drawTriangle();
+        } else if (shape === 'quadrilateral') {
+            drawQuadrilateral();
+        }
+
+    }, [shape, params, computedValues, mode]);
+
+    const handleParamChange = (name, value) => {
+        setParams(prev => ({
+            ...prev,
+            [shape]: {
+                ...prev[shape],
+                [name]: parseFloat(value)
+            }
+        }));
+        setFeedback(null);
+        setMode('manual');
+    };
+
+    const handleSolveForChange = (e) => {
+        setSolveFor(e.target.value);
+        setUserGuess('');
+        setFeedback(null);
+    };
+
+    const handleGuessSubmit = () => {
+        const correctValue = computedValues[solveFor];
+        const guess = parseFloat(userGuess);
+        if (Math.abs(guess - correctValue) < 0.1) {
+            setFeedback({ type: 'success', message: 'Correct!' });
+        } else {
+            setFeedback({ type: 'error', message: `Incorrect. The correct value is ${correctValue.toFixed(2)}.` });
+        }
+    };
+
+    const generateRandomShape = () => {
+        const shapesToGenerate = shape === 'triangle' ? Object.keys(shapeOptions.triangle) : Object.keys(shapeOptions.quadrilateral);
+        const randomShapeName = shapesToGenerate[Math.floor(Math.random() * shapesToGenerate.length)];
+        const newParams = shapeOptions[shape][randomShapeName];
+        
+        setParams(prev => ({
+            ...prev,
+            [shape]: newParams
+        }));
+        
+        setCorrectAnswer(randomShapeName);
+        setMode('challenge');
+        setUserGuess('');
+        setFeedback(null);
+    };
+
+    const handleCheckGuess = () => {
+        if (userGuess === correctAnswer) {
+            setFeedback({ type: 'success', message: 'Correct! You got it.' });
+        } else {
+            setFeedback({ type: 'error', message: `Incorrect. The correct answer was a ${correctAnswer}.` });
+        }
+    };
+
+    // --- Gemini API Call Functions ---
+    const getExplanation = async () => {
+        setIsGenerating(true);
+        setExplanation('');
+
+        const shapeType = shape;
+        const currentParams = params[shape];
+        let prompt = `Provide a concise, educational explanation about a geometric shape. The shape is a ${shapeType}. `;
+
+        if (shapeType === 'triangle') {
+            prompt += `The sides are ${currentParams.sideA.toFixed(2)} and ${currentParams.sideB.toFixed(2)}, and the angle between them is ${currentParams.angleC.toFixed(2)} degrees. The type is ${computedValues.triangleType}.`;
+        } else if (shapeType === 'quadrilateral') {
+            prompt += `The sides are ${currentParams.sideA.toFixed(2)}, ${currentParams.sideB.toFixed(2)}, ${currentParams.sideC.toFixed(2)}, and ${currentParams.sideD.toFixed(2)}. The angles are ${currentParams.angleA.toFixed(2)}°, ${currentParams.angleB.toFixed(2)}°, ${current.angleC.toFixed(2)}°, and ${currentParams.angleD.toFixed(2)}°. The type is ${computedValues.quadrilateralType}.`;
+        }
+
+        prompt += ' Include its key properties, how its area is calculated (use LaTeX for the formula), and a simple real-world example. Use an engaging, tutor-like tone. Keep it under 100 words.';
+
+        const payload = {
+            contents: [{ parts: [{ text: prompt }] }],
+            systemInstruction: {
+                parts: [{ text: "You are a friendly, knowledgeable geometry tutor. Explain complex concepts simply and clearly." }]
+            }
+        };
+
+        try {
+            const response = await fetch(TEXT_API_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+            const result = await response.json();
+            const text = result?.candidates?.[0]?.content?.parts?.[0]?.text || "Error generating explanation.";
+            setExplanation(text);
+        } catch (error) {
+            setExplanation("Failed to get explanation. Please try again.");
+            console.error("Explanation API error:", error);
+        } finally {
+            setIsGenerating(false);
+        }
+    };
+
+    const readAloud = async () => {
+        if (!explanation) return;
+
+        setIsReadingAloud(true);
+        if (audioRef.current) {
+            audioRef.current.pause();
+            audioRef.current.src = "";
+        }
+
+        const payload = {
+            contents: [{
+                parts: [{ text: explanation }]
+            }],
+            generationConfig: {
+                responseModalities: ["AUDIO"],
+                speechConfig: {
+                    voiceConfig: {
+                        prebuiltVoiceConfig: { voiceName: "Charon" }
+                    }
+                }
+            }
+        };
+
+        try {
+            const response = await fetch(TTS_API_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+
+            const result = await response.json();
+            const part = result?.candidates?.[0]?.content?.parts?.[0];
+            const audioData = part?.inlineData?.data;
+            const mimeType = part?.inlineData?.mimeType;
+
+            if (audioData && mimeType && mimeType.startsWith("audio/")) {
+                const sampleRate = 16000;
+                const pcmData = base64ToArrayBuffer(audioData);
+                const pcm16 = new Int16Array(pcmData);
+                const wavBlob = pcmToWav(pcm16, sampleRate);
+                const audioUrl = URL.createObjectURL(wavBlob);
+                audioRef.current.src = audioUrl;
+                audioRef.current.play();
+            } else {
+                console.error("Failed to get audio from API.");
+            }
+        } catch (error) {
+            console.error("TTS API error:", error);
+        } finally {
+            setIsReadingAloud(false);
+        }
+    };
+
+    // Helper functions for TTS
+    const base64ToArrayBuffer = (base64) => {
+        const binaryString = window.atob(base64);
+        const len = binaryString.length;
+        const bytes = new Uint8Array(len);
+        for (let i = 0; i < len; i++) {
+            bytes[i] = binaryString.charCodeAt(i);
+        }
+        return bytes.buffer;
+    };
+
+    const pcmToWav = (pcm16, sampleRate) => {
+        const pcmData = pcm16.buffer;
+        const wavData = new ArrayBuffer(44 + pcmData.byteLength);
+        const view = new DataView(wavData);
+        const samples = new Int16Array(pcmData);
+
+        writeString(view, 0, 'RIFF');
+        view.setUint32(4, 36 + pcmData.byteLength, true);
+        writeString(view, 8, 'WAVE');
+        writeString(view, 12, 'fmt ');
+        view.setUint32(16, 16, true);
+        view.setUint16(20, 1, true);
+        view.setUint16(22, 1, true);
+        view.setUint32(24, sampleRate, true);
+        view.setUint32(28, sampleRate * 2, true);
+        view.setUint16(32, 2, true);
+        view.setUint16(34, 16, true);
+        writeString(view, 36, 'data');
+        view.setUint32(40, pcmData.byteLength, true);
+
+        let offset = 44;
+        for (let i = 0; i < samples.length; i++, offset += 2) {
+            view.setInt16(offset, samples[i], true);
+        }
+
+        return new Blob([view], { type: 'audio/wav' });
+    };
+
+    const writeString = (view, offset, string) => {
+        for (let i = 0; i < string.length; i++) {
+            view.setUint8(offset + i, string.charCodeAt(i));
+        }
+    };
+
+    const renderControls = () => {
+        const controlMapping = {
+            triangle: {
+                title: 'Triangle Parameters',
+                params: [
+                    { name: 'sideA', label: 'Side A', min: 10, max: 200, unit: '' },
+                    { name: 'sideB', label: 'Side B', min: 10, max: 200, unit: '' },
+                    { name: 'angleC', label: 'Angle C', min: 10, max: 170, unit: '°' },
+                ],
+                outputs: [
+                    { name: 'sideC', label: 'Side C', unit: '' },
+                    { name: 'angleA', label: 'Angle A', unit: '°' },
+                    { name: 'angleB', label: 'Angle B', unit: '°' },
+                    { name: 'perimeter', label: 'Perimeter', unit: '' },
+                    { name: 'area', label: 'Area', unit: '' }
+                ]
+            },
+            quadrilateral: {
+                title: 'Quadrilateral Properties',
+                params: [
+                    { name: 'sideA', label: 'Side A', min: 1, max: 200, unit: '' },
+                    { name: 'sideB', label: 'Side B', min: 1, max: 200, unit: '' },
+                    { name: 'sideC', label: 'Side C', min: 1, max: 200, unit: '' },
+                    { name: 'sideD', label: 'Side D', min: 1, max: 200, unit: '' },
+                    { name: 'angleA', label: 'Angle A', min: 1, max: 179, unit: '°' },
+                    { name: 'angleB', label: 'Angle B', min: 1, max: 179, unit: '°' },
+                    { name: 'angleC', label: 'Angle C', min: 1, max: 179, unit: '°' },
+                    { name: 'angleD', label: 'Angle D', min: 1, max: 179, unit: '°' },
+                ],
+                outputs: []
+            }
+        };
+
+        const currentShapeControls = controlMapping[shape];
+        const allParameters = [...currentShapeControls.params, ...currentShapeControls.outputs];
+
+        return (
+            <div className="space-y-4">
+                <div className="flex flex-col items-start space-y-2">
+                    <label className="block text-sm font-medium text-gray-700 w-full">Solve For:</label>
+                    <select
+                        value={solveFor}
+                        onChange={handleSolveForChange}
+                        className="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 transition duration-150 ease-in-out"
+                        disabled={shape === 'quadrilateral'}
+                    >
+                        <option value="none">None</option>
+                        {allParameters.map(p => (
+                            <option key={p.name} value={p.name}>{p.label}</option>
+                        ))}
+                    </select>
+                </div>
+
+                {currentShapeControls.params.map(p => (
+                    <div key={p.name} className={`flex flex-col items-start space-y-2 ${solveFor === p.name ? 'hidden' : ''}`}>
+                        <label htmlFor={p.name} className="block text-sm font-medium text-gray-700 w-full">{p.label}:</label>
+                        <input
+                            type="range"
+                            id={p.name}
+                            min={p.min}
+                            max={p.max}
+                            value={params[shape][p.name]}
+                            onChange={(e) => handleParamChange(p.name, e.target.value)}
+                            className="w-full"
+                        />
+                        <span className="text-sm text-gray-500">{params[shape][p.name]}{p.unit}</span>
+                    </div>
+                ))}
+
+                {solveFor !== 'none' && (
+                    <div className="mt-4 pt-4 border-t border-gray-200 space-y-2">
+                        <label htmlFor="userGuess" className="block text-sm font-medium text-gray-700 w-full">
+                            Your Guess for {allParameters.find(p => p.name === solveFor)?.label}:
+                        </label>
+                        <div className="flex items-center gap-2">
+                            <input
+                                type="number"
+                                id="userGuess"
+                                value={userGuess}
+                                onChange={(e) => setUserGuess(e.target.value)}
+                                className="flex-1 rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                            />
+                            <button
+                                onClick={handleGuessSubmit}
+                                className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg transition-colors duration-200 ease-in-out"
+                            >
+                                Submit
+                            </button>
+                        </div>
+                        {feedback && (
+                            <div className={`text-sm mt-2 font-semibold ${feedback.type === 'success' ? 'text-green-600' : 'text-red-600'}`}>
+                                {feedback.message}
+                            </div>
+                        )}
+                    </div>
+                )}
+            </div>
+        );
+    };
+
+    return (
+        <div className="bg-gray-100 p-8 flex flex-col items-center justify-center min-h-screen font-sans">
+            <div className="bg-white p-8 rounded-2xl shadow-xl max-w-4xl w-full flex flex-col md:flex-row gap-8">
+                {/* Control Panel */}
+                <div className="flex-1 space-y-6">
+                    <h1 className="text-3xl font-bold text-gray-800 text-center">Interactive Geometry Tool</h1>
+                    <p className="text-gray-500 text-center">Adjust parameters to explore shapes and their properties in real time.</p>
+
+                    {/* Shape Selector */}
+                    <div className="space-y-2">
+                        <label htmlFor="shapeSelect" className="block text-sm font-medium text-gray-700">Select Shape</label>
+                        <select
+                            id="shapeSelect"
+                            value={shape}
+                            onChange={(e) => {
+                                setShape(e.target.value);
+                                setSolveFor('none');
+                                setFeedback(null);
+                                setMode('manual');
+                            }}
+                            className="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 transition duration-150 ease-in-out"
+                        >
+                            <option value="triangle">Triangle</option>
+                            <option value="quadrilateral">Quadrilateral</option>
+                        </select>
+                    </div>
+
+                    {/* Interactive Mode */}
+                    <div className="mt-8 pt-4 border-t border-gray-200 space-y-4">
+                        <h2 className="text-lg font-semibold text-gray-800">Challenge Mode</h2>
+                        <button
+                            onClick={generateRandomShape}
+                            className="w-full bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded-lg transition-colors duration-200 ease-in-out"
+                        >
+                            Generate a Random Shape
+                        </button>
+                        
+                        <div className="pt-4 border-t border-gray-200 space-y-2">
+                            <p className="block text-sm font-medium text-gray-700 w-full">Guess the Shape Type:</p>
+                            <div className="flex items-center gap-2">
+                                <select
+                                    id="userGuessShape"
+                                    value={userGuess}
+                                    onChange={(e) => setUserGuess(e.target.value)}
+                                    className="flex-1 rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                                >
+                                    <option value="">-- Select your guess --</option>
+                                    {Object.keys(shapeOptions[shape]).map(type => (
+                                        <option key={type} value={type}>{type}</option>
+                                    ))}
+                                </select>
+                                <button
+                                    onClick={handleCheckGuess}
+                                    className="bg-purple-500 hover:bg-purple-600 text-white font-bold py-2 px-4 rounded-lg transition-colors duration-200 ease-in-out"
+                                >
+                                    Check My Guess
+                                </button>
+                            </div>
+                            {feedback && (
+                                <div className={`text-sm mt-2 font-semibold ${feedback.type === 'success' ? 'text-green-600' : 'text-red-600'}`}>
+                                    {feedback.message}
+                                </div>
+                            )}
+                        </div>
+                    </div>
+
+                    {/* Manual Mode */}
+                    <div className="mt-8 pt-4 border-t border-gray-200 space-y-4">
+                        <h2 className="text-lg font-semibold text-gray-800">Manual Mode</h2>
+                        {renderControls()}
+                    </div>
+
+                    {/* Calculated Properties */}
+                    <div className="mt-8 pt-4 border-t border-gray-200 space-y-2">
+                        <h2 className="text-lg font-semibold text-gray-800">Calculated Properties</h2>
+                        {shape === 'quadrilateral' ? (
+                            <div className="p-4 bg-gray-50 rounded-lg text-gray-700">
+                                <p className="font-bold text-gray-800 text-lg mb-2">Type: {computedValues.quadrilateralType}</p>
+                                <p className="font-semibold text-gray-800">Properties:</p>
+                                {computedValues.properties.length > 0 ? (
+                                    <ul className="list-disc list-inside space-y-1 mt-1">
+                                        {computedValues.properties.map((prop, index) => (
+                                            <li key={index} className="text-sm text-gray-700">{prop}</li>
+                                        ))}
+                                    </ul>
+                                ) : (
+                                    <p className="text-sm text-gray-500">None of the specified properties found.</p>
+                                )}
+                            </div>
+                        ) : (
+                            <>
+                                <div className="p-4 bg-gray-50 rounded-lg text-gray-700 font-mono">
+                                    Area: {computedValues?.area?.toFixed(2) || '---'}
+                                    <br />
+                                    Perimeter: {computedValues?.perimeter?.toFixed(2) || '---'}
+                                </div>
+                                {shape === 'triangle' && (
+                                    <div className="text-sm text-gray-500 space-y-1">
+                                        <p>Side C: {computedValues.sideC.toFixed(2)}</p>
+                                        <p>Angle A ($\theta_A$): {computedValues.angleA.toFixed(2)}°</p>
+                                        <p>Angle B ($\theta_B$): {computedValues.angleB.toFixed(2)}°</p>
+                                        <p className="font-bold text-gray-800">Type: {computedValues.triangleType}</p>
+                                    </div>
+                                )}
+                            </>
+                        )}
+                    </div>
+
+                    {/* Gemini API Features */}
+                    <div className="mt-8 pt-4 border-t border-gray-200 space-y-4">
+                        <h2 className="text-lg font-semibold text-gray-800">Learning Center</h2>
+                        <div className="flex gap-4">
+                            <button
+                                onClick={getExplanation}
+                                disabled={isGenerating}
+                                className={`w-full font-bold py-2 px-4 rounded-lg transition-colors duration-200 ease-in-out ${isGenerating ? 'bg-blue-300' : 'bg-blue-500 hover:bg-blue-600 text-white'}`}
+                            >
+                                {isGenerating ? 'Generating...' : 'Explain Shape ✨'}
+                            </button>
+                            <button
+                                onClick={readAloud}
+                                disabled={!explanation || isReadingAloud}
+                                className={`w-full font-bold py-2 px-4 rounded-lg transition-colors duration-200 ease-in-out ${!explanation || isReadingAloud ? 'bg-gray-300' : 'bg-gray-500 hover:bg-gray-600 text-white'}`}
+                            >
+                                {isReadingAloud ? 'Reading...' : 'Read Aloud 🔊'}
+                            </button>
+                        </div>
+                        <div id="explanationDisplay" className="p-4 bg-gray-50 rounded-lg text-gray-700 transition-opacity duration-300 ease-in-out">
+                            {explanation}
+                        </div>
+                        <audio ref={audioRef} />
+                    </div>
+                </div>
+
+                {/* Canvas Container */}
+                <div className="flex-1 flex items-center justify-center">
+                    <canvas ref={canvasRef} width="400" height="400" className="w-full h-auto"></canvas>
+                </div>
+            </div>
+        </div>
+    );
+};
+
+export default App;

@@ -1,0 +1,174 @@
+
+Content area
+toPiCs
+ConCePts and sKills
+some ClariFiCation notes or teaCHinG Guidelines
+duration (in hours)
+shape and space (Geometry)
+3.5
+Construction of geometric figures
+measuring angles
+  Accurately use a protractor to measure and classify angles:
+- < 90o (acute angles)
+- Right-angles
+- > 90o (obtuse angles)
+- Straight angles
+- > 180o (reflex angles)
+Constructions
+  Accurately construct geometric figures appropriately using compass, ruler and protractor, including:
+- angles, to one degree of accuracy
+- circles
+- parallel lines
+- perpendicular lines
+What is different to Grade 6?
+  measure angles with a protractor
+  Geometric constructions using a compass, ruler and protractor
+measuring angles
+  Learners have to be shown how to place the protractor on the arm of the angle
+to be measured.
+  Learners also have to learn how to read the size of angles on a protractor.
+Constructions
+  Constructions provide a useful context to explore or consolidate knowledge of angles and shapes.
+  Learners have to be shown how to use a compass to draw circles, although they
+might have done this in Grade 6.
+  Learners should be aware that the centre of the circle is at the fixed point of the compass and the radius of the circle is dependent on how wide the compass is opened up.
+  make sure learners understand that arcs are parts of the circles of a particular
+radius.
+  Initially, learners have to be given careful instructions about how to do the constructions of the various shapes
+  Once they are comfortable with the apparatus and can do the constructions,
+they can practise by drawing patterns, for example of circles or parallel lines.
+10 hours
+
+
+
+Content area
+toPiCs
+ConCePts and sKills
+some ClariFiCation notes or teaCHinG Guidelines
+duration (in hours)
+shape and space (Geometry)
+3.1
+Geometry of 2d shapes
+Classifying 2d shapes
+  Describe, sort, name and compare triangles according to their sides and angles, focusing on:
+- equilateral triangles
+- isosceles triangles
+- right-angled triangles
+  Describe, sort, name and compare quadrilaterals in terms of:
+- length of sides
+- parallel and perpendicular sides
+- size of angles (right-angles or not)
+
+
+  Describe and name parts of a circle
+What is different to Grade 6?
+  Distinguishing and naming triangles in terms of their sides and angles
+  Distinguishing quadrilaterals in terms of parallel and perpendicular sides
+  Distinguishing similar and congruent figures
+  Using known properties of shapes to solve geometric problems
+triangles
+  Learners should be able to distinguish between an equilateral triangle (all the sides are equal), an isosceles triangle (at least two equal sides) and a right- angled triangle (one right-angle).
+Quadrilaterals
+  Learners should be able to sort and group quadrilaterals in the following ways:
+- all sides equal (square and rhombus)
+- opposite sides equal (rectangle, parallelogram, square, rhombus)
+- at least one pair of adjacent sides equal (square, rhombus, kite)
+- all four angles right angles (square, rectangle)
+- perpendicular sides (square, rectangle)
+- two pairs of opposite sides parallel (rectangle, square, parallelogram)
+- only one pair of opposite sides parallel (trapezium)
+Circles
+  Parts of a circle learners should know:
+- radius
+- circumference
+- diameter
+- chord
+- segments
+- sectors
+10 hours
+
+Content area
+toPiCs
+ConCePts and sKills
+some ClariFiCation notes or teaCHinG Guidelines
+duration (in hours)
+shape and space (Geometry)
+3.1
+Geometry of 2d shapes
+similar and congruent 2d shapes
+  Recognize and describe similar and congruent figures by comparing:
+- shape
+- size
+
+solving problems
+  Solve simple geometric problems involving unknown sides and angles in triangles and quadrilaterals, using known properties.
+similarity and congruency
+  Similarity and congruency can be explored with any 2D figures.
+  Learners should recognize that two or more figures are congruent if they are equal in all respects i.e. angles and sides are equal.
+  Learners should recognize that two or more figures are similar if they have the same shape, but differ in size i.e. angles are the same, but sides are proportionally longer or shorter. Similar figures are further explored when doing enlargements and reductions. Refer to "Clarification Notes" under 3.4 Transformation Geometry.
+solving problems
+  At this stage learners can solve simple geometric problems to find unknown sides in equilateral and isosceles triangles, and unknown sides and angles in quadrilaterals.
+  Learners should give reasons for their solutions.
+examples
+a) If ?ABC is an equilateral triangle, and side AB is 3 cm, what is the length of BC? Here learners should answer: BC = 3 cm, because the sides of an equilateral triangle are equal.
+b) If ABCD is a kite, and AB = 2,5 cm and BC = 4,5 cm, what is the length of AD and DC? Learners should use the property for kites, that adjacent pairs of sides are equal, to find the unknown sides.
+
+
+3.3
+Geometry of straight lines
+Define:
+  Line segment
+  Ray
+  Straight line
+  Parallel lines
+  Perpendicular lines
+  Line segment is a set of points with a definite starting-point and an end-point.
+  Ray is a set of points with a definite starting-point and no definite end-point.
+  Line is a set of points with no definite starting-point and end-point.
+  If two lines on the same plane are a constant distance apart, then the lines are
+parallel. Use common maths notation
+  If vertical line AO meets or intersects with horizontal line BC at right angle, then AO is perpendicular to BC.
+Use common maths notation
+2 hours
+
+3D part
+ surface area and volume
+ • Use appropriate formulae to calculate 
+the surface area, volume and 
+capacity of: 
+ -cubes 
+ -rectangular prisms
+ • Describe the interrelationship 
+between surface area and volume of 
+the objects mentioned above
+ Calculations and solving problems
+ • Solve problems involving surface 
+area, volume and capacity
+ • Use and convert between appropriate 
+SI units, including:
+ -mm^2 ↔ cm^2
+ -cm^2 ↔ m^2
+ -mm^3 ↔ cm^3
+ -cm^3 ↔ m^3
+ • Use equivalence between units when 
+solving problems:
+ -1cm^3 ↔ 1 ml
+ -1 m^3 ↔ 1 k
+
+What is different to Grade 6?
+ • In Grade 6 learners did not have to use formulae to calculate surface area and 
+volume.
+ •	Formulae learners should know and use:
+ -the volume of a prism = the area of the base x the height
+ -the surface area of a prism = the sum of the area of all its faces
+ -the volume of a cube = l3
+ -the volume of a rectangular prism = l x b x h
+ •	For conversions, note: 
+ -if 1 cm = 10 cm then 1 cm3 = 1 000 mm^3 and 
+ -if 1 m = 10 cm then 1 m3 = 1 000 000 mm^3 or 1 000 000 or 106 cm^3.
+ -an object with a volume of 1 cm3  will displace exactly 1 ml of water; and 
+ -an object with a volume of 1 m3  will displace exactly 1 kl of water.
+ • Emphasize that the amount of space inside a prism is called its capacity; and 
+the amount of space occupied by a prism is called its volume.
+ • Investigate the nets of cubes and rectangular prisms in order to deduce 
+formulae for calculating their surface areas

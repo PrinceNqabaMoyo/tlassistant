@@ -1,0 +1,14 @@
+I have decided to :
+
+1\) Change from marking to simple evaluation in the standard package.
+
+* by making the project have 2 subscription packages, the cheaper package will be the standard- deterministic, which instead of marking will have a simple evaluation deterministically. I want to have a check button which when clicked turns all the incorrect values in an answer red and makes them clickable. When clicked a pop up overlay (not covering the whole screen) shows a step by step breakdown of how the value is obtained. This applies to string and numeric values in the tabular structures and any other answers requiring calculations. There should also be a compare button which becomes active after the user submits their answer and toggles between the answer the user inputted  and the full correct answer that the system has. So this new system will apply to both the Scaffold and Practice modes. Remember that the difference between the 2 modes is that in the scaffold every cell in a tabular structure and every line where calculations are expected has a hint for the necessary step and where strings are expected there is also a hint, while those hints are not present in the practice mode.
+* The 2nd package is the agentic- which will be able to mark semantically by linking to an llm which checks the user's answer against the deterministically generated answer. This will be implemented later. For now we focus on first completing the standard package features.
+* So far all the topics that have been implemented are 1st term topics in the grade 10 to 12 accounting. Now I want to implement second term topics for grade 10 to 12 accounting. I want you to put a sticker that says Term 1, on the topic selection cards of the topics that have been implemented end to end currently. You can easily identify the  accounting term 1 topics because the selection cards  are numbered. Then after that implement the second term topic and then put stickers on each  topic selection card which says Term 2. You will find the grade 10 Term 2 topics in "C:\\Users\\princ\\fundile-tlassistant-vite\\caps-ai-backend\\curriculum\_docs\\Accounting \_Gr10\\Term 2" and the term 2 topics for other grades are found in their respective folders.
+* Let me know if we need to undo what we had started in the previous implementation of marking system which i am now proposing we ditch. But i think the work we had done there can be co-opted for this new direction. What do you think
+* Update any existing step by step.md file or create a new one with a detail implementation plan.
+
+
+
+cd caps-ai-backend \&\& python -c "from app.utils.grade10\_accounting.term2.salaries\_wages\_generator import generate\_questions; print('Gr10 salaries OK'); from app.utils.grade10\_accounting.term2.final\_accounts\_generator import generate\_questions; print('Gr10 final\_accounts OK'); from app.utils.grade10\_accounting.term2.vat\_generator import generate\_questions; print('Gr10 vat OK')"
+

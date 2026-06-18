@@ -1,0 +1,72 @@
+# Implementation Plan: Compare/Memo Feedback Loop & Phase 2 Admin Tools
+
+This plan is reprioritized to immediately address the missing core functionality in the Standard Package: The Check/Compare flow with interactive memos, starting exclusively with Grade 10 Accounting.
+
+## User Review Required
+
+> [!WARNING]
+> **Backend Workload:** Grade 10 Accounting has several generator scripts (`sole_trader`, `internal_control`, `indigenous_bookkeeping`, etc.). Some of these scripts are over 2,000 lines long. Injecting "derivations" (the exact mathematical explanation of how a value was calculated) for *every single cell* is a very large manual process on the Python backend. Will you approve beginning with just one generator (e.g., `sole_trader_generator.py`) as a proof-of-concept before expanding to the rest?
+
+## Proposed Changes
+
+---
+
+### Phase A: Backend Derivations (Grade 10 Accounting)
+
+To populate the interactive memo hovers, your Python backend must start returning explanations for generated values.
+
+#### [MODIFY] `caps-ai-backend/app/utils/grade10_accounting/sole_trader_generator.py` (and others)
+- Currently, the script builds a `correct_map` mapping cell IDs like `t0_r1_c2` to answers like `"12500"`.
+- We will add parallel logic to build a `derivation_map`.
+- Example: `derivation_map["t0_r1_c2"] = "Calculated as: Sales (10000) * 1.25 Markup."`
+- The generator payload will return this new `derivation_map` to the React frontend.
+
+---
+
+### Phase B: Frontend Scaffold/Practice State & TTC Tracking
+
+We will update the wrapper components that house the Check buttons to support the new states.
+
+#### [MODIFY] `src/components/workspace/grade10/accounting/.../Grade10AccountingScaffold.jsx` & `Practice.jsx`
+- **Time-to-Completion (TTC) Implementation:** We will implement a `startTime` ref captured exactly when the component mounts (or when a question is first fetched). When the user clicks `Check Answer` and achieves a `Correct` state, we capture `endTime`, calculate the duration, and log it to Firestore as a `practice_attempt` metric.
+- **New State:** Introduce `showCheckHighlights` (boolean) and `showMemo` (boolean).
+- **Check Button Logic:** Clicking "Check Answer" sets `showCheckHighlights = true` instead of just printing a text banner. A new **"Compare"** button is conditionally rendered next to it.
+- **Compare Button Logic:** Clicking "Compare" sets `showMemo = true`.
+
+---
+
+### Phase C: Rendering the Memos & Highlights
+
+The shared UI components must visually respond to the new state flags.
+
+#### [MODIFY] `src/components/workspace/grade11/accounting/renderers/JournalRenderer.jsx` (and Calc/Wordbank renderers)
+- Pass in `showCheckHighlights`, `showMemo`, `correctMap`, and `derivationMap`.
+- **Validation (Red Highlights):** If `showCheckHighlights` is true, compare the user's input with `correctMap`. If incorrect, apply `bg-red-50 border-red-500` to the input field.
+- **Memo Rendering:** If `showMemo` is true, render a sleek UI element immediately beneath or adjacent to the incorrect input showing the expected value.
+- **Derivation Hovers:** The rendered expected value will be interactive. Hovering or clicking it will render a tooltip sourced from `derivationMap` explaining the math.
+
+---
+
+### Phase 2: Question Validation, Analytics, & Security
+
+(This was pushed to Phase 2 per user request).
+
+#### Question Validation Sandbox
+- A dedicated tool in `AdminForms.jsx` allowing the Superadmin to input Grade, Subskill, and `Seed`. 
+- Mounts the actual student scaffold component in the Admin view to verify the Python generator output 1:1.
+
+#### Analytics & Telemetry Dashboard
+- Expand `SystemAnalytics` in the Admin Dashboard.
+- Incorporate the new TTC data gathered from Phase B into "Average Time To Completion per Subskill".
+
+#### Role Locking & Security
+- Write strict `firestore.rules` preventing basic Student users from altering their `role` or `subscriptionExpiry` via the Firebase SDK.
+
+---
+
+## Verification Plan
+
+### Manual Verification
+1. **Backend Payload:** Test the generator locally via API to ensure `derivation_map` correctly populates with string explanations.
+2. **Visual Check:** Launch the dev server, navigate to Grade 10 Accounting -> Sole Trader. Enter a wrong answer. Click "Check". Verify the box turns red. Click "Compare". Verify the correct value appears, and hovering it explains the derivation.
+3. **TTC Telemetry:** Verify a document is written to Firestore recording the time passed between question generation and successful completion.

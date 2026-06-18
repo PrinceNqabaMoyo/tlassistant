@@ -1,0 +1,28 @@
+Term 2
+Functions
+1.	The concept of a function, where a certain quantity (output value) uniquely depends on another quantity (input value). Work with relationships between variables using tables, graphs, words and formulae. Convert flexibly between these representations.
+Note: that the graph defined by y=x should be known from Grade 9.
+
+2. Point by point plotting of basic graphs defined by y=x^2,y=1/x and y=b^x,b>0 and b≠1 to discover shape, domain (input values), range (output values), asymptotes, axes of symmetry, turning points and intercepts on the axes (where applicable).
+
+3. Investigate the effect of a and q on the graphs defined by y=a.f(x)+q, where f(x)=x,f(x)=x^2,f(x)=1/x​ and f(x)=b^x,b>0,b≠1.
+
+4. Point by point plotting of basic graphs defined by y=sinθ, y=cosθ and y=sinθ for θ∈[0∘;360∘].
+
+5. Study the effect of a and q on the graphs defined by:
+y=asinθ+q,y=acosθ+q and y=atanθ+q where a,q∈Q for θ∈[0∘;360∘].
+
+6. Sketch graphs, find the equations of given graphs and interpret graphs.
+
+Note: Sketching of the graphs must be based on the observation of number 3 and 5.
+
+
+Comments:
+A more formal definition of a function follows in Grade 12. At this level it is enough to investigate the way (unique) output values depend on how input values vary. The terms independent (input) and dependent (output) variables might be useful.
+After summaries have been compiled about basic features of prescribed graphs and the effects of parameters a and q have been investigated: a: a vertical stretch and/or a reflection about the x-axis) and q a vertical shift. The following examples might be appropriate:
+Remember that graphs in some practical applications may be either discrete or continuous.
+Examples:
+1.	Sketched below are graphs of f(x)=q + x/a​ and g(x)=nb^x + t.
+The horizontal asymptote of both graphs is the line y=1.
+Determine the values of a,b,n,q and t.
+Sketch the graph defined by y= −sinx + 1/2​ for x∈[0∘;360∘].

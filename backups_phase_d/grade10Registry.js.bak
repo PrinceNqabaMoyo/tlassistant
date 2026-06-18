@@ -1,0 +1,1044 @@
+import React, { useState } from 'react';
+import Grade10AlgebraicExpressionsScaffold from '../grade10/mathematics/algebraic-expressions/Grade10AlgebraicExpressionsScaffold';
+import Grade10AlgebraicExpressionsPractice from '../grade10/mathematics/algebraic-expressions/Grade10AlgebraicExpressionsPractice';
+import Grade10ExponentsScaffold from '../grade10/mathematics/exponents/Grade10ExponentsScaffold';
+import Grade10ExponentsPractice from '../grade10/mathematics/exponents/Grade10ExponentsPractice';
+import Grade10PatternsSequencesScaffold from '../grade10/mathematics/patterns-sequences/Grade10PatternsSequencesScaffold';
+import Grade10PatternsSequencesPractice from '../grade10/mathematics/patterns-sequences/Grade10PatternsSequencesPractice';
+import Grade10EquationsInequalitiesScaffold from '../grade10/mathematics/equations-inequalities/Grade10EquationsInequalitiesScaffold';
+import Grade10EquationsInequalitiesPractice from '../grade10/mathematics/equations-inequalities/Grade10EquationsInequalitiesPractice';
+import Grade10Trigonometry1Scaffold from '../grade10/mathematics/trigonometry-1/Grade10Trigonometry1Scaffold';
+import Grade10Trigonometry1Practice from '../grade10/mathematics/trigonometry-1/Grade10Trigonometry1Practice';
+import Grade10AccountingIndigenousScaffold from '../grade10/accounting/indigenous-bookkeeping/Grade10AccountingIndigenousScaffold';
+import Grade10AccountingIndigenousPractice from '../grade10/accounting/indigenous-bookkeeping/Grade10AccountingIndigenousPractice';
+import Grade10AccountingEthicsScaffold from '../grade10/accounting/ethics/Grade10AccountingEthicsScaffold';
+import Grade10AccountingEthicsPractice from '../grade10/accounting/ethics/Grade10AccountingEthicsPractice';
+import Grade10AccountingGAAPScaffold from '../grade10/accounting/gaap/Grade10AccountingGAAPScaffold';
+import Grade10AccountingGAAPPractice from '../grade10/accounting/gaap/Grade10AccountingGAAPPractice';
+import Grade10AccountingInternalControlScaffold from '../grade10/accounting/internal-control/Grade10AccountingInternalControlScaffold';
+import Grade10AccountingInternalControlPractice from '../grade10/accounting/internal-control/Grade10AccountingInternalControlPractice';
+import Grade10AccountingSoleTraderScaffold from '../grade10/accounting/sole-trader/Grade10AccountingSoleTraderScaffold';
+import Grade10AccountingSoleTraderPractice from '../grade10/accounting/sole-trader/Grade10AccountingSoleTraderPractice';
+
+import { useGrade10AlgebraicExpressionsController, AlgebraicExpressionsVisualAids as Grade10AlgebraicExpressionsVisualAids } from '../grade10/mathematics/algebraic-expressions';
+import { useGrade10ExponentsController, ExponentsVisualAids as Grade10ExponentsVisualAids } from '../grade10/mathematics/exponents';
+import { useGrade10PatternsSequencesController, PatternsSequencesVisualAids as Grade10PatternsSequencesVisualAids } from '../grade10/mathematics/patterns-sequences';
+import { useGrade10EquationsInequalitiesController, EquationsInequalitiesVisualAids as Grade10EquationsInequalitiesVisualAids } from '../grade10/mathematics/equations-inequalities';
+import { useGrade10Trigonometry1Controller, Trigonometry1VisualAids as Grade10Trigonometry1VisualAids } from '../grade10/mathematics/trigonometry-1';
+import { useGrade10IndigenousBookkeepingController, Grade10IndigenousBookkeepingVisualAids } from '../grade10/accounting/indigenous-bookkeeping';
+import { useGrade10EthicsController, Grade10EthicsVisualAids } from '../grade10/accounting/ethics';
+import { useGrade10AccountingGAAPController, Grade10AccountingGAAPVisualAids } from '../grade10/accounting/gaap';
+import { useGrade10InternalControlController, Grade10InternalControlVisualAids } from '../grade10/accounting/internal-control';
+import { useGrade10SoleTraderController, Grade10SoleTraderVisualAids } from '../grade10/accounting/sole-trader';
+
+import WorkspaceModeShell from '../shared/WorkspaceModeShell';
+import EvaluatedWorkspaceModeShell from '../shared/EvaluatedWorkspaceModeShell';
+
+const h = React.createElement;
+
+const Grade10AlgebraicExpressionsRoute = ({ workspaceMode, ctx }) => {
+    const controller = useGrade10AlgebraicExpressionsController({ workspaceMode, buildApiUrl: ctx.buildApiUrl });
+
+    const renderGrade10AlgExpVisualAids = () => h(Grade10AlgebraicExpressionsVisualAids, {
+        visualAidsTab: controller.visualAidsTab,
+        setVisualAidsTab: controller.setVisualAidsTab,
+        setVisualAidsOpen: controller.setVisualAidsOpen,
+    });
+
+    if (workspaceMode === 'grade10_algebraic_expressions_scaffold') {
+        return h(Grade10AlgebraicExpressionsScaffold, {
+            onBack: ctx.onBack,
+            scaffoldSteps: controller.scaffoldSteps,
+            g10AlgExpVisualAidsOpen: controller.visualAidsOpen,
+            setG10AlgExpVisualAidsOpen: controller.setVisualAidsOpen,
+            g10AlgExpScaffoldDifficulty: controller.scaffoldDifficulty,
+            setG10AlgExpScaffoldDifficulty: controller.setScaffoldDifficulty,
+            g10AlgExpScaffoldStepIndex: controller.scaffoldStepIndex,
+            setG10AlgExpScaffoldStepIndex: controller.setScaffoldStepIndex,
+            fetchGrade10AlgExpScaffoldQuestion: controller.fetchScaffoldQuestion,
+            g10AlgExpScaffoldLoading: controller.scaffoldLoading,
+            g10AlgExpScaffoldError: controller.scaffoldError,
+            g10AlgExpScaffoldQuestion: controller.scaffoldQuestion,
+            g10AlgExpScaffoldShowHint: controller.scaffoldShowHint,
+            setG10AlgExpScaffoldShowHint: controller.setScaffoldShowHint,
+            g10AlgExpScaffoldAnswer: controller.scaffoldAnswer,
+            setG10AlgExpScaffoldAnswer: controller.setScaffoldAnswer,
+            g10AlgExpScaffoldFeedback: controller.scaffoldFeedback,
+            setG10AlgExpScaffoldFeedback: controller.setScaffoldFeedback,
+            g10AlgExpScaffoldCheckpointIndex: controller.scaffoldCheckpointIndex,
+            setG10AlgExpScaffoldCheckpointIndex: controller.setScaffoldCheckpointIndex,
+            g10AlgExpScaffoldCheckpointAnswers: controller.scaffoldCheckpointAnswers,
+            setG10AlgExpScaffoldCheckpointAnswers: controller.setScaffoldCheckpointAnswers,
+            g10AlgExpScaffoldCheckpointFeedback: controller.scaffoldCheckpointFeedback,
+            setG10AlgExpScaffoldCheckpointFeedback: controller.setScaffoldCheckpointFeedback,
+            normalizeWholeNumberAnswer: ctx.normalizeWholeNumberAnswer,
+            normalizeTextAnswer: ctx.normalizeTextAnswer,
+            renderGrade10AlgExpVisualAids,
+        });
+    }
+
+    if (workspaceMode === 'grade10_algebraic_expressions_practice') {
+        return h(Grade10AlgebraicExpressionsPractice, {
+            onBack: ctx.onBack,
+            g10AlgExpVisualAidsOpen: controller.visualAidsOpen,
+            setG10AlgExpVisualAidsOpen: controller.setVisualAidsOpen,
+            g10AlgExpPracticeDifficulty: controller.practiceDifficulty,
+            setG10AlgExpPracticeDifficulty: controller.setPracticeDifficulty,
+            fetchGrade10AlgExpPractice: controller.fetchPractice,
+            g10AlgExpPracticeLoading: controller.practiceLoading,
+            g10AlgExpPracticeError: controller.practiceError,
+            g10AlgExpPracticeQuestions: controller.practiceQuestions,
+            g10AlgExpPracticeAnswers: controller.practiceAnswers,
+            setG10AlgExpPracticeAnswers: controller.setPracticeAnswers,
+            g10AlgExpPracticeFeedback: controller.practiceFeedback,
+            setG10AlgExpPracticeFeedback: controller.setPracticeFeedback,
+            normalizeWholeNumberAnswer: ctx.normalizeWholeNumberAnswer,
+            normalizeTextAnswer: ctx.normalizeTextAnswer,
+            renderGrade10AlgExpVisualAids,
+        });
+    }
+
+    return null;
+};
+
+const Grade10ExponentsRoute = ({ workspaceMode, ctx }) => {
+    const controller = useGrade10ExponentsController({ workspaceMode, buildApiUrl: ctx.buildApiUrl });
+
+    const renderGrade10ExpVisualAids = () => h(Grade10ExponentsVisualAids, {
+        visualAidsTab: controller.visualAidsTab,
+        setVisualAidsTab: controller.setVisualAidsTab,
+        setVisualAidsOpen: controller.setVisualAidsOpen,
+    });
+
+    if (workspaceMode === 'grade10_exponents_scaffold') {
+        return h(Grade10ExponentsScaffold, {
+            onBack: ctx.onBack,
+            scaffoldSteps: controller.scaffoldSteps,
+            g10ExpVisualAidsOpen: controller.visualAidsOpen,
+            setG10ExpVisualAidsOpen: controller.setVisualAidsOpen,
+            g10ExpScaffoldDifficulty: controller.scaffoldDifficulty,
+            setG10ExpScaffoldDifficulty: controller.setScaffoldDifficulty,
+            g10ExpScaffoldStepIndex: controller.scaffoldStepIndex,
+            setG10ExpScaffoldStepIndex: controller.setScaffoldStepIndex,
+            fetchGrade10ExpScaffoldQuestion: controller.fetchScaffoldQuestion,
+            g10ExpScaffoldLoading: controller.scaffoldLoading,
+            g10ExpScaffoldError: controller.scaffoldError,
+            g10ExpScaffoldQuestion: controller.scaffoldQuestion,
+            g10ExpScaffoldShowHint: controller.scaffoldShowHint,
+            setG10ExpScaffoldShowHint: controller.setScaffoldShowHint,
+            g10ExpScaffoldAnswer: controller.scaffoldAnswer,
+            setG10ExpScaffoldAnswer: controller.setScaffoldAnswer,
+            g10ExpScaffoldFeedback: controller.scaffoldFeedback,
+            setG10ExpScaffoldFeedback: controller.setScaffoldFeedback,
+            g10ExpScaffoldCheckpointIndex: controller.scaffoldCheckpointIndex,
+            setG10ExpScaffoldCheckpointIndex: controller.setScaffoldCheckpointIndex,
+            g10ExpScaffoldCheckpointAnswers: controller.scaffoldCheckpointAnswers,
+            setG10ExpScaffoldCheckpointAnswers: controller.setScaffoldCheckpointAnswers,
+            g10ExpScaffoldCheckpointFeedback: controller.scaffoldCheckpointFeedback,
+            setG10ExpScaffoldCheckpointFeedback: controller.setScaffoldCheckpointFeedback,
+            normalizeWholeNumberAnswer: ctx.normalizeWholeNumberAnswer,
+            normalizeTextAnswer: ctx.normalizeTextAnswer,
+            renderGrade10ExpVisualAids,
+        });
+    }
+
+    if (workspaceMode === 'grade10_exponents_practice') {
+        return h(Grade10ExponentsPractice, {
+            onBack: ctx.onBack,
+            g10ExpVisualAidsOpen: controller.visualAidsOpen,
+            setG10ExpVisualAidsOpen: controller.setVisualAidsOpen,
+            g10ExpPracticeDifficulty: controller.practiceDifficulty,
+            setG10ExpPracticeDifficulty: controller.setPracticeDifficulty,
+            fetchGrade10ExpPractice: controller.fetchPractice,
+            g10ExpPracticeLoading: controller.practiceLoading,
+            g10ExpPracticeError: controller.practiceError,
+            g10ExpPracticeQuestions: controller.practiceQuestions,
+            g10ExpPracticeAnswers: controller.practiceAnswers,
+            setG10ExpPracticeAnswers: controller.setPracticeAnswers,
+            g10ExpPracticeFeedback: controller.practiceFeedback,
+            setG10ExpPracticeFeedback: controller.setPracticeFeedback,
+            normalizeWholeNumberAnswer: ctx.normalizeWholeNumberAnswer,
+            normalizeTextAnswer: ctx.normalizeTextAnswer,
+            renderGrade10ExpVisualAids,
+        });
+    }
+
+    return null;
+};
+
+const Grade10PatternsSequencesRoute = ({ workspaceMode, ctx }) => {
+    const controller = useGrade10PatternsSequencesController({ workspaceMode, buildApiUrl: ctx.buildApiUrl });
+
+    const renderGrade10PatSeqVisualAids = () => h(Grade10PatternsSequencesVisualAids, {
+        visualAidsTab: controller.visualAidsTab,
+        setVisualAidsTab: controller.setVisualAidsTab,
+        setVisualAidsOpen: controller.setVisualAidsOpen,
+    });
+
+    if (workspaceMode === 'grade10_patterns_sequences_scaffold') {
+        return h(Grade10PatternsSequencesScaffold, {
+            onBack: ctx.onBack,
+            scaffoldSteps: controller.scaffoldSteps,
+            g10PatSeqVisualAidsOpen: controller.visualAidsOpen,
+            setG10PatSeqVisualAidsOpen: controller.setVisualAidsOpen,
+            g10PatSeqScaffoldDifficulty: controller.scaffoldDifficulty,
+            setG10PatSeqScaffoldDifficulty: controller.setScaffoldDifficulty,
+            g10PatSeqScaffoldStepIndex: controller.scaffoldStepIndex,
+            setG10PatSeqScaffoldStepIndex: controller.setScaffoldStepIndex,
+            fetchGrade10PatternsSequencesScaffoldQuestion: controller.fetchScaffoldQuestion,
+            g10PatSeqScaffoldLoading: controller.scaffoldLoading,
+            g10PatSeqScaffoldError: controller.scaffoldError,
+            g10PatSeqScaffoldQuestion: controller.scaffoldQuestion,
+            g10PatSeqScaffoldCheckpointIndex: controller.scaffoldCheckpointIndex,
+            setG10PatSeqScaffoldCheckpointIndex: controller.setScaffoldCheckpointIndex,
+            g10PatSeqScaffoldCheckpointAnswers: controller.scaffoldCheckpointAnswers,
+            setG10PatSeqScaffoldCheckpointAnswers: controller.setScaffoldCheckpointAnswers,
+            g10PatSeqScaffoldCheckpointFeedback: controller.scaffoldCheckpointFeedback,
+            setG10PatSeqScaffoldCheckpointFeedback: controller.setScaffoldCheckpointFeedback,
+            g10PatSeqScaffoldAnswer: controller.scaffoldAnswer,
+            setG10PatSeqScaffoldAnswer: controller.setG10PatSeqScaffoldAnswer,
+            g10PatSeqScaffoldFeedback: controller.scaffoldFeedback,
+            setG10PatSeqScaffoldFeedback: controller.setScaffoldFeedback,
+            g10PatSeqScaffoldShowHint: controller.scaffoldShowHint,
+            setG10PatSeqScaffoldShowHint: controller.setScaffoldShowHint,
+            renderGrade10PatternsSequencesVisualAids: renderGrade10PatSeqVisualAids,
+        });
+    }
+
+    if (workspaceMode === 'grade10_patterns_sequences_practice') {
+        return h(Grade10PatternsSequencesPractice, {
+            onBack: ctx.onBack,
+            g10PatSeqVisualAidsOpen: controller.visualAidsOpen,
+            setG10PatSeqVisualAidsOpen: controller.setVisualAidsOpen,
+            g10PatSeqPracticeDifficulty: controller.practiceDifficulty,
+            setG10PatSeqPracticeDifficulty: controller.setPracticeDifficulty,
+            fetchGrade10PatternsSequencesPractice: controller.fetchPractice,
+            g10PatSeqPracticeLoading: controller.practiceLoading,
+            g10PatSeqPracticeError: controller.practiceError,
+            g10PatSeqPracticeQuestions: controller.practiceQuestions,
+            g10PatSeqPracticeAnswers: controller.practiceAnswers,
+            setG10PatSeqPracticeAnswers: controller.setPracticeAnswers,
+            g10PatSeqPracticeFeedback: controller.practiceFeedback,
+            setG10PatSeqPracticeFeedback: controller.setPracticeFeedback,
+            renderGrade10PatternsSequencesVisualAids: renderGrade10PatSeqVisualAids,
+        });
+    }
+
+    return null;
+};
+
+const Grade10EquationsInequalitiesRoute = ({ workspaceMode, ctx }) => {
+    const controller = useGrade10EquationsInequalitiesController({ workspaceMode, buildApiUrl: ctx.buildApiUrl });
+
+    const renderGrade10EqIneqVisualAids = () => h(Grade10EquationsInequalitiesVisualAids);
+
+    if (workspaceMode === 'grade10_equations_inequalities_scaffold') {
+        return h(Grade10EquationsInequalitiesScaffold, {
+            onBack: ctx.onBack,
+            scaffoldSteps: controller.scaffoldSteps,
+            g10EqIneqVisualAidsOpen: controller.visualAidsOpen,
+            setG10EqIneqVisualAidsOpen: controller.setVisualAidsOpen,
+            g10EqIneqScaffoldDifficulty: controller.scaffoldDifficulty,
+            setG10EqIneqScaffoldDifficulty: controller.setScaffoldDifficulty,
+            g10EqIneqScaffoldStepIndex: controller.scaffoldStepIndex,
+            setG10EqIneqScaffoldStepIndex: controller.setScaffoldStepIndex,
+            fetchGrade10EqIneqScaffoldQuestion: controller.fetchScaffoldQuestion,
+            g10EqIneqScaffoldLoading: controller.scaffoldLoading,
+            g10EqIneqScaffoldError: controller.scaffoldError,
+            g10EqIneqScaffoldQuestion: controller.scaffoldQuestion,
+            g10EqIneqScaffoldCheckpointIndex: controller.scaffoldCheckpointIndex,
+            setG10EqIneqScaffoldCheckpointIndex: controller.setScaffoldCheckpointIndex,
+            g10EqIneqScaffoldCheckpointAnswers: controller.scaffoldCheckpointAnswers,
+            setG10EqIneqScaffoldCheckpointAnswers: controller.setScaffoldCheckpointAnswers,
+            g10EqIneqScaffoldCheckpointFeedback: controller.scaffoldCheckpointFeedback,
+            setG10EqIneqScaffoldCheckpointFeedback: controller.setScaffoldCheckpointFeedback,
+            g10EqIneqScaffoldAnswer: controller.scaffoldAnswer,
+            setG10EqIneqScaffoldAnswer: controller.setG10EqIneqScaffoldAnswer,
+            g10EqIneqScaffoldFeedback: controller.scaffoldFeedback,
+            setG10EqIneqScaffoldFeedback: controller.setScaffoldFeedback,
+            g10EqIneqScaffoldShowHint: controller.scaffoldShowHint,
+            setG10EqIneqScaffoldShowHint: controller.setScaffoldShowHint,
+            renderGrade10EqIneqVisualAids,
+        });
+    }
+
+    if (workspaceMode === 'grade10_equations_inequalities_practice') {
+        return h(Grade10EquationsInequalitiesPractice, {
+            onBack: ctx.onBack,
+            g10EqIneqVisualAidsOpen: controller.visualAidsOpen,
+            setG10EqIneqVisualAidsOpen: controller.setVisualAidsOpen,
+            g10EqIneqPracticeDifficulty: controller.practiceDifficulty,
+            setG10EqIneqPracticeDifficulty: controller.setPracticeDifficulty,
+            fetchGrade10EqIneqPractice: controller.fetchPractice,
+            g10EqIneqPracticeLoading: controller.practiceLoading,
+            g10EqIneqPracticeError: controller.practiceError,
+            g10EqIneqPracticeQuestions: controller.practiceQuestions,
+            g10EqIneqPracticeAnswers: controller.practiceAnswers,
+            setG10EqIneqPracticeAnswers: controller.setPracticeAnswers,
+            g10EqIneqPracticeFeedback: controller.practiceFeedback,
+            setG10EqIneqPracticeFeedback: controller.setPracticeFeedback,
+            renderGrade10EqIneqVisualAids,
+        });
+    }
+
+    return null;
+};
+
+const Grade10Trigonometry1Route = ({ workspaceMode, ctx }) => {
+    const controller = useGrade10Trigonometry1Controller({ workspaceMode, buildApiUrl: ctx.buildApiUrl });
+
+    const renderGrade10Trig1VisualAids = () => h(Grade10Trigonometry1VisualAids);
+
+    if (workspaceMode === 'grade10_trigonometry_1_scaffold') {
+        return h(Grade10Trigonometry1Scaffold, {
+            onBack: ctx.onBack,
+            scaffoldSteps: controller.scaffoldSteps,
+            g10Trig1VisualAidsOpen: controller.visualAidsOpen,
+            setG10Trig1VisualAidsOpen: controller.setVisualAidsOpen,
+            g10Trig1ScaffoldDifficulty: controller.scaffoldDifficulty,
+            setG10Trig1ScaffoldDifficulty: controller.setScaffoldDifficulty,
+            g10Trig1ScaffoldStepIndex: controller.scaffoldStepIndex,
+            setG10Trig1ScaffoldStepIndex: controller.setScaffoldStepIndex,
+            fetchGrade10Trig1ScaffoldQuestion: controller.fetchScaffoldQuestion,
+            g10Trig1ScaffoldLoading: controller.scaffoldLoading,
+            g10Trig1ScaffoldError: controller.scaffoldError,
+            g10Trig1ScaffoldQuestion: controller.scaffoldQuestion,
+            g10Trig1ScaffoldCheckpointIndex: controller.scaffoldCheckpointIndex,
+            setG10Trig1ScaffoldCheckpointIndex: controller.setScaffoldCheckpointIndex,
+            g10Trig1ScaffoldCheckpointAnswers: controller.scaffoldCheckpointAnswers,
+            setG10Trig1ScaffoldCheckpointAnswers: controller.setScaffoldCheckpointAnswers,
+            g10Trig1ScaffoldCheckpointFeedback: controller.scaffoldCheckpointFeedback,
+            setG10Trig1ScaffoldCheckpointFeedback: controller.setScaffoldCheckpointFeedback,
+            g10Trig1ScaffoldAnswer: controller.scaffoldAnswer,
+            setG10Trig1ScaffoldAnswer: controller.setG10Trig1ScaffoldAnswer,
+            g10Trig1ScaffoldFeedback: controller.scaffoldFeedback,
+            setG10Trig1ScaffoldFeedback: controller.setScaffoldFeedback,
+            g10Trig1ScaffoldShowHint: controller.scaffoldShowHint,
+            setG10Trig1ScaffoldShowHint: controller.setScaffoldShowHint,
+            renderGrade10Trig1VisualAids,
+        });
+    }
+
+    if (workspaceMode === 'grade10_trigonometry_1_practice') {
+        return h(Grade10Trigonometry1Practice, {
+            onBack: ctx.onBack,
+            g10Trig1VisualAidsOpen: controller.visualAidsOpen,
+            setG10Trig1VisualAidsOpen: controller.setVisualAidsOpen,
+            g10Trig1PracticeDifficulty: controller.practiceDifficulty,
+            setG10Trig1PracticeDifficulty: controller.setPracticeDifficulty,
+            fetchGrade10Trig1Practice: controller.fetchPractice,
+            g10Trig1PracticeLoading: controller.practiceLoading,
+            g10Trig1PracticeError: controller.practiceError,
+            g10Trig1PracticeQuestions: controller.practiceQuestions,
+            g10Trig1PracticeAnswers: controller.practiceAnswers,
+            setG10Trig1PracticeAnswers: controller.setPracticeAnswers,
+            g10Trig1PracticeFeedback: controller.practiceFeedback,
+            setG10Trig1PracticeFeedback: controller.setPracticeFeedback,
+            renderGrade10Trig1VisualAids,
+        });
+    }
+
+    return null;
+};
+
+const Grade10AccountingGAAPRoute = ({ workspaceMode, ctx }) => {
+    const controller = useGrade10AccountingGAAPController({ workspaceMode, buildApiUrl: ctx.buildApiUrl });
+
+    const renderGrade10AcctGAAPVisualAids = () => h(Grade10AccountingGAAPVisualAids, {
+        visualAidsTab: controller.visualAidsTab,
+        setVisualAidsTab: controller.setVisualAidsTab,
+        setVisualAidsOpen: controller.setVisualAidsOpen,
+    });
+
+    const commonShellProps = {
+        availableModes: ['scaffold', 'practice', 'marking'],
+        subskills: controller.scaffoldSteps,
+        difficulty: workspaceMode.endsWith('_scaffold') ? controller.scaffoldDifficulty : controller.practiceDifficulty,
+        setDifficulty: workspaceMode.endsWith('_scaffold') ? controller.setScaffoldDifficulty : controller.setPracticeDifficulty,
+        subskill: workspaceMode.endsWith('_scaffold') ? (controller.scaffoldSteps?.[controller.scaffoldStepIndex]?.key || 'intro') : 'mixed',
+        setSubskill: (nextKey) => {
+            if (workspaceMode.endsWith('_scaffold')) {
+                const idx = controller.scaffoldSteps.findIndex(s => s.key === nextKey);
+                if (idx >= 0) controller.setScaffoldStepIndex(idx);
+            }
+        },
+        onGenerate: (config) => {
+            if (workspaceMode.endsWith('_scaffold')) {
+                controller.fetchScaffoldQuestion({
+                    subskill: config.subskill,
+                    difficulty: config.difficulty,
+                });
+            } else {
+                controller.fetchPractice({
+                    difficulty: config.difficulty,
+                });
+            }
+        },
+    };
+
+    // Hooks must be called unconditionally (Rules of Hooks)
+    const [gaapIdx, setGaapIdx] = useState(0);
+    const handleGaapNext = () => {
+        const total = (controller.practiceQuestions || []).length;
+        if (gaapIdx + 1 < total) setGaapIdx(gaapIdx + 1);
+    };
+
+    if (workspaceMode === 'grade10_accounting_gaap_scaffold' || workspaceMode === 'grade10_accounting_gaap_marking') {
+        const sq = controller.scaffoldQuestion;
+        return h(EvaluatedWorkspaceModeShell, {
+            workspaceMode,
+            setWorkspaceMode: ctx.setWorkspaceMode,
+            onBack: ctx.onBack,
+            onNext: () => controller.fetchScaffoldQuestion({
+                subskill: controller.scaffoldSteps?.[controller.scaffoldStepIndex]?.key || 'intro',
+                difficulty: controller.scaffoldDifficulty,
+            }),
+            renderVisualAids: renderGrade10AcctGAAPVisualAids,
+            questionSlot: sq ? h('div', { className: 'space-y-1' }, h('h2', { className: 'text-base sm:text-lg font-semibold text-slate-800 leading-relaxed' }, sq.prompt || '')) : null,
+            selectedSubject: ctx.selectedSubject,
+            selectedGrade: ctx.selectedGrade,
+            topic: ctx.topic,
+            question: sq,
+            userAnswersCells: controller.scaffoldAnswer?.cells || {},
+            ...commonShellProps,
+        }, h(Grade10AccountingGAAPScaffold, {
+            isMarkingEnv: workspaceMode.endsWith('_marking'),
+            onBack: ctx.onBack,
+            scaffoldSteps: controller.scaffoldSteps,
+            g10AcctGAAPVisualAidsOpen: controller.visualAidsOpen,
+            setG10AcctGAAPVisualAidsOpen: controller.setVisualAidsOpen,
+            g10AcctGAAPScaffoldDifficulty: controller.scaffoldDifficulty,
+            setG10AcctGAAPScaffoldDifficulty: controller.setScaffoldDifficulty,
+            g10AcctGAAPScaffoldStepIndex: controller.scaffoldStepIndex,
+            setG10AcctGAAPScaffoldStepIndex: controller.setScaffoldStepIndex,
+            fetchGrade10AcctGAAPScaffoldQuestion: controller.fetchScaffoldQuestion,
+            g10AcctGAAPScaffoldLoading: controller.scaffoldLoading,
+            g10AcctGAAPScaffoldError: controller.scaffoldError,
+            g10AcctGAAPScaffoldQuestion: controller.scaffoldQuestion,
+            g10AcctGAAPScaffoldAnswer: controller.scaffoldAnswer,
+            setG10AcctGAAPScaffoldAnswer: controller.setG10AcctGAAPScaffoldAnswer,
+            g10AcctGAAPScaffoldFeedback: controller.scaffoldFeedback,
+            setG10AcctGAAPScaffoldFeedback: controller.setG10AcctGAAPScaffoldFeedback,
+            g10AcctGAAPScaffoldShowHint: controller.scaffoldShowHint,
+            setG10AcctGAAPScaffoldShowHint: controller.setG10AcctGAAPScaffoldShowHint,
+            renderGrade10AcctGAAPVisualAids,
+            hideConfig: true,
+        }));
+    }
+
+    if (workspaceMode === 'grade10_accounting_gaap_practice') {
+        const pqs = controller.practiceQuestions || [];
+        const curQ = pqs[gaapIdx];
+
+        return h(WorkspaceModeShell, {
+            workspaceMode,
+            setWorkspaceMode: ctx.setWorkspaceMode,
+            onBack: ctx.onBack,
+            onNext: handleGaapNext,
+            renderVisualAids: renderGrade10AcctGAAPVisualAids,
+            questionSlot: curQ ? h('div', { className: 'space-y-1' }, h('div', { className: 'text-sm text-slate-500' }, `Question ${gaapIdx + 1} of ${pqs.length}`), h('h2', { className: 'text-base sm:text-lg font-semibold text-slate-800 leading-relaxed' }, curQ.prompt || '')) : null,
+            selectedSubject: ctx.selectedSubject,
+            selectedGrade: ctx.selectedGrade,
+            topic: ctx.topic,
+            ...commonShellProps,
+        }, h(Grade10AccountingGAAPPractice, {
+            onBack: ctx.onBack,
+            g10AcctGAAPVisualAidsOpen: controller.visualAidsOpen,
+            setG10AcctGAAPVisualAidsOpen: controller.setVisualAidsOpen,
+            g10AcctGAAPPracticeDifficulty: controller.practiceDifficulty,
+            setG10AcctGAAPPracticeDifficulty: controller.setPracticeDifficulty,
+            fetchGrade10AcctGAAPPractice: controller.fetchPractice,
+            g10AcctGAAPPracticeLoading: controller.practiceLoading,
+            g10AcctGAAPPracticeError: controller.practiceError,
+            g10AcctGAAPPracticeQuestions: controller.practiceQuestions,
+            g10AcctGAAPPracticeAnswers: controller.practiceAnswers,
+            setG10AcctGAAPPracticeAnswers: controller.setPracticeAnswers,
+            g10AcctGAAPPracticeFeedback: controller.practiceFeedback,
+            setG10AcctGAAPPracticeFeedback: controller.setPracticeFeedback,
+            renderGrade10AcctGAAPVisualAids,
+            currentIndex: gaapIdx,
+            hideConfig: true,
+        }));
+    }
+
+    return null;
+};
+
+const Grade10AccountingEthicsRoute = ({ workspaceMode, ctx }) => {
+    const controller = useGrade10EthicsController({ workspaceMode, buildApiUrl: ctx.buildApiUrl });
+
+    const renderGrade10AcctEthicsVisualAids = () => h(Grade10EthicsVisualAids, {
+        visualAidsTab: controller.visualAidsTab,
+        setVisualAidsTab: controller.setVisualAidsTab,
+        setVisualAidsOpen: controller.setVisualAidsOpen,
+    });
+
+    const commonShellProps = {
+        availableModes: ['scaffold', 'practice', 'marking'],
+        subskills: controller.scaffoldSteps,
+        difficulty: workspaceMode.endsWith('_scaffold') ? controller.scaffoldDifficulty : controller.practiceDifficulty,
+        setDifficulty: workspaceMode.endsWith('_scaffold') ? controller.setScaffoldDifficulty : controller.setPracticeDifficulty,
+        subskill: workspaceMode.endsWith('_scaffold') ? (controller.scaffoldSteps?.[controller.scaffoldStepIndex]?.key || 'code_of_ethics') : 'mixed',
+        setSubskill: (nextKey) => {
+            if (workspaceMode.endsWith('_scaffold')) {
+                const idx = controller.scaffoldSteps.findIndex(s => s.key === nextKey);
+                if (idx >= 0) controller.setScaffoldStepIndex(idx);
+            }
+        },
+        onGenerate: (config) => {
+            if (workspaceMode.endsWith('_scaffold')) {
+                controller.fetchScaffoldQuestion({
+                    subskill: config.subskill,
+                    difficulty: config.difficulty,
+                });
+            } else {
+                controller.fetchPractice({
+                    difficulty: config.difficulty,
+                });
+            }
+        },
+    };
+
+    // Hooks must be called unconditionally (Rules of Hooks)
+    const [ethicsIdx, setEthicsIdx] = useState(0);
+    const handleEthicsNext = () => {
+        const total = (controller.practiceQuestions || []).length;
+        if (ethicsIdx + 1 < total) setEthicsIdx(ethicsIdx + 1);
+    };
+
+    if (workspaceMode === 'grade10_accounting_ethics_scaffold' || workspaceMode === 'grade10_accounting_ethics_marking') {
+        const sq = controller.scaffoldQuestion;
+        return h(EvaluatedWorkspaceModeShell, {
+            workspaceMode,
+            setWorkspaceMode: ctx.setWorkspaceMode,
+            onBack: ctx.onBack,
+            onNext: () => controller.fetchScaffoldQuestion({
+                subskill: controller.scaffoldSteps?.[controller.scaffoldStepIndex]?.key || 'code_of_ethics',
+                difficulty: controller.scaffoldDifficulty,
+            }),
+            renderVisualAids: renderGrade10AcctEthicsVisualAids,
+            questionSlot: sq ? h('div', { className: 'space-y-1' }, h('h2', { className: 'text-base sm:text-lg font-semibold text-slate-800 leading-relaxed' }, sq.prompt || '')) : null,
+            selectedSubject: ctx.selectedSubject,
+            selectedGrade: ctx.selectedGrade,
+            topic: ctx.topic,
+            question: sq,
+            userAnswersCells: controller.scaffoldAnswer?.cells || {},
+            ...commonShellProps,
+        }, h(Grade10AccountingEthicsScaffold, {
+            isMarkingEnv: workspaceMode.endsWith('_marking'),
+            onBack: ctx.onBack,
+            scaffoldSteps: controller.scaffoldSteps,
+            g10AcctEthicsVisualAidsOpen: controller.visualAidsOpen,
+            setG10AcctEthicsVisualAidsOpen: controller.setVisualAidsOpen,
+            g10AcctEthicsScaffoldDifficulty: controller.scaffoldDifficulty,
+            setG10AcctEthicsScaffoldDifficulty: controller.setScaffoldDifficulty,
+            g10AcctEthicsScaffoldStepIndex: controller.scaffoldStepIndex,
+            setG10AcctEthicsScaffoldStepIndex: controller.setG10AcctEthicsScaffoldStepIndex,
+            fetchGrade10AcctEthicsScaffoldQuestion: controller.fetchScaffoldQuestion,
+            g10AcctEthicsScaffoldLoading: controller.scaffoldLoading,
+            g10AcctEthicsScaffoldError: controller.scaffoldError,
+            g10AcctEthicsScaffoldQuestion: controller.scaffoldQuestion,
+            g10AcctEthicsScaffoldAnswer: controller.scaffoldAnswer,
+            setG10AcctEthicsScaffoldAnswer: controller.setG10AcctEthicsScaffoldAnswer,
+            g10AcctEthicsScaffoldFeedback: controller.scaffoldFeedback,
+            setG10AcctEthicsScaffoldFeedback: controller.setG10AcctEthicsScaffoldFeedback,
+            g10AcctEthicsScaffoldShowHint: controller.scaffoldShowHint,
+            setG10AcctEthicsScaffoldShowHint: controller.setG10AcctEthicsScaffoldShowHint,
+            renderGrade10AcctEthicsVisualAids,
+            hideConfig: true,
+        }));
+    }
+
+    if (workspaceMode === 'grade10_accounting_ethics_practice') {
+        const pqs = controller.practiceQuestions || [];
+        const curQ = pqs[ethicsIdx];
+
+        return h(WorkspaceModeShell, {
+            workspaceMode,
+            setWorkspaceMode: ctx.setWorkspaceMode,
+            onBack: ctx.onBack,
+            onNext: handleEthicsNext,
+            renderVisualAids: renderGrade10AcctEthicsVisualAids,
+            questionSlot: curQ ? h('div', { className: 'space-y-1' }, h('div', { className: 'text-sm text-slate-500' }, `Question ${ethicsIdx + 1} of ${pqs.length}`), h('h2', { className: 'text-base sm:text-lg font-semibold text-slate-800 leading-relaxed' }, curQ.prompt || '')) : null,
+            selectedSubject: ctx.selectedSubject,
+            selectedGrade: ctx.selectedGrade,
+            topic: ctx.topic,
+            ...commonShellProps,
+        }, h(Grade10AccountingEthicsPractice, {
+            onBack: ctx.onBack,
+            g10AcctEthicsVisualAidsOpen: controller.visualAidsOpen,
+            setG10AcctEthicsVisualAidsOpen: controller.setVisualAidsOpen,
+            g10AcctEthicsPracticeDifficulty: controller.practiceDifficulty,
+            setG10AcctEthicsPracticeDifficulty: controller.setPracticeDifficulty,
+            fetchGrade10AcctEthicsPractice: controller.fetchPractice,
+            g10AcctEthicsPracticeLoading: controller.practiceLoading,
+            g10AcctEthicsPracticeError: controller.practiceError,
+            g10AcctEthicsPracticeQuestions: controller.practiceQuestions,
+            g10AcctEthicsPracticeAnswers: controller.practiceAnswers,
+            setG10AcctEthicsPracticeAnswers: controller.setPracticeAnswers,
+            g10AcctEthicsPracticeFeedback: controller.practiceFeedback,
+            setG10AcctEthicsPracticeFeedback: controller.setPracticeFeedback,
+            renderGrade10AcctEthicsVisualAids,
+            currentIndex: ethicsIdx,
+            hideConfig: true,
+        }));
+    }
+
+    return null;
+};
+
+const Grade10AccountingIndigenousRoute = ({ workspaceMode, ctx }) => {
+    const controller = useGrade10IndigenousBookkeepingController({ workspaceMode, buildApiUrl: ctx.buildApiUrl, currentUser: ctx.currentUser });
+
+    const renderGrade10AcctIndVisualAids = () => h(Grade10IndigenousBookkeepingVisualAids, {
+        visualAidsTab: controller.visualAidsTab,
+        setVisualAidsTab: controller.setVisualAidsTab,
+        setVisualAidsOpen: controller.setVisualAidsOpen,
+    });
+
+    const shellSubskills = Array.isArray(controller.scaffoldSteps) && controller.scaffoldSteps.length > 0
+        ? controller.scaffoldSteps
+        : (Array.isArray(controller.subskills) ? controller.subskills : []);
+
+    const currentSubskillKey = (() => {
+        if (workspaceMode === 'grade10_accounting_indigenous_scaffold' || workspaceMode === 'grade10_accounting_indigenous_marking') {
+            const step = controller.scaffoldSteps?.[controller.scaffoldStepIndex] || controller.scaffoldSteps?.[0];
+            return step?.key || 'concepts';
+        }
+        return 'mixed';
+    })();
+
+    const setShellSubskill = (nextKey) => {
+        if (workspaceMode !== 'grade10_accounting_indigenous_scaffold') return;
+        const steps = Array.isArray(controller.scaffoldSteps) ? controller.scaffoldSteps : [];
+        const idx = steps.findIndex((s) => String(s?.key) === String(nextKey));
+        if (idx >= 0) controller.setScaffoldStepIndex(idx);
+    };
+
+    const commonShellProps = {
+        availableModes: ['scaffold', 'practice', 'marking'],
+        subskills: shellSubskills,
+        difficulty: workspaceMode.endsWith('_scaffold') ? controller.scaffoldDifficulty : controller.practiceDifficulty,
+        setDifficulty: workspaceMode.endsWith('_scaffold') ? controller.setScaffoldDifficulty : controller.setPracticeDifficulty,
+        subskill: currentSubskillKey,
+        setSubskill: setShellSubskill,
+        onGenerate: (config) => {
+            if (workspaceMode.endsWith('_scaffold')) {
+                setShellSubskill(config.subskill);
+                controller.fetchScaffoldQuestion({
+                    subskill: config.subskill,
+                    difficulty: config.difficulty,
+                });
+            } else {
+                controller.fetchPractice({
+                    difficulty: config.difficulty,
+                });
+            }
+        },
+    };
+
+    // Hooks must be called unconditionally (Rules of Hooks)
+    const [indIdx, setIndIdx] = useState(0);
+    const handleNext = () => {
+        const total = (controller.practiceQuestions || []).length;
+        if (indIdx + 1 < total) setIndIdx(indIdx + 1);
+    };
+
+    if (workspaceMode === 'grade10_accounting_indigenous_scaffold' || workspaceMode === 'grade10_accounting_indigenous_marking') {
+        const sq = controller.scaffoldQuestion;
+        return h(EvaluatedWorkspaceModeShell, {
+            workspaceMode,
+            setWorkspaceMode: ctx.setWorkspaceMode,
+            onBack: ctx.onBack,
+            onNext: () => controller.fetchScaffoldQuestion({
+                subskill: controller.scaffoldSteps?.[controller.scaffoldStepIndex]?.key || 'concepts',
+                difficulty: controller.scaffoldDifficulty,
+            }),
+            renderVisualAids: renderGrade10AcctIndVisualAids,
+            questionSlot: sq ? h('div', { className: 'space-y-1' }, h('h2', { className: 'text-base sm:text-lg font-semibold text-slate-800 leading-relaxed' }, sq.prompt || '')) : null,
+            selectedSubject: ctx.selectedSubject,
+            selectedGrade: ctx.selectedGrade,
+            topic: ctx.topic,
+            question: sq,
+            userAnswersCells: controller.scaffoldAnswer?.cells || {},
+            ...commonShellProps,
+        }, h(Grade10AccountingIndigenousScaffold, {
+            isMarkingEnv: workspaceMode.endsWith('_marking'),
+            onBack: ctx.onBack,
+            scaffoldSteps: controller.scaffoldSteps,
+            g10AcctIndVisualAidsOpen: controller.visualAidsOpen,
+            setG10AcctIndVisualAidsOpen: controller.setVisualAidsOpen,
+            g10AcctIndScaffoldDifficulty: controller.scaffoldDifficulty,
+            setG10AcctIndScaffoldDifficulty: controller.setScaffoldDifficulty,
+            g10AcctIndScaffoldStepIndex: controller.scaffoldStepIndex,
+            setG10AcctIndScaffoldStepIndex: controller.setG10AcctIndScaffoldStepIndex,
+            fetchGrade10AcctIndScaffoldQuestion: controller.fetchScaffoldQuestion,
+            g10AcctIndScaffoldLoading: controller.scaffoldLoading,
+            g10AcctIndScaffoldError: controller.scaffoldError,
+            g10AcctIndScaffoldQuestion: controller.scaffoldQuestion,
+            g10AcctIndScaffoldAnswer: controller.scaffoldAnswer,
+            setG10AcctIndScaffoldAnswer: controller.setG10AcctIndScaffoldAnswer,
+            g10AcctIndScaffoldFeedback: controller.scaffoldFeedback,
+            setG10AcctIndScaffoldFeedback: controller.setG10AcctIndScaffoldFeedback,
+            g10AcctIndScaffoldShowHint: controller.scaffoldShowHint,
+            setG10AcctIndScaffoldShowHint: controller.setG10AcctIndScaffoldShowHint,
+            renderGrade10AcctIndVisualAids,
+            hideConfig: true,
+        }));
+    }
+
+    if (workspaceMode === 'grade10_accounting_indigenous_practice') {
+        const pqs = controller.practiceQuestions || [];
+        const curQ = pqs[indIdx];
+
+        return h(WorkspaceModeShell, {
+            workspaceMode,
+            setWorkspaceMode: ctx.setWorkspaceMode,
+            onBack: ctx.onBack,
+            onNext: handleNext,
+            renderVisualAids: renderGrade10AcctIndVisualAids,
+            questionSlot: curQ ? h('div', { className: 'space-y-1' }, h('div', { className: 'text-sm text-slate-500' }, `Question ${indIdx + 1} of ${pqs.length}`), h('h2', { className: 'text-base sm:text-lg font-semibold text-slate-800 leading-relaxed' }, curQ.prompt || '')) : null,
+            selectedSubject: ctx.selectedSubject,
+            selectedGrade: ctx.selectedGrade,
+            topic: ctx.topic,
+            ...commonShellProps,
+        }, h(Grade10AccountingIndigenousPractice, {
+            onBack: ctx.onBack,
+            g10AcctIndVisualAidsOpen: controller.visualAidsOpen,
+            setG10AcctIndVisualAidsOpen: controller.setVisualAidsOpen,
+            g10AcctIndPracticeDifficulty: controller.practiceDifficulty,
+            setG10AcctIndPracticeDifficulty: controller.setPracticeDifficulty,
+            fetchGrade10AcctIndPractice: controller.fetchPractice,
+            g10AcctIndPracticeLoading: controller.practiceLoading,
+            g10AcctIndPracticeError: controller.practiceError,
+            g10AcctIndPracticeQuestions: controller.practiceQuestions,
+            g10AcctIndPracticeAnswers: controller.practiceAnswers,
+            setG10AcctIndPracticeAnswers: controller.setPracticeAnswers,
+            g10AcctIndPracticeFeedback: controller.practiceFeedback,
+            setG10AcctIndPracticeFeedback: controller.setPracticeFeedback,
+            renderGrade10AcctIndVisualAids,
+            currentIndex: indIdx,
+            hideConfig: true,
+        }));
+    }
+
+    return null;
+};
+
+const Grade10AccountingInternalControlRoute = ({ workspaceMode, ctx }) => {
+    const controller = useGrade10InternalControlController({ workspaceMode, buildApiUrl: ctx.buildApiUrl });
+
+    const renderGrade10AcctICVisualAids = () => h(Grade10InternalControlVisualAids, {
+        visualAidsTab: controller.visualAidsTab,
+        setVisualAidsTab: controller.setVisualAidsTab,
+        setVisualAidsOpen: controller.setVisualAidsOpen,
+    });
+
+    const commonShellProps = {
+        availableModes: ['scaffold', 'practice', 'marking'],
+        subskills: controller.scaffoldSteps,
+        difficulty: workspaceMode.endsWith('_scaffold') ? controller.scaffoldDifficulty : controller.practiceDifficulty,
+        setDifficulty: workspaceMode.endsWith('_scaffold') ? controller.setScaffoldDifficulty : controller.setPracticeDifficulty,
+        subskill: workspaceMode.endsWith('_scaffold') ? (controller.scaffoldSteps?.[controller.scaffoldStepIndex]?.key || 'definition') : 'mixed',
+        setSubskill: (nextKey) => {
+            if (workspaceMode.endsWith('_scaffold')) {
+                const idx = controller.scaffoldSteps.findIndex(s => s.key === nextKey);
+                if (idx >= 0) controller.setScaffoldStepIndex(idx);
+            }
+        },
+        onGenerate: (config) => {
+            if (workspaceMode.endsWith('_scaffold')) {
+                controller.fetchScaffoldQuestion({
+                    subskill: config.subskill,
+                    difficulty: config.difficulty,
+                });
+            } else {
+                controller.fetchPractice({
+                    difficulty: config.difficulty,
+                });
+            }
+        },
+    };
+
+    // Hooks must be called unconditionally (Rules of Hooks)
+    const [icIdx, setIcIdx] = useState(0);
+    const handleICNext = () => {
+        const total = (controller.practiceQuestions || []).length;
+        if (icIdx + 1 < total) setIcIdx(icIdx + 1);
+    };
+
+    if (workspaceMode === 'grade10_accounting_internal_control_scaffold' || workspaceMode === 'grade10_accounting_internal_control_marking') {
+        const sq = controller.scaffoldQuestion;
+        return h(EvaluatedWorkspaceModeShell, {
+            workspaceMode,
+            setWorkspaceMode: ctx.setWorkspaceMode,
+            onBack: ctx.onBack,
+            onNext: () => controller.fetchScaffoldQuestion({
+                subskill: controller.scaffoldSteps?.[controller.scaffoldStepIndex]?.key || 'definition',
+                difficulty: controller.scaffoldDifficulty,
+            }),
+            renderVisualAids: renderGrade10AcctICVisualAids,
+            questionSlot: sq ? h('div', { className: 'space-y-1' }, h('h2', { className: 'text-base sm:text-lg font-semibold text-slate-800 leading-relaxed' }, sq.prompt || '')) : null,
+            selectedSubject: ctx.selectedSubject,
+            selectedGrade: ctx.selectedGrade,
+            topic: ctx.topic,
+            question: sq,
+            userAnswersCells: controller.scaffoldAnswer?.cells || {},
+            ...commonShellProps,
+        }, h(Grade10AccountingInternalControlScaffold, {
+            isMarkingEnv: workspaceMode.endsWith('_marking'),
+            onBack: ctx.onBack,
+            scaffoldSteps: controller.scaffoldSteps,
+            g10AcctICVisualAidsOpen: controller.visualAidsOpen,
+            setG10AcctICVisualAidsOpen: controller.setVisualAidsOpen,
+            g10AcctICScaffoldDifficulty: controller.scaffoldDifficulty,
+            setG10AcctICScaffoldDifficulty: controller.setScaffoldDifficulty,
+            g10AcctICScaffoldStepIndex: controller.scaffoldStepIndex,
+            setG10AcctICScaffoldStepIndex: controller.setG10AcctICScaffoldStepIndex,
+            fetchGrade10AcctICScaffoldQuestion: controller.fetchScaffoldQuestion,
+            g10AcctICScaffoldLoading: controller.scaffoldLoading,
+            g10AcctICScaffoldError: controller.scaffoldError,
+            g10AcctICScaffoldQuestion: controller.scaffoldQuestion,
+            g10AcctICScaffoldAnswer: controller.scaffoldAnswer,
+            setG10AcctICScaffoldAnswer: controller.setG10AcctICScaffoldAnswer,
+            g10AcctICScaffoldFeedback: controller.scaffoldFeedback,
+            setG10AcctICScaffoldFeedback: controller.setG10AcctICScaffoldFeedback,
+            g10AcctICScaffoldShowHint: controller.scaffoldShowHint,
+            setG10AcctICScaffoldShowHint: controller.setG10AcctICScaffoldShowHint,
+            renderGrade10AcctICVisualAids,
+            hideConfig: true,
+        }));
+    }
+
+    if (workspaceMode === 'grade10_accounting_internal_control_practice') {
+        const pqs = controller.practiceQuestions || [];
+        const curQ = pqs[icIdx];
+
+        return h(WorkspaceModeShell, {
+            workspaceMode,
+            setWorkspaceMode: ctx.setWorkspaceMode,
+            onBack: ctx.onBack,
+            onNext: handleICNext,
+            renderVisualAids: renderGrade10AcctICVisualAids,
+            questionSlot: curQ ? h('div', { className: 'space-y-1' }, h('div', { className: 'text-sm text-slate-500' }, `Question ${icIdx + 1} of ${pqs.length}`), h('h2', { className: 'text-base sm:text-lg font-semibold text-slate-800 leading-relaxed' }, curQ.prompt || '')) : null,
+            selectedSubject: ctx.selectedSubject,
+            selectedGrade: ctx.selectedGrade,
+            topic: ctx.topic,
+            ...commonShellProps,
+        }, h(Grade10AccountingInternalControlPractice, {
+            onBack: ctx.onBack,
+            g10AcctICVisualAidsOpen: controller.visualAidsOpen,
+            setG10AcctICVisualAidsOpen: controller.setVisualAidsOpen,
+            g10AcctICPracticeDifficulty: controller.practiceDifficulty,
+            setG10AcctICPracticeDifficulty: controller.setPracticeDifficulty,
+            fetchGrade10AcctICPractice: controller.fetchPractice,
+            g10AcctICPracticeLoading: controller.practiceLoading,
+            g10AcctICPracticeError: controller.practiceError,
+            g10AcctICPracticeQuestions: controller.practiceQuestions,
+            g10AcctICPracticeAnswers: controller.practiceAnswers,
+            setG10AcctICPracticeAnswers: controller.setPracticeAnswers,
+            g10AcctICPracticeFeedback: controller.practiceFeedback,
+            setG10AcctICPracticeFeedback: controller.setPracticeFeedback,
+            renderGrade10AcctICVisualAids,
+            currentIndex: icIdx,
+            hideConfig: true,
+        }));
+    }
+
+    return null;
+};
+
+const Grade10AccountingSoleTraderRoute = ({ workspaceMode, ctx }) => {
+    const controller = useGrade10SoleTraderController({ workspaceMode, buildApiUrl: ctx.buildApiUrl });
+
+    const renderGrade10AcctSoleTraderVisualAids = () => h(Grade10SoleTraderVisualAids, {
+        visualAidsTab: controller.visualAidsTab,
+        setVisualAidsTab: controller.setVisualAidsTab,
+        setVisualAidsOpen: controller.setVisualAidsOpen,
+    });
+
+    const commonShellProps = {
+        availableModes: ['scaffold', 'practice', 'marking'],
+        subskills: controller.subskills,
+        difficulty: workspaceMode.endsWith('_scaffold') ? controller.scaffoldDifficulty : controller.practiceDifficulty,
+        setDifficulty: workspaceMode.endsWith('_scaffold') ? controller.setScaffoldDifficulty : controller.setPracticeDifficulty,
+        subskill: workspaceMode.endsWith('_scaffold') ? controller.scaffoldSubskill : controller.practiceSubskill,
+        setSubskill: workspaceMode.endsWith('_scaffold') ? controller.setScaffoldSubskill : controller.setPracticeSubskill,
+        onGenerate: (config) => {
+            if (workspaceMode.endsWith('_scaffold')) {
+                controller.fetchScaffoldQuestion({
+                    difficulty: config.difficulty,
+                    subskill: config.subskill,
+                    seed: controller.scaffoldSeed
+                });
+            } else {
+                controller.fetchPractice({
+                    difficulty: config.difficulty,
+                    subskill: config.subskill,
+                    seed: controller.practiceSeed
+                });
+            }
+        }
+    };
+
+    // Hooks must be called unconditionally (Rules of Hooks)
+    const [stIdx, setStIdx] = useState(0);
+    const handleSTNext = () => {
+        const total = (controller.practiceQuestions || []).length;
+        if (stIdx + 1 < total) setStIdx(stIdx + 1);
+    };
+
+    if (workspaceMode === 'grade10_accounting_sole_trader_scaffold' || workspaceMode === 'grade10_accounting_sole_trader_marking') {
+        const sq = controller.scaffoldQuestion;
+        return h(EvaluatedWorkspaceModeShell, {
+            workspaceMode,
+            setWorkspaceMode: ctx.setWorkspaceMode,
+            onBack: ctx.onBack,
+            onNext: () => controller.fetchScaffoldQuestion({
+                subskill: controller.scaffoldSubskill,
+                difficulty: controller.scaffoldDifficulty,
+                seed: Date.now()
+            }),
+            renderVisualAids: renderGrade10AcctSoleTraderVisualAids,
+            questionSlot: sq ? h('div', { className: 'space-y-1' }, h('h2', { className: 'text-base sm:text-lg font-semibold text-slate-800 leading-relaxed' }, sq.prompt || '')) : null,
+            selectedSubject: ctx.selectedSubject,
+            selectedGrade: ctx.selectedGrade,
+            topic: ctx.topic,
+            question: sq,
+            userAnswersCells: controller.scaffoldAnswer?.cells || {},
+            ...commonShellProps,
+        }, h(Grade10AccountingSoleTraderScaffold, {
+            isMarkingEnv: workspaceMode.endsWith('_marking'),
+            onBack: ctx.onBack,
+            scaffoldSteps: controller.scaffoldSteps,
+            subskills: controller.subskills,
+            g10AcctSTVisualAidsOpen: controller.visualAidsOpen,
+            setG10AcctSTVisualAidsOpen: controller.setVisualAidsOpen,
+            g10AcctSTScaffoldDifficulty: controller.scaffoldDifficulty,
+            setG10AcctSTScaffoldDifficulty: controller.setScaffoldDifficulty,
+            g10AcctSTSubskill: controller.scaffoldSubskill,
+            setG10AcctSTSubskill: controller.setScaffoldSubskill,
+            g10AcctSTScaffoldSeed: controller.scaffoldSeed,
+            setG10AcctSTScaffoldSeed: controller.setScaffoldSeed,
+            g10AcctSTScaffoldStepIndex: controller.scaffoldStepIndex,
+            setG10AcctSTScaffoldStepIndex: controller.setG10AcctSTScaffoldStepIndex,
+            fetchGrade10AcctSTScaffoldQuestion: controller.fetchScaffoldQuestion,
+            g10AcctSTScaffoldLoading: controller.scaffoldLoading,
+            g10AcctSTScaffoldError: controller.scaffoldError,
+            g10AcctSTScaffoldQuestion: controller.scaffoldQuestion,
+            g10AcctSTScaffoldAnswer: controller.scaffoldAnswer,
+            setG10AcctSTScaffoldAnswer: controller.setG10AcctSTScaffoldAnswer,
+            g10AcctSTScaffoldFeedback: controller.scaffoldFeedback,
+            setG10AcctSTScaffoldFeedback: controller.setG10AcctSTScaffoldFeedback,
+            g10AcctSTScaffoldShowHint: controller.scaffoldShowHint,
+            setG10AcctSTScaffoldShowHint: controller.setG10AcctSTScaffoldShowHint,
+            renderGrade10AcctSTVisualAids: renderGrade10AcctSoleTraderVisualAids,
+            hideConfig: true,
+        }));
+    }
+
+    if (workspaceMode === 'grade10_accounting_sole_trader_practice') {
+        const pqs = controller.practiceQuestions || [];
+        const curQ = pqs[stIdx];
+
+        return h(WorkspaceModeShell, {
+            workspaceMode,
+            setWorkspaceMode: ctx.setWorkspaceMode,
+            onBack: ctx.onBack,
+            onNext: handleSTNext,
+            renderVisualAids: renderGrade10AcctSoleTraderVisualAids,
+            questionSlot: curQ ? h('div', { className: 'space-y-1' }, h('div', { className: 'text-sm text-slate-500' }, `Question ${stIdx + 1} of ${pqs.length}`), h('h2', { className: 'text-base sm:text-lg font-semibold text-slate-800 leading-relaxed' }, curQ.prompt || '')) : null,
+            selectedSubject: ctx.selectedSubject,
+            selectedGrade: ctx.selectedGrade,
+            topic: ctx.topic,
+            ...commonShellProps,
+        }, h(Grade10AccountingSoleTraderPractice, {
+            onBack: ctx.onBack,
+            g10AcctSTVisualAidsOpen: controller.visualAidsOpen,
+            setG10AcctSTVisualAidsOpen: controller.setVisualAidsOpen,
+            g10AcctSTPracticeDifficulty: controller.practiceDifficulty,
+            setG10AcctSTPracticeDifficulty: controller.setPracticeDifficulty,
+            g10AcctSTPracticeSubskill: controller.practiceSubskill,
+            setG10AcctSTPracticeSubskill: controller.setPracticeSubskill,
+            g10AcctSTPracticeSeed: controller.practiceSeed,
+            setG10AcctSTPracticeSeed: controller.setPracticeSeed,
+            subskills: controller.subskills,
+            fetchGrade10AcctSTPractice: controller.fetchPractice,
+            g10AcctSTPracticeLoading: controller.practiceLoading,
+            g10AcctSTPracticeError: controller.practiceError,
+            g10AcctSTPracticeQuestions: controller.practiceQuestions,
+            g10AcctSTPracticeAnswers: controller.practiceAnswers,
+            setG10AcctSTPracticeAnswers: controller.setPracticeAnswers,
+            g10AcctSTPracticeFeedback: controller.practiceFeedback,
+            setG10AcctSTPracticeFeedback: controller.setPracticeFeedback,
+            renderGrade10AcctSTVisualAids: renderGrade10AcctSoleTraderVisualAids,
+            currentIndex: stIdx,
+            hideConfig: true,
+        }));
+    }
+
+    return null;
+};
+
+export const grade10Registry = {
+    grade10_algebraic_expressions_scaffold: {
+        render: (ctx) => h(Grade10AlgebraicExpressionsRoute, { workspaceMode: 'grade10_algebraic_expressions_scaffold', ctx }),
+    },
+    grade10_algebraic_expressions_practice: {
+        render: (ctx) => h(Grade10AlgebraicExpressionsRoute, { workspaceMode: 'grade10_algebraic_expressions_practice', ctx }),
+    },
+    grade10_exponents_scaffold: {
+        render: (ctx) => h(Grade10ExponentsRoute, { workspaceMode: 'grade10_exponents_scaffold', ctx }),
+    },
+    grade10_exponents_practice: {
+        render: (ctx) => h(Grade10ExponentsRoute, { workspaceMode: 'grade10_exponents_practice', ctx }),
+    },
+    grade10_patterns_sequences_scaffold: {
+        render: (ctx) => h(Grade10PatternsSequencesRoute, { workspaceMode: 'grade10_patterns_sequences_scaffold', ctx }),
+    },
+    grade10_patterns_sequences_practice: {
+        render: (ctx) => h(Grade10PatternsSequencesRoute, { workspaceMode: 'grade10_patterns_sequences_practice', ctx }),
+    },
+    grade10_equations_inequalities_scaffold: {
+        render: (ctx) => h(Grade10EquationsInequalitiesRoute, { workspaceMode: 'grade10_equations_inequalities_scaffold', ctx }),
+    },
+    grade10_equations_inequalities_practice: {
+        render: (ctx) => h(Grade10EquationsInequalitiesRoute, { workspaceMode: 'grade10_equations_inequalities_practice', ctx }),
+    },
+    grade10_trigonometry_1_scaffold: {
+        render: (ctx) => h(Grade10Trigonometry1Route, { workspaceMode: 'grade10_trigonometry_1_scaffold', ctx }),
+    },
+    grade10_trigonometry_1_practice: {
+        render: (ctx) => h(Grade10Trigonometry1Route, { workspaceMode: 'grade10_trigonometry_1_practice', ctx }),
+    },
+    grade10_accounting_indigenous_scaffold: {
+        render: (ctx) => h(Grade10AccountingIndigenousRoute, { workspaceMode: 'grade10_accounting_indigenous_scaffold', ctx }),
+    },
+    grade10_accounting_indigenous_practice: {
+        render: (ctx) => h(Grade10AccountingIndigenousRoute, { workspaceMode: 'grade10_accounting_indigenous_practice', ctx }),
+    },
+    grade10_accounting_ethics_scaffold: {
+        render: (ctx) => h(Grade10AccountingEthicsRoute, { workspaceMode: 'grade10_accounting_ethics_scaffold', ctx }),
+    },
+    grade10_accounting_ethics_practice: {
+        render: (ctx) => h(Grade10AccountingEthicsRoute, { workspaceMode: 'grade10_accounting_ethics_practice', ctx }),
+    },
+    grade10_accounting_gaap_scaffold: {
+        render: (ctx) => h(Grade10AccountingGAAPRoute, { workspaceMode: 'grade10_accounting_gaap_scaffold', ctx }),
+    },
+    grade10_accounting_gaap_practice: {
+        render: (ctx) => h(Grade10AccountingGAAPRoute, { workspaceMode: 'grade10_accounting_gaap_practice', ctx }),
+    },
+    grade10_accounting_internal_control_scaffold: {
+        render: (ctx) => h(Grade10AccountingInternalControlRoute, { workspaceMode: 'grade10_accounting_internal_control_scaffold', ctx }),
+    },
+    grade10_accounting_internal_control_practice: {
+        render: (ctx) => h(Grade10AccountingInternalControlRoute, { workspaceMode: 'grade10_accounting_internal_control_practice', ctx }),
+    },
+    grade10_accounting_sole_trader_scaffold: {
+        render: (ctx) => h(Grade10AccountingSoleTraderRoute, { workspaceMode: 'grade10_accounting_sole_trader_scaffold', ctx }),
+    },
+    grade10_accounting_sole_trader_practice: {
+        render: (ctx) => h(Grade10AccountingSoleTraderRoute, { workspaceMode: 'grade10_accounting_sole_trader_practice', ctx }),
+    },
+};

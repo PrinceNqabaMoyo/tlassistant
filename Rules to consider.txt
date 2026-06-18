@@ -1,0 +1,1 @@
+When you encounter [DIAGRAM:] you need to pay closer attention and decide if you can generate a diagram

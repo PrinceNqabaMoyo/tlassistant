@@ -1,0 +1,13 @@
+1. I want to start validating question generation for  grades 10 to 12 accounting, for topic and subskill. I want to do this using the seed number/id of each architype in the generator files. I think I should do this in the admin view. There are 3 modes, student, teacher and admin.  My email account: princenqaba@gmail.com and princenqabamoyo@outlook.com are already owner emails as shown in the C:\Users\princ\fundile-tlassistant-vite\Evaluation_Subscriptions_Term2_Implementation_Plan.md.
+
+2. I want the admin dash board of my superadmin and owner emails to give me a dashboard that shows me the number of subscribers, the length of time they spend on the app per topic. I dont know if this makes sense or its something i can look up in my firestore?The dashboard should also show the number of architypes with their seed number/id for each subject and grade so that when i click a seed number/id, i get a generated question of that seed. This will make evaluating/ validating questions and the answers easy. The admin view of the generated question should be the exact same as the way a student user would see it. So that i can evaluate the student experience fully. 
+
+3. I also want to know what data i should aim to harvest, which will be valuable for my business. I will then check if each of your suggestions are lawful our jurisdiction.
+
+4. I want you to also evaluate security vulnerabilities for my architecture.
+
+5. For other users who are not me and subscribe as students the student/teacher/admin toggle should be locked on student. Teacher subscriber should be locked on teacher and admin subscribers should be locked on admin.
+
+6. The admin view for subscribing user should not be the one of my superadmin/owner emails. It is meant for school admins in case  schools or learning institutions  get an institutional package and they can manage their students in their admin view. The institutional package is a future goal.
+
+7. Come up with an implementation plan for this.

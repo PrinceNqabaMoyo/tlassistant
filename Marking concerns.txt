@@ -1,0 +1,14 @@
+1. Generate a calculation map with every step detailed. We should also generate an example completion of each architype group. This should be like the computer doing the working for the user, where they get a question and the user an clicks start worked example, then the first step is done with annotations showing why or how a calculation is being done, or why a particular value is being place in a particular cell. 
+
+2. Mathematical workings come in various forms, users may omit a summation because they would have implicitly included it, you need to have a summation for all your steps so that even if a step looks like it has been omitted you can sum up a step in the user's working and match it to the summation in a step in your map.
+e.g 103 730/[1/2(950 000 - 94 270 - 90 000)], a user may sum up part or all of the denominator and not show the broken down version. 
+I don't know if this means each working should be in its own line or the marker can still decipher workings in one line?
+It also means we need keypad for app purpose which will have frac for fraction so that inputs can be place 1 over the other. This can be used for division workings or for fractions. Also should have square root, superscript for powers and subscript for bases, therefore (3 triangular dots). The marker should be able to interpret these. Also need multiplication, division sign. Can you think of other that we may need?
+The up needs to update the VAT every 3 months.
+update the interest rate to know what financial institutions are offering for deposits.
+1 840 500÷(10 050 750 + 9 540 000) and 1 840 500/(10 050 750 + 9 540 000) should be recognised as equivalent in workings.
+
+3. What do we do with answer requiring explanations. Can they be deterministically marked.
+
+4. Make sure the years are updated to make questions current
+5. I think in making 

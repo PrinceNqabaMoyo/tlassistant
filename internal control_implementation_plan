@@ -1,0 +1,45 @@
+# Grade 10 Accounting Internal Controls Modernization
+
+This plan details the steps to modernize the Internal Controls module, achieving feature parity with the Sole Trader, Final Accounts, Ethics, and GAAP modules.
+
+## Open Questions
+
+None at this time. The requirements are clear based on the curriculum and previous module enhancements.
+
+## Proposed Changes
+
+### 1. Curriculum UI
+- Ensure the selection card cleanly displays "**Internal Controls**" if it doesn't already, aligning with the "GAAP" and "Ethics" presentation.
+
+### 2. Generator Refactoring (`internal_control_generator.py`)
+- Expand the question pools (`stock_pool`, `debtors_pool`, `creditors_pool`, `fixed_assets_pool`, `consumables_pool`, `cash_pool`) based on the provided `Internal Controls Studio.md` and `gr10AccountingTerm1Internal ControlArchetypes.md`.
+- Implement new `table_wordbank` scenarios:
+  - Create a matching activity where students match scenarios to the correct internal control measures (e.g., matching "Employees logging vehicles out" to "Fixed Asset Control", "Checking stock against delivery notes" to "Stock Control").
+- Ensure all questions have proper `sample_answer`, `guidelines`, and `hint_trigger` keys to support the advanced UI.
+
+### 3. Controller Update (`controller.js`)
+- Refactor the `fetchPractice` function to implement the **8-question timed practice flow**.
+- Similar to the GAAP module, fetch a specific mix of questions (e.g., 2 definitions/processes, 5 topic-specific questions, 1 matching activity) to ensure a comprehensive assessment.
+
+### 4. Scaffold Component (`Grade10AccountingInternalControlScaffold.jsx`)
+- Complete rewrite using the modern Scaffold design pattern.
+- Implement the advanced **Check**, **Hint**, and **Compare / Memo** button suite.
+- Implement state-driven visual feedback (green/red highlights) for MCQs and typed responses.
+- Implement the `activeCellHint` dynamic popup system for the `table_wordbank` matching activities, providing specific clues for each cell.
+
+### 5. Practice Component (`Grade10AccountingInternalControlPractice.jsx`)
+- Complete rewrite using the modern Practice design pattern.
+- Implement the live timer.
+- Implement the **Finish and Review** flow: input locking after submission, and a detailed review screen showing what the student got right/wrong along with comprehensive memos.
+- Ensure integration with `useGrade10AccountingMarking` for secure backend evaluation.
+
+## Verification Plan
+
+### Automated Tests
+- N/A (No automated test suite provided for the frontend)
+
+### Manual Verification
+- Review the selection card UI for consistency.
+- Test the Scaffold mode, ensuring hints and visual feedback trigger correctly for all new question types (MCQ, Typed, Table Wordbank).
+- Start a practice session and verify exactly 8 questions are generated.
+- Run through a full practice session, submit the assessment, and verify the review mode accurately displays correct/incorrect answers and memos.

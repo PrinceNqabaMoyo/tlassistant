@@ -1,0 +1,47 @@
+The generators are based on "C:\Users\princ\fundile-tlassistant-vite\caps-ai-backend\curriculum_docs\Accounting _Gr10\Term 1\Financial Accounting of a Sole Trader Studio.md" and "C:\Users\princ\fundile-tlassistant-vite\caps-ai-backend\curriculum_docs\Accounting _Gr10\Term 1\Question types Journals and legders 1.md"
+To use the various notes and insights in .md file to improve hints considerably.
+Remember your previous hint implementation: "C:\Users\princ\fundile-tlassistant-vite\improving-hint-system.md"
+
+
+1
+Trace how to handle credit sales. are they placed in the analysis of receipts?
+
+2
+Trace how eft is handled
+
+3
+Trace how money deposited directly into bank account is handled.
+
+4
+Trace how bank is placed in the last row as a total for the day and omitted in the other rows for the same day
+
+5
+Trace how interest on deposit is recorded.
+
+6
+How are cheques handled
+
+7
+Trace how capital contributions from owner are handled
+
+8
+Test that credit sales are not recorded on CRJ
+
+9
+I am also worried about table utility of these journals tables. When the screen is small the column overlap. I think there should be a mechanism where the table breaks up and forms stacks of a set number of columns. i.e maybe the first 5 columns top stack, next five bottom stack so that the column labels are not lost and the cells are usable and its contents visible. Maybe this should apply acroos the board to all tabular objects.
+
+
+10
+Trace how bounced cheques are handled. 
+
+11
+Trace how written off or previously written off debts are handle and how they are handled when payment towards them is received.
+
+12
+While you should keep and improve the multi-transaction questions which are the exam type also Make sure there are questions that ask a about a single transaction type e.g just eft, just credit sales, just written off debts, just direct deposits and others for specific learning purposes in the scaffold.
+
+13 
+Check if all encompassing complex questions like activity 22 in "C:\Users\princ\fundile-tlassistant-vite\caps-ai-backend\curriculum_docs\Accounting _Gr10\Term 1\Financial Accounting of a Sole Trader Studio.md" are available in both scaffold and practice.
+
+14 
+In "C:\Users\princ\fundile-tlassistant-vite\caps-ai-backend\curriculum_docs\Accounting _Gr10\Term 1\Financial Accounting of a Sole Trader Studio.md" Trace S. Moaner who already owes 2000, on a single day he buys on credit for 2 700 and pays by cheque. But the crj considers that as payment towards the R2000 debt and not the total of the existing 2000 plus the 2 700 (4 700). Is that proper?

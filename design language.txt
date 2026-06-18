@@ -1,0 +1,15 @@
+Il use grade 10 accounting informal/indigenous bookkeeping as a starting point so that we can have an appropriately implemented n to set the standard for the rest of our implementation. Relevant file may be C:\Users\princ\fundile-tlassistant-vite\src\components\workspace\Workspace.jsx; C:\Users\princ\fundile-tlassistant-vite\src\components\workspace\workspaceRegistry.js; C:\Users\princ\fundile-tlassistant-vite\src\components\curriculum\CurriculumHelper.jsx and the scaffold and practice .jsx files in the grade folders in C:\Users\princ\fundile-tlassistant-vite\src\components\workspace
+
+ 1. i am using C:\Users\princ\fundile-tlassistant-vite\Workspace UI.js as reference point for the design language i am implementing across the student user workspace. One of the problems i still have is that after generate questions is clicked the view doesn't render the 2 card system with question in the top card and answer area/options on the bottom card. Instead what i get is an overlay from C:\Users\princ\fundile-tlassistant-vite\src\components\workspace\shared\WorkspaceModeShell.jsx which i like but is itself overlayed  by the scaffold.jsx or practice.jsx.  Which uses color tones that are not consistent with the new design language.
+
+2. The practice mode of informal/indigenous bookkeeping generates more than 1 question which is inconsistent with the rest of the app. It should generate 1 question at a time.
+
+3.There is a question like this: 
+Managerial accounting puts emphasis on which of the following?
+
+It has 4 options but the selection bullets e not consistent, some are circular some are oval like. Its an untidy look.
+
+4. I do think there is an argument for a visual aids panel, but i am not sure how to implement it, and the current implementation looks clumsy.
+
+5. We need to change the 'Change settings' tab that takes the user back to the mode/difficulty/subskill card to 'go back' and also implement a 'next' button on at the bottom below the answer section which will generate the next questions, instead of the user having to first go back to the generate question card. 
+

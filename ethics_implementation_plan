@@ -1,0 +1,42 @@
+# Enhance Grade 10 Accounting Ethics Topic
+
+This plan addresses the required enhancements to the Grade 10 Accounting Ethics topic, aligning it with the robust features present in the Sole Trader and Final Accounts modules.
+
+## Open Questions
+- For the practice mode timer, do you want the exact timer implementation (elapsed time per question) as seen in Sole Trader, or just the 8-question pool and the "Finish and Review" functionality? I will implement the timer as well to match Sole Trader exactly unless specified otherwise.
+- The crossword puzzle in `Ethics.md` (Activity 2) will be adapted into a `table_wordbank` (matching) question for compatibility with the current question types. Is this acceptable?
+
+## Proposed Changes
+
+### Backend (Python Generator)
+
+#### [MODIFY] ethics_generator.py (file:///C:/Users/princ/fundile-tlassistant-vite/caps-ai-backend/app/utils/grade10_accounting/ethics_generator.py)
+- **Rename Subskills**: Remove the "Activity 1" nomenclature. Rename it to a descriptive subskill, such as `principles_matching`.
+- **Implement Activity 2**: Add a new subskill pool, e.g., `terminology_matching`, which adapts the crossword puzzle from `Ethics.md` into a `table_wordbank` matching activity.
+- **Update the generator pools**: Map `code_of_ethics`, `principles`, `leadership`, `principles_matching`, and `terminology_matching` in the `all_pools` dictionary.
+
+---
+
+### Frontend (React Components)
+
+#### [MODIFY] controller.js (file:///C:/Users/princ/fundile-tlassistant-vite/src/components/workspace/grade10/accounting/ethics/controller.js)
+- **Update Scaffold Steps**: Modify `scaffoldSteps` to match the newly named subskills from the backend (e.g., "Code of Ethics", "Principles of Ethics", "Ethical Leadership", "Principles Matching", "Terminology Matching").
+- **Update Practice Count**: Change the `count` parameter in `fetchPractice` from 6 to 8 to implement the 8-question pool.
+
+#### [MODIFY] Grade10AccountingEthicsScaffold.jsx (file:///C:/Users/princ/fundile-tlassistant-vite/src/components/workspace/grade10/accounting/ethics/Grade10AccountingEthicsScaffold.jsx)
+- **State Additions**: Introduce `showCheckHighlights`, `showMemo`, and `activeCellHint` states.
+- **Hint System**: Implement the `buildHintSections` and floating hint popup logic for typed questions and wordbank tables.
+- **Compare / Memo**: Add a "Compare / Memo" button that toggles the `showMemo` state. Implement memo rendering (using `buildNonTabularMemoItems` and `buildWordbankMemoRows` equivalents) to show the user the correct answers when requested.
+- **Feedback Highlights**: Update `checkAnswer` to trigger `showCheckHighlights` so that correct/incorrect items are visually distinguished.
+
+#### [MODIFY] Grade10AccountingEthicsPractice.jsx (file:///C:/Users/princ/fundile-tlassistant-vite/src/components/workspace/grade10/accounting/ethics/Grade10AccountingEthicsPractice.jsx)
+- **State Additions**: Introduce `reviewMode`, `elapsedSecondsByIndex`, and `liveElapsedSeconds` to track time and review state.
+- **Finish and Review**: Replace the per-question "Check Answer" button with a "Finish and Review" button that appears on the last (8th) question in Practice Mode.
+- **Evaluation Logic**: Add `evaluateQuestion` and `handleFinishAndReview` functions that loop through all 8 questions, score them, and display an aggregated review result for each question.
+- **Review UI**: Update the UI to render the feedback and lock inputs when `reviewMode` is active.
+
+## Verification Plan
+### Automated/Manual Verification
+- Generate a scaffold question for each of the new subskills (including Activity 1 and 2 adaptations) and verify the hint and compare/memo features work correctly.
+- Start a practice session, verify that exactly 8 questions are loaded.
+- Complete the 8 questions in practice mode, click "Finish and Review", and verify that the review mode correctly scores and highlights the answers.

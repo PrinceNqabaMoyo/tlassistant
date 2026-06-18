@@ -1,0 +1,45 @@
+# Accounting Refactor & Expansion Task List
+
+- [x] **Phase 1: 2-Mode Architecture Cleanup (Grades 10 & 11)**
+- [x] **Phase 2: Advanced Hints Engine (Backend & Frontend)**
+- [x] **Phase 3: Grade 12 Accounting Rollout**
+- [/] **Phase 4: Advanced Part Marking and Rich Workings**
+  - [x] Rubric data model + evaluation_service.py
+  - [x] Rubric popovers in JournalRenderer.jsx
+  - [x] Inject rubric_map into all grade generators
+  - [ ] Apply scoring thresholds
+
+- [/] **Phase A: 3-Mode Architecture**
+  - [x] Restore 'practice' mode to WorkspaceModeShell.jsx
+  - [x] Add subscriptionTier prop + lock Marking for standard users
+  - [x] Add Check/Compare buttons to answer card footer
+
+- [x] **Phase B: Subscription Security (Extend Firebase)**
+  - [x] Add OWNER_EMAILS array to useAuthentication.js
+  - [x] Add new fields to Firestore user doc (tier, subscribedGrades, etc.)
+  - [x] Expiry check on auth state change (checkSubscriptionExpiry)
+  - [x] Dec 1 auto-upgrade logic (getAutoUpgradedGrades + Firestore persist)
+  - [x] Grade-lock topic cards (locked prop on SelectionCard with 🔒 overlay)
+
+- [x] **Phase C: Term Stickers**
+  - [x] Add [getTopicTerm()](file:///C:/Users/princ/fundile-tlassistant-vite/src/components/curriculum/CurriculumHelper.jsx#891-935) function to CurriculumHelper.jsx
+  - [x] Add `badge` prop to SelectionCard (blue=Term1, emerald=Term2)
+  - [x] Render Term 1/Term 2 badges on accounting topic cards
+
+- [ ] **Phase D: Term 2 Topic Implementation**
+  - [ ] Gr10: Salaries & Wages Journal (5 subskills)
+  - [ ] Gr10: Sole Trader Final Accounts (6 subskills)
+  - [ ] Gr10: Value Added Tax (4 subskills)
+  - [ ] Gr11: Clubs & Non-profit Organisations (4 subskills)
+  - [ ] Gr11: Financial Statement Analysis (5 subskills)
+  - [ ] Gr12: Fixed/Tangible Assets (4 subskills)
+  - [ ] Gr12: Inventory Systems (4 subskills)
+  - [ ] Gr12: Reconciliations (TBD subskills)
+  - [ ] Gr12: Value Added Tax (TBD subskills)
+
+- [x] **Phase E: Check/Compare Evaluation UI**
+  - [x] Check button → useEvaluationCheck.js hook (deterministic compare)
+  - [x] EvaluationOverlay.jsx + EvaluationScoreBanner (rubric step-by-step)
+  - [x] EvaluatedWorkspaceModeShell.jsx wrapper (auto-wires hook + overlay)
+  - [x] Wire into grade10/11/12 registries (all accounting routes)
+  - [x] evalCellStyle.js utility + Grade10 Sole Trader scaffold wired (green/red cells + compare swap)
