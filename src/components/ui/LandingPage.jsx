@@ -2,7 +2,10 @@ import React from 'react';
 import FundileLogo from './FundileLogo';
 import { ArrowRight, BookOpen, BrainCircuit, CheckCircle, GraduationCap, LayoutDashboard, PenTool, ShieldCheck, Sparkles, Target, Trophy, Users } from 'lucide-react';
 import DemandCaptureForm from './DemandCaptureForm';
+import CapsNscClarity from './landing/CapsNscClarity';
+import LandingFaq from './landing/LandingFaq';
 import { LIVE_AVAILABILITY_DETAIL, LIVE_AVAILABILITY_HEADLINE, LIVE_AVAILABILITY_NOTE } from '../../app/constants/availability';
+import { HERO_COPY, HIDDEN_CURRICULUM, AUDIENCES, PRICING_COPY } from '../../app/constants/landingCopy';
 
 // Landing Page Component
 const LandingPage = ({ db, onGetStarted, onSignIn, onViewSubscription, palette = 'dark' }) => {
@@ -202,7 +205,7 @@ const LandingPage = ({ db, onGetStarted, onSignIn, onViewSubscription, palette =
                         <div className="max-w-3xl">
                             <div className={`mb-6 inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium ${isLightPalette ? 'border border-[#2B7BD8]/20 bg-white/85 text-[#13519C] shadow-sm shadow-sky-100/50' : 'border border-[#2B7BD8]/40 bg-[#13519C]/20 text-blue-100'}`}>
                                 <Sparkles className="h-4 w-4 text-[#FFD166]" />
-                                Curriculum-aligned support for stronger performance and mastery
+                                {HERO_COPY.eyebrow}
                             </div>
                             <div className="mb-6 flex flex-wrap gap-3">
                                 <button
@@ -211,6 +214,13 @@ const LandingPage = ({ db, onGetStarted, onSignIn, onViewSubscription, palette =
                                     className={`inline-flex items-center justify-center rounded-full px-4 py-2 text-sm font-semibold transition ${isLightPalette ? 'border border-sky-200 bg-white text-[#13519C] hover:border-sky-300 hover:bg-sky-50' : 'border border-white/15 bg-white/5 text-white hover:border-white/30 hover:bg-white/10'}`}
                                 >
                                     Pricing
+                                </button>
+                                <button
+                                    type="button"
+                                    onClick={() => scrollToSection('caps-nsc')}
+                                    className={`inline-flex items-center justify-center rounded-full px-4 py-2 text-sm font-semibold transition ${isLightPalette ? 'border border-sky-200 bg-white text-[#13519C] hover:border-sky-300 hover:bg-sky-50' : 'border border-white/15 bg-white/5 text-white hover:border-white/30 hover:bg-white/10'}`}
+                                >
+                                    CAPS &amp; NSC
                                 </button>
                                 <button
                                     type="button"
@@ -235,10 +245,10 @@ const LandingPage = ({ db, onGetStarted, onSignIn, onViewSubscription, palette =
                                 </button>
                             </div>
                             <h1 className={`text-5xl font-bold tracking-tight sm:text-6xl xl:text-7xl ${heroSectionTextClassName}`} style={{ fontFamily: 'Afacad, sans-serif' }}>
-                                Ace your exams with your 24/7 Personal Tutor.
+                                {HERO_COPY.title}
                             </h1>
                             <p className={`mt-6 max-w-2xl text-lg leading-8 sm:text-xl ${bodyTextClassName}`}>
-                                Fundile is a curriculum-aligned learning assistant that helps you crush your goals. Move past generic AI answers with our deep practice generators, safe learning environment, and strict CAPS syllabus alignment.
+                                {HERO_COPY.subtitle}
                             </p>
                             <div className={`mt-6 rounded-[28px] border px-5 py-4 ${isLightPalette ? 'border-sky-100 bg-white/95 shadow-sm shadow-sky-100/40' : 'border-white/10 bg-white/5 backdrop-blur-sm'}`}>
                                 <p className="text-sm font-semibold uppercase tracking-[0.25em] text-[#FF9100]">Availability</p>
@@ -341,11 +351,29 @@ const LandingPage = ({ db, onGetStarted, onSignIn, onViewSubscription, palette =
                         ))}
                     </section>
 
+                    <section id="hidden-curriculum" className="mt-24">
+                        <div className="max-w-3xl">
+                            <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[#FFD166]">{HIDDEN_CURRICULUM.eyebrow}</p>
+                            <h2 className={`mt-4 text-4xl font-bold tracking-tight sm:text-5xl ${heroSectionTextClassName}`} style={{ fontFamily: 'Afacad, sans-serif' }}>
+                                {HIDDEN_CURRICULUM.title}
+                            </h2>
+                            <p className={`mt-5 text-lg leading-8 ${bodyTextClassName}`}>{HIDDEN_CURRICULUM.body}</p>
+                        </div>
+                        <div className="mt-10 grid gap-5 md:grid-cols-3">
+                            {HIDDEN_CURRICULUM.points.map((point) => (
+                                <div key={point.title} className={surfaceClassName}>
+                                    <h3 className={`text-xl font-semibold ${heroSectionTextClassName}`}>{point.title}</h3>
+                                    <p className={`mt-3 leading-7 ${bodyTextClassName}`}>{point.body}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+
                     <section id="features" className="mt-24">
                         <div className="max-w-3xl">
                             <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[#FFD166]">What you can do</p>
                             <h2 className={`mt-4 text-4xl font-bold tracking-tight sm:text-5xl ${heroSectionTextClassName}`} style={{ fontFamily: 'Afacad, sans-serif' }}>
-                                A long-scroll page should still answer one thing clearly: what can I actually do here?
+                                Everything you need to study with intention.
                             </h2>
                             <p className={`mt-5 text-lg leading-8 ${bodyTextClassName}`}>
                                 Fundile is built around practical learning workflows so learners can move from confusion to action more quickly.
@@ -364,14 +392,16 @@ const LandingPage = ({ db, onGetStarted, onSignIn, onViewSubscription, palette =
                         </div>
                     </section>
 
+                    <CapsNscClarity isLightPalette={isLightPalette} />
+
                     <section id="pricing" className="mt-24 grid gap-8 lg:grid-cols-[0.92fr_1.08fr] lg:items-start">
                         <div className={`rounded-[32px] border p-8 ${isLightPalette ? 'border-sky-100 bg-white shadow-lg shadow-sky-100/35' : 'border-white/10 bg-white/5 backdrop-blur-sm'}`}>
                             <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[#FFD166]">Pricing</p>
                             <h2 className={`mt-4 text-4xl font-bold tracking-tight sm:text-5xl ${heroSectionTextClassName}`} style={{ fontFamily: 'Afacad, sans-serif' }}>
-                                Choose the package that matches your learning support needs.
+                                {PRICING_COPY.title}
                             </h2>
                             <p className={`mt-5 text-lg leading-8 ${bodyTextClassName}`}>
-                                Subscriptions currently cover the live Grade 10 and Grade 11 Accounting experience. If an active subscription overlaps into a new school year, Fundile already auto-adds the next grade from December onward so learners can continue smoothly.
+                                {PRICING_COPY.anchor}
                             </p>
                             <div className={`mt-5 rounded-2xl border px-4 py-3 text-sm leading-7 ${isLightPalette ? 'border-sky-100 bg-slate-50 text-slate-600' : 'border-white/10 bg-slate-950/60 text-white/75'}`}>
                                 {LIVE_AVAILABILITY_NOTE}
@@ -414,7 +444,7 @@ const LandingPage = ({ db, onGetStarted, onSignIn, onViewSubscription, palette =
                             <div className={`rounded-[28px] border p-6 ${isLightPalette ? 'border-sky-100 bg-white shadow-lg shadow-sky-100/30' : 'border-white/10 bg-[#13519C]/18'}`}>
                                 <p className={`text-sm font-semibold uppercase tracking-[0.25em] ${isLightPalette ? 'text-[#2B7BD8]' : 'text-blue-200'}`}>Standard package</p>
                                 <h3 className={`mt-4 text-2xl font-semibold ${heroSectionTextClassName}`}>R150 / mo</h3>
-                                <p className={`mt-3 leading-7 ${bodyTextClassName}`}>Deep deterministic practice generators across Accounting, EMS, and Business Studies. Gain mastery through adaptive progression and scaffolded hints.</p>
+                                <p className={`mt-3 leading-7 ${bodyTextClassName}`}>{PRICING_COPY.tiers.find((t) => t.key === 'standard').description}</p>
                                 <div className="mt-5 flex flex-wrap gap-3 text-sm font-semibold">
                                     <span className={`rounded-full px-3 py-1 ${isLightPalette ? 'bg-[#13519C]/10 text-[#13519C]' : 'bg-[#2B7BD8]/20 text-blue-100'}`}>Live now</span>
                                     <span className={`rounded-full px-3 py-1 ${isLightPalette ? 'bg-emerald-100 text-emerald-700' : 'bg-emerald-500/15 text-emerald-200'}`}>Save R200 yearly</span>
@@ -430,7 +460,7 @@ const LandingPage = ({ db, onGetStarted, onSignIn, onViewSubscription, palette =
                             <div className={`rounded-[28px] border p-6 ${isLightPalette ? 'border-sky-100 bg-white shadow-lg shadow-sky-100/30' : 'border-white/10 bg-violet-500/10'}`}>
                                 <p className={`text-sm font-semibold uppercase tracking-[0.25em] ${isLightPalette ? 'text-violet-600' : 'text-violet-200'}`}>Pro package</p>
                                 <h3 className={`mt-4 text-2xl font-semibold ${heroSectionTextClassName}`}>R299 / mo</h3>
-                                <p className={`mt-3 leading-7 ${bodyTextClassName}`}>Your 24/7 Multi-Agent Socratic Tutor. Pro connects to advanced LLMs to provide real-time guidance, W3C MathML formatting, and deep concept breakdowns.</p>
+                                <p className={`mt-3 leading-7 ${bodyTextClassName}`}>{PRICING_COPY.tiers.find((t) => t.key === 'pro').description}</p>
                                 <div className="mt-5 flex flex-wrap gap-3 text-sm font-semibold">
                                     <span className={`rounded-full px-3 py-1 ${isLightPalette ? 'bg-violet-100 text-violet-700' : 'bg-violet-500/20 text-violet-100'}`}>Coming soon</span>
                                     <span className={`rounded-full px-3 py-1 ${isLightPalette ? 'bg-amber-100 text-amber-700' : 'bg-amber-500/15 text-amber-200'}`}>Save R488 yearly</span>
@@ -581,21 +611,35 @@ const LandingPage = ({ db, onGetStarted, onSignIn, onViewSubscription, palette =
 
                     <section className="mt-24">
                         <div className="max-w-3xl">
-                            <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[#FFD166]">Who it is for</p>
+                            <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[#FFD166]">{AUDIENCES.eyebrow}</p>
                             <h2 className={`mt-4 text-4xl font-bold tracking-tight sm:text-5xl ${heroSectionTextClassName}`} style={{ fontFamily: 'Afacad, sans-serif' }}>
-                                Built for learners first, with space for teachers and families too.
+                                {AUDIENCES.title}
                             </h2>
                         </div>
                         <div className="mt-10 grid gap-5 lg:grid-cols-3">
-                            {audienceCards.map(({ icon: Icon, title, description }) => (
-                                <div key={title} className={audienceCardClassName}>
-                                    <Icon className={`h-8 w-8 ${isLightPalette ? 'text-[#13519C]' : 'text-[#FFD166]'}`} />
-                                    <h3 className={`mt-5 text-2xl font-semibold ${heroSectionTextClassName}`}>{title}</h3>
-                                    <p className={`mt-3 leading-7 ${bodyTextClassName}`}>{description}</p>
-                                </div>
-                            ))}
+                            {AUDIENCES.cards.map((card, index) => {
+                                const Icon = audienceCards[index]?.icon || GraduationCap;
+                                const isComingSoon = card.badge === 'Coming soon';
+                                return (
+                                    <div key={card.key} className={audienceCardClassName}>
+                                        <div className="flex items-center justify-between">
+                                            <Icon className={`h-8 w-8 ${isLightPalette ? 'text-[#13519C]' : 'text-[#FFD166]'}`} />
+                                            <span className={`rounded-full px-3 py-1 text-xs font-semibold ${isComingSoon
+                                                ? (isLightPalette ? 'bg-violet-100 text-violet-700' : 'bg-violet-500/20 text-violet-100')
+                                                : (isLightPalette ? 'bg-emerald-100 text-emerald-700' : 'bg-emerald-500/15 text-emerald-200')}`}
+                                            >
+                                                {card.badge}
+                                            </span>
+                                        </div>
+                                        <h3 className={`mt-5 text-2xl font-semibold ${heroSectionTextClassName}`}>{card.title}</h3>
+                                        <p className={`mt-3 leading-7 ${bodyTextClassName}`}>{card.body}</p>
+                                    </div>
+                                );
+                            })}
                         </div>
                     </section>
+                    <LandingFaq isLightPalette={isLightPalette} />
+
                     <section id="interest-form" className="mt-24 grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
                         <div className={`rounded-[32px] border p-8 ${isLightPalette ? 'border-sky-100 bg-white shadow-lg shadow-sky-100/35' : 'border-white/10 bg-white/5 backdrop-blur-sm'}`}>
                             <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[#FFD166]">Help shape rollout</p>
