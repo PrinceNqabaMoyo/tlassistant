@@ -1,36 +1,49 @@
 import os
-import math
+import json
 import re
-from typing import Dict, Any
+import math
+from typing import Dict, Any, List, Optional
 
-import sympy
-from sympy import sympify, solve, Eq, symbols, diff, integrate, pycode
-from langchain_google_genai import ChatGoogleGenerativeAI, GoogleGenerativeAIEmbeddings
-from langchain_chroma import Chroma
-from langchain.prompts import ChatPromptTemplate, MessagesPlaceholder
-from langchain.agents import AgentExecutor, create_tool_calling_agent
-from langchain_core.tools import tool
+try:
+    import sympy
+    from sympy import sympify, solve, Eq, symbols, diff, integrate, pycode
+except Exception:  # pragma: no cover
+    sympy = None  # type: ignore
+    sympify = solve = Eq = symbols = diff = integrate = pycode = None  # type: ignore
 
 from app.services.journal_service import (
     validate_cash_receipts_journal as _validate_crj,
     validate_cash_payments_journal as _validate_cpj,
-    mark_journal_submission as _mark_journal
+    mark_journal_submission as _mark_journal,
 )
+from app.services.llm_provider import get_llm_provider, BaseLLMProvider
+from app.services.student_model import StudentModel
+from app.services.topic_guardrail import TopicGuardrail
+from app.services.generator_registry import generate_variant
 
-agent_executors = {}
-vectorstore = None
 
-GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
+# --- Singleton state ---
+_llm_provider: Optional[BaseLLMProvider] = None
+_student_model: Optional[StudentModel] = None
+_guardrail: Optional[TopicGuardrail] = None
 
-# --- Math & Formatting Tools ---
 
-@tool
-def solve_equation_tool(equation: str) -> str:
-    """Solves a single algebraic equation for a variable."""
+def _get_provider() -> BaseLLMProvider:
+    global _llm_provider
+    if _llm_provider is None:
+        _llm_provider = get_llm_provider()
+    return _llm_provider
+
+
+# --- Math & formatting tools ---
+
+def _solve_equation(equation: str) -> str:
+    if sympify is None:
+        return "Math tools are not available (missing sympy dependency)."
     try:
-        if '=' not in equation:
+        if "=" not in equation:
             return "Error: Equation must contain an '=' sign."
-        lhs_str, rhs_str = equation.split('=', 1)
+        lhs_str, rhs_str = equation.split("=", 1)
         lhs = sympify(lhs_str.strip())
         rhs = sympify(rhs_str.strip())
         variables = lhs.free_symbols.union(rhs.free_symbols)
@@ -42,9 +55,10 @@ def solve_equation_tool(equation: str) -> str:
     except Exception as e:
         return f"Error solving equation: {e}"
 
-@tool
-def evaluate_expression_tool(expression: str, substitutions: dict = None) -> str:
-    """Evaluates a mathematical expression."""
+
+def _evaluate_expression(expression: str, substitutions: Optional[Dict[str, Any]] = None) -> str:
+    if sympify is None:
+        return "Math tools are not available (missing sympy dependency)."
     try:
         expr = sympify(expression.strip())
         if substitutions:
@@ -56,381 +70,339 @@ def evaluate_expression_tool(expression: str, substitutions: dict = None) -> str
     except Exception as e:
         return f"Error evaluating expression: {e}"
 
-@tool
-def geometry_calculator_tool(shape: str, **kwargs) -> str:
-    """Calculates geometric properties like area, perimeter, and volume for various 2D and 3D shapes."""
+
+def _geometry_calculator(shape: str, **kwargs) -> str:
     try:
         shape = shape.lower()
-        
-        # 2D Shapes
-        if shape == 'circle':
-            radius = kwargs.get('radius', 1)
-            area = math.pi * radius**2
-            circumference = 2 * math.pi * radius
-            diameter = 2 * radius
-            return f"Circle with radius {radius}: Area = {area:.2f}, Circumference = {circumference:.2f}, Diameter = {diameter:.2f}"
-            
-        elif shape == 'rectangle':
-            length = kwargs.get('length', 1)
-            width = kwargs.get('width', 1)
-            area = length * width
-            perimeter = 2 * (length + width)
-            diagonal = math.sqrt(length**2 + width**2)
-            return f"Rectangle with length {length} and width {width}: Area = {area:.2f}, Perimeter = {perimeter:.2f}, Diagonal = {diagonal:.2f}"
-            
-        elif shape == 'square':
-            side = kwargs.get('side', kwargs.get('length', 1))
-            area = side**2
-            perimeter = 4 * side
-            diagonal = side * math.sqrt(2)
-            return f"Square with side {side}: Area = {area:.2f}, Perimeter = {perimeter:.2f}, Diagonal = {diagonal:.2f}"
-            
-        elif shape == 'triangle':
-            base = kwargs.get('base', 1)
-            height = kwargs.get('height', 1)
-            side1 = kwargs.get('side1', base)
-            side2 = kwargs.get('side2', base)
-            side3 = kwargs.get('side3', base)
-            
-            # Calculate area using base and height
-            area = 0.5 * base * height
-            
-            # Calculate perimeter
-            perimeter = side1 + side2 + side3
-            
-            # Check if it's a right triangle
-            sides = sorted([side1, side2, side3])
-            is_right = abs(sides[0]**2 + sides[1]**2 - sides[2]**2) < 0.001
-            
-            result = f"Triangle with base {base} and height {height}: Area = {area:.2f}, Perimeter = {perimeter:.2f}"
-            if is_right:
-                result += " (Right triangle)"
-            return result
-            
-        elif shape == 'parallelogram':
-            base = kwargs.get('base', 1)
-            height = kwargs.get('height', 1)
-            side = kwargs.get('side', 1)
-            area = base * height
-            perimeter = 2 * (base + side)
-            return f"Parallelogram with base {base} and height {height}: Area = {area:.2f}, Perimeter = {perimeter:.2f}"
-            
-        elif shape == 'trapezoid':
-            base1 = kwargs.get('base1', 1)
-            base2 = kwargs.get('base2', 1)
-            height = kwargs.get('height', 1)
-            side1 = kwargs.get('side1', 1)
-            side2 = kwargs.get('side2', 1)
-            area = 0.5 * (base1 + base2) * height
-            perimeter = base1 + base2 + side1 + side2
-            return f"Trapezoid with bases {base1} and {base2}, height {height}: Area = {area:.2f}, Perimeter = {perimeter:.2f}"
-            
-        elif shape == 'rhombus':
-            side = kwargs.get('side', 1)
-            diagonal1 = kwargs.get('diagonal1', 1)
-            diagonal2 = kwargs.get('diagonal2', 1)
-            area = 0.5 * diagonal1 * diagonal2
-            perimeter = 4 * side
-            return f"Rhombus with side {side}: Area = {area:.2f}, Perimeter = {perimeter:.2f}"
-            
-        elif shape == 'regular_polygon':
-            n_sides = kwargs.get('n_sides', 6)
-            side_length = kwargs.get('side_length', 1)
-            apothem = kwargs.get('apothem', 0.866)  # Approximate for hexagon
-            
-            perimeter = n_sides * side_length
-            area = 0.5 * perimeter * apothem
-            return f"Regular {n_sides}-gon with side {side_length}: Area = {area:.2f}, Perimeter = {perimeter:.2f}"
-        
-        # 3D Shapes
-        elif shape == 'cube':
-            side = kwargs.get('side', 1)
-            volume = side**3
-            surface_area = 6 * side**2
-            diagonal = side * math.sqrt(3)
-            return f"Cube with side {side}: Volume = {volume:.2f}, Surface Area = {surface_area:.2f}, Space Diagonal = {diagonal:.2f}"
-            
-        elif shape == 'rectangular_prism':
-            length = kwargs.get('length', 1)
-            width = kwargs.get('width', 1)
-            height = kwargs.get('height', 1)
-            volume = length * width * height
-            surface_area = 2 * (length*width + length*height + width*height)
-            diagonal = math.sqrt(length**2 + width**2 + height**2)
-            return f"Rectangular Prism {length}×{width}×{height}: Volume = {volume:.2f}, Surface Area = {surface_area:.2f}, Space Diagonal = {diagonal:.2f}"
-            
-        elif shape == 'sphere':
-            radius = kwargs.get('radius', 1)
-            volume = (4/3) * math.pi * radius**3
-            surface_area = 4 * math.pi * radius**2
-            return f"Sphere with radius {radius}: Volume = {volume:.2f}, Surface Area = {surface_area:.2f}"
-            
-        elif shape == 'cylinder':
-            radius = kwargs.get('radius', 1)
-            height = kwargs.get('height', 1)
-            volume = math.pi * radius**2 * height
-            surface_area = 2 * math.pi * radius * (radius + height)
-            return f"Cylinder with radius {radius} and height {height}: Volume = {volume:.2f}, Surface Area = {surface_area:.2f}"
-            
-        elif shape == 'cone':
-            radius = kwargs.get('radius', 1)
-            height = kwargs.get('height', 1)
-            slant_height = kwargs.get('slant_height', math.sqrt(radius**2 + height**2))
-            volume = (1/3) * math.pi * radius**2 * height
-            surface_area = math.pi * radius * (radius + slant_height)
-            return f"Cone with radius {radius} and height {height}: Volume = {volume:.2f}, Surface Area = {surface_area:.2f}, Slant Height = {slant_height:.2f}"
-            
-        elif shape == 'pyramid':
-            base_length = kwargs.get('base_length', 1)
-            base_width = kwargs.get('base_width', 1)
-            height = kwargs.get('height', 1)
-            base_area = base_length * base_width
-            volume = (1/3) * base_area * height
-            # Approximate surface area (simplified)
-            surface_area = base_area + 2 * base_length * math.sqrt((base_width/2)**2 + height**2) + 2 * base_width * math.sqrt((base_length/2)**2 + height**2)
-            return f"Pyramid with base {base_length}×{base_width} and height {height}: Volume = {volume:.2f}, Surface Area ≈ {surface_area:.2f}"
-            
-        else:
-            supported_shapes = [
-                "2D: circle, rectangle, square, triangle, parallelogram, trapezoid, rhombus, regular_polygon",
-                "3D: cube, rectangular_prism, sphere, cylinder, cone, pyramid"
-            ]
-            return f"Error: Shape '{shape}' not supported. Supported shapes: {', '.join(supported_shapes)}"
-            
-    except KeyError as e:
-        return f"Error: Missing parameter {e} for shape '{shape}'. Check the required parameters for this shape."
+        if shape == "circle":
+            r = kwargs.get("radius", 1)
+            return f"Circle r={r}: Area={math.pi * r ** 2:.2f}, Circumference={2 * math.pi * r:.2f}"
+        if shape == "rectangle":
+            l = kwargs.get("length", 1)
+            w = kwargs.get("width", 1)
+            return f"Rectangle {l}x{w}: Area={l * w:.2f}, Perimeter={2 * (l + w):.2f}"
+        return "Supported shapes: circle, rectangle (expand as needed)."
     except Exception as e:
-        return f"Error in geometry calculation: {e}"
+        return f"Error: {e}"
 
-@tool
-def calculus_tool(operation: str, expression: str, variable: str) -> str:
-    """Performs calculus operations: differentiation or integration."""
+
+def _calculus(operation: str, expression: str, variable: str) -> str:
+    if sympify is None:
+        return "Math tools are not available (missing sympy dependency)."
     try:
         x = symbols(variable)
         expr = sympify(expression)
-        
-        if operation.lower() == 'differentiate':
-            derivative = diff(expr, x)
-            return f"The derivative of {expression} with respect to {variable} is: {pycode(derivative)}"
-        elif operation.lower() == 'integrate':
-            integral = integrate(expr, x)
-            return f"The integral of {expression} with respect to {variable} is: {pycode(integral)} + C"
-        else:
-            return "Error: Invalid operation. Choose 'differentiate' or 'integrate'."
+        if operation.lower() == "differentiate":
+            return f"Derivative: {pycode(diff(expr, x))}"
+        if operation.lower() == "integrate":
+            return f"Integral: {pycode(integrate(expr, x))} + C"
+        return "Invalid operation."
     except Exception as e:
-        return f"Error performing calculus operation: {e}"
+        return f"Error: {e}"
 
-@tool
-def format_expression_tool(expression: str) -> str:
-    """
-    Formats a mathematical expression string using HTML <sup> for superscripts
-    and <sub> for subscripts. Use this to clean up and display final mathematical answers.
-    Example: format_expression_tool("x**2 + y_1") returns "x<sup>2</sup> + y<sub>1</sub>"
-    """
+
+def _format_expression(expression: str) -> str:
+    if sympify is None:
+        return "Math tools are not available (missing sympy dependency)."
     try:
-        expression = expression.replace('sqrt', '√')
-        subscript_expr = re.sub(r'([a-zA-Z])_(\d+)', r'\1<sub>\2</sub>', expression)
+        expression = expression.replace("sqrt", "√")
+        subscript_expr = re.sub(r"([a-zA-Z])_(\d+)", r"\1<sub>\2</sub>", expression)
         expr = sympify(subscript_expr)
         code_str = pycode(expr)
-        final_expr = re.sub(r'\*\*(\w+|\d+\.?\d*)', r'<sup>\1</sup>', code_str)
-        final_expr = final_expr.replace('*', '×')
-        return final_expr
+        final_expr = re.sub(r"\*\*(\w+|\d+\.?\d*)", r"<sup>\1</sup>", code_str)
+        return final_expr.replace("*", "×")
     except Exception as e:
-        return f"Error formatting expression: {e}. The expression might be invalid."
-
-# Wrap journal logic as LangChain tools
-@tool
-def validate_cash_receipts_journal(journal_data: dict) -> str:
-    """Validates a Cash Receipts Journal for accounting accuracy and completeness."""
-    return _validate_crj(journal_data)
-
-@tool
-def validate_cash_payments_journal(journal_data: dict) -> str:
-    """Validates a Cash Payments Journal for accounting accuracy and completeness."""
-    return _validate_cpj(journal_data)
-
-@tool
-def mark_journal_submission(question_text: str, student_journal: dict, expected_journal: dict, journal_type: str) -> str:
-    """Marks a student's journal submission against the expected answer."""
-    return _mark_journal(question_text, student_journal, expected_journal, journal_type)
-
-# --- Persona-Based System Prompts ---
-ROUTER_PROMPT = (
-    "You are the CAPS AI Supervisor Router. Your sole responsibility is to evaluate a student's request "
-    "and determine the appropriate specialized agent to handle it. "
-    "If the request involves Mathematics, route to 'MathTutor'. "
-    "If the request involves Business Studies or EMS, route to 'BusinessStudiesTutor'."
-    "If the request involves Accounting, ledgers, or journals, route to 'AccountingTutor'."
-)
-
-MATH_TUTOR_PROMPT = (
-    "You are the CAPS AI Math Tutor. Your specialty is Mathematics. "
-    "Use the Socratic method to guide the student. Never give direct answers to assignments. "
-    "Frustration Index Logic: If the student struggles repeatedly on the same concept (use 'get_student_history' tool), "
-    "shift from pure Socratic questioning to providing direct, targeted hints to lower their frustration. "
-    "Always use 'get_curriculum_page' first. Use your calculator tools as needed. "
-    "Your output will be piped to the MathMLFormatter."
-)
-
-BUSINESS_STUDIES_TUTOR_PROMPT = (
-    "You are the CAPS AI Business Studies Tutor. Your specialty is Business Studies and EMS. "
-    "Use the Socratic method. Avoid direct answers. "
-    "Frustration Index Logic: If the student exhibits repeated failure on a topic (use 'get_student_history' tool), "
-    "provide direct concept breakdowns instead of endless questions to lower their frustration. "
-    "Always rely on 'get_curriculum_page' to pull theoretical definitions directly from caps-wiki."
-)
-
-ACCOUNTING_TUTOR_PROMPT = (
-    "You are the CAPS AI Accounting Tutor. Your specialty is Accounting and Financial Literacy. "
-    "Use the Socratic method. Avoid direct answers. "
-    "Frustration Index Logic: If the student exhibits repeated failure on a topic (use 'get_student_history' tool), "
-    "provide direct hints and formulas instead of endless questions to lower their frustration. "
-    "Use the validate journal tools (e.g., 'validate_cash_receipts_journal') when the student asks to check their ledger."
-)
-
-MATHML_FORMATTER_PROMPT = (
-    "You are the CAPS AI MathML Formatter. Your ONLY job is to take the final mathematical "
-    "output from the MathTutor and wrap it in valid W3C MathML <math> tags for frontend rendering. "
-    "Do not add any conversational text, just output the strict MathML."
-)
-
-TEACHER_PROMPT = (
-    "You are CAPS AI, an expert assistant for a South African teacher. Your specialty is Mathematics."
-    "Address the user as a professional colleague. Your goal is to help them create teaching materials, get curriculum information, and generate assessments."
-    "Provide concise, accurate information. You can generate lesson plans, summaries, and varied question types (e.g., multiple choice, long-form)."
-    "When asked to generate content, always refer to the provided curriculum documents using your tools."
-    "Always use the 'get_curriculum_page' tool first to find exact curriculum content. Only use 'curriculum_search_tool' as a secondary fallback if the specific information is missing from the wiki."
-)
-
-ADMIN_PROMPT = (
-    "You are CAPS AI, a high-level administrative assistant. Your purpose is to provide data-driven insights and summaries about the curriculum."
-    "Address the user formally and professionally. Your responses should be factual, data-oriented, and based on the documents provided."
-    "Do not provide teaching advice or student-facing content unless explicitly asked to generate an example."
-    "Always use the 'get_curriculum_page' tool first to find exact curriculum content. Only use 'curriculum_search_tool' as a secondary fallback if the specific information is missing from the wiki."
-)
-
-def initialize_agent(firestore_db=None):
-    """Initializes the AI agent, tools, and vector store for all personas."""
-    global agent_executors, vectorstore
-    if agent_executors:
-        return
-
-    print("Initializing AI Agents for all personas...")
-    llm = ChatGoogleGenerativeAI(model="models/gemini-1.5-flash", temperature=0.2, convert_system_message_to_human=True, google_api_key=GOOGLE_API_KEY)
-    
-    CHROMA_DB_DIR = "chroma_db_langchain"
-    if not os.path.exists(CHROMA_DB_DIR):
-        print(f"Warning: ChromaDB directory '{CHROMA_DB_DIR}' not found. Curriculum search will not work.")
-    else:
-         vectorstore = Chroma(
-            persist_directory=CHROMA_DB_DIR,
-            embedding_function=GoogleGenerativeAIEmbeddings(model="models/embedding-001", google_api_key=GOOGLE_API_KEY),
-            collection_name="caps_curriculum_collection"
-        )
+        return f"Error formatting expression: {e}"
 
 
+# --- Accounting journal tools ---
 
-    @tool
-    def curriculum_search_tool(query: str) -> str:
-        """Searches the CAPS curriculum documents for relevant information. Use this ONLY as a fallback if get_curriculum_page does not provide the answer."""
-        if not vectorstore:
-            return "Curriculum database is not available."
-        retriever = vectorstore.as_retriever(search_kwargs={"k": 3})
-        docs = retriever.invoke(query)
-        return "\n\n".join([f"Source: {doc.metadata.get('source_filename', 'N/A')}, Page: {doc.metadata.get('page_number', 'N/A')}\n\n{doc.page_content}" for doc in docs])
+def _validate_crj_tool(journal_data: Dict) -> str:
+    return str(_validate_crj(journal_data))
 
-    @tool
-    def get_curriculum_page(subject: str, grade: str, topic: str) -> str:
-        """Looks up exact CAPS curriculum content for a given subject, grade, and topic.
-        Args:
-            subject: e.g., 'mathematics', 'accounting'
-            grade: e.g., 'grade-7', 'grade-10'
-            topic: e.g., 'fractions', 'geometry', 'algebra', 'cash-receipts-journal'
-        """
-        base_path = os.path.join("caps-wiki", subject.lower(), grade.lower())
-        file_path = os.path.join(base_path, f"{topic.lower().replace(' ', '-')}.md")
-        if not os.path.exists(file_path):
-            base_path = os.path.join("caps-ai-backend", "caps-wiki", subject.lower(), grade.lower())
-            file_path = os.path.join(base_path, f"{topic.lower().replace(' ', '-')}.md")
-        try:
+
+def _validate_cpj_tool(journal_data: Dict) -> str:
+    return str(_validate_cpj(journal_data))
+
+
+def _mark_journal_tool(question_text: str, student_journal: Dict, expected_journal: Dict, journal_type: str) -> str:
+    return str(_mark_journal(question_text, student_journal, expected_journal, journal_type))
+
+
+# --- Wiki & visual tools ---
+
+def _get_curriculum_page(subject: str, grade: str, topic: str) -> str:
+    subject = subject.lower()
+    grade = grade.lower()
+    topic = topic.lower().replace(" ", "-")
+    base_paths = [
+        os.path.join("caps-wiki", subject, grade),
+        os.path.join("caps-ai-backend", "caps-wiki", subject, grade),
+    ]
+    for base_path in base_paths:
+        file_path = os.path.join(base_path, f"{topic}.md")
+        if os.path.exists(file_path):
             with open(file_path, "r", encoding="utf-8") as f:
                 return f.read()
-        except FileNotFoundError:
-            return f"Curriculum page not found for {subject} {grade} {topic}."
+    return f"Curriculum page not found for {subject} {grade} {topic}."
 
-    @tool
-    def render_visual(render_type: str, data: str) -> str:
-        """Returns a render payload for the frontend to display.
-        Args:
-            render_type: 'math' (LaTeX), 'geometry' (JSXGraph), 'accounting_table', 'chemistry' (SMILES), or 'geography' (JSON map data)
-            data: The content to render (e.g. LaTeX string, SMILES string, or JSON map)
-        """
-        return f"RENDER_PAYLOAD: {{\"type\": \"{render_type}\", \"data\": \"{data}\"}}"
 
-    @tool
-    def get_student_history(user_id: str, max_records: int = 10) -> str:
-        """Retrieves a student's recent problem history from Firestore to personalise tutoring.
-        Args:
-            user_id: The Firebase UID of the student.
-            max_records: Maximum number of recent struggling/solved problems to return (default 10).
-        """
-        if not firestore_db:
-            return "Student history is not available (Firestore not connected)."
+def _render_visual(render_type: str, data: str) -> str:
+    return json.dumps({"type": render_type, "data": data})
+
+
+def _get_student_history(user_id: str, max_records: int = 10) -> str:
+    if not _student_model or not user_id:
+        return "Student history is not available."
+    try:
+        struggling = _student_model.get_recent_struggles(user_id, max_records)
+        successes = _student_model.get_recent_successes(user_id, max_records)
+        weak = []
+        # We don't know subject/grade/topic here; keep the summary broad.
+        lines = []
+        if struggling:
+            lines.append("Recent struggling problems:")
+            for p in struggling:
+                lines.append(f"  - {p.get('topic', 'Unknown')} ({p.get('subject', 'Unknown')} {p.get('grade', 'Unknown')})")
+        else:
+            lines.append("No recent struggling problems.")
+        if successes:
+            lines.append("Recent solved problems:")
+            for p in successes:
+                lines.append(f"  - {p.get('topic', 'Unknown')} ({p.get('subject', 'Unknown')} {p.get('grade', 'Unknown')})")
+        else:
+            lines.append("No recent solved problems.")
+        return "\n".join(lines)
+    except Exception as e:
+        return f"Error retrieving history: {e}"
+
+
+# --- Tool definitions for the prompt ---
+
+TOOL_DESCRIPTIONS = """
+You have access to the following tools. Use exactly one tool at a time by responding with a line like:
+TOOL: <tool_name>(arg1="value1", arg2="value2")
+Then wait for the tool result before giving your final answer.
+
+Tools:
+1. get_curriculum_page(subject, grade, topic) - Read the relevant CAPS wiki page.
+2. get_student_history(user_id, max_records) - Read the student's recent struggles and successes.
+3. generate_variant(topic, subskill, difficulty, count, seed) - Create a new isomorphic question from the deterministic generator.
+4. render_visual(render_type, data) - Return a render payload for the frontend (math/geometry/accounting_table).
+5. solve_equation(equation) - Solve an algebraic equation.
+6. evaluate_expression(expression, substitutions) - Evaluate a math expression.
+7. geometry_calculator(shape, **kwargs) - Compute area/perimeter for basic shapes.
+8. calculus(operation, expression, variable) - Differentiate or integrate.
+9. validate_cash_receipts_journal(journal_data) - Validate a CRJ.
+10. validate_cash_payments_journal(journal_data) - Validate a CPJ.
+
+Only use a tool if the student's request requires it. If the answer is contained in the curriculum context provided, answer directly.
+""".strip()
+
+
+# --- Agent prompt ---
+
+def _build_system_prompt(context: Dict[str, Any]) -> str:
+    subject = context.get("subject", "the current subject")
+    grade = context.get("grade", "")
+    topic = context.get("topic", "the current topic")
+    subskill = context.get("subskill", "")
+    sample_answer = context.get("sample_answer", "")
+    marking_points = context.get("marking_points", [])
+    wiki = context.get("wiki_content", "")
+
+    prompt = f"""You are a CAPS-aligned tutor for South African schools. You are helping a student with {subject} {grade} - {topic}.
+Current subskill: {subskill}
+
+You are a Socratic tutor. Never give the full answer to an assignment question. Ask guiding questions, give hints, and help the student discover the answer.
+
+Strict rules:
+- Stay on the current topic.
+- If the student asks something off-topic, decline and redirect them to {topic}.
+- You may only use the generator tool to create another isomorphic question; you must not invent your own questions.
+- For math questions, use the calculator tools if needed.
+- For accounting questions, use the journal tools if needed.
+
+{TOOL_DESCRIPTIONS}
+
+Curriculum context:
+{wiki}
+
+Sample answer for the current question (do not reveal unless the student is truly stuck):
+{sample_answer}
+
+Marking points (do not reveal unless the student is truly stuck):
+{json.dumps(marking_points)}
+"""
+    return prompt
+
+
+# --- Tool execution router ---
+
+def _execute_tool_call(tool_line: str) -> str:
+    """Parses and executes a tool call of the form: TOOL: name(args)"""
+    match = re.match(r"TOOL:\s*(\w+)\s*\((.*)\)\s*$", tool_line.strip(), re.DOTALL)
+    if not match:
+        return "Error: Invalid tool call format."
+
+    tool_name = match.group(1)
+    args_str = match.group(2).strip()
+
+    # Try JSON object first (for dict arguments like journal_data)
+    kwargs: Dict[str, Any] = {}
+    if args_str.startswith("{"):
         try:
-            struggling_ref = firestore_db.collection('artifacts').document('tlassistant').collection('users').document(user_id).collection('struggling_problems')
-            solved_ref = firestore_db.collection('artifacts').document('tlassistant').collection('users').document(user_id).collection('solved_freeform_problems')
-            
-            struggling = [doc.to_dict() for doc in struggling_ref.order_by('lastUpdated', direction='DESCENDING').limit(max_records).stream()]
-            solved = [doc.to_dict() for doc in solved_ref.order_by('timestamp', direction='DESCENDING').limit(max_records).stream()]
-            
-            summary_lines = []
-            if struggling:
-                summary_lines.append(f"Recent struggling problems ({len(struggling)}):")
-                for p in struggling:
-                    summary_lines.append(f"  - Topic: {p.get('topic', 'Unknown')}, Subject: {p.get('subject', 'Unknown')}, Grade: {p.get('grade', 'Unknown')}, Solved: {p.get('isSolved', False)}")
-            else:
-                summary_lines.append("No recent struggling problems found.")
-            
-            if solved:
-                summary_lines.append(f"Recent solved problems ({len(solved)}):")
-                for p in solved:
-                    summary_lines.append(f"  - Topic: {p.get('topic', 'Unknown')}, Subject: {p.get('subject', 'Unknown')}, Grade: {p.get('grade', 'Unknown')}")
-            else:
-                summary_lines.append("No recent solved problems found.")
-            
-            return "\n".join(summary_lines)
+            kwargs = json.loads(args_str)
+        except json.JSONDecodeError:
+            return "Error: Invalid JSON arguments."
+    else:
+        # Parse simple keyword arguments (supports strings, ints)
+        for key, value in re.findall(r"(\w+)\s*=\s*(?:\"(.*?)\"|(\d+))", args_str):
+            kwargs[key] = value[0] if value[0] else int(value[1])
+
+    if tool_name == "get_curriculum_page":
+        return _get_curriculum_page(kwargs.get("subject", ""), kwargs.get("grade", ""), kwargs.get("topic", ""))
+    if tool_name == "get_student_history":
+        return _get_student_history(kwargs.get("user_id", ""), kwargs.get("max_records", 10))
+    if tool_name == "generate_variant":
+        try:
+            questions = generate_variant(
+                topic=kwargs.get("topic", ""),
+                subskill=kwargs.get("subskill", "concepts"),
+                difficulty=kwargs.get("difficulty", "medium"),
+                count=kwargs.get("count", 1),
+                seed=kwargs.get("seed", None),
+            )
+            return json.dumps(questions, default=str)
         except Exception as e:
-            return f"Error retrieving student history: {str(e)}"
+            return f"Error generating variant: {e}"
+    if tool_name == "render_visual":
+        return _render_visual(kwargs.get("render_type", ""), kwargs.get("data", ""))
+    if tool_name == "solve_equation":
+        return _solve_equation(kwargs.get("equation", ""))
+    if tool_name == "evaluate_expression":
+        return _evaluate_expression(kwargs.get("expression", ""), kwargs.get("substitutions"))
+    if tool_name == "geometry_calculator":
+        shape = kwargs.get("shape", "")
+        return _geometry_calculator(shape, **{k: v for k, v in kwargs.items() if k != "shape"})
+    if tool_name == "calculus":
+        return _calculus(kwargs.get("operation", ""), kwargs.get("expression", ""), kwargs.get("variable", ""))
+    if tool_name == "validate_cash_receipts_journal":
+        return _validate_crj_tool(kwargs.get("journal_data", {}))
+    if tool_name == "validate_cash_payments_journal":
+        return _validate_cpj_tool(kwargs.get("journal_data", {}))
 
-    tools = [
-        solve_equation_tool, evaluate_expression_tool, get_curriculum_page, render_visual, curriculum_search_tool,
-        geometry_calculator_tool, calculus_tool, format_expression_tool,
-        validate_cash_receipts_journal, validate_cash_payments_journal, mark_journal_submission,
-        get_student_history
-    ]
-    
-    prompts = {
-        "Router": ROUTER_PROMPT,
-        "MathTutor": MATH_TUTOR_PROMPT,
-        "BusinessStudiesTutor": BUSINESS_STUDIES_TUTOR_PROMPT,
-        "AccountingTutor": ACCOUNTING_TUTOR_PROMPT,
-        "MathMLFormatter": MATHML_FORMATTER_PROMPT,
-        "Teacher": TEACHER_PROMPT,
-        "Admin": ADMIN_PROMPT
-    }
+    return f"Error: Unknown tool '{tool_name}'."
 
-    for role, system_prompt in prompts.items():
-        agent_prompt = ChatPromptTemplate.from_messages([
-            ("system", system_prompt),
-            MessagesPlaceholder("chat_history"),
-            ("human", "{input}"),
-            MessagesPlaceholder("agent_scratchpad"),
-        ])
-        agent = create_tool_calling_agent(llm, tools, agent_prompt)
-        agent_executors[role] = AgentExecutor(agent=agent, tools=tools, verbose=True)
-        print(f"-> {role} agent initialized.")
-        
-    print("All AI Agents initialized successfully.")
+
+# --- Initialization ---
+
+def initialize_agent(firestore_db=None):
+    global _student_model, _guardrail
+    _student_model = StudentModel(firestore_db) if firestore_db else None
+    _guardrail = TopicGuardrail(_student_model)
+    print("AI Tutor initialized with provider:", _get_provider().__class__.__name__)
+
+
+def get_student_model() -> Optional[StudentModel]:
+    return _student_model
+
+
+# --- Main entry point ---
+
+def run_agent(
+    user_input: str,
+    context: Dict[str, Any],
+    chat_history: Optional[List[Dict[str, str]]] = None,
+    user_id: Optional[str] = None,
+    tier: str = "standard",
+) -> Dict[str, Any]:
+    """Runs the topic-bound tutor agent.
+
+    Context must include: subject, grade, topic, subskill, sample_answer, marking_points, wiki_content.
+    Returns: {"text": str, "render": Optional[Dict], "variant": Optional[Dict]}
+    """
+    if tier != "pro":
+        return {"text": "AI tutoring is available in the Pro package only.", "render": None, "variant": None}
+
+    if not all(k in context for k in ("subject", "grade", "topic", "subskill")):
+        return {"text": "Missing question context. Please start from a topic.", "render": None, "variant": None}
+
+    # Auto-populate wiki content if the frontend did not provide it.
+    if not context.get("wiki_content"):
+        context["wiki_content"] = _get_curriculum_page(
+            context["subject"], context["grade"], context["topic"]
+        )
+
+    if _guardrail:
+        guard_result = _guardrail.check(
+            user_input,
+            context["subject"],
+            context["grade"],
+            context["topic"],
+            user_id=user_id,
+        )
+        if not guard_result["allowed"]:
+            return {
+                "text": "I'm here to help with your current topic. Let's stay focused on that. You can ask me to explain a hint, show another example, or explain why an answer is wrong.",
+                "render": None,
+                "variant": None,
+            }
+
+    provider = _get_provider()
+    system_prompt = _build_system_prompt(context)
+
+    def _norm_role(msg: Dict[str, str]) -> Dict[str, str]:
+        role_map = {"human": "user", "ai": "assistant", "system": "system", "user": "user", "assistant": "assistant"}
+        return {"role": role_map.get(msg.get("role", "user"), "user"), "content": msg.get("content", "")}
+
+    messages = [{"role": "system", "content": system_prompt}]
+    if user_id:
+        messages.append({"role": "user", "content": f"Student ID: {user_id}"})
+    if chat_history:
+        messages.extend([_norm_role(m) for m in chat_history])
+    messages.append({"role": "user", "content": user_input})
+
+    # Simple tool loop: up to 3 iterations to prevent runaway calls.
+    tool_results = []
+    for _ in range(3):
+        full_prompt = "\n".join(
+            [m["content"] for m in messages]
+            + [f"Tool result: {tr}" for tr in tool_results]
+            + ["\nNow respond to the student. If you need a tool, use the TOOL: format."]
+        )
+
+        response = provider.invoke(messages=[{"role": "user", "content": full_prompt}])
+        tool_match = re.search(r"^\s*TOOL:\s*\w+\s*\(.*\)\s*$", response, re.MULTILINE)
+        if not tool_match:
+            break
+
+        tool_line = tool_match.group(0)
+        tool_result = _execute_tool_call(tool_line)
+        tool_results.append(f"{tool_line} -> {tool_result}")
+        messages.append({"role": "assistant", "content": tool_line})
+        messages.append({"role": "user", "content": f"Tool result: {tool_result}"})
+
+    # Extract render payload if present
+    render = None
+    render_match = re.search(r'RENDER_PAYLOAD:\s*(\{.*?\})', response, re.DOTALL)
+    if render_match:
+        try:
+            render = json.loads(render_match.group(1))
+        except json.JSONDecodeError:
+            pass
+
+    # Extract variant payload if present
+    variant = None
+    variant_match = re.search(r'VARIANT_PAYLOAD:\s*(\{.*?\})', response, re.DOTALL)
+    if variant_match:
+        try:
+            variant = json.loads(variant_match.group(1))
+        except json.JSONDecodeError:
+            pass
+
+    return {"text": response, "render": render, "variant": variant}
+
 
 def format_structured_answer(answer_data: Dict[str, Any]) -> str:
     """Formats a structured answer object into a string for the AI agent."""

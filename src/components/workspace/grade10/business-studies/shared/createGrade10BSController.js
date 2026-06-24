@@ -1,4 +1,5 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useDynamicScaffoldSteps } from './useDynamicScaffoldSteps';
 
 const DEFAULT_SCAFFOLD_STEPS = [
     { key: 'concepts', title: 'Concepts (MCQ)' },
@@ -9,12 +10,15 @@ const DEFAULT_SCAFFOLD_STEPS = [
  * Factory that builds a controller hook for a Grade 10 Business Studies topic.
  * Each topic only differs by its backend topic key, workspace mode prefix and
  * (optionally) its scaffold steps, so the heavy lifting is shared here.
+ *
+ * Phase 1 update: scaffold steps are now fetched dynamically from the
+ * curriculum `.md` file via `/sections` endpoint.
  */
 export const createGrade10BSController = ({
     topicKey,
     modePrefix,
     endpointPath = '/api/business-studies/grade10/generate',
-    scaffoldSteps = DEFAULT_SCAFFOLD_STEPS,
+    scaffoldSteps: initialScaffoldSteps = null,
 }) => {
     const scaffoldMode = `${modePrefix}_scaffold`;
     const practiceMode = `${modePrefix}_practice`;
@@ -39,7 +43,12 @@ export const createGrade10BSController = ({
         const [visualAidsOpen, setVisualAidsOpen] = useState(true);
         const [visualAidsTab, setVisualAidsTab] = useState('overview');
 
-        const steps = useMemo(() => scaffoldSteps, []);
+        // Dynamic scaffold steps from curriculum .md files
+        const { steps, loading: stepsLoading } = useDynamicScaffoldSteps({
+            topicKey,
+            buildApiUrl,
+            enabled: workspaceMode === scaffoldMode,
+        });
 
         const fetchScaffoldQuestion = async ({ subskill, difficulty }) => {
             setScaffoldLoading(true);
@@ -136,6 +145,7 @@ export const createGrade10BSController = ({
 
         return {
             scaffoldSteps: steps,
+            stepsLoading,
             practiceQuestions,
             practiceAnswers,
             setPracticeAnswers,

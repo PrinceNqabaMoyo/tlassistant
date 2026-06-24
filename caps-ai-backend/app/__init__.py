@@ -36,9 +36,11 @@ def create_app():
         except Exception as e:
             print(f"Warning: Could not initialize LLM Rate Limiter: {e}")
 
-    # Initialize global AI agent
+    # Initialize global AI agent and orchestrator
     from .services.agent_service import initialize_agent
     initialize_agent(firestore_db=firestore_db)
+    from .services.orchestrator_service import initialize_orchestrator
+    initialize_orchestrator(firestore_db=firestore_db)
 
     # Register blueprints
     from .api.math import math_bp
@@ -51,6 +53,7 @@ def create_app():
     from .api.grade11_business_studies import grade11_business_studies_bp
     from .api.grade12_business_studies import grade12_business_studies_bp
     from .api.agent import agent_bp
+    from .api.orchestrator import orchestrator_bp
     from .api.journals import journals_bp
     from .api.evaluation import evaluation_bp
     from .api.teacher import teacher_bp
@@ -70,6 +73,7 @@ def create_app():
     app.register_blueprint(grade11_business_studies_bp, url_prefix='/api/business-studies/grade11')
     app.register_blueprint(grade12_business_studies_bp, url_prefix='/api/business-studies/grade12')
     app.register_blueprint(agent_bp, url_prefix='/api/agent')
+    app.register_blueprint(orchestrator_bp, url_prefix='/api/orchestrator')
     app.register_blueprint(journals_bp, url_prefix='/api/journals')
     app.register_blueprint(evaluation_bp, url_prefix='/api')
     app.register_blueprint(teacher_bp, url_prefix='/api/teacher')

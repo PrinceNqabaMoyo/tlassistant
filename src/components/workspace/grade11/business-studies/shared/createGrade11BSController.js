@@ -1,4 +1,5 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useDynamicScaffoldSteps } from '../../../grade10/business-studies/shared/useDynamicScaffoldSteps';
 
 const DEFAULT_SCAFFOLD_STEPS = [
     { key: 'concepts', title: 'Concepts (MCQ)' },
@@ -41,7 +42,12 @@ export const createGrade11BSController = ({
         const [visualAidsOpen, setVisualAidsOpen] = useState(true);
         const [visualAidsTab, setVisualAidsTab] = useState('overview');
 
-        const steps = useMemo(() => scaffoldSteps, []);
+        const { steps, loading: stepsLoading } = useDynamicScaffoldSteps({
+            topicKey,
+            buildApiUrl,
+            enabled: workspaceMode === scaffoldMode,
+            sectionsEndpoint: '/api/business-studies/grade11/sections',
+        });
 
         const fetchScaffoldQuestion = async ({ subskill, difficulty }) => {
             setScaffoldLoading(true);
@@ -146,6 +152,7 @@ export const createGrade11BSController = ({
 
         return {
             scaffoldSteps: steps,
+            stepsLoading,
             practiceQuestions,
             practiceAnswers,
             setPracticeAnswers,

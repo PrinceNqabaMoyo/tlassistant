@@ -1,4 +1,5 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useDynamicScaffoldSteps } from './shared/useDynamicScaffoldSteps';
 
 export const useGrade7EmsController = ({ workspaceMode, buildApiUrl, config }) => {
     const [practiceQuestions, setPracticeQuestions] = useState([]);
@@ -20,9 +21,16 @@ export const useGrade7EmsController = ({ workspaceMode, buildApiUrl, config }) =
     const [visualAidsOpen, setVisualAidsOpen] = useState(true);
     const [visualAidsTab, setVisualAidsTab] = useState('concepts');
 
-    const scaffoldSteps = useMemo(() => config?.steps || [{ key: 'concepts', title: 'Concepts' }], [config]);
     const endpointPath = config?.endpoint || '/api/grade7_ems/generate';
     const topic = config?.topic;
+
+    const scaffoldMode = workspaceMode.endsWith('_scaffold');
+    const { steps: scaffoldSteps, loading: stepsLoading } = useDynamicScaffoldSteps({
+        topicKey: topic,
+        buildApiUrl,
+        enabled: scaffoldMode,
+        sectionsEndpoint: '/api/grade7_ems/sections',
+    });
 
     const fetchScaffoldQuestion = async ({ subskill, difficulty }) => {
         setScaffoldLoading(true);
@@ -127,6 +135,7 @@ export const useGrade7EmsController = ({ workspaceMode, buildApiUrl, config }) =
         fetchPractice,
 
         scaffoldSteps,
+        stepsLoading,
         scaffoldStepIndex,
         setScaffoldStepIndex,
         scaffoldQuestion,

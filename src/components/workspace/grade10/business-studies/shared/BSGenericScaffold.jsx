@@ -9,6 +9,10 @@ import {
     ArrowRight,
     Loader2,
 } from 'lucide-react';
+import WordBankQuestionUI from '../../../shared/WordBankQuestionUI';
+import BSMatchingColumns from './BSMatchingColumns';
+import BSCrosswordGrid from './BSCrosswordGrid';
+import BSEssayRenderer from './BSEssayRenderer';
 
 export const BSGenericScaffold = ({
     topicTitle = 'Business Studies',
@@ -116,6 +120,51 @@ export const BSGenericScaffold = ({
                     </div>
                 )}
 
+                {scaffoldQuestion.question_type === 'word_bank' && (
+                    <div className="pt-4">
+                        <WordBankQuestionUI
+                            question={scaffoldQuestion}
+                            answer={scaffoldAnswer || {}}
+                            setAnswer={handleAnswerChange}
+                            readOnly={!!scaffoldFeedback}
+                            showCheckHighlights={!!scaffoldFeedback}
+                        />
+                    </div>
+                )}
+
+                {scaffoldQuestion.question_type === 'matching_columns' && (
+                    <div className="pt-4">
+                        <BSMatchingColumns
+                            question={scaffoldQuestion}
+                            answer={scaffoldAnswer || {}}
+                            setAnswer={handleAnswerChange}
+                            readOnly={!!scaffoldFeedback}
+                        />
+                    </div>
+                )}
+
+                {scaffoldQuestion.question_type === 'crossword' && (
+                    <div className="pt-4">
+                        <BSCrosswordGrid
+                            question={scaffoldQuestion}
+                            answer={scaffoldAnswer || {}}
+                            setAnswer={handleAnswerChange}
+                            readOnly={!!scaffoldFeedback}
+                        />
+                    </div>
+                )}
+
+                {scaffoldQuestion.question_type === 'essay' && (
+                    <div className="pt-4">
+                        <BSEssayRenderer
+                            question={scaffoldQuestion}
+                            answer={scaffoldAnswer || ''}
+                            setAnswer={handleAnswerChange}
+                            readOnly={!!scaffoldFeedback}
+                        />
+                    </div>
+                )}
+
                 <div className="flex gap-4 pt-4 border-t border-slate-100">
                     <Button
                         onClick={() => setScaffoldShowHint(!scaffoldShowHint)}
@@ -177,6 +226,30 @@ export const BSGenericScaffold = ({
                                 </p>
                             </div>
                         </div>
+
+                        {/* Memo / Marking Points */}
+                        {(scaffoldQuestion.sample_answer || (scaffoldQuestion.marking_points && scaffoldQuestion.marking_points.length > 0)) && (
+                            <div className="mt-4 pt-4 border-t border-slate-200">
+                                {scaffoldQuestion.sample_answer && (
+                                    <div className="mb-3">
+                                        <h4 className="text-sm font-semibold text-slate-700 mb-1">Memo</h4>
+                                        <div className="text-sm text-slate-600 bg-white p-3 rounded-lg border border-slate-200 whitespace-pre-wrap">
+                                            {scaffoldQuestion.sample_answer}
+                                        </div>
+                                    </div>
+                                )}
+                                {scaffoldQuestion.marking_points && scaffoldQuestion.marking_points.length > 0 && (
+                                    <div>
+                                        <h4 className="text-sm font-semibold text-slate-700 mb-1">Marking Points</h4>
+                                        <ul className="list-disc list-inside text-sm text-slate-600 bg-white p-3 rounded-lg border border-slate-200 space-y-1">
+                                            {scaffoldQuestion.marking_points.map((pt, idx) => (
+                                                <li key={idx}>{pt}</li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                )}
+                            </div>
+                        )}
 
                         {scaffoldFeedback.is_correct && (
                             <div className="mt-6 flex justify-end">

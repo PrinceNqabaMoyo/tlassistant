@@ -1,4 +1,5 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useDynamicScaffoldSteps } from '../../shared/useDynamicScaffoldSteps';
 
 export const useGrade10BSInterrelationshipController = ({ workspaceMode, buildApiUrl }) => {
     const [practiceQuestions, setPracticeQuestions] = useState([]);
@@ -20,13 +21,12 @@ export const useGrade10BSInterrelationshipController = ({ workspaceMode, buildAp
     const [visualAidsOpen, setVisualAidsOpen] = useState(true);
     const [visualAidsTab, setVisualAidsTab] = useState('overview');
 
-    const scaffoldSteps = useMemo(
-        () => [
-            { key: 'concepts', title: 'Concepts (MCQ)' },
-            { key: 'discussion', title: 'Semantic/Essay (Discussion)' }
-        ],
-        []
-    );
+    const scaffoldMode = 'grade10_bs_interrelationship_scaffold';
+    const { steps: scaffoldSteps, loading: stepsLoading } = useDynamicScaffoldSteps({
+        topicKey: 'grade10_bs_interrelationship',
+        buildApiUrl,
+        enabled: workspaceMode === scaffoldMode,
+    });
 
     const endpointPath = '/api/business-studies/grade10/generate';
     const topicKey = 'grade10_bs_interrelationship';

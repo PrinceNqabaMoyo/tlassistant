@@ -1,9 +1,11 @@
 import json
+import os
 from flask import Blueprint, request, jsonify
-from langchain_google_genai import ChatGoogleGenerativeAI
-from app.services.agent_service import GOOGLE_API_KEY
 
 evaluation_bp = Blueprint('evaluation', __name__)
+
+# Read key from environment (same place llm_provider.py looks)
+GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 
 @evaluation_bp.route('/evaluate-typed', methods=['POST'])
 def evaluate_typed_answer():
@@ -23,7 +25,24 @@ def evaluate_typed_answer():
             return jsonify({"error": "Missing question_prompt or student_answer"}), 400
 
         if not GOOGLE_API_KEY:
-            return jsonify({"error": "AI service not configured"}), 500
+            return jsonify({"evaluation": {
+                "is_correct": False,
+                "score": 0,
+                "feedback": "AI evaluation is not available right now. Please review the sample answer and marking points instead.",
+                "key_points_hit": [],
+                "key_points_missed": [],
+            }}), 200
+
+        try:
+            from langchain_google_genai import ChatGoogleGenerativeAI
+        except Exception:
+            return jsonify({"evaluation": {
+                "is_correct": False,
+                "score": 0,
+                "feedback": "AI evaluation is not available (missing LLM package). Please review the sample answer and marking points instead.",
+                "key_points_hit": [],
+                "key_points_missed": [],
+            }}), 200
 
         llm = ChatGoogleGenerativeAI(
             model="models/gemini-1.5-flash",

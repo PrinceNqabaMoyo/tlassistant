@@ -38,8 +38,8 @@ venv/
 chroma_db_langchain/
 caps-ai-backend/chroma_db_langchain/
 
-agent.json
-agent2.json
+
+
 caps-ai-math-assistant-app-firebase-adminsdk*.json
 .env
 .env.local

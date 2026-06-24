@@ -1,20 +1,73 @@
-﻿PS C:\Users\princ> @"
->> import CurriculumHelperContainer from './curriculum-helper/CurriculumHelperContainer';
->>
->> export default CurriculumHelperContainer;
->> "@ | Set-Content -Encoding UTF8 .\src\components\curriculum\CurriculumHelper.jsx
-Set-Content : Could not find a part of the path 'C:\Users\princ\src\components\curriculum\CurriculumHelper.jsx'.
-At line:5 char:6
-+ "@ | Set-Content -Encoding UTF8 .\src\components\curriculum\Curriculu ...
-+      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    + CategoryInfo          : ObjectNotFound: (C:\Users\princ\...culumHelper.jsx:String) [Set-Content], DirectoryNotFo
-   undException
-    + FullyQualifiedErrorId : GetContentWriterDirectoryNotFoundError,Microsoft.PowerShell.Commands.SetContentCommand
-
-PS C:\Users\princ> @"
->> import CurriculumHelperContainer from './curriculum-helper/CurriculumHelperContainer';
->>
->> export default CurriculumHelperContainer;
->> "@ | Set-Content -Encoding UTF8 "C:\Users\princ\fundile-tlassistant-vite\src\components\curriculum\CurriculumHelper.jsx"
-PS C:\Users\princ>
+﻿14:38:44 [vite] Internal server error: Failed to resolve import "../../grade10/business-studies/shared/useDynamicScaffoldSteps" from "src/components/workspace/grade12/business-studies/shared/createGrade12BSController.js". Does the file exist?
+  Plugin: vite:import-analysis
+  File: C:/Users/princ/fundile-tlassistant-vite/src/components/workspace/grade12/business-studies/shared/createGrade12BSController.js:2:41
+  1  |  import { useEffect, useState } from 'react';
+  2  |  import { useDynamicScaffoldSteps } from '../../grade10/business-studies/shared/useDynamicScaffoldSteps';
+     |                                            ^
+  3  |
+  4  |  const DEFAULT_SCAFFOLD_STEPS = [
+      at TransformPluginContext._formatLog (file:///C:/Users/princ/fundile-tlassistant-vite/node_modules/vite/dist/node/chunks/config.js:29079:43)
+      at TransformPluginContext.error (file:///C:/Users/princ/fundile-tlassistant-vite/node_modules/vite/dist/node/chunks/config.js:29076:14)
+      at normalizeUrl (file:///C:/Users/princ/fundile-tlassistant-vite/node_modules/vite/dist/node/chunks/config.js:27199:18)
+      at async file:///C:/Users/princ/fundile-tlassistant-vite/node_modules/vite/dist/node/chunks/config.js:27257:32
+      at async Promise.all (index 1)
+      at async TransformPluginContext.transform (file:///C:/Users/princ/fundile-tlassistant-vite/node_modules/vite/dist/node/chunks/config.js:27225:4)
+      at async EnvironmentPluginContainer.transform (file:///C:/Users/princ/fundile-tlassistant-vite/node_modules/vite/dist/node/chunks/config.js:28877:14)
+      at async loadAndTransform (file:///C:/Users/princ/fundile-tlassistant-vite/node_modules/vite/dist/node/chunks/config.js:22746:26)
+      at async viteTransformMiddleware (file:///C:/Users/princ/fundile-tlassistant-vite/node_modules/vite/dist/node/chunks/config.js:24622:20)
+14:38:44 [vite] Internal server error: Failed to resolve import "../../grade10/business-studies/shared/useDynamicScaffoldSteps" from "src/components/workspace/grade11/business-studies/shared/createGrade11BSController.js". Does the file exist?
+  Plugin: vite:import-analysis
+  File: C:/Users/princ/fundile-tlassistant-vite/src/components/workspace/grade11/business-studies/shared/createGrade11BSController.js:2:41
+  1  |  import { useEffect, useState } from 'react';
+  2  |  import { useDynamicScaffoldSteps } from '../../grade10/business-studies/shared/useDynamicScaffoldSteps';
+     |                                            ^
+  3  |
+  4  |  const DEFAULT_SCAFFOLD_STEPS = [
+      at TransformPluginContext._formatLog (file:///C:/Users/princ/fundile-tlassistant-vite/node_modules/vite/dist/node/chunks/config.js:29079:43)
+      at TransformPluginContext.error (file:///C:/Users/princ/fundile-tlassistant-vite/node_modules/vite/dist/node/chunks/config.js:29076:14)
+      at normalizeUrl (file:///C:/Users/princ/fundile-tlassistant-vite/node_modules/vite/dist/node/chunks/config.js:27199:18)
+      at async file:///C:/Users/princ/fundile-tlassistant-vite/node_modules/vite/dist/node/chunks/config.js:27257:32
+      at async Promise.all (index 1)
+      at async TransformPluginContext.transform (file:///C:/Users/princ/fundile-tlassistant-vite/node_modules/vite/dist/node/chunks/config.js:27225:4)
+      at async EnvironmentPluginContainer.transform (file:///C:/Users/princ/fundile-tlassistant-vite/node_modules/vite/dist/node/chunks/config.js:28877:14)
+      at async loadAndTransform (file:///C:/Users/princ/fundile-tlassistant-vite/node_modules/vite/dist/node/chunks/config.js:22746:26)
+      at async viteTransformMiddleware (file:///C:/Users/princ/fundile-tlassistant-vite/node_modules/vite/dist/node/chunks/config.js:24622:20)
+14:39:22 [vite] (client) hmr update /src/index.css
+14:39:38 [vite] Internal server error: Failed to resolve import "../../grade10/business-studies/shared/useDynamicScaffoldSteps" from "src/components/workspace/grade11/business-studies/shared/createGrade11BSController.js". Does the file exist?
+  Plugin: vite:import-analysis
+  File: C:/Users/princ/fundile-tlassistant-vite/src/components/workspace/grade11/business-studies/shared/createGrade11BSController.js:2:41
+  1  |  import { useEffect, useState } from 'react';
+  2  |  import { useDynamicScaffoldSteps } from '../../grade10/business-studies/shared/useDynamicScaffoldSteps';
+     |                                            ^
+  3  |
+  4  |  const DEFAULT_SCAFFOLD_STEPS = [
+      at TransformPluginContext._formatLog (file:///C:/Users/princ/fundile-tlassistant-vite/node_modules/vite/dist/node/chunks/config.js:29079:43)
+      at TransformPluginContext.error (file:///C:/Users/princ/fundile-tlassistant-vite/node_modules/vite/dist/node/chunks/config.js:29076:14)
+      at normalizeUrl (file:///C:/Users/princ/fundile-tlassistant-vite/node_modules/vite/dist/node/chunks/config.js:27199:18)
+      at async file:///C:/Users/princ/fundile-tlassistant-vite/node_modules/vite/dist/node/chunks/config.js:27257:32
+      at async Promise.all (index 1)
+      at async TransformPluginContext.transform (file:///C:/Users/princ/fundile-tlassistant-vite/node_modules/vite/dist/node/chunks/config.js:27225:4)
+      at async EnvironmentPluginContainer.transform (file:///C:/Users/princ/fundile-tlassistant-vite/node_modules/vite/dist/node/chunks/config.js:28877:14)
+      at async loadAndTransform (file:///C:/Users/princ/fundile-tlassistant-vite/node_modules/vite/dist/node/chunks/config.js:22746:26)
+      at async viteTransformMiddleware (file:///C:/Users/princ/fundile-tlassistant-vite/node_modules/vite/dist/node/chunks/config.js:24622:20)
+14:39:38 [vite] Internal server error: Failed to resolve import "../../grade10/business-studies/shared/useDynamicScaffoldSteps" from "src/components/workspace/grade12/business-studies/shared/createGrade12BSController.js". Does the file exist?
+  Plugin: vite:import-analysis
+  File: C:/Users/princ/fundile-tlassistant-vite/src/components/workspace/grade12/business-studies/shared/createGrade12BSController.js:2:41
+  1  |  import { useEffect, useState } from 'react';
+  2  |  import { useDynamicScaffoldSteps } from '../../grade10/business-studies/shared/useDynamicScaffoldSteps';
+     |                                            ^
+  3  |
+  4  |  const DEFAULT_SCAFFOLD_STEPS = [
+      at TransformPluginContext._formatLog (file:///C:/Users/princ/fundile-tlassistant-vite/node_modules/vite/dist/node/chunks/config.js:29079:43)
+      at TransformPluginContext.error (file:///C:/Users/princ/fundile-tlassistant-vite/node_modules/vite/dist/node/chunks/config.js:29076:14)
+      at normalizeUrl (file:///C:/Users/princ/fundile-tlassistant-vite/node_modules/vite/dist/node/chunks/config.js:27199:18)
+      at async file:///C:/Users/princ/fundile-tlassistant-vite/node_modules/vite/dist/node/chunks/config.js:27257:32
+      at async Promise.all (index 1)
+      at async TransformPluginContext.transform (file:///C:/Users/princ/fundile-tlassistant-vite/node_modules/vite/dist/node/chunks/config.js:27225:4)
+      at async EnvironmentPluginContainer.transform (file:///C:/Users/princ/fundile-tlassistant-vite/node_modules/vite/dist/node/chunks/config.js:28877:14)
+      at async loadAndTransform (file:///C:/Users/princ/fundile-tlassistant-vite/node_modules/vite/dist/node/chunks/config.js:22746:26)
+      at async viteTransformMiddleware (file:///C:/Users/princ/fundile-tlassistant-vite/node_modules/vite/dist/node/chunks/config.js:24622:20)
+14:40:39 [vite] (client) hmr update /src/index.css, /src/components/workspace/Workspace.jsx
+14:40:40 [vite] (client) hmr update /src/index.css, /src/components/workspace/Workspace.jsx (x2)
+14:40:40 [vite] (client) hmr update /src/index.css, /src/components/workspace/Workspace.jsx (x3)
 

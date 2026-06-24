@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react';
+import { useDynamicScaffoldSteps } from '../../shared/useDynamicScaffoldSteps';
 
 const topicKey = 'grade11_bs_influences_on_business_environments';
 const endpointPath = '/api/business-studies/grade11/generate';
@@ -79,11 +80,13 @@ export const useGrade11BSInfluencesController = ({ buildApiUrl }) => {
     const [scaffoldMasteryProgress, setScaffoldMasteryProgress] = useState(createInitialMasteryProgress);
     const [scaffoldTopicCompleted, setScaffoldTopicCompleted] = useState(false);
 
-    const scaffoldSteps = useMemo(() => ([
-        { key: 'concepts', title: 'Concepts (MCQ)' },
-        { key: 'application', title: 'Scenario Analysis' },
-        { key: 'discussion', title: 'Discussion' },
-    ]), []);
+    const scaffoldMode = 'grade11_bs_influences_on_business_environments_scaffold';
+    const { steps: scaffoldSteps, loading: stepsLoading } = useDynamicScaffoldSteps({
+        topicKey,
+        buildApiUrl,
+        enabled: true,
+        sectionsEndpoint: '/api/business-studies/grade11/sections',
+    });
 
     const practiceSubskills = useMemo(() => ([
         { key: 'mixed', title: 'Mixed Practice' },
@@ -274,6 +277,7 @@ export const useGrade11BSInfluencesController = ({ buildApiUrl }) => {
 
     return {
         scaffoldSteps,
+        stepsLoading,
         practiceSubskills,
         scaffoldQuestion,
         setScaffoldQuestion,

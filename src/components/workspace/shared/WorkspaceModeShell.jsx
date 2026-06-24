@@ -124,9 +124,17 @@ const WorkspaceModeShell = ({
     ].filter(Boolean);
 
     const selectedSubskillLabel = subskills.find(s => s.key === localSubskill)?.title || localSubskill;
-    const configurationGridClassName = showDifficultyControl
-        ? 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4'
-        : 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4';
+    const showSubskillControl = !disableSubskillControl;
+    const configurationGridClassName = (() => {
+        const cols = [];
+        if (showDifficultyControl) cols.push('difficulty');
+        if (showSubskillControl) cols.push('subskill');
+        cols.push('generate');
+        const count = cols.length;
+        if (count <= 2) return 'grid grid-cols-1 sm:grid-cols-2 gap-4';
+        if (count === 3) return 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4';
+        return 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4';
+    })();
 
     // Hide scrollbar on mount, restore on unmount
     useEffect(() => {
@@ -227,27 +235,24 @@ const WorkspaceModeShell = ({
                                     )}
 
                                     {/* Subskill */}
-                                    <div className="space-y-2 sm:col-span-2">
-                                        <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide">Subskill</p>
-                                        <select
-                                            value={localSubskill}
-                                            onChange={(e) => setLocalSubskill(e.target.value)}
-                                            disabled={disableSubskillControl}
-                                            className={`w-full px-3 py-3 rounded-xl border text-sm bg-white transition-all ${
-                                                disableSubskillControl
-                                                    ? 'border-slate-200 text-slate-400 bg-slate-50 cursor-not-allowed'
-                                                    : 'border-slate-200 focus:outline-none focus:ring-2 focus:ring-slate-300 cursor-pointer'
-                                            }`}
-                                        >
-                                            {subskills.length > 0 ? (
-                                                subskills.map((s) => (
-                                                    <option key={s.key} value={s.key}>{s.title}</option>
-                                                ))
-                                            ) : (
-                                                <option value="mixed">Mixed (all)</option>
-                                            )}
-                                        </select>
-                                    </div>
+                                    {showSubskillControl && (
+                                        <div className="space-y-2 sm:col-span-2">
+                                            <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide">Subskill</p>
+                                            <select
+                                                value={localSubskill}
+                                                onChange={(e) => setLocalSubskill(e.target.value)}
+                                                className="w-full px-3 py-3 rounded-xl border text-sm bg-white transition-all border-slate-200 focus:outline-none focus:ring-2 focus:ring-slate-300 cursor-pointer"
+                                            >
+                                                {subskills.length > 0 ? (
+                                                    subskills.map((s) => (
+                                                        <option key={s.key} value={s.key}>{s.title}</option>
+                                                    ))
+                                                ) : (
+                                                    <option value="mixed">Mixed (all)</option>
+                                                )}
+                                            </select>
+                                        </div>
+                                    )}
 
                                     {/* Generate Button */}
                                     <div className="flex items-end">

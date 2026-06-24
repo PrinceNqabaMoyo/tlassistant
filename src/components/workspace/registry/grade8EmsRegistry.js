@@ -10,49 +10,59 @@ const TOPIC_CONFIGS = {
     'grade8_ems_gov_and_society': {
         topic: 'grade8_ems_gov_and_society',
         title: 'Grade 8 EMS • Term 1 • Government and Society',
-        steps: [
-            { key: 'concepts', title: 'Concepts' },
-            { key: 'discussion', title: 'Discussion' }
-        ]
+    },
+    'grade8_ems_government': {
+        topic: 'grade8_ems_government',
+        title: 'Grade 8 EMS • Term 1 • Government',
+    },
+    'grade8_ems_national_budget': {
+        topic: 'grade8_ems_national_budget',
+        title: 'Grade 8 EMS • Term 1 • National Budget',
+    },
+    'grade8_ems_standard_of_living': {
+        topic: 'grade8_ems_standard_of_living',
+        title: 'Grade 8 EMS • Term 1 • Standard of Living',
     },
     'grade8_ems_accounting_basics': {
         topic: 'grade8_ems_accounting_basics',
         title: 'Grade 8 EMS • Term 1 • Accounting Basics',
-        steps: [
-            { key: 'concepts', title: 'Concepts' },
-            { key: 'accounting_equation', title: 'Accounting Equation' }
-        ]
+    },
+    'grade8_ems_source_documents': {
+        topic: 'grade8_ems_source_documents',
+        title: 'Grade 8 EMS • Term 1 • Source Documents',
     },
     'grade8_ems_markets_and_production': {
         topic: 'grade8_ems_markets_and_production',
         title: 'Grade 8 EMS • Term 2 • Markets and Production',
-        steps: [
-            { key: 'concepts', title: 'Concepts' },
-            { key: 'discussion', title: 'Discussion' }
-        ]
+    },
+    'grade8_ems_markets': {
+        topic: 'grade8_ems_markets',
+        title: 'Grade 8 EMS • Term 2 • Markets',
+    },
+    'grade8_ems_factors_of_production': {
+        topic: 'grade8_ems_factors_of_production',
+        title: 'Grade 8 EMS • Term 2 • Factors of Production',
     },
     'grade8_ems_crj': {
         topic: 'grade8_ems_crj',
         title: 'Grade 8 EMS • Term 2 • Cash Receipts Journal',
-        steps: [
-            { key: 'crj', title: 'CRJ' }
-        ]
+    },
+    'grade8_ems_accounting_cycle': {
+        topic: 'grade8_ems_accounting_cycle',
+        title: 'Grade 8 EMS • Term 2 • Accounting Cycle',
     },
     'grade8_ems_cpj_and_crj': {
         topic: 'grade8_ems_cpj_and_crj',
         title: 'Grade 8 EMS • Term 3 • Cash Payments Journal',
-        steps: [
-            { key: 'cpj', title: 'CPJ' }
-        ]
     },
     'grade8_ems_ownership': {
         topic: 'grade8_ems_ownership',
         title: 'Grade 8 EMS • Term 3 • Forms of Ownership',
-        steps: [
-            { key: 'concepts', title: 'Concepts' },
-            { key: 'discussion', title: 'Discussion' }
-        ]
-    }
+    },
+    'grade8_ems_forms_of_ownership': {
+        topic: 'grade8_ems_forms_of_ownership',
+        title: 'Grade 8 EMS • Term 3 • Forms of Ownership',
+    },
 };
 
 const Grade8EmsRoute = ({ workspaceMode, ctx }) => {
@@ -74,6 +84,7 @@ const Grade8EmsRoute = ({ workspaceMode, ctx }) => {
         return h(Grade8EmsScaffold, {
             onBack: ctx.onBack,
             scaffoldSteps: controller.scaffoldSteps,
+            stepsLoading: controller.stepsLoading,
             visualAidsOpen: controller.visualAidsOpen,
             setVisualAidsOpen: controller.setVisualAidsOpen,
             scaffoldDifficulty: controller.scaffoldDifficulty,

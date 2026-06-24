@@ -94,6 +94,153 @@ def make_typed(
     }
 
 
+def make_wordbank(
+    *,
+    prefix: str,
+    prompt: str,
+    pool: List[str],
+    blanks: List[str],
+    correct_map: Dict[str, str],
+    explanation: str,
+    marks: int = 2,
+    hint: Optional[str] = None,
+    visual_aid_key: Optional[str] = None,
+    text_parts: Optional[List[str]] = None,
+) -> Dict[str, Any]:
+    """Build a word-bank question.
+
+    `blanks`   – list of blank labels, e.g. ["1", "2", "3"]
+    `correct_map` – dict mapping blank label -> correct word from pool,
+                   e.g. {"1": "Marketing", "2": "Production"}
+    `text_parts` – optional list of text segments surrounding blanks.
+                   Length should be len(blanks) + 1. Used by WordBankQuestionUI.
+    """
+    hint_text = hint or explanation
+    # Structured blanks for frontend WordBankQuestionUI compatibility
+    structured_blanks = [{"id": str(b), "label": str(b)} for b in blanks]
+    resolved_text_parts = list(text_parts) if text_parts else [prompt] + [""] * len(blanks)
+    return {
+        "id": make_id(f"{prefix}_wb"),
+        "question_type": "word_bank",
+        "prompt": prompt,
+        "word_bank": list(pool),
+        "blanks": structured_blanks,
+        "correct_map": dict(correct_map),
+        "text_parts": resolved_text_parts,
+        "explanation": explanation,
+        "marks": int(marks),
+        "hint_trigger": hint_text,
+        "guidelines": [hint_text] if hint_text else [],
+        "visual_aid_key": visual_aid_key,
+    }
+
+
+def make_matching(
+    *,
+    prefix: str,
+    prompt: str,
+    column_a: List[str],
+    column_b: List[str],
+    correct_pairs: Dict[str, str],
+    explanation: str,
+    marks: int = 2,
+    hint: Optional[str] = None,
+    visual_aid_key: Optional[str] = None,
+) -> Dict[str, Any]:
+    """Build a matching-columns question.
+
+    `column_a`    – left-side items, e.g. ["A", "B", "C"]
+    `column_b`    – right-side items, e.g. ["1", "2", "3"]
+    `correct_pairs` – mapping from column_a label -> column_b label,
+                     e.g. {"A": "2", "B": "1", "C": "3"}
+    """
+    hint_text = hint or explanation
+    return {
+        "id": make_id(f"{prefix}_match"),
+        "question_type": "matching_columns",
+        "prompt": prompt,
+        "column_a": list(column_a),
+        "column_b": list(column_b),
+        "correct_pairs": dict(correct_pairs),
+        "explanation": explanation,
+        "marks": int(marks),
+        "hint_trigger": hint_text,
+        "guidelines": [hint_text] if hint_text else [],
+        "visual_aid_key": visual_aid_key,
+    }
+
+
+def make_crossword(
+    *,
+    prefix: str,
+    prompt: str,
+    words: List[str],
+    clues: Dict[str, str],
+    grid_size: int = 10,
+    explanation: str,
+    marks: int = 2,
+    hint: Optional[str] = None,
+    visual_aid_key: Optional[str] = None,
+) -> Dict[str, Any]:
+    """Build a crossword question.
+
+    `words`    – list of words to place in the grid (uppercase)
+    `clues`    – dict mapping word -> clue text
+    `grid_size`– size of the square grid
+    """
+    hint_text = hint or explanation
+    return {
+        "id": make_id(f"{prefix}_cross"),
+        "question_type": "crossword",
+        "prompt": prompt,
+        "words": [w.upper() for w in words],
+        "clues": dict(clues),
+        "grid_size": int(grid_size),
+        "explanation": explanation,
+        "marks": int(marks),
+        "hint_trigger": hint_text,
+        "guidelines": [hint_text] if hint_text else [],
+        "visual_aid_key": visual_aid_key,
+    }
+
+
+def make_essay(
+    *,
+    prefix: str,
+    prompt: str,
+    rubric: List[Dict[str, Any]],
+    sample_answer: str,
+    marks: int = 20,
+    min_words: int = 150,
+    max_words: int = 400,
+    hint: Optional[str] = None,
+    visual_aid_key: Optional[str] = None,
+) -> Dict[str, Any]:
+    """Build an essay / long-form question.
+
+    `rubric` – list of criteria dicts, e.g.
+        [{"criterion": "Introduction", "marks": 4, "description": "..."}, ...]
+    """
+    hint_text = hint or (
+        "Plan your answer: write an introduction, develop your points in the body, "
+        "and finish with a conclusion."
+    )
+    return {
+        "id": make_id(f"{prefix}_essay"),
+        "question_type": "essay",
+        "prompt": prompt,
+        "rubric": list(rubric),
+        "sample_answer": sample_answer,
+        "explanation": sample_answer,
+        "marks": int(marks),
+        "min_words": int(min_words),
+        "max_words": int(max_words),
+        "hint_trigger": hint_text,
+        "guidelines": [hint_text],
+        "visual_aid_key": visual_aid_key,
+    }
+
+
 def sample_pool(r: random.Random, pool: List[Dict[str, Any]], count: int) -> List[Dict[str, Any]]:
     """Pick `count` items from a pool of *factory callables or dicts*.
 

@@ -69,6 +69,7 @@ export const createGrade12BSTopicRegistry = (config) => {
 
         const commonShellProps = {
             availableModes: ['scaffold', 'practice'],
+            disableSubskillControl: isScaffoldLikeMode,
             subskills: isScaffoldLikeMode ? controller.scaffoldSteps : null,
             difficulty: isScaffoldLikeMode ? controller.scaffoldDifficulty : controller.practiceDifficulty,
             setDifficulty: isScaffoldLikeMode ? controller.setScaffoldDifficulty : controller.setPracticeDifficulty,

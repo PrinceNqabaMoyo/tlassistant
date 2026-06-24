@@ -204,9 +204,9 @@ export const Grade10BSBusinessFunctionsPractice = ({
                         {/* Feedback Display */}
                         {isSubmitted && fb && (
                             <div className={`mt-6 p-6 rounded-xl border-2 animate-in fade-in slide-in-from-top-4 ${
-                                fb.is_correct 
-                                    ? 'bg-emerald-50 border-emerald-200' 
-                                    : fb.score > 0 
+                                fb.is_correct
+                                    ? 'bg-emerald-50 border-emerald-200'
+                                    : fb.score > 0
                                         ? 'bg-amber-50 border-amber-200'
                                         : 'bg-rose-50 border-rose-200'
                             }`}>
@@ -220,19 +220,43 @@ export const Grade10BSBusinessFunctionsPractice = ({
                                     )}
                                     <div>
                                         <h3 className={`font-semibold text-lg mb-1 ${
-                                            fb.is_correct ? 'text-emerald-800' 
+                                            fb.is_correct ? 'text-emerald-800'
                                             : fb.score > 0 ? 'text-amber-800' : 'text-rose-800'
                                         }`}>
                                             Score: {fb.score} / {fb.max_score}
                                         </h3>
                                         <p className={`text-sm ${
-                                            fb.is_correct ? 'text-emerald-600' 
+                                            fb.is_correct ? 'text-emerald-600'
                                             : fb.score > 0 ? 'text-amber-600' : 'text-rose-600'
                                         }`}>
                                             {fb.feedback}
                                         </p>
                                     </div>
                                 </div>
+
+                                {/* Memo / Marking Points */}
+                                {(currentQuestion.sample_answer || (currentQuestion.marking_points && currentQuestion.marking_points.length > 0)) && (
+                                    <div className="mt-4 pt-4 border-t border-slate-200">
+                                        {currentQuestion.sample_answer && (
+                                            <div className="mb-3">
+                                                <h4 className="text-sm font-semibold text-slate-700 mb-1">Memo</h4>
+                                                <div className="text-sm text-slate-600 bg-white p-3 rounded-lg border border-slate-200 whitespace-pre-wrap">
+                                                    {currentQuestion.sample_answer}
+                                                </div>
+                                            </div>
+                                        )}
+                                        {currentQuestion.marking_points && currentQuestion.marking_points.length > 0 && (
+                                            <div>
+                                                <h4 className="text-sm font-semibold text-slate-700 mb-1">Marking Points</h4>
+                                                <ul className="list-disc list-inside text-sm text-slate-600 bg-white p-3 rounded-lg border border-slate-200 space-y-1">
+                                                    {currentQuestion.marking_points.map((pt, idx) => (
+                                                        <li key={idx}>{pt}</li>
+                                                    ))}
+                                                </ul>
+                                            </div>
+                                        )}
+                                    </div>
+                                )}
                             </div>
                         )}
                     </div>

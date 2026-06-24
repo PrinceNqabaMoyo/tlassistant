@@ -1,0 +1,27 @@
+Searched for "(adaptive progression|agentic system|standard package|pro package)"
+Viewed AGENTS.md:1-6
+Edited AGENTS.md
+
+I have updated the `.agents/AGENTS.md` file to permanently include the definitions and architectural boundaries for the **Adaptive Progression** and **Agentic System** features, so all future AI agents will understand how to build for the different tiers.
+
+Here is a breakdown of how these two concepts differ between your **Standard** and **Pro** packages:
+
+### 1. The Agentic System (How the AI Tutors)
+This defines how the student interacts with the AI when they get stuck or need help.
+
+*   **Standard Package (Static Generation):** 
+    In the standard tier, the AI does all of its thinking *before* the student even sees the question. When a question is generated, the backend LLM simultaneously generates the question, the answer, and all the rich, cell-level hints and teaching notes. If a student gets stuck, they click a button, and the UI simply reveals that pre-computed text. There is no live "chatting" or back-and-forth communication.
+*   **Pro Package (Live Agentic Tutor):** 
+    The Pro tier introduces a live, conversational AI agent. Instead of just revealing pre-written hints, if a student struggles, the React frontend packages up their current workspace state (what they've typed so far) and sends it to a live AI agent on the backend. The agent analyzes exactly where the student went wrong and initiates a real-time Socratic dialogue (a chat interface), asking them guiding questions to help them realize their mistake on their own.
+
+### 2. Adaptive Progression (How the Student Advances)
+This defines how a student moves through the curriculum (from Scaffold → Practice → Assessment).
+
+*   **Standard Package (Linear / Rule-Based):**
+    Progression is linear and controlled by simple, hardcoded rules. A student must complete the Scaffold mode, then they take the Practice mode. If they score above a certain threshold (e.g., 80%), the Assessment mode unlocks. It treats all subskills equally.
+*   **Pro Package (AI-Driven Non-Linear Progression):**
+    The Pro tier continuously analyzes the student's performance on a granular level. If the student is great at "Concepts" but keeps failing the "Calculation" subskill, the AI intervenes. Instead of letting them move forward and fail the assessment, the system dynamically generates targeted micro-lessons and highly specific practice questions solely focused on "Calculation" until the AI determines they have mastered that specific weakness.
+
+By keeping these boundaries clear in the `AGENTS.md` file, any agent working on your codebase will know exactly which features belong to the standard tier we are building now, and which features are reserved for the premium Pro tier later. 
+
+Does this help clarify the difference between the two packages?

@@ -1921,64 +1921,13 @@ export default function App() {
     ));
   }, [setNavigationStack]);
 
-  // --- Enhanced getAgentResponse function with token tracking and caching ---
+  // --- getAgentResponse (LLM disabled until backend provider is configured) ---
   const getAgentResponse = useCallback(async (input, history) => {
-    setLoading(true);
-
-    // Check cache first for common requests
-    const cacheKey = `api_${input.substring(0, 100)}_${JSON.stringify(history).substring(0, 100)}`;
-    const cachedResponse = aiResponseCache.get(cacheKey);
-
-    if (cachedResponse && Date.now() - cachedResponse.timestamp < 30 * 60 * 1000) { // 30 min cache for API calls
-      tokenUsageTracker.logCachedResponse();
-      setLoading(false);
-      return cachedResponse.response;
-    }
-
-    const apiUrl = buildApiUrl('/api/agent'); // Fixed API endpoint
-    const sanitizedHistory = history.map(msg => ({
-      role: msg.role,
-      content: typeof msg.content === 'string' ? getPlainTextFromHtml(msg.content) : JSON.stringify(msg.content)
-    }));
-    const payload = {
-      input: input,
-      chat_history: sanitizedHistory,
-      user_role: effectiveRole || 'student',
-      subscription: effectiveCurrentUser?.tier || 'standard',
-      user_id: effectiveCurrentUser?.uid || null,
-    };
-
-    try {
-      const response = await fetch(apiUrl, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      });
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => ({ error: 'Unknown error' }));
-        throw new Error(`HTTP error! status: ${response.status}, message: ${errorData.error || 'No error message provided'}`);
-      }
-      const result = await response.json();
-
-      // Estimate token usage (rough approximation)
-      const estimatedTokens = Math.ceil((input.length + JSON.stringify(history).length + result.output.length) / 4);
-      tokenUsageTracker.logAICall(estimatedTokens);
-
-      // Cache the response
-      aiResponseCache.set(cacheKey, {
-        response: result.output,
-        timestamp: Date.now(),
-        metadata: { input: input.substring(0, 100), history: history.length }
-      });
-
-      return result.output;
-    } catch (error) {
-      console.error("Error communicating with AI agent:", error);
-      return `Sorry, there was an error communicating with the AI. Please try again. ${error.message}`;
-    } finally {
-      setLoading(false);
-    }
-  }, [currentUser]);
+    // The LLM agent is not active yet. Return a friendly message so the UI
+    // does not break, and log the request for later review.
+    console.log('[getAgentResponse] LLM not configured. Input:', input);
+    return 'The AI tutor is not available right now. Please review the memo and marking points shown after you submit your answer.';
+  }, []);
 
 
   // --- Navigation Helper Functions ---

@@ -11,11 +11,15 @@ export const useGrade10BusinessStudiesMarking = (config = {}) => {
 
     const [status, setStatus] = useState('idle');
     const [scoreState, setScoreState] = useState({ totalScore: 0, maxScore: 0 });
+    const [progression, setProgression] = useState(null);
+    const [recommendations, setRecommendations] = useState([]);
     const [error, setError] = useState(null);
 
     const resetMarking = useCallback(() => {
         setStatus('idle');
         setScoreState({ totalScore: 0, maxScore: 0 });
+        setProgression(null);
+        setRecommendations([]);
         setError(null);
     }, []);
 
@@ -49,6 +53,8 @@ export const useGrade10BusinessStudiesMarking = (config = {}) => {
                 totalScore: data.total_score || 0,
                 maxScore: data.max_score || 0,
             });
+            setProgression(data.progression || null);
+            setRecommendations(data.recommendations || []);
             setStatus('marking_submitted');
             return data.results || null;
         } catch (err) {
@@ -62,6 +68,8 @@ export const useGrade10BusinessStudiesMarking = (config = {}) => {
     return {
         status,
         scoreState,
+        progression,
+        recommendations,
         error,
         resetMarking,
         markQuestions,

@@ -2,21 +2,26 @@ from pathlib import Path
 
 import firebase_admin
 from firebase_admin import auth, credentials, firestore
-from flask import current_app
 
 
 DEFAULT_SERVICE_ACCOUNT_FILE = 'caps-ai-math-assistant-app-firebase-adminsdk-fbsvc-16f0a819d2.json'
 
+# Base directory of the backend package (caps-ai-backend/)
+_BASE_DIR = Path(__file__).resolve().parent.parent.parent
+
 
 def _resolve_credentials_path():
-    configured_path = current_app.config.get('FIREBASE_CREDENTIALS_PATH')
-    if configured_path:
-        path = Path(str(configured_path)).expanduser()
+    import os
+    # 1. Check environment variable first
+    env_path = os.environ.get('FIREBASE_CREDENTIALS_PATH')
+    if env_path:
+        path = Path(str(env_path)).expanduser()
         if path.exists():
             return path
         raise RuntimeError(f'Firebase credentials file not found: {path}')
 
-    fallback_path = Path(current_app.root_path).parent / DEFAULT_SERVICE_ACCOUNT_FILE
+    # 2. Fallback to file in the backend root
+    fallback_path = _BASE_DIR / DEFAULT_SERVICE_ACCOUNT_FILE
     if fallback_path.exists():
         return fallback_path
 

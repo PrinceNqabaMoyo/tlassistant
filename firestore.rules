@@ -117,6 +117,26 @@ service cloud.firestore {
       allow read, write: if signedIn() && request.auth.uid == userId;
     }
 
+    match /artifacts/{appId}/users/{userId}/study_plans/{planId} {
+      allow read, write: if signedIn() && request.auth.uid == userId;
+      allow read, write: if isAdminUser();
+    }
+
+    match /artifacts/{appId}/users/{userId}/notifications/{notificationId} {
+      allow read, write: if signedIn() && request.auth.uid == userId;
+      allow read, write: if isAdminUser();
+    }
+
+    match /artifacts/{appId}/users/{userId}/mastery/{subject}/{grade}/{topic}/subskills/{subskill} {
+      allow read, write: if signedIn() && request.auth.uid == userId;
+      allow read, write: if isAdminUser();
+    }
+
+    match /artifacts/{appId}/users/{userId}/streaks/{subject}/{grade}/{topic}/subskills/{subskill} {
+      allow read, write: if signedIn() && request.auth.uid == userId;
+      allow read, write: if isAdminUser();
+    }
+
     match /chat_rooms/{chatRoomId}/messages/{messageId} {
       allow read, write: if signedIn();
     }

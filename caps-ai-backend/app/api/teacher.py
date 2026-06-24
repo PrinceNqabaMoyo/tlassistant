@@ -1,10 +1,11 @@
 import json
+import os
 import re
 import datetime
 from flask import Blueprint, request, jsonify
-from langchain_google_genai import ChatGoogleGenerativeAI
-from app.services.agent_service import agent_executors, GOOGLE_API_KEY
 from app.utils.firebase_admin_client import get_firestore_client
+
+GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 
 teacher_bp = Blueprint('teacher', __name__)
 
@@ -95,9 +96,6 @@ def create_assessment():
     """
     Generates a new assessment with questions, a detailed marking scheme/rubric, and a worked solution.
     """
-    if not agent_executors:
-        return jsonify({"error": "Agents not initialized"}), 500
-
     data = request.get_json()
     topic = data.get("topic")
     grade = data.get("grade")
@@ -108,6 +106,11 @@ def create_assessment():
 
     if not GOOGLE_API_KEY:
         return jsonify({"error": "AI service not configured"}), 500
+
+    try:
+        from langchain_google_genai import ChatGoogleGenerativeAI
+    except Exception:
+        return jsonify({"error": "AI service not available (missing LLM package)."}), 503
 
     llm = ChatGoogleGenerativeAI(model="models/gemini-1.5-flash", temperature=0.3, convert_system_message_to_human=True, google_api_key=GOOGLE_API_KEY)
     

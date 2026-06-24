@@ -97,6 +97,7 @@ const Grade10BSMicroEnvironmentRoute = ({ workspaceMode, ctx }) => {
                 if (idx >= 0) controller.setScaffoldStepIndex(idx);
             }
         },
+        disableSubskillControl: isScaffoldLikeMode,
         onGenerate: (config) => {
             if (isScaffoldLikeMode) {
                 controller.fetchScaffoldQuestion({ subskill: controller.scaffoldSteps?.[controller.scaffoldStepIndex]?.key || 'concepts', difficulty: config.difficulty });
@@ -193,6 +194,7 @@ const Grade10BSBusinessFunctionsRoute = ({ workspaceMode, ctx }) => {
                 if (idx >= 0) controller.setScaffoldStepIndex(idx);
             }
         },
+        disableSubskillControl: isScaffoldLikeMode,
         onGenerate: (config) => {
             if (isScaffoldLikeMode) {
                 controller.fetchScaffoldQuestion({ subskill: controller.scaffoldSteps?.[controller.scaffoldStepIndex]?.key || 'concepts', difficulty: config.difficulty });
@@ -289,6 +291,7 @@ const Grade10BSMarketEnvironmentRoute = ({ workspaceMode, ctx }) => {
                 if (idx >= 0) controller.setScaffoldStepIndex(idx);
             }
         },
+        disableSubskillControl: isScaffoldLikeMode,
         onGenerate: (config) => {
             if (isScaffoldLikeMode) {
                 controller.fetchScaffoldQuestion({ subskill: controller.scaffoldSteps?.[controller.scaffoldStepIndex]?.key || 'concepts', difficulty: config.difficulty });
@@ -385,6 +388,7 @@ const Grade10BSMacroEnvironmentRoute = ({ workspaceMode, ctx }) => {
                 if (idx >= 0) controller.setScaffoldStepIndex(idx);
             }
         },
+        disableSubskillControl: isScaffoldLikeMode,
         onGenerate: (config) => {
             if (isScaffoldLikeMode) {
                 controller.fetchScaffoldQuestion({ subskill: controller.scaffoldSteps?.[controller.scaffoldStepIndex]?.key || 'concepts', difficulty: config.difficulty });
@@ -481,6 +485,7 @@ const Grade10BSInterrelationshipRoute = ({ workspaceMode, ctx }) => {
                 if (idx >= 0) controller.setScaffoldStepIndex(idx);
             }
         },
+        disableSubskillControl: isScaffoldLikeMode,
         onGenerate: (config) => {
             if (isScaffoldLikeMode) {
                 controller.fetchScaffoldQuestion({ subskill: controller.scaffoldSteps?.[controller.scaffoldStepIndex]?.key || 'concepts', difficulty: config.difficulty });
@@ -577,6 +582,7 @@ const Grade10BSBusinessSectorsRoute = ({ workspaceMode, ctx }) => {
                 if (idx >= 0) controller.setScaffoldStepIndex(idx);
             }
         },
+        disableSubskillControl: isScaffoldLikeMode,
         onGenerate: (config) => {
             if (isScaffoldLikeMode) {
                 controller.fetchScaffoldQuestion({ subskill: controller.scaffoldSteps?.[controller.scaffoldStepIndex]?.key || 'concepts', difficulty: config.difficulty });
@@ -673,6 +679,7 @@ const Grade10BSSocioEconomicIssuesRoute = ({ workspaceMode, ctx }) => {
                 if (idx >= 0) controller.setScaffoldStepIndex(idx);
             }
         },
+        disableSubskillControl: isScaffoldLikeMode,
         onGenerate: (config) => {
             if (isScaffoldLikeMode) {
                 controller.fetchScaffoldQuestion({ subskill: controller.scaffoldSteps?.[controller.scaffoldStepIndex]?.key || 'concepts', difficulty: config.difficulty });
@@ -769,6 +776,7 @@ const Grade10BSSocialResponsibilityRoute = ({ workspaceMode, ctx }) => {
                 if (idx >= 0) controller.setScaffoldStepIndex(idx);
             }
         },
+        disableSubskillControl: isScaffoldLikeMode,
         onGenerate: (config) => {
             if (isScaffoldLikeMode) {
                 controller.fetchScaffoldQuestion({ subskill: controller.scaffoldSteps?.[controller.scaffoldStepIndex]?.key || 'concepts', difficulty: config.difficulty });
@@ -865,6 +873,7 @@ const Grade10BSEntrepreneurialQualitiesRoute = ({ workspaceMode, ctx }) => {
                 if (idx >= 0) controller.setScaffoldStepIndex(idx);
             }
         },
+        disableSubskillControl: isScaffoldLikeMode,
         onGenerate: (config) => {
             if (isScaffoldLikeMode) {
                 controller.fetchScaffoldQuestion({ subskill: controller.scaffoldSteps?.[controller.scaffoldStepIndex]?.key || 'concepts', difficulty: config.difficulty });
@@ -961,6 +970,7 @@ const Grade10BSFormsOfOwnershipRoute = ({ workspaceMode, ctx }) => {
                 if (idx >= 0) controller.setScaffoldStepIndex(idx);
             }
         },
+        disableSubskillControl: isScaffoldLikeMode,
         onGenerate: (config) => {
             if (isScaffoldLikeMode) {
                 controller.fetchScaffoldQuestion({ subskill: controller.scaffoldSteps?.[controller.scaffoldStepIndex]?.key || 'concepts', difficulty: config.difficulty });
@@ -1057,6 +1067,7 @@ const Grade10BSConceptOfQualityRoute = ({ workspaceMode, ctx }) => {
                 if (idx >= 0) controller.setScaffoldStepIndex(idx);
             }
         },
+        disableSubskillControl: isScaffoldLikeMode,
         onGenerate: (config) => {
             if (isScaffoldLikeMode) {
                 controller.fetchScaffoldQuestion({ subskill: controller.scaffoldSteps?.[controller.scaffoldStepIndex]?.key || 'concepts', difficulty: config.difficulty });

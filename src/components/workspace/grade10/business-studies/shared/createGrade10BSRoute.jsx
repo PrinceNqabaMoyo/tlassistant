@@ -78,6 +78,7 @@ export const createGrade10BSTopicRegistry = (config) => {
                     if (idx >= 0) controller.setScaffoldStepIndex(idx);
                 }
             },
+            disableSubskillControl: isScaffoldLikeMode, // BS scaffold uses section-based progression, no subskill dropdown
             onGenerate: (cfg) => {
                 if (isScaffoldLikeMode) {
                     controller.fetchScaffoldQuestion({ subskill: controller.scaffoldSteps?.[controller.scaffoldStepIndex]?.key || 'concepts', difficulty: cfg.difficulty });
@@ -136,7 +137,13 @@ export const createGrade10BSTopicRegistry = (config) => {
                 markPracticeTest: async () => {
                     const resultsObj = await marking.markQuestions(controller.practiceQuestions, controller.practiceAnswers);
                     if (resultsObj) {
-                        controller.setPracticeFeedback({ results: resultsObj, total_score: marking.scoreState.totalScore, max_score: marking.scoreState.maxScore });
+                        controller.setPracticeFeedback({
+                            results: resultsObj,
+                            total_score: marking.scoreState.totalScore,
+                            max_score: marking.scoreState.maxScore,
+                            progression: marking.progression,
+                            recommendations: marking.recommendations,
+                        });
                     }
                 },
             }));

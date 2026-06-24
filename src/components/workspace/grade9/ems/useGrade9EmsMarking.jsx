@@ -2,7 +2,7 @@ import { buildApiUrl } from '../../../../utils/apiBaseUrl';
 import { useState, useCallback } from 'react';
 
 export const useGrade9EmsMarking = (config = {}) => {
-    const { apiUrl = buildApiUrl('/api/accounting/grade10/mark') } = config;
+    const { apiUrl = buildApiUrl('/api/grade9/ems/mark') } = config;
 
     // markingMode = 'practice' | 'marking_active' | 'marking_submitted'
     const [markingMode, setMarkingMode] = useState('practice');

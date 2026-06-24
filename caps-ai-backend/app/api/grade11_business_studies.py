@@ -18,6 +18,9 @@ from app.utils.grade11_business_studies.term_3 import citizenship_responsibiliti
 from app.utils.grade11_business_studies.term_3 import business_plan_transformation_generator
 from app.utils.grade11_business_studies.term_3 import start_business_venture_generator
 from app.utils.grade11_business_studies.term_3 import presentation_of_information_generator
+from app.utils.grade11_business_studies._bs_curriculum import (
+    get_g11_topic_sections,
+)
 
 
 grade11_business_studies_bp = Blueprint('grade11_business_studies', __name__)
@@ -46,6 +49,31 @@ GENERATORS = {
 
 def generate_questions(topic, subskill, difficulty, count=1, config=None):
     config = config or {}
+
+    # Section-based progression: if subskill matches a curriculum section key,
+    # pick a recommended format pool for that section.
+    section = get_g11_topic_sections(topic)
+    if section:
+        for sec in section:
+            if sec['key'] == subskill and sec.get('formats'):
+                import random
+                pool_key = random.choice(sec['formats'])
+                subskill = pool_key
+                break
+
+    # Map new format keys to legacy subskill pools generators understand.
+    # Generators currently have: concepts (MCQ), application (scenario/typed),
+    # discussion (essay). New format keys are normalised here.
+    _FORMAT_TO_SUBSKILL = {
+        'mcq': 'concepts',
+        'word_bank': 'concepts',
+        'matching_columns': 'concepts',
+        'crossword': 'concepts',
+        'typed': 'application',
+        'essay': 'discussion',
+    }
+    subskill = _FORMAT_TO_SUBSKILL.get(subskill, subskill)
+
     if topic not in GENERATORS:
         raise ValueError(f'No generator found for topic: {topic}')
     generator = GENERATORS[topic]
@@ -185,6 +213,78 @@ def mark_business_studies_endpoint():
             }
         elif question_type == 'typed':
             result = _score_typed_answer(question, user_answer)
+        elif question_type == 'word_bank':
+            correct_map = question.get('correct_map', {})
+            user_map = user_answer or {}
+            correct_count = sum(1 for k, v in correct_map.items() if str(user_map.get(k, '')).strip().lower() == str(v).strip().lower())
+            max_score = max(1, len(correct_map))
+            score = correct_count
+            result = {
+                'is_correct': correct_count == max_score,
+                'is_mastered': correct_count == max_score,
+                'score': score,
+                'max_score': max_score,
+                'mastery_threshold': mastery_threshold,
+                'mastery_ratio': score / max_score if max_score else 0,
+                'feedback': 'Correct.' if correct_count == max_score else f'You got {correct_count}/{max_score} correct. Review the word bank and try again.'
+            }
+        elif question_type == 'matching_columns':
+            correct_pairs = question.get('correct_pairs', {})
+            user_pairs = user_answer or {}
+            correct_count = sum(1 for k, v in correct_pairs.items() if str(user_pairs.get(k, '')).strip().lower() == str(v).strip().lower())
+            max_score = max(1, len(correct_pairs))
+            score = correct_count
+            result = {
+                'is_correct': correct_count == max_score,
+                'is_mastered': correct_count == max_score,
+                'score': score,
+                'max_score': max_score,
+                'mastery_threshold': mastery_threshold,
+                'mastery_ratio': score / max_score if max_score else 0,
+                'feedback': 'Correct.' if correct_count == max_score else f'You matched {correct_count}/{max_score} correctly. Review the columns and try again.'
+            }
+        elif question_type == 'crossword':
+            correct_words = question.get('words', [])
+            user_words = user_answer or []
+            correct_count = sum(1 for cw, uw in zip(correct_words, user_words) if str(cw).upper().strip() == str(uw).upper().strip())
+            max_score = max(1, len(correct_words))
+            score = correct_count
+            result = {
+                'is_correct': correct_count == max_score,
+                'is_mastered': correct_count == max_score,
+                'score': score,
+                'max_score': max_score,
+                'mastery_threshold': mastery_threshold,
+                'mastery_ratio': score / max_score if max_score else 0,
+                'feedback': 'Correct.' if correct_count == max_score else f'You filled {correct_count}/{max_score} words correctly. Review the clues and try again.'
+            }
+        elif question_type == 'essay':
+            text = str(user_answer or '').strip()
+            word_count = len(text.split())
+            min_words = question.get('min_words', 150)
+            max_words = question.get('max_words', 400)
+            rubric = question.get('rubric', [])
+            max_score = question.get('marks', 20)
+            # Basic rubric keyword matching
+            score = 0
+            if rubric:
+                for criterion in rubric:
+                    desc = criterion.get('description', '').lower()
+                    if any(kw in text.lower() for kw in desc.split()[:5]):
+                        score += criterion.get('marks', 0)
+                score = min(score, max_score)
+            else:
+                score = max_score if word_count >= min_words else max(0, int(max_score * (word_count / min_words)))
+            result = {
+                'is_correct': score >= max_score * 0.6,
+                'is_mastered': score >= max_score * mastery_threshold,
+                'score': score,
+                'max_score': max_score,
+                'mastery_threshold': mastery_threshold,
+                'mastery_ratio': score / max_score if max_score else 0,
+                'word_count': word_count,
+                'feedback': f'Essay marked. Word count: {word_count}. Score: {score}/{max_score}.'
+            }
         else:
             result = {
                 'is_correct': False,
@@ -205,3 +305,22 @@ def mark_business_studies_endpoint():
         'total_score': total_score,
         'max_score': max_score
     })
+
+
+@grade11_business_studies_bp.route('/sections', methods=['GET'])
+def get_business_studies_sections():
+    """Return scaffold sections for a Grade 11 topic from curriculum .md files."""
+    topic = request.args.get('topic')
+    if not topic:
+        return jsonify({'error': 'Missing topic query param'}), 400
+    try:
+        sections = get_g11_topic_sections(topic)
+        steps = [
+            {'key': sec['key'], 'title': sec['title'], 'formats': sec['formats']}
+            for sec in sections
+        ]
+        return jsonify({'topic': topic, 'steps': steps})
+    except Exception as e:
+        import traceback
+        traceback.print_exc()
+        return jsonify({'error': str(e)}), 500

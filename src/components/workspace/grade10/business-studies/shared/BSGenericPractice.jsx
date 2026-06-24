@@ -10,6 +10,10 @@ import {
     Trophy,
     Target,
 } from 'lucide-react';
+import WordBankQuestionUI from '../../../shared/WordBankQuestionUI';
+import BSMatchingColumns from './BSMatchingColumns';
+import BSCrosswordGrid from './BSCrosswordGrid';
+import BSEssayRenderer from './BSEssayRenderer';
 
 export const BSGenericPractice = ({
     topicTitle = 'Business Studies',
@@ -105,6 +109,20 @@ export const BSGenericPractice = ({
                             </div>
                         </div>
 
+                        {practiceFeedback?.recommendations && practiceFeedback.recommendations.length > 0 && (
+                            <div className="mt-8 p-6 bg-indigo-50 rounded-xl border border-indigo-100">
+                                <h3 className="text-lg font-semibold text-indigo-900 mb-3">Recommended Next Steps</h3>
+                                <ul className="space-y-2">
+                                    {practiceFeedback.recommendations.map((rec, idx) => (
+                                        <li key={idx} className="flex items-start gap-2 text-sm text-indigo-800">
+                                            <ArrowRight className="w-4 h-4 mt-0.5 flex-shrink-0" />
+                                            <span>{rec}</span>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                        )}
+
                         <div className="flex justify-center gap-4">
                             <Button
                                 onClick={() => setCurrentQuestionIndex(0)}
@@ -196,6 +214,51 @@ export const BSGenericPractice = ({
                             </div>
                         )}
 
+                        {currentQuestion.question_type === 'word_bank' && (
+                            <div className="pt-4">
+                                <WordBankQuestionUI
+                                    question={currentQuestion}
+                                    answer={currentAnswer || {}}
+                                    setAnswer={(val) => handleAnswerChange(qId, val)}
+                                    readOnly={isSubmitted || isMarking}
+                                    showCheckHighlights={isSubmitted}
+                                />
+                            </div>
+                        )}
+
+                        {currentQuestion.question_type === 'matching_columns' && (
+                            <div className="pt-4">
+                                <BSMatchingColumns
+                                    question={currentQuestion}
+                                    answer={currentAnswer || {}}
+                                    setAnswer={(val) => handleAnswerChange(qId, val)}
+                                    readOnly={isSubmitted || isMarking}
+                                />
+                            </div>
+                        )}
+
+                        {currentQuestion.question_type === 'crossword' && (
+                            <div className="pt-4">
+                                <BSCrosswordGrid
+                                    question={currentQuestion}
+                                    answer={currentAnswer || {}}
+                                    setAnswer={(val) => handleAnswerChange(qId, val)}
+                                    readOnly={isSubmitted || isMarking}
+                                />
+                            </div>
+                        )}
+
+                        {currentQuestion.question_type === 'essay' && (
+                            <div className="pt-4">
+                                <BSEssayRenderer
+                                    question={currentQuestion}
+                                    answer={currentAnswer || ''}
+                                    setAnswer={(val) => handleAnswerChange(qId, val)}
+                                    readOnly={isSubmitted || isMarking}
+                                />
+                            </div>
+                        )}
+
                         {isSubmitted && fb && (
                             <div className={`mt-6 p-6 rounded-xl border-2 animate-in fade-in slide-in-from-top-4 ${
                                 fb.is_correct
@@ -227,6 +290,30 @@ export const BSGenericPractice = ({
                                         </p>
                                     </div>
                                 </div>
+
+                                {/* Memo / Marking Points */}
+                                {(currentQuestion.sample_answer || (currentQuestion.marking_points && currentQuestion.marking_points.length > 0)) && (
+                                    <div className="mt-4 pt-4 border-t border-slate-200">
+                                        {currentQuestion.sample_answer && (
+                                            <div className="mb-3">
+                                                <h4 className="text-sm font-semibold text-slate-700 mb-1">Memo</h4>
+                                                <div className="text-sm text-slate-600 bg-white p-3 rounded-lg border border-slate-200 whitespace-pre-wrap">
+                                                    {currentQuestion.sample_answer}
+                                                </div>
+                                            </div>
+                                        )}
+                                        {currentQuestion.marking_points && currentQuestion.marking_points.length > 0 && (
+                                            <div>
+                                                <h4 className="text-sm font-semibold text-slate-700 mb-1">Marking Points</h4>
+                                                <ul className="list-disc list-inside text-sm text-slate-600 bg-white p-3 rounded-lg border border-slate-200 space-y-1">
+                                                    {currentQuestion.marking_points.map((pt, idx) => (
+                                                        <li key={idx}>{pt}</li>
+                                                    ))}
+                                                </ul>
+                                            </div>
+                                        )}
+                                    </div>
+                                )}
                             </div>
                         )}
                     </div>

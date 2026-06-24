@@ -10,53 +10,51 @@ const TOPIC_CONFIGS = {
     'grade7_ems_money_needs': {
         topic: 'grade7_ems_money_and_needs',
         title: 'Grade 7 EMS • Term 1 • Money and Needs',
-        steps: [
-            { key: 'concepts', title: 'Concepts' },
-            { key: 'discussion', title: 'Discussion' }
-        ]
+    },
+    'grade7_ems_needs_and_wants': {
+        topic: 'grade7_ems_needs_and_wants',
+        title: 'Grade 7 EMS • Term 1 • Needs and Wants',
+    },
+    'grade7_ems_goods_and_services': {
+        topic: 'grade7_ems_goods_and_services',
+        title: 'Grade 7 EMS • Term 1 • Goods and Services',
     },
     'grade7_ems_businesses': {
         topic: 'grade7_ems_businesses',
         title: 'Grade 7 EMS • Term 1 • Businesses',
-        steps: [
-            { key: 'concepts', title: 'Concepts' },
-            { key: 'discussion', title: 'Discussion' }
-        ]
     },
     'grade7_ems_accounting_concepts': {
         topic: 'grade7_ems_accounting_concepts',
         title: 'Grade 7 EMS • Term 2 • Accounting Concepts',
-        steps: [
-            { key: 'concepts', title: 'Concepts' },
-            { key: 'discussion', title: 'Discussion' }
-        ]
     },
     'grade7_ems_income_expenses': {
         topic: 'grade7_ems_income_and_expenses',
         title: 'Grade 7 EMS • Term 2 • Income and Expenses',
-        steps: [
-            { key: 'concepts', title: 'Concepts' },
-            { key: 'calculation', title: 'Calculation' },
-            { key: 'journal', title: 'Journal' }
-        ]
     },
     'grade7_ems_budgets': {
         topic: 'grade7_ems_budgets',
         title: 'Grade 7 EMS • Term 2 • Budgets',
-        steps: [
-            { key: 'concepts', title: 'Concepts' },
-            { key: 'calculation', title: 'Calculation' },
-            { key: 'journal', title: 'Journal' }
-        ]
     },
     'grade7_ems_entrepreneurship': {
         topic: 'grade7_ems_entrepreneurship',
         title: 'Grade 7 EMS • Term 3 • Entrepreneurship',
-        steps: [
-            { key: 'concepts', title: 'Concepts' },
-            { key: 'discussion', title: 'Discussion' }
-        ]
-    }
+    },
+    'grade7_ems_the_entrepreneur': {
+        topic: 'grade7_ems_the_entrepreneur',
+        title: 'Grade 7 EMS • Term 3 • The Entrepreneur',
+    },
+    'grade7_ems_starting_a_business': {
+        topic: 'grade7_ems_starting_a_business',
+        title: 'Grade 7 EMS • Term 3 • Starting a Business',
+    },
+    'grade7_ems_entrepreneurs_day': {
+        topic: 'grade7_ems_entrepreneurs_day',
+        title: 'Grade 7 EMS • Term 3 • Entrepreneurs Day',
+    },
+    'grade7_ems_inequality_and_poverty': {
+        topic: 'grade7_ems_inequality_and_poverty',
+        title: 'Grade 7 EMS • Term 3 • Inequality and Poverty',
+    },
 };
 
 const Grade7EmsRoute = ({ workspaceMode, ctx }) => {
@@ -75,6 +73,7 @@ const Grade7EmsRoute = ({ workspaceMode, ctx }) => {
         return h(EmsScaffold, {
             onBack: ctx.onBack,
             scaffoldSteps: controller.scaffoldSteps,
+            stepsLoading: controller.stepsLoading,
             visualAidsOpen: controller.visualAidsOpen,
             setVisualAidsOpen: controller.setVisualAidsOpen,
             scaffoldDifficulty: controller.scaffoldDifficulty,

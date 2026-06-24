@@ -70,22 +70,33 @@ const WordBankQuestionUI = ({ question, answer, setAnswer, readOnly, showCheckHi
 
             {/* Word Bank */}
             <div className="p-4 bg-indigo-50 border border-indigo-100 rounded-xl min-h-[4rem] flex flex-wrap gap-2">
-                {availableWords.map((word, idx) => (
-                    <button
-                        key={idx}
-                        onClick={() => handleWordClick(word)}
-                        disabled={readOnly}
-                        className={`px-3 py-1.5 rounded-full text-sm font-medium transition-all shadow-sm
-                            ${selectedPill === word 
-                                ? 'bg-indigo-600 text-white ring-2 ring-indigo-300 ring-offset-1' 
-                                : 'bg-white text-indigo-700 hover:bg-indigo-100 border border-indigo-200'
-                            } ${readOnly && 'opacity-50 cursor-not-allowed'}
-                        `}
-                    >
-                        {word}
-                    </button>
-                ))}
-                {availableWords.length === 0 && (
+                {readOnly ? (
+                    /* Memo mode: show all words as correctly placed */
+                    question?.word_bank?.map((word, idx) => (
+                        <span
+                            key={idx}
+                            className="px-3 py-1.5 rounded-full text-sm font-medium transition-all duration-500 shadow-sm bg-emerald-50 text-emerald-700 border border-emerald-200 opacity-80"
+                        >
+                            ✓ {word}
+                        </span>
+                    ))
+                ) : (
+                    availableWords.map((word, idx) => (
+                        <button
+                            key={idx}
+                            onClick={() => handleWordClick(word)}
+                            className={`px-3 py-1.5 rounded-full text-sm font-medium transition-all duration-500 shadow-sm
+                                ${selectedPill === word
+                                    ? 'bg-indigo-600 text-white ring-2 ring-indigo-300 ring-offset-1'
+                                    : 'bg-white text-indigo-700 hover:bg-indigo-100 border border-indigo-200'
+                                }
+                            `}
+                        >
+                            {word}
+                        </button>
+                    ))
+                )}
+                {availableWords.length === 0 && !readOnly && (
                     <div className="text-indigo-400 text-sm italic w-full text-center">All words placed.</div>
                 )}
             </div>
@@ -98,7 +109,7 @@ const WordBankQuestionUI = ({ question, answer, setAnswer, readOnly, showCheckHi
                     const bId = blankItem?.id;
                     const placedWord = bId ? userMap[bId] : null;
 
-                    let slotStyle = "inline-flex min-w-[100px] h-8 mx-1 px-3 border-b-2 bg-slate-50 text-slate-700 items-center justify-center cursor-pointer transition-colors";
+                    let slotStyle = "inline-flex min-w-[100px] h-8 mx-1 px-3 border-b-2 bg-slate-50 text-slate-700 items-center justify-center cursor-pointer transition-all duration-500";
                     if (selectedPill && !placedWord && !readOnly) slotStyle += " hover:bg-indigo-50 hover:border-indigo-400 border-slate-300 border-dashed";
                     else if (!placedWord) slotStyle += " border-slate-300 border-dashed";
                     else if (placedWord && readOnly) slotStyle += " border-emerald-400 text-emerald-700 font-semibold bg-emerald-50";

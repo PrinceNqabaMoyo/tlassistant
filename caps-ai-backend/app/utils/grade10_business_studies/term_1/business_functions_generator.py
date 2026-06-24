@@ -8,7 +8,7 @@ from __future__ import annotations
 
 from typing import Any, Callable, Dict, List
 
-from .._bs_common import build_generate, make_mcq, make_typed
+from .._bs_common import build_generate, make_mcq, make_typed, make_wordbank, make_matching, make_crossword, make_essay
 
 PREFIX = "g10bs_bizfunc"
 VAID = "business_functions"
@@ -280,10 +280,150 @@ def _discussion(r) -> List[Callable[[], Dict[str, Any]]]:
     ]
 
 
+def _wordbank(r) -> List[Callable[[], Dict[str, Any]]]:
+    """Word-bank questions drawn from curriculum key concepts."""
+    return [
+        lambda: make_wordbank(
+            prefix=PREFIX,
+            prompt="Fill in the missing words to complete the definitions of business functions.",
+            pool=["General management", "Administration", "Financial", "Purchasing", "Public relations", "Human resources", "Production", "Marketing"],
+            blanks=["1", "2", "3"],
+            correct_map={"1": "General management", "2": "Administration", "3": "Financial"},
+            text_parts=[
+                "The ",
+                " function sets the overall direction for the business and oversees all other functions.",
+                "The ",
+                " function collects and stores information used by management in decision making.",
+                "The ",
+                " function involves acquiring and utilising funds necessary for efficient operations."
+            ],
+            explanation="General management sets direction; Administration collects information; Financial acquires funds.",
+            marks=3,
+            visual_aid_key=VAID,
+        ),
+        lambda: make_wordbank(
+            prefix=PREFIX,
+            prompt="Complete the sentence about management and leadership.",
+            pool=["vision", "mission", "goals", "objectives", "planning", "organising", "controlling", "leadership"],
+            blanks=["1", "2", "3"],
+            correct_map={"1": "vision", "2": "mission", "3": "objectives"},
+            text_parts=[
+                "The ",
+                " describes what the business wants to achieve in the long-term.",
+                "The ",
+                " statement describes what the business provides or produces.",
+                "The ",
+                " describe how goals will be achieved."
+            ],
+            explanation="Vision = long-term dream; Mission = what the business provides; Objectives = how goals are achieved.",
+            marks=3,
+            visual_aid_key=VAID,
+        ),
+    ]
+
+
+def _matching(r) -> List[Callable[[], Dict[str, Any]]]:
+    """Matching columns drawn from curriculum content."""
+    return [
+        lambda: make_matching(
+            prefix=PREFIX,
+            prompt="Match each business function with its correct description.",
+            column_a=["General management", "Administration", "Financial", "Purchasing", "Marketing"],
+            column_b=["Collects and stores information for decision-making", "Sets overall direction and oversees all functions", "Buys goods and services needed to operate", "Acquires and utilises funds for operations", "Promotes and sells products or services"],
+            correct_pairs={
+                "General management": "Sets overall direction and oversees all functions",
+                "Administration": "Collects and stores information for decision-making",
+                "Financial": "Acquires and utilises funds for operations",
+                "Purchasing": "Buys goods and services needed to operate",
+                "Marketing": "Promotes and sells products or services"
+            },
+            explanation="Each business function has a specific purpose: General management oversees; Administration handles information; Financial manages funds; Purchasing buys inputs; Marketing sells products.",
+            marks=5,
+            visual_aid_key=VAID,
+        ),
+        lambda: make_matching(
+            prefix=PREFIX,
+            prompt="Match each level of management with its key responsibility.",
+            column_a=["Top-level management", "Middle-level management", "Lower-level management"],
+            column_b=["Takes short-term operational decisions", "Takes medium-term tactical decisions", "Develops long-term strategic plans"],
+            correct_pairs={
+                "Top-level management": "Develops long-term strategic plans",
+                "Middle-level management": "Takes medium-term tactical decisions",
+                "Lower-level management": "Takes short-term operational decisions"
+            },
+            explanation="Top-level = strategic/long-term; Middle-level = tactical/medium-term; Lower-level = operational/short-term.",
+            marks=3,
+            visual_aid_key=VAID,
+        ),
+    ]
+
+
+def _crossword(r) -> List[Callable[[], Dict[str, Any]]]:
+    """Crossword questions using key vocabulary from the curriculum."""
+    return [
+        lambda: make_crossword(
+            prefix=PREFIX,
+            prompt="Read each clue and fill in the correct business term.",
+            words=["MANAGEMENT", "LEADERSHIP", "ORGANISING", "CONTROLLING", "PLANNING"],
+            clues={
+                "MANAGEMENT": "The process of guiding and directing an organisation to achieve its goals",
+                "LEADERSHIP": "The ability to inspire and influence subordinates",
+                "ORGANISING": "Identifying and grouping work, defining responsibility and authority",
+                "CONTROLLING": "Measuring progress towards goals and taking corrective action",
+                "PLANNING": "Thinking about activities required to achieve a desired goal"
+            },
+            grid_size=15,
+            explanation="These are the five key management tasks/functions.",
+            marks=5,
+            visual_aid_key=VAID,
+        ),
+    ]
+
+
+def _essay(r) -> List[Callable[[], Dict[str, Any]]]:
+    """Essay questions drawn from curriculum learning objectives."""
+    return [
+        lambda: make_essay(
+            prefix=PREFIX,
+            prompt="Discuss the differences between leadership and management in a business context. (20)",
+            rubric=[
+                {"criterion": "Introduction", "marks": 4, "description": "Define leadership and management and state the purpose of the essay."},
+                {"criterion": "Differences", "marks": 8, "description": "Explain at least four differences between leadership and management with examples."},
+                {"criterion": "Relationship", "marks": 4, "description": "Explain how leadership and management complement each other in business."},
+                {"criterion": "Conclusion", "marks": 4, "description": "Summarise the key points and give a final evaluative statement."}
+            ],
+            sample_answer="Leadership and management are both necessary competencies in business, but they are different. A leader creates a vision and sets direction, inspiring subordinates with natural or instinctive skills. A manager understands business goals, ensures tasks are completed, and is appointed to the position. Leaders influence behaviour while managers guide behaviour. Both are essential for business success.",
+            marks=20,
+            min_words=150,
+            max_words=300,
+            visual_aid_key=VAID,
+        ),
+        lambda: make_essay(
+            prefix=PREFIX,
+            prompt="Discuss the importance of the eight business functions and how they are interrelated. (20)",
+            rubric=[
+                {"criterion": "Introduction", "marks": 4, "description": "Define business functions and state the purpose of the essay."},
+                {"criterion": "Eight Functions", "marks": 8, "description": "Name and briefly describe at least five of the eight business functions."},
+                {"criterion": "Interrelationship", "marks": 4, "description": "Explain how the functions depend on each other to achieve business goals."},
+                {"criterion": "Conclusion", "marks": 4, "description": "Summarise the importance of business functions and give a final statement."}
+            ],
+            sample_answer="Business functions are tasks requiring specific knowledge and skills carried out by various departments to achieve business goals. There are eight functions: General Management, Administration, Financial, Purchasing, Public Relations, Human Resources, Production and Marketing. They are interrelated and work together as a team. General management oversees all functions. The financial and administration functions gather and process information. Purchasing, production and marketing deliver goods to customers. Together they ensure the survival and sustainability of the business.",
+            marks=20,
+            min_words=150,
+            max_words=300,
+            visual_aid_key=VAID,
+        ),
+    ]
+
+
 def _pools(r):
     return {
         "concepts": _concepts(r),
         "discussion": _discussion(r),
+        "word_bank": _wordbank(r),
+        "matching": _matching(r),
+        "crossword": _crossword(r),
+        "essay": _essay(r),
     }
 
 
