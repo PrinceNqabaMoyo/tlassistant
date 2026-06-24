@@ -88,3 +88,23 @@ This prevents accidental loss of state if an edit goes wrong.
     - The first adaptive + agentic vertical slice is **Grade 10 Business Studies**.
     - After the slice is verified, replicate the pattern to EMS Grades 7–9 and the remaining BS grades.
 
+## Mathematics Modules
+
+16. **Deterministic, SymPy-Backed Generators**
+    - Maths generators compute answers symbolically with `sympy` (seeded `random.Random(seed)` + symbolic computation). They never call an LLM.
+    - Same seed → byte-identical question, answer, and worked solution. Generators emit a **canonical solution graph** (per-step `from`/`to` in LaTeX + srepr, `op`, `rule`, `common_errors`) shared with the Procedure Tracker.
+    - Reference implementations: `caps-ai-backend/app/utils/grade10_mathematics/` (`_math_common.py`, `term_1/algebraic_expressions_generator.py`, `term_1/trigonometry_generator.py`).
+
+17. **Rendering & Comma Decimals**
+    - All maths is rendered with **KaTeX** on the frontend (`shared/mathx/MathText`). Question/answer/worked-solution strings carry LaTeX.
+    - Use the **comma decimal separator** everywhere (SA/CAPS standard): LaTeX uses `{,}` for tight spacing and the frontend parses a learner's comma as the decimal separator.
+
+18. **Diagram Spec → JSXGraph (bidirectional)**
+    - Geometric figures are described by a structured **Diagram Spec** (JSON: `kind`, `points`, `sides`, `angles`, `right_angle_at`, labels), built by `_diagram.py` and rendered by `shared/mathx/DiagramRenderer.jsx` via **JSXGraph** — never hand-drawn image assets.
+    - The same edge-key vocabulary (e.g. `"AB"`, `"BC"`, `"AC"`) travels in two directions: render (spec → figure) and mark (learner's selected edge → string compare to `correct_edge`). The `diagram_select` question type marks clicks deterministically (no pixels). The serialized spec is also the descriptive parameter the Pro agent reads to reason about a figure.
+
+19. **Procedure Tracker + Maths Keypad**
+    - Step-by-step working is marked by the **Procedure Tracker** (`app/services/procedure_tracker.py`): it parses each line, checks SymPy equivalence per transition, localises the FIRST error and classifies it from `common_errors`, and awards NSC-style method marks + an accuracy mark with carry-over. It is a tool on the one orchestrator, not a separate agent.
+    - The **Working Pad** (`shared/mathx/WorkingPad`) is integrated from the start; for diagram questions the answer area embeds the interactive canvas.
+    - The maths keypad is registry-driven: it inherits Algebra keys and grows per topic (Trig adds `sin`/`cos`/`tan`, `θ`, degree `°`). Each key carries a LaTeX label + a SymPy-parseable insert token.
+
