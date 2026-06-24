@@ -52,6 +52,7 @@ def create_app():
     from .api.grade10_business_studies import grade10_business_studies_bp
     from .api.grade11_business_studies import grade11_business_studies_bp
     from .api.grade12_business_studies import grade12_business_studies_bp
+    from .api.grade10_mathematics import grade10_mathematics_bp
     from .api.agent import agent_bp
     from .api.orchestrator import orchestrator_bp
     from .api.journals import journals_bp
@@ -72,6 +73,7 @@ def create_app():
     app.register_blueprint(grade10_business_studies_bp, url_prefix='/api/business-studies/grade10')
     app.register_blueprint(grade11_business_studies_bp, url_prefix='/api/business-studies/grade11')
     app.register_blueprint(grade12_business_studies_bp, url_prefix='/api/business-studies/grade12')
+    app.register_blueprint(grade10_mathematics_bp, url_prefix='/api/mathematics/grade10')
     app.register_blueprint(agent_bp, url_prefix='/api/agent')
     app.register_blueprint(orchestrator_bp, url_prefix='/api/orchestrator')
     app.register_blueprint(journals_bp, url_prefix='/api/journals')
