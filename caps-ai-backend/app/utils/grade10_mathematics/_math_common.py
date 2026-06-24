@@ -255,6 +255,37 @@ def make_steps(
     }
 
 
+def make_diagram_select(
+    *,
+    prefix: str,
+    prompt: str,
+    target: str,
+    correct_edge: str,
+    marks: int = 1,
+    explanation: str = "",
+    hint: Optional[str] = None,
+) -> Dict[str, Any]:
+    """A question answered by clicking a side of an interactive diagram.
+
+    The diagram (carried via ``with_metadata(..., diagram_spec=...)``) renders
+    clickable edges; the learner selects one and it is compared to
+    ``correct_edge`` (an edge key such as ``"AC"``). This proves the Diagram
+    Spec is bidirectional: the same vocabulary renders *and* marks the figure.
+    """
+    return {
+        "id": make_id(f"{prefix}_dsel"),
+        "question_type": "diagram_select",
+        "prompt": prompt,
+        "prompt_latex": "",
+        "target": target,
+        "correct_edge": correct_edge,
+        "explanation": explanation,
+        "marks": int(marks),
+        "hint_trigger": hint or "",
+        "guidelines": [hint] if hint else [],
+    }
+
+
 def with_metadata(
     question: Dict[str, Any],
     *,

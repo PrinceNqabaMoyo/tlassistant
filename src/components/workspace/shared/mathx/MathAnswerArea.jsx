@@ -3,6 +3,7 @@ import { CheckCircle2, Eye } from 'lucide-react';
 import MathText from './MathText';
 import MathKeypad from './MathKeypad';
 import WorkingPad from './WorkingPad';
+import DiagramRenderer from './DiagramRenderer';
 import { latexify } from './mathLatexify';
 
 const insertAtCaret = (el, value, token, offset) => {
@@ -28,6 +29,7 @@ const insertAtCaret = (el, value, token, offset) => {
 const MathAnswerArea = ({ question, topic, onCheck, result, busy = false }) => {
     const qType = question?.question_type;
     const [selected, setSelected] = React.useState(null);
+    const [selectedEdge, setSelectedEdge] = React.useState(null);
     const [value, setValue] = React.useState('');
     const [lines, setLines] = React.useState(['']);
     const [showSolution, setShowSolution] = React.useState(false);
@@ -36,6 +38,7 @@ const MathAnswerArea = ({ question, topic, onCheck, result, busy = false }) => {
 
     React.useEffect(() => {
         setSelected(null);
+        setSelectedEdge(null);
         setValue('');
         setLines(['']);
         setShowSolution(false);
@@ -67,14 +70,36 @@ const MathAnswerArea = ({ question, topic, onCheck, result, busy = false }) => {
 
     const handleCheck = () => {
         if (qType === 'mcq') onCheck?.(selected);
+        else if (qType === 'diagram_select') onCheck?.(selectedEdge);
         else if (qType === 'math_short') onCheck?.(value);
         else onCheck?.(lines.filter((l) => l.trim()));
     };
 
     const sol = question?.canonical_solution;
+    const diagram = question?.diagram_spec;
+    const checkDisabled = busy || (qType === 'diagram_select' && !selectedEdge && !result);
 
     return (
         <div className="space-y-5">
+            {/* Diagram (the figure is the question/answer surface) */}
+            {diagram ? (
+                <DiagramRenderer
+                    spec={diagram}
+                    interactive={qType === 'diagram_select'}
+                    selectedEdge={selectedEdge}
+                    onSelectEdge={setSelectedEdge}
+                    graded={qType === 'diagram_select' && !!result}
+                    correctEdge={result?.correct_edge || question?.correct_edge}
+                />
+            ) : null}
+
+            {/* Diagram-select prompt hint */}
+            {qType === 'diagram_select' ? (
+                <p className="text-sm text-slate-500">
+                    {selectedEdge ? `Selected side ${selectedEdge}. ` : 'Click a side of the triangle above. '}
+                    Then press Check.
+                </p>
+            ) : null}
             {/* MCQ */}
             {qType === 'mcq' && (
                 <div className="space-y-2">
@@ -131,8 +156,8 @@ const MathAnswerArea = ({ question, topic, onCheck, result, busy = false }) => {
                 />
             )}
 
-            {/* Keypad (not for MCQ) */}
-            {qType !== 'mcq' && (
+            {/* Keypad (not for MCQ / diagram-select) */}
+            {qType !== 'mcq' && qType !== 'diagram_select' && (
                 <div className="rounded-xl border border-slate-100 bg-slate-50 p-3">
                     <MathKeypad topic={topic} onInsert={handleInsert} disabled={busy} />
                 </div>
@@ -143,7 +168,7 @@ const MathAnswerArea = ({ question, topic, onCheck, result, busy = false }) => {
                 <button
                     type="button"
                     onClick={handleCheck}
-                    disabled={busy}
+                    disabled={checkDisabled}
                     className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold bg-indigo-600 text-white hover:bg-indigo-700 disabled:opacity-50 shadow-sm active:scale-95"
                 >
                     <CheckCircle2 className="h-4 w-4" />

@@ -24,12 +24,16 @@ from app.utils.grade10_mathematics._math_curriculum import (
     get_topic_sections,
     list_topics,
 )
-from app.utils.grade10_mathematics.term_1 import algebraic_expressions_generator
+from app.utils.grade10_mathematics.term_1 import (
+    algebraic_expressions_generator,
+    trigonometry_generator,
+)
 
 grade10_mathematics_bp = Blueprint("grade10_mathematics", __name__)
 
 GENERATORS = {
     "grade10_math_algebraic_expressions": algebraic_expressions_generator.generate,
+    "grade10_math_trigonometry": trigonometry_generator.generate,
 }
 
 
@@ -100,6 +104,16 @@ def _mark_one(question: Dict[str, Any], answer: Any) -> Dict[str, Any]:
             "score": 1 if is_correct else 0,
             "max_score": 1,
             "feedback": "Correct." if is_correct else "Not quite — review the explanation.",
+        }
+    if q_type == "diagram_select":
+        correct_edge = str(question.get("correct_edge", ""))
+        is_correct = str(answer) == correct_edge
+        return {
+            "is_correct": is_correct,
+            "score": 1 if is_correct else 0,
+            "max_score": int(question.get("marks", 1)),
+            "feedback": "Correct." if is_correct else "Not quite — review which side that is relative to \u03b8.",
+            "correct_edge": correct_edge,
         }
     if q_type == "math_short":
         return pt.mark_short_answer(question, str(answer or ""))

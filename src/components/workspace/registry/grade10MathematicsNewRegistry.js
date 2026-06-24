@@ -10,4 +10,10 @@ export const grade10MathematicsNewRegistry = {
         topicKey: 'grade10_math_algebraic_expressions',
         modePrefix: 'grade10_algebraic_expressions',
     }),
+    // Overrides the legacy ``grade10_trigonometry_1_*`` modes with the
+    // SymPy-backed stack + the Diagram Spec render/mark pipeline.
+    ...createMathTopicRegistry({
+        topicKey: 'grade10_math_trigonometry',
+        modePrefix: 'grade10_trigonometry_1',
+    }),
 };

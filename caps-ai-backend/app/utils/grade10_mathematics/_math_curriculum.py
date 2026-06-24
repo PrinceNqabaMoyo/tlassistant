@@ -29,6 +29,28 @@ TOPICS: Dict[str, Dict[str, Any]] = {
             {"key": "fractions", "title": "Algebraic fractions", "formats": ["simplify_fractions"]},
         ],
     },
+    "grade10_math_trigonometry": {
+        "title": "Trigonometry",
+        "term": 1,
+        "subskills": [
+            {"key": "identify_sides", "title": "Opposite, adjacent & hypotenuse"},
+            {"key": "ratio_from_triangle", "title": "Trig ratios from a triangle"},
+            {"key": "calculator_value", "title": "Using a calculator"},
+            {"key": "special_angles", "title": "Special angles (no calculator)"},
+            {"key": "find_length", "title": "Finding a side length"},
+            {"key": "find_angle", "title": "Finding an angle"},
+            {"key": "solve_equation", "title": "Solving trig equations"},
+        ],
+        "sections": [
+            {"key": "identify_sides", "title": "Opposite, adjacent & hypotenuse", "formats": ["identify_sides"]},
+            {"key": "ratios", "title": "Trig ratios (SohCahToa)", "formats": ["ratio_from_triangle"]},
+            {"key": "calculator", "title": "Calculator skills", "formats": ["calculator_value"]},
+            {"key": "special_angles", "title": "Special angles", "formats": ["special_angles"]},
+            {"key": "find_length", "title": "Finding a side length", "formats": ["find_length"]},
+            {"key": "find_angle", "title": "Finding an angle", "formats": ["find_angle"]},
+            {"key": "solve_equation", "title": "Solving trig equations", "formats": ["solve_equation"]},
+        ],
+    },
 }
 
 
