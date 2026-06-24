@@ -296,14 +296,18 @@ def build_generate(subskill_builders: Dict[str, Any], default_subskill: str):
     seed ``seed*1000 + index`` so a fixed seed reproduces the exact set.
     """
 
+    # Real subskills for "mixed" practice — exclude aliases that point at an
+    # existing builder (e.g. "concepts").
+    real_keys = [k for k in subskill_builders if k != "concepts"]
+
     def generate(subskill: Optional[str] = None, difficulty: str = "medium", count: int = 1, seed: Optional[int] = None, **_: Any):
-        key = subskill if subskill in subskill_builders else default_subskill
-        builder = subskill_builders[key]
+        mixed = subskill == "mixed"
         questions: List[Dict[str, Any]] = []
         base = 0 if seed is None else int(seed)
         for i in range(max(1, int(count))):
+            key = real_keys[i % len(real_keys)] if mixed else (subskill if subskill in subskill_builders else default_subskill)
             r = rng(base * 1000 + i if seed is not None else None)
-            q = builder(r, difficulty)
+            q = subskill_builders[key](r, difficulty)
             if seed is not None:
                 # Deterministic id so a fixed seed reproduces output byte-for-byte
                 # (lets the agent regenerate the exact same variant).
