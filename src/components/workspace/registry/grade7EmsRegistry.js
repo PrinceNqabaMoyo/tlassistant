@@ -65,9 +65,10 @@ const Grade7EmsRoute = ({ workspaceMode, ctx }) => {
     const baseMode = workspaceMode.replace('_scaffold', '').replace('_practice', '').replace('_assessment', '');
     
     const config = TOPIC_CONFIGS[baseMode];
-    if (!config) return null;
 
     const controller = useGrade7EmsController({ workspaceMode, buildApiUrl: ctx.buildApiUrl, config });
+
+    if (!config) return null;
 
     if (isScaffold) {
         return h(EmsScaffold, {
