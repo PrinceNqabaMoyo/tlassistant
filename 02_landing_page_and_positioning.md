@@ -88,3 +88,35 @@ teach a *different curriculum* from "CAPS/DBE".
 3. Who signs off the **CAPS/NSC/examining-body copy**? (Recommended before publish.)
 4. Tone: aspirational ("intelligence-age companion") vs concrete ("pass your exams") —
    or hero = aspirational, body = concrete? My recommendation is the latter.
+
+
+# Additional thoughts
+
+Hero should capture the essence of this: Helping you master high school
+
+## Capture the following somewhere
+- Built for the South African high school learner
+- Did you know CAPS is the south african  standard curriculum on which IEB, SACAI and DBE high school exams are based?
+
+## Curriculum aligned
+Fundile is built on the CAPS curriculum. With Fundile you can master your subjects to excel whether you sit for:
+- IEB,
+- SACAI  or the
+- GOVERNMENT'S DBE examination.
+
+
+## Also this: 
+- Topically sequenced
+- Personalized adaptive progression
+- Prioritize developing understanding over giving out answers.
+- We emphasize procedure over final product
+
+## IMPORTANT
+Fundile is Not an ai Chatbot (e.g GPTs)
+
+### Compare chatbots with fundile
+- Process: Ai chat bot -user asks question, ai gives the answer. 
+- Fundile - Fundile gives the learner the question and learner gives the answer. Fundile helps learner fill gaps in understanding.
+- Ai doesn't have your syllabus guard rails. Fundile is built using your grade level syllabus, tests and exams.
+- Ai can hallucinate, fundile  operates deterministically, to always stay in context.
+- Ai chatbot answers are not calibrated to meet curriculum objectives, fundile guides you based on the south africa curriculum objectives.
