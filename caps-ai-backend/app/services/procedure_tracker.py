@@ -180,6 +180,12 @@ def _final_equation_match(last: Any, final_ref: Any, var: str) -> bool:
     """Does the learner's last line state the same solution as canonical?"""
     try:
         x = sp.Symbol(var)
+        # Handle inequalities: compare solution sets
+        if isinstance(final_ref, sp.Relational) and not isinstance(final_ref, sp.Equality):
+            return _inequality_match(last, final_ref, x)
+        # Handle value pairs / sets
+        if isinstance(final_ref, (sp.Tuple, sp.FiniteSet)):
+            return _value_pair_match(last, final_ref)
         target = final_ref
         # final_ref may be the bare value or an Eq(x, value).
         if isinstance(final_ref, sp.Equality):
@@ -194,6 +200,82 @@ def _final_equation_match(last: Any, final_ref: Any, var: str) -> bool:
         return sp.simplify(sp.sympify(last) - target) == 0
     except (sp.SympifyError, TypeError, ValueError):
         return False
+
+
+def _inequality_match(last: Any, final_ref: sp.Relational, var: sp.Symbol) -> bool:
+    """Compare two inequalities by checking their solution sets are equivalent."""
+    try:
+        if not isinstance(last, sp.Relational):
+            return False
+        # Compare solution sets using solveset
+        ref_set = sp.solveset(final_ref, var, domain=sp.S.Reals)
+        last_set = sp.solveset(last, var, domain=sp.S.Reals)
+        return ref_set == last_set
+    except Exception:
+        return False
+
+
+def _value_pair_match(last: Any, final_ref: Any) -> bool:
+    """Compare a student answer to a canonical value pair (Tuple or FiniteSet)."""
+    try:
+        if isinstance(final_ref, sp.Tuple):
+            ref_vals = list(final_ref)
+        elif isinstance(final_ref, sp.FiniteSet):
+            ref_vals = sorted(list(final_ref), key=lambda e: str(e))
+        else:
+            ref_vals = [final_ref]
+        # last may be a Tuple, a FiniteSet, or a bare expression
+        if isinstance(last, sp.Tuple):
+            last_vals = list(last)
+        elif isinstance(last, sp.FiniteSet):
+            last_vals = sorted(list(last), key=lambda e: str(e))
+        else:
+            # Try to parse as comma-separated values
+            return False
+        if len(last_vals) != len(ref_vals):
+            return False
+        return all(sp.simplify(lv - rv) == 0 for lv, rv in zip(last_vals, ref_vals))
+    except Exception:
+        return False
+
+
+def mark_number_line(spec: Dict[str, Any], student_answer: Any) -> Dict[str, Any]:
+    """Mark a number-line build answer by structural comparison.
+
+    ``student_answer`` is expected to be a dict like:
+    ``{"at": 4, "closed": false, "direction": "negative"}``
+    """
+    max_marks = 2
+    if not spec or not student_answer:
+        return {"is_correct": False, "score": 0, "max_score": max_marks, "feedback": "No answer provided."}
+    ref_point = spec.get("point", {})
+    ref_ray = spec.get("ray", {})
+    ans = student_answer if isinstance(student_answer, dict) else {}
+    at_ok = float(ans.get("at", 0)) == float(ref_point.get("at", 0))
+    closed_ok = bool(ans.get("closed", True)) == bool(ref_point.get("closed", True))
+    dir_ok = str(ans.get("direction", "")) == str(ref_ray.get("direction", ""))
+
+    score = 0
+    feedback_parts = []
+    if at_ok:
+        score += 1
+    else:
+        feedback_parts.append(f"Position should be at {ref_point.get('at')}")
+    if closed_ok:
+        score += 1
+    else:
+        feedback_parts.append(f"Dot should be {'closed' if ref_point.get('closed') else 'open'}")
+    if not dir_ok:
+        feedback_parts.append(f"Direction should be {ref_ray.get('direction')}")
+
+    if score >= max_marks:
+        return {"is_correct": True, "score": score, "max_score": max_marks, "feedback": "Correct."}
+    return {
+        "is_correct": False,
+        "score": score,
+        "max_score": max_marks,
+        "feedback": "; ".join(feedback_parts) if feedback_parts else "Review the number line.",
+    }
 
 
 def _error_meta(canonical_steps: List[Dict[str, Any]], first_error: Optional[int]) -> Dict[str, Any]:
@@ -237,6 +319,12 @@ def mark_short_answer(question: Dict[str, Any], student_answer: str) -> Dict[str
                 correct = (sp.expand(cur) == cur) and equivalent(cur, ref, "expression")
             except (sp.SympifyError, TypeError, ValueError):
                 correct = False
+        elif mode == "expression_positive_exponents":
+            correct = equivalent(cur, ref, "expression") and not _has_negative_exponent(cur)
+        elif mode == "value_pair":
+            correct = _value_pair_match(cur, ref)
+        elif mode == "inequality":
+            correct = _inequality_match(cur, ref, sp.Symbol(question.get("var", "x")))
         else:
             correct = equivalent(cur, ref, "expression")
     score = max_marks if correct else 0
@@ -257,3 +345,19 @@ def _is_factored(expr: Any) -> bool:
     if e.is_Atom:
         return False
     return e.is_Mul or e.is_Pow
+
+
+def _has_negative_exponent(expr: Any) -> bool:
+    """True if any Pow in expr has a negative exponent (violates CAPS convention)."""
+    try:
+        e = sp.sympify(expr)
+    except (sp.SympifyError, TypeError, ValueError):
+        return True  # unparseable → treat as invalid
+    for sub in sp.preorder_traversal(e):
+        if sub.is_Pow and sub.exp.is_number:
+            try:
+                if float(sub.exp) < 0:
+                    return True
+            except Exception:
+                pass
+    return False

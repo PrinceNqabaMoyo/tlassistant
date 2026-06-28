@@ -19,6 +19,12 @@ from typing import Any, Dict, List
 from flask import Blueprint, jsonify, request
 
 from app.services import procedure_tracker as pt
+from app.services.adaptive_progression import (
+    evaluate_pro_progression,
+    evaluate_standard_progression,
+    get_progression_recommendation,
+)
+from app.services.agent_service import get_student_model
 from app.utils.grade10_mathematics._math_curriculum import (
     get_section_for_topic,
     get_topic_sections,
@@ -26,6 +32,9 @@ from app.utils.grade10_mathematics._math_curriculum import (
 )
 from app.utils.grade10_mathematics.term_1 import (
     algebraic_expressions_generator,
+    equations_inequalities_generator,
+    exponents_generator,
+    patterns_sequences_generator,
     trigonometry_generator,
 )
 
@@ -34,6 +43,9 @@ grade10_mathematics_bp = Blueprint("grade10_mathematics", __name__)
 GENERATORS = {
     "grade10_math_algebraic_expressions": algebraic_expressions_generator.generate,
     "grade10_math_trigonometry": trigonometry_generator.generate,
+    "grade10_math_exponents": exponents_generator.generate,
+    "grade10_math_equations_inequalities": equations_inequalities_generator.generate,
+    "grade10_math_patterns_sequences": patterns_sequences_generator.generate,
 }
 
 
@@ -121,6 +133,8 @@ def _mark_one(question: Dict[str, Any], answer: Any) -> Dict[str, Any]:
         steps = answer if isinstance(answer, list) else str(answer or "").splitlines()
         diag = pt.diagnose(question.get("canonical_solution", {}), steps, int(question.get("marks", 1)))
         return diag
+    if q_type == "number_line_build":
+        return pt.mark_number_line(question.get("diagram_spec", {}), answer)
     return {"is_correct": False, "score": 0, "max_score": int(question.get("marks", 1)), "feedback": "Unsupported question type."}
 
 
@@ -146,6 +160,79 @@ def mark_endpoint():
             "total_score": total_score,
             "max_score": max_score,
             "percentage": round(100 * total_score / max_score, 1) if max_score else 0,
+        }
+    )
+
+
+@grade10_mathematics_bp.route("/submit", methods=["POST"])
+def submit_endpoint():
+    """Mark an answer, record to the student model, and return progression."""
+    data = request.get_json() or {}
+    questions = data.get("questions", [])
+    answers = data.get("answers", {})
+    user_id = data.get("user_id")
+    mode = data.get("mode", "practice")
+    tier = data.get("subscription", "standard")
+    topic = data.get("topic", "unknown")
+    subskill = data.get("subskill", "concepts")
+
+    results: Dict[str, Any] = {}
+    total_score = 0
+    max_score = 0
+    for q in questions:
+        q_id = str(q.get("id", ""))
+        res = _mark_one(q, answers.get(q_id))
+        results[q_id] = res
+        total_score += res.get("score", 0)
+        max_score += res.get("max_score", 0)
+
+    # Build metadata from first question's diagnosis
+    metadata = {}
+    if questions:
+        first_res = results.get(str(questions[0].get("id", "")), {})
+        metadata = {
+            "first_error_step": first_res.get("first_error_step"),
+            "error_type": first_res.get("error_type"),
+            "misconception_tags": first_res.get("misconception_tags", []),
+            "final_answer_correct": first_res.get("final_answer_correct"),
+            "marks_breakdown": first_res.get("marks", {}),
+        }
+
+    student_model = get_student_model()
+    if tier == "pro" and student_model and user_id:
+        progression = evaluate_pro_progression(
+            student_model=student_model,
+            user_id=user_id,
+            subject="mathematics",
+            grade="grade-10",
+            topic=topic,
+            subskill=subskill,
+            score=total_score,
+            max_score=max_score,
+            mode=mode,
+            metadata=metadata,
+        )
+    else:
+        progression = evaluate_standard_progression(mode, total_score, max_score)
+
+    recommendations = []
+    if student_model and user_id:
+        recommendations = get_progression_recommendation(
+            student_model=student_model,
+            user_id=user_id,
+            subject="mathematics",
+            grade="grade-10",
+            topic=topic,
+        )
+
+    return jsonify(
+        {
+            "results": results,
+            "total_score": total_score,
+            "max_score": max_score,
+            "percentage": round(100 * total_score / max_score, 1) if max_score else 0,
+            "progression": progression,
+            "recommendations": recommendations,
         }
     )
 

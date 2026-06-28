@@ -36,7 +36,12 @@ export const createMathTopicRegistry = ({ topicKey, modePrefix }) => {
     const useController = createMathController({ topicKey, scaffoldMode });
 
     const Route = ({ workspaceMode, ctx }) => {
-        const c = useController({ workspaceMode, buildApiUrl: ctx.buildApiUrl });
+        const c = useController({
+            workspaceMode,
+            buildApiUrl: ctx.buildApiUrl,
+            userId: ctx.userId,
+            subscriptionTier: ctx.subscriptionTier,
+        });
         const isScaffold = workspaceMode === scaffoldMode;
 
         const answerArea = c.question

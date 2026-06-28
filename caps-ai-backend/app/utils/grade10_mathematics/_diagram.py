@@ -90,3 +90,49 @@ def cartesian_point(
         "show_radius": bool(show_radius),
         "caption": caption,
     }
+
+
+def number_line(
+    *,
+    min_val: float = -5,
+    max_val: float = 5,
+    point_at: float = 0,
+    closed: bool = True,
+    ray_direction: str = "positive",
+    ticks: float = 1,
+    label: str = "",
+) -> Dict[str, Any]:
+    """Build a number-line diagram spec for inequalities.
+
+    ``ray_direction``: ``"positive"`` | ``"negative"`` | ``"both"`` | ``"none"``
+    """
+    return {
+        "kind": "number_line",
+        "min": float(min_val),
+        "max": float(max_val),
+        "point": {"at": float(point_at), "closed": bool(closed)},
+        "ray": {"direction": str(ray_direction)} if ray_direction != "none" else None,
+        "ticks": float(ticks),
+        "label": str(label),
+    }
+
+
+def dot_pattern(
+    *,
+    family: str = "tables",
+    figure_index: int = 1,
+    count_rule: str = "",
+    caption: str = "",
+) -> Dict[str, Any]:
+    """Build a parametric diagram pattern spec for sequences.
+
+    ``family`` names the figure family (``"tables"``, ``"matchsticks"``, ``"stadium"``).
+    ``count_rule`` is a LaTeX string describing the count (e.g. ``"4 + 2(n-1)"``).
+    """
+    return {
+        "kind": "dot_pattern",
+        "family": str(family),
+        "figure_index": int(figure_index),
+        "count_rule": str(count_rule),
+        "caption": str(caption),
+    }
