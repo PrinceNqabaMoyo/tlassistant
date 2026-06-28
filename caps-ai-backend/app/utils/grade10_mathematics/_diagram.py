@@ -136,3 +136,52 @@ def dot_pattern(
         "count_rule": str(count_rule),
         "caption": str(caption),
     }
+
+
+# Function families understood by the grapher (shareable across grades and
+# Technical Mathematics). Each is ``y = a·base_fn(x) + q`` with an optional
+# exponential base ``b``.
+FUNCTION_FAMILIES = ("linear", "quadratic", "hyperbola", "exponential", "sin", "cos", "tan")
+
+
+def function_graph(
+    *,
+    family: str = "linear",
+    a: float = 1.0,
+    q: float = 0.0,
+    b: float = 2.0,
+    domain: Optional[List[float]] = None,
+    features: Optional[Dict[str, Any]] = None,
+    interactive: Optional[Dict[str, Any]] = None,
+    caption: str = "",
+) -> Dict[str, Any]:
+    """Build a parametric function-graph spec (the reusable grapher surface).
+
+    The *same* JSON renders a static annotated figure (when ``features`` are
+    supplied) and powers the interactive parameter-manipulation grapher (when
+    ``interactive`` lists draggable sliders + a target). It is family-agnostic:
+    any grade/subject that emits this kind gets the identical ``FunctionGrapher``.
+
+    ``family``   one of :data:`FUNCTION_FAMILIES`.
+    ``a``, ``q`` the standard CAPS parameters of ``y = a·f(x) + q``.
+    ``b``        exponential base (only used when ``family == "exponential"``).
+    ``domain``   ``[xmin, xmax]`` to plot (degrees, e.g. ``[0, 360]`` for trig).
+    ``features`` optional annotations: ``y_intercept``, ``x_intercepts``,
+                 ``turning_point``, ``asymptotes`` (``{"horizontal": q, "vertical": 0}``).
+    ``interactive`` optional ``{"sliders": ["a", "q"], "target": {"a":.., "q":..}}``.
+    """
+    fam = str(family)
+    if domain is None:
+        domain = [0.0, 360.0] if fam in ("sin", "cos", "tan") else [-5.0, 5.0]
+    spec: Dict[str, Any] = {
+        "kind": "function_graph",
+        "family": fam,
+        "params": {"a": float(a), "q": float(q), "b": float(b)},
+        "domain": [float(domain[0]), float(domain[1])],
+        "caption": str(caption),
+    }
+    if features is not None:
+        spec["features"] = features
+    if interactive is not None:
+        spec["interactive"] = interactive
+    return spec

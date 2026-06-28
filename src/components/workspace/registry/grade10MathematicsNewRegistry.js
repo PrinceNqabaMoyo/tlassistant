@@ -26,4 +26,8 @@ export const grade10MathematicsNewRegistry = {
         topicKey: 'grade10_math_trigonometry',
         modePrefix: 'grade10_trigonometry_1',
     }),
+    ...createMathTopicRegistry({
+        topicKey: 'grade10_math_functions',
+        modePrefix: 'grade10_functions',
+    }),
 };

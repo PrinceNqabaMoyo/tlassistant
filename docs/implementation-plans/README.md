@@ -16,15 +16,16 @@ documents, not code — safe to read before/while implementing.
   generators, KaTeX + comma decimals, Diagram Spec → JSXGraph, Working Pad,
   registry-driven keypad.
 
-### Grade 10, Term 1 (5 topics)
+### Grade 10, Term 1 (6 topics)
 | Topic | Plan | Status |
 |-------|------|--------|
 | 1. Algebraic Expressions | (shipped in PR #6) | ✅ done |
-| 2. Exponents | `mathematics/gr10_t1_04_exponents.md` | planned |
-| 3. Patterns & Sequences | `mathematics/gr10_t1_05_patterns_sequences.md` | planned |
-| 4. Equations & Inequalities | `mathematics/gr10_t1_06_equations_inequalities.md` | planned |
+| 2. Exponents | `mathematics/gr10_t1_04_exponents.md` | ✅ done |
+| 3. Patterns & Sequences | `mathematics/gr10_t1_05_patterns_sequences.md` | ✅ done |
+| 4. Equations & Inequalities | `mathematics/gr10_t1_06_equations_inequalities.md` | ✅ done |
 | 5. Trigonometry | (shipped in PR #6) | ✅ done |
+| 6. Functions | `mathematics/gr10_t1_07_functions.md` | in progress |
 
-**Recommended build order for the 3 outstanding topics:**
-Exponents → Equations & Inequalities → Patterns & Sequences
-(rationale in `gr10_t1_06_equations_inequalities.md`).
+Functions completes Gr10 Term 1. It introduces the reusable, parametric
+`function_graph` Diagram Spec + interactive parameter-manipulation grapher
+(shareable across grades' mathematics and Technical Mathematics).

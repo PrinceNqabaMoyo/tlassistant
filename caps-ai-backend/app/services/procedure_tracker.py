@@ -239,6 +239,35 @@ def _value_pair_match(last: Any, final_ref: Any) -> bool:
         return False
 
 
+def _value_pair_text_match(text: Any, final_ref: Any) -> bool:
+    """Match a typed ordered pair like ``(1;0)`` / ``1; 0`` against the key.
+
+    SA notation uses ``;`` to separate coordinates (commas are decimals), so the
+    pair is split on ``;`` and each component parsed independently.
+    """
+    if text is None:
+        return False
+    s = str(text).strip().strip("()[]{}").strip()
+    if ";" not in s:
+        return False
+    parts = [p.strip() for p in s.split(";") if p.strip()]
+    parsed = [parse_line(p) for p in parts]
+    if any(p is None for p in parsed):
+        return False
+    try:
+        if isinstance(final_ref, sp.Tuple):
+            ref_vals = list(final_ref)
+        elif isinstance(final_ref, sp.FiniteSet):
+            ref_vals = sorted(list(final_ref), key=lambda e: str(e))
+        else:
+            ref_vals = [final_ref]
+        if len(parsed) != len(ref_vals):
+            return False
+        return all(sp.simplify(sp.sympify(pv) - rv) == 0 for pv, rv in zip(parsed, ref_vals))
+    except (sp.SympifyError, TypeError, ValueError):
+        return False
+
+
 def mark_number_line(spec: Dict[str, Any], student_answer: Any) -> Dict[str, Any]:
     """Mark a number-line build answer by structural comparison.
 
@@ -278,6 +307,58 @@ def mark_number_line(spec: Dict[str, Any], student_answer: Any) -> Dict[str, Any
     }
 
 
+def mark_function_transform(question: Dict[str, Any], student_answer: Any) -> Dict[str, Any]:
+    """Mark a function-grapher answer by comparing submitted parameters.
+
+    ``student_answer`` is expected to be a dict of the parameters the learner
+    set, e.g. ``{"a": 2, "q": -3}``. Only the sliders the question exposes are
+    graded, each within ``tolerance`` (0 = exact). Structural compare, no pixels.
+    """
+    target = question.get("target_params", {}) or {}
+    sliders = question.get("sliders") or list(target.keys())
+    tol = float(question.get("tolerance", 0.0))
+    max_marks = int(question.get("marks", len(sliders) or 1))
+    ans = student_answer if isinstance(student_answer, dict) else {}
+
+    per_mark = max_marks / max(1, len(sliders))
+    score = 0.0
+    wrong: List[str] = []
+    for key in sliders:
+        try:
+            got = float(ans.get(key))
+            want = float(target.get(key))
+        except (TypeError, ValueError):
+            wrong.append(key)
+            continue
+        if abs(got - want) <= tol:
+            score += per_mark
+        else:
+            wrong.append(key)
+
+    awarded = int(round(score))
+    correct = not wrong
+    if correct:
+        feedback = "Correct — your curve matches the target."
+    else:
+        bits = [f"{k} should be {_fmt_num(target.get(k))}" for k in wrong]
+        feedback = "Not yet — " + "; ".join(bits) + "."
+    return {
+        "is_correct": correct,
+        "score": max_marks if correct else awarded,
+        "max_score": max_marks,
+        "feedback": feedback,
+    }
+
+
+def _fmt_num(value: Any) -> str:
+    try:
+        f = float(value)
+    except (TypeError, ValueError):
+        return str(value)
+    s = str(int(f)) if f.is_integer() else str(f)
+    return s.replace(".", ",")
+
+
 def _error_meta(canonical_steps: List[Dict[str, Any]], first_error: Optional[int]) -> Dict[str, Any]:
     if first_error is None:
         return {}
@@ -309,7 +390,11 @@ def mark_short_answer(question: Dict[str, Any], student_answer: str) -> Dict[str
     ref = _restore_sympy(question.get("answer_sympy", ""))
     cur = parse_line(student_answer)
     correct = False
-    if ref is not None and cur is not None:
+    # value_pair is handled first: SA ordered pairs use ";" as the separator
+    # (commas are decimals), so the bare parser can't produce a tuple.
+    if mode == "value_pair" and ref is not None:
+        correct = _value_pair_text_match(student_answer, ref) or _value_pair_match(cur, ref)
+    elif ref is not None and cur is not None:
         if mode in ("equation", "set") or isinstance(ref, sp.Equality) or isinstance(cur, sp.Equality):
             correct = equivalent(cur, ref, "equation")
         elif mode == "factored":
@@ -321,8 +406,6 @@ def mark_short_answer(question: Dict[str, Any], student_answer: str) -> Dict[str
                 correct = False
         elif mode == "expression_positive_exponents":
             correct = equivalent(cur, ref, "expression") and not _has_negative_exponent(cur)
-        elif mode == "value_pair":
-            correct = _value_pair_match(cur, ref)
         elif mode == "inequality":
             correct = _inequality_match(cur, ref, sp.Symbol(question.get("var", "x")))
         else:

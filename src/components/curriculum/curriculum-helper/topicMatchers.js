@@ -121,6 +121,12 @@ export const isTrigonometry1Topic = (topicName) => {
         || normalized === 'trigonometry';
 };
 
+export const isGrade10FunctionsTopic = (topicName) => {
+    const normalized = normalizeTopicName(topicName);
+    return normalized === 'functions'
+        || (normalized.includes('functions') && !normalized.includes('relationship'));
+};
+
 export const isGrade10IndigenousBookkeepingTopic = (topicName) => {
     const normalized = normalizeLooseTopicName(topicName);
     return normalized.includes('informal')

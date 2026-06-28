@@ -34,6 +34,7 @@ from app.utils.grade10_mathematics.term_1 import (
     algebraic_expressions_generator,
     equations_inequalities_generator,
     exponents_generator,
+    functions_generator,
     patterns_sequences_generator,
     trigonometry_generator,
 )
@@ -46,6 +47,7 @@ GENERATORS = {
     "grade10_math_exponents": exponents_generator.generate,
     "grade10_math_equations_inequalities": equations_inequalities_generator.generate,
     "grade10_math_patterns_sequences": patterns_sequences_generator.generate,
+    "grade10_math_functions": functions_generator.generate,
 }
 
 
@@ -135,6 +137,8 @@ def _mark_one(question: Dict[str, Any], answer: Any) -> Dict[str, Any]:
         return diag
     if q_type == "number_line_build":
         return pt.mark_number_line(question.get("diagram_spec", {}), answer)
+    if q_type == "function_transform":
+        return pt.mark_function_transform(question, answer)
     return {"is_correct": False, "score": 0, "max_score": int(question.get("marks", 1)), "feedback": "Unsupported question type."}
 
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import JXG from 'jsxgraph';
+import { evalFamily, yBoundsFor, isTrigFamily } from './functionFamilies';
 
 const { JSXGraph } = JXG;
 
@@ -267,6 +268,72 @@ function renderNumberLine(spec, { id }) {
 }
 
 /**
+ * Render a (static) function-graph spec into a JSXGraph board.
+ * Plots the curve, dashed asymptotes and any annotated feature points.
+ * Returns a cleanup function.
+ */
+function renderFunctionGraph(spec, { id }) {
+    const family = spec.family || 'linear';
+    const params = spec.params || { a: 1, q: 0, b: 2 };
+    const domain = spec.domain || (isTrigFamily(family) ? [0, 360] : [-5, 5]);
+    const [xlo, xhi] = domain;
+    const [ylo, yhi] = yBoundsFor(family, domain, params);
+    const padX = isTrigFamily(family) ? 20 : 0.8;
+    const bbox = [xlo - padX, yhi, xhi + padX, ylo];
+
+    const board = JSXGraph.initBoard(id, {
+        boundingbox: bbox,
+        axis: true,
+        defaultAxes: {
+            x: { ticks: { visible: true, insertTicks: !isTrigFamily(family), ticksDistance: isTrigFamily(family) ? 90 : 1, minorTicks: 0 } },
+            y: { ticks: { visible: true, insertTicks: true, minorTicks: 0 } },
+        },
+        grid: true,
+        showNavigation: false,
+        showCopyright: false,
+        keepAspectRatio: false,
+        pan: { enabled: false },
+        zoom: { enabled: false },
+    });
+
+    const plot = (xfrom, xto) => board.create(
+        'functiongraph',
+        [(x) => evalFamily(family, x, params), xfrom, xto],
+        { strokeColor: COLORS.fill, strokeWidth: 2.5, fixed: true, highlight: false },
+    );
+    if (family === 'hyperbola') {
+        plot(xlo, -0.05);
+        plot(0.05, xhi);
+    } else {
+        plot(xlo, xhi);
+    }
+
+    const features = spec.features || {};
+    if (features.asymptotes && typeof features.asymptotes.horizontal === 'number') {
+        board.create('line', [[xlo, features.asymptotes.horizontal], [xhi, features.asymptotes.horizontal]], {
+            strokeColor: COLORS.wrong, strokeWidth: 1, dash: 2, fixed: true, highlight: false, straightFirst: false, straightLast: false,
+        });
+    }
+    if (features.asymptotes && typeof features.asymptotes.vertical === 'number') {
+        board.create('line', [[features.asymptotes.vertical, ylo], [features.asymptotes.vertical, yhi]], {
+            strokeColor: COLORS.wrong, strokeWidth: 1, dash: 2, fixed: true, highlight: false, straightFirst: false, straightLast: false,
+        });
+    }
+    const featurePoint = (pt) => board.create('point', pt, {
+        name: `(${pt[0]}; ${pt[1]})`, size: 3, fixed: true, showInfobox: false,
+        fillColor: COLORS.select, strokeColor: COLORS.select,
+        label: { offset: [8, 8], fontSize: 12, strokeColor: COLORS.label }, highlight: false,
+    });
+    if (Array.isArray(features.y_intercept)) featurePoint(features.y_intercept);
+    if (Array.isArray(features.turning_point)) featurePoint(features.turning_point);
+    (features.x_intercepts || []).forEach((pt) => featurePoint(pt));
+
+    return () => {
+        try { JSXGraph.freeBoard(board); } catch { /* already freed */ }
+    };
+}
+
+/**
  * DiagramRenderer — turns a Diagram Spec (see backend ``_diagram.py``) into a
  * JSXGraph figure. The same spec renders a static figure or, when
  * ``interactive``, an answer surface whose clickable sides emit edge keys back
@@ -289,7 +356,6 @@ const DiagramRenderer = ({
     correctEdge = null,
 }) => {
     const boxRef = React.useRef(null);
-    const boardRef = React.useRef(null);
     const idRef = React.useRef(`jxgbox-${++_boardSeq}`);
     const selectRef = React.useRef(onSelectEdge);
     selectRef.current = onSelectEdge;
@@ -309,6 +375,10 @@ const DiagramRenderer = ({
             return renderNumberLine(spec, { id: idRef.current });
         }
 
+        if (spec.kind === 'function_graph') {
+            return renderFunctionGraph(spec, { id: idRef.current });
+        }
+
         return undefined;
     }, [specKey, interactive, selectedEdge, graded, correctEdge]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -317,7 +387,8 @@ const DiagramRenderer = ({
     const isRightTriangle = spec.kind === 'right_triangle';
     const isNumberLine = spec.kind === 'number_line';
     const isDotPattern = spec.kind === 'dot_pattern';
-    if (!isRightTriangle && !isNumberLine && !isDotPattern) return null;
+    const isFunctionGraph = spec.kind === 'function_graph';
+    if (!isRightTriangle && !isNumberLine && !isDotPattern && !isFunctionGraph) return null;
 
     if (isDotPattern) {
         return (
@@ -336,9 +407,14 @@ const DiagramRenderer = ({
         );
     }
 
-    const boxStyle = isNumberLine
-        ? { width: 400, height: 120, position: 'relative', overflow: 'hidden', userSelect: 'none' }
-        : { width: 320, height: 250, position: 'relative', overflow: 'hidden', userSelect: 'none' };
+    let boxStyle;
+    if (isNumberLine) {
+        boxStyle = { width: 400, height: 120, position: 'relative', overflow: 'hidden', userSelect: 'none' };
+    } else if (isFunctionGraph) {
+        boxStyle = { width: 360, height: 320, position: 'relative', overflow: 'hidden', userSelect: 'none' };
+    } else {
+        boxStyle = { width: 320, height: 250, position: 'relative', overflow: 'hidden', userSelect: 'none' };
+    }
 
     return (
         <div className="flex flex-col items-center">
