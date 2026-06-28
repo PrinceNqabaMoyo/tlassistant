@@ -31,8 +31,27 @@ export const KEYPAD_GROUPS = {
         { label: 'x^2', insert: '^2' },
         { label: 'x^3', insert: '^3' },
         { label: 'x^{n}', insert: '^' },
+        { label: 'x^{-1}', insert: '^(-1)' },
         { label: '\\sqrt{\\;}', insert: 'sqrt()', offset: -1 },
-        { label: '\\sqrt[3]{\\;}', insert: 'cbrt()', offset: -1 },
+        { label: '\\sqrt[3]{\\;}', insert: '()', offset: -1 },
+        { label: '\\dfrac{1}{x}', insert: '1/' },
+    ],
+    inequalities: [
+        { label: '<', insert: '<' },
+        { label: '>', insert: '>' },
+        { label: '\\leq', insert: '<=' },
+        { label: '\\geq', insert: '>=' },
+        { label: '\\neq', insert: '!=' },
+        { label: '\\infty', insert: 'oo' },
+        { label: '(\\;)', insert: '()', offset: -1 },
+        { label: '[\\;]', insert: '[]', offset: -1 },
+    ],
+    sequences: [
+        { label: 'T_n', insert: 'T_n' },
+        { label: 'T_{n-1}', insert: 'T_{n-1}' },
+        { label: ';', insert: ';' },
+        { label: '\\ldots', insert: 'ldots' },
+        { label: 'n', insert: 'n' },
     ],
     trigonometry: [
         { label: '\\sin', insert: 'sin()', offset: -1 },
@@ -48,6 +67,8 @@ export const TOPIC_KEYPADS = {
     grade10_math_algebraic_expressions: ['algebra', 'arithmetic'],
     grade10_math_exponents: ['exponents', 'algebra', 'arithmetic'],
     grade10_math_trigonometry: ['trigonometry', 'algebra', 'arithmetic'],
+    grade10_math_equations_inequalities: ['inequalities', 'algebra', 'arithmetic'],
+    grade10_math_patterns_sequences: ['sequences', 'algebra', 'arithmetic'],
 };
 
 /** Resolve the flat key list for a topic (deduped, group order preserved). */

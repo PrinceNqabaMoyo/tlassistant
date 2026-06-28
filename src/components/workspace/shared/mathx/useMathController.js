@@ -2,15 +2,15 @@ import { useEffect, useState } from 'react';
 
 const GENERATE = '/api/mathematics/grade10/generate';
 const SECTIONS = '/api/mathematics/grade10/sections';
-const MARK = '/api/mathematics/grade10/mark';
+const SUBMIT = '/api/mathematics/grade10/submit';
 
 /**
  * Controller for a Grade 10 Mathematics topic. Handles scaffold (one question
- * per curriculum section) and practice (a mixed batch), plus marking via the
- * SymPy-backed ``/mark`` endpoint (which routes to the procedure tracker for
- * step questions).
+ * per curriculum section) and practice (a mixed batch), plus marking and
+ * adaptive progression via the SymPy-backed ``/submit`` endpoint (which routes
+ * to the procedure tracker for step questions and records to the student model).
  */
-export const createMathController = ({ topicKey, scaffoldMode }) => ({ workspaceMode, buildApiUrl }) => {
+export const createMathController = ({ topicKey, scaffoldMode }) => ({ workspaceMode, buildApiUrl, userId, subscriptionTier }) => {
     const isScaffold = workspaceMode === scaffoldMode;
 
     const [sections, setSections] = useState([]);
@@ -92,10 +92,22 @@ export const createMathController = ({ topicKey, scaffoldMode }) => ({ workspace
         if (!question) return;
         setMarking(true);
         try {
-            const res = await fetch(buildApiUrl(MARK), {
+            const mode = isScaffold ? 'scaffold' : 'practice';
+            const subskill = isScaffold
+                ? (sections?.[scaffoldStepIndex]?.key || 'concepts')
+                : 'mixed';
+            const res = await fetch(buildApiUrl(SUBMIT), {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ questions: [question], answers: { [question.id]: answer } }),
+                body: JSON.stringify({
+                    questions: [question],
+                    answers: { [question.id]: answer },
+                    user_id: userId || null,
+                    mode,
+                    subscription: subscriptionTier || 'standard',
+                    topic: topicKey,
+                    subskill,
+                }),
             });
             const data = await res.json();
             setResult(data?.results?.[question.id] || null);
