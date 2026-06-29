@@ -16,7 +16,7 @@ const CapsNscClarity = ({ isLightPalette }) => {
         ? 'rounded-2xl border border-sky-100 bg-slate-50 px-4 py-3 text-center'
         : 'rounded-2xl border border-white/10 bg-slate-950/60 px-4 py-3 text-center';
 
-    const { flow, table } = CAPS_NSC;
+    const { flow, table, aligned } = CAPS_NSC;
 
     return (
         <section id="caps-nsc" className="mt-24">
@@ -26,6 +26,11 @@ const CapsNscClarity = ({ isLightPalette }) => {
                     {CAPS_NSC.title}
                 </h2>
                 <p className={`mt-5 text-lg leading-8 ${body}`}>{CAPS_NSC.intro}</p>
+            </div>
+
+            {/* "Did you know" highlight band */}
+            <div className={`mt-8 rounded-[28px] border px-6 py-5 ${isLightPalette ? 'border-[#FF9100]/30 bg-[#FF9100]/8' : 'border-[#FF9100]/35 bg-[#FF9100]/12'}`}>
+                <p className={`text-lg font-semibold leading-8 ${heading}`}>{CAPS_NSC.didYouKnow}</p>
             </div>
 
             {/* CAPS -> three bodies -> one NSC flow */}
@@ -94,6 +99,23 @@ const CapsNscClarity = ({ isLightPalette }) => {
             <div className={`mt-6 rounded-[28px] border px-6 py-5 ${isLightPalette ? 'border-[#2B7BD8]/25 bg-[#13519C]/6' : 'border-[#2B7BD8]/35 bg-[#13519C]/15'}`}>
                 <p className={`text-lg font-semibold leading-8 ${heading}`}>{CAPS_NSC.framing}</p>
                 <p className={`mt-3 text-xs leading-6 ${muted}`}>{CAPS_NSC.disclaimer}</p>
+            </div>
+
+            {/* Plain-language "curriculum aligned" promise */}
+            <div className={`mt-6 ${card}`}>
+                <p className="text-sm font-semibold uppercase tracking-[0.25em] text-[#FFD166]">{aligned.heading}</p>
+                <p className={`mt-3 text-lg leading-8 ${body}`}>{aligned.body}</p>
+                <div className="mt-4 flex flex-wrap gap-3">
+                    {aligned.bodies.map((b) => (
+                        <span
+                            key={b}
+                            className={`inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold ${isLightPalette ? 'bg-[#13519C]/10 text-[#13519C]' : 'bg-[#2B7BD8]/20 text-blue-100'}`}
+                        >
+                            <span className="h-1.5 w-1.5 rounded-full bg-[#FF9100]" />
+                            {b}
+                        </span>
+                    ))}
+                </div>
             </div>
         </section>
     );

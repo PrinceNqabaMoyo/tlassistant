@@ -3,10 +3,12 @@
 // edited without touching layout. Treat the CAPS/NSC copy as sign-off material.
 
 export const HERO_COPY = {
-    eyebrow: 'Your intelligence-age study companion',
-    title: 'Exam-ready from day one. Every subject. One companion.',
+    eyebrow: 'Built for the South African high-school learner',
+    title: 'Helping you master high school.',
     subtitle:
-        'All your subjects, unlimited practice, and exam-standard questions — for less than the cost of a single private-tutoring hour a month. Fundile prepares you for the exam from your very first session, so you are never caught by surprise.',
+        'Every subject, unlimited exam-standard practice, and feedback that shows you exactly where you went wrong — for less than the cost of a single private-tutoring hour a month. Fundile prepares you for the exam from your very first session, so you are never caught by surprise.',
+    imageAlt: 'South African high-school learners studying together with Fundile',
+    imageCaption: 'For every South African learner — whatever school, whatever exam.',
     primaryCta: 'Start free',
     secondaryCta: 'See how it works',
 };
@@ -61,8 +63,16 @@ export const HOW_IT_WORKS = {
 export const CAPS_NSC = {
     eyebrow: 'CAPS, the NSC & the examining bodies',
     title: 'The difference is not the curriculum — it is the preparation.',
+    didYouKnow:
+        'Did you know? CAPS is the South African national curriculum on which the IEB, SACAI and DBE high-school exams are all based.',
     intro:
         'Many families believe the IEB or SACAI teach a different, "superior" curriculum to the DBE. In reality there is one national curriculum, and Fundile prepares you for the same National Senior Certificate whichever body sets your exam.',
+    // Plain-language "curriculum aligned" promise, in the user's words.
+    aligned: {
+        heading: 'Curriculum aligned',
+        body: 'Fundile is built on the CAPS curriculum. With Fundile you can master your subjects to excel whether you sit for:',
+        bodies: ['the IEB', 'SACAI', "the government's DBE examination"],
+    },
     // CAPS -> three bodies -> one NSC.
     flow: {
         foundation: {
@@ -212,4 +222,94 @@ export const FAQ = {
 export const COLLAB_COMING_SOON = {
     title: 'Teacher & tutor collaboration is coming soon',
     body: 'A shared space for teachers, tutors and students to assign work, review working, and complete tasks flexibly — any time. Register your interest and we will tell you the moment it is ready.',
+};
+
+// How Fundile teaches — the four principles in the user's words.
+export const PRINCIPLES = {
+    eyebrow: 'How Fundile teaches',
+    title: 'A learning method, not a search box.',
+    items: [
+        {
+            title: 'Topically sequenced',
+            body: 'Work through each subject in the order the curriculum builds it, so every topic stands on the one before it.',
+        },
+        {
+            title: 'Personalised adaptive progression',
+            body: 'Fundile tracks the subskills you have mastered and the ones you have not, then sends you exactly where you need to practise next.',
+        },
+        {
+            title: 'Understanding over answers',
+            body: 'We prioritise developing real understanding instead of handing out the answer — you do the thinking, Fundile fills the gaps.',
+        },
+        {
+            title: 'Procedure over final product',
+            body: 'We mark your method like an exam, not just your final answer — because in the NSC your working earns the marks.',
+        },
+    ],
+};
+
+// "Fundile is NOT an AI chatbot" — the core differentiation, in the user's words.
+export const NOT_A_CHATBOT = {
+    eyebrow: 'What makes Fundile different',
+    title: 'Fundile is not an AI chatbot.',
+    intro:
+        'Chatbots like ChatGPT answer the question for you. Fundile turns that around: it asks you the question, then helps you close the gaps in your own understanding.',
+    rows: [
+        {
+            aspect: 'Who answers',
+            chatbot: 'You ask, the AI gives you the answer.',
+            fundile: 'Fundile gives you the question; you answer, and it helps you fill the gaps in your understanding.',
+        },
+        {
+            aspect: 'Curriculum guard-rails',
+            chatbot: 'No syllabus guard-rails — it answers about anything.',
+            fundile: 'Built on your grade-level syllabus, tests and exams, so it stays on topic.',
+        },
+        {
+            aspect: 'Reliability',
+            chatbot: 'Can hallucinate and drift off course.',
+            fundile: 'Operates deterministically to always stay in context.',
+        },
+        {
+            aspect: 'Curriculum objectives',
+            chatbot: 'Answers are not calibrated to curriculum objectives.',
+            fundile: 'Guides you against the South African curriculum objectives.',
+        },
+    ],
+};
+
+// "What the app does" claims, each with its own demo-media slot so a specific
+// clip can be dropped under every claim. `demo.type` is 'youtube' for an embed
+// or 'placeholder' for a labelled "coming soon" slot.
+export const FEATURE_CLAIMS = {
+    eyebrow: 'See it in action',
+    title: 'Watch what Fundile actually does.',
+    intro:
+        'Every claim below comes with a short demo. We are recording one per feature — drop in to watch how each part works.',
+    claims: [
+        {
+            key: 'topic-flow',
+            title: 'Guided Scaffold → Practice → Assessment',
+            body: 'Pick a topic and move through guided scaffolding, unlimited practice, and an exam-style assessment that unlocks as you master each stage.',
+            demo: { type: 'youtube', src: 'https://www.youtube.com/embed/c4SMEpSFO0w?rel=0', label: 'Full product demo' },
+        },
+        {
+            key: 'step-marking',
+            title: 'Step-by-step marking that finds your mistake',
+            body: 'Show your working line by line. Fundile pinpoints the exact line your method broke down — and still credits everything that was correct.',
+            demo: { type: 'placeholder', label: 'Demo coming soon' },
+        },
+        {
+            key: 'unlimited-practice',
+            title: 'Unlimited, fresh exam-standard questions',
+            body: 'Deterministic generators produce endless new variants of any question, so you can practise a tricky type until it is automatic.',
+            demo: { type: 'placeholder', label: 'Demo coming soon' },
+        },
+        {
+            key: 'adaptive',
+            title: 'Adaptive progression on your weak subskills',
+            body: 'When you struggle, Fundile drops you to the foundation you are missing and rebuilds it before moving you on.',
+            demo: { type: 'placeholder', label: 'Demo coming soon' },
+        },
+    ],
 };
