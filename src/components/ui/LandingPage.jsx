@@ -4,8 +4,11 @@ import { ArrowRight, BookOpen, BrainCircuit, CheckCircle, GraduationCap, LayoutD
 import DemandCaptureForm from './DemandCaptureForm';
 import CapsNscClarity from './landing/CapsNscClarity';
 import LandingFaq from './landing/LandingFaq';
+import NotAChatbot from './landing/NotAChatbot';
+import FeatureClaims from './landing/FeatureClaims';
+import heroLearners from '../../assets/landing/sa-learners-hero.jpg';
 import { LIVE_AVAILABILITY_DETAIL, LIVE_AVAILABILITY_HEADLINE, LIVE_AVAILABILITY_NOTE } from '../../app/constants/availability';
-import { HERO_COPY, HIDDEN_CURRICULUM, AUDIENCES, PRICING_COPY } from '../../app/constants/landingCopy';
+import { HERO_COPY, HIDDEN_CURRICULUM, AUDIENCES, PRICING_COPY, PRINCIPLES } from '../../app/constants/landingCopy';
 
 // Landing Page Component
 const LandingPage = ({ db, onGetStarted, onSignIn, onViewSubscription, palette = 'dark' }) => {
@@ -224,7 +227,7 @@ const LandingPage = ({ db, onGetStarted, onSignIn, onViewSubscription, palette =
                                 </button>
                                 <button
                                     type="button"
-                                    onClick={() => scrollToSection('demo-video')}
+                                    onClick={() => scrollToSection('feature-claims')}
                                     className={`inline-flex items-center justify-center rounded-full px-4 py-2 text-sm font-semibold transition ${isLightPalette ? 'border border-sky-200 bg-white text-[#13519C] hover:border-sky-300 hover:bg-sky-50' : 'border border-white/15 bg-white/5 text-white hover:border-white/30 hover:bg-white/10'}`}
                                 >
                                     Demo video
@@ -296,46 +299,15 @@ const LandingPage = ({ db, onGetStarted, onSignIn, onViewSubscription, palette =
 
                         <div className="relative">
                             <div className={`absolute inset-0 rounded-[32px] bg-[radial-gradient(circle_at_center,_rgba(255,145,0,0.18),_transparent_60%)] blur-3xl ${isLightPalette ? 'opacity-70' : ''}`} />
-                            <div className={`relative overflow-hidden rounded-[32px] border p-5 shadow-2xl ${isLightPalette ? 'border-sky-100 bg-white/90 shadow-sky-100/60' : 'border-white/10 bg-white/[0.08] backdrop-blur-xl'}`}>
-                                <div className={`rounded-[28px] border p-6 ${isLightPalette ? 'border-sky-100 bg-slate-50/90' : 'border-white/10 bg-slate-950/80'}`}>
-                                    <div className={`flex items-center justify-between rounded-2xl border px-4 py-3 ${isLightPalette ? 'border-sky-100 bg-white' : 'border-white/10 bg-white/5'}`}>
-                                        <div>
-                                            <p className={`text-sm font-medium ${isLightPalette ? 'text-slate-500' : 'text-white/60'}`}>Inside Fundile</p>
-                                            <p className={`text-lg font-semibold ${heroSectionTextClassName}`}>A single learning flow</p>
-                                        </div>
-                                        <div className={`rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] ${isLightPalette ? 'bg-[#FF9100]/15 text-[#C76B00]' : 'bg-[#FF9100]/20 text-[#FFD166]'}`}>
-                                            live support
-                                        </div>
-                                    </div>
-                                    <div className="mt-5 space-y-4">
-                                        <div className={`rounded-2xl p-4 ring-1 ring-inset ${isLightPalette ? 'bg-[#13519C]/8 ring-[#2B7BD8]/18' : 'bg-[#13519C]/18 ring-[#2B7BD8]/35'}`}>
-                                            <div className="flex items-start gap-3">
-                                                <Target className={`mt-1 h-5 w-5 ${isLightPalette ? 'text-[#13519C]' : 'text-blue-300'}`} />
-                                                <div>
-                                                    <p className={`font-semibold ${heroSectionTextClassName}`}>Choose a topic with intention</p>
-                                                    <p className={`mt-1 text-sm ${bodyTextClassName}`}>Start from the exact subject area you need instead of searching aimlessly.</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className={`rounded-2xl p-4 ring-1 ring-inset ${isLightPalette ? 'bg-violet-500/6 ring-violet-400/18' : 'bg-violet-500/10 ring-violet-400/25'}`}>
-                                            <div className="flex items-start gap-3">
-                                                <BrainCircuit className={`mt-1 h-5 w-5 ${isLightPalette ? 'text-violet-600' : 'text-violet-300'}`} />
-                                                <div>
-                                                    <p className={`font-semibold ${heroSectionTextClassName}`}>Get guided help while you work</p>
-                                                    <p className={`mt-1 text-sm ${bodyTextClassName}`}>Use tutoring support and structured prompts to keep moving.</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className={`rounded-2xl p-4 ring-1 ring-inset ${isLightPalette ? 'bg-amber-500/8 ring-amber-400/18' : 'bg-amber-500/10 ring-amber-300/25'}`}>
-                                            <div className="flex items-start gap-3">
-                                                <CheckCircle className={`mt-1 h-5 w-5 ${isLightPalette ? 'text-amber-600' : 'text-amber-300'}`} />
-                                                <div>
-                                                    <p className={`font-semibold ${heroSectionTextClassName}`}>Learn from feedback, not just answers</p>
-                                                    <p className={`mt-1 text-sm ${bodyTextClassName}`}>Review your work, spot mistakes, and strengthen understanding over time.</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                            <div className={`relative overflow-hidden rounded-[32px] border shadow-2xl ${isLightPalette ? 'border-sky-100 bg-white/90 shadow-sky-100/60' : 'border-white/10 bg-white/[0.08] backdrop-blur-xl'}`}>
+                                <img
+                                    src={heroLearners}
+                                    alt={HERO_COPY.imageAlt}
+                                    loading="eager"
+                                    className="h-full w-full object-cover"
+                                />
+                                <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 via-black/25 to-transparent px-6 py-5">
+                                    <p className="text-sm font-medium text-white/90">{HERO_COPY.imageCaption}</p>
                                 </div>
                             </div>
                         </div>
@@ -368,6 +340,28 @@ const LandingPage = ({ db, onGetStarted, onSignIn, onViewSubscription, palette =
                             ))}
                         </div>
                     </section>
+
+                    <section id="principles" className="mt-24">
+                        <div className="max-w-3xl">
+                            <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[#FFD166]">{PRINCIPLES.eyebrow}</p>
+                            <h2 className={`mt-4 text-4xl font-bold tracking-tight sm:text-5xl ${heroSectionTextClassName}`} style={{ fontFamily: 'Afacad, sans-serif' }}>
+                                {PRINCIPLES.title}
+                            </h2>
+                        </div>
+                        <div className="mt-10 grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
+                            {PRINCIPLES.items.map((item, index) => (
+                                <div key={item.title} className={surfaceClassName}>
+                                    <div className={`text-sm font-semibold uppercase tracking-[0.25em] ${isLightPalette ? 'text-[#2B7BD8]' : 'text-blue-200'}`}>
+                                        {String(index + 1).padStart(2, '0')}
+                                    </div>
+                                    <h3 className={`mt-4 text-xl font-semibold ${heroSectionTextClassName}`}>{item.title}</h3>
+                                    <p className={`mt-3 leading-7 ${bodyTextClassName}`}>{item.body}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+
+                    <NotAChatbot isLightPalette={isLightPalette} />
 
                     <section id="features" className="mt-24">
                         <div className="max-w-3xl">
@@ -476,40 +470,7 @@ const LandingPage = ({ db, onGetStarted, onSignIn, onViewSubscription, palette =
                         </div>
                     </section>
 
-                    <section id="demo-video" className="mt-24 grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
-                        <div className={`rounded-[32px] border p-8 ${isLightPalette ? 'border-sky-100 bg-white shadow-lg shadow-sky-100/35' : 'border-white/10 bg-white/5 backdrop-blur-sm'}`}>
-                            <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[#FFD166]">See Fundile in action</p>
-                            <h2 className={`mt-4 text-4xl font-bold tracking-tight sm:text-5xl ${heroSectionTextClassName}`} style={{ fontFamily: 'Afacad, sans-serif' }}>
-                                Watch how Fundile supports guided learning from topic choice to practice.
-                            </h2>
-                            <p className={`mt-5 text-lg leading-8 ${bodyTextClassName}`}>
-                                This short demo shows the kind of structured learning flow Fundile creates for students and teachers: clearer direction, guided practice, and a more focused path toward stronger performance and mastery.
-                            </p>
-                            <div className="mt-6 grid gap-4 sm:grid-cols-2">
-                                <div className={`rounded-2xl border p-4 ${isLightPalette ? 'border-sky-100 bg-slate-50' : 'border-white/10 bg-slate-950/60'}`}>
-                                    <p className={`text-sm font-medium ${mutedTextClassName}`}>Watch for</p>
-                                    <p className={`mt-2 text-lg font-semibold ${heroSectionTextClassName}`}>Topic-to-practice flow</p>
-                                </div>
-                                <div className={`rounded-2xl border p-4 ${isLightPalette ? 'border-sky-100 bg-slate-50' : 'border-white/10 bg-slate-950/60'}`}>
-                                    <p className={`text-sm font-medium ${mutedTextClassName}`}>Focus area</p>
-                                    <p className={`mt-2 text-lg font-semibold ${heroSectionTextClassName}`}>Performance + mastery</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className={`rounded-[32px] border p-4 shadow-2xl ${isLightPalette ? 'border-sky-100 bg-white shadow-sky-100/50' : 'border-white/10 bg-white/[0.08] backdrop-blur-xl'}`}>
-                            <div className={`overflow-hidden rounded-[28px] border ${isLightPalette ? 'border-sky-100 bg-slate-50' : 'border-white/10 bg-slate-950/80'}`}>
-                                <iframe 
-                                    className="aspect-video w-full"
-                                    src="https://www.youtube.com/embed/c4SMEpSFO0w?rel=0" 
-                                    title="Fundile Demo Video" 
-                                    frameBorder="0" 
-                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                                    allowFullScreen
-                                ></iframe>
-                            </div>
-                        </div>
-                    </section>
+                    <FeatureClaims isLightPalette={isLightPalette} />
 
                     <section id="research-evidence" className="mt-24">
                         <div className="max-w-4xl">
