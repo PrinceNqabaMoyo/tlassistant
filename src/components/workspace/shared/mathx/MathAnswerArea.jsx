@@ -4,6 +4,7 @@ import MathText from './MathText';
 import MathKeypad from './MathKeypad';
 import WorkingPad from './WorkingPad';
 import DiagramRenderer from './DiagramRenderer';
+import FunctionGrapher from './FunctionGrapher';
 import { latexify } from './mathLatexify';
 
 const insertAtCaret = (el, value, token, offset) => {
@@ -31,6 +32,7 @@ const MathAnswerArea = ({ question, topic, onCheck, result, busy = false }) => {
     const [selected, setSelected] = React.useState(null);
     const [selectedEdge, setSelectedEdge] = React.useState(null);
     const [value, setValue] = React.useState('');
+    const [graphParams, setGraphParams] = React.useState(null);
     const [lines, setLines] = React.useState(['']);
     const [showSolution, setShowSolution] = React.useState(false);
     const inputs = React.useRef({});
@@ -40,10 +42,15 @@ const MathAnswerArea = ({ question, topic, onCheck, result, busy = false }) => {
         setSelected(null);
         setSelectedEdge(null);
         setValue('');
+        setGraphParams(
+            qType === 'function_transform'
+                ? { a: 1, q: 0, b: question?.diagram_spec?.interactive?.target?.b ?? 2 }
+                : null,
+        );
         setLines(['']);
         setShowSolution(false);
         activeField.current = qType === 'math_short' ? 'single' : 'line-0';
-    }, [question?.id, qType]);
+    }, [question?.id, qType]); // eslint-disable-line react-hooks/exhaustive-deps
 
     const registerInput = (id, el) => { if (el) inputs.current[id] = el; };
     const onFocusField = (id) => {
@@ -71,6 +78,7 @@ const MathAnswerArea = ({ question, topic, onCheck, result, busy = false }) => {
     const handleCheck = () => {
         if (qType === 'mcq') onCheck?.(selected);
         else if (qType === 'diagram_select') onCheck?.(selectedEdge);
+        else if (qType === 'function_transform') onCheck?.(graphParams);
         else if (qType === 'math_short') onCheck?.(value);
         else onCheck?.(lines.filter((l) => l.trim()));
     };
@@ -81,8 +89,19 @@ const MathAnswerArea = ({ question, topic, onCheck, result, busy = false }) => {
 
     return (
         <div className="space-y-5">
+            {/* Interactive parameter-manipulation grapher (the answer surface) */}
+            {qType === 'function_transform' && diagram ? (
+                <FunctionGrapher
+                    spec={diagram}
+                    value={graphParams}
+                    onChange={setGraphParams}
+                    graded={!!result?.is_correct}
+                    disabled={!!result}
+                />
+            ) : null}
+
             {/* Diagram (the figure is the question/answer surface) */}
-            {diagram ? (
+            {qType !== 'function_transform' && diagram ? (
                 <DiagramRenderer
                     spec={diagram}
                     interactive={qType === 'diagram_select'}
@@ -156,8 +175,8 @@ const MathAnswerArea = ({ question, topic, onCheck, result, busy = false }) => {
                 />
             )}
 
-            {/* Keypad (not for MCQ / diagram-select) */}
-            {qType !== 'mcq' && qType !== 'diagram_select' && (
+            {/* Keypad (not for MCQ / diagram-select / grapher) */}
+            {qType !== 'mcq' && qType !== 'diagram_select' && qType !== 'function_transform' && (
                 <div className="rounded-xl border border-slate-100 bg-slate-50 p-3">
                     <MathKeypad topic={topic} onInsert={handleInsert} disabled={busy} />
                 </div>

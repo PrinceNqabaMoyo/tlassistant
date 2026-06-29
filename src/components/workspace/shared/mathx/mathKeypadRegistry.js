@@ -61,6 +61,14 @@ export const KEYPAD_GROUPS = {
         { label: '^{\\circ}', insert: 'deg' },
         { label: '\\pi', insert: 'pi' },
     ],
+    functions: [
+        { label: 'f(x)', insert: 'f(x)' },
+        { label: '(\\;;\\;)', insert: '(;)', offset: -2 },
+        { label: 'y =', insert: 'y=' },
+        { label: '\\in', insert: ' in ' },
+        { label: '\\mathbb{R}', insert: 'R' },
+        { label: '\\neq', insert: '!=' },
+    ],
 };
 
 export const TOPIC_KEYPADS = {
@@ -69,6 +77,7 @@ export const TOPIC_KEYPADS = {
     grade10_math_trigonometry: ['trigonometry', 'algebra', 'arithmetic'],
     grade10_math_equations_inequalities: ['inequalities', 'algebra', 'arithmetic'],
     grade10_math_patterns_sequences: ['sequences', 'algebra', 'arithmetic'],
+    grade10_math_functions: ['functions', 'trigonometry', 'algebra', 'arithmetic'],
 };
 
 /** Resolve the flat key list for a topic (deduped, group order preserved). */
