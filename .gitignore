@@ -46,3 +46,6 @@ caps-ai-math-assistant-app-firebase-adminsdk*.json
 .env.*
 
 upload.js
+
+# Scratch / temp files
+testsonconsole.txt
