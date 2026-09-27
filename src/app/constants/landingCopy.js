@@ -3,14 +3,62 @@
 // edited without touching layout. Treat the CAPS/NSC copy as sign-off material.
 
 export const HERO_COPY = {
-    eyebrow: 'Built for the South African high-school learner',
-    title: 'Helping you master high school.',
-    subtitle:
-        'Every subject, unlimited exam-standard practice, and feedback that shows you exactly where you went wrong — for less than the cost of a single private-tutoring hour a month. Fundile prepares you for the exam from your very first session, so you are never caught by surprise.',
-    imageAlt: 'South African high-school learners studying together with Fundile',
+    eyebrow: 'Teaching & Learning Assistant + LMS • Grades 7–12',
+    // title is now handled as a typing animation in LandingPage.jsx
+    // 'typingSubjects' drives the animated part
+    titlePrefix: 'Excel in',
+    typingSubjects: [
+        'Mathematics.',
+        'Physical Sciences.',
+        'Life Sciences.',
+        'Natural Sciences.',
+        'Mathematical Literacy.',
+        'EMS.',
+        'Accounting.',
+        'Business Studies.',
+    ],
+    tagline: 'Use Fundile, become a top student.',
+    bullets: [
+        'Unlimited practice and authentic exam-standard questions with step-by-step guidance',
+        'Adaptive progression through Scaffold, Practice, and Assessment modes',
+        'Knowledge gap diagnostic autopsies & targeted prerequisite micro-drills',
+        '100% Aligned with South African National Curriculum Standards',
+        'SimuLearn: Interactive solution animation that saves over 95% data costs',
+    ],
+    imageAlt: 'South African learners studying with Fundile',
     imageCaption: 'For every South African learner — whatever school, whatever exam.',
-    primaryCta: 'Start free',
-    secondaryCta: 'See how it works',
+    primaryCta: 'Start 2-week free trial',
+    mobileSimCta: 'See what you get ↓',
+    trialNote: '2-week free trial. No card required. Cancel anytime.',
+};
+
+export const EXPLORE_COPY = {
+    title: 'Try Fundile now — no signup required',
+    buttonText: 'Explore',
+    gradeOptions: ['Grade 7', 'Grade 8', 'Grade 9', 'Grade 10', 'Grade 11', 'Grade 12'],
+    subjectOptions: {
+        'Grade 7': ['Economic and Management Sciences', 'Mathematics', 'Natural Sciences'],
+        'Grade 8': ['Economic and Management Sciences', 'Mathematics', 'Natural Sciences'],
+        'Grade 9': ['Economic and Management Sciences', 'Mathematics', 'Natural Sciences'],
+        'Grade 10': ['Mathematics', 'Accounting', 'Business Studies', 'Physical Sciences', 'Life Sciences', 'Mathematical Literacy', 'Technical Mathematics'],
+        'Grade 11': ['Mathematics', 'Accounting', 'Business Studies', 'Physical Sciences', 'Life Sciences', 'Mathematical Literacy', 'Technical Mathematics'],
+        'Grade 12': ['Mathematics', 'Accounting', 'Business Studies', 'Physical Sciences', 'Life Sciences', 'Mathematical Literacy', 'Technical Mathematics'],
+    },
+    // Topic options are loaded dynamically from curriculum data based on grade + subject
+    selectGradePrompt: 'Select your grade',
+    selectSubjectPrompt: 'Select a subject',
+    selectTopicPrompt: 'Select a topic',
+    questionLabel: 'Question {n} of 3',
+    answerPlaceholder: 'Type your answer here...',
+    submitAnswer: 'Submit answer',
+    nextQuestion: 'Next question',
+    feedbackTitle: 'Feedback',
+    subscribePopup: {
+        title: "You've used your 3 free Explore questions",
+        body: 'Start your 2-week free trial for unlimited practice + a personal improvement plan based on your work.',
+        cta: 'Start 2-week free trial',
+        dismiss: 'Maybe later',
+    },
 };
 
 // "The hidden curriculum" — the problem we remove.
@@ -22,7 +70,7 @@ export const HIDDEN_CURRICULUM = {
     points: [
         {
             title: 'Exam-standard from day one',
-            body: 'Practice questions are pitched at NSC exam level from the first topic, not only at revision time.',
+            body: 'Practice questions are pitched at authentic exam level from the first topic, not only at revision time.',
         },
         {
             title: 'See where you went wrong',
@@ -30,7 +78,7 @@ export const HIDDEN_CURRICULUM = {
         },
         {
             title: 'Unlimited practice',
-            body: 'Generators produce endless fresh variants of any question, so you practise until it is automatic.',
+            body: 'Deterministic generators produce endless fresh variants of any question, so you practise until it is automatic.',
         },
     ],
 };
@@ -38,64 +86,59 @@ export const HIDDEN_CURRICULUM = {
 // How it works — 3 steps.
 export const HOW_IT_WORKS = {
     eyebrow: 'How it works',
-    title: 'A single, focused learning flow.',
+    title: 'A structured, adaptive learning system.',
     steps: [
         {
             step: '01',
-            title: 'Pick a topic',
-            body: 'Choose the exact subject and topic you need — no aimless searching.',
+            title: 'Pick a Topic or Take a Diagnostic',
+            body: 'Choose the exact subject, grade, and topic you need, or begin with a diagnostic autopsy that pinpoints your baseline against the national curriculum.',
         },
         {
             step: '02',
             title: 'Scaffold → Practice → Assessment',
-            body: 'Move through guided scaffolding, then practice, then an exam-style assessment, unlocking as you master each stage.',
+            body: 'Progress through guided scaffolding, move to independent practice, and unlock exam-standard assessments with pre-baked 3-tier hints.',
         },
         {
             step: '03',
-            title: 'Learn from feedback',
-            body: 'A tutor that shows you where your working went wrong and how to fix it — so the next attempt is stronger.',
+            title: 'Precision Gap Autopsy & Micro-Drills',
+            body: 'If your working stumbles, Fundile isolates the exact flawed step, awards consequential method marks, and deploys targeted 5-minute drills and SimuLearn visual animations.',
         },
     ],
 };
 
-// CAPS / NSC clarity — the trust centrepiece. Wording follows what each body
-// itself publishes; it never implies endorsement by any body.
+// Curriculum & Examination alignment — Rule 2b compliant.
 export const CAPS_NSC = {
-    eyebrow: 'CAPS, the NSC & the examining bodies',
+    eyebrow: 'Curriculum Standards & Exam Alignment',
     title: 'The difference is not the curriculum — it is the preparation.',
     didYouKnow:
-        'Did you know? CAPS is the South African national curriculum on which the IEB, SACAI and DBE high-school exams are all based.',
+        'Did you know? There is only one official national curriculum standard in South Africa, which underpins public, private, and independent school examinations nationwide.',
     intro:
-        'Many families believe the IEB or SACAI teach a different, "superior" curriculum to the DBE. In reality there is one national curriculum, and Fundile prepares you for the same National Senior Certificate whichever body sets your exam.',
-    // Plain-language "curriculum aligned" promise, in the user's words.
+        'Many families believe private or independent schools follow a completely different curriculum. In reality, the South African National Curriculum forms the statutory foundation for all schools—the difference lies in preparation and assessment depth. Fundile prepares learners to excel at the highest level of examination standards.',
     aligned: {
-        heading: 'Curriculum aligned',
-        body: 'Fundile is built on the CAPS curriculum. With Fundile you can master your subjects to excel whether you sit for:',
-        bodies: ['the IEB', 'SACAI', "the government's DBE examination"],
+        heading: '100% Aligned with National Curriculum Standards',
+        body: 'Fundile is built directly on South African National Curriculum statements, preparing learners for:',
+        bodies: ['Public school examinations', 'Independent & private school examinations', 'Distance & home-education assessments'],
     },
-    // CAPS -> three bodies -> one NSC.
     flow: {
         foundation: {
-            label: 'CAPS',
-            caption: 'The South African national curriculum (what must be learned), Grades R–12.',
+            label: 'National Curriculum Standards',
+            caption: 'The official South African national curriculum statements (what must be learned), Grades 7–12.',
         },
         bodies: [
-            { label: 'DBE', caption: 'Public-school examinations' },
-            { label: 'IEB', caption: 'Independent examinations' },
-            { label: 'SACAI', caption: 'Private/home-education examinations' },
+            { label: 'Public Schools', caption: 'National state curriculum examinations' },
+            { label: 'Independent Schools', caption: 'Private & independent school examinations' },
+            { label: 'Distance & Homeschool', caption: 'Independent assessment bodies' },
         ],
         outcome: {
-            label: 'One NSC',
-            caption: 'The same National Senior Certificate qualification, quality-assured by Umalusi.',
+            label: 'Universal NSC',
+            caption: 'Authentic National Senior Certificate preparation, quality-assured and benchmarked for university entry.',
         },
     },
-    // Comparison table — first rows identical across bodies (that is the point);
-    // only the last row differs.
     table: {
-        columns: ['DBE', 'IEB', 'SACAI'],
+        columns: ['Public Schools', 'Independent Schools', 'Distance & Home Education'],
         rows: [
             {
-                label: 'Curriculum',
+                label: 'Curriculum Standard',
                 values: ['South African National Curriculum', 'South African National Curriculum', 'South African National Curriculum'],
             },
             {
@@ -103,52 +146,36 @@ export const CAPS_NSC = {
                 values: ['National Senior Certificate', 'National Senior Certificate', 'National Senior Certificate'],
             },
             {
-                label: 'Quality assured by',
-                values: ['Umalusi', 'Umalusi', 'Umalusi'],
+                label: 'Quality Assurance',
+                values: ['National Quality Standard', 'National Quality Standard', 'National Quality Standard'],
             },
             {
-                label: 'What differs',
+                label: 'Assessment Style',
                 values: [
-                    'Assessment style & school-based assessment',
-                    'Assessment style & emphasis (internationally benchmarked)',
-                    'Assessment style for private & home education',
+                    'Standardized national examination format',
+                    'Higher-order cognitive & application emphasis',
+                    'Flexible, continuous & independent assessment',
                 ],
             },
         ],
     },
-    // Safe framing line, per locked wording.
     framing:
-        'Built on the CAPS curriculum — the South African National Curriculum behind the NSC — Fundile prepares you for your NSC exams whether they are set by the DBE, IEB or SACAI.',
+        'Built on the South African National Curriculum statements behind the Senior Certificate — Fundile prepares you for your exams whether you study in public, private, or independent schools nationwide.',
     disclaimer:
-        'Fundile aligns to CAPS and prepares learners for the NSC. Fundile is not affiliated with, or endorsed by, the DBE, IEB, SACAI or Umalusi.',
+        'Fundile is an independent educational platform aligned with the official South African National Curriculum Statements. All examination board names and trademarks belong to their respective owners.',
 };
 
-export const AUDIENCES = {
-    eyebrow: 'Who it is for',
-    title: 'Built for learners first — with teachers, tutors and families alongside.',
-    cards: [
-        {
-            key: 'students',
-            title: 'For students',
-            body: 'Structure, unlimited exam-standard practice, and feedback that tells you exactly what to fix.',
-            cta: 'Start free',
-            badge: 'Live now',
-        },
-        {
-            key: 'teachers',
-            title: 'For teachers & tutors',
-            body: 'Assign work, review learners’ working, and set tasks that learners complete flexibly, any time.',
-            cta: 'Coming soon',
-            badge: 'Coming soon',
-        },
-        {
-            key: 'families',
-            title: 'For parents',
-            body: 'One affordable subscription covering every subject — purposeful, supportive, and curriculum-aware.',
-            cta: 'See pricing',
-            badge: 'Live now',
-        },
-    ],
+export const INTERNAL_CONSISTENCY = {
+    title: 'Internally consistent, always.',
+    body: 'Every question and its answer are generated from the same underlying logic, so they are always internally consistent. If you ever spot a discrepancy, tell us — we will fix it.',
+    cta: 'Report a discrepancy',
+    ctaHref: 'mailto:info@fundile.com?subject=Question%20discrepancy%20report',
+};
+
+export const TEACHERS_LINK = {
+    text: 'Fundile for teachers, tutors, and schools is live.',
+    cta: 'Explore School & Teacher Cockpit',
+    href: '#teachers-simulation',
 };
 
 // Pricing anchor — real alternative is private tutoring.
@@ -157,16 +184,15 @@ export const PRICING_COPY = {
     title: 'One subscription. Every subject. Less than one tutoring hour.',
     anchor:
         'Private tutoring in South Africa runs roughly R50–R200 an hour. Even three sessions a week at the low end is about R150 × 4 weeks = R600+ a month — for one subject. Fundile covers every subject and is available any time.',
+    trial: {
+        duration: '2 weeks',
+        cardRequired: false,
+        cancelAnytime: true,
+        includes: 'Full Standard access — every feature, every subject across Grades 7–12',
+    },
+    trialValueProp:
+        'At the end of your trial, Fundile tells you exactly what you need to improve and how — based on your actual work, not a guess.',
     tiers: [
-        {
-            key: 'free',
-            name: 'Free',
-            price: 'R0',
-            cadence: 'forever',
-            description: 'A safe place to start: topic tracking, curriculum outlines, and selected practice generators.',
-            badge: 'Always free',
-            cta: 'Start free',
-        },
         {
             key: 'standard',
             name: 'Standard',
@@ -174,16 +200,16 @@ export const PRICING_COPY = {
             cadence: '/ month',
             description: 'Unlimited deterministic practice across subjects, adaptive progression, and scaffolded, exam-standard questions with step-by-step marking.',
             badge: 'Live now',
-            cta: 'Start Standard',
+            cta: 'Start free trial',
         },
         {
             key: 'pro',
             name: 'Pro',
             price: 'R299',
             cadence: '/ month',
-            description: 'Everything in Standard, plus a live Socratic AI tutor that diagnoses your working in real time and adapts to your weak subskills.',
-            badge: 'Coming soon',
-            cta: 'Explore Pro',
+            description: 'Everything in Standard, plus an on-rails Socratic AI tutor with dynamic suggestion chips, SimuLearn animated worked solutions, and targeted prerequisite micro-lessons.',
+            badge: 'Live • 2-Week Free Trial',
+            cta: 'Start 2-week free trial',
         },
     ],
 };
@@ -193,123 +219,24 @@ export const FAQ = {
     title: 'Straight answers.',
     items: [
         {
-            q: 'Does Fundile teach the DBE, IEB or SACAI "curriculum"?',
-            a: 'There is one national curriculum — CAPS. The DBE, IEB and SACAI are all examining bodies that assess the same National Senior Certificate against CAPS, and all are quality-assured by Umalusi. They differ in assessment style and emphasis, not in the underlying curriculum. Fundile is built on CAPS and prepares you for the NSC whichever body sets your exam.',
-        },
-        {
-            q: 'Is the IEB or SACAI exam "harder" than the DBE?',
-            a: 'They are different in style, not in curriculum. Each body sets its own papers and school-based assessment to the same NSC standard under Umalusi. What actually moves results is exam-level preparation — which Fundile gives every learner from day one.',
+            q: 'How is Fundile aligned to my child’s school curriculum?',
+            a: 'In South Africa, all public, private, and independent schools follow the same underlying national curriculum statements for the National Senior Certificate. Fundile is 100% aligned with these national academic standards, ensuring your child develops the exact core competencies, problem-solving methods, and exam techniques required regardless of which examination board sets their final paper.',
         },
         {
             q: 'Which subjects and grades are available?',
-            a: 'Accounting (Grade 10 & 11) is live now, with Mathematics and more subjects rolling out. Tell us what you need next and we prioritise rollout from real demand.',
+            a: 'Fundile covers Grades 7 to 12 across all core subjects: Mathematics, Physical Sciences, Life Sciences, Natural Sciences, Mathematical Literacy, Economic & Management Sciences (EMS), Accounting, and Business Studies. Additional electives and language modules are expanded based on learner demand.',
         },
         {
-            q: 'How is this cheaper than a tutor?',
-            a: 'One Fundile subscription covers every subject and is available any time, for less than a single private-tutoring hour a month. A tutor charges per hour, per subject.',
+            q: 'Can an individual learner subscribe independently of their school?',
+            a: 'Yes! Individual learners and parents can subscribe directly and access the full suite of subjects and diagnostic reports. If their school later adopts Fundile, their account can seamlessly link to their teacher’s classroom using a school code without losing any history or progress.',
         },
         {
-            q: 'Can teachers and tutors use it with their students?',
-            a: 'Teacher and tutor collaboration — assigning work, reviewing learners’ working, and setting tasks — is coming soon. Register your interest and we will let you know when it lands.',
+            q: 'How is this cheaper than a private tutor?',
+            a: 'One Fundile subscription covers every subject 24/7 for less than the cost of a single private tutoring session a month. Tutors charge per hour, per subject; Fundile gives you unlimited practice across all subjects.',
         },
         {
-            q: 'Is my information safe?',
-            a: 'Yes. Fundile approaches personal information with POPIA-aligned privacy responsibilities. You can read our privacy statement any time.',
-        },
-    ],
-};
-
-export const COLLAB_COMING_SOON = {
-    title: 'Teacher & tutor collaboration is coming soon',
-    body: 'A shared space for teachers, tutors and students to assign work, review working, and complete tasks flexibly — any time. Register your interest and we will tell you the moment it is ready.',
-};
-
-// How Fundile teaches — the four principles in the user's words.
-export const PRINCIPLES = {
-    eyebrow: 'How Fundile teaches',
-    title: 'A learning method, not a search box.',
-    items: [
-        {
-            title: 'Topically sequenced',
-            body: 'Work through each subject in the order the curriculum builds it, so every topic stands on the one before it.',
-        },
-        {
-            title: 'Personalised adaptive progression',
-            body: 'Fundile tracks the subskills you have mastered and the ones you have not, then sends you exactly where you need to practise next.',
-        },
-        {
-            title: 'Understanding over answers',
-            body: 'We prioritise developing real understanding instead of handing out the answer — you do the thinking, Fundile fills the gaps.',
-        },
-        {
-            title: 'Procedure over final product',
-            body: 'We mark your method like an exam, not just your final answer — because in the NSC your working earns the marks.',
-        },
-    ],
-};
-
-// "Fundile is NOT an AI chatbot" — the core differentiation, in the user's words.
-export const NOT_A_CHATBOT = {
-    eyebrow: 'What makes Fundile different',
-    title: 'Fundile is not an AI chatbot.',
-    intro:
-        'Chatbots like ChatGPT answer the question for you. Fundile turns that around: it asks you the question, then helps you close the gaps in your own understanding.',
-    rows: [
-        {
-            aspect: 'Who answers',
-            chatbot: 'You ask, the AI gives you the answer.',
-            fundile: 'Fundile gives you the question; you answer, and it helps you fill the gaps in your understanding.',
-        },
-        {
-            aspect: 'Curriculum guard-rails',
-            chatbot: 'No syllabus guard-rails — it answers about anything.',
-            fundile: 'Built on your grade-level syllabus, tests and exams, so it stays on topic.',
-        },
-        {
-            aspect: 'Reliability',
-            chatbot: 'Can hallucinate and drift off course.',
-            fundile: 'Operates deterministically to always stay in context.',
-        },
-        {
-            aspect: 'Curriculum objectives',
-            chatbot: 'Answers are not calibrated to curriculum objectives.',
-            fundile: 'Guides you against the South African curriculum objectives.',
-        },
-    ],
-};
-
-// "What the app does" claims, each with its own demo-media slot so a specific
-// clip can be dropped under every claim. `demo.type` is 'youtube' for an embed
-// or 'placeholder' for a labelled "coming soon" slot.
-export const FEATURE_CLAIMS = {
-    eyebrow: 'See it in action',
-    title: 'Watch what Fundile actually does.',
-    intro:
-        'Every claim below comes with a short demo. We are recording one per feature — drop in to watch how each part works.',
-    claims: [
-        {
-            key: 'topic-flow',
-            title: 'Guided Scaffold → Practice → Assessment',
-            body: 'Pick a topic and move through guided scaffolding, unlimited practice, and an exam-style assessment that unlocks as you master each stage.',
-            demo: { type: 'youtube', src: 'https://www.youtube.com/embed/c4SMEpSFO0w?rel=0', label: 'Full product demo' },
-        },
-        {
-            key: 'step-marking',
-            title: 'Step-by-step marking that finds your mistake',
-            body: 'Show your working line by line. Fundile pinpoints the exact line your method broke down — and still credits everything that was correct.',
-            demo: { type: 'placeholder', label: 'Demo coming soon' },
-        },
-        {
-            key: 'unlimited-practice',
-            title: 'Unlimited, fresh exam-standard questions',
-            body: 'Deterministic generators produce endless new variants of any question, so you can practise a tricky type until it is automatic.',
-            demo: { type: 'placeholder', label: 'Demo coming soon' },
-        },
-        {
-            key: 'adaptive',
-            title: 'Adaptive progression on your weak subskills',
-            body: 'When you struggle, Fundile drops you to the foundation you are missing and rebuilds it before moving you on.',
-            demo: { type: 'placeholder', label: 'Demo coming soon' },
+            q: 'Is my child’s personal information safe?',
+            a: 'Yes. Fundile is strictly compliant with the Protection of Personal Information Act (POPIA), including Section 35 protections for children’s personal data. We never sell student data or use learner responses for commercial advertising.',
         },
     ],
 };

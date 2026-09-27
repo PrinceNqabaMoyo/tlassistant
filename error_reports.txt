@@ -1,0 +1,26 @@
+PS C:\Users\princ\fundile-tlassistant-vite\caps-ai-backend> venv\Scripts\activate
+(venv) PS C:\Users\princ\fundile-tlassistant-vite\caps-ai-backend> python run.py
+Firebase Admin SDK / Firestore initialized successfully.
+LLM Rate Limiter initialized with Firestore.
+AI Tutor initialized with provider: GoogleGeminiProvider
+Orchestrator initialized.
+Loading template modules from: C:\Users\princ\fundile-tlassistant-vite\caps-ai-backend\app\utils\templates
+Registered Grade 7 template module with 380 templates
+Successfully loaded Grade 7 module
+Loading template modules from: C:\Users\princ\fundile-tlassistant-vite\caps-ai-backend\app\utils\templates
+Registered Grade 7 template module with 380 templates
+Successfully loaded Grade 7 module
+Loading template modules from: C:\Users\princ\fundile-tlassistant-vite\caps-ai-backend\app\utils\templates
+Registered Grade 7 template module with 380 templates
+Successfully loaded Grade 7 module
+Traceback (most recent call last):
+  File "C:\Users\princ\fundile-tlassistant-vite\caps-ai-backend\run.py", line 4, in <module>
+    app = create_app()
+  File "C:\Users\princ\fundile-tlassistant-vite\caps-ai-backend\app\__init__.py", line 55, in create_app
+    from .api.grade10_mathematics import grade10_mathematics_bp
+  File "C:\Users\princ\fundile-tlassistant-vite\caps-ai-backend\app\api\grade10_mathematics.py", line 40, in <module>
+    from app.utils.grade10_mathematics.term_2 import functions_generator
+  File "C:\Users\princ\fundile-tlassistant-vite\caps-ai-backend\app\utils\grade10_mathematics\term_2\__init__.py", line 1, in <module>
+    from app.utils.grade10_mathematics.term_2 import functions_generator
+ImportError: cannot import name 'functions_generator' from partially initialized module 'app.utils.grade10_mathematics.term_2' (most likely due to a circular import) (C:\Users\princ\fundile-tlassistant-vite\caps-ai-backend\app\utils\grade10_mathematics\term_2\__init__.py)
+(venv) PS C:\Users\princ\fundile-tlassistant-vite\caps-ai-backend>

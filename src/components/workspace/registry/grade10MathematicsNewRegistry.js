@@ -26,4 +26,8 @@ export const grade10MathematicsNewRegistry = {
         topicKey: 'grade10_math_trigonometry',
         modePrefix: 'grade10_trigonometry_1',
     }),
+    ...createMathTopicRegistry({
+        topicKey: 'grade10_math_euclidean_geometry',
+        modePrefix: 'grade10_euclidean_geometry',
+    }),
 };

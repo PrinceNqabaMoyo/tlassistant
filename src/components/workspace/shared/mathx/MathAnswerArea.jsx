@@ -111,11 +111,11 @@ const MathAnswerArea = ({ question, topic, onCheck, result, busy = false }) => {
                                 key={i}
                                 type="button"
                                 onClick={() => setSelected(i)}
-                                className={`w-full text-left flex items-center gap-3 rounded-xl border px-4 py-3 transition-colors ${
-                                    isSel ? 'border-indigo-400 bg-indigo-50' : 'border-slate-200 bg-white hover:bg-slate-50'
+                                className={`w-full text-left flex items-center gap-3 rounded-xl border px-4 py-3 transition-all cursor-pointer ${
+                                    isSel ? 'border-brand-blue bg-blue-50/70 ring-1 ring-brand-blue text-slate-950 shadow-xs' : 'border-slate-200 bg-white hover:bg-slate-50 text-slate-800'
                                 }`}
                             >
-                                <span className="text-xs font-semibold text-slate-400 w-5">{String.fromCharCode(65 + i)}</span>
+                                <span className={`text-xs font-semibold w-5 ${isSel ? 'text-brand-blue font-bold' : 'text-slate-400'}`}>{String.fromCharCode(65 + i)}</span>
                                 {optLatex ? <MathText latex={optLatex} /> : <span className="text-slate-800">{opt}</span>}
                             </button>
                         );
@@ -126,8 +126,8 @@ const MathAnswerArea = ({ question, topic, onCheck, result, busy = false }) => {
             {/* Single short answer */}
             {qType === 'math_short' && (
                 <div className="space-y-2">
-                    <div className="flex items-center gap-3 rounded-lg border border-slate-200 bg-white px-3 py-2">
-                        <span className="text-sm text-slate-500 shrink-0">Answer:</span>
+                    <div className="flex items-center gap-3 rounded-xl border border-slate-200 bg-white px-4 py-2.5 shadow-2xs focus-within:border-brand-blue focus-within:ring-2 focus-within:ring-brand-blue/20">
+                        <span className="text-sm font-medium text-slate-500 shrink-0">Answer:</span>
                         <input
                             ref={(el) => registerInput('single', el)}
                             value={value}
@@ -158,7 +158,7 @@ const MathAnswerArea = ({ question, topic, onCheck, result, busy = false }) => {
 
             {/* Keypad (not for MCQ / diagram-select) */}
             {qType !== 'mcq' && qType !== 'diagram_select' && (
-                <div className="rounded-xl border border-slate-100 bg-slate-50 p-3">
+                <div className="rounded-xl border border-slate-200 bg-slate-50 p-3">
                     <MathKeypad topic={topic} onInsert={handleInsert} disabled={busy} />
                 </div>
             )}
@@ -169,7 +169,7 @@ const MathAnswerArea = ({ question, topic, onCheck, result, busy = false }) => {
                     type="button"
                     onClick={handleCheck}
                     disabled={checkDisabled}
-                    className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold bg-indigo-600 text-white hover:bg-indigo-700 disabled:opacity-50 shadow-sm active:scale-95"
+                    className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold bg-brand-blue text-white hover:bg-brand-cobalt disabled:opacity-50 shadow-sm active:scale-95 cursor-pointer"
                 >
                     <CheckCircle2 className="h-4 w-4" />
                     {busy ? 'Checking…' : 'Check'}
@@ -178,7 +178,7 @@ const MathAnswerArea = ({ question, topic, onCheck, result, busy = false }) => {
                     <button
                         type="button"
                         onClick={() => setShowSolution((v) => !v)}
-                        className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold bg-white text-slate-700 border border-slate-300 hover:bg-slate-100 active:scale-95"
+                        className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold bg-white text-brand-blue border border-brand-blue/30 hover:bg-blue-50 active:scale-95 cursor-pointer"
                     >
                         <Eye className="h-4 w-4" />
                         {showSolution ? 'Hide solution' : 'Show worked solution'}

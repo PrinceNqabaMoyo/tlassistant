@@ -49,14 +49,23 @@ MICRO_ISSUES = [
     "a strike by the company's own workers"
 ]
 
-def get_random_scenario():
+try:
+    from .sa_naming_engine import generate_sa_enterprise, generate_sa_person
+except ImportError:
+    from app.utils.sa_naming_engine import generate_sa_enterprise, generate_sa_person
+
+
+def get_random_scenario(r: random.Random = None):
     """Generates a random dictionary of business dressing."""
+    ent = generate_sa_enterprise(r)
     return {
-        "owner_name": random.choice(NAMES),
-        "city": random.choice(CITIES),
-        "business_name": random.choice(BUSINESS_NAMES),
-        "business_type": random.choice(BUSINESS_TYPES),
-        "product": random.choice(PRODUCTS)
+        "owner_name": ent["founder"],
+        "city": ent["town"],
+        "business_name": ent["business_name"],
+        "business_type": ent["form"].lower(),
+        "product": ent["product"],
+        "province": ent["province"],
+        "industry": ent["industry"],
     }
 
 def get_random_issue(environment: str):

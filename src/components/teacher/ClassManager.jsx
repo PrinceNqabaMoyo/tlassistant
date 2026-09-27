@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { collection, query, where, getDocs, doc, setDoc, deleteDoc, updateDoc } from 'firebase/firestore';
 import { Users, Plus, Trash2, ChevronLeft, BookOpen, GraduationCap } from 'lucide-react';
 
-const CAPS_SUBJECTS = [
+const CURRICULUM_SUBJECTS = [
   'Accounting',
   'Business Studies',
   'Economics',
@@ -132,7 +132,7 @@ const ClassManager = ({ db, currentUser, onBack }) => {
               className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
             >
               <option value="">Select Subject</option>
-              {CAPS_SUBJECTS.map((s) => (
+              {CURRICULUM_SUBJECTS.map((s) => (
                 <option key={s} value={s}>{s}</option>
               ))}
             </select>

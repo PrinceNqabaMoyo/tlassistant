@@ -29,7 +29,10 @@ def deploy_to_huggingface():
         "__pycache__/*",
         "*.zip",
         "deploy_hf.py",  # Don't upload this script itself
-        ".env"           # Never upload local secrets
+        ".env",          # Never upload local secrets
+        "curriculum_docs/*",
+        "curriculum_docs_auto/*",
+        "tests/*",
     ]
 
     print("=== Hugging Face Deployment Pipeline ===")

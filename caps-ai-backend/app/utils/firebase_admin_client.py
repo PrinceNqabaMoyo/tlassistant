@@ -25,6 +25,10 @@ def _resolve_credentials_path():
     if fallback_path.exists():
         return fallback_path
 
+    for candidate in _BASE_DIR.glob("*firebase-adminsdk*.json"):
+        if candidate.is_file():
+            return candidate
+
     return None
 
 

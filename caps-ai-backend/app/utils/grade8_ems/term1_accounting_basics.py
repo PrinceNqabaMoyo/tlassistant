@@ -72,7 +72,7 @@ def _mcq_question(rng, item, mode="scaffold"):
     return question
 
 def _concept_pool(rng):
-    scenario = get_ems_scenario()
+    scenario = get_ems_scenario(rng)
     money_value = rng.randint(500, 5000)
     
     return [
@@ -124,7 +124,7 @@ def _accounting_equation_pool(rng, mode="scaffold"):
     Generates tabular accounting equation questions.
     Grade 8 format: Assets, Owner's Equity, Liabilities (and effects: +, -, 0).
     """
-    scenario = get_ems_scenario()
+    scenario = get_ems_scenario(rng)
     
     # Generate 3 random transactions
     transactions = []

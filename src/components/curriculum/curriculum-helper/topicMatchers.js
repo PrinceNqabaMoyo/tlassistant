@@ -121,6 +121,21 @@ export const isTrigonometry1Topic = (topicName) => {
         || normalized === 'trigonometry';
 };
 
+export const isGrade10FunctionsTopic = (topicName) => {
+    const normalized = normalizeLooseTopicName(topicName);
+    return normalized === 'functions'
+        || normalized.includes('functions and graphs')
+        || normalized.includes('functions & graphs')
+        || (normalized.includes('functions') && !normalized.includes('relationships'));
+};
+
+export const isGrade10EuclideanGeometryTopic = (topicName) => {
+    const normalized = normalizeLooseTopicName(topicName);
+    return normalized.includes('euclidean geometry')
+        || normalized.includes('euclidean')
+        || (normalized.includes('geometry') && !normalized.includes('analytical') && !normalized.includes('coordinate'));
+};
+
 export const isGrade10IndigenousBookkeepingTopic = (topicName) => {
     const normalized = normalizeLooseTopicName(topicName);
     return normalized.includes('informal')

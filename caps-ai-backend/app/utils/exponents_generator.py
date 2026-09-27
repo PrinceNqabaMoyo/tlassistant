@@ -325,26 +325,27 @@ def _gen_identify_base_exponent_language(rng: random.Random, difficulty: str, qu
     base = _pick_base_for_powers(rng, difficulty)
     exp = _pick_exponent(rng, difficulty)
 
-    style = rng.choice(['words_to_exp', 'given_base_exp', 'exp_to_words'])
+    style = rng.choice(['words_to_exp', 'given_base_exp', 'eval_power'])
 
     if style == 'given_base_exp':
         prompt = f"Write in exponential notation: base {base}, exponent {exp}"
         answer = _format_pow(base, exp)
-    elif style == 'exp_to_words':
+    elif style == 'eval_power':
         pow_str = _format_pow(base, exp)
-        prompt = f"Write in words: {pow_str}"
-        answer = f"{base} to the power {exp}"
+        prompt = f"Calculate the numerical value of: {pow_str}"
+        answer = str(base ** exp)
     else:
         prompt = f"Write in exponential notation: {base} to the power {exp}"
         answer = _format_pow(base, exp)
 
     if question_type == 'mcq':
-        if style == 'exp_to_words':
+        if style == 'eval_power':
+            val = base ** exp
             options = [
-                f"{base} to the power {exp}",
-                f"{exp} to the power {base}",
-                f"{base} times {exp}",
-                f"{base} squared" if exp == 2 else f"{base} cubed" if exp == 3 else f"{base} to the power {exp - 1}",
+                str(val),
+                str(val + rng.choice([1, 2, 5, 10])),
+                str(max(1, val - rng.choice([1, 2, 5]))),
+                str(base * exp),
             ]
         else:
             options = [
@@ -364,8 +365,8 @@ def _gen_identify_base_exponent_language(rng: random.Random, difficulty: str, qu
             {'id': 'c1', 'kind': 'typed', 'prompt': 'What is the base?', 'answer': str(base)},
             {'id': 'c2', 'kind': 'typed', 'prompt': 'What is the exponent?', 'answer': str(exp)},
         ]
-        if style == 'exp_to_words':
-            checkpoints.append({'id': 'c3', 'kind': 'typed', 'prompt': f"Write { _format_pow(base, exp) } in words.", 'answer': answer})
+        if style == 'eval_power':
+            checkpoints.append({'id': 'c3', 'kind': 'typed', 'prompt': f"Calculate the value of {_format_pow(base, exp)}.", 'answer': answer})
         else:
             checkpoints.append({'id': 'c3', 'kind': 'typed', 'prompt': 'Write the exponential notation.', 'answer': answer})
         return _make_scaffold(prompt, answer, steps, checkpoints, meta)
@@ -615,60 +616,68 @@ def _gen_order_expressions(rng: random.Random, difficulty: str, question_type: s
 
 
 def _gen_write_expression_in_words(rng: random.Random, difficulty: str, question_type: str, meta: Dict[str, Any]) -> Dict[str, Any]:
-    base = rng.randint(2, 9)
-    exp = rng.choice([2, 3, 4]) if difficulty != 'hard' else rng.choice([2, 3, 4, 5])
-    a = rng.randint(2, 8)
-    b = rng.randint(1, 12)
+    base = rng.randint(2, 6)
+    exp = rng.choice([2, 3])
+    a = rng.randint(2, 6)
+    b = rng.randint(1, 10)
     pattern = rng.choice(['mul_pow_plus', 'sqrt_plus_pow', 'pow_times_pow'])
 
     if pattern == 'mul_pow_plus':
-        expr = {
-            'kind': 'binop',
-            'op': '+',
-            'left': {'kind': 'binop', 'op': '*', 'left': {'kind': 'int', 'value': a}, 'right': {'kind': 'pow', 'base': base, 'exp': exp}},
-            'right': {'kind': 'int', 'value': b},
-        }
-        expr_str = f"{a} × {base}^{exp} + {b}"
+        val = a * (base ** exp) + b
+        prompt = f"Calculate the exact numerical value: {a} × {base}^{exp} + {b}"
+        answer = str(val)
+        steps = [
+            {'title': 'Powers first (BODMAS)', 'content': f"Calculate {base}^{exp} = {base**exp}."},
+            {'title': 'Multiply', 'content': f"{a} × {base**exp} = {a * (base**exp)}."},
+            {'title': 'Add', 'content': f"{a * (base**exp)} + {b} = {val}."},
+        ]
+        checkpoints = [
+            {'id': 'c1', 'kind': 'typed', 'prompt': f"What is {base}^{exp}?", 'answer': str(base**exp)},
+            {'id': 'c2', 'kind': 'typed', 'prompt': f"What is {a} × {base**exp}?", 'answer': str(a * (base**exp))},
+            {'id': 'c3', 'kind': 'typed', 'prompt': f"Final value: {a} × {base**exp} + {b}", 'answer': answer},
+        ]
     elif pattern == 'sqrt_plus_pow':
-        s = rng.randint(5, 15)
-        expr = {
-            'kind': 'binop',
-            'op': '+',
-            'left': {'kind': 'sqrt', 'value': s * s},
-            'right': {'kind': 'pow', 'base': base, 'exp': 2 if difficulty == 'easy' else exp},
-        }
-        expr_str = f"√{s*s} + {base}^{(2 if difficulty == 'easy' else exp)}"
+        s = rng.choice([4, 9, 16, 25, 36, 49, 64, 81, 100])
+        sqrt_val = int(math.isqrt(s))
+        pow_val = base ** exp
+        val = sqrt_val + pow_val
+        prompt = f"Calculate the exact numerical value: √{s} + {base}^{exp}"
+        answer = str(val)
+        steps = [
+            {'title': 'Roots and powers first', 'content': f"√{s} = {sqrt_val} and {base}^{exp} = {pow_val}."},
+            {'title': 'Add terms', 'content': f"{sqrt_val} + {pow_val} = {val}."},
+        ]
+        checkpoints = [
+            {'id': 'c1', 'kind': 'typed', 'prompt': f"What is √{s}?", 'answer': str(sqrt_val)},
+            {'id': 'c2', 'kind': 'typed', 'prompt': f"What is {base}^{exp}?", 'answer': str(pow_val)},
+            {'id': 'c3', 'kind': 'typed', 'prompt': f"Final answer: √{s} + {base}^{exp}", 'answer': answer},
+        ]
     else:
         e2 = rng.choice([2, 3])
-        expr = {
-            'kind': 'binop',
-            'op': '*',
-            'left': {'kind': 'pow', 'base': base, 'exp': exp},
-            'right': {'kind': 'pow', 'base': a, 'exp': e2},
-        }
-        expr_str = f"{base}^{exp} × {a}^{e2}"
-
-    answer = _expr_to_words_b(expr)
-    prompt = f"Write this numerical expression in words: {expr_str}"
+        val = (base ** exp) * (a ** e2)
+        prompt = f"Calculate the exact numerical value: {base}^{exp} × {a}^{e2}"
+        answer = str(val)
+        steps = [
+            {'title': 'Evaluate each power', 'content': f"{base}^{exp} = {base**exp} and {a}^{e2} = {a**e2}."},
+            {'title': 'Multiply results', 'content': f"{base**exp} × {a**e2} = {val}."},
+        ]
+        checkpoints = [
+            {'id': 'c1', 'kind': 'typed', 'prompt': f"What is {base}^{exp}?", 'answer': str(base**exp)},
+            {'id': 'c2', 'kind': 'typed', 'prompt': f"What is {a}^{e2}?", 'answer': str(a**e2)},
+            {'id': 'c3', 'kind': 'typed', 'prompt': f"Final product: {base**exp} × {a**e2}", 'answer': answer},
+        ]
 
     if question_type == 'mcq':
         options = [
             answer,
-            answer.replace('plus', 'minus') if 'plus' in answer else answer + ' plus 1',
-            answer.replace('multiplied by', 'plus') if 'multiplied by' in answer else answer,
-            answer.replace('square root of', 'cube root of') if 'square root of' in answer else answer,
+            str(val + rng.choice([1, 2, 5, 10])),
+            str(max(1, val - rng.choice([1, 2, 5]))),
+            str(val + rng.choice([3, 7])),
         ]
         rng.shuffle(options)
         return _make_mcq(prompt, answer, options, meta)
 
     if question_type == 'scaffold':
-        steps = [
-            {'title': 'Read the structure', 'content': 'Identify exponents, roots, and operations.'},
-            {'title': 'Use operation words', 'content': 'Say “multiplied by”, “plus”, and “square root of”.'},
-        ]
-        checkpoints = [
-            {'id': 'c1', 'kind': 'typed', 'prompt': 'Write the expression in words.', 'answer': answer},
-        ]
         return _make_scaffold(prompt, answer, steps, checkpoints, meta)
 
     return _make_typed(prompt, answer, meta)

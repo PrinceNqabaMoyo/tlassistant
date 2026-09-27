@@ -164,6 +164,24 @@ NAME_GROUP_WEIGHTS: Tuple[Tuple[str, float], ...] = (
 )
 
 
+try:
+    from ..sa_naming_engine import (
+        pick_person_name as _sa_pick_person_name,
+        pick_person_names as _sa_pick_person_names,
+        pick_surname as _sa_pick_surname,
+        pick_business_name as _sa_pick_business_name,
+        pick_business_names as _sa_pick_business_names,
+    )
+except ImportError:
+    from app.utils.sa_naming_engine import (
+        pick_person_name as _sa_pick_person_name,
+        pick_person_names as _sa_pick_person_names,
+        pick_surname as _sa_pick_surname,
+        pick_business_name as _sa_pick_business_name,
+        pick_business_names as _sa_pick_business_names,
+    )
+
+
 def pick_name_group(*, r: random.Random) -> str:
     roll = r.random()
     cumulative = 0.0
@@ -174,69 +192,22 @@ def pick_name_group(*, r: random.Random) -> str:
     return NAME_GROUP_WEIGHTS[-1][0]
 
 
-
 def pick_person_name(*, r: random.Random) -> str:
-    group = pick_name_group(r=r)
-    bank = NAME_BANKS[group]
-    first = r.choice(bank["first"])
-    surname = r.choice(bank["surname"])
-    return f"{first} {surname}"
+    return _sa_pick_person_name(r)
 
 
 def pick_surname(*, r: random.Random) -> str:
-    group = pick_name_group(r=r)
-    bank = NAME_BANKS[group]
-    return r.choice(bank["surname"])
+    return _sa_pick_surname(r)
 
 
 def pick_business_name(*, r: random.Random) -> str:
-    surname = pick_surname(r=r)
-    suffix = r.choice(["Traders", "Enterprise", "Stores", "Suppliers", "Wholesalers", "Distributors"])
-    return f"{surname} {suffix}"
+    return _sa_pick_business_name(r)
 
 
 def pick_business_names(*, r: random.Random, k: int, unique_surnames: bool = False) -> List[str]:
-    target = max(0, int(k))
-    out: List[str] = []
-    seen = set()
-    seen_surnames = set()
-    max_attempts = max(20, target * 20)
-    attempts = 0
-    while len(out) < target and attempts < max_attempts:
-        attempts += 1
-        if unique_surnames:
-            surname = pick_surname(r=r)
-            if surname in seen_surnames:
-                continue
-            suffix = r.choice(["Traders", "Enterprise", "Stores", "Suppliers", "Wholesalers", "Distributors"])
-            name = f"{surname} {suffix}"
-        else:
-            surname = ""
-            name = pick_business_name(r=r)
-        if name in seen:
-            continue
-        out.append(name)
-        seen.add(name)
-        if unique_surnames:
-            seen_surnames.add(surname)
-    while len(out) < target:
-        out.append(pick_business_name(r=r))
-    return out
+    return _sa_pick_business_names(r, k=k, unique_surnames=unique_surnames)
 
 
 def pick_person_names(*, r: random.Random, k: int) -> List[str]:
-    target = max(0, int(k))
-    out: List[str] = []
-    seen = set()
-    max_attempts = max(20, target * 20)
-    attempts = 0
-    while len(out) < target and attempts < max_attempts:
-        attempts += 1
-        name = pick_person_name(r=r)
-        if name in seen:
-            continue
-        out.append(name)
-        seen.add(name)
-    while len(out) < target:
-        out.append(pick_person_name(r=r))
-    return out
+    return _sa_pick_person_names(r, k=k)
+

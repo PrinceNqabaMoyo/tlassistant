@@ -50,8 +50,8 @@ def _crj_table_pool(rng, mode="scaffold"):
     Generates tabular CRJ questions.
     Grade 8 CRJ columns: Doc No, Day, Details, Analysis of Receipts, Bank, Current Income, Sundry Accounts Amount, Sundry Accounts Details.
     """
-    scenario = get_ems_scenario()
-    business_name = f"{scenario['entrepreneur']} {scenario['business_type']}s"
+    scenario = get_ems_scenario(rng)
+    business_name = f"{scenario['entrepreneur']}'s {scenario['business_type']}"
     month = "May 2024"
     
     # Generate 3 distinct CRJ transactions
@@ -102,6 +102,8 @@ def _crj_table_pool(rng, mode="scaffold"):
     cell_hints["r2_c6"] = f"Expectation: Sundry amount. Connection: Since it is not Current Income, the R{rent_amount} goes to Sundry Accounts."
     cell_hints["r2_c7"] = "Expectation: Sundry details. Connection: The money was received for rent, so the account is 'Rent Income'."
 
+    ui_rows = []
+    correct_map = {}
     for i, row in enumerate(data_rows):
         ui_row = []
         for j, val in enumerate(row):

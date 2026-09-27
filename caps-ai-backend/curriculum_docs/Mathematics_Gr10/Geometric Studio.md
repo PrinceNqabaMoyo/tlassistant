@@ -1,96 +1,55 @@
-# Term 2
-
-## Euclidean Geometry
-
-&nbsp;1.  Revise basic results established in earlier 
-
-grades regarding lines, angles and 
-
-triangles, especially the similarity and 
-
-congruence of triangles. 
-
-2\.  Investigate line segments joining the mid
-
-points of two sides of a triangle. 
-
-3\.  Define the following special quadrilaterals: 
-
-the kite, parallelogram, rectangle, rhombus, 
-
-square and trapezium. Investigate and 
-
-make conjectures about the properties of 
-
-the sides, angles, diagonals and areas 
-
-of these quadrilaterals. Prove these 
-
-conjectures.
+# Euclidean Geometry
 
 
 
-Comments:
+## Comment
 
-&nbsp;•Triangles are similar if their corresponding angles are equal, or if the ratios of their sides are 
-
-equal: Triangles ABC and DEF are similar if angle A = angle D, angle B= angle E, angle C = angle F.
-
-They are also similar if AB/DE = BC/EF = CA/FD 
-
-&nbsp;•	We could define a parallelogram as a quadrilateral with two pairs of opposite sides parallel. 
-
-Then we investigate and prove that the opposite sides of the parallelogram are equal, opposite 
-
-angles of a  parallelogram are equal, and diagonals of a parallelogram bisect each other.
-
-&nbsp;•	It must be explained that a single counter example can disprove a Conjecture, but numerous 
-
-specific examples supporting a conjecture do not constitute a general proof.
+* Due to limitations of notepad, angles are not expressed as they should appear in the app. An angle represented as a letter should have the caret/upward pointing chevron/cap directly on top of it, but in this .md file it may be on the side.
 
 
 
-&nbsp;example:
+## Introduction
 
-&nbsp;In quadrilateral KITE, KI = KE and IT = ET. The diagonals intersect at M. Prove that:
-
-&nbsp;1.  IM = ME and                                                                                                                              
-
-&nbsp;2.  KT is perpendicular to IE.                                                                                                          
-
-&nbsp;As it is not obvious, first prove that triangle KIT ≡ triangle KET
+* Geometry (from the Greek “geo” = earth and “metria” = measure)arose as the field of knowledge dealing with spatial relationships. Analytical geometry deals with space and shape using algebra and a coordinate system. Euclidean geometry deals with space and shape using a system of logical deductions. 
+* Euclidean geometry was first used in surveying and is still used extensively for surveying today. Euclidean geometry is also used in architecture to design new buildings. Other uses of Euclidean geometry are in art and to determine the best packing arrangement for various types of objects.
 
 
 
-# Term 3
+### Angles
 
-## Euclidean Geometry
-
-Solve problems and prove riders using the 
-
-properties of parallel lines, triangles and 
-
-quadrilaterals.
+* An angle is formed when two straight lines meet at a point, also known as a vertex. 
+* Angles are labelled with a caret on a letter, for example Bˆ. Angles can also be labelled according to the line segments that make up the angle, for example CBˆA or ABˆC . 
+* The ∠ symbol is a short method of writing angle in geometry and is often used in phrases such as “sum of ∠ sin △”. 
+* Angles are measured in degrees which is denoted by °, a small circle raised above the text, similar to an exponent.
 
 
 
-Comment:
-
-&nbsp;Use congruency and properties of quads, esp. parallelograms.
-
-&nbsp;
-
-example:
-
-ABCD is a parallelogram with diagonal AC. A quadrilateral DFBH is inscribed within ABCD, such that F and H lie on the diagonal AC, with AF = HC
+DIAGRAM\[angle ABˆC with an arc inside the angle]
 
 
 
-Show that
+### Properties and notation
 
-&nbsp;(a) Triangle AFD ≡ Triangle CHB
+DIAGRAM\[two straight lines intersect at a point, forming the four angles aˆ, bˆ, cˆ and dˆ.]
 
-&nbsp;  (b)   DF ||HB
+ 
 
-&nbsp;  (c) DFBH is a parallelogram
+The following table summarises the different types of angles, with examples from the figure above.
+
+|Term|Property|Examples|
+|-|-|-|
+|Acute angle|0° < angle < 90°|aˆ; cˆ|
+|Right angle|||
+|Obtuse angle|||
+|Straight angle|||
+|Reflex angle|||
+|Adjacent angle|||
+|Vertically opposite angle|||
+|Supplementary angle|||
+|Contemporary angle|||
+|Revolution|||
+
+
+
+# 
 

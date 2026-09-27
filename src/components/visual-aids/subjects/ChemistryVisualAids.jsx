@@ -623,7 +623,7 @@ const MatterClassificationSimulator = ({
     <div className="bg-white rounded-lg shadow-lg p-6 max-w-4xl mx-auto">
       <div className="text-center mb-6">
         <h2 className="text-2xl font-bold text-gray-800 mb-2">Matter Classification Simulator</h2>
-        <p className="text-gray-600">Explore the properties and classification of matter - CAPS Grade 10 Foundation</p>
+        <p className="text-gray-600">Explore the properties and classification of matter - Grade 10 Foundation</p>
       </div>
 
       {/* Category Selection */}
@@ -772,9 +772,9 @@ const MatterClassificationSimulator = ({
         </div>
       )}
 
-      {/* CAPS Learning Objectives */}
+      {/* Learning Objectives */}
       <div className="mt-8 p-4 bg-yellow-50 rounded-lg">
-        <h4 className="font-medium text-yellow-800 mb-2">CAPS Grade 10 Learning Objectives</h4>
+        <h4 className="font-medium text-yellow-800 mb-2">National Curriculum Grade 10 Learning Objectives</h4>
         <ul className="text-sm text-yellow-700 space-y-1">
           <li>• Revise matter and classification from Grade 9</li>
           <li>• Understand heterogeneous vs homogeneous mixtures</li>
@@ -910,7 +910,7 @@ const StatesOfMatterVisualizer = ({
     <div className="bg-white rounded-lg shadow-lg p-6 max-w-6xl mx-auto">
       <div className="text-center mb-6">
         <h2 className="text-2xl font-bold text-gray-800 mb-2">States of Matter Visualizer</h2>
-        <p className="text-gray-600">Explore Kinetic Molecular Theory and state changes - CAPS Grade 10 Foundation</p>
+        <p className="text-gray-600">Explore Kinetic Molecular Theory and state changes - Grade 10 Foundation</p>
       </div>
 
       {/* Controls */}
@@ -1119,9 +1119,9 @@ const StatesOfMatterVisualizer = ({
         </div>
       </div>
 
-      {/* CAPS Learning Objectives */}
+      {/* Learning Objectives */}
       <div className="bg-yellow-50 p-4 rounded-lg">
-        <h4 className="font-medium text-yellow-800 mb-2">CAPS Grade 10 Learning Objectives</h4>
+        <h4 className="font-medium text-yellow-800 mb-2">National Curriculum Grade 10 Learning Objectives</h4>
         <ul className="text-sm text-yellow-700 space-y-1">
           <li>• Verify the particulate nature of matter</li>
           <li>• List and characterize the three states of matter</li>
@@ -1363,7 +1363,7 @@ const AtomicStructureBuilder = ({
     <div className="bg-white rounded-lg shadow-lg p-6 max-w-6xl mx-auto">
       <div className="text-center mb-6">
         <h2 className="text-2xl font-bold text-gray-800 mb-2">Atomic Structure Builder</h2>
-        <p className="text-gray-600">Explore atomic structure and electron configurations - CAPS Grade 10 Foundation</p>
+        <p className="text-gray-600">Explore atomic structure and electron configurations - Grade 10 Foundation</p>
       </div>
 
       {/* Controls */}
@@ -1546,9 +1546,9 @@ const AtomicStructureBuilder = ({
         </div>
       </div>
 
-      {/* CAPS Learning Objectives */}
+      {/* Learning Objectives */}
       <div className="bg-yellow-50 p-4 rounded-lg">
-        <h4 className="font-medium text-yellow-800 mb-2">CAPS Grade 10 Learning Objectives</h4>
+        <h4 className="font-medium text-yellow-800 mb-2">National Curriculum Grade 10 Learning Objectives</h4>
         <ul className="text-sm text-yellow-700 space-y-1">
           <li>• Understand models of the atom through history</li>
           <li>• Describe atomic structure in terms of protons, neutrons, and electrons</li>

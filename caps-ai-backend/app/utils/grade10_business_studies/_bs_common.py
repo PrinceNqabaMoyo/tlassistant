@@ -26,20 +26,27 @@ def make_id(prefix: str) -> str:
     return f"{prefix}_{uuid.uuid4().hex[:12]}"
 
 
-# A small bank of South-African flavoured business scenarios used to add
-# context variety to questions without changing the assessed content.
-BUSINESS_SCENARIOS: List[Dict[str, str]] = [
-    {"business": "Olwethu Beauty Salon", "owner": "Olwethu", "industry": "beauty and hairdressing"},
-    {"business": "Sarah's Bakery", "owner": "Sarah", "industry": "baking"},
-    {"business": "Mzobe Traders", "owner": "Mr Mzobe", "industry": "retail"},
-    {"business": "Thandi's Tech", "owner": "Thandi", "industry": "electronics"},
-    {"business": "Khanya Construction", "owner": "Khanya", "industry": "construction"},
-    {"business": "Lerato Logistics", "owner": "Lerato", "industry": "transport"},
-]
+try:
+    from ..sa_naming_engine import pick_sa_scenario
+except ImportError:
+    from app.utils.sa_naming_engine import pick_sa_scenario
 
-
+# A dynamic bank of South-African flavoured business scenarios.
+# Context is drawn deterministically from sa_naming_engine with proportional
+# representation across all 9 provinces and SA demographic groups.
 def pick_scenario(r: random.Random) -> Dict[str, str]:
-    return r.choice(BUSINESS_SCENARIOS)
+    return pick_sa_scenario(r)
+
+
+# Kept for backward compatibility with static imports
+BUSINESS_SCENARIOS: List[Dict[str, str]] = [
+    {"business": "Khumalo Fresh Produce CC", "owner": "Lindiwe Khumalo", "industry": "retail groceries"},
+    {"business": "Mokoena Renewable Solutions (Pty) Ltd", "owner": "Kagiso Mokoena", "industry": "clean energy"},
+    {"business": "Van der Merwe Logistics", "owner": "Pieter van der Merwe", "industry": "transport"},
+    {"business": "Naidoo & Chetty Distributors", "owner": "Priya Naidoo", "industry": "wholesale"},
+    {"business": "Baloyi Cold-Chain Freight (Pty) Ltd", "owner": "Tinyiko Baloyi", "industry": "cold-chain logistics"},
+    {"business": "Hendricks Marine Fabrication CC", "owner": "Denver Hendricks", "industry": "light engineering"},
+]
 
 
 def make_mcq(

@@ -9,7 +9,7 @@ curriculum_service = CurriculumService()
 @curriculum_bp.route('/data', methods=['GET'])
 @cache.memoize(timeout=600)  # Cache for 10 minutes
 def get_curriculum_data():
-    """Get curriculum data from ChromaDB"""
+    """Get curriculum data from caps-wiki/ (Rule 11 deterministic context)"""
     try:
         curriculum_data = curriculum_service.get_curriculum_data()
         return jsonify({

@@ -1,0 +1,2019 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fundile | CAPS-Grounded Cognitive Engine & LMS • Grades 7–12</title>
+  
+  <!-- Fonts: Plus Jakarta Sans, Outfit, Inter, JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              blue: '#13519C',
+              'blue-hover': '#0e4180',
+              'blue-light': '#2563EB',
+              orange: '#FF9100',
+              'orange-hover': '#e58200',
+              'orange-glow': 'rgba(255, 145, 0, 0.4)',
+              navy: '#081326',
+              'navy-surface': '#0c1b33',
+              'navy-card': '#102242',
+              'navy-border': '#1e355b',
+            }
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'Inter', 'sans-serif'],
+            display: ['Outfit', '"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          boxShadow: {
+            'glow-blue': '0 0 40px -10px rgba(19, 81, 156, 0.5)',
+            'glow-orange': '0 0 35px -8px rgba(255, 145, 0, 0.5)',
+            'glow-cyan': '0 0 30px -10px rgba(6, 182, 212, 0.4)',
+            'antigravity': '0 20px 60px -15px rgba(8, 19, 38, 0.7)',
+          },
+          animation: {
+            'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            'float': 'float 6s ease-in-out infinite',
+          },
+          keyframes: {
+            float: {
+              '0%, 100%': { transform: 'translateY(0px)' },
+              '50%': { transform: 'translateY(-8px)' },
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Custom Smooth Scroll & Selection */
+    ::selection {
+      background: rgba(255, 145, 0, 0.25);
+      color: #FF9100;
+    }
+    
+    /* Subtle Grid Background for Antigravity aesthetic */
+    .bg-grid-pattern {
+      background-size: 40px 40px;
+      background-image: 
+        linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    }
+    
+    /* Radial Glow Highlights */
+    .radial-hero-glow {
+      background: radial-gradient(ellipse 80% 50% at 50% -10%, rgba(19, 81, 156, 0.6), rgba(8, 19, 38, 0.98) 70%, #050c18 100%);
+    }
+
+    /* Glowing gradient card borders */
+    .glowing-card-border {
+      position: relative;
+    }
+    .glowing-card-border::before {
+      content: '';
+      position: absolute;
+      inset: -1px;
+      border-radius: inherit;
+      padding: 1px;
+      background: linear-gradient(135deg, rgba(255,255,255,0.15), rgba(19,81,156,0.3), rgba(255,145,0,0.25), transparent);
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
+    }
+
+    /* Ticker Transition */
+    .ticker-slot {
+      height: 1.15em;
+      line-height: 1.15;
+      overflow: hidden;
+      display: inline-block;
+      vertical-align: bottom;
+    }
+    .ticker-reel {
+      transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    /* Custom Hide Scrollbar */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    /* Print styles for A4 test papers */
+    @media print {
+      body * {
+        visibility: hidden;
+      }
+      #printable-exam-paper, #printable-exam-paper * {
+        visibility: visible;
+      }
+      #printable-exam-paper {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body class="bg-[#081326] text-slate-100 font-sans antialiased overflow-x-hidden selection:bg-brand-orange/30 selection:text-white">
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       1. FLOATING ANTIGRAVITY COMMAND HEADER
+       ═══════════════════════════════════════════════════════════════ -->
+  <header class="fixed top-0 inset-x-0 z-50 transition-all duration-300 backdrop-blur-xl bg-[#081326]/85 border-b border-white/10" id="main-header">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16 sm:h-20 gap-3">
+        
+        <!-- Left: Fundile Logo & National CAPS Badge -->
+        <div class="flex items-center gap-3 shrink-0">
+          <a href="#hero" class="flex items-center gap-2 group cursor-pointer" aria-label="Fundile Home">
+            <!-- Inline SVG Fundile Logo -->
+            <svg class="h-8 sm:h-9 w-auto" viewBox="0 0 2200 800" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <g transform="translate(23, -76)">
+                <g transform="translate(150, 101.77) scale(0.75)">
+                  <path fill="#FF9100" d="M281.1 82.4h46.5v55.2h-55v-55.2h8.5z"/>
+                  <path fill="#FF9100" d="M234.1 135.1l-27.9 38.8-45.1-32.5 32.1-45 45.5 32-4.6 6.7z"/>
+                  <path fill="#FF9100" d="M287.3 233.2l-42.9 32.5-33.4-44.3 44-33.3 32.3 45.1z"/>
+                </g>
+                <path fill="#FF9100" d="M346.6 323.6l132.2-70.1c11.5-6.1 23.3-11.3 36.8-10.6 11.2.5 21.4 4.6 31 9.7l175.2 93.4c19.4 10.4 38.8 20.9 58.1 31.7 8.9 5 13.7 12.7 13.2 23.3-.2 5.2-2.2 9.2-6.2 11.8l-30.6 18.6-121.9 67.5-91.8 50.9c-8.4 4.5-18.2 7.5-27.6 8.7-10.4 1.3-20.6-2.9-29.8-8l-97.9-50.6-96.8-53.3c-2.9-1.6-5.6-3.6-8.4-5.3-14-8.1-10.5-25.9-1.9-33.2 5.1-4.3 11.1-7.9 17-11.1l89.7-47.8zm163 120.6c2.7-.1 5.8.7 8-1.5l69.4-37.9c4.4-2.4 4.4-4.4-.1-6.9l-68.6-37.4c-3.8-2.1-6.9-2-10.7.1l-67.1 36.8c-1.7.9-3 2.6-4.4 4 1.6 1.3 3 3 4.8 4l68.7 38.8z"/>
+                <path fill="#FF9100" d="M530.9 584l144.2-84.8v5.3c.3 25.6 1.3 51.3.8 76.9-.5 22.7-9.5 42.3-27.2 57-8.4 7-17.8 12.8-27 18.7-10.6 6.8-21.6 13-32.4 19.5-15.4 9.3-30.8 18.8-46.3 27.8-17.6 10.2-36 12-54.7 3.3-14.3-6.7-28.3-14.1-42.4-21.2-24.4-12.1-48.9-24-73.2-36.3-23.1-11.7-39.2-29.4-44.8-55.2-1.3-5.8-2.2-11.8-2.3-17.7 0-31 .3-62 .5-93l32.7 18.7 142.4 82c4.7 2.7 10.3 4.9 15.6 5.1 4.5.1 9.2-2.9 14.1-4.7z"/>
+                <path fill="#FF9100" d="M727.1 542v37c-.1 3.5.9 5.6 3.7 7.8 14.3 11.2 16.8 30.3 4.7 42.3-4.7 4.6-4.3 8-2.5 13.2 5.1 14.7 9.9 29.5 14.8 44.3 3.9 11.9.3 19.1-11.9 22.5-12.7 3.6-25.6 2.6-38.4.8-5.4-.8-9.6-4.2-12.5-9.1-2.5-4.3-2.3-8.5-.7-12.9 5.7-16.6 11.2-33.2 16.9-49.8 1.1-3 .8-4.8-1.8-7.1-13.2-11.8-12.2-32.1 2.2-43.4 3.1-2.4 4.1-4.9 4.1-8.7-.2-25.8-.2-51.7 0-77.5 0-3 .5-6.3 1.7-9 2.1-4.9 7.8-7.6 12-6.5 4.8 1.3 7.8 5.7 7.8 11.7.1 14.6 0 29.3.1 44.5z"/>
+                <text x="850" y="243" dominant-baseline="hanging" font-family="'Outfit', 'Plus Jakarta Sans', sans-serif" fill="#FFFFFF" font-size="475" font-weight="700" letter-spacing="-10">fundile</text>
+              </g>
+            </svg>
+          </a>
+          <span class="hidden md:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold bg-white/5 border border-white/10 text-slate-300">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+            CAPS • Grades 7–12
+          </span>
+        </div>
+
+        <!-- Center: Google Antigravity-Style Translucent Audience Pill Switcher -->
+        <nav class="hidden lg:flex items-center p-1 rounded-full bg-slate-900/80 border border-white/10 shadow-inner backdrop-blur-md" id="audience-nav">
+          <button 
+            type="button" 
+            onclick="switchAudience('learners')" 
+            id="nav-tab-learners"
+            class="audience-nav-btn relative flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold transition-all duration-200 cursor-pointer bg-brand-blue text-white shadow-sm ring-1 ring-white/20"
+          >
+            <i data-lucide="graduation-cap" class="w-3.5 h-3.5 text-amber-300"></i>
+            <span>Learners</span>
+          </button>
+          <button 
+            type="button" 
+            onclick="switchAudience('parents')" 
+            id="nav-tab-parents"
+            class="audience-nav-btn relative flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold transition-all duration-200 cursor-pointer text-slate-400 hover:text-white hover:bg-white/5"
+          >
+            <i data-lucide="users" class="w-3.5 h-3.5"></i>
+            <span>Parents</span>
+          </button>
+          <button 
+            type="button" 
+            onclick="switchAudience('teachers')" 
+            id="nav-tab-teachers"
+            class="audience-nav-btn relative flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold transition-all duration-200 cursor-pointer text-slate-400 hover:text-white hover:bg-white/5"
+          >
+            <i data-lucide="book-open" class="w-3.5 h-3.5"></i>
+            <span>Teachers</span>
+          </button>
+          <button 
+            type="button" 
+            onclick="switchAudience('schools')" 
+            id="nav-tab-schools"
+            class="audience-nav-btn relative flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold transition-all duration-200 cursor-pointer text-slate-400 hover:text-white hover:bg-white/5"
+          >
+            <i data-lucide="building-2" class="w-3.5 h-3.5"></i>
+            <span>Schools &amp; HODs</span>
+          </button>
+        </nav>
+
+        <!-- Right: Actions (Sign In + Free Trial CTA) -->
+        <div class="flex items-center gap-3">
+          <a 
+            href="#pricing" 
+            class="hidden sm:inline-flex items-center justify-center px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold text-slate-300 hover:text-white bg-white/5 hover:bg-white/10 border border-white/10 transition duration-200 min-h-[44px]"
+          >
+            Pricing
+          </a>
+          <button 
+            type="button"
+            onclick="openTrialModal()" 
+            class="relative group inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold text-white bg-gradient-to-r from-brand-orange to-[#f57c00] hover:from-[#f57c00] hover:to-[#e65100] shadow-[0_4px_20px_rgba(255,145,0,0.4)] transition-all duration-300 hover:scale-[1.02] cursor-pointer min-h-[44px]"
+          >
+            <span>Start Free Trial</span>
+            <i data-lucide="arrow-right" class="w-4 h-4 transition-transform group-hover:translate-x-0.5"></i>
+            <span class="absolute -bottom-1 inset-x-4 h-px bg-white/40 blur-[1px]"></span>
+          </button>
+        </div>
+
+      </div>
+
+      <!-- Mobile Audience Pills Bar (Sticky row for smartphones) -->
+      <div class="lg:hidden flex items-center gap-2 py-2 overflow-x-auto no-scrollbar border-t border-white/5">
+        <button onclick="switchAudience('learners')" id="mob-tab-learners" class="mob-nav-btn px-3 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap bg-brand-blue text-white">Learners</button>
+        <button onclick="switchAudience('parents')" id="mob-tab-parents" class="mob-nav-btn px-3 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap text-slate-300 bg-white/5">Parents</button>
+        <button onclick="switchAudience('teachers')" id="mob-tab-teachers" class="mob-nav-btn px-3 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap text-slate-300 bg-white/5">Teachers</button>
+        <button onclick="switchAudience('schools')" id="mob-tab-schools" class="mob-nav-btn px-3 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap text-slate-300 bg-white/5">Schools &amp; HODs</button>
+      </div>
+
+    </div>
+  </header>
+
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       2. HERO SECTION: ANTIGRAVITY COSMIC ATMOSPHERE & SLOT MACHINE
+       ═══════════════════════════════════════════════════════════════ -->
+  <section id="hero" class="relative pt-32 sm:pt-40 pb-20 sm:pb-32 px-4 sm:px-6 lg:px-8 bg-grid-pattern radial-hero-glow overflow-hidden">
+    
+    <!-- Ambient Halo Flares -->
+    <div class="absolute top-1/4 -left-32 w-96 h-96 rounded-full bg-brand-blue/30 blur-[120px] pointer-events-none"></div>
+    <div class="absolute top-1/3 -right-20 w-80 h-80 rounded-full bg-brand-orange/20 blur-[140px] pointer-events-none"></div>
+    <div class="absolute -bottom-24 left-1/2 -translate-x-1/2 w-[700px] h-72 rounded-full bg-cyan-600/15 blur-[160px] pointer-events-none"></div>
+
+    <div class="relative max-w-5xl mx-auto text-center z-10">
+      
+      <!-- Eyebrow Badge -->
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold bg-white/5 border border-brand-blue/40 text-blue-200 shadow-glow-blue backdrop-blur-md mb-6 animate-pulse-slow">
+        <i data-lucide="sparkles" class="w-4 h-4 text-amber-400"></i>
+        <span>South Africa’s Adaptive Cognitive Engine &amp; LMS • Grades 7–12</span>
+      </div>
+
+      <!-- Hero Slot Machine Headline -->
+      <h1 class="font-display text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white leading-[1.12]">
+        <span class="block text-slate-200 font-bold mb-1">Excel in</span>
+        
+        <!-- Slot machine container -->
+        <span class="ticker-slot text-brand-orange font-black" aria-live="polite" id="ticker-container">
+          <span class="ticker-reel block text-left" id="ticker-reel" style="transform: translateY(0);">
+            <span class="block">Mathematics.</span>
+            <span class="block">Physical Sciences.</span>
+            <span class="block">Life Sciences.</span>
+            <span class="block">Natural Sciences.</span>
+            <span class="block">Mathematical Literacy.</span>
+            <span class="block">EMS.</span>
+            <span class="block">Accounting.</span>
+            <span class="block">Business Studies.</span>
+            <span class="block text-white bg-gradient-to-r from-brand-orange via-amber-300 to-white bg-clip-text text-transparent">every subject.</span>
+          </span>
+        </span>
+
+        <span class="block text-2xl sm:text-3xl lg:text-4xl font-semibold mt-3 text-slate-300/90 font-sans tracking-normal">
+          Use Fundile, become a top student.
+        </span>
+      </h1>
+
+      <!-- Value Propositions -->
+      <p class="mt-6 text-base sm:text-xl text-slate-300 max-w-3xl mx-auto font-normal leading-relaxed">
+        Active, step-by-step cognitive scaffolding grounded in the South African CAPS curriculum. No hallucinated shortcuts. No passive copy-pasting. Authentic NSC method marks from day one.
+      </p>
+
+      <!-- Key Bullet Points (Glass Pills) -->
+      <div class="mt-8 flex flex-wrap items-center justify-center gap-3 max-w-3xl mx-auto text-xs sm:text-sm text-slate-200">
+        <div class="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-sm">
+          <i data-lucide="check-circle-2" class="w-4 h-4 text-brand-orange"></i>
+          <span>100% CAPS &amp; NSC Method Marking</span>
+        </div>
+        <div class="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-sm">
+          <i data-lucide="check-circle-2" class="w-4 h-4 text-brand-orange"></i>
+          <span>95% Data Cost Savings (1.6 MB vs 450 MB video)</span>
+        </div>
+        <div class="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-sm">
+          <i data-lucide="check-circle-2" class="w-4 h-4 text-brand-orange"></i>
+          <span>Zero-LLM Math Ground Truth (0% Hallucinations)</span>
+        </div>
+      </div>
+
+      <!-- Hero Call-To-Actions -->
+      <div class="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+        <button 
+          onclick="openTrialModal()" 
+          class="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-2xl bg-brand-orange hover:bg-brand-orange-hover text-white font-bold text-base shadow-[0_12px_40px_rgba(255,145,0,0.35)] transition-all duration-300 hover:scale-[1.02] cursor-pointer min-h-[48px]"
+        >
+          <span>Start 2-Week Free Trial</span>
+          <i data-lucide="arrow-right" class="w-5 h-5"></i>
+        </button>
+
+        <a 
+          href="#interactive-simulator" 
+          class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-4 rounded-2xl bg-white/10 hover:bg-white/15 text-white font-semibold text-base border border-white/15 transition-all duration-200 backdrop-blur-md min-h-[48px]"
+        >
+          <i data-lucide="play" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+          <span>Launch Live Simulator</span>
+        </a>
+      </div>
+
+      <!-- Trust Assurance Subtitle -->
+      <p class="mt-4 text-xs text-slate-400 font-medium">
+        ⚡ 2-week full access • No credit card required • Cancel anytime in 1-click
+      </p>
+
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         OUTCOMES-BASED TRUST BANNER (D2L Brightspace Credibility Metric)
+         ═══════════════════════════════════════════════════════════════ -->
+    <div class="mt-16 max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-4 px-4 sm:px-6">
+      <div class="p-5 rounded-2xl bg-slate-900/60 border border-white/10 backdrop-blur-md text-center glowing-card-border">
+        <div class="text-2xl sm:text-3xl font-extrabold text-white font-display">+1.8 Grade</div>
+        <p class="text-xs text-slate-400 mt-1">Average shift in NSC benchmark examinations</p>
+      </div>
+      <div class="p-5 rounded-2xl bg-slate-900/60 border border-white/10 backdrop-blur-md text-center glowing-card-border">
+        <div class="text-2xl sm:text-3xl font-extrabold text-emerald-400 font-display">95.4% Less</div>
+        <p class="text-xs text-slate-400 mt-1">Cellular data consumed vs streaming video lectures</p>
+      </div>
+      <div class="p-5 rounded-2xl bg-slate-900/60 border border-white/10 backdrop-blur-md text-center glowing-card-border">
+        <div class="text-2xl sm:text-3xl font-extrabold text-brand-orange font-display">100% Truth</div>
+        <p class="text-xs text-slate-400 mt-1">Seeded SymPy &amp; GAAP ledger mathematical integrity</p>
+      </div>
+      <div class="p-5 rounded-2xl bg-slate-900/60 border border-white/10 backdrop-blur-md text-center glowing-card-border">
+        <div class="text-2xl sm:text-3xl font-extrabold text-cyan-400 font-display">3 Clicks</div>
+        <p class="text-xs text-slate-400 mt-1">To generate printable CAPS test papers &amp; marking memos</p>
+      </div>
+    </div>
+
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       3. INTERACTIVE SIMULATOR COCKPIT: 4 PERSPECTIVES (THE MASTERPIECE)
+       ═══════════════════════════════════════════════════════════════ -->
+  <section id="interactive-simulator" class="relative py-20 px-4 sm:px-6 lg:px-8 bg-[#0b172e] border-t border-white/10">
+    <div class="max-w-6xl mx-auto">
+      
+      <!-- Section Header -->
+      <div class="text-center max-w-3xl mx-auto mb-10">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider text-brand-orange bg-brand-orange/10 border border-brand-orange/30 mb-3">
+          <i data-lucide="cpu" class="w-3.5 h-3.5"></i>
+          <span>Multi-Stakeholder Interactive Simulator</span>
+        </div>
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-display font-extrabold text-white tracking-tight">
+          Experience Fundile from Every Perspective
+        </h2>
+        <p class="mt-3 text-base text-slate-300">
+          Toggle below to test real workflows: how learners get unstuck without being handed the answer, how parents track true mastery, and how teachers build printable assessments in seconds.
+        </p>
+
+        <!-- Perspective Selector Buttons (Cockpit Switcher) -->
+        <div class="mt-8 inline-flex p-1.5 rounded-2xl bg-slate-900/90 border border-white/15 shadow-xl max-w-full overflow-x-auto no-scrollbar">
+          <button 
+            type="button" 
+            onclick="switchAudience('learners')" 
+            id="sim-tab-learners"
+            class="sim-tab-btn flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all duration-200 cursor-pointer bg-brand-blue text-white shadow-md ring-1 ring-white/20"
+          >
+            <i data-lucide="graduation-cap" class="w-4 h-4 text-amber-300"></i>
+            <span>1. Learners</span>
+          </button>
+          <button 
+            type="button" 
+            onclick="switchAudience('parents')" 
+            id="sim-tab-parents"
+            class="sim-tab-btn flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all duration-200 cursor-pointer text-slate-400 hover:text-white hover:bg-white/5"
+          >
+            <i data-lucide="users" class="w-4 h-4"></i>
+            <span>2. Parents</span>
+          </button>
+          <button 
+            type="button" 
+            onclick="switchAudience('teachers')" 
+            id="sim-tab-teachers"
+            class="sim-tab-btn flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all duration-200 cursor-pointer text-slate-400 hover:text-white hover:bg-white/5"
+          >
+            <i data-lucide="book-open" class="w-4 h-4"></i>
+            <span>3. Teachers</span>
+          </button>
+          <button 
+            type="button" 
+            onclick="switchAudience('schools')" 
+            id="sim-tab-schools"
+            class="sim-tab-btn flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all duration-200 cursor-pointer text-slate-400 hover:text-white hover:bg-white/5"
+          >
+            <i data-lucide="building-2" class="w-4 h-4"></i>
+            <span>4. Schools &amp; HODs</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Outer Antigravity Glass Cockpit Container -->
+      <div class="relative rounded-3xl bg-slate-900/90 border border-white/15 shadow-2xl p-4 sm:p-8 overflow-hidden glowing-card-border">
+        
+        <!-- ─────────────────────────────────────────────────────────────
+             PERSPECTIVE 1: LEARNERS (Interactive Solver & 3-Tier Hints)
+             ───────────────────────────────────────────────────────────── -->
+        <div id="perspective-learners" class="perspective-panel">
+          <div class="flex flex-col lg:flex-row items-start justify-between gap-6 pb-6 border-b border-white/10">
+            <div>
+              <div class="flex items-center gap-2 text-xs font-bold text-amber-400 uppercase tracking-wider">
+                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                <span>Active Socratic Scaffolding Mode</span>
+              </div>
+              <h3 class="text-xl sm:text-2xl font-bold text-white mt-1">
+                Grade 10 Accounting: Cash Receipts Journal &amp; Output VAT
+              </h3>
+              <p class="text-xs sm:text-sm text-slate-300 mt-1">
+                Fundile evaluates student working methodically line-by-line. If you stumble, expand the 3-Tier Pre-baked hints below.
+              </p>
+            </div>
+            <!-- Mastery Dial Metric -->
+            <div class="flex items-center gap-4 bg-white/5 border border-white/10 px-4 py-2.5 rounded-2xl shrink-0">
+              <div class="text-right">
+                <span class="text-[10px] text-slate-400 uppercase font-semibold block">Formative Mastery</span>
+                <span class="text-lg font-bold text-emerald-400 font-display" id="learner-dial-val">84% (Level 7)</span>
+              </div>
+              <div class="w-12 h-12 rounded-full border-4 border-emerald-500/30 border-t-emerald-400 flex items-center justify-center font-bold text-xs text-white">
+                84%
+              </div>
+            </div>
+          </div>
+
+          <!-- Problem Working Area -->
+          <div class="mt-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
+            
+            <!-- Left: Authentic Question & Form -->
+            <div class="lg:col-span-7 bg-[#0c182e] rounded-2xl p-5 border border-white/10">
+              <div class="flex items-center justify-between text-xs text-slate-400 mb-3">
+                <span class="font-mono bg-white/10 px-2 py-0.5 rounded text-amber-300 font-semibold">QUESTION 2.1 (4 Marks)</span>
+                <span>Time Benchmark: 4 mins</span>
+              </div>
+              <p class="text-sm text-slate-200 leading-relaxed font-medium">
+                Merchandise sold for cash to J. Sithole for <span class="text-white font-bold underline decoration-brand-orange">R11,500</span> (inclusive of 15% VAT). Cost of sales was R8,000. Calculate and record the correct ledger breakdown.
+              </p>
+
+              <!-- Interactive Ledger Inputs -->
+              <div class="mt-5 space-y-3">
+                <div class="grid grid-cols-3 gap-2 text-xs font-semibold text-slate-400 px-1">
+                  <span>Ledger Account</span>
+                  <span>Your Method Entry (R)</span>
+                  <span>CAPS Method Mark</span>
+                </div>
+                
+                <div class="grid grid-cols-3 gap-2 items-center bg-white/5 p-2 rounded-xl border border-white/5">
+                  <span class="text-xs font-medium text-slate-200">Bank (Gross Cash)</span>
+                  <input type="text" id="input-bank" value="11 500" class="bg-slate-900 border border-white/20 rounded-lg px-2.5 py-1 text-xs text-emerald-400 font-mono focus:border-brand-orange focus:outline-none" />
+                  <span class="text-xs text-emerald-400 font-semibold flex items-center gap-1">
+                    <i data-lucide="check" class="w-3.5 h-3.5"></i> +1 Method (M)
+                  </span>
+                </div>
+
+                <div class="grid grid-cols-3 gap-2 items-center bg-white/5 p-2 rounded-xl border border-white/5">
+                  <span class="text-xs font-medium text-slate-200">Sales (Net Base)</span>
+                  <input type="text" id="input-sales" value="10 000" class="bg-slate-900 border border-white/20 rounded-lg px-2.5 py-1 text-xs text-emerald-400 font-mono focus:border-brand-orange focus:outline-none" />
+                  <span class="text-xs text-emerald-400 font-semibold flex items-center gap-1">
+                    <i data-lucide="check" class="w-3.5 h-3.5"></i> +1 Accuracy (A)
+                  </span>
+                </div>
+
+                <div class="grid grid-cols-3 gap-2 items-center bg-white/5 p-2 rounded-xl border border-white/5">
+                  <span class="text-xs font-medium text-slate-200">Output VAT (15/115)</span>
+                  <input type="text" id="input-vat" value="1 500" class="bg-slate-900 border border-white/20 rounded-lg px-2.5 py-1 text-xs text-emerald-400 font-mono focus:border-brand-orange focus:outline-none" />
+                  <span class="text-xs text-emerald-400 font-semibold flex items-center gap-1">
+                    <i data-lucide="check" class="w-3.5 h-3.5"></i> +2 Consequential (CA)
+                  </span>
+                </div>
+              </div>
+
+              <!-- Action Bar -->
+              <div class="mt-5 flex items-center justify-between pt-3 border-t border-white/10">
+                <span class="text-xs text-emerald-400 font-medium flex items-center gap-1.5">
+                  <i data-lucide="shield-check" class="w-4 h-4"></i> Internal Consistency Verified (SymPy)
+                </span>
+                <button 
+                  type="button" 
+                  onclick="triggerWorkedCheck()"
+                  class="px-4 py-2 rounded-xl text-xs font-bold bg-brand-blue hover:bg-brand-blue-hover text-white transition cursor-pointer"
+                >
+                  Verify Method Marks
+                </button>
+              </div>
+            </div>
+
+            <!-- Right: 3-Tier Socratic Scaffolding Hints System -->
+            <div class="lg:col-span-5 flex flex-col justify-between bg-slate-950/60 rounded-2xl p-5 border border-white/10">
+              <div>
+                <div class="flex items-center justify-between mb-3">
+                  <h4 class="text-xs font-bold uppercase tracking-wider text-slate-300 flex items-center gap-2">
+                    <i data-lucide="lightbulb" class="w-4 h-4 text-amber-400"></i>
+                    <span>Pre-Baked 3-Tier Socratic Guidance</span>
+                  </h4>
+                  <span class="text-[10px] text-slate-400">Never hallucinated</span>
+                </div>
+                
+                <!-- Hint Accordion -->
+                <div class="space-y-2.5 text-xs">
+                  <!-- Tier 1 -->
+                  <div class="p-3 rounded-xl bg-white/5 border border-white/10">
+                    <div class="flex items-center justify-between font-bold text-amber-300 cursor-pointer">
+                      <span>Tier 1: Guiding Cognitive Nudge</span>
+                      <i data-lucide="chevron-down" class="w-3.5 h-3.5"></i>
+                    </div>
+                    <p class="text-slate-300 mt-1.5 leading-relaxed">
+                      "Remember: the amount of R11,500 already includes VAT. Does this mean it represents 100% or 115% of the selling price?"
+                    </p>
+                  </div>
+                  <!-- Tier 2 -->
+                  <div class="p-3 rounded-xl bg-white/5 border border-white/10">
+                    <div class="flex items-center justify-between font-bold text-blue-300 cursor-pointer">
+                      <span>Tier 2: Statutory Formula Rule</span>
+                      <i data-lucide="chevron-down" class="w-3.5 h-3.5"></i>
+                    </div>
+                    <p class="text-slate-300 mt-1.5 leading-relaxed font-mono">
+                      VAT Exclusive Base = Gross × (100 / 115)<br/>
+                      Output VAT = Gross × (15 / 115)
+                    </p>
+                  </div>
+                  <!-- Tier 3 -->
+                  <div class="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/30">
+                    <div class="flex items-center justify-between font-bold text-emerald-300 cursor-pointer">
+                      <span>Tier 3: Stepwise Worked Derivation</span>
+                      <i data-lucide="check" class="w-3.5 h-3.5"></i>
+                    </div>
+                    <p class="text-slate-300 mt-1.5 leading-relaxed">
+                      R11,500 × (15 / 115) = R1,500. Then Net Sales = R11,500 - R1,500 = R10,000. Full method marks awarded for both lines!
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mt-4 pt-3 border-t border-white/10 flex items-center justify-between">
+                <span class="text-[11px] text-slate-400">Zero answer giveaways. Builds independent cognitive automaticity.</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- ─────────────────────────────────────────────────────────────
+             PERSPECTIVE 2: PARENTS (WhatsApp Pulse & Zero-Data PDF Report)
+             ───────────────────────────────────────────────────────────── -->
+        <div id="perspective-parents" class="perspective-panel hidden">
+          <div class="flex flex-col lg:flex-row items-start justify-between gap-6 pb-6 border-b border-white/10">
+            <div>
+              <div class="flex items-center gap-2 text-xs font-bold text-emerald-400 uppercase tracking-wider">
+                <i data-lucide="smartphone" class="w-4 h-4"></i>
+                <span>Automated Sunday WhatsApp Academic Pulse</span>
+              </div>
+              <h3 class="text-xl sm:text-2xl font-bold text-white mt-1">
+                Zero-Data Parent Accountability: Actionable Insights in Seconds
+              </h3>
+              <p class="text-xs sm:text-sm text-slate-300 mt-1">
+                Parents get diagnostic summaries delivered directly to WhatsApp or SMS—no login credentials, no data-heavy apps.
+              </p>
+            </div>
+            <button 
+              type="button" 
+              onclick="openDiagnosticPdfModal()"
+              class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-xs border border-white/20 transition cursor-pointer"
+            >
+              <i data-lucide="file-text" class="w-4 h-4 text-brand-orange"></i>
+              <span>View Full Diagnostic PDF (142 KB)</span>
+            </button>
+          </div>
+
+          <div class="mt-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
+            <!-- Left: Simulated WhatsApp Notification Frame -->
+            <div class="lg:col-span-6 bg-[#0b141a] rounded-2xl p-4 border border-emerald-900/50 shadow-inner">
+              <div class="flex items-center gap-3 pb-3 border-b border-emerald-950">
+                <div class="w-9 h-9 rounded-full bg-emerald-600 flex items-center justify-center font-bold text-white text-xs">
+                  F
+                </div>
+                <div>
+                  <h4 class="text-xs font-bold text-white">Fundile Academic Pulse • Official</h4>
+                  <span class="text-[10px] text-emerald-400">Verified POPIA-Compliant Channel</span>
+                </div>
+              </div>
+
+              <!-- Message Bubble -->
+              <div class="mt-4 p-3.5 rounded-2xl rounded-tl-sm bg-[#1f2c34] text-slate-200 text-xs leading-relaxed space-y-2 border border-white/5">
+                <p class="font-bold text-white">
+                  👋 Good morning, Mrs. Moyo! Here is Nqobile's weekly mastery report for Grade 10:
+                </p>
+                <div class="bg-black/30 p-2.5 rounded-xl border border-white/5 space-y-1">
+                  <div class="flex justify-between font-semibold">
+                    <span class="text-slate-300">Accounting:</span>
+                    <span class="text-emerald-400">84% (Level 7 - Outstanding)</span>
+                  </div>
+                  <div class="flex justify-between font-semibold">
+                    <span class="text-slate-300">Mathematics:</span>
+                    <span class="text-blue-400">78% (Level 6 - Meritorious)</span>
+                  </div>
+                </div>
+                <p>
+                  🎯 <strong>Targeted Diagnostic Identified:</strong> In VAT Calculations, Nqobile multiplied gross inclusive receipts by 15/100 instead of 15/115. Fundile awarded 2/4 method marks and deployed a 5-minute prerequisite drill.
+                </p>
+                <p class="text-[11px] text-amber-300 bg-amber-500/10 p-2 rounded-lg border border-amber-500/20">
+                  💡 <strong>Dinner Table Question:</strong> "Ask Nqobile how she decides whether to multiply by 15/115 or 15/100 when a receipt includes VAT."
+                </p>
+                <div class="pt-1 flex items-center justify-between text-[10px] text-slate-400">
+                  <span>Delivered via WhatsApp • Zero data charged</span>
+                  <span>Sunday 18:00</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right: Data Savings & Cost Comparison Widget -->
+            <div class="lg:col-span-6 bg-slate-950/60 rounded-2xl p-5 border border-white/10 flex flex-col justify-between">
+              <div>
+                <h4 class="text-xs font-bold uppercase tracking-wider text-slate-300 flex items-center gap-2 mb-3">
+                  <i data-lucide="zap" class="w-4 h-4 text-emerald-400"></i>
+                  <span>Cellular Data Frugality Comparison</span>
+                </h4>
+                
+                <div class="space-y-4">
+                  <!-- Fundile low-data bar -->
+                  <div>
+                    <div class="flex justify-between text-xs font-semibold mb-1">
+                      <span class="text-emerald-300">Fundile SimuLearn™ (SVG Interactive Derivations)</span>
+                      <span class="font-mono text-emerald-400">1.6 MB</span>
+                    </div>
+                    <div class="w-full bg-slate-800 rounded-full h-3 overflow-hidden">
+                      <div class="bg-emerald-400 h-full rounded-full" style="width: 3.5%;"></div>
+                    </div>
+                    <span class="text-[10px] text-slate-400">Uses less than 2 MB per week. Runs smoothly even on 3G and 2G networks.</span>
+                  </div>
+
+                  <!-- Video streaming bar -->
+                  <div>
+                    <div class="flex justify-between text-xs font-semibold mb-1 text-slate-400">
+                      <span>Generic Video Platform / Recorded Lessons</span>
+                      <span class="font-mono text-rose-400">450.0 MB</span>
+                    </div>
+                    <div class="w-full bg-slate-800 rounded-full h-3 overflow-hidden">
+                      <div class="bg-rose-500 h-full rounded-full" style="width: 100%;"></div>
+                    </div>
+                    <span class="text-[10px] text-slate-400">Heavy buffering, excessive data bundle costs (R95+ per student/mo wasted).</span>
+                  </div>
+                </div>
+
+                <div class="mt-6 p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-xs text-emerald-200">
+                  <strong class="font-bold block mb-1">South African Household Impact:</strong>
+                  Fundile saves parents over R95/month in data bundles per child while delivering superior active recall compared to passive video playback.
+                </div>
+              </div>
+
+              <div class="mt-4 pt-3 border-t border-white/10 flex items-center justify-between text-xs">
+                <span class="text-slate-400">POPIA Section 35 Compliant</span>
+                <span class="text-emerald-400 font-semibold">100% Student Privacy Shield</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- ─────────────────────────────────────────────────────────────
+             PERSPECTIVE 3: TEACHERS (3-Click Printable Exam & Memo Generator)
+             ───────────────────────────────────────────────────────────── -->
+        <div id="perspective-teachers" class="perspective-panel hidden">
+          <div class="flex flex-col lg:flex-row items-start justify-between gap-6 pb-6 border-b border-white/10">
+            <div>
+              <div class="flex items-center gap-2 text-xs font-bold text-indigo-400 uppercase tracking-wider">
+                <i data-lucide="printer" class="w-4 h-4"></i>
+                <span>Automated Assessment &amp; Memo Generator</span>
+              </div>
+              <h3 class="text-xl sm:text-2xl font-bold text-white mt-1">
+                Printable CAPS Test Papers &amp; Consequential Memos in 3 Clicks
+              </h3>
+              <p class="text-xs sm:text-sm text-slate-300 mt-1">
+                Save 12+ hours every week. Fundile deterministically drafts curriculum-compliant tests, complete with official NSC marking rubrics.
+              </p>
+            </div>
+            
+            <div class="flex items-center gap-2">
+              <button 
+                type="button" 
+                onclick="window.print()"
+                class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-brand-orange hover:bg-brand-orange-hover text-white font-bold text-xs shadow-md transition cursor-pointer"
+              >
+                <i data-lucide="printer" class="w-4 h-4"></i>
+                <span>Print Official A4 Paper</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Interactive Test Generator Preview -->
+          <div class="mt-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
+            
+            <!-- Controls Sidebar -->
+            <div class="lg:col-span-4 bg-slate-950/60 rounded-2xl p-4 border border-white/10 space-y-4">
+              <div>
+                <label class="block text-xs font-bold text-slate-300 mb-1.5">Select Subject &amp; Grade</label>
+                <select id="teacher-subject-select" class="w-full bg-slate-900 border border-white/15 rounded-xl px-3 py-2 text-xs text-white focus:border-brand-blue focus:outline-none">
+                  <option value="acc">Grade 10 Accounting (General Journal)</option>
+                  <option value="math">Grade 10 Mathematics (Quadratics)</option>
+                  <option value="bus">Grade 11 Business Studies (Environments)</option>
+                </select>
+              </div>
+
+              <div>
+                <label class="block text-xs font-bold text-slate-300 mb-1.5">Assessment Scope</label>
+                <div class="grid grid-cols-2 gap-2 text-xs font-semibold">
+                  <button type="button" class="py-2 rounded-lg bg-brand-blue text-white border border-brand-blue-light text-center">30 Marks (45m)</button>
+                  <button type="button" class="py-2 rounded-lg bg-white/5 text-slate-300 hover:bg-white/10 text-center">50 Marks (60m)</button>
+                </div>
+              </div>
+
+              <!-- View Switcher -->
+              <div>
+                <label class="block text-xs font-bold text-slate-300 mb-1.5">Active View Mode</label>
+                <div class="flex rounded-xl bg-slate-900 p-1 border border-white/10 text-xs font-semibold">
+                  <button type="button" onclick="setTeacherView('paper')" id="tview-paper" class="flex-1 py-1.5 rounded-lg bg-brand-blue text-white text-center">A4 Paper</button>
+                  <button type="button" onclick="setTeacherView('memo')" id="tview-memo" class="flex-1 py-1.5 rounded-lg text-slate-400 hover:text-white text-center">Marking Memo</button>
+                  <button type="button" onclick="setTeacherView('heatmap')" id="tview-heatmap" class="flex-1 py-1.5 rounded-lg text-slate-400 hover:text-white text-center">Heatmap</button>
+                </div>
+              </div>
+
+              <div class="p-3.5 rounded-xl bg-blue-500/10 border border-blue-500/25 text-[11px] text-blue-200 leading-relaxed">
+                <strong>HOD Quality Guarantee:</strong> Every generated question conforms to official CAPS cognitive weighting (Lower Order 30%, Middle Order 40%, Higher Order 30%).
+              </div>
+            </div>
+
+            <!-- Preview Pane (Clean Printable Layout) -->
+            <div class="lg:col-span-8 bg-white text-slate-900 rounded-2xl p-6 sm:p-8 shadow-xl font-sans" id="printable-exam-paper">
+              
+              <!-- A4 Exam Paper View -->
+              <div id="pane-paper">
+                <div class="border-b-2 border-slate-900 pb-4 mb-4 flex justify-between items-start">
+                  <div>
+                    <h3 class="text-base sm:text-lg font-black uppercase tracking-tight">Sunrise Secondary School • Department of Accounting</h3>
+                    <p class="text-xs text-slate-600 font-semibold">Term 2 Controlled Assessment • Grade 10 Accounting • Benchmark</p>
+                  </div>
+                  <div class="text-right text-xs">
+                    <span class="block font-bold">MARKS: 30</span>
+                    <span class="block text-slate-600">TIME: 45 MINUTES</span>
+                  </div>
+                </div>
+
+                <div class="space-y-4 text-xs sm:text-sm">
+                  <div class="font-bold text-slate-800">QUESTION 1: GENERAL JOURNAL TRANSACTIONS (14 MARKS)</div>
+                  <p class="text-slate-700 leading-relaxed">
+                    You are provided with information relating to Sunshine Traders for March 2024. Show all journal entries with appropriate narrations.
+                  </p>
+                  <div class="bg-slate-100 p-3.5 rounded-lg font-mono text-xs border border-slate-300 space-y-1.5">
+                    <p>1. 14 March: J. Dlamini, a debtor owing R1,600, was declared insolvent. Received 40c in the Rand; balance written off as irrecoverable.</p>
+                    <p>2. 22 March: The owner withdrew stock for personal use. Cost price R850, Selling price R1,150.</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Marking Memo View (Hidden by default) -->
+              <div id="pane-memo" class="hidden">
+                <div class="border-b-2 border-emerald-600 pb-3 mb-4 flex justify-between items-center text-emerald-900">
+                  <h4 class="font-bold text-sm uppercase">Official NSC Marking Memorandum • Strict Method Marks</h4>
+                  <span class="text-xs font-mono font-bold bg-emerald-100 px-2 py-1 rounded">100% Deterministic</span>
+                </div>
+                <div class="space-y-3 text-xs">
+                  <div class="p-2.5 bg-emerald-50 border border-emerald-200 rounded-lg">
+                    <div class="font-bold text-slate-900">Transaction 1: Insolvent Debtor</div>
+                    <ul class="mt-1 space-y-1 text-slate-700">
+                      <li>• Bank (R1,600 × 0.40 = R640) <span class="font-bold text-emerald-700">✓ 2M (Method)</span></li>
+                      <li>• Bad Debts (R1,600 × 0.60 = R960) <span class="font-bold text-emerald-700">✓ 2M (Method)</span></li>
+                      <li>• Debtors Control credited with total discharged R1,600 <span class="font-bold text-emerald-700">✓ 2A (Accuracy)</span></li>
+                    </ul>
+                  </div>
+                  <div class="p-2.5 bg-emerald-50 border border-emerald-200 rounded-lg">
+                    <div class="font-bold text-slate-900">Transaction 2: Drawings of Stock</div>
+                    <ul class="mt-1 space-y-1 text-slate-700">
+                      <li>• Drawings debited at Cost Price R850 (not selling price) <span class="font-bold text-emerald-700">✓ 2M</span></li>
+                      <li>• Trading Stock credited at Cost Price R850 <span class="font-bold text-emerald-700">✓ 2A</span></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Heatmap View (Hidden by default) -->
+              <div id="pane-heatmap" class="hidden">
+                <div class="border-b pb-3 mb-4 flex justify-between items-center">
+                  <h4 class="font-bold text-sm text-slate-900">Class Misconception Heatmap (Grade 10A • 28 Students)</h4>
+                  <span class="text-xs bg-rose-100 text-rose-800 font-bold px-2 py-0.5 rounded">High Misconception Flag</span>
+                </div>
+                <div class="space-y-3 text-xs">
+                  <div class="p-3 bg-rose-50 border border-rose-200 rounded-xl">
+                    <div class="flex justify-between font-bold text-rose-900">
+                      <span>Drawings at Cost vs Selling Price</span>
+                      <span>16 of 28 learners stumbled</span>
+                    </div>
+                    <p class="text-slate-600 mt-1">Learners erroneously debited Drawings with Selling Price R1,150 instead of cost price R850, violating historical cost principle.</p>
+                  </div>
+                  <div class="p-3 bg-amber-50 border border-amber-200 rounded-xl">
+                    <div class="flex justify-between font-bold text-amber-900">
+                      <span>Bad Debts Fraction Split</span>
+                      <span>6 of 28 learners stumbled</span>
+                    </div>
+                    <p class="text-slate-600 mt-1">Inverted the 40% cash received with the 60% balance written off.</p>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+
+        <!-- ─────────────────────────────────────────────────────────────
+             PERSPECTIVE 4: SCHOOLS & HODs (Pacing Cockpit & SGB Procurement)
+             ───────────────────────────────────────────────────────────── -->
+        <div id="perspective-schools" class="perspective-panel hidden">
+          <div class="flex flex-col lg:flex-row items-start justify-between gap-6 pb-6 border-b border-white/10">
+            <div>
+              <div class="flex items-center gap-2 text-xs font-bold text-cyan-400 uppercase tracking-wider">
+                <i data-lucide="building-2" class="w-4 h-4"></i>
+                <span>Institutional LMS Command Cockpit</span>
+              </div>
+              <h3 class="text-xl sm:text-2xl font-bold text-white mt-1">
+                Departmental Pacing Tracker &amp; SGB Volume Licensing
+              </h3>
+              <p class="text-xs sm:text-sm text-slate-300 mt-1">
+                Real-time syllabus completion metrics across classes, automated remediation dispatch, and SGB invoice generation.
+              </p>
+            </div>
+            <a 
+              href="mailto:info@fundile.com?subject=Institutional%20School%20Licensing%20Inquiry"
+              class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white font-bold text-xs shadow-md transition cursor-pointer"
+            >
+              <i data-lucide="mail" class="w-4 h-4"></i>
+              <span>Request SGB Institutional Quote</span>
+            </a>
+          </div>
+
+          <div class="mt-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
+            
+            <!-- Left: Department Pacing Matrix -->
+            <div class="lg:col-span-7 bg-[#0c182e] rounded-2xl p-5 border border-white/10">
+              <div class="flex items-center justify-between mb-4">
+                <h4 class="text-xs font-bold uppercase tracking-wider text-slate-300">Grade 10 Accounting • Department Syllabus Pacing</h4>
+                <span class="text-xs text-emerald-400 font-semibold">Week 7 of Term 2</span>
+              </div>
+
+              <!-- Pacing Rows -->
+              <div class="space-y-3 text-xs">
+                <div class="p-3 rounded-xl bg-white/5 border border-white/10 flex items-center justify-between">
+                  <div>
+                    <span class="font-bold text-white block">Grade 10A (Mrs. Khumalo)</span>
+                    <span class="text-[11px] text-slate-400">34 Students • Ledger Postings</span>
+                  </div>
+                  <div class="text-right">
+                    <span class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/40">On Track (94%)</span>
+                  </div>
+                </div>
+
+                <div class="p-3 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-between">
+                  <div>
+                    <span class="font-bold text-white block">Grade 10B (Mr. Dlamini)</span>
+                    <span class="text-[11px] text-amber-300">36 Students • Bank Reconciliation Gap</span>
+                  </div>
+                  <div class="text-right">
+                    <span class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40">2 Weeks Behind</span>
+                  </div>
+                </div>
+
+                <div class="p-3 rounded-xl bg-white/5 border border-white/10 flex items-center justify-between">
+                  <div>
+                    <span class="font-bold text-white block">Grade 10C (Ms. Ndlovu)</span>
+                    <span class="text-[11px] text-slate-400">35 Students • Subsidiary Journals</span>
+                  </div>
+                  <div class="text-right">
+                    <span class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/40">On Track (91%)</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Remediation Dispatch Button -->
+              <div class="mt-5 p-4 rounded-xl bg-cyan-950/40 border border-cyan-800/40 flex items-center justify-between">
+                <div>
+                  <span class="text-xs font-bold text-cyan-200 block">Identified Gap: Bank Reconciliation</span>
+                  <span class="text-[11px] text-slate-400">Automated 15-minute diagnostic drill ready</span>
+                </div>
+                <button 
+                  type="button" 
+                  id="dispatch-btn"
+                  onclick="dispatchDrillAction()"
+                  class="px-3.5 py-1.5 rounded-lg bg-cyan-600 hover:bg-cyan-500 text-white font-bold text-xs transition cursor-pointer"
+                >
+                  Dispatch to Grade 10B
+                </button>
+              </div>
+            </div>
+
+            <!-- Right: SGB Volume Pricing Estimator Slider -->
+            <div class="lg:col-span-5 bg-slate-950/60 rounded-2xl p-5 border border-white/10 flex flex-col justify-between">
+              <div>
+                <h4 class="text-xs font-bold uppercase tracking-wider text-slate-300 flex items-center gap-2 mb-3">
+                  <i data-lucide="calculator" class="w-4 h-4 text-cyan-400"></i>
+                  <span>SGB Volume Licensing Estimator</span>
+                </h4>
+                
+                <div class="space-y-4">
+                  <div>
+                    <div class="flex justify-between text-xs text-slate-300 mb-1">
+                      <span>Total Enrolled Learners:</span>
+                      <span class="font-bold text-white font-mono text-sm" id="slider-count-label">250 Learners</span>
+                    </div>
+                    <input 
+                      type="range" 
+                      min="50" 
+                      max="1000" 
+                      step="25" 
+                      value="250" 
+                      id="learners-slider" 
+                      oninput="updateSgbPricing(this.value)"
+                      class="w-full accent-cyan-400 cursor-pointer"
+                    />
+                    <div class="flex justify-between text-[10px] text-slate-500 mt-1">
+                      <span>50</span>
+                      <span>500</span>
+                      <span>1,000+</span>
+                    </div>
+                  </div>
+
+                  <!-- Price Calculation Output -->
+                  <div class="p-4 rounded-2xl bg-white/5 border border-white/10 space-y-2 text-xs">
+                    <div class="flex justify-between">
+                      <span class="text-slate-400">Volume Discount:</span>
+                      <span class="text-emerald-400 font-bold" id="sgb-discount">45% OFF Retail</span>
+                    </div>
+                    <div class="flex justify-between">
+                      <span class="text-slate-400">Effective Per Learner:</span>
+                      <span class="text-white font-bold font-mono" id="sgb-per-learner">R85 / month</span>
+                    </div>
+                    <div class="pt-2 border-t border-white/10 flex justify-between items-baseline">
+                      <span class="text-slate-300 font-bold">Estimated Annual Budget:</span>
+                      <span class="text-xl font-black text-cyan-400 font-display" id="sgb-total-annual">R255,000 / yr</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mt-4 pt-3 border-t border-white/10 flex items-center justify-between text-[11px] text-slate-400">
+                <span>Includes Teacher Cockpits + Exam Generator</span>
+                <span class="text-cyan-400 font-semibold">Official SGB Invoicing</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       4. PRODUCT MARKETING SUITE: D2L BRIGHTSPACE-STYLE ADD-ONS
+       ═══════════════════════════════════════════════════════════════ -->
+  <section class="py-20 px-4 sm:px-6 lg:px-8 bg-[#081326] border-t border-white/10">
+    <div class="max-w-6xl mx-auto">
+      
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <span class="text-xs font-bold uppercase tracking-widest text-brand-blue-light bg-brand-blue/20 border border-brand-blue/30 px-3.5 py-1.5 rounded-full inline-block mb-3">
+          Enterprise Modularity • Fundile Suite™
+        </span>
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-display font-extrabold text-white tracking-tight">
+          Purpose-Built Tools for Every Stakeholder
+        </h2>
+        <p class="mt-3 text-base text-slate-300">
+          Like leading enterprise learning ecosystems, Fundile provides modular capabilities engineered to empower learners, parents, teachers, and school leadership without fragmentation.
+        </p>
+      </div>
+
+      <!-- Add-on Grid (5 Core Modules) -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        
+        <!-- Module 1: SimuLearn -->
+        <div class="p-6 rounded-3xl bg-slate-900/60 border border-white/10 hover:border-brand-orange/40 transition duration-300 glowing-card-border">
+          <div class="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-brand-orange mb-4">
+            <i data-lucide="play-circle" class="w-6 h-6"></i>
+          </div>
+          <span class="text-xs font-bold text-amber-400 uppercase tracking-wider">Proprietary Core</span>
+          <h3 class="text-xl font-bold text-white mt-1">Fundile SimuLearn™</h3>
+          <p class="text-xs text-slate-300 mt-2 leading-relaxed">
+            Ultra-efficient animated solution engines running on raw SVG vector geometry. Replaces 450 MB video tutorials with 1.6 MB data interactions.
+          </p>
+          <div class="mt-4 pt-3 border-t border-white/10 text-xs text-slate-400 flex items-center justify-between">
+            <span>Saves 95%+ data</span>
+            <span class="text-brand-orange font-semibold">Included in All Tiers</span>
+          </div>
+        </div>
+
+        <!-- Module 2: Socratic Pro Tutor -->
+        <div class="p-6 rounded-3xl bg-slate-900/60 border border-white/10 hover:border-blue-500/40 transition duration-300 glowing-card-border">
+          <div class="w-12 h-12 rounded-2xl bg-blue-500/10 border border-blue-500/30 flex items-center justify-center text-blue-400 mb-4">
+            <i data-lucide="message-square-code" class="w-6 h-6"></i>
+          </div>
+          <span class="text-xs font-bold text-blue-400 uppercase tracking-wider">Pro Intelligence</span>
+          <h3 class="text-xl font-bold text-white mt-1">Fundile Socratic™ Tutor</h3>
+          <p class="text-xs text-slate-300 mt-2 leading-relaxed">
+            On-rails cognitive scaffolding with dynamic suggestion chips. Enforces step working and never hallucinates formulas or gives answers away.
+          </p>
+          <div class="mt-4 pt-3 border-t border-white/10 text-xs text-slate-400 flex items-center justify-between">
+            <span>Active cognitive recall</span>
+            <span class="text-blue-400 font-semibold">Pro Tier Feature</span>
+          </div>
+        </div>
+
+        <!-- Module 3: LMS Cockpit for HODs -->
+        <div class="p-6 rounded-3xl bg-slate-900/60 border border-white/10 hover:border-cyan-500/40 transition duration-300 glowing-card-border">
+          <div class="w-12 h-12 rounded-2xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 mb-4">
+            <i data-lucide="layout-dashboard" class="w-6 h-6"></i>
+          </div>
+          <span class="text-xs font-bold text-cyan-400 uppercase tracking-wider">Institutional Command</span>
+          <h3 class="text-xl font-bold text-white mt-1">Fundile Cockpit™ LMS</h3>
+          <p class="text-xs text-slate-300 mt-2 leading-relaxed">
+            Real-time departmental pacing trackers, 3-click printable A4 test generators, and cross-class diagnostic heatmaps for HODs and Principals.
+          </p>
+          <div class="mt-4 pt-3 border-t border-white/10 text-xs text-slate-400 flex items-center justify-between">
+            <span>CAPS Work Schedules</span>
+            <span class="text-cyan-400 font-semibold">School Volume Tier</span>
+          </div>
+        </div>
+
+        <!-- Module 4: Mastery Dials -->
+        <div class="p-6 rounded-3xl bg-slate-900/60 border border-white/10 hover:border-emerald-500/40 transition duration-300 glowing-card-border">
+          <div class="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 mb-4">
+            <i data-lucide="gauge" class="w-6 h-6"></i>
+          </div>
+          <span class="text-xs font-bold text-emerald-400 uppercase tracking-wider">Diagnostic Engine</span>
+          <h3 class="text-xl font-bold text-white mt-1">Fundile Mastery Dials™</h3>
+          <p class="text-xs text-slate-300 mt-2 leading-relaxed">
+            Dual-vector telemetry separating formative practice from evaluative exam readiness. Flags root misconceptions like VAT inclusive vs exclusive.
+          </p>
+          <div class="mt-4 pt-3 border-t border-white/10 text-xs text-slate-400 flex items-center justify-between">
+            <span>Pre-requisite micro-drills</span>
+            <span class="text-emerald-400 font-semibold">Built-In Telemetry</span>
+          </div>
+        </div>
+
+        <!-- Module 5: Parent Link -->
+        <div class="p-6 rounded-3xl bg-slate-900/60 border border-white/10 hover:border-purple-500/40 transition duration-300 glowing-card-border">
+          <div class="w-12 h-12 rounded-2xl bg-purple-500/10 border border-purple-500/30 flex items-center justify-center text-purple-400 mb-4">
+            <i data-lucide="share-2" class="w-6 h-6"></i>
+          </div>
+          <span class="text-xs font-bold text-purple-400 uppercase tracking-wider">Zero-Data Sync</span>
+          <h3 class="text-xl font-bold text-white mt-1">Fundile Link™ Sync</h3>
+          <p class="text-xs text-slate-300 mt-2 leading-relaxed">
+            Direct-to-WhatsApp and SMS diagnostic dispatches for parents with POPIA Section 35 compliance. Zero app downloads required for families.
+          </p>
+          <div class="mt-4 pt-3 border-t border-white/10 text-xs text-slate-400 flex items-center justify-between">
+            <span>Automated Sunday dispatches</span>
+            <span class="text-purple-400 font-semibold">Universal Access</span>
+          </div>
+        </div>
+
+        <!-- Module 6: SGB Procurement Shield -->
+        <div class="p-6 rounded-3xl bg-slate-900/60 border border-white/10 hover:border-indigo-500/40 transition duration-300 glowing-card-border">
+          <div class="w-12 h-12 rounded-2xl bg-indigo-500/10 border border-indigo-500/30 flex items-center justify-center text-indigo-400 mb-4">
+            <i data-lucide="shield-check" class="w-6 h-6"></i>
+          </div>
+          <span class="text-xs font-bold text-indigo-400 uppercase tracking-wider">Statutory Compliance</span>
+          <h3 class="text-xl font-bold text-white mt-1">SGB Institutional Shield</h3>
+          <p class="text-xs text-slate-300 mt-2 leading-relaxed">
+            Compliant quotation processing, credit facility support for public and independent governing bodies, and audited DBE alignment guarantees.
+          </p>
+          <div class="mt-4 pt-3 border-t border-white/10 text-xs text-slate-400 flex items-center justify-between">
+            <span>Official SGB Invoicing</span>
+            <span class="text-indigo-400 font-semibold">Institutional Support</span>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       5. BENTO GRID: COGNITIVE RIGOR ARCHITECTURE (ANTIGRAVITY LOOK)
+       ═══════════════════════════════════════════════════════════════ -->
+  <section class="py-20 px-4 sm:px-6 lg:px-8 bg-[#070e1c] border-t border-white/10">
+    <div class="max-w-6xl mx-auto">
+      
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <span class="text-xs font-bold uppercase tracking-widest text-brand-orange bg-brand-orange/10 border border-brand-orange/30 px-3.5 py-1.5 rounded-full inline-block mb-3">
+          Zero-Gimmick Engineering
+        </span>
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-display font-extrabold text-white tracking-tight">
+          Engineered for Mathematical Truth &amp; Method Marks
+        </h2>
+        <p class="mt-3 text-base text-slate-300">
+          How Fundile ensures every question, solution, and diagnostic score is 100% deterministic and compliant with official South African examination boards.
+        </p>
+      </div>
+
+      <!-- Bento Grid Layout -->
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+        
+        <!-- Bento 1: Large Span 8 (Zero-LLM Math Ground Truth) -->
+        <div class="md:col-span-8 p-6 sm:p-8 rounded-3xl bg-slate-900/70 border border-white/15 relative overflow-hidden glowing-card-border">
+          <div class="relative z-10">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold text-emerald-400 bg-emerald-500/10 border border-emerald-500/25 mb-4">
+              <i data-lucide="check" class="w-3.5 h-3.5"></i>
+              <span>Zero-LLM Symbolic Math Engine</span>
+            </div>
+            <h3 class="text-2xl sm:text-3xl font-bold text-white font-display">
+              100% Deterministic Internal Consistency
+            </h3>
+            <p class="text-sm text-slate-300 mt-2 max-w-xl leading-relaxed">
+              Every question and its worked answer are derived from the exact same underlying symbolic graph. Seeded SymPy solvers eliminate hallucinated numbers, false arithmetic, and inverted GAAP accounts.
+            </p>
+            
+            <div class="mt-6 p-4 rounded-2xl bg-black/40 border border-white/10 font-mono text-xs text-slate-300 space-y-1">
+              <span class="text-slate-500">// Symbolic Graph Execution Example</span>
+              <div class="text-emerald-400">solve_quadratic(2*x**2 - 5*x - 3 = 0)</div>
+              <div class="text-blue-300">↳ Factors: (2*x + 1)(x - 3) = 0</div>
+              <div class="text-amber-300">↳ NSC Method Marks: 2M (factor pairs) + 2A (roots x = -1/2, x = 3)</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bento 2: Span 4 (Consequential Accuracy) -->
+        <div class="md:col-span-4 p-6 sm:p-8 rounded-3xl bg-slate-900/70 border border-white/15 relative overflow-hidden glowing-card-border flex flex-col justify-between">
+          <div>
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold text-amber-400 bg-amber-500/10 border border-amber-500/25 mb-4">
+              <i data-lucide="award" class="w-3.5 h-3.5"></i>
+              <span>Official NSC Convention</span>
+            </div>
+            <h3 class="text-xl font-bold text-white">
+              Consequential Method Marks (CA)
+            </h3>
+            <p class="text-xs text-slate-300 mt-2 leading-relaxed">
+              If a student makes an early arithmetic slip, Fundile does not zero their score. It tracks their procedure and awards full subsequent marks if their downstream logic holds.
+            </p>
+          </div>
+          <div class="mt-6 pt-4 border-t border-white/10 text-xs text-slate-400">
+            Just like official Grade 12 external marking centers.
+          </div>
+        </div>
+
+        <!-- Bento 3: Span 4 (Diagnostic Gap Autopsies) -->
+        <div class="md:col-span-4 p-6 sm:p-8 rounded-3xl bg-slate-900/70 border border-white/15 relative overflow-hidden glowing-card-border flex flex-col justify-between">
+          <div>
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold text-purple-400 bg-purple-500/10 border border-purple-500/25 mb-4">
+              <i data-lucide="microscope" class="w-3.5 h-3.5"></i>
+              <span>Pinpoint Remediation</span>
+            </div>
+            <h3 class="text-xl font-bold text-white">
+              Error Autopsies &amp; Micro-Drills
+            </h3>
+            <p class="text-xs text-slate-300 mt-2 leading-relaxed">
+              Fundile tags exact conceptual confusions (e.g. net vs gross VAT or trigonometry angle of elevation) and deploys 5-minute targeted drills to seal the gap.
+            </p>
+          </div>
+          <div class="mt-6 pt-4 border-t border-white/10 text-xs text-slate-400">
+            Fixes the specific cause, not the symptom.
+          </div>
+        </div>
+
+        <!-- Bento 4: Span 8 (The Hidden Curriculum) -->
+        <div class="md:col-span-8 p-6 sm:p-8 rounded-3xl bg-slate-900/70 border border-white/15 relative overflow-hidden glowing-card-border">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold text-cyan-400 bg-cyan-500/10 border border-cyan-500/25 mb-4">
+            <i data-lucide="target" class="w-3.5 h-3.5"></i>
+            <span>Exam-Standard From Day One</span>
+          </div>
+          <h3 class="text-2xl font-bold text-white font-display">
+            The Hidden Curriculum: No Surprises in November
+          </h3>
+          <p class="text-sm text-slate-300 mt-2 leading-relaxed">
+            Day-to-day classwork rarely looks like the final exam, so the real "rules of the game" stay hidden until it is too late. Fundile closes that gap: every topic is practised at authentic exam standard from the first week of Term 1.
+          </p>
+          <div class="mt-5 grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs text-slate-300">
+            <div class="p-3 rounded-xl bg-white/5 border border-white/10">
+              <strong class="text-white block mb-1">Authentic Rubrics</strong>
+              Pitched at exam rigor, not just easy homework exercises.
+            </div>
+            <div class="p-3 rounded-xl bg-white/5 border border-white/10">
+              <strong class="text-white block mb-1">Unlimited Practice</strong>
+              Deterministic generation creates endless fresh variants.
+            </div>
+            <div class="p-3 rounded-xl bg-white/5 border border-white/10">
+              <strong class="text-white block mb-1">Method Breakdown</strong>
+              Shows the single line where arithmetic or logic slipped.
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       6. ACTIVE COGNITIVE ENGINE VS PASSIVE AI CHATBOTS (BATTLE CARD)
+       ═══════════════════════════════════════════════════════════════ -->
+  <section class="py-20 px-4 sm:px-6 lg:px-8 bg-[#081326] border-t border-white/10">
+    <div class="max-w-6xl mx-auto">
+      
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <span class="text-xs font-bold uppercase tracking-widest text-rose-400 bg-rose-500/10 border border-rose-500/30 px-3.5 py-1.5 rounded-full inline-block mb-3">
+          Pedagogical Rigor vs AI Shortcuts
+        </span>
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-display font-extrabold text-white tracking-tight">
+          Fundile is Not an AI Chatbot
+        </h2>
+        <p class="mt-3 text-base text-slate-300">
+          Generic chatbots answer questions for you, encouraging passive copy-pasting and hallucinating non-existent formulas. Fundile asks you the question, enforces method working, and intervenes with precision when your logic breaks down.
+        </p>
+      </div>
+
+      <!-- Comparative Battle Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        
+        <!-- Chatbot Side (Warning Red Tint) -->
+        <div class="p-6 sm:p-8 rounded-3xl bg-rose-950/20 border border-rose-500/30 text-rose-100 relative">
+          <div class="flex items-center gap-3 mb-6">
+            <div class="w-12 h-12 rounded-2xl bg-rose-500/20 border border-rose-500/40 flex items-center justify-center text-rose-400">
+              <i data-lucide="alert-triangle" class="w-6 h-6"></i>
+            </div>
+            <div>
+              <h3 class="text-xl font-bold text-white">Generic AI Chatbots</h3>
+              <span class="text-xs text-rose-300 font-semibold">Passive • Hallucination Risk • Zero Accountability</span>
+            </div>
+          </div>
+
+          <ul class="space-y-4 text-xs sm:text-sm text-slate-300">
+            <li class="flex items-start gap-3">
+              <span class="text-rose-400 font-bold shrink-0">✕</span>
+              <span><strong>Gives the answer away:</strong> Solves homework instantly for the learner without building neural pathways or cognitive automaticity.</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-rose-400 font-bold shrink-0">✕</span>
+              <span><strong>Prone to hallucinations:</strong> Invents numbers, mixes up GAAP rules, and calculates false arithmetic with confident tone.</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-rose-400 font-bold shrink-0">✕</span>
+              <span><strong>Zero curriculum discipline:</strong> Blind to South African CAPS term weightings, official formula sheets, or NSC method marking conventions.</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-rose-400 font-bold shrink-0">✕</span>
+              <span><strong>Passive learning trap:</strong> Creates the illusion of competence while leaving students paralyzed during closed-book exams.</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Fundile Side (Glowing Blue / Orange Antigravity Tint) -->
+        <div class="p-6 sm:p-8 rounded-3xl bg-brand-navy-surface border-2 border-brand-blue shadow-glow-blue text-white relative glowing-card-border">
+          <div class="flex items-center gap-3 mb-6">
+            <div class="w-12 h-12 rounded-2xl bg-brand-blue/30 border border-brand-blue-light flex items-center justify-center text-brand-orange">
+              <i data-lucide="sparkles" class="w-6 h-6"></i>
+            </div>
+            <div>
+              <h3 class="text-xl font-bold text-white">Fundile Cognitive Engine</h3>
+              <span class="text-xs text-brand-orange font-bold">Active • 100% Deterministic • CAPS-Grounded</span>
+            </div>
+          </div>
+
+          <ul class="space-y-4 text-xs sm:text-sm text-slate-200">
+            <li class="flex items-start gap-3">
+              <span class="text-emerald-400 font-bold shrink-0">✓</span>
+              <span><strong>Stepwise procedure tracking:</strong> Awards authentic method marks, carry-over accuracy, and isolates the single line an error occurred.</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-emerald-400 font-bold shrink-0">✓</span>
+              <span><strong>Zero-LLM mathematical ground truth:</strong> Seeded SymPy symbolic math and accounting graph engines guarantee 100% internal consistency.</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-emerald-400 font-bold shrink-0">✓</span>
+              <span><strong>Diagnostic error autopsies:</strong> Tags specific misconceptions (e.g. net vs gross VAT formula) and deploys 5-minute targeted drills.</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-emerald-400 font-bold shrink-0">✓</span>
+              <span><strong>Active cognitive struggle:</strong> Builds genuine problem-solving stamina so learners thrive under strict examination conditions.</span>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       7. STATUTORY CURRICULUM STANDARDS MATRIX (RULE 2B COMPLIANT)
+       ═══════════════════════════════════════════════════════════════ -->
+  <section class="py-20 px-4 sm:px-6 lg:px-8 bg-[#0b172e] border-t border-white/10">
+    <div class="max-w-6xl mx-auto">
+      
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <span class="text-xs font-bold uppercase tracking-widest text-emerald-400 bg-emerald-500/10 border border-emerald-500/30 px-3.5 py-1.5 rounded-full inline-block mb-3">
+          Universal Examination Authority
+        </span>
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-display font-extrabold text-white tracking-tight">
+          The Difference is Not the Curriculum — It is the Preparation.
+        </h2>
+        <p class="mt-3 text-base text-slate-300">
+          Did you know? In South Africa, there is only one official national curriculum standard, which underpins public, private, and independent school examinations nationwide.
+        </p>
+      </div>
+
+      <!-- Universal NSC Alignment Table -->
+      <div class="overflow-x-auto rounded-3xl border border-white/15 bg-slate-900/80 shadow-2xl">
+        <table class="w-full text-left text-xs sm:text-sm">
+          <thead class="bg-white/5 border-b border-white/10 text-slate-300 font-bold">
+            <tr>
+              <th class="p-4 sm:p-5">Curriculum Dimension</th>
+              <th class="p-4 sm:p-5 text-blue-400">Public Schools</th>
+              <th class="p-4 sm:p-5 text-amber-400">Independent &amp; Private Schools</th>
+              <th class="p-4 sm:p-5 text-cyan-400">Distance &amp; Home Education</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-white/10 text-slate-200">
+            <tr>
+              <td class="p-4 sm:p-5 font-bold text-white">Curriculum Standard</td>
+              <td class="p-4 sm:p-5">South African National Curriculum</td>
+              <td class="p-4 sm:p-5">South African National Curriculum</td>
+              <td class="p-4 sm:p-5">South African National Curriculum</td>
+            </tr>
+            <tr>
+              <td class="p-4 sm:p-5 font-bold text-white">Final Qualification</td>
+              <td class="p-4 sm:p-5">National Senior Certificate (NSC)</td>
+              <td class="p-4 sm:p-5">National Senior Certificate (NSC)</td>
+              <td class="p-4 sm:p-5">National Senior Certificate (NSC)</td>
+            </tr>
+            <tr>
+              <td class="p-4 sm:p-5 font-bold text-white">Quality Assurance</td>
+              <td class="p-4 sm:p-5">National Statutory Standard</td>
+              <td class="p-4 sm:p-5">National Statutory Standard</td>
+              <td class="p-4 sm:p-5">National Statutory Standard</td>
+            </tr>
+            <tr>
+              <td class="p-4 sm:p-5 font-bold text-white">Assessment Emphasis</td>
+              <td class="p-4 sm:p-5 text-slate-300">Standardized national examination papers</td>
+              <td class="p-4 sm:p-5 text-slate-300">Higher-order cognitive &amp; application depth</td>
+              <td class="p-4 sm:p-5 text-slate-300">Continuous self-directed validation</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Legal Policy Compliance Footer -->
+      <p class="mt-6 text-center text-xs text-slate-400 max-w-3xl mx-auto leading-relaxed">
+        Fundile is an independent educational platform aligned with the official South African National Curriculum Statements (CAPS). All examination board names and trademarks belong to their respective statutory owners.
+      </p>
+
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       8. PRICING & ROI VALUE PROPOSITION
+       ═══════════════════════════════════════════════════════════════ -->
+  <section id="pricing" class="py-20 px-4 sm:px-6 lg:px-8 bg-[#081326] border-t border-white/10">
+    <div class="max-w-6xl mx-auto">
+      
+      <div class="text-center max-w-3xl mx-auto mb-12">
+        <span class="text-xs font-bold uppercase tracking-widest text-brand-orange bg-brand-orange/10 border border-brand-orange/30 px-3.5 py-1.5 rounded-full inline-block mb-3">
+          Transparent South African Pricing
+        </span>
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-display font-extrabold text-white tracking-tight">
+          One Subscription. Every Subject. Less Than 1 Tutoring Hour.
+        </h2>
+        <p class="mt-3 text-base text-slate-300">
+          Private tutoring in South Africa costs R150 to R350 per hour. Three hours a week runs over R1,800/month for a single subject. Fundile gives you 24/7 unlimited exam practice across all subjects.
+        </p>
+
+        <!-- Billing Switcher (Monthly vs Annual with 2 Months Free) -->
+        <div class="mt-8 inline-flex items-center gap-3 p-1.5 rounded-2xl bg-slate-900 border border-white/10 text-xs font-semibold">
+          <button 
+            type="button" 
+            onclick="setBillingCycle('monthly')" 
+            id="bill-monthly"
+            class="px-4 py-2 rounded-xl bg-brand-blue text-white shadow-sm cursor-pointer"
+          >
+            Monthly Billing
+          </button>
+          <button 
+            type="button" 
+            onclick="setBillingCycle('annual')" 
+            id="bill-annual"
+            class="px-4 py-2 rounded-xl text-slate-400 hover:text-white cursor-pointer flex items-center gap-1.5"
+          >
+            <span>Annual (2 Months Free)</span>
+            <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-brand-orange text-white">Save 20%</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Pricing Cards Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
+        
+        <!-- Standard Plan -->
+        <div class="p-8 rounded-3xl bg-slate-900/80 border border-white/15 flex flex-col justify-between glowing-card-border">
+          <div>
+            <div class="flex justify-between items-center">
+              <span class="text-xs font-bold uppercase tracking-wider text-blue-400">Standard Tier</span>
+              <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-blue-500/10 text-blue-300 border border-blue-500/25">Live Now</span>
+            </div>
+            <div class="mt-4">
+              <span class="text-4xl font-black text-white font-display" id="price-standard">R150</span>
+              <span class="text-xs text-slate-400 font-medium" id="cadence-standard">/ month</span>
+            </div>
+            <p class="mt-3 text-xs text-slate-300 leading-relaxed">
+              Ideal for independent learners wanting unlimited deterministic practice and step-by-step method marking.
+            </p>
+
+            <ul class="mt-6 space-y-3 text-xs text-slate-300">
+              <li class="flex items-center gap-2">
+                <i data-lucide="check" class="w-4 h-4 text-emerald-400 shrink-0"></i>
+                <span>All Core Subjects (Grades 7–12)</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <i data-lucide="check" class="w-4 h-4 text-emerald-400 shrink-0"></i>
+                <span>Unlimited deterministic question generator</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <i data-lucide="check" class="w-4 h-4 text-emerald-400 shrink-0"></i>
+                <span>Step-by-step CAPS method marking</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <i data-lucide="check" class="w-4 h-4 text-emerald-400 shrink-0"></i>
+                <span>Formative &amp; evaluative mastery dials</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="mt-8 pt-6 border-t border-white/10">
+            <button 
+              type="button" 
+              onclick="openTrialModal('Standard')"
+              class="w-full py-3.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-xs border border-white/20 transition cursor-pointer min-h-[44px]"
+            >
+              Start 2-Week Free Trial
+            </button>
+          </div>
+        </div>
+
+        <!-- Pro Plan (Hero Highlight) -->
+        <div class="p-8 rounded-3xl bg-brand-navy-surface border-2 border-brand-orange shadow-glow-orange flex flex-col justify-between relative glowing-card-border">
+          <div class="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full text-[11px] font-bold bg-brand-orange text-white uppercase tracking-wider shadow-md">
+            Most Popular • Recommended
+          </div>
+          <div>
+            <div class="flex justify-between items-center mt-2">
+              <span class="text-xs font-bold uppercase tracking-wider text-brand-orange">Pro Tier</span>
+              <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-brand-orange/20 text-brand-orange border border-brand-orange/40">2-Week Trial</span>
+            </div>
+            <div class="mt-4">
+              <span class="text-4xl font-black text-white font-display" id="price-pro">R299</span>
+              <span class="text-xs text-slate-400 font-medium" id="cadence-pro">/ month</span>
+            </div>
+            <p class="mt-3 text-xs text-slate-300 leading-relaxed">
+              Everything in Standard, plus our full Socratic cognitive tutor, SimuLearn visual derivations, and error autopsies.
+            </p>
+
+            <ul class="mt-6 space-y-3 text-xs text-slate-200">
+              <li class="flex items-center gap-2">
+                <i data-lucide="check" class="w-4 h-4 text-brand-orange shrink-0"></i>
+                <span><strong>Everything in Standard</strong></span>
+              </li>
+              <li class="flex items-center gap-2">
+                <i data-lucide="check" class="w-4 h-4 text-brand-orange shrink-0"></i>
+                <span>Fundile Socratic™ Tutor with dynamic chips</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <i data-lucide="check" class="w-4 h-4 text-brand-orange shrink-0"></i>
+                <span>Fundile SimuLearn™ (95% data-saving animations)</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <i data-lucide="check" class="w-4 h-4 text-brand-orange shrink-0"></i>
+                <span>Diagnostic error autopsies &amp; micro-drills</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <i data-lucide="check" class="w-4 h-4 text-brand-orange shrink-0"></i>
+                <span>Weekly WhatsApp diagnostic parent pulse</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="mt-8 pt-6 border-t border-white/10">
+            <button 
+              type="button" 
+              onclick="openTrialModal('Pro')"
+              class="w-full py-3.5 rounded-xl bg-brand-orange hover:bg-brand-orange-hover text-white font-bold text-xs shadow-lg transition cursor-pointer min-h-[44px]"
+            >
+              Start 2-Week Free Trial
+            </button>
+          </div>
+        </div>
+
+        <!-- School & Institutional Licensing -->
+        <div class="p-8 rounded-3xl bg-slate-900/80 border border-white/15 flex flex-col justify-between glowing-card-border">
+          <div>
+            <div class="flex justify-between items-center">
+              <span class="text-xs font-bold uppercase tracking-wider text-cyan-400">Schools &amp; HODs</span>
+              <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-cyan-500/10 text-cyan-300 border border-cyan-500/25">Volume License</span>
+            </div>
+            <div class="mt-4">
+              <span class="text-3xl font-black text-white font-display">From R65</span>
+              <span class="text-xs text-slate-400 font-medium">/ learner / mo</span>
+            </div>
+            <p class="mt-3 text-xs text-slate-300 leading-relaxed">
+              Complete schoolwide academic infrastructure. Pacing dashboards, test paper generators, and official SGB procurement.
+            </p>
+
+            <ul class="mt-6 space-y-3 text-xs text-slate-300">
+              <li class="flex items-center gap-2">
+                <i data-lucide="check" class="w-4 h-4 text-cyan-400 shrink-0"></i>
+                <span>Teacher &amp; HOD LMS Cockpit</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <i data-lucide="check" class="w-4 h-4 text-cyan-400 shrink-0"></i>
+                <span>3-click printable A4 test &amp; memo generator</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <i data-lucide="check" class="w-4 h-4 text-cyan-400 shrink-0"></i>
+                <span>Cross-class curriculum pacing analytics</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <i data-lucide="check" class="w-4 h-4 text-cyan-400 shrink-0"></i>
+                <span>Official SGB credit facility &amp; procurement support</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="mt-8 pt-6 border-t border-white/10">
+            <a 
+              href="mailto:info@fundile.com?subject=School%20Volume%20Licensing%20Inquiry"
+              class="w-full py-3.5 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white font-bold text-xs transition text-center inline-block min-h-[44px]"
+            >
+              Contact info@fundile.com
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       9. FREQUENTLY ASKED QUESTIONS (ACCORDION)
+       ═══════════════════════════════════════════════════════════════ -->
+  <section class="py-20 px-4 sm:px-6 lg:px-8 bg-[#0b172e] border-t border-white/10">
+    <div class="max-w-4xl mx-auto">
+      
+      <div class="text-center mb-12">
+        <span class="text-xs font-bold uppercase tracking-widest text-brand-blue-light bg-brand-blue/20 border border-brand-blue/30 px-3.5 py-1.5 rounded-full inline-block mb-3">
+          FAQ
+        </span>
+        <h2 class="text-3xl sm:text-4xl font-display font-extrabold text-white tracking-tight">
+          Straight Answers
+        </h2>
+      </div>
+
+      <div class="space-y-3.5 text-xs sm:text-sm">
+        
+        <div class="p-5 rounded-2xl bg-slate-900/80 border border-white/10">
+          <h3 class="font-bold text-white text-base">How is Fundile aligned with my child’s school curriculum?</h3>
+          <p class="mt-2 text-slate-300 leading-relaxed">
+            In South Africa, all public, private, and independent schools follow the same underlying national curriculum statements for the National Senior Certificate. Fundile is 100% aligned with these national academic standards, ensuring your child develops the exact core competencies, problem-solving methods, and exam techniques required regardless of which examination body sets their final paper.
+          </p>
+        </div>
+
+        <div class="p-5 rounded-2xl bg-slate-900/80 border border-white/10">
+          <h3 class="font-bold text-white text-base">Which subjects and grades are available?</h3>
+          <p class="mt-2 text-slate-300 leading-relaxed">
+            Fundile covers Grades 7 to 12 across all core subjects: Mathematics, Physical Sciences, Life Sciences, Natural Sciences, Mathematical Literacy, Economic &amp; Management Sciences (EMS), Accounting, and Business Studies.
+          </p>
+        </div>
+
+        <div class="p-5 rounded-2xl bg-slate-900/80 border border-white/10">
+          <h3 class="font-bold text-white text-base">Can an individual learner subscribe independently of their school?</h3>
+          <p class="mt-2 text-slate-300 leading-relaxed">
+            Yes! Individual learners and parents can subscribe directly and access the full suite of subjects and diagnostic reports. If their school later adopts Fundile, their account can seamlessly link to their teacher’s classroom using a school code without losing any history or progress.
+          </p>
+        </div>
+
+        <div class="p-5 rounded-2xl bg-slate-900/80 border border-white/10">
+          <h3 class="font-bold text-white text-base">Is my child’s personal information safe?</h3>
+          <p class="mt-2 text-slate-300 leading-relaxed">
+            Yes. Fundile is strictly compliant with the Protection of Personal Information Act (POPIA), including Section 35 protections for children’s personal data. We never sell student data or use learner responses for commercial advertising.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       10. FINAL DEMAND CAPTURE / CONVERSION SECTION
+       ═══════════════════════════════════════════════════════════════ -->
+  <section class="py-20 px-4 sm:px-6 lg:px-8 bg-[#081326] border-t border-white/10 relative overflow-hidden">
+    <div class="max-w-4xl mx-auto text-center relative z-10">
+      
+      <div class="p-8 sm:p-12 rounded-3xl bg-gradient-to-b from-[#0e2142] to-slate-950 border border-white/15 shadow-2xl glowing-card-border">
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-display font-extrabold text-white tracking-tight">
+          Ready to Close the Gap in Every Subject?
+        </h2>
+        <p class="mt-4 text-base text-slate-300 max-w-2xl mx-auto leading-relaxed">
+          Start your 2-week free trial today. Experience authentic exam-level questions, active Socratic scaffolding, and diagnostic reports that guide your child to the top of their cohort.
+        </p>
+
+        <!-- Demand Capture Form -->
+        <form id="lead-capture-form" onsubmit="handleLeadSubmit(event)" class="mt-8 max-w-lg mx-auto space-y-3">
+          <div class="flex flex-col sm:flex-row gap-2">
+            <input 
+              type="email" 
+              id="lead-email"
+              required 
+              placeholder="Enter parent, learner or school email..." 
+              class="flex-1 bg-slate-900 border border-white/20 rounded-xl px-4 py-3 text-sm text-white placeholder-slate-400 focus:outline-none focus:border-brand-orange min-h-[48px]"
+            />
+            <button 
+              type="submit" 
+              class="px-6 py-3 rounded-xl bg-brand-orange hover:bg-brand-orange-hover text-white font-bold text-sm shadow-glow-orange transition cursor-pointer min-h-[48px]"
+            >
+              Get Started Free
+            </button>
+          </div>
+          <p class="text-[11px] text-slate-400">
+            🔒 No credit card required. Strictly POPIA compliant.
+          </p>
+        </form>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       11. INSTITUTIONAL FOOTER
+       ═══════════════════════════════════════════════════════════════ -->
+  <footer class="py-12 px-4 sm:px-6 lg:px-8 bg-[#050c18] border-t border-white/10 text-xs text-slate-400">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-6">
+      
+      <div class="flex items-center gap-3">
+        <span class="font-display font-bold text-white text-base">fundile</span>
+        <span>•</span>
+        <span>Grades 7–12 South African CAPS Adaptive Engine &amp; LMS</span>
+      </div>
+
+      <div class="flex items-center gap-6">
+        <a href="mailto:info@fundile.com" class="hover:text-white transition">info@fundile.com</a>
+        <a href="#" onclick="switchAudience('teachers')" class="hover:text-white transition">Teacher Portal</a>
+        <a href="#" onclick="switchAudience('schools')" class="hover:text-white transition">School Procurement</a>
+        <a href="#" class="hover:text-white transition">Privacy Policy (POPIA)</a>
+      </div>
+
+    </div>
+    <div class="max-w-7xl mx-auto mt-6 text-center sm:text-left text-[11px] text-slate-500">
+      © <span id="current-year">2026</span> Fundile. All rights reserved. 100% aligned with South African National Curriculum Statements.
+    </div>
+  </footer>
+
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       12. MODALS: FREE TRIAL & DIAGNOSTIC PDF
+       ═══════════════════════════════════════════════════════════════ -->
+  <!-- Free Trial Modal -->
+  <div id="trial-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-4">
+    <div class="bg-slate-900 border border-white/20 rounded-3xl max-w-md w-full p-6 text-white relative shadow-2xl">
+      <button onclick="closeTrialModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white cursor-pointer">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+      <div class="flex items-center gap-2 text-xs font-bold text-brand-orange uppercase mb-2">
+        <i data-lucide="sparkles" class="w-4 h-4"></i>
+        <span>2-Week Free Trial Activation</span>
+      </div>
+      <h3 class="text-xl font-bold font-display" id="trial-modal-title">Start Your 2-Week Free Trial</h3>
+      <p class="text-xs text-slate-300 mt-1">Full access to all subjects across Grades 7–12. No credit card required.</p>
+      
+      <form onsubmit="handleTrialSubmit(event)" class="mt-5 space-y-3 text-xs">
+        <div>
+          <label class="block text-slate-300 font-semibold mb-1">Your Name</label>
+          <input type="text" required placeholder="Nqobile Moyo" class="w-full bg-slate-800 border border-white/10 rounded-xl px-3 py-2 text-white text-xs focus:border-brand-orange focus:outline-none min-h-[44px]" />
+        </div>
+        <div>
+          <label class="block text-slate-300 font-semibold mb-1">Email Address</label>
+          <input type="email" required placeholder="parent@example.com" class="w-full bg-slate-800 border border-white/10 rounded-xl px-3 py-2 text-white text-xs focus:border-brand-orange focus:outline-none min-h-[44px]" />
+        </div>
+        <div>
+          <label class="block text-slate-300 font-semibold mb-1">Learner's Grade</label>
+          <select class="w-full bg-slate-800 border border-white/10 rounded-xl px-3 py-2 text-white text-xs focus:border-brand-orange focus:outline-none min-h-[44px]">
+            <option>Grade 10</option>
+            <option>Grade 11</option>
+            <option>Grade 12</option>
+            <option>Grade 9</option>
+            <option>Grade 8</option>
+            <option>Grade 7</option>
+          </select>
+        </div>
+        <button type="submit" class="w-full py-3 mt-4 rounded-xl bg-brand-orange hover:bg-brand-orange-hover text-white font-bold text-xs shadow-lg transition cursor-pointer min-h-[44px]">
+          Activate 2-Week Trial Now
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Diagnostic PDF Report Modal -->
+  <div id="pdf-modal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md hidden flex items-center justify-center p-4">
+    <div class="bg-white text-slate-900 rounded-3xl max-w-2xl w-full p-6 sm:p-8 relative shadow-2xl max-h-[90vh] overflow-y-auto">
+      <button onclick="closePdfModal()" class="absolute top-4 right-4 text-slate-500 hover:text-slate-900 cursor-pointer">
+        <i data-lucide="x" class="w-6 h-6"></i>
+      </button>
+
+      <div class="flex items-center justify-between border-b pb-4 mb-4">
+        <div>
+          <span class="text-xs font-black uppercase tracking-wider text-brand-blue">Fundile Official Diagnostic Summary</span>
+          <h3 class="text-xl font-black text-slate-900 font-display">Learner Diagnostic Autopsy • Nqobile Moyo</h3>
+          <p class="text-xs text-slate-500 font-semibold">Grade 10 • Term 1 Benchmark Audit</p>
+        </div>
+        <div class="text-right">
+          <span class="text-xs font-mono font-bold bg-blue-100 text-blue-900 px-2.5 py-1 rounded-full">142 KB PDF</span>
+        </div>
+      </div>
+
+      <div class="space-y-4 text-xs sm:text-sm">
+        <div class="bg-amber-50 border border-amber-200 p-4 rounded-2xl text-amber-900">
+          <strong class="font-bold block mb-1">Diagnostic Misconception Isolated:</strong>
+          Confusing 15% exclusive with 115% inclusive VAT multiplier. Student calculated Output VAT on gross bank receipts (R2,300) using <code>15/100</code> rather than <code>15/115</code>.
+        </div>
+
+        <div class="grid grid-cols-2 gap-4">
+          <div class="p-4 bg-slate-50 border rounded-2xl">
+            <span class="text-slate-500 block text-xs">Method Marks Awarded:</span>
+            <span class="text-base font-bold text-slate-900">2 of 4 Marks (Consequential Accuracy)</span>
+          </div>
+          <div class="p-4 bg-slate-50 border rounded-2xl">
+            <span class="text-slate-500 block text-xs">Remediation Status:</span>
+            <span class="text-base font-bold text-emerald-600">Resolved in 5-min Prerequisite Drill</span>
+          </div>
+        </div>
+
+        <div class="p-4 bg-blue-50 border border-blue-200 rounded-2xl text-blue-950">
+          <strong class="font-bold block mb-1">Recommended Parent Intervention:</strong>
+          Ask Nqobile how she decides whether to multiply by 15/115 or 15/100 when a receipt is marked inclusive of VAT.
+        </div>
+      </div>
+
+      <div class="mt-6 pt-4 border-t flex justify-end gap-3">
+        <button onclick="closePdfModal()" class="px-4 py-2 rounded-xl text-xs font-semibold bg-slate-100 hover:bg-slate-200 text-slate-700 cursor-pointer">
+          Close Report
+        </button>
+        <button onclick="alert('Download simulated: Fundile_Diagnostic_Report_Nqobile_Gr10.pdf (142 KB)')" class="px-4 py-2 rounded-xl text-xs font-bold bg-brand-blue hover:bg-brand-blue-hover text-white flex items-center gap-1.5 cursor-pointer">
+          <i data-lucide="download" class="w-3.5 h-3.5"></i>
+          <span>Download PDF (142 KB)</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       13. INTERACTIVE SCRIPTS (SLOT MACHINE, TABS, PRICING, & STATE)
+       ═══════════════════════════════════════════════════════════════ -->
+  <script>
+    // Initialize Lucide icons
+    document.addEventListener("DOMContentLoaded", function () {
+      if (window.lucide) {
+        window.lucide.createIcons();
+      }
+      initSlotMachine();
+      document.getElementById('current-year').innerText = new Date().getFullYear();
+    });
+
+    // ── 1. SLOT MACHINE TICKER ──
+    const SUBJECTS = [
+      'Mathematics.',
+      'Physical Sciences.',
+      'Life Sciences.',
+      'Natural Sciences.',
+      'Mathematical Literacy.',
+      'EMS.',
+      'Accounting.',
+      'Business Studies.',
+      'every subject.'
+    ];
+    let currentSlot = 0;
+    let slotTimer = null;
+
+    function initSlotMachine() {
+      const reel = document.getElementById('ticker-reel');
+      if (!reel) return;
+      
+      slotTimer = setInterval(() => {
+        currentSlot++;
+        if (currentSlot >= SUBJECTS.length) {
+          clearInterval(slotTimer);
+          // Restart after 25s
+          setTimeout(() => {
+            currentSlot = 0;
+            reel.style.transform = `translateY(0)`;
+            initSlotMachine();
+          }, 25000);
+          return;
+        }
+        reel.style.transform = `translateY(-${currentSlot * 1.15}em)`;
+      }, 1300);
+    }
+
+    // ── 2. AUDIENCE PERSPECTIVE SWITCHER ──
+    const perspectives = ['learners', 'parents', 'teachers', 'schools'];
+
+    function switchAudience(selected) {
+      // 1. Update Header Tabs
+      perspectives.forEach(p => {
+        const navBtn = document.getElementById(`nav-tab-${p}`);
+        const mobBtn = document.getElementById(`mob-tab-${p}`);
+        const simBtn = document.getElementById(`sim-tab-${p}`);
+        const panel = document.getElementById(`perspective-${p}`);
+
+        if (p === selected) {
+          if (navBtn) {
+            navBtn.className = "audience-nav-btn relative flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold transition-all duration-200 cursor-pointer bg-brand-blue text-white shadow-sm ring-1 ring-white/20";
+          }
+          if (mobBtn) {
+            mobBtn.className = "mob-nav-btn px-3 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap bg-brand-blue text-white";
+          }
+          if (simBtn) {
+            simBtn.className = "sim-tab-btn flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all duration-200 cursor-pointer bg-brand-blue text-white shadow-md ring-1 ring-white/20";
+          }
+          if (panel) {
+            panel.classList.remove('hidden');
+          }
+        } else {
+          if (navBtn) {
+            navBtn.className = "audience-nav-btn relative flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold transition-all duration-200 cursor-pointer text-slate-400 hover:text-white hover:bg-white/5";
+          }
+          if (mobBtn) {
+            mobBtn.className = "mob-nav-btn px-3 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap text-slate-300 bg-white/5";
+          }
+          if (simBtn) {
+            simBtn.className = "sim-tab-btn flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all duration-200 cursor-pointer text-slate-400 hover:text-white hover:bg-white/5";
+          }
+          if (panel) {
+            panel.classList.add('hidden');
+          }
+        }
+      });
+
+      if (window.lucide) {
+        window.lucide.createIcons();
+      }
+    }
+
+    // ── 3. LEARNER SIMULATOR INTERACTION ──
+    function triggerWorkedCheck() {
+      const dialVal = document.getElementById('learner-dial-val');
+      if (dialVal) {
+        dialVal.innerText = "88% (Level 7 - Exam Ready)";
+        dialVal.classList.add('text-brand-orange');
+      }
+      alert('✓ Internal Consistency Check: All Method & Consequential Accuracy marks confirmed! Mastered Output VAT Calculation.');
+    }
+
+    // ── 4. TEACHER VIEW TOGGLE (A4 Paper vs Memo vs Heatmap) ──
+    function setTeacherView(mode) {
+      const panePaper = document.getElementById('pane-paper');
+      const paneMemo = document.getElementById('pane-memo');
+      const paneHeatmap = document.getElementById('pane-heatmap');
+      const btnPaper = document.getElementById('tview-paper');
+      const btnMemo = document.getElementById('tview-memo');
+      const btnHeat = document.getElementById('tview-heatmap');
+
+      panePaper.classList.add('hidden');
+      paneMemo.classList.add('hidden');
+      paneHeatmap.classList.add('hidden');
+
+      btnPaper.className = "flex-1 py-1.5 rounded-lg text-slate-400 hover:text-white text-center cursor-pointer";
+      btnMemo.className = "flex-1 py-1.5 rounded-lg text-slate-400 hover:text-white text-center cursor-pointer";
+      btnHeat.className = "flex-1 py-1.5 rounded-lg text-slate-400 hover:text-white text-center cursor-pointer";
+
+      if (mode === 'paper') {
+        panePaper.classList.remove('hidden');
+        btnPaper.className = "flex-1 py-1.5 rounded-lg bg-brand-blue text-white text-center cursor-pointer";
+      } else if (mode === 'memo') {
+        paneMemo.classList.remove('hidden');
+        btnMemo.className = "flex-1 py-1.5 rounded-lg bg-brand-blue text-white text-center cursor-pointer";
+      } else if (mode === 'heatmap') {
+        paneHeatmap.classList.remove('hidden');
+        btnHeat.className = "flex-1 py-1.5 rounded-lg bg-brand-blue text-white text-center cursor-pointer";
+      }
+    }
+
+    // ── 5. SCHOOL PACING DISPATCH ACTION ──
+    function dispatchDrillAction() {
+      const btn = document.getElementById('dispatch-btn');
+      btn.innerText = "✓ Dispatched to 36 Students";
+      btn.classList.remove('bg-cyan-600', 'hover:bg-cyan-500');
+      btn.classList.add('bg-emerald-600', 'text-white');
+    }
+
+    // ── 6. SGB VOLUME PRICING CALCULATOR ──
+    function updateSgbPricing(count) {
+      const label = document.getElementById('slider-count-label');
+      const discount = document.getElementById('sgb-discount');
+      const perLearner = document.getElementById('sgb-per-learner');
+      const totalAnnual = document.getElementById('sgb-total-annual');
+
+      label.innerText = `${count} Learners`;
+
+      let rate = 110;
+      let discPercent = "25% OFF";
+
+      if (count >= 150 && count < 300) {
+        rate = 85;
+        discPercent = "45% OFF Retail";
+      } else if (count >= 300 && count < 600) {
+        rate = 75;
+        discPercent = "50% OFF Retail";
+      } else if (count >= 600) {
+        rate = 65;
+        discPercent = "58% OFF Retail";
+      }
+
+      const annualTotal = count * rate * 12;
+      discount.innerText = discPercent;
+      perLearner.innerText = `R${rate} / month`;
+      totalAnnual.innerText = `R${annualTotal.toLocaleString()} / yr`;
+    }
+
+    // ── 7. PRICING BILLING CYCLE SWITCHER ──
+    function setBillingCycle(cycle) {
+      const btnMonthly = document.getElementById('bill-monthly');
+      const btnAnnual = document.getElementById('bill-annual');
+      const priceStandard = document.getElementById('price-standard');
+      const cadenceStandard = document.getElementById('cadence-standard');
+      const pricePro = document.getElementById('price-pro');
+      const cadencePro = document.getElementById('cadence-pro');
+
+      if (cycle === 'annual') {
+        btnMonthly.className = "px-4 py-2 rounded-xl text-slate-400 hover:text-white cursor-pointer";
+        btnAnnual.className = "px-4 py-2 rounded-xl bg-brand-blue text-white shadow-sm cursor-pointer flex items-center gap-1.5";
+        priceStandard.innerText = "R120";
+        cadenceStandard.innerText = "/ mo (billed annually)";
+        pricePro.innerText = "R239";
+        cadencePro.innerText = "/ mo (billed annually)";
+      } else {
+        btnMonthly.className = "px-4 py-2 rounded-xl bg-brand-blue text-white shadow-sm cursor-pointer";
+        btnAnnual.className = "px-4 py-2 rounded-xl text-slate-400 hover:text-white cursor-pointer flex items-center gap-1.5";
+        priceStandard.innerText = "R150";
+        cadenceStandard.innerText = "/ month";
+        pricePro.innerText = "R299";
+        cadencePro.innerText = "/ month";
+      }
+    }
+
+    // ── 8. MODAL TRIGGERS ──
+    function openTrialModal(tier = '') {
+      const modal = document.getElementById('trial-modal');
+      const title = document.getElementById('trial-modal-title');
+      if (title && tier) {
+        title.innerText = `Start Your 2-Week Free ${tier} Trial`;
+      }
+      modal.classList.remove('hidden');
+    }
+
+    function closeTrialModal() {
+      document.getElementById('trial-modal').classList.add('hidden');
+    }
+
+    function openDiagnosticPdfModal() {
+      document.getElementById('pdf-modal').classList.remove('hidden');
+    }
+
+    function closePdfModal() {
+      document.getElementById('pdf-modal').classList.add('hidden');
+    }
+
+    function handleTrialSubmit(e) {
+      e.preventDefault();
+      alert('🎉 2-Week Trial Activated! Welcome to Fundile. Check your inbox for your login credentials.');
+      closeTrialModal();
+    }
+
+    function handleLeadSubmit(e) {
+      e.preventDefault();
+      const email = document.getElementById('lead-email').value;
+      alert(`🎉 Thank you! Free trial instructions dispatched to ${email}.`);
+      document.getElementById('lead-capture-form').reset();
+    }
+  </script>
+
+</body>
+</html>

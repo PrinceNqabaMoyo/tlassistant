@@ -1,697 +1,1050 @@
-import React from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import FundileLogo from './FundileLogo';
-import { ArrowRight, BookOpen, BrainCircuit, CheckCircle, GraduationCap, LayoutDashboard, PenTool, ShieldCheck, Sparkles, Target, Trophy, Users } from 'lucide-react';
+import {
+    ArrowRight,
+    Sparkles,
+    MessageCircleWarning,
+    ChevronDown,
+    CheckCircle2,
+    GraduationCap,
+    Users,
+    BookOpen,
+    Building2,
+    Mail,
+    Activity,
+    Wrench,
+    CheckSquare,
+    Radar,
+    ShieldCheck,
+    Landmark,
+    Home,
+    Star,
+    Check,
+    Cpu,
+    WifiOff,
+    FileCheck2,
+} from 'lucide-react';
 import DemandCaptureForm from './DemandCaptureForm';
-import CapsNscClarity from './landing/CapsNscClarity';
-import LandingFaq from './landing/LandingFaq';
-import NotAChatbot from './landing/NotAChatbot';
-import FeatureClaims from './landing/FeatureClaims';
-import heroLearners from '../../assets/landing/sa-learners-hero.jpg';
-import { LIVE_AVAILABILITY_DETAIL, LIVE_AVAILABILITY_HEADLINE, LIVE_AVAILABILITY_NOTE } from '../../app/constants/availability';
-import { HERO_COPY, HIDDEN_CURRICULUM, AUDIENCES, PRICING_COPY, PRINCIPLES } from '../../app/constants/landingCopy';
+import ScrollReveal from './landing/ScrollReveal';
+import PerspectiveShowcase from './landing/PerspectiveShowcase';
+import InstallAppModal from './InstallAppModal';
+import { motion } from 'framer-motion';
 
-// Landing Page Component
-const LandingPage = ({ db, onGetStarted, onSignIn, onViewSubscription, palette = 'dark' }) => {
-    const [selectedResearchIndex, setSelectedResearchIndex] = React.useState(0);
-    const [showProComingSoon, setShowProComingSoon] = React.useState(false);
-    const currentYear = new Date().getFullYear();
+import { LIVE_AVAILABILITY_DETAIL, LIVE_AVAILABILITY_HEADLINE, LIVE_AVAILABILITY_NOTE } from '../../app/constants/availability';
+import { HERO_COPY, HIDDEN_CURRICULUM, PRICING_COPY, HOW_IT_WORKS, INTERNAL_CONSISTENCY, TEACHERS_LINK } from '../../app/constants/landingCopy';
+
+const LandingPage = ({ db, onGetStarted, onSignIn, onViewSubscription, palette = 'dark', authService, currentUser }) => {
+    // ── Install modal state ──
+    const [showInstallModal, setShowInstallModal] = useState(false);
+
+    // ── Perspective navigation state ──
+    const [activePerspective, setActivePerspective] = useState('learners');
+
+    // ── Slot-machine ticker state ──
+    const SLOT_ITEMS = [
+        'Mathematics',
+        'Physical Sciences',
+        'Life Sciences',
+        'Natural Sciences',
+        'Mathematical Literacy',
+        'EMS',
+        'Accounting',
+        'Business Studies',
+        'every subject.',
+    ];
+    const FINAL_IDX = SLOT_ITEMS.length - 1;
+    const [slotIdx, setSlotIdx] = useState(0);
+    const [slotSettled, setSlotSettled] = useState(false);
+    const [showDetails, setShowDetails] = useState(false);
+    const [showArrow, setShowArrow] = useState(false);
+
+    useEffect(() => {
+        if (slotSettled) return;
+        const delay = 1333;
+        const t = setTimeout(() => {
+            if (slotIdx < FINAL_IDX) {
+                setSlotIdx(i => i + 1);
+            } else {
+                setSlotSettled(true);
+            }
+        }, delay);
+        return () => clearTimeout(t);
+    }, [slotIdx, slotSettled]);
+
+    useEffect(() => {
+        if (!slotSettled) return;
+        const detailsTimer = setTimeout(() => setShowDetails(true), 350);
+        const arrowTimer = setTimeout(() => setShowArrow(true), 1100);
+        return () => {
+            clearTimeout(detailsTimer);
+            clearTimeout(arrowTimer);
+        };
+    }, [slotSettled]);
+
+    // Replay slot machine every 30 s
+    const replaySlot = useCallback(() => {
+        setSlotSettled(false);
+        setSlotIdx(0);
+    }, []);
+
+    useEffect(() => {
+        if (!slotSettled) return;
+        const id = setInterval(replaySlot, 30_000);
+        return () => clearInterval(id);
+    }, [slotSettled, replaySlot]);
+
+    const heroRef = useRef(null);
+    const simulatorRef = useRef(null);
+    const ctaRowRef = useRef(null);
+    const [isTucked, setIsTucked] = useState(false);
+    const [isRibbonVisible, setIsRibbonVisible] = useState(true);
+    const lastScrollYRef = useRef(0);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            const currentScrollY = window.scrollY || window.pageYOffset || 0;
+            const diff = currentScrollY - lastScrollYRef.current;
+
+            if (currentScrollY < 60) {
+                // Near top of page: smoothly slide back into view
+                setIsRibbonVisible(true);
+            } else if (diff > 8 && currentScrollY > 100) {
+                // Scrolling down: dynamically hide ribbon to maximize browsing area
+                setIsRibbonVisible(false);
+            } else if (diff < -8) {
+                // Scrolling up: smoothly slide back into view
+                setIsRibbonVisible(true);
+            }
+
+            lastScrollYRef.current = currentScrollY;
+
+            if (ctaRowRef.current) {
+                const rect = ctaRowRef.current.getBoundingClientRect();
+                const tucked = rect.top <= 124;
+                setIsTucked(tucked);
+            }
+        };
+
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        handleScroll();
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
+
+    const PERSPECTIVE_LABELS = {
+        learners: 'Learner Experience • Step-by-Step Scaffolding',
+        parents: 'Parent Overview • Transparent Weekly Progress',
+        teachers: 'Teacher Workflow • Instant Exam Authoring',
+        schools: 'School Administration • SASAMS & ATP Pacing',
+    };
+
+    const scrollToSimulator = () => {
+        const el = document.getElementById('how-it-works') || document.getElementById('ai-engine') || document.getElementById('features');
+        if (el) {
+            const yOffset = -110;
+            const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
+            window.scrollTo({ top: y, behavior: 'smooth' });
+        }
+    };
+
+    const handlePerspectiveChange = (perspective) => {
+        setActivePerspective(perspective);
+        const el = document.getElementById('how-it-works');
+        if (el) {
+            const yOffset = -110;
+            const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
+            window.scrollTo({ top: y, behavior: 'smooth' });
+        }
+    };
 
     const scrollToSection = (id) => {
         const section = document.getElementById(id);
         if (section) {
-            section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            const yOffset = -110;
+            const y = section.getBoundingClientRect().top + window.pageYOffset + yOffset;
+            window.scrollTo({ top: y, behavior: 'smooth' });
         }
     };
 
-    const isLightPalette = palette === 'light';
-    const shellClassName = isLightPalette ? 'relative min-h-screen bg-slate-50 text-slate-900' : 'relative min-h-screen bg-slate-950 text-white';
-    const overlayClassName = isLightPalette
-        ? 'absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(43,123,216,0.18),_transparent_34%),radial-gradient(circle_at_20%_20%,_rgba(255,145,0,0.10),_transparent_24%),linear-gradient(180deg,_#f8fbff_0%,_#eef5ff_45%,_#f8fafc_100%)]'
-        : 'absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(43,123,216,0.28),_transparent_34%),radial-gradient(circle_at_20%_20%,_rgba(255,145,0,0.14),_transparent_25%),linear-gradient(180deg,_#08101f_0%,_#0b1328_45%,_#050914_100%)]';
-    const heroSectionTextClassName = isLightPalette ? 'text-slate-950' : 'text-white';
-    const bodyTextClassName = isLightPalette ? 'text-slate-600' : 'text-slate-300';
-    const mutedTextClassName = isLightPalette ? 'text-slate-500' : 'text-white/70';
-    const surfaceClassName = isLightPalette ? 'rounded-[28px] border border-sky-100 bg-white p-6 shadow-lg shadow-sky-100/40 transition duration-300 hover:-translate-y-1 hover:border-sky-200' : 'rounded-[28px] border border-white/10 bg-white/5 p-6 backdrop-blur-sm transition duration-300 hover:-translate-y-1 hover:border-white/20 hover:bg-white/[0.08]';
-    const featureCardClassName = isLightPalette ? 'rounded-[28px] border border-sky-100 bg-white p-6 shadow-lg shadow-sky-100/35 transition duration-300 hover:border-[#2B7BD8]/30 hover:shadow-xl hover:shadow-sky-100/50' : 'rounded-[28px] border border-white/10 bg-slate-900/65 p-6 shadow-lg shadow-black/20 transition duration-300 hover:border-[#2B7BD8]/35 hover:bg-slate-900';
-    const audienceCardClassName = isLightPalette ? 'rounded-[28px] border border-sky-100 bg-white p-6 shadow-lg shadow-sky-100/35' : 'rounded-[28px] border border-white/10 bg-white/5 p-6 backdrop-blur-sm';
-
-    const valueCards = [
-        {
-            icon: Target,
-            title: 'Curriculum-aligned support',
-            description: 'Stay closer to what your subject and grade actually expect instead of jumping between random online resources.',
-            accent: 'text-blue-300',
-        },
-        {
-            icon: BrainCircuit,
-            title: 'Teaching + learning support',
-            description: 'Support classroom learning and independent study with guided practice, structured workflows, and clearer next steps.',
-            accent: 'text-violet-300',
-        },
-        {
-            icon: PenTool,
-            title: 'Performance + mastery',
-            description: 'Build stronger understanding through guided practice, repeated revision, and focused learning routines that improve results over time.',
-            accent: 'text-amber-300',
-        },
-    ];
-
-    const featureCards = [
-        {
-            icon: BookOpen,
-            title: 'Topic-based revision',
-            description: 'Work through subjects by topic with clearer structure and less overwhelm.',
-        },
-        {
-            icon: BrainCircuit,
-            title: 'Socratic AI Tutors & Adaptive Progression',
-            description: 'Specialised AI agents guide your learning. If you struggle, the system adapts and drops you to lower-level foundations to rebuild confidence.',
-        },
-        {
-            icon: CheckCircle,
-            title: 'Feedback that teaches',
-            description: 'See what was right, what was missing, and how to improve on the next attempt.',
-        },
-        {
-            icon: LayoutDashboard,
-            title: 'One learning workspace',
-            description: 'Keep writing, practising, and revising inside the same focused study environment.',
-        },
-        {
-            icon: Trophy,
-            title: 'Momentum over guesswork',
-            description: 'Build confidence through repeated practice, clearer direction, and visible progress.',
-        },
-        {
-            icon: ShieldCheck,
-            title: 'Built for real study habits',
-            description: 'Designed to support both independent learning and teacher-guided learning routines.',
-        },
-    ];
-
-    const audienceCards = [
-        {
-            icon: GraduationCap,
-            title: 'Students',
-            description: 'For learners who want more structure, clearer feedback, and less confusion when studying alone.',
-        },
-        {
-            icon: Users,
-            title: 'Teachers',
-            description: 'For educators who want students working in a space that supports revision, assignments, and guided practice.',
-        },
-        {
-            icon: Sparkles,
-            title: 'Families',
-            description: 'For parents and guardians looking for a study tool that feels purposeful, supportive, and curriculum-aware.',
-        },
-    ];
-
-    const researchCards = [
-        {
-            id: 'paper-1',
-            label: 'Accounting inquiry in South Africa',
-            quote: `“Inquiry-based learning transforms the classroom into a space where curiosity drives discovery, and learners become active creators of knowledge rather than passive recipients.”`,
-            summary: `Walusa and Qhosola-Mahlomaholo (2025) argue that inquiry-based learning fosters deeper engagement by encouraging learners to question, investigate, and construct their own understanding of accounting concepts. Their study demonstrates that this method not only enhances critical thinking and problem-solving but also nurtures independence and confidence in learners. By positioning students as active participants in knowledge creation, inquiry-based approaches prepare them for both academic success and real-world challenges.`,
-            support: `This supports Fundile's inquiry-based design by showing why structured questioning, guided investigation, and active knowledge construction matter in accounting learning.`,
-            reference: `Walusa, A., & Qhosola-Mahlomaholo, M. R. (2025). Enhancing critical thinking and problem-solving skills of grade 11 learners in accounting education in high school at uMgungundlovu district, South Africa.`
-        },
-        {
-            id: 'paper-2',
-            label: 'Problem-based learning and ethics',
-            quote: `“Problem-based learning is perhaps the most innovative instructional method conceived in the history of education, and its most consistent finding is the superiority of PBL-trained learners in life-long learning.”`,
-            summary: `Gerstein, Winter, and Hertz (2016) argue that problem-based learning is uniquely effective in teaching accounting ethics because it engages students in real-world dilemmas, fosters collaboration, and cultivates self-directed learning. They highlight that PBL equips learners with flexible thinking, critical reasoning, and intrinsic motivation — skills essential for ethical decision-making in professional practice.`,
-            support: `This supports enquiry-based learning by showing that learners grow when they solve meaningful problems, reason through uncertainty, and build understanding through active exploration instead of memorising isolated facts.`,
-            reference: `Gerstein, M., Winter, E., & Hertz, S. (2016). Teaching Accounting Ethics: A Problem-Based Learning Approach.`
-        },
-        {
-            id: 'paper-3',
-            label: 'Ownership and independent thinking',
-            quote: `“Inquiry-based learning empowers students to take ownership of their education, transforming them into independent thinkers who can apply knowledge creatively to real-world challenges.”`,
-            summary: `Hayat, Mahmood, and Akhter (2024) present inquiry-based learning as a transformative approach that cultivates independence, creativity, and critical thinking. By engaging learners in questioning, exploration, and problem-solving, the method shifts the classroom dynamic from passive absorption to active knowledge construction. Their findings emphasise that inquiry-based strategies prepare students for lifelong learning and adaptability.`,
-            support: `This aligns with Fundile's goal of helping learners move from dependence on answers to confident, self-directed study supported by structured prompts and feedback.`,
-            reference: `Hayat, Muhammad Usman, Azhar Mahmood, and Mirza Muhammad Akhter. Effect of Inquiry Based Learning on Academic Achievement of Students at Higher Secondary Level. (2024).`
-        },
-        {
-            id: 'paper-4',
-            label: 'Confidence, autonomy, and teamwork',
-            quote: `“Students reported increased confidence, improved problem-solving skills, and greater engagement in the learning process… the inquiry-based methodology has helped me become a more confident and independent learner.”`,
-            summary: `Martinez-Blasco, Markulin, and Bosch (2025) present a structured inquiry-based approach in accounting education through Study and Research Paths. Their findings across three implementations reveal that students engaged more deeply with accounting concepts and demonstrated enhanced teamwork, autonomy, and problem-solving abilities. Learners valued the real-world relevance of tasks, reported improved confidence, and appreciated the shift toward active, self-directed learning.`,
-            support: `This supports enquiry-based learning by showing that carefully structured investigation can improve both academic performance and the learner confidence needed to keep progressing independently.`,
-            reference: `Martinez-Blasco, M., Markulin, K., & Bosch, M. (2025). A proposal for inquiry-based learning in accounting using study and research paths.`
-        },
-        {
-            id: 'paper-5',
-            label: 'Student-question-based inquiry',
-            quote: `“Student-question-based inquiry supports the learning of inquiry skills, improves discussion and reasoning, increases motivation, and strengthens confidence and ownership of learning.”`,
-            summary: `Herranen and Aksela (2019) reviewed 30 studies on student-question-based inquiry and found that when students' own questions drive inquiry, learners demonstrate improved problem-solving, reasoning, and discussion skills. The approach also enhances motivation, engagement, and confidence, while fostering a sense of ownership over learning. The authors emphasise that teacher scaffolding remains important, but conclude that student-question-based inquiry is a powerful model for performance and lifelong learning.`,
-            support: `This supports Fundile's guided-enquiry model: learners should be encouraged to ask, test, and refine questions, while the platform provides the scaffolding that keeps the enquiry productive.`,
-            reference: `Herranen, J., & Aksela, M. (2019). Student-question-based inquiry in science education.`
-        },
-        {
-            id: 'paper-6',
-            label: 'Achievement, motivation, transfer',
-            quote: `“Learners engaged in inquiry-based approaches demonstrated higher achievement, stronger motivation, and improved capacity to apply knowledge in new contexts.”`,
-            summary: `Suhandi and colleagues (2018) argue that inquiry-based learning significantly enhances student outcomes by fostering deeper engagement, critical thinking, and transferable problem-solving skills. Their findings show that students not only achieve higher academic performance but also develop stronger motivation and confidence. By encouraging learners to actively question, investigate, and construct knowledge, inquiry-based methods prepare them for lifelong learning and adaptability.`,
-            support: `This reinforces the case for an app like Fundile: enquiry-based support should not only help with today's task, but also improve motivation and transfer of understanding into new academic contexts.`,
-            reference: `Suhandi, A., et al. (2018). Effectiveness of the use of question-driven levels of inquiry based instruction assisted visual multimedia supported teaching material on enhancing scientific explanation ability.`
-        }
-    ];
-
-    const activeResearchCard = researchCards[selectedResearchIndex] || researchCards[0];
-    const researchCardCount = researchCards.length;
-
-    React.useEffect(() => {
-        const timerId = window.setTimeout(() => {
-            setSelectedResearchIndex((currentIndex) => (currentIndex + 1) % researchCardCount);
-        }, 7000);
-
-        return () => {
-            window.clearTimeout(timerId);
-        };
-    }, [researchCardCount, selectedResearchIndex]);
+    // Shared style tokens for light canvas sections below the fold
+    const surfaceClassName = 'rounded-[28px] border border-slate-200/90 bg-white p-6 sm:p-7 shadow-xs hover:shadow-md transition duration-300 hover:border-slate-300';
+    const cardClassName = 'rounded-[28px] border border-slate-200/90 bg-white p-6 sm:p-7 shadow-xs hover:shadow-md transition duration-300';
 
     return (
-        <div className={shellClassName}>
-            <div className={`${overlayClassName} z-0`} />
-            <div className={`absolute -left-24 top-40 z-10 h-72 w-72 rounded-full blur-3xl ${isLightPalette ? 'bg-[#13519C]/12' : 'bg-[#13519C]/25'}`} />
-            <div className={`absolute right-0 top-24 z-20 h-96 w-96 rounded-full blur-3xl ${isLightPalette ? 'bg-[#FF9100]/8' : 'bg-[#FF9100]/10'}`} />
-
-            <div className="fixed top-0 left-0 right-0 z-50 bg-[#13519C] border-b border-[#13519C]/20">
+        <div className="relative min-h-screen bg-slate-50 text-slate-900 font-sans selection:bg-[#13519C]/20 selection:text-[#13519C]">
+            
+            {/* FIXED BLUE RIBBON */}
+            <div className={`fixed top-0 left-0 right-0 z-50 bg-[#13519C] border-b border-[#13519C]/20 transition-transform duration-300 ease-in-out ${
+                isRibbonVisible ? 'translate-y-0' : '-translate-y-full'
+            }`}>
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex justify-between items-center h-16">
-                        <div className="flex items-center shrink-0">
+                        <div className="flex items-center shrink-0 pointer-events-none">
                             <FundileLogo className="h-28 w-28 sm:h-48 sm:w-48 text-white" />
                         </div>
-                        <div className="flex items-center gap-3">
+                        <div className="flex items-center gap-2.5 sm:gap-3">
+                            <button
+                                type="button"
+                                onClick={() => setShowInstallModal(true)}
+                                className="inline-flex items-center gap-1.5 rounded-lg border border-emerald-300/40 bg-emerald-500/20 px-2.5 py-1.5 text-xs sm:text-sm font-bold text-emerald-200 transition-all duration-300 hover:bg-emerald-500/30 cursor-pointer shadow-xs"
+                                title="Install Fundile App on Mobile Phone or Computer"
+                            >
+                                <span>📲</span>
+                                <span className="hidden sm:inline">Install App</span>
+                                <span className="sm:hidden">Install</span>
+                            </button>
                             <button
                                 type="button"
                                 onClick={onSignIn}
-                                className="rounded-lg border border-white/20 bg-white/10 px-3 py-1.5 text-sm sm:px-5 sm:py-2 sm:text-base font-medium text-white transition-all duration-300 hover:bg-white/20"
+                                className="hidden sm:inline-flex rounded-lg border border-white/20 bg-white/10 px-3 py-1.5 text-sm sm:px-5 sm:py-2 sm:text-base font-medium text-white transition-all duration-300 hover:bg-white/20 cursor-pointer"
                             >
                                 Sign in
                             </button>
                             <button 
                                 onClick={onGetStarted}
-                                className="bg-white text-[#13519C] px-3 py-1.5 text-sm sm:px-6 sm:py-2 sm:text-base rounded-lg hover:bg-gray-100 transition-all duration-300 font-medium"
+                                className="bg-[#FF9100] text-white px-3 py-1.5 text-sm sm:px-6 sm:py-2 sm:text-base rounded-lg hover:bg-[#f58200] shadow-[0_4px_14px_rgba(255,145,0,0.39)] transition-all duration-300 font-medium cursor-pointer"
                             >
-                                Get Started
+                                Start free trial
                             </button>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div className="relative z-30 px-4 pb-24 pt-20 sm:px-6 sm:pt-24 lg:px-8">
-                <div className="mx-auto max-w-7xl">
-                    <section className="grid gap-14 pb-10 pt-4 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:pb-16 lg:pt-8">
-                        <div className="max-w-3xl">
-                            <div className={`mb-6 inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium ${isLightPalette ? 'border border-[#2B7BD8]/20 bg-white/85 text-[#13519C] shadow-sm shadow-sky-100/50' : 'border border-[#2B7BD8]/40 bg-[#13519C]/20 text-blue-100'}`}>
-                                <Sparkles className="h-4 w-4 text-[#FFD166]" />
-                                {HERO_COPY.eyebrow}
-                            </div>
-                            <div className="mb-6 flex flex-wrap gap-3">
-                                <button
-                                    type="button"
-                                    onClick={() => scrollToSection('pricing')}
-                                    className={`inline-flex items-center justify-center rounded-full px-4 py-2 text-sm font-semibold transition ${isLightPalette ? 'border border-sky-200 bg-white text-[#13519C] hover:border-sky-300 hover:bg-sky-50' : 'border border-white/15 bg-white/5 text-white hover:border-white/30 hover:bg-white/10'}`}
-                                >
-                                    Pricing
-                                </button>
-                                <button
-                                    type="button"
-                                    onClick={() => scrollToSection('caps-nsc')}
-                                    className={`inline-flex items-center justify-center rounded-full px-4 py-2 text-sm font-semibold transition ${isLightPalette ? 'border border-sky-200 bg-white text-[#13519C] hover:border-sky-300 hover:bg-sky-50' : 'border border-white/15 bg-white/5 text-white hover:border-white/30 hover:bg-white/10'}`}
-                                >
-                                    CAPS &amp; NSC
-                                </button>
-                                <button
-                                    type="button"
-                                    onClick={() => scrollToSection('feature-claims')}
-                                    className={`inline-flex items-center justify-center rounded-full px-4 py-2 text-sm font-semibold transition ${isLightPalette ? 'border border-sky-200 bg-white text-[#13519C] hover:border-sky-300 hover:bg-sky-50' : 'border border-white/15 bg-white/5 text-white hover:border-white/30 hover:bg-white/10'}`}
-                                >
-                                    Demo video
-                                </button>
-                                <button
-                                    type="button"
-                                    onClick={() => scrollToSection('contact-footer')}
-                                    className={`inline-flex items-center justify-center rounded-full px-4 py-2 text-sm font-semibold transition ${isLightPalette ? 'border border-sky-200 bg-white text-[#13519C] hover:border-sky-300 hover:bg-sky-50' : 'border border-white/15 bg-white/5 text-white hover:border-white/30 hover:bg-white/10'}`}
-                                >
-                                    Contacts
-                                </button>
-                                <button
-                                    type="button"
-                                    onClick={() => scrollToSection('interest-form')}
-                                    className={`inline-flex items-center justify-center rounded-full px-4 py-2 text-sm font-semibold transition ${isLightPalette ? 'border border-sky-200 bg-white text-[#13519C] hover:border-sky-300 hover:bg-sky-50' : 'border border-white/15 bg-white/5 text-white hover:border-white/30 hover:bg-white/10'}`}
-                                >
-                                    Request a subject
-                                </button>
-                            </div>
-                            <h1 className={`text-5xl font-bold tracking-tight sm:text-6xl xl:text-7xl ${heroSectionTextClassName}`} style={{ fontFamily: 'Afacad, sans-serif' }}>
-                                {HERO_COPY.title}
-                            </h1>
-                            <p className={`mt-6 max-w-2xl text-lg leading-8 sm:text-xl ${bodyTextClassName}`}>
-                                {HERO_COPY.subtitle}
-                            </p>
-                            <div className={`mt-6 rounded-[28px] border px-5 py-4 ${isLightPalette ? 'border-sky-100 bg-white/95 shadow-sm shadow-sky-100/40' : 'border-white/10 bg-white/5 backdrop-blur-sm'}`}>
-                                <p className="text-sm font-semibold uppercase tracking-[0.25em] text-[#FF9100]">Availability</p>
-                                <p className={`mt-2 text-lg font-semibold ${heroSectionTextClassName}`}>{LIVE_AVAILABILITY_HEADLINE}</p>
-                                <p className={`mt-2 text-sm leading-7 ${bodyTextClassName}`}>{LIVE_AVAILABILITY_NOTE}</p>
-                                <p className={`mt-2 text-sm leading-7 ${mutedTextClassName}`}>{LIVE_AVAILABILITY_DETAIL}</p>
-                            </div>
-                            <div className="mt-8 flex flex-col gap-4 sm:flex-row">
-                                <button
-                                    onClick={onGetStarted}
-                                    className="inline-flex items-center justify-center gap-2 rounded-2xl bg-[#FF9100] px-6 py-4 text-base font-semibold text-white shadow-[0_16px_50px_rgba(255,145,0,0.25)] transition hover:bg-[#f58200]"
-                                >
-                                    Start with Fundile
-                                    <ArrowRight className="h-5 w-5" />
-                                </button>
-                                <button
-                                    type="button"
-                                    onClick={onSignIn}
-                                    className={`inline-flex items-center justify-center rounded-2xl px-6 py-4 text-base font-semibold transition ${isLightPalette ? 'border border-slate-200 bg-white text-slate-700 hover:border-slate-300 hover:bg-slate-50' : 'border border-white/15 text-white/90 hover:border-white/30 hover:bg-white/5'}`}
-                                >
-                                    Returning user? Sign in
-                                </button>
-                                <button
-                                    onClick={() => scrollToSection('why-fundile')}
-                                    className={`inline-flex items-center justify-center rounded-2xl px-6 py-4 text-base font-semibold transition ${isLightPalette ? 'border border-slate-200 bg-white text-slate-700 hover:border-slate-300 hover:bg-slate-50' : 'border border-white/15 text-white/90 hover:border-white/30 hover:bg-white/5'}`}
-                                >
-                                    Why Fundile?
-                                </button>
-                            </div>
-                            <div className="mt-10 grid gap-4 sm:grid-cols-3">
-                                <div className={`rounded-2xl border p-4 ${isLightPalette ? 'border-sky-100 bg-white shadow-sm shadow-sky-100/40' : 'border-white/10 bg-white/5 backdrop-blur-sm'}`}>
-                                    <p className={`text-sm font-medium ${mutedTextClassName}`}>Designed around</p>
-                                    <p className={`mt-2 text-xl font-semibold ${heroSectionTextClassName}`}>Curriculum alignment</p>
-                                </div>
-                                <div className={`rounded-2xl border p-4 ${isLightPalette ? 'border-sky-100 bg-white shadow-sm shadow-sky-100/40' : 'border-white/10 bg-white/5 backdrop-blur-sm'}`}>
-                                    <p className={`text-sm font-medium ${mutedTextClassName}`}>Built for</p>
-                                    <p className={`mt-2 text-xl font-semibold ${heroSectionTextClassName}`}>Teaching + learning</p>
-                                </div>
-                                <div className={`rounded-2xl border p-4 ${isLightPalette ? 'border-sky-100 bg-white shadow-sm shadow-sky-100/40' : 'border-white/10 bg-white/5 backdrop-blur-sm'}`}>
-                                    <p className={`text-sm font-medium ${mutedTextClassName}`}>Focused on</p>
-                                    <p className={`mt-2 text-xl font-semibold ${heroSectionTextClassName}`}>Performance + mastery</p>
-                                </div>
-                            </div>
-                        </div>
+            {/* FIXED AUDIENCE SUB-RIBBON (Crisp white fill, dark blue pills, zero scrollbars) */}
+            <div className={`fixed top-16 left-0 right-0 z-50 transition-all duration-300 ease-in-out border-b bg-white/95 border-slate-200/90 shadow-xs backdrop-blur-md ${
+                isRibbonVisible ? 'translate-y-0' : '-translate-y-16'
+            }`}>
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 sm:py-2.5">
+                    <div className="flex items-center justify-between gap-3">
+                        <div 
+                            className="flex items-center gap-2 sm:gap-2.5 overflow-x-auto no-scrollbar scrollbar-hide px-1 py-0.5 max-w-full [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden [&::-webkit-scrollbar]:w-0 [&::-webkit-scrollbar]:h-0 relative z-10"
+                            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+                        >
 
-                        <div className="relative">
-                            <div className={`absolute inset-0 rounded-[32px] bg-[radial-gradient(circle_at_center,_rgba(255,145,0,0.18),_transparent_60%)] blur-3xl ${isLightPalette ? 'opacity-70' : ''}`} />
-                            <div className={`relative overflow-hidden rounded-[32px] border shadow-2xl ${isLightPalette ? 'border-sky-100 bg-white/90 shadow-sky-100/60' : 'border-white/10 bg-white/[0.08] backdrop-blur-xl'}`}>
-                                <img
-                                    src={heroLearners}
-                                    alt={HERO_COPY.imageAlt}
-                                    loading="eager"
-                                    className="h-full w-full object-cover"
-                                />
-                                <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 via-black/25 to-transparent px-6 py-5">
-                                    <p className="text-sm font-medium text-white/90">{HERO_COPY.imageCaption}</p>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-
-                    <section id="why-fundile" className="mt-8 grid gap-6 md:grid-cols-3">
-                        {valueCards.map(({ icon: Icon, title, description, accent }) => (
-                            <div key={title} className={surfaceClassName}>
-                                <Icon className={`h-8 w-8 ${isLightPalette ? (accent === 'text-violet-300' ? 'text-violet-600' : accent === 'text-amber-300' ? 'text-amber-600' : 'text-[#13519C]') : accent}`} />
-                                <h3 className={`mt-4 text-2xl font-semibold ${heroSectionTextClassName}`}>{title}</h3>
-                                <p className={`mt-3 leading-7 ${bodyTextClassName}`}>{description}</p>
-                            </div>
-                        ))}
-                    </section>
-
-                    <section id="hidden-curriculum" className="mt-24">
-                        <div className="max-w-3xl">
-                            <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[#FFD166]">{HIDDEN_CURRICULUM.eyebrow}</p>
-                            <h2 className={`mt-4 text-4xl font-bold tracking-tight sm:text-5xl ${heroSectionTextClassName}`} style={{ fontFamily: 'Afacad, sans-serif' }}>
-                                {HIDDEN_CURRICULUM.title}
-                            </h2>
-                            <p className={`mt-5 text-lg leading-8 ${bodyTextClassName}`}>{HIDDEN_CURRICULUM.body}</p>
-                        </div>
-                        <div className="mt-10 grid gap-5 md:grid-cols-3">
-                            {HIDDEN_CURRICULUM.points.map((point) => (
-                                <div key={point.title} className={surfaceClassName}>
-                                    <h3 className={`text-xl font-semibold ${heroSectionTextClassName}`}>{point.title}</h3>
-                                    <p className={`mt-3 leading-7 ${bodyTextClassName}`}>{point.body}</p>
-                                </div>
-                            ))}
-                        </div>
-                    </section>
-
-                    <section id="principles" className="mt-24">
-                        <div className="max-w-3xl">
-                            <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[#FFD166]">{PRINCIPLES.eyebrow}</p>
-                            <h2 className={`mt-4 text-4xl font-bold tracking-tight sm:text-5xl ${heroSectionTextClassName}`} style={{ fontFamily: 'Afacad, sans-serif' }}>
-                                {PRINCIPLES.title}
-                            </h2>
-                        </div>
-                        <div className="mt-10 grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
-                            {PRINCIPLES.items.map((item, index) => (
-                                <div key={item.title} className={surfaceClassName}>
-                                    <div className={`text-sm font-semibold uppercase tracking-[0.25em] ${isLightPalette ? 'text-[#2B7BD8]' : 'text-blue-200'}`}>
-                                        {String(index + 1).padStart(2, '0')}
-                                    </div>
-                                    <h3 className={`mt-4 text-xl font-semibold ${heroSectionTextClassName}`}>{item.title}</h3>
-                                    <p className={`mt-3 leading-7 ${bodyTextClassName}`}>{item.body}</p>
-                                </div>
-                            ))}
-                        </div>
-                    </section>
-
-                    <NotAChatbot isLightPalette={isLightPalette} />
-
-                    <section id="features" className="mt-24">
-                        <div className="max-w-3xl">
-                            <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[#FFD166]">What you can do</p>
-                            <h2 className={`mt-4 text-4xl font-bold tracking-tight sm:text-5xl ${heroSectionTextClassName}`} style={{ fontFamily: 'Afacad, sans-serif' }}>
-                                Everything you need to study with intention.
-                            </h2>
-                            <p className={`mt-5 text-lg leading-8 ${bodyTextClassName}`}>
-                                Fundile is built around practical learning workflows so learners can move from confusion to action more quickly.
-                            </p>
-                        </div>
-                        <div className="mt-10 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-                            {featureCards.map(({ icon: Icon, title, description }) => (
-                                <div key={title} className={featureCardClassName}>
-                                    <div className={`flex h-12 w-12 items-center justify-center rounded-2xl ring-1 ring-inset ${isLightPalette ? 'bg-slate-50 ring-slate-200' : 'bg-white/6 ring-white/10'}`}>
-                                        <Icon className={`h-6 w-6 ${isLightPalette ? 'text-[#13519C]' : 'text-white'}`} />
-                                    </div>
-                                    <h3 className={`mt-5 text-xl font-semibold ${heroSectionTextClassName}`}>{title}</h3>
-                                    <p className={`mt-3 leading-7 ${bodyTextClassName}`}>{description}</p>
-                                </div>
-                            ))}
-                        </div>
-                    </section>
-
-                    <CapsNscClarity isLightPalette={isLightPalette} />
-
-                    <section id="pricing" className="mt-24 grid gap-8 lg:grid-cols-[0.92fr_1.08fr] lg:items-start">
-                        <div className={`rounded-[32px] border p-8 ${isLightPalette ? 'border-sky-100 bg-white shadow-lg shadow-sky-100/35' : 'border-white/10 bg-white/5 backdrop-blur-sm'}`}>
-                            <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[#FFD166]">Pricing</p>
-                            <h2 className={`mt-4 text-4xl font-bold tracking-tight sm:text-5xl ${heroSectionTextClassName}`} style={{ fontFamily: 'Afacad, sans-serif' }}>
-                                {PRICING_COPY.title}
-                            </h2>
-                            <p className={`mt-5 text-lg leading-8 ${bodyTextClassName}`}>
-                                {PRICING_COPY.anchor}
-                            </p>
-                            <div className={`mt-5 rounded-2xl border px-4 py-3 text-sm leading-7 ${isLightPalette ? 'border-sky-100 bg-slate-50 text-slate-600' : 'border-white/10 bg-slate-950/60 text-white/75'}`}>
-                                {LIVE_AVAILABILITY_NOTE}
-                            </div>
-                            <div className="mt-8 flex flex-col gap-4 sm:flex-row">
-                                <button
-                                    type="button"
-                                    onClick={() => onViewSubscription?.()}
-                                    className="inline-flex items-center justify-center rounded-2xl bg-[#FF9100] px-6 py-4 text-base font-semibold text-white shadow-[0_16px_50px_rgba(255,145,0,0.25)] transition hover:bg-[#f58200]"
-                                >
-                                    Get started with Standard
-                                </button>
-                                <a
-                                    href="mailto:info@fundile.com"
-                                    className={`inline-flex items-center justify-center rounded-2xl px-6 py-4 text-base font-semibold transition ${isLightPalette ? 'border border-slate-200 bg-white text-slate-700 hover:border-slate-300 hover:bg-slate-50' : 'border border-white/15 text-white/90 hover:border-white/30 hover:bg-white/5'}`}
-                                >
-                                    Ask about school access
-                                </a>
-                            </div>
-                            <p className={`mt-4 text-sm leading-7 ${mutedTextClassName}`}>
-                                EFT payment is already supported inside Fundile through the existing Manage Subscription flow after sign-in.
-                            </p>
-                        </div>
-                        <div className="grid gap-5 sm:grid-cols-3">
-                            <div className={`rounded-[28px] border p-6 ${isLightPalette ? 'border-sky-100 bg-white shadow-lg shadow-sky-100/30' : 'border-white/10 bg-[#13519C]/5'}`}>
-                                <p className={`text-sm font-semibold uppercase tracking-[0.25em] ${isLightPalette ? 'text-slate-500' : 'text-slate-400'}`}>Free Tier</p>
-                                <h3 className={`mt-4 text-2xl font-semibold ${heroSectionTextClassName}`}>R0 forever</h3>
-                                <p className={`mt-3 leading-7 ${bodyTextClassName}`}>A safe learning environment for everyone. Get access to basic topic tracking, curriculum outlines, and select practice generators to test your knowledge.</p>
-                                <div className="mt-5 flex flex-wrap gap-3 text-sm font-semibold">
-                                    <span className={`rounded-full px-3 py-1 ${isLightPalette ? 'bg-slate-100 text-slate-700' : 'bg-slate-800 text-slate-300'}`}>Always Free</span>
-                                </div>
-                                <button
-                                    type="button"
-                                    onClick={onGetStarted}
-                                    className={`mt-6 inline-flex w-full items-center justify-center rounded-2xl px-5 py-3 text-sm font-semibold transition ${isLightPalette ? 'bg-slate-100 text-slate-700 hover:bg-slate-200' : 'bg-white/10 text-white hover:bg-white/20'}`}
-                                >
-                                    Start Free
-                                </button>
-                            </div>
-                            <div className={`rounded-[28px] border p-6 ${isLightPalette ? 'border-sky-100 bg-white shadow-lg shadow-sky-100/30' : 'border-white/10 bg-[#13519C]/18'}`}>
-                                <p className={`text-sm font-semibold uppercase tracking-[0.25em] ${isLightPalette ? 'text-[#2B7BD8]' : 'text-blue-200'}`}>Standard package</p>
-                                <h3 className={`mt-4 text-2xl font-semibold ${heroSectionTextClassName}`}>R150 / mo</h3>
-                                <p className={`mt-3 leading-7 ${bodyTextClassName}`}>{PRICING_COPY.tiers.find((t) => t.key === 'standard').description}</p>
-                                <div className="mt-5 flex flex-wrap gap-3 text-sm font-semibold">
-                                    <span className={`rounded-full px-3 py-1 ${isLightPalette ? 'bg-[#13519C]/10 text-[#13519C]' : 'bg-[#2B7BD8]/20 text-blue-100'}`}>Live now</span>
-                                    <span className={`rounded-full px-3 py-1 ${isLightPalette ? 'bg-emerald-100 text-emerald-700' : 'bg-emerald-500/15 text-emerald-200'}`}>Save R200 yearly</span>
-                                </div>
-                                <button
-                                    type="button"
-                                    onClick={() => onViewSubscription?.()}
-                                    className="mt-6 inline-flex w-full items-center justify-center rounded-2xl bg-[#13519C] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#0f3e77]"
-                                >
-                                    Start Standard
-                                </button>
-                            </div>
-                            <div className={`rounded-[28px] border p-6 ${isLightPalette ? 'border-sky-100 bg-white shadow-lg shadow-sky-100/30' : 'border-white/10 bg-violet-500/10'}`}>
-                                <p className={`text-sm font-semibold uppercase tracking-[0.25em] ${isLightPalette ? 'text-violet-600' : 'text-violet-200'}`}>Pro package</p>
-                                <h3 className={`mt-4 text-2xl font-semibold ${heroSectionTextClassName}`}>R299 / mo</h3>
-                                <p className={`mt-3 leading-7 ${bodyTextClassName}`}>{PRICING_COPY.tiers.find((t) => t.key === 'pro').description}</p>
-                                <div className="mt-5 flex flex-wrap gap-3 text-sm font-semibold">
-                                    <span className={`rounded-full px-3 py-1 ${isLightPalette ? 'bg-violet-100 text-violet-700' : 'bg-violet-500/20 text-violet-100'}`}>Coming soon</span>
-                                    <span className={`rounded-full px-3 py-1 ${isLightPalette ? 'bg-amber-100 text-amber-700' : 'bg-amber-500/15 text-amber-200'}`}>Save R488 yearly</span>
-                                </div>
-                                <button
-                                    type="button"
-                                    onClick={() => setShowProComingSoon(true)}
-                                    className={`mt-6 inline-flex w-full items-center justify-center rounded-2xl px-5 py-3 text-sm font-semibold transition ${isLightPalette ? 'bg-violet-600 text-white hover:bg-violet-700' : 'bg-violet-500/85 text-white hover:bg-violet-500'}`}
-                                >
-                                    Explore Pro
-                                </button>
-                            </div>
-                        </div>
-                    </section>
-
-                    <FeatureClaims isLightPalette={isLightPalette} />
-
-                    <section id="research-evidence" className="mt-24">
-                        <div className="max-w-4xl">
-                            <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[#FFD166]">Research-backed learning</p>
-                            <h2 className={`mt-4 text-4xl font-bold tracking-tight sm:text-5xl ${heroSectionTextClassName}`} style={{ fontFamily: 'Afacad, sans-serif' }}>
-                                Why enquiry-based learning matters for a platform like Fundile.
-                            </h2>
-                            <p className={`mt-5 text-lg leading-8 ${bodyTextClassName}`}>
-                                These studies highlight why guided enquiry, student questioning, problem-solving, and reflective feedback can improve confidence, motivation, and real understanding. Select a quote card to read the wider finding.
-                            </p>
-                        </div>
-
-                        <div className="mt-10 grid gap-5 lg:grid-cols-[0.95fr_1.05fr] lg:items-start">
-                            <div className="grid gap-4 sm:grid-cols-2">
-                                {researchCards.map((card, index) => {
-                                    const isActive = selectedResearchIndex === index;
-
-                                    return (
-                                        <button
-                                            key={card.id}
-                                            type="button"
-                                            onClick={() => setSelectedResearchIndex(index)}
-                                            className={`text-left rounded-[28px] border p-5 transition duration-300 ${isActive
-                                                ? (isLightPalette
-                                                    ? 'border-[#2B7BD8]/40 bg-white shadow-xl shadow-sky-100/60'
-                                                    : 'border-[#2B7BD8]/45 bg-[#13519C]/18 shadow-lg shadow-[#13519C]/20')
-                                                : (isLightPalette
-                                                    ? 'border-sky-100 bg-white shadow-lg shadow-sky-100/30 hover:border-[#2B7BD8]/25'
-                                                    : 'border-white/10 bg-white/5 hover:border-white/20 hover:bg-white/[0.08]')}`}
-                                        >
-                                            <div className="flex items-start justify-between gap-3">
-                                                <div>
-                                                    <p className={`text-xs font-semibold uppercase tracking-[0.25em] ${isLightPalette ? 'text-[#2B7BD8]' : 'text-blue-200'}`}>Paper {index + 1}</p>
-                                                    <h3 className={`mt-3 text-lg font-semibold ${heroSectionTextClassName}`}>{card.label}</h3>
-                                                </div>
-                                                <span className={`rounded-full px-3 py-1 text-xs font-semibold ${isActive
-                                                    ? (isLightPalette ? 'bg-[#13519C]/10 text-[#13519C]' : 'bg-[#2B7BD8]/20 text-blue-100')
-                                                    : (isLightPalette ? 'bg-slate-100 text-slate-600' : 'bg-white/10 text-white/70')}`}
-                                                >
-                                                    {isActive ? 'Selected' : 'Open'}
-                                                </span>
-                                            </div>
-                                            <p className={`mt-4 text-sm leading-7 ${bodyTextClassName}`}>{card.quote}</p>
-                                        </button>
-                                    );
-                                })}
-                            </div>
-
-                            <div className="rounded-[32px] border border-sky-100 bg-white p-8 shadow-[0_24px_70px_rgba(148,163,184,0.2)]">
-                                <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[#2B7BD8]">Selected insight</p>
-                                <h3 className="mt-4 text-2xl font-semibold text-slate-950 sm:text-3xl">{activeResearchCard.label}</h3>
-                                <p className="mt-5 text-lg leading-8 text-slate-900">{activeResearchCard.quote}</p>
-                                <div className="mt-6 space-y-5">
-                                    <div>
-                                        <p className="text-sm font-semibold uppercase tracking-[0.22em] text-slate-500">What the paper says</p>
-                                        <p className="mt-3 leading-8 text-slate-600">{activeResearchCard.summary}</p>
-                                    </div>
-                                    <div>
-                                        <p className="text-sm font-semibold uppercase tracking-[0.22em] text-slate-500">Why it supports enquiry-based learning</p>
-                                        <p className="mt-3 leading-8 text-slate-600">{activeResearchCard.support}</p>
-                                    </div>
-                                    <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
-                                        <p className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-500">Reference</p>
-                                        <p className="mt-3 text-sm leading-7 text-slate-600">{activeResearchCard.reference}</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-
-                    <section className="mt-24 grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
-                        <div className={`rounded-[32px] border p-8 ${isLightPalette ? 'border-sky-100 bg-white shadow-lg shadow-sky-100/35' : 'border-white/10 bg-white/5 backdrop-blur-sm'}`}>
-                            <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[#FFD166]">How it feels</p>
-                            <h2 className={`mt-4 text-3xl font-bold sm:text-4xl ${heroSectionTextClassName}`} style={{ fontFamily: 'Afacad, sans-serif' }}>
-                                Less noise. More direction.
-                            </h2>
-                            <p className={`mt-5 text-lg leading-8 ${bodyTextClassName}`}>
-                                The goal is not to overwhelm learners with features. The goal is to help them know what to do next, why it matters, and how to improve.
-                            </p>
-                        </div>
-                        <div className="grid gap-4 md:grid-cols-3">
-                            <div className={`rounded-[28px] border p-6 ${isLightPalette ? 'border-sky-100 bg-white shadow-lg shadow-sky-100/30' : 'border-white/10 bg-[#13519C]/18'}`}>
-                                <div className={`text-sm font-semibold uppercase tracking-[0.25em] ${isLightPalette ? 'text-[#2B7BD8]' : 'text-blue-200'}`}>01</div>
-                                <h3 className={`mt-4 text-xl font-semibold ${heroSectionTextClassName}`}>Find the right topic</h3>
-                                <p className={`mt-3 ${bodyTextClassName}`}>Start from the subject and topic that matches your current need.</p>
-                            </div>
-                            <div className={`rounded-[28px] border p-6 ${isLightPalette ? 'border-sky-100 bg-white shadow-lg shadow-sky-100/30' : 'border-white/10 bg-violet-500/10'}`}>
-                                <div className={`text-sm font-semibold uppercase tracking-[0.25em] ${isLightPalette ? 'text-violet-600' : 'text-violet-200'}`}>02</div>
-                                <h3 className={`mt-4 text-xl font-semibold ${heroSectionTextClassName}`}>Work with guidance</h3>
-                                <p className={`mt-3 ${bodyTextClassName}`}>Use tutoring, prompts, and structured spaces to keep your thinking moving.</p>
-                            </div>
-                            <div className={`rounded-[28px] border p-6 ${isLightPalette ? 'border-sky-100 bg-white shadow-lg shadow-sky-100/30' : 'border-white/10 bg-amber-500/10'}`}>
-                                <div className={`text-sm font-semibold uppercase tracking-[0.25em] ${isLightPalette ? 'text-amber-600' : 'text-amber-200'}`}>03</div>
-                                <h3 className={`mt-4 text-xl font-semibold ${heroSectionTextClassName}`}>Improve with feedback</h3>
-                                <p className={`mt-3 ${bodyTextClassName}`}>Review answers and learn what to fix instead of stopping at the result.</p>
-                            </div>
-                        </div>
-                    </section>
-
-                    <section className="mt-24">
-                        <div className="max-w-3xl">
-                            <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[#FFD166]">{AUDIENCES.eyebrow}</p>
-                            <h2 className={`mt-4 text-4xl font-bold tracking-tight sm:text-5xl ${heroSectionTextClassName}`} style={{ fontFamily: 'Afacad, sans-serif' }}>
-                                {AUDIENCES.title}
-                            </h2>
-                        </div>
-                        <div className="mt-10 grid gap-5 lg:grid-cols-3">
-                            {AUDIENCES.cards.map((card, index) => {
-                                const Icon = audienceCards[index]?.icon || GraduationCap;
-                                const isComingSoon = card.badge === 'Coming soon';
+                            {[
+                                { id: 'learners', label: 'Learners', icon: GraduationCap, iconColor: 'text-[#13519C]' },
+                                { id: 'parents', label: 'Parents', icon: Users, iconColor: 'text-amber-600' },
+                                { id: 'teachers', label: 'Teachers', icon: BookOpen, iconColor: 'text-indigo-600' },
+                                { id: 'schools', label: 'School Admins', icon: Building2, iconColor: 'text-cyan-600' },
+                            ].map((tab) => {
+                                const Icon = tab.icon;
+                                const isActive = activePerspective === tab.id;
                                 return (
-                                    <div key={card.key} className={audienceCardClassName}>
-                                        <div className="flex items-center justify-between">
-                                            <Icon className={`h-8 w-8 ${isLightPalette ? 'text-[#13519C]' : 'text-[#FFD166]'}`} />
-                                            <span className={`rounded-full px-3 py-1 text-xs font-semibold ${isComingSoon
-                                                ? (isLightPalette ? 'bg-violet-100 text-violet-700' : 'bg-violet-500/20 text-violet-100')
-                                                : (isLightPalette ? 'bg-emerald-100 text-emerald-700' : 'bg-emerald-500/15 text-emerald-200')}`}
-                                            >
-                                                {card.badge}
-                                            </span>
-                                        </div>
-                                        <h3 className={`mt-5 text-2xl font-semibold ${heroSectionTextClassName}`}>{card.title}</h3>
-                                        <p className={`mt-3 leading-7 ${bodyTextClassName}`}>{card.body}</p>
-                                    </div>
+                                    <button
+                                        key={tab.id}
+                                        type="button"
+                                        onClick={() => handlePerspectiveChange(tab.id)}
+                                        className={`relative z-10 inline-flex items-center gap-2 px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-bold transition-all duration-200 cursor-pointer shrink-0 ${
+                                            isActive
+                                                ? 'bg-white text-[#13519C] ring-2 ring-[#FF9100] shadow-md shadow-amber-500/20 scale-[1.02]'
+                                                : 'bg-white text-[#13519C] border border-slate-200/90 hover:bg-slate-50 hover:shadow-xs'
+                                        }`}
+                                    >
+                                        <Icon className={`h-4 w-4 ${tab.iconColor} shrink-0`} />
+                                        <span>{tab.label}</span>
+                                        {isActive && (
+                                            <span className="w-1.5 h-1.5 rounded-full bg-[#FF9100] shrink-0" />
+                                        )}
+                                    </button>
                                 );
                             })}
                         </div>
-                    </section>
-                    <LandingFaq isLightPalette={isLightPalette} />
 
-                    <section id="interest-form" className="mt-24 grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
-                        <div className={`rounded-[32px] border p-8 ${isLightPalette ? 'border-sky-100 bg-white shadow-lg shadow-sky-100/35' : 'border-white/10 bg-white/5 backdrop-blur-sm'}`}>
-                            <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[#FFD166]">Help shape rollout</p>
-                            <h2 className={`mt-4 text-4xl font-bold tracking-tight sm:text-5xl ${heroSectionTextClassName}`} style={{ fontFamily: 'Afacad, sans-serif' }}>
-                                Need another grade or subject?
-                            </h2>
-                            <p className={`mt-5 text-lg leading-8 ${bodyTextClassName}`}>
-                                {LIVE_AVAILABILITY_NOTE}
-                            </p>
-                            <p className={`mt-4 text-sm leading-7 ${mutedTextClassName}`}>
-                                {LIVE_AVAILABILITY_DETAIL}
-                            </p>
-                            <div className="mt-8 grid gap-4 sm:grid-cols-2">
-                                <div className={`rounded-2xl border p-4 ${isLightPalette ? 'border-sky-100 bg-slate-50' : 'border-white/10 bg-slate-950/60'}`}>
-                                    <p className={`text-sm font-medium ${mutedTextClassName}`}>Live now</p>
-                                    <p className={`mt-2 text-lg font-semibold ${heroSectionTextClassName}`}>Grade 10 Accounting</p>
-                                    <p className={`mt-1 text-sm ${bodyTextClassName}`}>Available today inside the current MVP rollout.</p>
+                        {/* Right Helper Info */}
+                        <div className="shrink-0 hidden lg:flex items-center gap-2">
+                            <span className="text-[11px] font-semibold text-slate-500 bg-slate-100 px-3 py-1 rounded-full border border-slate-200 flex items-center gap-1.5">
+                                <span className="w-2 h-2 rounded-full bg-[#FF9100]" />
+                                <span>{PERSPECTIVE_LABELS[activePerspective] || 'Learner Experience'}</span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {/* 1. HERO STAGE (Above the Fold) — Signature Deep Royal Navy / Cobalt Atmosphere */}
+            <div className="relative min-h-[92vh] sm:min-h-screen bg-[#081326] bg-[radial-gradient(ellipse_at_top,_rgba(19,81,156,0.45)_0%,_rgba(8,19,38,0.98)_55%,_#050c18_100%)] text-white pt-28 sm:pt-32 pb-20 sm:pb-28 px-4 sm:px-6 lg:px-8 overflow-hidden">
+                {/* Ambient Atmospheric Glows */}
+                <div className="absolute -left-24 top-40 z-0 h-72 w-72 rounded-full blur-3xl bg-[#13519C]/30 pointer-events-none" />
+                <div className="absolute right-0 top-24 z-0 h-96 w-96 rounded-full blur-3xl bg-[#FF9100]/15 pointer-events-none" />
+                {/* Horizon gradient softening into curtain */}
+                <div className="absolute inset-x-0 bottom-0 h-36 bg-gradient-to-t from-[#081326] via-[#081326]/80 to-transparent pointer-events-none z-0" />
+
+                <div className="relative z-10 max-w-7xl mx-auto">
+                    <ScrollReveal delay={0.1}>
+                        <section ref={heroRef} id="learner-screen-top" className="flex flex-col items-center justify-between text-center pb-6 pt-4 min-h-[calc(100vh-11rem)] max-w-4xl mx-auto relative z-10 box-border scroll-mt-32 sm:scroll-mt-36">
+                            {/* Top & Middle Group */}
+                            <div className="flex flex-col items-center justify-center flex-1 w-full gap-4">
+                                <div className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium border border-[#2B7BD8]/40 bg-[#13519C]/20 text-blue-100 shadow-xs">
+                                    <Sparkles className="h-4 w-4 text-[#FFD166]" />
+                                    {HERO_COPY.eyebrow}
                                 </div>
-                                <div className={`rounded-2xl border p-4 ${isLightPalette ? 'border-sky-100 bg-slate-50' : 'border-white/10 bg-slate-950/60'}`}>
-                                    <p className={`text-sm font-medium ${mutedTextClassName}`}>Also live</p>
-                                    <p className={`mt-2 text-lg font-semibold ${heroSectionTextClassName}`}>Grade 11 Accounting</p>
-                                    <p className={`mt-1 text-sm ${bodyTextClassName}`}>More grades and subjects will follow once demand and readiness line up.</p>
+
+                                {/* ── Slot-machine headline ── */}
+                                <h1
+                                    className="font-bold tracking-tight text-white"
+                                    style={{ fontFamily: 'Afacad, sans-serif' }}
+                                >
+                                    {/* Line 1 — static lead-in */}
+                                    <span className="block text-4xl sm:text-5xl xl:text-6xl">
+                                        Excel in
+                                    </span>
+
+                                    {/* Line 2 — slot machine: fixed height = exactly 1 line */}
+                                    <span
+                                        className="block overflow-hidden text-4xl sm:text-5xl xl:text-6xl"
+                                        style={{ height: '1.1em' }}
+                                        aria-live="polite"
+                                        aria-label={SLOT_ITEMS[slotIdx]}
+                                    >
+                                        <span
+                                            className="block"
+                                            style={{
+                                                transform: `translateY(calc(${-slotIdx} * 1.1em))`,
+                                                transition: slotSettled ? 'none' : 'transform 0.25s cubic-bezier(0.4,0,0.2,1)',
+                                                lineHeight: '1.1',
+                                                willChange: 'transform',
+                                            }}
+                                        >
+                                            {SLOT_ITEMS.map((item, i) => (
+                                                <span
+                                                    key={i}
+                                                    className={`block ${i === FINAL_IDX ? 'text-white' : 'text-[#FF9100]'}`}
+                                                    style={{ height: '1.1em', lineHeight: '1.1' }}
+                                                >
+                                                    {item}
+                                                </span>
+                                            ))}
+                                        </span>
+                                    </span>
+
+                                    {/* Line 3 — static tagline, always visible */}
+                                    <span className="block text-2xl sm:text-3xl xl:text-4xl font-semibold mt-1 text-white/70">
+                                        {HERO_COPY.tagline || 'Use Fundile, become a top student.'}
+                                    </span>
+                                </h1>
+
+                                {/* Bullet points */}
+                                <div 
+                                    className={`transition-all duration-1000 ease-out transform ${
+                                        showDetails ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'
+                                    }`}
+                                >
+                                    <ul className="mt-4 space-y-2 inline-block text-left">
+                                        {(HERO_COPY.bullets || []).map((bullet, i) => (
+                                            <li key={i} className="flex items-start gap-2.5 text-sm sm:text-base leading-6 text-slate-200">
+                                                <CheckCircle2 className="h-4.5 w-4.5 mt-0.5 shrink-0 text-[#FF9100]" />
+                                                <span>{bullet}</span>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+
+                                {/* CTA row */}
+                                <div 
+                                    ref={ctaRowRef}
+                                    className={`mt-4 w-full flex flex-col items-center transition-all duration-1000 ease-out transform ${
+                                        showDetails ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'
+                                    }`}
+                                >
+                                    <div className="flex flex-col sm:flex-row items-center justify-center gap-3 w-full max-w-lg">
+                                        <button
+                                            type="button"
+                                            onClick={onGetStarted}
+                                            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl bg-[#FF9100] px-8 py-3.5 text-sm sm:text-base font-semibold text-white shadow-[0_16px_50px_rgba(255,145,0,0.3)] transition hover:bg-[#f58200] cursor-pointer"
+                                        >
+                                            {HERO_COPY.primaryCta}
+                                            <ArrowRight className="h-4.5 w-4.5" />
+                                        </button>
+                                        <button
+                                            type="button"
+                                            onClick={() => setShowInstallModal(true)}
+                                            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl border border-white/20 bg-white/10 backdrop-blur-md px-6 py-3.5 text-sm sm:text-base font-semibold text-white transition hover:bg-white/20 cursor-pointer shadow-lg hover:border-white/30"
+                                        >
+                                            <span>📲</span>
+                                            <span>Install App</span>
+                                        </button>
+                                    </div>
+                                    <p className="mt-3 text-xs font-medium text-white/60">
+                                        {HERO_COPY.trialNote}
+                                    </p>
                                 </div>
                             </div>
-                        </div>
-                        <DemandCaptureForm
-                            db={db}
-                            source="landing_page"
-                            title="Tell Fundile what you want next"
-                            description="Share the next subject, grade, or rollout request you want Fundile to prioritise."
-                            submitLabel="Send request"
-                        />
-                    </section>
-                    <footer id="contact-footer" className={`mt-24 rounded-[32px] border px-6 py-10 sm:px-8 ${isLightPalette ? 'border-sky-100 bg-white shadow-lg shadow-sky-100/30' : 'border-white/10 bg-slate-950/70 backdrop-blur-sm'}`}>
-                        <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-end">
-                            <div>
-                                <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[#FFD166]">Contact + privacy</p>
-                                <h2 className={`mt-4 text-3xl font-bold tracking-tight sm:text-4xl ${heroSectionTextClassName}`} style={{ fontFamily: 'Afacad, sans-serif' }}>
-                                    Stay in touch with Fundile.
+
+                            {/* Bouncing scroll arrow */}
+                            <div 
+                                className={`shrink-0 transition-all duration-1000 ease-out transform ${
+                                    showArrow ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'
+                                }`}
+                            >
+                                <button
+                                    onClick={scrollToSimulator}
+                                    className="flex flex-col items-center gap-1.5 text-[10px] sm:text-xs font-semibold uppercase tracking-[0.2em] transition-all hover:translate-y-1 text-white/50 hover:text-white/80 cursor-pointer"
+                                >
+                                    <span>See how it works</span>
+                                    <ChevronDown className="h-4 sm:h-5 w-4 sm:w-5 animate-bounce text-[#FF9100]" />
+                                </button>
+                            </div>
+                        </section>
+                    </ScrollReveal>
+                </div>
+            </div>
+
+            {/* 2. LOWER CONTENT SECTIONS CANVAS — Crisp Radiant White / Soft-Slate Canvas with Antigravity Curtain Transition */}
+            <div className="relative z-20 -mt-10 sm:-mt-14 bg-slate-50 text-slate-900 rounded-t-[36px] sm:rounded-t-[48px] lg:rounded-t-[56px] border-t border-slate-200/90 shadow-[0_-25px_60px_-15px_rgba(0,0,0,0.5)] px-4 sm:px-6 lg:px-8 pt-10 sm:pt-12 pb-24 transition-all duration-700">
+                <div className="mx-auto max-w-7xl">
+                    
+                    {/* 0. DUAL-ENGINE ARCHITECTURE & TARGETED PRACTICE (BRIDGE SECTION) */}
+                    <ScrollReveal delay={0.1}>
+                        <section id="ai-engine" className="pt-2 sm:pt-4 pb-16 sm:pb-20 border-b border-slate-200/80 scroll-mt-32">
+                            <div className="text-center max-w-4xl mx-auto">
+                                
+                                {/* Eyebrow Pill */}
+                                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-slate-200/90 shadow-xs mb-6">
+                                    <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                                    <span className="text-xs font-bold text-slate-700 uppercase tracking-wide">
+                                        Dual-Engine Architecture • Grounded Socratic Intelligence
+                                    </span>
+                                </div>
+
+                                {/* Main Display Headline (Afacad / Plus Jakarta Sans) */}
+                                <h2 
+                                    className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 tracking-tight leading-[1.12] mb-6"
+                                    style={{ fontFamily: 'Afacad, sans-serif' }}
+                                >
+                                    Targeted Practice. Zero Rote Guesswork.<br className="hidden sm:inline" />
+                                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#13519C] via-blue-700 to-[#FF9100]">
+                                        {' '}100% Exam Certainty.
+                                    </span>
                                 </h2>
-                                <p className={`mt-5 max-w-2xl text-lg leading-8 ${bodyTextClassName}`}>
-                                    For pricing, support, school enquiries, or general questions, contact us directly. You can also read our privacy statement for more information about how Fundile approaches personal information and POPIA-aligned privacy responsibilities.
+
+                                {/* Lead Narrative Paragraph introducing AI without sounding like a generic wrapper */}
+                                <p className="text-base sm:text-lg lg:text-xl text-slate-600 font-normal leading-relaxed max-w-3xl mx-auto mb-10">
+                                    Fundile pairs an on-rails Socratic AI tutor with a 100% deterministic calculation engine. While generic chatbots guess answers and hallucinate formulas, Fundile computes verified mathematical steps with SymPy and 2D ledger graphs — using artificial intelligence strictly where human teaching matters most: diagnosing misconceptions and nudging learners to discover the answer themselves.
+                                </p>
+
+                                {/* Focused CTA Button */}
+                                <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
+                                    <button
+                                        type="button"
+                                        onClick={onGetStarted}
+                                        className="w-full sm:w-auto inline-flex items-center justify-center px-8 py-3.5 text-base font-bold text-white bg-[#FF9100] hover:bg-[#e68200] rounded-xl shadow-lg shadow-orange-500/25 transition-all duration-200 transform hover:-translate-y-0.5 cursor-pointer"
+                                    >
+                                        <span>Start 2-Week Free Trial</span>
+                                        <ArrowRight className="w-5 h-5 ml-2" />
+                                    </button>
+                                </div>
+
+                                {/* 4 Quick Badges Strip */}
+                                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-left max-w-4xl mx-auto">
+                                    {/* Badge 1: Socratic AI */}
+                                    <div className="bg-white p-4 rounded-2xl border border-slate-200/90 shadow-xs flex items-start gap-3 hover:shadow-md transition duration-200">
+                                        <div className="w-8 h-8 rounded-xl bg-blue-50 text-[#13519C] flex items-center justify-center shrink-0 border border-blue-100">
+                                            <Sparkles className="w-4 h-4 text-[#FF9100]" />
+                                        </div>
+                                        <div>
+                                            <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider">On-Rails Socratic AI</h4>
+                                            <p className="text-[12px] text-slate-500 leading-snug mt-0.5">Never solves homework for you. Nudges your thinking step-by-step.</p>
+                                        </div>
+                                    </div>
+
+                                    {/* Badge 2: Zero-Hallucination */}
+                                    <div className="bg-white p-4 rounded-2xl border border-slate-200/90 shadow-xs flex items-start gap-3 hover:shadow-md transition duration-200">
+                                        <div className="w-8 h-8 rounded-xl bg-orange-50 text-[#FF9100] flex items-center justify-center shrink-0 border border-orange-100">
+                                            <Cpu className="w-4 h-4 text-[#13519C]" />
+                                        </div>
+                                        <div>
+                                            <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider">Zero-Hallucination</h4>
+                                            <p className="text-[12px] text-slate-500 leading-snug mt-0.5">Pure deterministic SymPy & 2D ledger graphs. Zero wrong memos.</p>
+                                        </div>
+                                    </div>
+
+                                    {/* Badge 3: 1.4 MB Data */}
+                                    <div className="bg-white p-4 rounded-2xl border border-slate-200/90 shadow-xs flex items-start gap-3 hover:shadow-md transition duration-200">
+                                        <div className="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0 border border-emerald-100">
+                                            <WifiOff className="w-4 h-4" />
+                                        </div>
+                                        <div>
+                                            <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider">1.4 MB Cellular Data</h4>
+                                            <p className="text-[12px] text-slate-500 leading-snug mt-0.5">Ultra-lean offline PWA architecture. No high-cost chatbot streaming.</p>
+                                        </div>
+                                    </div>
+
+                                    {/* Badge 4: Unlimited 3-Click Exams */}
+                                    <div className="bg-white p-4 rounded-2xl border border-slate-200/90 shadow-xs flex items-start gap-3 hover:shadow-md transition duration-200">
+                                        <div className="w-8 h-8 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center shrink-0 border border-purple-100">
+                                            <FileCheck2 className="w-4 h-4" />
+                                        </div>
+                                        <div>
+                                            <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider">3-Click Exams</h4>
+                                            <p className="text-[12px] text-slate-500 leading-snug mt-0.5">Instant classroom-ready exam papers and official marking memos.</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </section>
+                    </ScrollReveal>
+
+                    {/* 1. CORE COGNITIVE PILLARS */}
+                    <section id="features" className="scroll-mt-32 pt-16 pb-16">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                            {/* Pillar 1: Smart Diagnostic Autopsy */}
+                            <div className="rounded-[28px] border border-slate-200/90 bg-white p-6 shadow-xs hover:shadow-md transition duration-300">
+                                <div className="flex items-center gap-2.5 text-[#13519C] font-bold text-xs uppercase tracking-wider mb-2.5">
+                                    <div className="w-8 h-8 rounded-xl bg-orange-50 text-[#FF9100] flex items-center justify-center shrink-0 border border-orange-100">
+                                        <Activity className="w-4 h-4" />
+                                    </div>
+                                    <span>Smart Diagnostic Autopsy</span>
+                                </div>
+                                <p className="text-xs leading-relaxed text-slate-600">
+                                    Automatically pinpoints the exact calculation step where marks were lost, just like a master teacher spotting an error pattern on a graded test paper.
                                 </p>
                             </div>
-                            <div className="grid gap-4 sm:grid-cols-2">
-                                <div className={`rounded-2xl border p-4 ${isLightPalette ? 'border-sky-100 bg-slate-50' : 'border-white/10 bg-white/5'}`}>
-                                    <p className={`text-sm font-medium ${mutedTextClassName}`}>Email</p>
-                                    <a href="mailto:info@fundile.com" className="mt-2 block text-lg font-semibold text-[#FF9100] hover:underline">info@fundile.com</a>
+
+                            {/* Pillar 2: 5-Minute Focus Fixes */}
+                            <div className="rounded-[28px] border border-slate-200/90 bg-white p-6 shadow-xs hover:shadow-md transition duration-300">
+                                <div className="flex items-center gap-2.5 text-[#13519C] font-bold text-xs uppercase tracking-wider mb-2.5">
+                                    <div className="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0 border border-emerald-100">
+                                        <Wrench className="w-4 h-4" />
+                                    </div>
+                                    <span>5-Minute Focus Fixes</span>
                                 </div>
-                                <div className={`rounded-2xl border p-4 ${isLightPalette ? 'border-sky-100 bg-slate-50' : 'border-white/10 bg-white/5'}`}>
-                                    <p className={`text-sm font-medium ${mutedTextClassName}`}>Privacy</p>
-                                    <a href="/privacy-statement.html" className="mt-2 block text-lg font-semibold text-[#FF9100] hover:underline">Read our privacy statement</a>
+                                <p className="text-xs leading-relaxed text-slate-600">
+                                    Quick 3-question targeted practice sessions isolated purely to the single prerequisite step you stumbled on (such as calculating 15% VAT) before resuming full problems.
+                                </p>
+                            </div>
+
+                            {/* Pillar 3: Fair Step Marking */}
+                            <div className="rounded-[28px] border border-slate-200/90 bg-white p-6 shadow-xs hover:shadow-md transition duration-300">
+                                <div className="flex items-center gap-2.5 text-[#13519C] font-bold text-xs uppercase tracking-wider mb-2.5">
+                                    <div className="w-8 h-8 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center shrink-0 border border-purple-100">
+                                        <CheckSquare className="w-4 h-4" />
+                                    </div>
+                                    <span>Fair Step Marking</span>
                                 </div>
+                                <p className="text-xs leading-relaxed text-slate-600">
+                                    You receive full method marks [M] for applying correct formulas and logic on subsequent steps, even if an early arithmetic calculation had a minor slip.
+                                </p>
+                            </div>
+
+                            {/* Pillar 4: Skill Radar Calibration */}
+                            <div className="rounded-[28px] border border-slate-200/90 bg-white p-6 shadow-xs hover:shadow-md transition duration-300">
+                                <div className="flex items-center gap-2.5 text-[#13519C] font-bold text-xs uppercase tracking-wider mb-2.5">
+                                    <div className="w-8 h-8 rounded-xl bg-blue-50 text-[#13519C] flex items-center justify-center shrink-0 border border-blue-100">
+                                        <Radar className="w-4 h-4" />
+                                    </div>
+                                    <span>Skill Radar Calibration</span>
+                                </div>
+                                <p className="text-xs leading-relaxed text-slate-600">
+                                    A thought-paced 2 to 4 check radar that skips drills you've already mastered and jumps straight to your optimal challenge tier without anxiety-inducing timers.
+                                </p>
                             </div>
                         </div>
-                        <div className={`mt-8 flex flex-col gap-3 border-t pt-6 text-sm sm:flex-row sm:items-center sm:justify-between ${isLightPalette ? 'border-sky-100 text-slate-500' : 'border-white/10 text-white/60'}`}>
-                            <p>© {currentYear} Fundile. All rights reserved.</p>
-                            <div className="flex flex-wrap gap-4">
-                                <a href="mailto:info@fundile.com" className="hover:text-[#FF9100]">info@fundile.com</a>
-                                <a href="/privacy-statement.html" className="hover:text-[#FF9100]">Privacy statement</a>
+                    </section>
+
+                    {/* 1.5 HOW IT WORKS — INTERACTIVE DEMO SIMULATIONS */}
+                    <ScrollReveal delay={0.1}>
+                        <section id="how-it-works" className="scroll-mt-32 pt-8 pb-16 border-b border-slate-200/80">
+                            <PerspectiveShowcase
+                                activePerspective={activePerspective}
+                                onSelectPerspective={handlePerspectiveChange}
+                                onGetStarted={onGetStarted}
+                                onSignIn={onSignIn}
+                                isLightPalette={true}
+                            />
+                        </section>
+                    </ScrollReveal>
+
+                    {/* 2. THE PROBLEM → THE PROMISE */}
+                    <ScrollReveal delay={0.1}>
+                        <section id="problem-promise" className="mt-8 scroll-mt-32">
+                            <div className="max-w-3xl mb-10">
+                                <span className="text-xs font-bold uppercase tracking-[0.25em] text-[#13519C] bg-blue-50 border border-blue-200/60 px-3 py-1 rounded-full inline-block mb-3">
+                                    The Hidden Curriculum
+                                </span>
+                                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-slate-900" style={{ fontFamily: 'Afacad, sans-serif' }}>
+                                    Most learners are surprised by the exam. They should not be.
+                                </h2>
+                                <p className="mt-4 text-base sm:text-lg leading-relaxed text-slate-600">
+                                    Day-to-day classwork rarely looks like the final exam, so the real "rules of the game" stay hidden until it is too late. Fundile closes that gap: every topic is practised at exam standard, with transparent feedback on exactly where you went wrong — no surprises in November.
+                                </p>
+                            </div>
+
+                            <div className="grid gap-6 md:grid-cols-3">
+                                <div className="rounded-[28px] border border-slate-200/90 bg-white p-6 sm:p-7 shadow-xs hover:shadow-md transition duration-300">
+                                    <h3 className="text-lg sm:text-xl font-bold text-slate-900 mb-2">
+                                        Exam-standard from day one
+                                    </h3>
+                                    <p className="text-sm leading-relaxed text-slate-600">
+                                        Practice questions are pitched at authentic exam level from the first topic, not only at revision time.
+                                    </p>
+                                </div>
+
+                                <div className="rounded-[28px] border border-slate-200/90 bg-white p-6 sm:p-7 shadow-xs hover:shadow-md transition duration-300">
+                                    <h3 className="text-lg sm:text-xl font-bold text-slate-900 mb-2">
+                                        See where you went wrong
+                                    </h3>
+                                    <p className="text-sm leading-relaxed text-slate-600">
+                                        Step-by-step marking shows the exact line your method broke down — and still credits the work that was correct with fair method marks.
+                                    </p>
+                                </div>
+
+                                <div className="rounded-[28px] border border-slate-200/90 bg-white p-6 sm:p-7 shadow-xs hover:shadow-md transition duration-300">
+                                    <h3 className="text-lg sm:text-xl font-bold text-slate-900 mb-2">
+                                        Unlimited practice
+                                    </h3>
+                                    <p className="text-sm leading-relaxed text-slate-600">
+                                        Deterministic generators produce endless fresh variants of any question, so you practise until it is automatic.
+                                    </p>
+                                </div>
+                            </div>
+                        </section>
+                    </ScrollReveal>
+
+                    {/* 3. A STRUCTURED, ADAPTIVE LEARNING SYSTEM */}
+                    <ScrollReveal delay={0.1}>
+                        <section id="structured-system" className="mt-24 scroll-mt-32">
+                            <div className="max-w-3xl mb-10">
+                                <span className="text-xs font-bold uppercase tracking-[0.25em] text-[#13519C] bg-blue-50 border border-blue-200/60 px-3 py-1 rounded-full inline-block mb-3">
+                                    How It Works
+                                </span>
+                                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-slate-900" style={{ fontFamily: 'Afacad, sans-serif' }}>
+                                    A structured, adaptive learning system.
+                                </h2>
+                                <p className="mt-4 text-base sm:text-lg leading-relaxed text-slate-600">
+                                    From diagnosing prerequisites to mastering final exam papers, our deterministic progression guides learners without calculation errors or generic chatbot guessing.
+                                </p>
+                            </div>
+
+                            <div className="grid gap-6 md:grid-cols-3">
+                                <div className="rounded-[28px] border border-slate-200/90 bg-white p-6 sm:p-7 shadow-xs hover:shadow-md transition duration-300">
+                                    <div className="text-xs font-bold uppercase tracking-[0.2em] text-[#13519C] mb-2">
+                                        Step 01
+                                    </div>
+                                    <h3 className="text-lg sm:text-xl font-bold text-slate-900 mb-2">
+                                        Pick a Topic or Take a Diagnostic
+                                    </h3>
+                                    <p className="text-sm leading-relaxed text-slate-600">
+                                        Choose the exact subject, grade, and topic you need, or begin with a diagnostic autopsy that pinpoints your baseline against the national curriculum standard.
+                                    </p>
+                                </div>
+
+                                <div className="rounded-[28px] border border-slate-200/90 bg-white p-6 sm:p-7 shadow-xs hover:shadow-md transition duration-300">
+                                    <div className="text-xs font-bold uppercase tracking-[0.2em] text-[#13519C] mb-2">
+                                        Step 02
+                                    </div>
+                                    <h3 className="text-lg sm:text-xl font-bold text-slate-900 mb-2">
+                                        Scaffold → Practice → Assessment
+                                    </h3>
+                                    <p className="text-sm leading-relaxed text-slate-600">
+                                        Progress through guided scaffolding, move to independent practice, and unlock exam-standard assessments with pre-baked 3-tier hints.
+                                    </p>
+                                </div>
+
+                                <div className="rounded-[28px] border border-slate-200/90 bg-white p-6 sm:p-7 shadow-xs hover:shadow-md transition duration-300">
+                                    <div className="text-xs font-bold uppercase tracking-[0.2em] text-[#13519C] mb-2">
+                                        Step 03
+                                    </div>
+                                    <h3 className="text-lg sm:text-xl font-bold text-slate-900 mb-2">
+                                        Precision Gap Autopsy & 5-Minute Focus Fixes
+                                    </h3>
+                                    <p className="text-sm leading-relaxed text-slate-600">
+                                        If your working stumbles, Fundile isolates the exact flawed step, awards consequential method marks, and deploys targeted 5-minute focus fixes and SimuLearn visual animations.
+                                    </p>
+                                </div>
+                            </div>
+                        </section>
+                    </ScrollReveal>
+
+                    {/* 4. ACTIVE COGNITIVE LEARNING VS. PASSIVE CHATBOTS */}
+                    <ScrollReveal delay={0.1}>
+                        <section id="not-a-chatbot" className="mt-24 scroll-mt-32">
+                            <div className="max-w-3xl mb-10">
+                                <span className="text-xs font-bold uppercase tracking-[0.25em] text-[#13519C] bg-blue-50 border border-blue-200/60 px-3 py-1 rounded-full inline-block mb-3">
+                                    Active Cognitive Learning vs. Passive Chatbots
+                                </span>
+                                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-slate-900" style={{ fontFamily: 'Afacad, sans-serif' }}>
+                                    Fundile is not an AI chatbot.
+                                </h2>
+                                <p className="mt-4 text-base sm:text-lg leading-relaxed text-slate-600">
+                                    Generic chatbots answer questions for you, encouraging passive copy-pasting and hallucinating non-existent formulas. Fundile asks you the question, enforces authentic exam-standard method working, and intervenes with precision when your logic breaks down.
+                                </p>
+                            </div>
+
+                            <div className="grid gap-6 md:grid-cols-2">
+                                {/* Chatbot Column */}
+                                <div className="rounded-[28px] border border-rose-200/90 bg-rose-50/40 p-6 sm:p-8 shadow-xs">
+                                    <div className="flex items-center gap-3 mb-4">
+                                        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-rose-100 text-rose-700">
+                                            <MessageCircleWarning className="h-5 w-5" />
+                                        </div>
+                                        <div>
+                                            <h3 className="text-lg sm:text-xl font-bold text-rose-950">Generic AI Chatbots</h3>
+                                            <span className="text-xs font-medium text-rose-700">Passive • Hallucination Risk • Zero Accountability</span>
+                                        </div>
+                                    </div>
+                                    <ul className="space-y-3.5 text-sm text-rose-900/80">
+                                        <li className="flex items-start gap-2.5">
+                                            <span className="text-rose-500 font-bold shrink-0">✕</span>
+                                            <span><strong>Gives the answer away:</strong> Solves homework for the learner without building neural pathways or cognitive automaticity.</span>
+                                        </li>
+                                        <li className="flex items-start gap-2.5">
+                                            <span className="text-rose-500 font-bold shrink-0">✕</span>
+                                            <span><strong>Prone to hallucinations:</strong> Invents numbers, mixes up financial accounting rules, and calculates false arithmetic answers with total confidence.</span>
+                                        </li>
+                                        <li className="flex items-start gap-2.5">
+                                            <span className="text-rose-500 font-bold shrink-0">✕</span>
+                                            <span><strong>Zero curriculum discipline:</strong> Unaware of South African national curriculum term weightings, official formula sheets, or method marking rubrics.</span>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                {/* Fundile Column */}
+                                <div className="rounded-[28px] border-2 border-[#13519C] bg-white p-6 sm:p-8 shadow-md shadow-blue-900/10">
+                                    <div className="flex items-center gap-3 mb-4">
+                                        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-50 text-[#13519C]">
+                                            <Sparkles className="h-5 w-5 text-[#FF9100]" />
+                                        </div>
+                                        <div>
+                                            <h3 className="text-lg sm:text-xl font-bold text-slate-900">Fundile Cognitive Engine</h3>
+                                            <span className="text-xs font-bold text-[#13519C]">Active • 100% Deterministic • National Standard</span>
+                                        </div>
+                                    </div>
+                                    <ul className="space-y-3.5 text-sm text-slate-700">
+                                        <li className="flex items-start gap-2.5">
+                                            <span className="text-emerald-600 font-bold shrink-0">✓</span>
+                                            <span><strong>Stepwise procedure tracking:</strong> Awards authentic method marks, carry-over accuracy, and isolates the single line an error occurred.</span>
+                                        </li>
+                                        <li className="flex items-start gap-2.5">
+                                            <span className="text-emerald-600 font-bold shrink-0">✓</span>
+                                            <span><strong>Zero-LLM mathematical ground truth:</strong> Seeded SymPy symbolic math and accounting ledger graph engines guarantee 100% internal consistency.</span>
+                                        </li>
+                                        <li className="flex items-start gap-2.5">
+                                            <span className="text-emerald-600 font-bold shrink-0">✓</span>
+                                            <span><strong>Diagnostic error autopsies:</strong> Tags specific misconceptions (e.g. net vs gross VAT formula) and deploys 5-minute targeted focus fixes.</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </section>
+                    </ScrollReveal>
+
+                    {/* 5. UNIVERSAL NATIONAL CURRICULUM STANDARDS */}
+                    <ScrollReveal delay={0.1}>
+                        <section id="curriculum-alignment" className="mt-24 scroll-mt-32">
+                            <div className="max-w-3xl mb-10">
+                                <span className="text-xs font-bold uppercase tracking-[0.25em] text-[#13519C] bg-blue-50 border border-blue-200/60 px-3 py-1 rounded-full inline-block mb-3">
+                                    Curriculum Standards & Exam Alignment
+                                </span>
+                                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-slate-900" style={{ fontFamily: 'Afacad, sans-serif' }}>
+                                    The difference is not the curriculum — it is the preparation.
+                                </h2>
+                                <div className="mt-4 p-4 rounded-2xl bg-blue-50 border border-blue-200/80 text-sm sm:text-base text-slate-700 leading-relaxed">
+                                    <strong className="text-[#13519C] block mb-1">Did you know?</strong>
+                                    There is only one official national curriculum standard in South Africa, which underpins public, private, and independent school examinations nationwide.
+                                </div>
+                                <p className="mt-4 text-base sm:text-lg leading-relaxed text-slate-600">
+                                    Many families believe private or independent schools follow a completely different curriculum. In reality, the South African National Curriculum forms the statutory foundation for all schools—the difference lies in preparation and assessment depth. Fundile prepares learners to excel at the highest level of examination standards across all examining bodies.
+                                </p>
+                            </div>
+
+                            <div className="grid gap-6 md:grid-cols-3">
+                                <div className="rounded-[28px] border border-slate-200/90 bg-white p-6 sm:p-7 shadow-xs hover:shadow-md transition duration-300">
+                                    <div className="w-10 h-10 rounded-xl bg-blue-50 text-[#13519C] flex items-center justify-center font-bold mb-4">
+                                        <Landmark className="w-5 h-5" />
+                                    </div>
+                                    <h3 className="text-lg sm:text-xl font-bold text-slate-900 mb-2">
+                                        Public School Examinations
+                                    </h3>
+                                    <p className="text-sm leading-relaxed text-slate-600">
+                                        Comprehensive coverage of official national curriculum statements with authentic past exam question archetypes and official time pacing.
+                                    </p>
+                                </div>
+
+                                <div className="rounded-[28px] border border-slate-200/90 bg-white p-6 sm:p-7 shadow-xs hover:shadow-md transition duration-300">
+                                    <div className="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-700 flex items-center justify-center font-bold mb-4">
+                                        <ShieldCheck className="w-5 h-5" />
+                                    </div>
+                                    <h3 className="text-lg sm:text-xl font-bold text-slate-900 mb-2">
+                                        Independent & Private School Examinations
+                                    </h3>
+                                    <p className="text-sm leading-relaxed text-slate-600">
+                                        Higher-order multi-step questions, unseen conceptual synthesis, and rigorous rubric definitions benchmarked for top academic standards.
+                                    </p>
+                                </div>
+
+                                <div className="rounded-[28px] border border-slate-200/90 bg-white p-6 sm:p-7 shadow-xs hover:shadow-md transition duration-300">
+                                    <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center font-bold mb-4">
+                                        <Home className="w-5 h-5" />
+                                    </div>
+                                    <h3 className="text-lg sm:text-xl font-bold text-slate-900 mb-2">
+                                        Distance & Home-Education Assessments
+                                    </h3>
+                                    <p className="text-sm leading-relaxed text-slate-600">
+                                        Clear structured pacing with diagnostic radar checkpoints, assuring independent homeschoolers complete the national syllabus with certainty.
+                                    </p>
+                                </div>
+                            </div>
+                        </section>
+                    </ScrollReveal>
+
+                    {/* 6. SIMPLE & TRANSPARENT PRICING */}
+                    <ScrollReveal delay={0.1}>
+                        <section id="pricing" className="mt-24 scroll-mt-32">
+                            <div className="text-center max-w-3xl mx-auto mb-14">
+                                <span className="text-xs font-bold uppercase tracking-[0.25em] text-[#13519C] bg-blue-50 border border-blue-200/60 px-3 py-1 rounded-full inline-block mb-3">
+                                    Simple &amp; Transparent Pricing
+                                </span>
+                                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-slate-900" style={{ fontFamily: 'Afacad, sans-serif' }}>
+                                    Accessible for Independent Learners. Scalable for Schools.
+                                </h2>
+                                <p className="mt-4 text-base sm:text-lg leading-relaxed text-slate-600">
+                                    Private tutoring costs R150 to R350 per hour. Fundile gives you 24/7 unlimited exam practice, diagnostic autopsies, and step-by-step guidance for less than one tutoring session.
+                                </p>
+                            </div>
+
+                            {/* Pricing Islands Grid (3 Distinct Audiences) */}
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto items-stretch">
+                                {/* Island 1: Standard Individual Learner */}
+                                <div className="rounded-[28px] border border-slate-200/90 bg-white p-7 shadow-xs flex flex-col justify-between hover:shadow-md transition duration-300">
+                                    <div>
+                                        <div className="flex justify-between items-center mb-2">
+                                            <span className="text-xs font-bold uppercase tracking-wider text-[#13519C]">Individual Learner</span>
+                                            <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-blue-50 text-[#13519C] border border-blue-200">Live Now</span>
+                                        </div>
+                                        <h3 className="text-2xl font-bold text-slate-900 mt-2">Standard Pass</h3>
+                                        <p className="text-xs text-slate-500 mt-1 mb-4">Complete self-paced revision for Grades 7–12.</p>
+                                        
+                                        <div className="mt-4">
+                                            <span className="text-4xl font-extrabold text-slate-900">R150</span>
+                                            <span className="text-xs font-medium text-slate-500"> / learner / month</span>
+                                        </div>
+
+                                        <ul className="mt-6 space-y-3 text-xs text-slate-600 border-t border-slate-100 pt-6">
+                                            <li className="flex items-center gap-2">
+                                                <Check className="w-4 h-4 text-emerald-600 shrink-0" />
+                                                <span>Full access to all 476+ national curriculum topics</span>
+                                            </li>
+                                            <li className="flex items-center gap-2">
+                                                <Check className="w-4 h-4 text-emerald-600 shrink-0" />
+                                                <span>Unlimited deterministic question generator</span>
+                                            </li>
+                                            <li className="flex items-center gap-2">
+                                                <Check className="w-4 h-4 text-emerald-600 shrink-0" />
+                                                <span>Step-by-step Fair Step Marking (consequential accuracy)</span>
+                                            </li>
+                                            <li className="flex items-center gap-2">
+                                                <Check className="w-4 h-4 text-emerald-600 shrink-0" />
+                                                <span>Offline PWA installation (1.4 MB total data)</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <div className="mt-8 pt-4">
+                                        <button 
+                                            type="button"
+                                            onClick={onGetStarted}
+                                            className="w-full inline-flex items-center justify-center py-3.5 px-4 rounded-xl text-xs font-bold text-[#13519C] bg-blue-50 hover:bg-blue-100 border border-blue-200 transition cursor-pointer"
+                                        >
+                                            Start Free Trial
+                                        </button>
+                                    </div>
+                                </div>
+
+                                {/* Island 2: Pro Cognitive Package (Featured) */}
+                                <div className="rounded-[28px] border-2 border-[#13519C] bg-white p-7 shadow-lg shadow-blue-900/10 flex flex-col justify-between relative">
+                                    <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full text-xs font-extrabold bg-[#13519C] text-white shadow-sm flex items-center gap-1">
+                                        <Star className="w-3 h-3 text-[#FF9100] fill-[#FF9100]" />
+                                        <span>RECOMMENDED • 2-WEEK FREE TRIAL</span>
+                                    </div>
+
+                                    <div>
+                                        <div className="flex justify-between items-center mb-2 mt-2">
+                                            <span className="text-xs font-bold uppercase tracking-wider text-purple-700">Pro Intelligence</span>
+                                            <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-purple-50 text-purple-700 border border-purple-200">Full Suite</span>
+                                        </div>
+                                        <h3 className="text-2xl font-bold text-slate-900 mt-2">Pro Package</h3>
+                                        <p className="text-xs text-slate-500 mt-1 mb-4">Everything in Standard, plus our full Socratic cognitive tutor & SimuLearn.</p>
+                                        
+                                        <div className="mt-4">
+                                            <span className="text-4xl font-extrabold text-slate-900">R299</span>
+                                            <span className="text-xs font-medium text-slate-500"> / learner / month</span>
+                                        </div>
+
+                                        <ul className="mt-6 space-y-3 text-xs text-slate-700 border-t border-slate-100 pt-6">
+                                            <li className="flex items-center gap-2">
+                                                <Check className="w-4 h-4 text-[#FF9100] shrink-0" />
+                                                <span><strong>Everything in Standard</strong></span>
+                                            </li>
+                                            <li className="flex items-center gap-2">
+                                                <Check className="w-4 h-4 text-[#FF9100] shrink-0" />
+                                                <span>Fundile Socratic™ Tutor with on-rails suggestion chips</span>
+                                            </li>
+                                            <li className="flex items-center gap-2">
+                                                <Check className="w-4 h-4 text-[#FF9100] shrink-0" />
+                                                <span>SimuLearn visual animations (saves 95% data over video)</span>
+                                            </li>
+                                            <li className="flex items-center gap-2">
+                                                <Check className="w-4 h-4 text-[#FF9100] shrink-0" />
+                                                <span>Diagnostic error autopsies & 5-minute focus fixes</span>
+                                            </li>
+                                            <li className="flex items-center gap-2">
+                                                <Check className="w-4 h-4 text-[#FF9100] shrink-0" />
+                                                <span>Sunday WhatsApp Parent Coaching Pulse</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <div className="mt-8 pt-4">
+                                        <button 
+                                            type="button"
+                                            onClick={onGetStarted}
+                                            className="w-full inline-flex items-center justify-center py-3.5 px-4 rounded-xl text-xs font-bold text-white bg-[#FF9100] hover:bg-[#e68200] shadow-md transition cursor-pointer"
+                                        >
+                                            Start 2-Week Free Trial
+                                        </button>
+                                    </div>
+                                </div>
+
+                                {/* Island 3: Whole School SGB & Institutional */}
+                                <div className="rounded-[28px] border border-slate-200/90 bg-white p-7 shadow-xs flex flex-col justify-between hover:shadow-md transition duration-300">
+                                    <div>
+                                        <div className="flex justify-between items-center mb-2">
+                                            <span className="text-xs font-bold uppercase tracking-wider text-cyan-800">Schools &amp; Leadership</span>
+                                            <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-cyan-50 text-cyan-800 border border-cyan-200">Volume Tier</span>
+                                        </div>
+                                        <h3 className="text-2xl font-bold text-slate-900 mt-2">Institutional License</h3>
+                                        <p className="text-xs text-slate-500 mt-1 mb-4">Complete infrastructure for classrooms, school administrators, and school governing bodies.</p>
+                                        
+                                        <div className="mt-4">
+                                            <span className="text-3xl font-extrabold text-slate-900">From R65</span>
+                                            <span className="text-xs font-medium text-slate-500"> / learner / month</span>
+                                        </div>
+
+                                        <ul className="mt-6 space-y-3 text-xs text-slate-600 border-t border-slate-100 pt-6">
+                                            <li className="flex items-center gap-2">
+                                                <Check className="w-4 h-4 text-cyan-600 shrink-0" />
+                                                <span>Teacher & Admin LMS Cockpits with real student photos</span>
+                                            </li>
+                                            <li className="flex items-center gap-2">
+                                                <Check className="w-4 h-4 text-cyan-600 shrink-0" />
+                                                <span>Unlimited 3-click printable A4 test papers & memos</span>
+                                            </li>
+                                            <li className="flex items-center gap-2">
+                                                <Check className="w-4 h-4 text-cyan-600 shrink-0" />
+                                                <span>1-Click official SASAMS Excel mark sheet export</span>
+                                            </li>
+                                            <li className="flex items-center gap-2">
+                                                <Check className="w-4 h-4 text-cyan-600 shrink-0" />
+                                                <span>Curriculum pacing variance radar (ATP vs reality)</span>
+                                            </li>
+                                            <li className="flex items-center gap-2">
+                                                <Check className="w-4 h-4 text-cyan-600 shrink-0" />
+                                                <span>SGB formal quotation & invoice procurement support</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <div className="mt-8 pt-4">
+                                        <a 
+                                            href="mailto:info@fundile.com?subject=School%20Volume%20Pricing%20%26%20Institutional%20Inquiry" 
+                                            className="w-full inline-flex items-center justify-center py-3.5 px-4 rounded-xl text-xs font-bold text-white bg-cyan-700 hover:bg-cyan-800 transition cursor-pointer"
+                                        >
+                                            Contact info@fundile.com
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </ScrollReveal>
+
+                    {/* 7. DEMAND CAPTURE */}
+                    <ScrollReveal delay={0.1}>
+                        <section id="interest-form" className="mt-24">
+                            <DemandCaptureForm isLightPalette={true} />
+                        </section>
+                    </ScrollReveal>
+
+                    {/* 8. AUTHENTIC INSTITUTIONAL FOOTER & POPIA */}
+                    <footer className="mt-24 border-t border-slate-200 pt-12 pb-8">
+                        {/* Top Brand Bar: Logo with Brand Blue Wordmark */}
+                        <div className="mb-8">
+                            <FundileLogo className="h-10 w-auto sm:h-12 text-[#13519C]" wordmarkColor="#13519C" />
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-10 items-start">
+                            {/* Brand & Mission Column */}
+                            <div className="md:col-span-2 space-y-4">
+                                <p className="text-xs text-slate-500 leading-relaxed max-w-md">
+                                    Fundile is South Africa’s deterministic curriculum engine and school management system. Grounded in the official National Curriculum Standards across Grades 7–12, we eliminate calculation hallucinations and empower learners, teachers, parents, and school leadership with measurable academic certainty.
+                                </p>
+                                <div className="flex items-center gap-3 pt-2">
+                                    <span className="inline-flex items-center px-2.5 py-1 rounded-md bg-emerald-50 text-emerald-800 text-[11px] font-semibold border border-emerald-200">
+                                        <ShieldCheck className="w-3.5 h-3.5 mr-1 text-emerald-600" /> POPIA Compliant (Sec 35)
+                                    </span>
+                                    <span className="inline-flex items-center px-2.5 py-1 rounded-md bg-blue-50 text-[#13519C] text-[11px] font-semibold border border-blue-200">
+                                        <Check className="w-3.5 h-3.5 mr-1 text-[#FF9100]" /> 100% National Standard
+                                    </span>
+                                </div>
+                            </div>
+
+                            {/* Stakeholders & Quick Links */}
+                            <div>
+                                <h4 className="text-xs font-bold uppercase tracking-wider text-slate-900 mb-3">Stakeholders</h4>
+                                <ul className="space-y-2 text-xs text-slate-600">
+                                    <li><button type="button" onClick={() => handlePerspectiveChange('learners')} className="hover:text-[#13519C] transition cursor-pointer">For High School Learners</button></li>
+                                    <li><button type="button" onClick={() => handlePerspectiveChange('parents')} className="hover:text-[#13519C] transition cursor-pointer">For Supportive Parents</button></li>
+                                    <li><button type="button" onClick={() => handlePerspectiveChange('teachers')} className="hover:text-[#13519C] transition cursor-pointer">For Classroom Teachers</button></li>
+                                    <li><button type="button" onClick={() => handlePerspectiveChange('schools')} className="hover:text-[#13519C] transition cursor-pointer">For School Admins</button></li>
+                                    <li><button type="button" onClick={() => scrollToSection('features')} className="hover:text-[#13519C] transition cursor-pointer">Core Features</button></li>
+                                </ul>
+                            </div>
+
+                            {/* Contact & Legal Links */}
+                            <div>
+                                <h4 className="text-xs font-bold uppercase tracking-wider text-slate-900 mb-3">Institutional & Legal</h4>
+                                <ul className="space-y-2 text-xs text-slate-600">
+                                    <li>
+                                        <a href="mailto:info@fundile.com" className="hover:text-[#13519C] transition flex items-center gap-1.5">
+                                            <Mail className="w-3.5 h-3.5 text-slate-400" /> info@fundile.com
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="mailto:info@fundile.com?subject=School%20Pricing%20%26%20Institutional%20Inquiry" className="hover:text-[#13519C] transition flex items-center gap-1.5 font-semibold text-[#13519C]">
+                                            <Building2 className="w-3.5 h-3.5" /> Institutional Inquiries
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/privacy-statement.html" className="hover:text-[#13519C] transition flex items-center gap-1.5">
+                                            <ShieldCheck className="w-3.5 h-3.5 text-slate-400" /> Privacy Policy (POPIA)
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <button type="button" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="hover:text-[#13519C] transition cursor-pointer">Back to Top</button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        {/* Bottom Bar */}
+                        <div className="border-t border-slate-200 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-slate-500 text-xs">
+                            <div>
+                                © {new Date().getFullYear()} Fundile. All rights reserved. 100% Aligned with South African National Curriculum Standards.
+                            </div>
+                            <div className="text-slate-400 text-[11px]">
+                                Trusted preparation for public, private, and independent school examinations nationwide.
                             </div>
                         </div>
                     </footer>
-                    {showProComingSoon && (
-                        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/70 p-4 backdrop-blur-sm">
-                            <div className={`w-full max-w-md rounded-[28px] border p-6 shadow-2xl ${isLightPalette ? 'border-sky-100 bg-white' : 'border-white/10 bg-slate-950'}`}>
-                                <p className="text-sm font-semibold uppercase tracking-[0.25em] text-[#FFD166]">Pro package</p>
-                                <h3 className={`mt-4 text-2xl font-semibold ${heroSectionTextClassName}`}>Coming soon</h3>
-                                <p className={`mt-3 leading-7 ${bodyTextClassName}`}>
-                                    Coming soon, not yet available in South Africa.
-                                </p>
-                                <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:justify-end">
-                                    <a
-                                        href="mailto:info@fundile.com?subject=Fundile%20Pro%20interest"
-                                        className="inline-flex items-center justify-center rounded-2xl bg-[#FF9100] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#f58200]"
-                                    >
-                                        Register interest
-                                    </a>
-                                    <button
-                                        type="button"
-                                        onClick={() => setShowProComingSoon(false)}
-                                        className={`inline-flex items-center justify-center rounded-2xl px-5 py-3 text-sm font-semibold transition ${isLightPalette ? 'border border-slate-200 bg-white text-slate-700 hover:border-slate-300 hover:bg-slate-50' : 'border border-white/15 text-white/90 hover:border-white/30 hover:bg-white/5'}`}
-                                    >
-                                        Close
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    )}
+
                 </div>
             </div>
+
+            {/* Direct Device Install Modal (PWA & WebAPK) */}
+            <InstallAppModal 
+                isOpen={showInstallModal} 
+                onClose={() => setShowInstallModal(false)} 
+            />
         </div>
     );
 };

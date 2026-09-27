@@ -1,0 +1,329 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fundile — Alternative UI Design (Landing + Topic Workspace)</title>
+  <!-- Tailwind Play CDN — mockup only, not part of the app build -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Afacad:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              blue: '#13519C',
+              navy: '#081326',
+              cobalt: '#0f3e77',
+              sky: '#2B7BD8',
+              orange: '#FF9100',
+              orangeDark: '#f58200',
+              amber: '#FFD166',
+            },
+          },
+          fontFamily: {
+            display: ['Afacad', 'sans-serif'],
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+          },
+          boxShadow: {
+            ribbon: '0 4px 14px rgba(255,145,0,0.39)',
+            lift: '0 16px 50px rgba(19,81,156,0.14)',
+          },
+        },
+      },
+    };
+  </script>
+  <style>
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', system-ui, sans-serif; }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    .hero-glow { background: radial-gradient(ellipse at top, rgba(19,81,156,0.45) 0%, rgba(8,19,38,0.98) 55%, #050c18 100%); }
+    @keyframes floatUp { from { opacity: 0; transform: translateY(14px);} to {opacity:1; transform: translateY(0);} }
+    .reveal { animation: floatUp .7s cubic-bezier(0.16,1,0.3,1) both; }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-900 antialiased">
+
+  <!-- ============================================================ -->
+  <!--  DESIGN NOTE BANNER                                           -->
+  <!-- ============================================================ -->
+  <div class="bg-brand-navy text-white/80 text-center text-xs sm:text-sm py-2 px-4">
+    Concept mockup — alternative design. Blue <span class="text-brand-sky font-semibold">#13519C</span> + Orange <span class="text-brand-orange font-semibold">#FF9100</span> brand ribbon unified across Landing &amp; Workspace.
+  </div>
+
+  <!-- ============================================================ -->
+  <!--  SECTION A — LANDING PAGE                                     -->
+  <!-- ============================================================ -->
+
+  <!-- FIXED TOP NAV (brand blue ribbon) -->
+  <header class="sticky top-0 z-50 bg-brand-blue border-b border-white/10 h-16 shadow-lg shadow-brand-blue/20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center justify-between">
+      <div class="flex items-center gap-2.5 text-white">
+        <span class="grid place-items-center h-9 w-9 rounded-xl bg-white/10 ring-1 ring-white/20">
+          <i data-lucide="graduation-cap" class="h-5 w-5 text-brand-amber"></i>
+        </span>
+        <span class="font-display font-bold text-xl tracking-tight">Fundile</span>
+      </div>
+      <nav class="hidden md:flex items-center gap-7 text-sm font-medium text-white/85">
+        <a href="#how" class="hover:text-white transition">How it works</a>
+        <a href="#pricing" class="hover:text-white transition">Pricing</a>
+        <a href="#trust" class="hover:text-white transition">CAPS Alignment</a>
+      </nav>
+      <div class="flex items-center gap-3">
+        <button class="hidden sm:inline-flex rounded-lg border border-white/20 bg-white/10 px-4 py-2 text-sm font-medium text-white transition hover:bg-white/20 cursor-pointer">Sign in</button>
+        <button class="bg-brand-orange text-white px-5 py-2 rounded-lg text-sm font-semibold shadow-ribbon transition hover:bg-brand-orangeDark cursor-pointer">Start free trial</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- AUDIENCE SUB-RIBBON (white) -->
+  <div class="sticky top-16 z-40 bg-white/95 backdrop-blur border-b border-slate-200 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5 flex items-center justify-between">
+      <div class="flex items-center gap-2 overflow-x-auto no-scrollbar">
+        <button class="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-bold bg-white text-brand-blue ring-2 ring-brand-orange shadow-md scale-[1.02] shrink-0 cursor-pointer">
+          <i data-lucide="graduation-cap" class="h-4 w-4 text-brand-blue"></i> Learners <span class="w-1.5 h-1.5 rounded-full bg-brand-orange"></span>
+        </button>
+        <button class="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-bold bg-white text-brand-blue border border-slate-200 hover:bg-slate-50 shrink-0 cursor-pointer">
+          <i data-lucide="users" class="h-4 w-4 text-amber-600"></i> Parents
+        </button>
+        <button class="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-bold bg-white text-brand-blue border border-slate-200 hover:bg-slate-50 shrink-0 cursor-pointer">
+          <i data-lucide="book-open" class="h-4 w-4 text-indigo-600"></i> Teachers
+        </button>
+        <button class="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-bold bg-white text-brand-blue border border-slate-200 hover:bg-slate-50 shrink-0 cursor-pointer">
+          <i data-lucide="building-2" class="h-4 w-4 text-cyan-600"></i> Schools &amp; HODs
+        </button>
+      </div>
+      <span class="hidden lg:inline text-[11px] font-medium text-slate-500">Learner experience</span>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <section class="relative hero-glow text-white pt-24 sm:pt-28 pb-24 sm:pb-32 px-4 sm:px-6 lg:px-8 overflow-hidden">
+    <div class="absolute -left-24 top-40 h-72 w-72 rounded-full blur-3xl bg-brand-blue/40 pointer-events-none"></div>
+    <div class="absolute right-0 top-24 h-96 w-96 rounded-full blur-3xl bg-brand-orange/15 pointer-events-none"></div>
+
+    <div class="relative z-10 max-w-5xl mx-auto text-center reveal">
+      <span class="inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium border border-brand-sky/40 bg-brand-blue/20 text-blue-100">
+        <i data-lucide="sparkles" class="h-4 w-4 text-brand-amber"></i> Your CAPS study companion, powered by a cognitive engine
+      </span>
+
+      <h1 class="mt-6 font-display font-bold tracking-tight">
+        <span class="block text-4xl sm:text-6xl xl:text-7xl">Excel in</span>
+        <span class="block text-4xl sm:text-6xl xl:text-7xl text-brand-orange">Mathematics.</span>
+        <span class="block text-2xl sm:text-3xl xl:text-4xl font-semibold mt-3 text-white/70">Use Fundile, become a top student.</span>
+      </h1>
+
+      <ul class="mt-8 space-y-2.5 inline-block text-left max-w-lg">
+        <li class="flex items-start gap-2.5 text-sm sm:text-base text-slate-200"><i data-lucide="check-circle-2" class="h-5 w-5 mt-0.5 text-brand-orange shrink-0"></i> Exam-standard method marks &amp; carry-over accuracy</li>
+        <li class="flex items-start gap-2.5 text-sm sm:text-base text-slate-200"><i data-lucide="check-circle-2" class="h-5 w-5 mt-0.5 text-brand-orange shrink-0"></i> Deterministic, zero-hallucination answers</li>
+        <li class="flex items-start gap-2.5 text-sm sm:text-base text-slate-200"><i data-lucide="check-circle-2" class="h-5 w-5 mt-0.5 text-brand-orange shrink-0"></i> Fixes the exact prerequisite you're missing</li>
+      </ul>
+
+      <!-- trust chips row -->
+      <div class="mt-6 flex flex-wrap items-center justify-center gap-2 text-[11px] font-semibold text-white/70">
+        <span class="px-3 py-1 rounded-full bg-white/5 border border-white/10">Grades 7–12</span>
+        <span class="px-3 py-1 rounded-full bg-white/5 border border-white/10">9 CAPS subjects</span>
+        <span class="px-3 py-1 rounded-full bg-white/5 border border-white/10">NSC Paper 1 &amp; 2</span>
+        <span class="px-3 py-1 rounded-full bg-white/5 border border-white/10">POPIA-safe</span>
+      </div>
+
+      <div class="mt-9 flex flex-col sm:flex-row items-center justify-center gap-3">
+        <button class="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl bg-brand-orange px-8 py-3.5 text-base font-semibold text-white shadow-[0_16px_50px_rgba(255,145,0,0.3)] transition hover:bg-brand-orangeDark cursor-pointer">
+          Start 2-week free trial <i data-lucide="arrow-right" class="h-5 w-5"></i>
+        </button>
+        <a href="#workspace-preview" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl border border-white/25 px-8 py-3.5 text-base font-semibold text-white/90 transition hover:bg-white/10 cursor-pointer">
+          <i data-lucide="play" class="h-5 w-5"></i> Preview the workspace
+        </a>
+      </div>
+      <p class="mt-3 text-xs font-medium text-white/60">No credit card required · Cancel anytime</p>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS (brand-tinted) -->
+  <section id="how" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+    <div class="max-w-3xl">
+      <span class="text-xs font-bold uppercase tracking-[0.25em] text-brand-blue bg-blue-50 border border-blue-200/60 px-3 py-1 rounded-full inline-block mb-3">How it works</span>
+      <h2 class="font-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight">Three steps to exam-ready.</h2>
+    </div>
+    <div class="mt-10 grid gap-5 md:grid-cols-3">
+      <div class="rounded-[28px] border border-slate-200 bg-white p-7 shadow-sm hover:shadow-lift transition">
+        <div class="h-11 w-11 rounded-2xl bg-brand-blue/10 text-brand-blue grid place-items-center mb-4"><i data-lucide="target" class="h-6 w-6"></i></div>
+        <div class="text-xs font-bold uppercase tracking-[0.2em] text-brand-blue mb-1">Step 1</div>
+        <h3 class="text-xl font-bold mb-2">Pick your topic</h3>
+        <p class="text-sm text-slate-600 leading-relaxed">Choose subject, grade and topic. Fundile loads the exact CAPS subskills you need.</p>
+      </div>
+      <div class="rounded-[28px] border border-slate-200 bg-white p-7 shadow-sm hover:shadow-lift transition">
+        <div class="h-11 w-11 rounded-2xl bg-brand-orange/15 text-brand-orange grid place-items-center mb-4"><i data-lucide="pencil-ruler" class="h-6 w-6"></i></div>
+        <div class="text-xs font-bold uppercase tracking-[0.2em] text-brand-blue mb-1">Step 2</div>
+        <h3 class="text-xl font-bold mb-2">Solve, show your working</h3>
+        <p class="text-sm text-slate-600 leading-relaxed">Work step-by-step in the workspace. Method marks are awarded line by line.</p>
+      </div>
+      <div class="rounded-[28px] border border-slate-200 bg-white p-7 shadow-sm hover:shadow-lift transition">
+        <div class="h-11 w-11 rounded-2xl bg-brand-blue/10 text-brand-blue grid place-items-center mb-4"><i data-lucide="stethoscope" class="h-6 w-6"></i></div>
+        <div class="text-xs font-bold uppercase tracking-[0.2em] text-brand-blue mb-1">Step 3</div>
+        <h3 class="text-xl font-bold mb-2">Get a diagnostic autopsy</h3>
+        <p class="text-sm text-slate-600 leading-relaxed">Misconceptions are tagged and it steps down the grade ladder to repair the gap.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="h-px bg-slate-200 max-w-7xl mx-auto"></div>
+
+  <!-- ============================================================ -->
+  <!--  SECTION B — TOPIC-SELECTED WORKSPACE (branded)              -->
+  <!-- ============================================================ -->
+  <section id="workspace-preview" class="bg-slate-100 py-16 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-6xl mx-auto">
+      <div class="mb-6">
+        <span class="text-xs font-bold uppercase tracking-[0.25em] text-brand-blue bg-blue-50 border border-blue-200/60 px-3 py-1 rounded-full inline-block mb-3">After topic selection</span>
+        <h2 class="font-display text-2xl sm:text-3xl font-bold tracking-tight">The Question Workspace — now on-brand.</h2>
+        <p class="mt-2 text-slate-600 text-sm max-w-2xl">The current workspace uses generic indigo/slate controls. This alternative carries the brand ribbon into the app shell so learners always feel “at Fundile”.</p>
+      </div>
+
+      <!-- App shell top bar -->
+      <div class="rounded-2xl overflow-hidden shadow-xl ring-1 ring-slate-200 bg-white">
+        <div class="bg-brand-blue px-4 sm:px-6 h-14 flex items-center justify-between text-white">
+          <div class="flex items-center gap-2.5">
+            <span class="grid place-items-center h-8 w-8 rounded-lg bg-white/10 ring-1 ring-white/20"><i data-lucide="graduation-cap" class="h-4 w-4 text-brand-amber"></i></span>
+            <span class="font-display font-bold">Fundile</span>
+          </div>
+          <div class="flex items-center gap-2 text-xs font-medium text-white/80">
+            <span class="hidden sm:inline px-3 py-1 rounded-full bg-white/10 border border-white/15">Grade 11</span>
+            <span class="hidden sm:inline px-3 py-1 rounded-full bg-white/10 border border-white/15">Mathematics</span>
+            <span class="px-3 py-1 rounded-full bg-brand-orange/90 font-semibold text-white">Quadratic Equations</span>
+          </div>
+        </div>
+
+        <!-- thin orange progress ribbon under header -->
+        <div class="h-1.5 w-full bg-slate-100">
+          <div class="h-full bg-gradient-to-r from-brand-orange to-brand-amber" style="width:62%"></div>
+        </div>
+
+        <div class="p-4 sm:p-6 space-y-6 bg-slate-50">
+          <!-- CONFIG PANEL -->
+          <div class="rounded-2xl shadow-sm border border-slate-200 bg-white overflow-hidden">
+            <div class="px-5 py-3 border-b border-slate-100 bg-slate-50 flex items-center justify-between">
+              <h3 class="font-semibold text-slate-800 flex items-center gap-2"><i data-lucide="settings" class="h-4 w-4 text-brand-blue"></i> Configure session</h3>
+              <button class="text-sm font-medium text-brand-blue hover:underline cursor-pointer flex items-center gap-1"><i data-lucide="chevron-left" class="h-4 w-4"></i> Change topic</button>
+            </div>
+            <div class="p-5 space-y-6">
+              <!-- mode pills -->
+              <div>
+                <p class="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-2">Mode</p>
+                <div class="flex flex-wrap gap-2">
+                  <button class="px-4 py-2 rounded-full text-sm font-semibold border transition bg-brand-blue text-white border-brand-blue shadow-sm cursor-pointer">Scaffold</button>
+                  <button class="px-4 py-2 rounded-full text-sm font-semibold border transition bg-white text-brand-blue border-slate-200 hover:bg-slate-50 cursor-pointer">Practice</button>
+                  <button class="px-4 py-2 rounded-full text-sm font-semibold border transition bg-white text-brand-blue border-slate-200 hover:bg-slate-50 cursor-pointer flex items-center gap-1"><i data-lucide="lock" class="h-3 w-3 text-brand-orange"></i> Marking <span class="text-[10px] font-bold text-brand-orange">PRO</span></button>
+                </div>
+              </div>
+              <!-- difficulty + subskill + generate -->
+              <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 items-end">
+                <div>
+                  <p class="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-2">Difficulty</p>
+                  <div class="flex gap-2">
+                    <button class="flex-1 px-3 py-2.5 rounded-xl text-sm border bg-white text-slate-600 border-slate-200 hover:bg-slate-50">Easy</button>
+                    <button class="flex-1 px-3 py-2.5 rounded-xl text-sm border bg-brand-blue text-white border-brand-blue shadow-md">Med</button>
+                    <button class="flex-1 px-3 py-2.5 rounded-xl text-sm border bg-white text-slate-600 border-slate-200 hover:bg-slate-50">Hard</button>
+                  </div>
+                </div>
+                <div class="sm:col-span-2">
+                  <p class="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-2">Subskill</p>
+                  <select class="w-full px-3 py-3 rounded-xl border text-sm bg-white border-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-blue/30 focus:border-brand-blue cursor-pointer">
+                    <option>Trinomial factorisation</option>
+                    <option>Common factors</option>
+                    <option>Mixed (all)</option>
+                  </select>
+                </div>
+                <button class="w-full rounded-xl h-12 text-sm font-semibold bg-brand-orange text-white hover:bg-brand-orangeDark transition-all shadow-ribbon active:scale-95">Generate Question</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- QUESTION CARD -->
+          <div class="rounded-2xl shadow-lg border border-slate-200 bg-white overflow-hidden">
+            <div class="px-5 sm:px-6 py-4 border-b border-slate-100 flex flex-wrap items-center justify-between gap-3">
+              <div class="flex flex-wrap gap-2 text-xs">
+                <span class="px-3 py-1 rounded-full border bg-brand-blue/10 text-brand-blue border-brand-blue/20 font-semibold">Scaffold</span>
+                <span class="px-3 py-1 rounded-full border bg-slate-100 text-slate-700">Medium</span>
+                <span class="px-3 py-1 rounded-full border bg-slate-100 text-slate-700">Trinomial factorisation</span>
+              </div>
+              <span class="text-xs font-semibold text-slate-400">Question 4 of 8</span>
+            </div>
+
+            <div class="p-5 sm:p-6 space-y-5">
+              <!-- prompt -->
+              <div class="rounded-xl border border-slate-200 bg-slate-50 p-5">
+                <p class="text-sm font-semibold text-slate-500 uppercase tracking-wide mb-2">Question</p>
+                <p class="text-lg text-slate-900 font-medium">Solve for <span class="font-serif italic">x</span>:&nbsp; <span class="font-serif">x² − 5x − 24 = 0</span></p>
+              </div>
+
+              <!-- scaffold steps / working pad -->
+              <div>
+                <p class="text-sm font-semibold text-slate-500 uppercase tracking-wide mb-3">Your working</p>
+                <div class="space-y-3">
+                  <div class="flex items-start gap-3">
+                    <span class="mt-1 h-6 w-6 shrink-0 grid place-items-center rounded-full bg-emerald-100 text-emerald-700 text-xs font-bold">✓</span>
+                    <div class="flex-1">
+                      <p class="text-xs text-slate-500 mb-1">Step 1 · Standard form <span class="text-emerald-600 font-semibold">[M ✓]</span></p>
+                      <div class="rounded-lg border border-emerald-200 bg-emerald-50/50 px-4 py-2.5 font-serif text-slate-800">x² − 5x − 24 = 0</div>
+                    </div>
+                  </div>
+                  <div class="flex items-start gap-3">
+                    <span class="mt-1 h-6 w-6 shrink-0 grid place-items-center rounded-full bg-brand-orange/15 text-brand-orange text-xs font-bold">2</span>
+                    <div class="flex-1">
+                      <p class="text-xs text-slate-500 mb-1">Step 2 · Factorise — find factors of −24 that sum to −5</p>
+                      <div class="rounded-lg border-2 border-brand-blue/40 bg-white px-4 py-2.5 flex items-center gap-2">
+                        <span class="font-serif text-slate-800">(x − <input class="w-10 text-center border-b-2 border-brand-blue focus:outline-none font-serif" value="8" />)(x + <input class="w-10 text-center border-b-2 border-brand-blue focus:outline-none font-serif" placeholder="3" />) = 0</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- keypad strip -->
+              <div class="rounded-xl border border-slate-200 bg-slate-50 p-2.5 flex flex-wrap gap-1.5 items-center">
+                <span class="text-[11px] font-semibold text-slate-400 uppercase mr-1">Math keypad</span>
+                <button class="px-2.5 py-1.5 rounded-md bg-white border border-slate-200 text-sm font-serif hover:border-brand-blue">x²</button>
+                <button class="px-2.5 py-1.5 rounded-md bg-white border border-slate-200 text-sm font-serif hover:border-brand-blue">√</button>
+                <button class="px-2.5 py-1.5 rounded-md bg-white border border-slate-200 text-sm font-serif hover:border-brand-blue">a⁄b</button>
+                <button class="px-2.5 py-1.5 rounded-md bg-white border border-slate-200 text-sm font-serif hover:border-brand-blue">Tₙ</button>
+                <button class="px-2.5 py-1.5 rounded-md bg-white border border-slate-200 text-sm font-serif hover:border-brand-blue">xⁿ</button>
+                <button class="px-2.5 py-1.5 rounded-md bg-white border border-slate-200 text-sm hover:border-brand-blue">,</button>
+              </div>
+            </div>
+
+            <!-- action footer -->
+            <div class="border-t border-slate-200 bg-slate-50 px-5 sm:px-6 py-3 flex flex-wrap gap-3 items-center">
+              <button class="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold bg-brand-blue text-white hover:bg-brand-cobalt transition shadow-sm active:scale-95 cursor-pointer"><i data-lucide="check-circle-2" class="h-4 w-4"></i> Check</button>
+              <button class="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold bg-white text-brand-blue border border-brand-blue/30 hover:bg-blue-50 transition active:scale-95 cursor-pointer"><i data-lucide="arrow-left-right" class="h-4 w-4"></i> Compare memo</button>
+              <button class="ml-auto flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold bg-brand-orange text-white hover:bg-brand-orangeDark transition shadow-ribbon active:scale-95 cursor-pointer">Next <i data-lucide="arrow-right" class="h-4 w-4"></i></button>
+            </div>
+          </div>
+
+          <!-- prerequisite banner (cross-grade regression made visible) -->
+          <div class="rounded-2xl border border-brand-orange/30 bg-amber-50/70 p-4 sm:p-5 flex items-start gap-3">
+            <span class="h-9 w-9 shrink-0 grid place-items-center rounded-xl bg-brand-orange/15 text-brand-orange"><i data-lucide="git-branch" class="h-5 w-5"></i></span>
+            <div>
+              <p class="font-semibold text-slate-900 text-sm">Prerequisite gap detected — step down to Grade 10</p>
+              <p class="text-xs text-slate-600 mt-0.5">You're missing <span class="font-semibold">trinomial factorisation (Grade 10)</span>. A 5-minute foundational micro-drill is recommended before continuing Grade 11 quadratics.</p>
+              <button class="mt-2 text-xs font-bold text-brand-blue hover:underline cursor-pointer">Start micro-drill →</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- footer -->
+  <footer class="bg-brand-navy text-white/70 py-10 px-4 text-center text-sm">
+    <div class="font-display font-bold text-white text-lg mb-1">Fundile</div>
+    <p>© 2026 Fundile · 100% aligned with South African CAPS · Grades 7–12</p>
+  </footer>
+
+  <script>if (window.lucide && typeof lucide.createIcons === 'function') { lucide.createIcons(); }</script>
+</body>
+</html>

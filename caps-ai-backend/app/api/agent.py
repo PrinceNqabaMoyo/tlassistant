@@ -1,8 +1,38 @@
 from flask import Blueprint, request, jsonify
 
 from app.services.agent_service import run_agent
+from app.services.teach_back_evaluator import evaluate_teach_back
 
 agent_bp = Blueprint('agent', __name__)
+
+
+@agent_bp.route('/teach-back', methods=['POST'])
+def handle_teach_back():
+    """Cognitive Teach-Back Evaluator endpoint. Zero-LLM deterministic semantic matching.
+    Required keys: subject, topic, subskill, explanation.
+    Optional: misconception_tag, user_id.
+    """
+    data = request.get_json() or {}
+    subject = data.get("subject", "")
+    topic = data.get("topic", "")
+    subskill = data.get("subskill", "")
+    explanation = data.get("explanation", "")
+    misconception_tag = data.get("misconception_tag")
+
+    if not explanation:
+        return jsonify({"error": "Missing explanation"}), 400
+
+    try:
+        result = evaluate_teach_back(
+            subject=subject,
+            topic=topic,
+            subskill=subskill,
+            student_explanation=explanation,
+            misconception_tag=misconception_tag
+        )
+        return jsonify(result), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 
 @agent_bp.route('/chat', methods=['POST'])
@@ -40,3 +70,4 @@ def handle_agent_chat():
     except Exception as e:
         print(f"Error during agent invocation: {e}")
         return jsonify({"error": str(e)}), 500
+

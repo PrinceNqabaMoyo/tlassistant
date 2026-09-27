@@ -35,6 +35,11 @@ INDUSTRY_TYPES = [
     "clothing boutique",
 ]
 
+try:
+    from ..sa_naming_engine import generate_sa_enterprise, generate_sa_person
+except ImportError:
+    from app.utils.sa_naming_engine import generate_sa_enterprise, generate_sa_person
+
 def _rng(seed: Optional[int]) -> random.Random:
     r = random.Random()
     if seed is None:
@@ -46,13 +51,18 @@ def _rng(seed: Optional[int]) -> random.Random:
 def build_scenario(*, seed: Optional[int] = None) -> Dict[str, str]:
     """Generates a random business scenario to be used as context in theoretical questions."""
     r = _rng(seed)
-    owner = r.choice(OWNER_NAMES)
-    business = r.choice(BUSINESS_NAMES)
-    industry = r.choice(INDUSTRY_TYPES)
-    
+    ent = generate_sa_enterprise(r, form="Sole Trader")
+    owner = ent["founder"]
+    business = ent["business_name"]
+    industry = ent["industry"]
+    town = ent["town"]
+    province = ent["province"]
+
     return {
         "owner": owner,
         "business": business,
         "industry": industry,
-        "intro": f"{owner} owns and operates {business}, a local {industry}. "
+        "town": town,
+        "province": province,
+        "intro": f"{owner} owns and operates {business}, a local {industry} based in {town}, {province}. "
     }

@@ -332,6 +332,7 @@ const Grade10AccountingSoleTraderScaffold = ({
     renderGrade10AcctSTVisualAids,
     evaluationState,
     isSuperAdmin,
+    hideConfig,
 }) => {
     const [activeHeaderHelp, setActiveHeaderHelp] = useState(null);
     const [activeCellHint, setActiveCellHint] = useState(null);
@@ -1329,77 +1330,81 @@ const Grade10AccountingSoleTraderScaffold = ({
 
     return (
         <div className="w-full">
-            <div className="flex items-center justify-between mb-4">
-                <h3 className="text-xl font-bold text-slate-800">Scaffold Mode</h3>
+            {!hideConfig && (
+                <>
+                    <div className="flex items-center justify-between mb-4">
+                        <h3 className="text-xl font-bold text-slate-800">Scaffold Mode</h3>
 
-                {question && (
-                    <div className="flex flex-wrap items-center gap-3 bg-white px-4 py-2 rounded-xl border border-slate-200 opacity-80">
-                        <span className="text-sm font-semibold text-slate-700">Assessment:</span>
-                        <button
-                            type="button"
-                            disabled
-                            className="relative inline-flex h-6 w-11 items-center rounded-full bg-slate-200 cursor-not-allowed"
-                        >
-                            <span className="inline-block h-4 w-4 transform rounded-full bg-white translate-x-1" />
-                        </button>
-                        <span className="text-sm text-slate-600">Scaffold only</span>
-                        <span className="text-xs text-slate-500">Assessment available in Pro package</span>
+                        {question && (
+                            <div className="flex flex-wrap items-center gap-3 bg-white px-4 py-2 rounded-xl border border-slate-200 opacity-80">
+                                <span className="text-sm font-semibold text-slate-700">Assessment:</span>
+                                <button
+                                    type="button"
+                                    disabled
+                                    className="relative inline-flex h-6 w-11 items-center rounded-full bg-slate-200 cursor-not-allowed"
+                                >
+                                    <span className="inline-block h-4 w-4 transform rounded-full bg-white translate-x-1" />
+                                </button>
+                                <span className="text-sm text-slate-600">Scaffold only</span>
+                                <span className="text-xs text-slate-500">Assessment available in Pro package</span>
+                            </div>
+                        )}
                     </div>
-                )}
-            </div>
 
-            <div className="mb-4 p-3 bg-slate-50 border border-slate-200 rounded-xl space-y-3">
-                <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
-                    <div>
-                        <div className="text-xs font-semibold uppercase tracking-wide text-slate-500">Scaffold difficulty</div>
-                        <div className="mt-2 flex flex-wrap items-center gap-2">
-                            {SCAFFOLD_DIFFICULTY_ORDER.map((level) => {
-                                const isActive = currentDifficulty === level;
-                                return (
-                                    <button
-                                        key={level}
-                                        type="button"
-                                        onClick={() => {
-                                            setG10AcctSTScaffoldDifficulty(level);
-                                            setPendingDifficultyPromotion(null);
-                                            setDifficultyNotice(`Difficulty set to ${level}.`);
-                                        }}
-                                        className={`px-3 py-1.5 rounded-lg text-sm font-semibold border transition-colors ${isActive ? 'bg-indigo-600 border-indigo-600 text-white' : 'bg-white border-slate-200 text-slate-700 hover:bg-slate-100'}`}
-                                    >
-                                        {formatDifficultyLabel(level)}
-                                    </button>
-                                );
-                            })}
+                    <div className="mb-4 p-3 bg-slate-50 border border-slate-200 rounded-xl space-y-3">
+                        <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+                            <div>
+                                <div className="text-xs font-semibold uppercase tracking-wide text-slate-500">Scaffold difficulty</div>
+                                <div className="mt-2 flex flex-wrap items-center gap-2">
+                                    {SCAFFOLD_DIFFICULTY_ORDER.map((level) => {
+                                        const isActive = currentDifficulty === level;
+                                        return (
+                                            <button
+                                                key={level}
+                                                type="button"
+                                                onClick={() => {
+                                                    setG10AcctSTScaffoldDifficulty(level);
+                                                    setPendingDifficultyPromotion(null);
+                                                    setDifficultyNotice(`Difficulty set to ${level}.`);
+                                                }}
+                                                className={`px-3 py-1.5 rounded-lg text-sm font-semibold border transition-colors ${isActive ? 'bg-indigo-600 border-indigo-600 text-white' : 'bg-white border-slate-200 text-slate-700 hover:bg-slate-100'}`}
+                                            >
+                                                {formatDifficultyLabel(level)}
+                                            </button>
+                                        );
+                                    })}
+                                </div>
+                            </div>
+                            <div className="flex flex-col gap-2 items-start lg:items-end">
+                                <button
+                                    type="button"
+                                    onClick={() => {
+                                        const nextValue = !keepCurrentDifficulty;
+                                        setKeepCurrentDifficulty(nextValue);
+                                        setPendingDifficultyPromotion(null);
+                                        setDifficultyNotice(nextValue
+                                            ? `Keep ${currentDifficulty} mode is on. Automatic promotion is paused.`
+                                            : `Keep mode is off. Scaffold can auto-progress from ${currentDifficulty} after every 5 checked questions.`);
+                                    }}
+                                    className={`px-3 py-1.5 rounded-lg text-sm font-semibold border transition-colors ${keepCurrentDifficulty ? 'bg-amber-50 border-amber-300 text-amber-800 hover:bg-amber-100' : 'bg-white border-slate-200 text-slate-700 hover:bg-slate-100'}`}
+                                >
+                                    {keepCurrentDifficulty ? `Keep ${formatDifficultyLabel(currentDifficulty)} Mode` : 'Allow Auto Progression'}
+                                </button>
+                                <div className="text-xs text-slate-500">
+                                    {nextDifficulty
+                                        ? `${attemptsTowardNextLevel}/5 checked questions at ${currentDifficulty} before the next automatic move to ${nextDifficulty}.`
+                                        : 'Hard is the highest difficulty level.'}
+                                </div>
+                            </div>
                         </div>
+                        {difficultyNotice && (
+                            <div className="text-sm text-indigo-800 bg-indigo-50 border border-indigo-200 rounded-lg px-3 py-2">
+                                {difficultyNotice}
+                            </div>
+                        )}
                     </div>
-                    <div className="flex flex-col gap-2 items-start lg:items-end">
-                        <button
-                            type="button"
-                            onClick={() => {
-                                const nextValue = !keepCurrentDifficulty;
-                                setKeepCurrentDifficulty(nextValue);
-                                setPendingDifficultyPromotion(null);
-                                setDifficultyNotice(nextValue
-                                    ? `Keep ${currentDifficulty} mode is on. Automatic promotion is paused.`
-                                    : `Keep mode is off. Scaffold can auto-progress from ${currentDifficulty} after every 5 checked questions.`);
-                            }}
-                            className={`px-3 py-1.5 rounded-lg text-sm font-semibold border transition-colors ${keepCurrentDifficulty ? 'bg-amber-50 border-amber-300 text-amber-800 hover:bg-amber-100' : 'bg-white border-slate-200 text-slate-700 hover:bg-slate-100'}`}
-                        >
-                            {keepCurrentDifficulty ? `Keep ${formatDifficultyLabel(currentDifficulty)} Mode` : 'Allow Auto Progression'}
-                        </button>
-                        <div className="text-xs text-slate-500">
-                            {nextDifficulty
-                                ? `${attemptsTowardNextLevel}/5 checked questions at ${currentDifficulty} before the next automatic move to ${nextDifficulty}.`
-                                : 'Hard is the highest difficulty level.'}
-                        </div>
-                    </div>
-                </div>
-                {difficultyNotice && (
-                    <div className="text-sm text-indigo-800 bg-indigo-50 border border-indigo-200 rounded-lg px-3 py-2">
-                        {difficultyNotice}
-                    </div>
-                )}
-            </div>
+                </>
+            )}
 
             {marking.markingError && (
                 <div className="mb-4 p-3 bg-red-50 border border-red-200 text-red-700 rounded-lg break-words">

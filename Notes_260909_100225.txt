@@ -1,0 +1,73 @@
+New thought/1august
+What do you think of the following changes?
+-Replace 'Fundile knows the exam' with  'Fundile gives you something an AI chat can't.' 
+-Then bullet points :
+-Real, South African high school-level test and exam questions
+-Unlimited question generation and supported practice
+-Knowledge-gap Identification and remediation 
+-World class education at your fingertips/ world class education just a click away.
+-We deconvolute the learning pathway, students focus their energies on knowledge they need
+
+-More subjects in one price
+
+>I need an efficient way to say that 'ai chats wait for your question but fundile already knows the questions you need to excel so it asks the right questions, the user learns what they need to learn'
+
+-Ever wanted to move around with your tutor or teacher.. fundile is available 24/7 
+
+-the essence and/or statements mentioned above should be I'm the landing page. What do you think???
+
+>New breakthrough thought... 14 august
+-giving the feeling that the question is already waiting for the user.
+-clicking generate may not be a good psychological trigger.  ..maybe the default should be a user clicks on a topic for the first time and they get 'start diagnostic assessment'. Maybe the diagnostic test could be timed.. heightens sense of integrity/professionalism in the  impression of the user..when done the user gets a brief report on what they struggled with, where they excel and how fundile will help. The reports should be received in email and and also stored in user dashboard.The subsequent questions are generated in a path dependant on the user's knowledge... since each question is deterministically generated  if a student struggles, then help/correction/teaching should be based on what they are struggling with.. this should also be deterministically done to avoid ai cost. It means that maybe each question should have associate parameters that when failed trigger built in thorough explainers. 
+Also each parameter of a question that the user struggles with should be associated with questions generated for the purpose of mastering that parameter. Admittedly such parameters may only apply to questions involving systematic procedure such as in accounting , Mathematics and calculations in science. Explanations/discussions and semantic answers maybe maybe don't have that many parameters.
+
+-When a user returns to a topic the app should not start questions from the beginning unless the user elects to do so, but be able to continue through the topic.. perhaps this means that for each question. There should be extracted foundational questions which when understood would enable the user to then tackle the compound/complex archetypes?
+
+-When a student signs in their, dashboard should be showing a dial of how far they have gone in a path way in a particular subject.. 
+
+Parameters may have to be shared across grades. learning pathways should be grade level tagged. A user should not be allowed to go beyond the level of their grade. In other words when a user struggles with an area, they are downgraded to a previous abstraction level  even if it means going to questions at a lower grade level. If a user is proficient within their grade in a particular learning area..they shouldn't however be automatically upgraded to higher grade level abstraction but choose to stay within the grades highest level questioning for the learning area or move to a new topic and then be given an option to move to higher grade abstraction only after being advised that it's better to spend time improving on other learning areas or subjects within their grade.
+
+I think the app should further differentiate itself from ai chat bots by taking initiative..it is after all an assistant. Hence the question already waiting and channeling a user to deeper knowledge through adaptive progression within the grade or adaptive regression including to lower grade level concepts in order to be better able to handle their current grade level. This means that for each subject and each grade..there should be an adaptive progression/ regression  plan.md detailing how to achieve this.
+
+-I also want to know what data should we be collecting that would enable improving our approach whether through machine learning algorithms or otherwise.
+
+-
+New thought/ 17 august
+
+Master our questions, become a top student
+Master fundile questions, become a top student 
+Master fundile's questions, become a top student.
+
+Why fundile?
+-As a student you wont magically  be able to answer questions in an exam if you didnt have practice
+-Attempting questions and getting corrected is a better way to learn than just reading through topics in textbooks 
+-Attempting questions yourself and getting corrected is better way to learn than listening or watching a tutor or teacher do the questions.
+-Attempting questions is a better way to learn than getting corrected on  answers from an ai chat.
+
+New thought/ 18 august
+Or  better yet (maybe).. a student clicks on a topic and they are welcome to a learning an initial diagnostic pathway, which then determines algorithmically which set of questions should come next. 
+This means each archetype question has associated with it 'early principle' or 'more elementary' questions that when a user struggles with an archetype question in 3 or 2 attempts, they get the 'early principle'/ 'more elementary question dealing with what they struggled with. This means that each archetype would have parameters that are tracked alongside the procedure tracker..and determines where exactly the user has gone wrong. Procedure should be more important..because a user may get a wrong out put at an earlier stage and then subsequent stages also become wrong yet in those subsequent stages the user followed correct sub-procedures
+
+New thought/19august
+Fundile, better than an ai chat
+
+What differentiates fundile from an ai  chat is that fundile gives you questions and analysis your answers based on curriculum requirements.. ai chats regularly miss the scope of the curriculum, they are curriculum agnostic/blind
+
+I think we should mention curriculum  as little as possible..instead saying that fundile prepares you for all south african high school examining bodies/covers all South african examining bodies. No mention of particular examining bodies is necessary.
+
+Putting it altogether it could say
+Built for the south african learner, better than ai chats
+Excel in....(subject slot machine)
+Use fundile, become a top student
+
+[  ] Unlimited practice questions 
+[  ] Adaptive progression
+[  ] Knowledge gap Diagnostic reports
+[  ] Procedure tracking and feedback 
+[  ] Covers all south african high school examining bodies
+[  ] Simulearn- videos that don't eat data
+
+-maybe something that shows that the bullet points are links and they should lead to simulearn type simulation of the bullet point concerned or when you hover on a bullet point a screen overlay showing the simulation  comes up
+
+Somewhere on the left side under the ribbon maybe we need a 'for teachers/tutors' and 'for schools' buttons which show when on the default student landing page...then when one of the 2 is chosen then there is a for student and button for the other dedicated landing page. Or maybe it's in the same landing page but different scroll levels..so each scroll levels.
+I like the one landing page different scroll levels..but the buttons exist at each scroll level and scroll you straight to the beginning of the level you want.

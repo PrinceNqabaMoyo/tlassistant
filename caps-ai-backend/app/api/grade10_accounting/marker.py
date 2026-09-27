@@ -4,11 +4,13 @@ from typing import List, Dict, Any, Optional
 import os
 import google.generativeai as genai
 
-# Setup Gemini
+# Setup Gemini (Graceful fallback if api key not present)
 api_key = os.environ.get("GEMINI_API_KEY")
-if not api_key:
-    raise RuntimeError("GEMINI_API_KEY environment variable not set")
-genai.configure(api_key=api_key)
+if api_key:
+    try:
+        genai.configure(api_key=api_key)
+    except Exception as e:
+        print(f"[WARNING] Gemini config failed: {e}")
 
 router = APIRouter()
 

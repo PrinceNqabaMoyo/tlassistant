@@ -3778,8 +3778,8 @@ The owner, Ben Joseph, realises that many people are now using electronic funds 
 
 ###### Answer
 
-* Less fraud 
-* Convenient or easy to use 
+* Less fraud
+* Convenient or easy to use
 * Can be done from business; not restricted to business hours / time-saving
 * Payment/receipts are instant / account is updated immediately / no long queues to deal with
 * Cheaper bank charges
@@ -3797,9 +3797,9 @@ Explain TWO reasons why the internal auditor is concerned about this. (4)
 ###### Answer
 
 * Too many related job functions / No division of duties (no checks and balances) / Possible fraud.
-* She may be negligent in performing her duties. 
+* She may be negligent in performing her duties.
 * Lack of supervision can result in abuse / payments not made on time
-* If Janet is absent, there may not be any continuity. 
+* If Janet is absent, there may not be any continuity.
 
 
 
@@ -3811,23 +3811,23 @@ Show changes in the Cash Journals for June 2019. (11)
 
 ###### Answer
 
-&nbsp;, CASH RECEIPTS JOURAL, CASH PAYMENTS JOURNAL
+ , CASH RECEIPTS JOURAL, CASH PAYMENTS JOURNAL
 
 Provisional totals, #27 470, #32 400
 
-&nbsp;, , 1 125
+ , , 1 125
 
-&nbsp;, 1 500, 
+ , 1 500,
 
-&nbsp;, 1 400, 1 200
+ , 1 400, 1 200
 
-&nbsp;,  7 950 - 5 250 = 2 700, 
+ ,  7 950 - 5 250 = 2 700,
 
-&nbsp;, , 175
+ , , 175
 
-&nbsp;, 2 800, 
+ , 2 800,
 
-&nbsp;, 130, 
+ , 130,
 
 Totals, 36 000, 34 900
 
@@ -3857,7 +3857,7 @@ Prepare the Bank Reconciliation Statement on 30 June 2019. (8)
 
 BANK RECONCILIATION STATEMENT ON 30 JUNE 2019
 
-&nbsp;, DEBIT, CREDIT
+ , DEBIT, CREDIT
 
 Cr Balance per bank statement, Balancing figure Could be Dr or Cr. 12 550
 
@@ -3867,15 +3867,15 @@ Cr Incorrect entry, , 1 125
 
 Dr Outstanding cheques / EFTs, ,
 
-&nbsp;444, 4 670,
+ 444, 4 670,
 
-&nbsp;522, 4 580,
+ 522, 4 580,
 
-&nbsp;EFT 14, 3 800,
+ EFT 14, 3 800,
 
 Dr Balance per bank account, 10 300, (Do not accept 9 200)
 
-&nbsp;, 23 350, 23 350
+ , 23 350, 23 350
 
 
 
@@ -3895,11 +3895,11 @@ Incorrect entry, 1 125
 
 Outstanding cheques/EFTs,
 
-&nbsp;	444, (4 670)
+ 	444, (4 670)
 
-&nbsp;	522, (4 580)
+ 	522, (4 580)
 
-&nbsp;	EFT 14, (3 800)
+ 	EFT 14, (3 800)
 
 Balance per bank account, 10 300
 
@@ -3913,13 +3913,13 @@ Outstanding deposit, (9 675)
 
 Incorrect entry, (1 125)
 
-Outstanding cheques/EFTs, 
+Outstanding cheques/EFTs,
 
-&nbsp;	444, 4 670
+ 	444, 4 670
 
-&nbsp;	522, 4 580
+ 	522, 4 580
 
-&nbsp;	EFT 14, 3 800
+ 	EFT 14, 3 800
 
 Balance per bank statement, 12 550
 
@@ -3945,11 +3945,11 @@ Outstanding deposit (dated 23 April 2019): R31 560
 
 Outstanding payments:
 
-&nbsp;Cheque 654 (dated 23 November 2018) R2 350
+ Cheque 654 (dated 23 November 2018) R2 350
 
-&nbsp;EFT (electronic funds transfer) R15 400
+ EFT (electronic funds transfer) R15 400
 
-&nbsp;Cheque 705 (dated 30 June 2019) R9 450
+ Cheque 705 (dated 30 June 2019) R9 450
 
 
 
@@ -3980,7 +3980,7 @@ NOTE:
 
 
 
-(iii) An EFT payment appeared correctly in the Bank Statement as 
+(iii) An EFT payment appeared correctly in the Bank Statement as
 
 R5 678. The Cash Journal shows this EFT as R6 578.
 
@@ -3988,7 +3988,7 @@ R5 678. The Cash Journal shows this EFT as R6 578.
 
 #### REQUIRED:
 
-##### 12.1 
+##### 12.1
 
 Calculate the correct Bank Account balance on 31 May 2019. Indicate whether this is favourable or unfavourable. (9)
 
@@ -4026,7 +4026,7 @@ Favourable/Unfavourable: Unfavourable
 
 
 
-##### 12.2 
+##### 12.2
 
 Prepare the Bank Reconciliation Statement on 31 May 2019. The bank statement balance is the missing figure. (7)
 
@@ -4034,7 +4034,7 @@ Prepare the Bank Reconciliation Statement on 31 May 2019. The bank statement bal
 
 ###### Answer
 
-&nbsp;, Alternative, DEBIT, CREDIT
+ , Alternative, DEBIT, CREDIT
 
 Balance as per Bank Statement, (2 700), 2 700,
 
@@ -4042,15 +4042,15 @@ Outstanding deposit, 21 343, , 21 343
 
 Outstanding cheques:, , ,
 
-&nbsp;	705, (9 450), 9 450,
+ 	705, (9 450), 9 450,
 
-&nbsp;	797, (14 350), 14 350,
+ 	797, (14 350), 14 350,
 
 Debit deposit erroneously credit, (4 500), 4 500,
 
 Balance as per bank account, (9 657), , 9 657
 
-&nbsp;, , 31 000, 31 000
+ , , 31 000, 31 000
 
 
 
@@ -4058,7 +4058,7 @@ Balance as per bank account, (9 657), , 9 657
 
 ##### 12.3 Refer to Information B(iii).
 
-State TWO internal control measures that the business can use to 
+State TWO internal control measures that the business can use to
 
 ensure that this will not happen in the future. (4)
 
@@ -4088,13 +4088,13 @@ The following information relates to Claire Traders. The business buys goods on 
 
 ##### A. Creditors' Ledger of Claire Traders
 
-&nbsp;		MARITI SUPPLIERS (CL5)
+ 		MARITI SUPPLIERS (CL5)
 
 , , , , DEBIT, CREDIT, BALANCE
 
 2018 July, 1, Balance, b/d, , , 67 500
 
-&nbsp;, 10, Invoice 209, , , 81 000,
+ , 10, Invoice 209, , , 81 000,
 
 , , EFT, , 33 750, ,
 
@@ -4114,7 +4114,7 @@ The following information relates to Claire Traders. The business buys goods on 
 
 
 
-##### B. Statement of account from Mariti Suppliers 
+##### B. Statement of account from Mariti Suppliers
 
 
 
@@ -4130,33 +4130,33 @@ Claire Traders
 
 2018 July, 1, Balance, , , 67 500
 
-&nbsp; , 10, Invoice 209, 81 000, ,
+  , 10, Invoice 209, 81 000, ,
 
-&nbsp;, , Receipt 695, , 33 750,
+ , , Receipt 695, , 33 750,
 
 , 17, Credit Note 741, , 6 840,
 
-&nbsp;, , Invoice 301, 25 000, ,
+ , , Invoice 301, 25 000, ,
 
-&nbsp;, 21, Invoice 360, 20 250, ,
+ , 21, Invoice 360, 20 250, ,
 
-&nbsp;, 24, Credit Note 811, , 8 100, 145 060
+ , 24, Credit Note 811, , 8 100, 145 060
 
 
 
 ##### C. Differences noted:
 
-(a) The incorrect entry for Debit Note 674 in the Creditor's Ledger 
+(a) The incorrect entry for Debit Note 674 in the Creditor's Ledger
 
-Account of Mariti Suppliers relates to the correct Credit Note 741 
+Account of Mariti Suppliers relates to the correct Credit Note 741
 
 on the statement.
 
 
 
-(b) Invoice 282 was incorrectly reflected in the account of Mariti 
+(b) Invoice 282 was incorrectly reflected in the account of Mariti
 
-Suppliers in the Creditors' Ledger. The goods were purchased 
+Suppliers in the Creditors' Ledger. The goods were purchased
 
 from Genesis Suppliers.
 
@@ -4166,17 +4166,17 @@ from Genesis Suppliers.
 
 
 
-(d) Mariti Suppliers also purchased goods on credit from Claire 
+(d) Mariti Suppliers also purchased goods on credit from Claire
 
-Traders. Claire Traders has transferred a debit balance from the 
+Traders. Claire Traders has transferred a debit balance from the
 
-Debtors' Ledger (Journal Voucher 570). Mariti Suppliers will offset 
+Debtors' Ledger (Journal Voucher 570). Mariti Suppliers will offset
 
-this on the next statement. 
+this on the next statement.
 
 
 
-(e) The transaction on 24 July 2018 is for merchandise returned to 
+(e) The transaction on 24 July 2018 is for merchandise returned to
 
 Mariti Suppliers.
 
@@ -4188,7 +4188,7 @@ Mariti Suppliers.
 
 #### REQUIRED:
 
-##### 13.1 
+##### 13.1
 
 Use the table provided to indicate changes to the:
 
@@ -4199,29 +4199,29 @@ Use the table provided to indicate changes to the:
 
 ###### Answer
 
-&nbsp;, Creditors Ledger: Account of Mariti Suppliers, Statement of Account
+ , Creditors Ledger: Account of Mariti Suppliers, Statement of Account
 
 Balance, #147 820, #145 060
 
-(a), + 1 800, 
+(a), + 1 800,
 
-(b), -40 950, 
+(b), -40 950,
 
 (c), , +30 000
 
 (d), , - 5 400
 
-(e), -8 100 - 8 100 = -16 200, 
+(e), -8 100 - 8 100 = -16 200,
 
 (f), , -77 190
 
-&nbsp;, 92 470, 92 470
+ , 92 470, 92 470
 
 
 
 
 
-##### 13.2 
+##### 13.2
 
 The internal auditor insists that direct payments (EFTs) must be used to pay suppliers. Explain:
 
@@ -4247,7 +4247,7 @@ Notification from bank (sms / email) when payments are effected
 
 
 
-##### 13.3 
+##### 13.3
 
 Refer to Invoice 301. It was discovered that the store manager, Vernon, had signed a fictitious order form and took the goods for himself when they arrived. Besides dismissing Vernon, provide:
 
@@ -4279,7 +4279,7 @@ The information below relates to Witbank Hardware.
 
 ##### INFORMATION:
 
-###### A. 
+###### A.
 
 Debtors are granted 30 days to settle their accounts.
 
@@ -4291,7 +4291,7 @@ DEBTORS, CREDIT LIMIT, AMOUNT OWING, CURRENT MONTH, 30 DAYS, 60 DAYS, 90 DAYS
 
 Z Zulu, 6 000, 5 000, 2 100, 2 900, ,
 
-P Botha, 3 500, 4 200, 3 800, 400, , 
+P Botha, 3 500, 4 200, 3 800, 400, ,
 
 M Valley, 7 000, 1 450, 500, , , 950
 
@@ -4299,17 +4299,17 @@ S Walker, 13 000, 12 500, 1 000, 3 000, 4 500, 4 000
 
 O Klein, 3 000, 3 000, 1 900, , 1 100,
 
-&nbsp;, , 26 150, 9 300, 6 300, 5 600, 4 950
+ , , 26 150, 9 300, 6 300, 5 600, 4 950
 
-&nbsp;, ,100%, 36%, 24%, 21%, 19%
+ , ,100%, 36%, 24%, 21%, 19%
 
 
 
 ##### REQUIRED:
 
-###### 14.1.1 
+###### 14.1.1
 
-Explain why the debtors' age analysis is considered to be an 
+Explain why the debtors' age analysis is considered to be an
 
 effective internal control measure. State ONE point. (2)
 
@@ -4317,18 +4317,18 @@ effective internal control measure. State ONE point. (2)
 
 Answer
 
-Any valid explanation  
+Any valid explanation 
 
 * Helps identify slow or defaulting debtors (not abiding to the credit terms) so that action can be taken.
 * Highlights debtors in good standing so their credit ratings can be reviewed.
 * It can expose the problem of allowing debtors to exceed their credit limits.
-* It can assist with planning/corrective measures such as sending reminders, writing off debtors etc. 
+* It can assist with planning/corrective measures such as sending reminders, writing off debtors etc.
 
 
 
-###### 14.1.2 
+###### 14.1.2
 
-Explain TWO different problems highlighted by the debtors' age 
+Explain TWO different problems highlighted by the debtors' age
 
 analysis. In EACH case, provide the name of a debtor and figure(s). (6)
 
@@ -4370,7 +4370,7 @@ Information from the records of Amber Traders for November 2017 is presented. So
 
 
 
-&nbsp;, DEBIT, CREDIT
+ , DEBIT, CREDIT
 
 L Nkosi, R5 700,
 
@@ -4380,7 +4380,7 @@ M Welthagen, , R1 900
 
 B Sandleni, R15 900,
 
-&nbsp;, R32 700, R1 900
+ , R32 700, R1 900
 
 
 
@@ -4390,7 +4390,7 @@ B Sandleni, R15 900,
 
 (ii) Interest of R350 must be charged on the overdue account of S Muller.
 
-(iii) An amount of R3 100 received from L Nkosi was incorrectly 
+(iii) An amount of R3 100 received from L Nkosi was incorrectly
 
 recorded as R1 300 in the Cash Receipts Journal and posted as such to the General Ledger and the Debtors' Ledger.
 
@@ -4402,7 +4402,7 @@ recorded as R1 300 in the Cash Receipts Journal and posted as such to the Genera
 
 #### REQUIRED:
 
-###### 14.2.1 
+###### 14.2.1
 
 Calculate the correct Debtors' Control Balance on 30 November 2017. Show figures and indicate '+', '–' or 'No change'
 
@@ -4418,13 +4418,13 @@ Balance before errors and omissions, #25 700
 
 (ii), +350 
 
-&nbsp;(iii),  – 1 800 
+ (iii),  – 1 800 
 
 (iv), No change 
 
 (v), +1 500 
 
-Correct Debtors' Control balance, 28 450 
+Correct Debtors' Control balance, 28 450
 
 
 
@@ -4432,7 +4432,7 @@ Note that a value preceded by # means that the value was supplied in the table w
 
 
 
-###### 14.2.2 
+###### 14.2.2
 
 Calculate the correct total of the debtors' list on 30 November 2017. (10)
 

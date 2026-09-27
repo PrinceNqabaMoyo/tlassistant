@@ -11,12 +11,6 @@ from dotenv import load_dotenv
 from typing import Optional, Union, Dict, Any
 import sympy
 from sympy import sympify, solve, Eq, S, symbols, diff, integrate, pycode
-from langchain_google_genai import ChatGoogleGenerativeAI, GoogleGenerativeAIEmbeddings
-from langchain_chroma import Chroma
-from langchain.prompts import ChatPromptTemplate, MessagesPlaceholder
-from langchain.agents import AgentExecutor, create_tool_calling_agent
-from langchain_core.messages import HumanMessage, AIMessage
-from langchain_core.tools import tool
 import datetime
 
 # --- Firebase Admin SDK Imports ---
@@ -54,28 +48,14 @@ app.wsgi_app = DispatcherMiddleware(app.wsgi_app, {
 })
 
 
-# --- Firebase Admin SDK Initialization ---
-# IMPORTANT: Replace 'path/to/your/serviceAccountKey.json' with the actual path
-# to your Firebase service account key file. This file contains the credentials
-# your backend needs to authenticate with Firestore.
-# Ensure this block runs only once.
 try:
-    # Attempt to get an existing Firebase app to avoid re-initialization errors
-    firestore_db = firestore.client()
-    print("Firebase Admin SDK already initialized.")
-except ValueError:
-    # If not initialized, proceed with initialization
-    # Make sure your service account key file is accessible to your Flask app.
-    # For production, consider using environment variables for the path or directly
-    # for the credentials JSON string.
-    try:
-        cred = credentials.Certificate("caps-ai-math-assistant-app-firebase-adminsdk-fbsvc-16f0a819d2.json") # !!! REPLACE THIS PATH !!!
-        initialize_app(cred)
-        firestore_db = firestore.client()
-        print("Firebase Admin SDK initialized successfully.")
-    except Exception as e:
-        print(f"Error initializing Firebase Admin SDK: {e}")
-        print("Firestore operations may fail.")
+    from app.utils.firebase_admin_client import get_firestore_client
+    firestore_db = get_firestore_client()
+    print("Firebase Admin SDK / Firestore initialized successfully via client module.")
+except Exception as e:
+    print(f"Error initializing Firebase Admin SDK: {e}")
+    print("Firestore operations may fail.")
+    firestore_db = None
 
 # --- Initialize LLM Rate Limiter with Firestore ---
 try:

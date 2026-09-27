@@ -69,6 +69,19 @@ Currently, two official plugins are available:
 Before editing `src/App.jsx` (a 2,300+ line file), **always make a manual backup** first (e.g. copy `src/App.jsx` to `src/App.jsx.backup`).
 This prevents accidental loss of state if an edit goes wrong.
 
-## Expanding the ESLint configuration
+## Mandatory Specialist Agent Routing Protocol
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+To maintain architectural integrity and prevent inconsistent implementations, all engineering tasks must strictly route to their designated specialist subagent:
+
+| Domain | Assigned Specialist Subagent | Key Invariants |
+| :--- | :--- | :--- |
+| **Frontend UI & Mobile Ergonomics** | `cognitive_ui_engineer` | React 18, Vite, mobile touch targets (min 44px), portrait/landscape workspace maximization, skeuo-modern folder tabs, cognitive modalities. |
+| **Learner Journey & Pacing** | `learner_ux_specialist` | Student psychology, distraction-free workspaces, emotional safety of looping, 3-tier pacing. |
+| **Backend Question Generators** | `generator_architect` + Domain Specialist | 6-pillar contract, SymPy AST purity (CC <= 12), South African comma decimals (`{,}`), 3-tier pre-baked hints. |
+| **Quality Assurance & Verification** | `qa_test_architect` | Large-scale Monte Carlo determinism, Vite production builds, responsive viewport testing. |
+| **Curriculum Alignment & Pacing** | `curriculum_specialist` | CAPS ground truth, Annual Teaching Plan (ATP) weightings, zero proprietary trademarks. |
+| **Architecture Manifest Governance** | `architecture_governor` | `fundile-architecture.json` sync (Rule 0a-0c) and `generate_architecture_html.py`. |
+
+### Agent Creation & Modification Governance
+For any task that requires the creation of a **new specialist agent** or the **modification of an existing agent** (its configuration, system prompt, or tooling in `.agents/agents/`), the assistant must **ask the user for explicit permission first** before making changes or registering new agent definitions. Never modify or create agents unilaterally.
+

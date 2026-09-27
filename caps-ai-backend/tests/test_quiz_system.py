@@ -1,9 +1,9 @@
 """
 Unit Tests for Enhanced Quiz System
-Proper test structure using pytest
+Standard unittest structure
 """
 
-import pytest
+import unittest
 import sys
 import os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -16,15 +16,15 @@ from app.utils.curriculum_mapping import get_curriculum_mapper
 from app.utils.geometric_validators import GeometricConstraintValidator
 
 
-class TestQuizGeneration:
+class TestQuizGeneration(unittest.TestCase):
     """Test quiz generation functionality"""
-    
-    def setup_method(self):
+
+    def setUp(self):
         """Set up test fixtures"""
         self.quiz_service = QuizGenerationService()
         self.curriculum_mapper = get_curriculum_mapper()
         self.validator = GeometricConstraintValidator()
-    
+
     def test_basic_quiz_generation(self):
         """Test basic quiz question generation"""
         request = QuizGenerationRequest(
@@ -34,14 +34,14 @@ class TestQuizGeneration:
             shape_type=ShapeType.TRIANGLE_EQUILATERAL,
             count=1
         )
-        
+
         response = self.quiz_service.generate_questions(request)
-        
-        assert response.success is True
-        assert len(response.questions) == 1
-        assert response.questions[0].question is not None
-        assert response.questions[0].correct_answer is not None
-    
+
+        self.assertTrue(response.success)
+        self.assertEqual(len(response.questions), 1)
+        self.assertIsNotNone(response.questions[0].question)
+        self.assertIsNotNone(response.questions[0].correct_answer)
+
     def test_different_question_types(self):
         """Test different question types"""
         question_types = [
@@ -50,7 +50,7 @@ class TestQuizGeneration:
             QuestionType.SHAPE_CLASSIFICATION,
             QuestionType.UNIT_CONVERSION
         ]
-        
+
         for qtype in question_types:
             request = QuizGenerationRequest(
                 topic="Calculations involving 2D Shapes",
@@ -58,15 +58,15 @@ class TestQuizGeneration:
                 question_type=qtype,
                 count=1
             )
-            
+
             response = self.quiz_service.generate_questions(request)
-            assert response.success is True
-            assert len(response.questions) == 1
-    
+            self.assertTrue(response.success)
+            self.assertEqual(len(response.questions), 1)
+
     def test_difficulty_levels(self):
         """Test different difficulty levels"""
         difficulties = [DifficultyLevel.EASY, DifficultyLevel.MEDIUM, DifficultyLevel.HARD]
-        
+
         for difficulty in difficulties:
             request = QuizGenerationRequest(
                 topic="Calculations involving 2D Shapes",
@@ -74,76 +74,76 @@ class TestQuizGeneration:
                 question_type=QuestionType.AREA_CALCULATION,
                 count=1
             )
-            
+
             response = self.quiz_service.generate_questions(request)
-            assert response.success is True
-            assert response.questions[0].difficulty == difficulty
+            self.assertTrue(response.success)
+            self.assertEqual(response.questions[0].difficulty, difficulty)
 
 
-class TestGeometricValidation:
+class TestGeometricValidation(unittest.TestCase):
     """Test geometric constraint validation"""
-    
-    def setup_method(self):
+
+    def setUp(self):
         """Set up test fixtures"""
         self.validator = GeometricConstraintValidator()
-    
+
     def test_triangle_validation_valid(self):
         """Test valid triangle parameters"""
         params = {'sides': [3, 4, 5]}
         result = self.validator.validate_triangle(params)
-        assert result.is_valid is True
-    
+        self.assertTrue(result.is_valid)
+
     def test_triangle_validation_invalid(self):
         """Test invalid triangle parameters"""
         params = {'sides': [1, 2, 10]}  # Violates triangle inequality
         result = self.validator.validate_triangle(params)
-        assert result.is_valid is False
-        assert "triangle inequality" in result.error_message.lower()
-    
+        self.assertFalse(result.is_valid)
+        self.assertIn("triangle inequality", result.error_message.lower())
+
     def test_circle_validation_valid(self):
         """Test valid circle parameters"""
         params = {'radius': 5}
         result = self.validator.validate_circle(params)
-        assert result.is_valid is True
-    
+        self.assertTrue(result.is_valid)
+
     def test_circle_validation_invalid(self):
         """Test invalid circle parameters"""
         params = {'radius': -2}  # Negative radius
         result = self.validator.validate_circle(params)
-        assert result.is_valid is False
-        assert "positive" in result.error_message.lower()
+        self.assertFalse(result.is_valid)
+        self.assertIn("positive", result.error_message.lower())
 
 
-class TestCurriculumMapping:
+class TestCurriculumMapping(unittest.TestCase):
     """Test curriculum mapping functionality"""
-    
-    def setup_method(self):
+
+    def setUp(self):
         """Set up test fixtures"""
         self.mapper = get_curriculum_mapper()
-    
+
     def test_question_categories_exist(self):
         """Test that all question categories exist"""
         categories = self.mapper.question_categories.keys()
-        assert len(categories) == 11
-        assert "Shape Classification" in categories
-        assert "Area & Perimeter Calculations" in categories
-    
+        self.assertEqual(len(categories), 11)
+        self.assertIn("Shape Classification", categories)
+        self.assertIn("Area & Perimeter Calculations", categories)
+
     def test_difficulty_characteristics(self):
         """Test difficulty level characteristics"""
         easy_chars = self.mapper.get_difficulty_characteristics(DifficultyLevel.EASY)
-        assert "whole numbers" in easy_chars['description'].lower()
-        
+        self.assertIn("whole numbers", easy_chars['description'].lower())
+
         hard_chars = self.mapper.get_difficulty_characteristics(DifficultyLevel.HARD)
-        assert "complex" in hard_chars['description'].lower()
-    
+        self.assertIn("complex", hard_chars['description'].lower())
+
     def test_shape_coverage(self):
         """Test shape coverage for different categories"""
         triangle_shapes = self.mapper.get_shapes_for_category("Triangle Height Concepts")
-        assert ShapeType.TRIANGLE_EQUILATERAL in triangle_shapes
-        
+        self.assertIn(ShapeType.TRIANGLE_EQUILATERAL, triangle_shapes)
+
         quadrilateral_shapes = self.mapper.get_shapes_for_category("Quadrilateral Sorting & Grouping")
-        assert ShapeType.SQUARE in quadrilateral_shapes
+        self.assertIn(ShapeType.SQUARE, quadrilateral_shapes)
 
 
 if __name__ == "__main__":
-    pytest.main([__file__])
+    unittest.main()

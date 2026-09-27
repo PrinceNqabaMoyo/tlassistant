@@ -1,0 +1,2147 @@
+# Probability
+
+## Revision
+
+### Terminology
+
+* Outcome: a single observation of an uncertain or random process (called an experiment). For example, when you accidentally drop a book, it might fall on its cover, on its back or on its side. Each of these options is a possible outcome.
+
+
+
+* Sample space of an experiment: the set of all possible outcomes of the experiment. For example, the sample space when you roll a single 6-sided die is the set {1;2;3;4;5;6}. For a given experiment, there is exactly one sample space. The sample space is de noted by the letter S.
+
+
+
+* Event: a set of outcomes of an experiment. For example, during radioactive decay of 1 gramme of uranium-234, one possible event is that the number of alpha-particles emitted during 1 microsecond is between 225 and 235.
+
+
+
+* Probability of an event: a real number between 0 and 1 that describes how likely it is that the event will occur. A probability of 0 means the outcome of the experiment will never be in the event set. A probability of 1 means the outcome of the experiment will always be in the event set. When all possible outcomes of an experiment have equal chance of occurring, the probability of an event is the number of outcomes in the event set as a fraction of the number of outcomes in the sample space.
+
+
+
+* Relative frequency of an event: the number of times that the event occurs during experimental trials, divided by the total number of trials conducted. For example, if we flip a coin 10 times and it landed on heads 3 times, then the relative frequency of the heads event is 3/10 = 0,3.
+
+
+
+* Union of events: the set of all outcomes that occur in at least one of the events. For 2 events called A and B, we write the union as “A or B”. Another way of writing the union is using set notation: A ∪ B.
+
+
+
+* Intersection of events: the set of all outcomes that occur in all of the events. For 2 events called A and B, we write the intersection as “A and B”. Another way of writing the intersection is using set notation: A ∩ B.
+
+
+
+* Mutually exclusive events: events with no outcomes in common, that is (A and B) = ∅. Mutually exclusive events can never occur simultaneously. For example the event that a number is even and the event that the same number is odd are mutually exclusive, since a number can never be both even and odd.
+
+
+
+* Complementary events: two mutually exclusive events that together contain all the outcomes in the sample space. For an event called A, we write the complement as “not A”. Another way of writing the complement is as A.
+
+
+
+### Identities
+
+\-The addition rule (also called the sum rule) for any 2 events, A and B is
+
+* P(A or B) = P(A) + P(B) − P(A and B)
+
+
+
+\-This rule relates the probabilities of 2 events with the probabilities of their union and intersection.
+
+
+
+\-The addition rule for 2 mutually exclusive events is
+
+* P(A or B) = P(A) + P(B)
+
+
+
+This rule is a special case of the previous rule. Because the events are mutually exclusive, P(A and B) = 0.
+
+
+
+The complementary rule is
+
+* P(not A) = 1 − P(A)
+
+\-This rule is a special case of the previous rule. Since A and (notA)are mutually exclusive, P(A or (not A)) = 1.
+
+
+
+
+
+#### EXAMPLES
+
+##### 1
+
+You take all the hearts from a deck of cards. You then select a random card from the set of hearts. What is the sample space? What is the probability of each of the following events?
+
+
+
+###### a.
+
+The card is the ace of hearts.
+
+
+
+###### b.
+
+The card has a prime number on it.
+
+
+
+###### c.
+
+The card has a letter of the alphabet on it.
+
+
+
+###### SOLUTION
+
+\####### Step 1: Write down the sample space
+
+\-Since we are considering only one suit from the deck of cards (the hearts), we need to write down only the letters and numbers on the cards. Therefore the sample space is
+
+
+
+* S = {A; 2; 3; 4; 5; 6; 7; 8; 9; 10; J; Q; K}
+
+
+
+\####### Step 2: Write down the event sets
+
+* ace of hearts:{A}
+* prime number:{2; 3; 5; 7}
+* letter of alphabet: {A; J; Q; K}
+
+
+
+\####### Step 3: Compute the probabilities
+
+\-The probability of an event is defined as the number of elements in the event set divided by the number of elements in the sample space. There are 13 elements in the sample space. So the probability of each event is
+
+* ace of hearts: 1/13
+* prime number: 4/13
+* letter of alphabet: 4/13
+
+
+
+##### 2
+
+\-You roll two 6-sided dice. Let E be the event that the total number of dots on the dice is 10. Let F be the event that at least one die is a 3.
+
+
+
+###### a.
+
+Write down the event sets for E and F.
+
+
+
+###### b.
+
+Determine the probabilities for E and F.
+
+
+
+###### c.
+
+Are E and F mutually exclusive? Why or why not?
+
+
+
+###### SOLUTION
+
+\####### Step 1: Write down the sample space
+
+\-The sample space of a single 6-sided die is just {1;2;3;4;5;6}. To get the sample space of two 6-sided dice, we have to take every possible pair of numbers from 1 to 6.
+
+
+
+*S* = {
+
+(1;1) (1;2) (1;3) (1;4) (1;5) (1;6)
+
+(2;1) (2;2) (2;3) (2;4) (2;5) (2;6)
+
+(3;1) (3;2) (3;3) (3;4) (3;5) (3;6)
+
+(4;1) (4;2) (4;3) (4;4) (4;5) (4;6)
+
+(5;1) (5;2) (5;3) (5;4) (5;5) (5;6)
+
+(6;1) (6;2) (6;3) (6;4) (6;5) (6;6)
+
+}
+
+
+
+\####### Step 2: Write down the events
+
+For E the dice have to add to10.
+
+E = {(4;6);(5;5);(6;4)}
+
+
+
+\-For F at least one die has to be 3.
+
+F = {(1;3); (3;1); (2;3); (3;2); (3;3); (4;3); (3;4); (5;3); (3;5); (6;3); (3;6)}
+
+
+
+\####### Step3:Computetheprobabilities
+
+The probability of an event is defined as the number of elements in the event set divided by the number of elements in the sample space. There are
+
+* 6×6=36 outcomes in the sample space, S;
+* 3 outcomes in event E; and
+* 11 outcomes in event F.
+
+
+
+Therefore
+
+P(E) = 3/36= 1/12
+
+and
+
+P(F) = 11/36
+
+
+
+\####### Step 4: Are they mutually exclusive
+
+\-To test whether two events are mutually exclusive, we have to test whether their intersection is empty. Since E has no outcomes that contain a 3 on one of the dice, the intersection of E and F is empty: (E and F) = ∅. This means that the events are mutually exclusive.
+
+
+
+#### QUESTIONS
+
+##### 1\.
+
+A bag contains r red balls, b blue balls and y yellow balls. What is the probability that a ball drawn from the bag at random is yellow?
+
+
+
+##### 2\.
+
+A packet has yellow and pink sweets. The probability of taking out a pink sweet is 7/12. What is the probability of taking out a yellow sweet?
+
+
+
+##### 3\.
+
+\-You flip a coin 4 times. What is the probability that you get 2 heads and 2 tails?
+
+\-Write down the sample space and the event set to determine the probability of this event.
+
+
+
+##### 4\.
+
+\-In a class of 37 children, 15 children walk to school, 20 children have pets at home and 12 children who have a pet at home also walk to school. How many children walk to school and do not have a pet at home?
+
+
+
+##### 5\.
+
+\-You roll two 6-sided dice and are interested in the following two events:
+
+* A:  the sum of the dice equals 8
+* B: at least one of the dice shows a 1
+
+\-Show that these events are mutually exclusive.
+
+
+
+##### 6\.
+
+\-You ask a friend to think of a number from 1 to 100. You then ask her the following questions:
+
+* Is the number even?
+* Is the number divisible by 7?
+
+\-How many possible numbers are less than 80 if she answered “yes” to both questions?
+
+
+
+##### 7\.
+
+\-In a group of 42 pupils, all but 3 had a packet of chips or a Fanta or both. If 23 had a packet of chips and 7 of these also had a Fanta, what is the probability that one pupil chosen at random has:
+
+
+
+###### a)
+
+both chips and Fanta
+
+
+
+###### b)
+
+&#x20;only Fanta
+
+
+
+##### 8\.
+
+Tamara has 18 loose socks in a drawer. Eight of these are orange and two are pink. Calculate the probability that the first sock taken out at random is:
+
+
+
+###### a)
+
+orange
+
+
+
+###### b)
+
+not orange
+
+
+
+###### c)
+
+pink
+
+
+
+###### d)
+
+not pink
+
+
+
+###### e)
+
+orange or pink
+
+
+
+###### f)
+
+neither orange nor pink
+
+
+
+##### 9\.
+
+\-A box contains coloured blocks. The number of blocks of each colour is given in the following table.
+
+
+
+|Colour|Purple|Orange|White|Pink|
+|-|-|-|-|-|
+|Number of blocks|24|32|41|19|
+
+
+
+\-A block is selected randomly. What is the probability that the block will be:
+
+
+
+###### a)
+
+purple
+
+
+
+###### b)
+
+purple or white
+
+
+
+###### c)
+
+pink and orange
+
+
+
+###### d)
+
+not orange?
+
+
+
+##### 10\.
+
+\-The surface of a soccer ball is made up of 32 faces. 12 faces are regular pentagons, each with a surface area of about 37 cm2. The other 20 faces are regular hexagons, each with a surface area of about 56 cm^2.
+
+\-You roll the soccer ball. What is the probability that it stops with a pentagon touching the ground?
+
+
+
+### Venn diagrams
+
+\-A Venn diagram is used to show how events are related to one another. A Venn diagram can be very helpful when doing calculations with probabilities. In a Venn diagram each event is represented by a shape, often a circle or a rectangle. The region inside the shape represents the out comes included in the event and the region outside the shape represents the outcomes that are not in the event.
+
+
+
+>DIAGRAM\\\[
+
+\-Intersecting circular set A and B inside a box Venn diagram labelled S
+
+]
+
+
+
+\-A Venn diagram representing a sample space, S, as a square; and two events, A and B, as circles. The intersection of the two circles contains out comes that are in both A and B.
+
+\-Venn diagrams can be used in slightly different ways and it is important to notice the differences between them. The following 3 examples show how a Venn diagram is used to represent
+
+* the outcomes included in each event;
+* the number of outcomes in each event; and
+* the probability of each event.
+
+
+
+#### Examples
+
+##### 1
+
+Choose a number between 1 and 20. Draw a Venn diagram to answer the following questions.
+
+
+
+###### a.
+
+What is the probability that the number is a multiple of 3?
+
+
+
+###### b.
+
+What is the probability that the number is a multiple of 5?
+
+
+
+###### c.
+
+What is the probability that the number is a multiple of 3 or 5?
+
+
+
+###### d.
+
+What is the probability that the number is a multiple of 3 and 5?
+
+
+
+###### SOLUTION
+
+\####### Step 1: Draw a Venn diagram
+
+The Venn diagram should show the sample space of all numbers from 1 to 20. It should
+
+also show an event set that contains all the multiples of 3, let A = {3; 6; 9; 12; 15; 18}, and another event set that contains all the multiples of 5, let B = {5; 10; 15; 20}. Note that there is one shared outcome between these two events, namely 15.
+
+
+
+>DIAGRAM\\\[
+
+\-2 intersecting circles inside a Venn diagram box
+
+\-The intersection has the number 15
+
+\-The left sided circle has the following numbers: 3; 6; 9; 12; 18
+
+\-The right sided circle has the following numbers: 5; 10; 20
+
+\-The following numbers are outside the circles but inside the box: 1; 2; 4; 7; 8; 11; 13; 14; 16; 17; 19
+
+]
+
+
+
+\####### Step 2: Compute probabilities
+
+The probability of an event is the number of outcomes in the event set divided by the number of outcomes in the sample space. There are 20 outcomes in the sample space.
+
+
+
+\######## a. 
+
+Since there are 6 outcomes in the multiples of 3 event set, the probability of a multiple of 3 is P(A) = 6/20 = 3/10.
+
+
+
+\######## b. 
+
+Since there are 4 outcomes in the multiples of 5 event set, the probability of a multiple of 5 is P(B) = 4/20 = 1/5.
+
+
+
+\######## c. 
+
+The event that the number is a multiple of 3 or 5 is the union of the above two event sets. There are 9 elements in the union of the event sets, so the probability is 9/20.
+
+
+
+\######## d. 
+
+The event that the number is a multiple of 3 and 5 is the intersection of the two event sets. There is 1 element in the intersection of the event sets, so the probability is 1/20.
+
+
+
+
+
+##### 2
+
+\-In a group of 50 learners, 35 take Mathematics and 30 take History, while 12 take neither of the two subjects. Draw a Venn diagram representing this information. 
+
+\-If a learner is chosen at random from this group, what is the probability that he takes both Mathematics and History?
+
+
+
+###### SOLUTION
+
+\####### Step 1: Draw outline of Venn diagram
+
+\-There are 2 events in this question, namely
+
+* M: that a learner takes Mathematics; and
+* H: that a learner takes History.
+
+
+
+\-We need to do some calculations before drawing the full Venn diagram, but with the information above we can already draw the outline.
+
+
+
+>DIAGRAM\[
+
+\-Venn diagram labelled S
+
+\-2 empty intersecting circles M and H
+
+\-The box is also empty
+
+]
+
+
+
+\####### Step 2: Write down sizes of the event sets, their union and intersection
+
+\-We are told that 12 learners take neither of the two subjects. Graphically we can represent this as:
+
+
+
+>DIAGRAM\[
+
+\-Venn diagram labelled S
+
+\-2 empty intersecting circles M and H
+
+\-The box has the number 12
+
+]
+
+
+
+\-Since there are 50 elements in the sample space, we can see from this figure that there are 50 − 12 = 38 elements in (M or H). So far we know
+
+• n(M) = 35
+
+• n(H) = 30
+
+• n(M or H) = 38
+
+
+
+\-From the addition rule,
+
+n(M or H) = n(M) + n(H) − n(M and H)
+
+∴ n(M and H) = 35 + 30 − 38
+
+= 27
+
+
+
+\####### Step 3: Draw the final Venn diagram
+
+
+
+>DIAGRAM\\\[
+
+\-Venn diagram labelled S
+
+\-2 intersecting circles M and H
+
+\-The intersection has the number 27
+
+\-Circle M has the number 8
+
+\-Circle H has the number 3
+
+\-The box has the number 12
+
+]
+
+
+
+##### 3
+
+\-Draw a Venn diagram to represent the same information as in the previous example, except showing the probabilities of the different events, rather than the counts.
+
+\-If a learner is chosen at random from this group, what is the probability that she takes both Mathematics and History?
+
+
+
+###### SOLUTION
+
+\####### Step 1: Use counts to compute probabilities
+
+\-Since there are 50 elements (learners) in the sample space, we can compute the probability of any event by dividing the size of the event set by 50. This gives the following probabilities:
+
+
+
+• P(M) = 35/50 = 7/10
+
+• P(H) = 30/50 = 3/5
+
+• P(M or H) = 38/50 = 19/25
+
+• P(M and H) = 27/50
+
+
+
+\####### Step 2: Draw the Venn diagram
+
+Next we replace each count from the Venn diagram in the previous example with a probability.
+
+
+
+>DIAGRAM\[
+
+\-Venn diagram labelled S
+
+\-2 intersecting circles M and H
+
+\-The intersection has the fraction 27/50
+
+\-M has 4/25
+
+\-H has 3/50
+
+\-The box has the fraction 6/25
+
+]
+
+
+
+\####### Step 3: Find the answer
+
+\-The probability that a random learner will take both Mathematics and History is P(M and H) = 27/50.
+
+
+
+#### QUESTIONS
+
+##### 1\.
+
+\-Given the following information:
+
+* P(A) = 0,3
+* P(B and A) = 0,2
+* P(B) = 0,7
+
+
+
+\-First draw a Venn diagram to represent this information. Then compute the value of P (B and (not A)).
+
+
+
+##### 2\. 
+
+\-You are given the following information:
+
+* P(A) = 0,5
+* P(A and B) = 0,2
+* P(not B) = 0,6
+
+
+
+\-Draw a Venn diagram to represent this information and determine P(A or B).
+
+
+
+##### 3\. 
+
+\-A study was undertaken to see how many people in Port Elizabeth owned either a Volkswagen or a Toyota. 3% owned both, 25%owned a Toyota and 60% owned a Volkswagen. What percentage of people owned neither car?
+
+
+
+##### 4\. 
+
+\-Let S denote the set of whole numbers from 1 to 15, X denote the set of even numbers from 1 to 15 and Y denote the set of prime numbers from 1 to 15.
+
+\-Draw a Venn diagram depicting S, X and Y.
+
+
+
+## Dependent and independent events
+
+\-Sometimes the presence or absence of one event tells us something about other events.
+
+\-We call events dependent if knowing whether one of them happened tells us some thing about whether the others happened. Independent events give us no information about one another; the probability of one event occurring does not affect the probability of the other events occurring.
+
+
+
+DEFINITION: Independent events
+
+\-Two events, A and B are independent if and only if
+
+P(A and B) = P(A) × P(B)
+
+\-At first it might not be clear why we should call events that satisfy the equation above independent. We will explore this further using a number of examples.
+
+\-So, why do we call it independence when P(A and B) = P(A) × P(B)? 
+
+\-For  two events, A and B, independence means that knowing the outcome of B does not affect the probability of A.
+
+\-Consider the following Venn diagram.
+
+
+
+>DIAGRAM\[
+
+\-Venn diagram S
+
+\-Two intersecting circles A and B
+
+\-The intersection has the phrase 'A and B'
+
+]
+
+
+
+\-The probability of A is the ratio between the number of outcomes in A and the number of outcomes in the sample space, S.
+
+P(A) = n(A)/n(S)
+
+\-Now, let’s say that we know that event B happened. How does this affect the probability of A? Here is how the Venn diagram changes:
+
+>DIAGRAM\[
+
+\-The circle B is shedded blue
+
+]
+
+
+
+\-A lot of the possible outcomes (all of the outcomes outside B) are now out of the picture, because we know that they did not happen. Now the probability of A happening, given that we know that B happened, is the ratio between the size of the region where A is present (A and B) and the size of all possible events (B).
+
+
+
+P(A if we know B) = n(A and B)/ n(B)
+
+
+
+\-If P(A) = P(A if we know B) we call them independent, because knowing B does not change the probability of A.
+
+\-With some algebra, we can prove that this statement of independence is the same as the definition of independence that we saw at the beginning of this section. For independent events 
+
+
+
+P(A and B) = P(A) × P(B)
+
+
+
+\-This is equivalent to
+
+
+
+P(A) = P(A and B) ÷ P(B)
+
+= n(A and B)/n(S) ÷ n(B)/n(S)
+
+= n(A and B)/n(B)
+
+=P(A if we know B)
+
+
+
+That is why we call events independent!
+
+
+
+\-(For enrichment only):
+
+* The ratio P(A and B)/P(B) is called a conditional probability and written using the notation P(A | B). This notation is read as “the probability of A given B.”
+* If (and only if) A and B are independent: P(A | B) = P(A) and P(B | A) = P(B).
+* Try to prove this using the definition of independence.
+
+
+
+
+
+### Examples
+
+#### 1
+
+A bag contains 5 red and 5 blue balls. We remove a random ball from the bag, record
+
+its colour and put it back into the bag. We then remove another random ball from the bag and record its colour.
+
+
+
+##### a.
+
+What is the probability that the first ball is red?
+
+
+
+##### b.
+
+What is the probability that the second ball is blue?
+
+
+
+##### c.
+
+What is the probability that the first ball is red and the second ball is blue?
+
+
+
+##### d. 
+
+Are the first ball being red and  the second ball being blue independent events?
+
+
+
+##### SOLUTION
+
+
+
+###### Step 1: Probability of a red ball first
+
+\-Since there are a total of 10 balls, of which 5 are red, the probability of getting a red ball is P(first ball red) = 5/10 = 1/2
+
+
+
+###### Step 2: Probability of a blue ball second
+
+\-The problem states that the first ball is placed back in to the bag before we take the second ball. This means that when we draw the second ball, there are again a total of 10 balls in the bag, of which 5 are blue. Therefore the probability of drawing a blue ball is
+
+P(second ball blue) = 5/10 = 1/2
+
+
+
+###### Step 3: Probability of red first and blue second
+
+\-When drawing two balls from the bag, there are 4 possibilities. We can get
+
+• a red ball and then another red ball;
+
+• a red ball and then a blue ball;
+
+• a blue ball and then a red ball;
+
+• a blue ball and then another blue ball.
+
+
+
+\-We want to know the probability of the second outcome, where we have to get a red ball first. Since there are 5 red balls and 10 balls in total, there are 5/10 ways to get a red ball first. Now we put the first ball back, so there are again 5 red balls and 5 blue balls in the bag. Therefore there are 5/10 ways to get a blue ball second if the first ball was red. This means that there are 5/10 × 5/10 = 25/100 ways to get a red ball first and a blue ball second. So, the probability of getting a red ball first and a blue ball second is 1/4.
+
+
+
+###### Step 4: Dependent or independent?
+
+According to the definition, events are independent if and only if
+
+P(A and B) = P(A) × P(B)
+
+
+
+In this problem:
+
+* P(first ball red) = 1/2
+* P(second ball blue) = 1/2
+* P(first ball red and second ball blue) =1/4
+
+
+
+\-Since 1/4 = 1/2×1/2, the events are independent.
+
+
+
+
+
+#### 2
+
+In the previous example, we picked a random ball and put it back into the bag before continuing. This is called sampling with replacement. In this example, we will follow the same process, except that we will not put the first ball back into the bag. This is called sampling without replacement.
+
+So, from a bag with 5 red and 5 blue balls, were move a random ball and record its colour. Then, without putting back the first ball, we remove another random ball from the bag and record its colour.
+
+
+
+##### a.
+
+What is the probability that the first ball is red?
+
+
+
+##### b.
+
+What is the probability that the second ball is blue?
+
+
+
+##### c.
+
+What is the probability that the first ball is red and the second ball is blue?
+
+
+
+##### d. 
+
+Are the  first ball being red and the second ball being blue independent events?
+
+
+
+##### SOLUTION
+
+###### Step 1: Count the number of outcomes
+
+\-We will look directly at the number of possible way sin which we can get the 4 possible outcomes when removing 2 balls. -In the previous example, we saw that the 4 possible outcomes are
+
+
+
+* a red ball and then another red ball;
+* a red ball and then a blue ball;
+* a blue ball and then a red ball;
+* a blue ball and then another blue ball.
+
+
+
+\-For the first outcome, we have to get a red ball first. Since there are 5 red balls and 10 balls in total, there are 5/10 ways to get a red ball first. After we have taken out a red ball, there are now 4 red balls and 5 blue balls left. Therefore there are 4/9 ways to get 
+
+a red ball second if the first ball was also red. This means that there are 5/10 × 4/9 = 20/90
+
+ways to get a red ball first and a red ball second. The probability of the first outcome is 2/9.
+
+
+
+\-For the second outcome, we have to get a red ball first. As in the first outcome, there are 5/10 ways to get a red ball first; and there are now 4 red balls and 5 blue balls left.
+
+Therefore there are 5/9 ways to get a blue ball second if the first ball was red. This means that there are 5/10 × 5/9 = 25/90
+
+ways to get a red ball first and a blue ball second. The probability of the second outcome is 5/18.
+
+\-We can compute the probabilities of the third and fourth out comes in the same way as the first two, but there is an easier way. Notice that there are only 2 types of ball and that there are exactly equal numbers of them at the start. This means that the problem is completely symmetric in red and blue. We can use this symmetry to compute the probabilities of the other two outcomes.
+
+\-In the third outcome, the first ball is blue and the second ball is red. Because of symmetry this outcome must have the same probability as the second outcome (when the first ball is red and the second ball is blue). Therefore the probability of the third outcome is 5/18.
+
+\-In the fourth outcome, the first and second balls are both blue. From symmetry, this outcome must have the same probability as the first outcome (when both balls are red).
+
+\-Therefore the probability of the fourth outcome is 2/9.
+
+\-To summarise, these are the possible outcomes and their probabilities:
+
+* first ball red and second ball red: 2/9;
+* first ball red and second ball blue: 5/18;
+* first ball blue and second ball red: 5/18;
+* first ball blue and second ball blue: 2/9.
+
+
+
+###### Step 2: Probability of a red ball first
+
+\-To determine the probability of getting a red ball on the first draw, we look at all of the outcomes that contain a red ball first. These are
+
+* a red ball and then another red ball;
+* a red ball and then a blue ball.
+
+
+
+The probability of the first outcome is 2/9 and the probability of the second outcome is 5/18. By adding these two probabilities, we see that the probability of getting a red ball first is
+
+P(first ball red) = 2/9 + 5/18 = 1/2
+
+
+
+\-This is the same as in the previous exercise, which should not be too surprising since the probability of the first ball being red is not affected by whether or not we put it back into the bag before drawing the second ball.
+
+
+
+Step 3: Probability of a blue ball second
+
+\-To determine the probability of getting a blue ball on the second draw, we look at all
+
+of the outcomes that contain a blue ball second. These are
+
+
+
+* a red ball and then a blue ball;
+* a blue ball and then another blue ball.
+
+
+
+\-The probability of the first outcome is 5/18 and the probability of the second outcome is 2/9. By adding these two probabilities, we see that the probability of getting a blue ball second is
+
+P(second ball blue) = 5/18 + 2/9 =1/2
+
+
+
+\-This is also the same as in the previous exercise!You might find it surprising that the probability of the second ball is not affected by whether or not were place the first ball.
+
+\-The reason why this probability is still 1/2 is that we are computing the probability that the second ball is blue without knowing the colour of the first ball. Because there are only two equal possibilities for the second ball (red and blue)and because we don’t know whether the first ball is red or blue, there is an equal chance that the second ball will be one colour or the other.
+
+
+
+###### Step 4: Probability of red first and blue second
+
+\-We have already calculated the probability that the first ball is red and the second ball is blue. It is 5/18.
+
+
+
+###### Step 5: Dependent or independent?
+
+\-According to the definition, events are independent if and only if
+
+P(A and B) = P(A) × P(B)
+
+
+
+\-In this problem:
+
+* P(first ball red) = 1/2
+* P(second ball blue) =1/2
+* P(first ball red and second ball blue)= 5/18
+
+
+
+\-Since 5/18 ≠ 1/2 × 1/2, the events are dependent.
+
+
+
+### WARNING!
+
+Just because two events are  mutually exclusive does not necessarily mean that they are independent. To test whether events are mutually exclusive, always check that P(A and B) = 0. To test whether events are independent, always check that P(A and B) = 
+
+P(A) × P(B). See the exercises below for examples of events that are mutually exclusive and independent indifferent combinations.
+
+
+
+### QUESTIONS
+
+#### 1\.
+
+Use the following Venn diagram to determine whether events X and Y are
+
+##### a) 
+
+mutually exclusive or not mutually exclusive;
+
+
+
+##### b) 
+
+dependent or independent.
+
+
+
+>DIAGRAM\[
+
+\-Venn diagram labelled S
+
+\-Two intersecting circles X and Y
+
+\-The intersection has the number 3
+
+\-The circle X has the number 11
+
+\-The circle Y has the number 7
+
+\-Outside the circles but in the box has the number 14
+
+]
+
+
+
+#### 2\.
+
+Of  the 30 learners in a class 17 have black hair, 11 have brown hair and 2 have red hair. A learner is selected from the class at random.
+
+
+
+##### a)
+
+What is the probability that the learner has black hair?
+
+
+
+##### b)
+
+What is the probability that the learner has brown hair?
+
+
+
+##### c) 
+
+Are these two events mutually exclusive?
+
+
+
+##### d) 
+
+Are these two events independent?
+
+
+
+#### 3\. 
+
+P(M) = 0,45; P(N) = 0,3 and P(M or N) = 0,615. Are the events M and N mutually exclusive, independent or neither mutually exclusive nor independent?
+
+
+
+#### 4\. (For enrichment)
+
+Prove that if event A and event B are mutually exclusive with P(A) = 0 and P(B) = 0, then A and B are always dependent.
+
+
+
+## More Venn diagrams
+
+\-In the rest of this chapter we will look at tools and techniques for working with probability problems.
+
+When working with more complex problems, we can have three or more events that intersect in various ways. To solve these problems, we usually want to count the number (or percentage) of outcomes in an event, or a combination of events. Venn diagrams are a useful tool for recording and visualising the counts.
+
+
+
+\-There are some words that tell you which part of the Venn diagram should be filled in.
+
+\-The following table summarises the most important ones:
+
+|Words|Symbol| Venn diagram|
+|-|-|-|
+|"all"|A and B and C / A ⋂ B ⋂ C|>Diagram\[<br />\[-intersection of 3 circles shaded blue]|
+|"none"||>DIAGRAM\[<br />-3 empty intersecting circles]|
+|"at least one"|A or B or C / A∪B∪C|>DIAGRAM\[<br />-3 intersecting circles all shaded blue]|
+|"both A and B "|A and B /A∩B|>DIAGRAM\[-only the intersection of 2 circles is shaded blue]|
+|"A or B"|A or B /A∪B|>DIAGRAM\[- 2 intersecting circles both shaded blue]|
+
+
+
+
+
+### QUESTIONS
+
+#### 1
+
+Use the Venn diagram below to answer the following questions. Also given: n(S) = 120.
+
+
+
+>DIAGRAM\[
+
+\-Venn diagram box labelled S
+
+\-3 intersecting circles F, G and H
+
+\-The intersection of all 3 has the number 2
+
+\-Intersection of F and G has the number 10
+
+\-Intersection of G and H has the number 15
+
+\-Intersection of H and F has the number 7
+
+\-The set F has the number 8
+
+\-The set H has the number 14
+
+\-The set G has the number 24
+
+]
+
+
+
+##### a) 
+
+Compute P(F).
+
+
+
+##### b) 
+
+Compute P(G or H).
+
+
+
+##### c) 
+
+Compute P(F and G).
+
+
+
+##### d) 
+
+Are F and G dependent or independent?
+
+
+
+
+
+#### 2\. 
+
+The Venn diagram below shows the probabilities of 3 events. Complete the Venn diagram using the additional information provided.
+
+
+
+>DIAGRAM\[
+
+\-Venn diagram box labelled S
+
+\-3 intersecting circles X, Y and Z
+
+\-The intersection of X and Y has the fraction 17/100
+
+\-The intersection of X and Z has the fraction 3/20
+
+\-The intersection of Y and Z has the fraction 1/25
+
+\-The circle X has the fraction 17/100
+
+\-The other  parts are all empty
+
+]
+
+
+
+* P(Z and (not Y)) = 31/100
+* P(Y and X)= 23/100
+* P(Y) = 39/100
+
+
+
+\-After completing the Venn diagram, compute the following:
+
+P (Z and not (X or Y))
+
+
+
+#### 3\. 
+
+\-There are 79 Grade 10 learners at school. All of these take some combination of Maths, Geography and History. The number who take Geography is 41; those who take History is 36; and 30 take Maths. 
+
+\-The number who take Maths and History is 16; the number who take Geography and History is 6, and there are 8 who take Maths only and 16 who take History only.
+
+
+
+##### a) 
+
+Draw a Venn diagram to illustrate all this information.
+
+
+
+##### b) 
+
+How many learners take Maths and Geography but not History?
+
+
+
+##### c) 
+
+How many learners take Geography only?
+
+
+
+##### d) 
+
+How many learners take all three subjects?
+
+
+
+#### 4\. 
+
+\-Draw a Venn diagram with 3 mutually exclusive events. Use the diagram to show that for 3 mutually exclusive events, A, B and C, the following is true:
+
+P(A or B or C) = P(A) + P(B) + P(C)
+
+\-This is the addition rule for 3 mutually exclusive events.
+
+
+
+
+
+## Tree diagrams
+
+\-Tree diagrams are useful for organising and visualising the different possible outcomes of a sequence of events. For each possible outcome of the first event, we draw a line where we write down the probability of that outcome and the state of the world if that outcome happened. 
+
+\-Then, for each possible outcome of the second event we do the
+
+same thing.
+
+\-Below is an example of a simple tree diagram, showing the possible outcomes of rolling a 6-sided die.
+
+
+
+>DIAGRAM\[
+
+\-Six lines that all meet at an apex point
+
+\-Each line is labelled with the probability 1/6
+
+\-Under each probability is the outcome i.e one of the numbers 1; 2; 3; 4; 5 or 6
+
+]
+
+
+
+\-Note that each outcome (the numbers 1 to 6) is shown at the end of a line; and that the probability of each outcome (all 1/6 in this case) is shown on a line. The probabilities have to add up to 1 in order to cover all of the possible outcomes. In the examples below, we will see how to draw tree diagrams with multiple events and how to compute probabilities using the diagrams.
+
+\-Earlier in this chapter you learned about dependent and independent events. Tree diagrams are very helpful for analysing dependent events. A tree diagram allows you to show how each possible outcome of one event affects the probabilities of the other
+
+events.
+
+\-Tree diagrams are not so useful for independent events since we can just multiply the probabilities of separate events to get the probability of the combined event. Remember that for independent events:
+
+* P(A and B) = P(A) × P(B)
+
+\-So if you already know that events are independent, it is usually easier to solve a problem without using tree diagrams. But if you are uncertain about whether events are independent or if you know that they are not, you should use a tree diagram.
+
+
+
+### EXAMPLES
+
+#### 1
+
+If it rains on a given day, the probability that it rains the next day is 1/3. If it does not rain on a given day, the probability that it rains the next day is 1/6. The probability that it will rain tomorrow is 1/5. What is the probability that it will rain the day after tomorrow?
+
+Draw a tree diagram of all the possibilities to determine the answer.
+
+
+
+##### SOLUTION
+
+###### Step 1: Draw the first level of the tree diagram
+
+\-Before we can determine what happens on the day after tomorrow, we first have to determine what might happen tomorrow. We are told that there is a 1/5 probability that it will rain tomorrow. Here is how to represent this information using a tree diagram:
+
+
+
+>DIAGRAM\[
+
+\-Root Node: Today
+
+\--First level (Today to Tomorrow)
+
+\--Root node Today
+
+\--Branch 1 (Left): Path to '"Tomorrow: Rain" → Probablity = 1/5
+
+\--Branch 2 (Right): Path to "Tomorrow: No Rain" → Probability = 4/5]
+
+
+
+###### Step 2: Draw the second level of the tree diagram
+
+We are also told that if it does rain on one day, there is a 1/3 probability that it will also rain on the following day. On the other hand, if it does not rain on one day, there is only a 1/6 probability that it will also rain on the following day. Using this information
+
+we complete the tree diagram:
+
+
+
+>DIAGRAM\[
+
+\-2nd level (Tomorrow to Day After Tomorrow)
+
+\-Root Node: Today
+
+\--Level 1 Node: Tomorrow (Rain)\[Probability: 1/5]
+
+\---Level 2 Branch (Left): Path to "Day after tomorrow: Rain"→Conditional Probabality = 1/3
+
+\---Level 2 Barnch (Right): Path to "Day after Tomorrow: No Rain"→ Conditional Probability = 2/3
+
+\--Level 1 Node: Tomorrow (No rain)\[Probability: 4/5]
+
+\---Level 2 Branch (Left):Path to '"Day after tomorrow: Rain"→ Conditional probability = 1/6
+
+\---Level 2 Branch (Right): Path to "Day after Tomorrow: No Rain"→ Conditional Probability = 5/6
+
+
+
+###### Step 3: Compute the probability
+
+We are asked what the probability is that it will rain the day after  tomorrow. On the tree diagram above we can see that there are 2 situations where it rains on the day after tomorrow.
+
+
+
+>DIAGRAM\[
+
+\-The following branches are shown in red
+
+\-Level 1 Node: Tomorrow (Rain)\[Probability: 1/5]
+
+\--Level 2 Branch (Left): Path to "Day after tomorrow: Rain"→ Conditional Probability = 1/3
+
+\-Level 1 Node: Tomorrow (No rain)\[Probability: 4/5]
+
+\--Level 2 Branch (Left):Path to '"Day after tomorrow: Rain"→ Conditional probability = 1/6
+
+]
+
+
+
+To get the probability for the first situation(that it rains tomorrow and the day after tomorrow) we have to multiply the probabilities along the first redline.
+
+P(rain tomorrow and rain day after tomorrow)
+
+=1/5 × 1/3
+
+=1/15
+
+
+
+\-To get the probability for the second situation (that it does not rain tomorrow, but it  does rain the day after tomorrow) we have to multiply the probabilities along the second redline.
+
+P(no train tomorrow and rain day after tomorrow)
+
+= 4/5 × 1/6 = 2/15
+
+
+
+\-Therefore the total probability that it will rain the day after tomorrow is the sum of the probabilities along the two red paths, namely
+
+1/15 + 2/15 = 1/5
+
+
+
+#### 2
+
+\-You play the following game. You flip a coin. If it comes up tails, you get 2 points and your turn ends. If it comes up heads, you get only 1 point, but you can flip the coin again. If you flip the coin multiple times in one turn, you add up the points. You
+
+can flip the coin at most 3 times in one turn. What is the probability that you will get exactly 3 points in one turn?
+
+\-Draw a tree diagram to visualise the different possibilities.
+
+
+
+##### SOLUTION
+
+###### Step 1: Write down the events and their symbols
+
+Each coin toss has on of two possible outcomes, namely heads(H) and tails (T). Each outcome has a probability of 1/2. We are asked to count the number of points, so we will also indicate how many points we have for each outcome.
+
+
+
+###### Step 2: Draw the first level of the tree diagram
+
+
+
+>DIAGRAM\[
+
+\-Asymmetric, stopping-rule probability tree or a sequential game/ decision tree branching side way instead of down like previous question
+
+\-Root Node: Start (1 Flip)
+
+\--Branch 1 (Top): Outcome = H | Probability  = 1/2 → State: 1 pt (Active/ Continues)
+
+\--Branch 2 (Bottom): Outcome = T| Probablity = 1/2 → State: 2pts (Terminal/Stops)
+
+]
+
+
+
+\-This treed diagram shows the possible outcomes after 1 flip of the coin. Remember that we can have up to 3 flips, so the diagram is not complete yet. If the coin comes up heads, we flip the coin again. If the coin comes up tails, we stop.
+
+
+
+###### Step 3: Draw the second and third level of the tree diagram
+
+
+
+>DIAGRAM\[
+
+\-Root Node: Start
+
+\--Level 1 Node: H (1pt)\[Prob: 1/2]
+
+\---Level 2 Branch (Top): Outcome = H| Probablity = 1/2→ State: 2 pts (Active)
+
+\----Level 3 Branch (Top): Outcome = H| Probability = 1/2 → State: 3 pts (Terminal - Max Flips)
+
+\----Level 3 Branch (Bottom): Outcome = T| Probability = 1/2 → State 4 pts (Terminal - Game Over Rule)
+
+\---Level 2 Branch (Bottom): Outcome = T| Probability = 1/2 → State: 3 pts (Terminal- Game Over Rule)
+
+\--Level 1 Node: T (2 pts)\[Pro: 1/2]→ No children (Leaf node due to stopping condition)
+
+]
+
+
+
+\-In this tree diagram you can see that we add up the points we get with each coin flip.
+
+\-After three coin flips, the game is over.
+
+
+
+###### Step 4: Find the relevant outcomes and compute the probability
+
+\-We are interested in getting exactly 3 points during the game. To find these outcomes we look only at the tips of the tree. We end with exactly 3 points when the coin flips are
+
+• (H; T) with probability 1/2 × 1/2 = 1/4;
+
+• (H; H; H) with probability 1/2 × 1/2 × 1/2 = 1/8.
+
+
+
+\-Notice that we compute the probability of an outcome by multiplying all the probabilities along the path from the start of the tree to the tip where the outcome is. We add
+
+the above two probabilites to obtain the final probability of getting exactly 3 points as 1/4 + 1/8 = 3/8.
+
+
+
+#### 3
+
+\-A person takes part in a medical trial that tests the effect of a medicine on a disease. Half the people are given medicine and the other half are given a sugar pill, which has no effect on the disease.  The medicine has a 60% chance of curing someone. But, people who do not get the medicine still have a 10% chance of getting well. There are 50 people in the trial and they all have the disease. Talwar takes part in the trial, but we do not know whether he got the medicine or the sugar pill. Draw a tree diagram of all the possible cases. 
+
+\-What is the probability that Talwar gets cured?
+
+
+
+##### SOLUTION
+
+###### Step 1: Summarise the information in the problem
+
+There are two uncertain events in this problem. Each person either receives medicine (probability 1/2) or a sugar pill (probability 1/2). Each person also gets cured(probability 3/5 with medicine and 1/10 without) or stays ill (probability 2/5 with medicine and 9/10
+
+without).
+
+
+
+###### Step 2: Draw the tree diagram
+
+>DIAGRAM\[
+
+\-Root Node: Treatment Assignment
+
+\-- Level 1 Node (Left): "medicine"| Branch Probablity = 1/2
+
+\---Level 2 Branch (Left): "cured"(marked in red)| Conditional Probability = 3/5
+
+\---Level 2 Branch (Right): "not cured"| Conditional Probability = 2/5
+
+\--Level 1 Node (Right):"sugar pill"| Branch Probability = 1/2
+
+\---Level 2 Branch (Left): "cured"(marked in red)| Conditional probability = 1/10
+
+\---Level 2 Branch (Right): "not cured"| Conditional Probability = 9/10
+
+]
+
+
+
+\-In the first level of the tree diagram we show that Talwar either gets the medicine or the sugar pill. The second level of the tree diagram shows whether Talwar is cured or not, depending on which one of the pill she got.
+
+
+
+###### Step 3: Compute the required probability
+
+\-We multiply the probabilities along each path in the tree diagram that leads to Talwer being cured:
+
+1/2 × 3/5 = 3/10
+
+1/2 × 1/10 = 1/20
+
+
+
+\-We then add these probability to get the final answer. The probability that Talwar is cured is 7/20.
+
+
+
+
+
+### QUESTIONS
+
+#### 1\. 
+
+You roll a die twice and add up  the dots to get a score. Draw a tree diagram to represent this experiment. What is the probability that your score is a multiple of 5?
+
+
+
+#### 2\.
+
+What is the probability of throwing at least one five in four rolls of a regular 6-sided die? Hint: do not show all possible outcomes of each roll of the die. We are interested in whether the outcome is 5 or not 5 only.
+
+
+
+#### 3\. 
+
+You flip one coin 4 times.
+
+##### a)
+
+What is the probability of getting exactly 3 heads?
+
+
+
+##### b)
+
+What is the probability of getting at least 3 heads?
+
+
+
+#### 4\. 
+
+You flip 4 different coins at the same time.
+
+##### a)
+
+What is the probability of getting exactly 3 heads?
+
+
+
+##### b)
+
+What is the probability of getting at least 3 heads?
+
+
+
+
+
+## Contingency tables
+
+\-A contingency table is another tool for keeping a record of the counts or percentages in a probability problem. Contingency tables are especially helpful for figuring out whether events are dependent or independent.
+
+\-We will be studying two-way contingency tables, where we count the number of outcomes for 2 events and their complements, making 4 events in total. A two-way contingency table always shows the counts for the 4 possible combinations of events, as well as the totals for each event and its complement. 
+
+\-We can use a contingency table to compute the probabilities of various events by computing the ratios between counts, and to determine whether the events are dependent or independent. The example below shows a two-way contingency table, representing the outcome of a medical study.
+
+
+
+### Example
+
+#### 1
+
+\-A medical trial into the effectiveness of a new medication was carried out. 120 females and 90 males took part in the trial. Out of those people, 50 females and 30 males responded positively to the medication. Given below is a contingency table with the given information filled in.
+
+
+
+||Female|Male|Totals|
+|-|-|-|-|
+|Positive|50|30||
+|Negative||||
+|Totals|120|90||
+
+
+
+##### a.
+
+What  is the probability that the medicine gives a positive result for females?
+
+
+
+##### b.
+
+What  is the probability that the medicine gives a negative result for males?
+
+
+
+##### c.
+
+Was the medication’s success independent of gender? Explain.
+
+
+
+##### SOLUTION
+
+###### Step 1: Complete the contingency table
+
+The best place to start is always to complete the contingency table. Because the each column has to sum up to its total, we can work out the number of females and males who responded negatively to the medication. Then we can add each row to get the totals on the right hand side of the table.
+
+
+
+||Female|Male|Totals|
+|-|-|-|-|
+|Positive|50|30|80|
+|Negative|70|60|130|
+|Totals|120|90|210|
+
+
+
+###### Step 2: Compute the required probabilities
+
+\-The way the first question is phrased, we need to determine the probability that a person responds positively if she is female. This means that we do not include males in this calculation. So, the probability that the medicine gives a positive result for females is the ratio between the number of females who got a positive response and the total number of females.
+
+P(positive if female) = n(positive and female)/n(female)
+
+= 50/120
+
+= 5/12
+
+
+
+\-Similarly, the probability that the medicine gives a negative result for males is:
+
+P(negative if male) = n(negative and male)/n(male)
+
+= 60/90
+
+= 2/3
+
+
+
+###### Step 3: Independence
+
+\-We need to determine whether the effect of the medicine and the gender of a participant are dependent or independent. According to the definition, two events are independent if and only if
+
+P(A and B) =P(A)×P(B)
+
+\-We will look at the events that a participant is female and that the participant responded positively to the trial.
+
+P(female) = n(female)/n(total trials)
+
+= 120/210
+
+= 4/7
+
+
+
+P(positive) = n(positive)/n(total trials)
+
+= 80/210
+
+= 8/21
+
+
+
+P(female and positive) = n(female and positive)/n(total trials)
+
+= 50/210
+
+= 5/21
+
+
+
+\-From these probabilities we can see that
+
+
+
+P(female and positive) ≠ P(female) × P(positive);
+
+
+
+and therefore the gender of a participant and the out come of a trial are dependent events.
+
+
+
+
+
+#### 2
+
+Use the contingency table below to answer the following questions.
+
+
+
+||Grade 11|Grade 12|Totals|
+|-|-|-|-|
+|Has cellphone|59|50|109|
+|No cellphones|6|3|9|
+|Totals|65|53|118|
+
+
+
+##### a.
+
+What is the probability that a learner from Grade11 has a cell phone?
+
+
+
+##### b.
+
+What is the probability that a learner who does not have a cell phone is from Grade11.
+
+
+
+##### c. 
+
+Are the grade of a learner and whether he has a cellphone or not  independent events? Explain your answer.
+
+
+
+##### SOLUTION
+
+###### a. 
+
+\-There are 65 learners in Grade 11 and 59 of them have a cellphone. Therefore the probability that a learner from Grade 11 has a cellphone is 59/65.
+
+
+
+###### b. 
+
+\-There are 9 learners who do not have a cellphone and 6 of them are in Grade 11. Therefore the probability that a learner who does not have a cell phone is from Grade 11 is 6/9 = 2/3.
+
+
+
+###### c. 
+
+\-To test for independence, we will consider whether a learner is in Grade 11 and whether a learner has a cellphone. The probability that a learner is in Grade 11 is 65/118. The probability that a learner has a cellphone is 109/118. The probability that a learner is in Grade 11 and has a cellphone is 59/118 = 1/2. Since 1/2 ≠ 65/118 × 109/118 the grade of a learner and whether he has a cellphone are dependent.
+
+
+
+
+
+### QUESTIONS
+
+#### 1
+
+Use the contingency table below to answer the following questions.
+
+
+
+||Brown eyes|Not brown eyes|Totals|
+|-|-|-|-|
+|Black hair|50|30|80|
+|Red hair|70|80|150|
+|Totals|120|110|230|
+
+
+
+##### a) 
+
+What is the probability that someone with black hair has brown eyes?
+
+
+
+##### b) 
+
+What is the probability that someone has black hair?
+
+
+
+##### c) 
+
+What is the probability that someone has brown eyes?
+
+
+
+##### d) 
+
+Are having black hair and having brown eyes dependent or independent events?
+
+
+
+
+
+#### 2\. 
+
+Given the following contingency table, identify the events and determine whether they are dependent or independent.
+
+
+
+||Location A|Location B|Totals|
+|-|-|-|-|
+|Buses left late|15|40|55|
+|Bus left on time|25|20|45|
+|Totals|40|60|100|
+
+
+
+
+
+#### 3
+
+&#x20;You are given the following information.
+
+* Events A and B are independent.
+* P(not A) = 0,3.
+* P(B) =0,4.
+
+Complete the contingency table below.
+
+
+
+||A not A|Totals|
+|-|-|-|
+|B|||
+|not B|||
+|Totals||50|
+
+
+
+
+
+## QUESTIONS
+
+### 1\. 
+
+\-Jane invested in the stock market. The probability that she will not lose all her money is 0,32. What is the probability that she will lose all her money? Explain.
+
+
+
+### 2\. 
+
+\-If D and F are mutually exclusive events, with P(not D) = 0,3 and
+
+P(D or F) =0,94, find P(F).
+
+
+
+### 3\. 
+
+\-A car sales person has pink, lime-green and purple models of car A and purple, orange and multicolour models of car B. One dark night a thief steals a car.
+
+
+
+#### a) 
+
+What is the experiment and sample space?
+
+
+
+#### b) 
+
+What is the probability of stealing either a model of A or a model of B?
+
+
+
+#### c) 
+
+What is the probability of stealing both a model of A and a model of B?
+
+
+
+### 4\. 
+
+\-The probability of event X is 0,43 and the probability of event Y is 0,24. The probability of both occurring together is 0,10. What is the probability that X or Y will occur?
+
+
+
+### 5\. 
+
+P(H) = 0,62; P(J) = 0,39 and P(H and J) = 0,31. Calculate:
+
+#### 
+
+#### a) 
+
+P(H')
+
+
+
+#### b) 
+
+P(H or J)
+
+
+
+#### c) 
+
+P(H' or J')
+
+
+
+#### d) 
+
+P(H' or J)
+
+
+
+#### e) 
+
+P(H' and J')
+
+
+
+### 6\. 
+
+\-The last ten letters of the alphabet are placed in a hat and people are asked to pick one of them. Event D is picking a vowel, event E is picking a consonant and event F is picking one of the last four letters. Draw a Venn diagram showing the outcomes in the sample space and the different events. Then calculate the following probabilities:
+
+
+
+#### a) 
+
+P(not F)
+
+
+
+#### b) 
+
+P(F or D)
+
+
+
+#### c) 
+
+P(neither E nor F)
+
+
+
+#### d) 
+
+P(D and E)
+
+
+
+#### e) 
+
+P(E and F)
+
+
+
+#### f) 
+
+P(E and D')
+
+
+
+### 7\. 
+
+\-Thobeka compares three neighbourhoods (we’ll call them A, B and C) to see where the best place is to live. She interviews 80 people and asks them whether they like each of the neighbourhoods, or not.
+
+
+
+* 40 people like neighbourhood A.
+* 35people like neighbourhood B.
+* 40people like neighbourhood C.
+* 21people like both neighbourhoods A and C.
+* 18people like both neighbourhoods B and C.
+* 68people like at least one neighbourhood.
+* 7people like all three neighbourhoods.
+
+
+
+#### a) 
+
+Use this information to draw a Venn diagram.
+
+
+
+#### b) 
+
+How many people like none of the neighbourhoods?
+
+
+
+#### c)
+
+How many people like neighbourhoods A and B, but not C?
+
+
+
+#### d) 
+
+What is the probability that a randomly chosen person from the survey likes at least one of the neighbourhoods?
+
+
+
+### 8\. 
+
+\-Let G and H be two events in a sample space. Suppose that P(G) = 0,4; P(H) =h; and P(G or H) = 0,7.
+
+
+
+#### a) 
+
+For what value of h are G and H mutually exclusive?
+
+
+
+#### b) 
+
+For what value of h are G and H independent?
+
+
+
+
+
+### 9\. 
+
+\-The following tree diagram represents points scored by two teams in a soccer game. At each level in the tree, the points are shown as (points for Team 1; points for Team 2).
+
+
+
+>DIAGRAM\[
+
+\-Root Node: (0: 0) (Starting score)
+
+\--Branch 1 (Left): Team 1 scores | Probability = 0,52→ State: (1: 0)
+
+\---Level 2 Branch (Left): Team 1 scores| Probability = 0,65 → State: (2 : 0)
+
+\----Level 3 Branch (Left): Team 1 scores| Probability = 0,75 → State: (3 : 0) (Terminal)
+
+\----Level 3 Branch (Right): Team 2 scores| Probability = 0,25 → State: (2 : 1) (Terminal)
+
+\---Level 2 Branch (Right): Team 2 scores | Probability = 0,35 → State: (1: 1) (Terminal)
+
+\--Branch 2(Right): Team 2 scores| Probability = 0,48 → State: (0 : 1)
+
+\---Level 2 Branch (Left): Team 1 scores | Probability = 0,4 → State: (1: 1)  
+
+\----Level 3 Branch (Left): Team 1 scores| Probability = 0,5 → State: (2:1) (Terminal)
+
+\----Level 3 Branch (Right): Team 2 scores| Probability = 0,5 → State: (1:2) (Terminal)
+
+\---Level 2 Branch (Right): Team 2 scores| Probability = 0,6 → State: (0:2) (Terminal)
+
+]
+
+
+
+\-Use this diagram to determine the probability that:
+
+
+
+#### a) 
+
+Team 1 will win
+
+
+
+#### b) 
+
+The game will be a draw
+
+
+
+#### c) 
+
+The game will end with an even number of total points
+
+
+
+### 10\. 
+
+\-A bag contains 10 orange balls and 7 black balls. You draw 3 balls from the bag without replacement. What is the probability that you will end up with exactly 2 orange balls? Represent this experiment using a tree diagram.
+
+
+
+### 11\. 
+
+\-Complete the following contingency table and determine whether the events are dependent or independent.
+
+
+
+||Durban|Bloemfontein|Totals|
+|-|-|-|-|
+|Liked living there|130|30||
+|Did not like living there|140||340|
+|Totals||230|500|
+
+
+
+
+
+### 12\. 
+
+\-Summarise the following information about a medical trial with 2 types of multi vitamin in a contingency table and determine whether the events are dependent or independent.
+
+* 960 people took part in the medical trial.
+* 540 people used multivitamin A for a month and 400 of those people showed an improvement in their health.
+* &#x20;300 people showed an improvement in health when using multivitamin B for a month.
+
+
+
+\-If the events are independent, it means that the two multivitamins have the same effect on people. If the events are dependent, it means that one multivitamin is better than the other. Which multivitamin is better than the other, or are the both equally effective?
+

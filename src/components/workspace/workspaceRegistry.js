@@ -13,7 +13,7 @@ import { grade11BusinessStudiesRegistry } from './registry/grade11BusinessStudie
 import { grade11BusinessStudiesExtraRegistry } from './registry/grade11BusinessStudiesExtraRegistry';
 import { grade12Registry } from './registry/grade12Registry';
 import { grade12BusinessStudiesRegistry } from './registry/grade12BusinessStudiesRegistry';
-import WorkspaceModeShell from './shared/WorkspaceModeShell';
+import WorkspaceModeShell, { EmbeddedWorkspaceContext } from './shared/WorkspaceModeShell';
 import EvaluatedWorkspaceModeShell from './shared/EvaluatedWorkspaceModeShell';
 
 const h = React.createElement;
@@ -36,10 +36,48 @@ export const workspaceRegistry = {
 };
 
 export const renderFromRegistry = ({ workspaceMode, ctx }) => {
-    // Check for marking mode — derive the base and check if scaffold/practice exists
-    const markingMatch = workspaceMode?.match(/^(.+)_marking$/);
-    if (markingMatch) {
-        // Marking route: render shell with marking placeholder (no child content)
+    const renderCore = () => {
+        // Check for marking mode — derive the base and check if scaffold/practice exists
+        const markingMatch = workspaceMode?.match(/^(.+)_marking$/);
+        if (markingMatch) {
+            // Marking route: render shell with marking placeholder (no child content)
+            return h(WorkspaceModeShell, {
+                workspaceMode,
+                setWorkspaceMode: ctx.setWorkspaceMode,
+                onBack: ctx.onBack,
+                selectedSubject: ctx.selectedSubject,
+                selectedGrade: ctx.selectedGrade,
+                topic: ctx.topic,
+                subscriptionTier: ctx.subscriptionTier,
+                autoStart: ctx.autoStart,
+            });
+        }
+
+        const entry = workspaceRegistry[workspaceMode];
+        if (!entry) return null;
+
+        const routeResult = entry.render(ctx);
+        if (!routeResult) return null;
+
+        if (
+            routeResult.type === WorkspaceModeShell
+            || routeResult.type === EvaluatedWorkspaceModeShell
+            || workspaceMode.includes('accounting')
+            || workspaceMode.includes('grade10_bs_')
+            || workspaceMode.includes('grade11_bs_')
+            || workspaceMode.includes('grade12_bs_')
+        ) {
+            return React.cloneElement(routeResult, { 
+                autoStart: ctx.autoStart,
+                isEmbedded: ctx.isEmbedded
+            });
+        }
+
+        const wrappedChild = React.isValidElement(routeResult)
+            ? React.cloneElement(routeResult, { hideConfig: true })
+            : routeResult;
+
+        // Wrap the existing scaffold/practice component in the shared shell
         return h(WorkspaceModeShell, {
             workspaceMode,
             setWorkspaceMode: ctx.setWorkspaceMode,
@@ -48,38 +86,13 @@ export const renderFromRegistry = ({ workspaceMode, ctx }) => {
             selectedGrade: ctx.selectedGrade,
             topic: ctx.topic,
             subscriptionTier: ctx.subscriptionTier,
-        });
+            autoStart: ctx.autoStart,
+        }, wrappedChild);
+    };
+
+    const element = renderCore();
+    if (element && ctx.isEmbedded) {
+        return h(EmbeddedWorkspaceContext.Provider, { value: true }, element);
     }
-
-    const entry = workspaceRegistry[workspaceMode];
-    if (!entry) return null;
-
-    const routeResult = entry.render(ctx);
-    if (!routeResult) return null;
-
-    if (
-        routeResult.type === WorkspaceModeShell
-        || routeResult.type === EvaluatedWorkspaceModeShell
-        || workspaceMode.includes('accounting')
-        || workspaceMode.includes('grade10_bs_')
-        || workspaceMode.includes('grade11_bs_')
-        || workspaceMode.includes('grade12_bs_')
-    ) {
-        return routeResult;
-    }
-
-    const wrappedChild = React.isValidElement(routeResult)
-        ? React.cloneElement(routeResult, { hideConfig: true })
-        : routeResult;
-
-    // Wrap the existing scaffold/practice component in the shared shell
-    return h(WorkspaceModeShell, {
-        workspaceMode,
-        setWorkspaceMode: ctx.setWorkspaceMode,
-        onBack: ctx.onBack,
-        selectedSubject: ctx.selectedSubject,
-        selectedGrade: ctx.selectedGrade,
-        topic: ctx.topic,
-        subscriptionTier: ctx.subscriptionTier,
-    }, wrappedChild);
+    return element;
 };

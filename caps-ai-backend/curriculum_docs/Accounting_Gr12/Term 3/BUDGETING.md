@@ -1,0 +1,6020 @@
+# BUDGETING
+
+## Curriculum Requirements
+
+>Analysis, interpretation and comparison of projected income 
+
+statements for sole traders or companies.
+
+\-Projected Income Statement:
+
+* sales
+* cost of sales
+* expenses
+* income
+* profits
+
+
+
+>Analysis, interpretation and comparison of cash budgets for sole 
+
+traders or companies.
+
+\-Cash Budget
+
+* receipts
+* payments
+* debtors’ collection
+* creditors’ payment
+* cash balances
+
+
+
+\-Integration of ethical issues relating to budgeting and projections.
+
+\-Integration of internal audit and control processes relating to budgets and projections by comparing budget to actual figures.
+
+
+
+## NOTES
+
+N/A
+
+
+
+## Architypes
+
+### 1
+
+As the accountant of Blossom Traders Ltd you are reviewing the Cash Budget for the three months ending 30 September 2013, which will be presented to the directors.
+
+
+
+#### INFORMATION
+
+1\. Credit sales:
+
+\-40% of all sales are on credit.
+
+\-Debtors are given 30 days in which to settle their debts. However, trends over the past year reveal that debtors pay as follows:
+
+* 40% within the same month of sale, subject to a 5% discount
+* 35% in the month following the sale, that is 30 days
+* 20% in the second month following the sale, that is 60 days
+* 5% of debts are written off after 60 days
+
+&#x20;
+
+2\. Stock purchases:
+
+* The business works on a fixed stock base where the stock sold in a month is replaced at the end of that month.
+* The business uses a mark-up of 60% on cost.
+* 80% of stock is purchased on credit and creditors are paid in 30 days.
+
+&#x20;
+
+3\. Fixed deposit:
+
+The business has three fixed deposits with Reliable Bank to the value of R675 000 at an interest rate of 8,0%. One of these fixed deposits, worth R375 000, matures in September.
+
+&#x20;
+
+4\. Shares:
+
+* The company has 250 000 shares in issue and the authorised share capital has a balance of R1 500 000.
+* The company is planning on issuing a further 40 000 shares during August 2013 at a price of R10,00 per share.
+* One of the shareholders passed away earlier in the year. This shareholder owns 55 000 shares. It was decided to buy back the shares from the deceased estate during September 2013 at a price of R15,50 each.
+
+&#x20;
+
+5\. Dividends:
+
+\-At the end of September, an interim dividend of 40 cents per share will be paid on shares held at the end of September.
+
+
+
+&#x20;
+
+##### BLOSSOM TRADERS LTD - CASH BUDGET FOR THREE MONTHS ENDING 30 SEPTEMBER 2013
+
+||2013 July|2013 August|2013 September|
+|-|-|-|-|
+|RECEIPTS||||
+|Cash sales|1 200 000|1 200 000|1 440 000|
+|Collections from debtors|?|?|804 800|
+|Ordinary share capital (new shares)||400 000||
+|Rent income|8 500|8 500|?|
+|Fixed deposit maturing|||375 000|
+|Interest on fixed deposit|4 500|4 500|?|
+|Sundry income|||?|
+||1 893 300|2 339 000|2 635 700|
+|||||
+|||||
+|PAYMENTS||||
+|Purchase of stock|?|?|300 000|
+|Payments to creditors|?|?||
+|Directors' fees|6 000|6 000|6 000|
+|Salaries and wages|520 000|520 000|520 000|
+|Audit fees|7 500|7 500|7 500|
+|Income tax||46 000||
+|Advertising|5 200|5 200|5 200|
+|Dividends on ordinary shares|||?|
+|Buy-back of shares|||?|
+|Other operating expenses|?|?|?|
+|||||
+||1 758 700|1 804 700|2 835 200|
+|||||
+|Surplus (deficit)|134 600|534 300|(199 500)|
+|Opening bank balance|(28 000)|106 600|640 900|
+|Closing bank balance|106 600|640 900|441 400|
+
+
+
+&#x20;
+
+##### REQUIRED:
+
+###### 1.1
+
+Explain to the shareholders what the main difference is between a projected income statement and a Cash Budget.  (2)
+
+
+
+\####### Answer
+
+\-Explanation of projected income statement
+
+* The projected income statement projects the profits and losses.
+* The projected income statement projects future  expenses and income.
+
+
+
+Explanation of Cash Budget
+
+* The Cash Budget projects future cash surplus or deficit.
+* The Cash Budget projects future receipts and payments.
+
+&#x20;
+
+###### 1.2
+
+Name TWO items that could be included in 'other operating expenses'.  (2)
+
+
+
+\####### Answer
+
+>Any TWO valid items:
+
+* Packing material
+* Stationery
+* Printing
+* Rates
+* Electricity and water
+* Telephone
+
+&#x20;
+
+###### 1.3
+
+Complete the Debtors' Collection Schedule for July and August 2013.  (8)
+
+
+
+\####### Answer Sheet
+
+||Credit sales|July collections|August collections|
+|-|-|-|-|
+|May|R660 000|||
+|June|R680 000|||
+|July|R800 000|||
+|August|R800 000|||
+|||||
+|TOTAL||||
+
+
+
+
+
+\####### Answer
+
+||Credit sales|July collections|August collections|
+|-|-|-|-|
+|May|R660 000|132 000||
+|June|R680 000|238 000|136 000|
+|July|R800 000|304 000|280 000|
+|August|R800 000||304 000|
+|||||
+|TOTAL||674 000|720 000|
+
+
+
+&#x20;
+
+###### 1.4
+
+Calculate the following:
+
+&#x20;
+
+\####### 1.4.1
+
+The % increase in sales in September 2013  (3)
+
+
+
+\######## Answer
+
+240 000/1 200 000 × 100 = 20%
+
+&#x20;
+
+\####### 1.4.2
+
+The rent income amount for September 2013. Note that the
+
+company is budgeting for a 12% increase in rent starting 1 September 2013.   (2)
+
+
+
+\######## Answer
+
+8 500 + 12%(8 500) = 1,12(8 500) = R9 520
+
+&#x20;
+
+\####### 1.4.3
+
+The total sales for August 2013  (4)
+
+
+
+\######## Answer
+
+1 200 000/60 × 100 = R2 000 000
+
+&#x20;
+
+\####### 1.4.4
+
+The amount that will be paid to creditors during September  (4)
+
+
+
+\######## Answer
+
+2 000 000 × 100/160 × 80% = R1 000 000
+
+&#x20;
+
+\####### 1.4.5
+
+The amount that will be paid for interim dividends in
+
+September 2013  (4)
+
+&#x20;
+
+\####### Answer
+
+235 000 × 40 cents = R94 000
+
+
+
+\####### 1.4.6
+
+What the buy-back of shares will cost the company in September 2013  (3)
+
+
+
+\######## Answer
+
+55 000 × R15,50 = R852 000
+
+&#x20;
+
+\####### 1.4.7
+
+The interest that will be received for September 2013  (4)
+
+
+
+\######## Answer
+
+300 000 × 8% ÷ 12 = R2 000
+
+
+
+
+
+###### 1.5
+
+In August, there is an amount that will be paid for income tax.
+
+&#x20;
+
+\####### 1.5.1
+
+What does this amount represent, since the financial year-end of
+
+this company is annually at the end of February?  (2)
+
+
+
+\######## Answer
+
+A provisional tax payment
+
+&#x20;
+
+\####### 1.5.2
+
+How will this amount be calculated?  (2)
+
+
+
+\######## Answer
+
+It will be calculated on the profits projected in the projected income statement.
+
+###### 
+
+###### 1.6
+
+The shareholders are unhappy with the way the collection of debtors has been handled.
+
+&#x20;
+
+\####### 1.6.1
+
+Explain why you believe the shareholders feel this way regarding the collection from debtors.  (2)
+
+
+
+\######## Answer
+
+The credit terms of the company is 30 days, yet only 75% of all debtors are paying within this time.
+
+&#x20;
+
+\####### 1.6.2
+
+Suggest TWO measures that can be introduced to improve the
+
+situation.  (2)
+
+
+
+\######## Answer
+
+Any TWO measures:
+
+* Charge interest on overdue accounts
+* Offer bigger discounts for prompt payment
+* Send regular reminders
+
+
+
+###### 1.7
+
+\-At the end of June, the following figures were identified. The directors have asked that you explain to them why the budgeted and actual amounts of certain items differ significantly. Explain what you would say to them about each of the following items. Explain ONE point of advice in each case. (6)
+
+
+
+; JUNE 2013\[Budgeted; Actual]
+
+Advertising; R5 200; R8 000
+
+Training of employees; R12 000; NIL
+
+Rent income; R8 500; R2 000
+
+
+
+\####### Answer
+
+||COMMENT TO DIRECTORS|ADVICE|
+|-|-|-|
+|Advertising|The expense is much higher than the budgeted amount.|They should stick to the budgeted amount or consider different advertising techniques.|
+|Training of employees|The budgeted amount has not been used.|Training is an important aspect of any company and should be used.|
+|Rent income|Significantly under budget (actual less than budget)/ Budget was unrealistically high|Investigate shortfall, e.g. poor collection, tenant has left, etc, to rectify this problem/tenants to sign debit orders/appoint a rent collector/charge interest on show payers.|
+
+
+
+&#x20;
+
+### 2
+
+#### 2.1
+
+\-Show the amounts for the transactions below in the appropriate columns for the Cash Budget and the Projected Statement of Comprehensive Income for December 2024 in the ANSWER BOOK.
+
+
+
+\-Example: Monthly insurance premium for December 2024, R5 000, will be paid.
+
+&#x20;
+
+##### 2.1.1
+
+Expected cash sales for December 2024, R132 000. Cost of sales,
+
+R101 000.
+
+&#x20;
+
+##### 2.1.2
+
+Drawings by the owner budgeted for December 2024, R40 000. This includes R34 000 cash and the remainder for merchandise.
+
+&#x20;
+
+##### 2.1.3
+
+A fixed deposit of R245 000 will mature on 31 December 2024. A direct deposit of R264 600 (inclusive of interest) will be made into the current banking account of the business on this date. Interest is not capitalised. (6)
+
+
+
+##### Answer Sheet
+
+&#x20;; CASH BUDGET\[RECEIPT; PAYMENT]; PROJECTED STATEMENT OF COMPREHENSIVE INCOME\[INCOME; EXPENSE]
+
+E.g.; ; 5 000; ; 5 000
+
+&#x20;2.1.1; ; ; ;
+
+&#x20;2.1.2; ; ; ;
+
+&#x20;2.1.3; ; ; ;
+
+
+
+##### Answer
+
+&#x20;; CASH BUDGET\[RECEIPT; PAYMENT]; PROJECTED STATEMENT OF COMPREHENSIVE INCOME\[INCOME; EXPENSE]
+
+E.g.; ; 5 000; ; 5 000
+
+&#x20;2.1.1; 132 000; ; 132 000 or 31 000; 101 000
+
+&#x20;2.1.2; ; 34 000; ;
+
+&#x20;2.1.3; 264 600; ; 19 600;
+
+
+
+
+
+#### 2.2
+
+\-The information relates to JESARY SUPERSPARES for the budget period ending 31 December 2024. The business is owned by Bluey Summers.
+
+
+
+##### INFORMATION:
+
+###### &#x20;A. Sales and Debtors' Collection:
+
+* 60% of total sales is cash sales.
+
+&#x20;
+
+###### &#x20;B. Purchases of stock and payment to creditors:
+
+* Goods are sold at a mark-up of 25% on cost.
+* Trading stock on hand is maintained through monthly purchases.
+* The business buys merchandise only on credit.
+* Creditors are paid as follows:
+
+&#x20;-75% in the month after date of purchase to qualify for 3%
+
+discount.
+
+&#x20;-The balance is paid in the month thereafter.
+
+&#x20;
+
+###### C. Rent expense:
+
+* The business rents premises in a shopping centre.
+* Rent will increase by 6% during December 2024.
+
+&#x20;
+
+###### D. Loan:
+
+* Part of the loan from Diamond Bank will be paid on 1 December 2024.
+* Interest at 14% p.a. is paid at the end of each month. Interest is not capitalised.
+
+&#x20;
+
+###### E. Office computers:
+
+* New computers will be installed and will be operational from 30 November 2024.
+* 20% cash deposit must be paid on 30 November 2024.
+* The balance will be repaid in 36 equal monthly instalments from 31 December 2024.
+
+&#x20;
+
+###### F. Insurance:
+
+* The current monthly insurance premium on the existing computers is R4 500. This monthly premium will increase by 28% from 1 December 2024 to get additional insurance cover on the new computers installed.
+* The renewal period of other items insured will only come into effect next year.
+
+&#x20;
+
+###### G. Salaries:
+
+* The business has 9 employees who earn the same monthly salary.
+* 5 of the employees will receive a bonus of 70% of the normal monthly salary during December 2024.
+
+&#x20;
+
+###### H. Extract from the Cash Budget for the period ending 31 December 2024.
+
+||Nov. 2024 (R)|Dec. 2024 (R)|
+|-|-|-|
+|RECEIPTS|||
+|Cash sales|103 200|112 200|
+|Collection from debtors|||
+|PAYMENTS|||
+|Payment to creditors|207 012|?|
+|Rent expense|29 000|(i)|
+|Salaries|(v)|143 750|
+|Drawings|50 000|50 000|
+|Loan repayment||60 000|
+|Interest on loan (14% p.a.)|3 500|(ii)|
+|Deposit and instalments for new computers|(iii)|9 800|
+|Insurance|17 500|(iv)|
+
+
+
+###### I. Figures for September 2024 (budgeted) and October 2024
+
+(budgeted and actual):
+
+&#x20;; SEPTEMBER 2024\[BUDGETED]; OCTOBER 2024\[BUDGETED; ACTUAL]
+
+Number of customers; 520; 540; 729
+
+Sales; R145 000; R160 000; R221 000
+
+Cash sales; 58 000; 96 000; 76 000
+
+Credit sales; 87 000; 64 000; 145 000
+
+Gross profit; 54 375; 60 000; 82 875
+
+Delivery expenses; 21 750; 24 000; 33 150
+
+Packing materials; 13 050; 14 400; 26 520
+
+
+
+##### REQUIRED:
+
+###### 2.2.1
+
+Creditors' Payment:
+
+* Calculate the credit purchases for November 2024. (4)
+* Complete the Creditors' Payment Schedule for December 2024. (5)
+
+
+
+\####### Answer Sheet
+
+* Calculate the credit purchases for November 2024. (4)
+* Creditors' Payment Schedule for December 2024 (5)
+
+|MONTH|CREDIT PURCHASES|NOVEMBER|DECEMBER|
+|-|-|-|-|
+|September|147 200|36 800||
+|October|132 800|96 612||
+|November||||
+|||||
+|||133 412||
+
+
+
+\####### Answer
+
+* 103 200 x  100/60 x 100/125 = 137 600
+* Creditors' Payment Schedule for December 2024
+
+|MONTH|CREDIT PURCHASES|NOVEMBER|DECEMBER|
+|-|-|-|-|
+|September|147 200|36 800|Superfluous entry; lose method mark on total|
+|October|132 800|96 612|33 200|
+|November|137 600||100 104|
+|||||
+|||133 412|133 304|
+
+
+
+&#x20;
+
+###### 2.2.2
+
+Calculate the following amounts:
+
+\####### (i)
+
+Rent expense for December 2024 (2)
+
+
+
+\######## Answer
+
+29 000 × 106/100 = 30 740
+
+&#x20;
+
+\####### (ii)
+
+Interest on loan for December 2024 (4)
+
+
+
+\######## Answer
+
+3 500 - (60 000 ×\[14/100 × 1/12]) =  2 800
+
+&#x20;
+
+\####### (iii)
+
+Deposit to be paid on 30 November 2024 for the new computers
+
+installed (3)
+
+
+
+\######## Answer
+
+\[9 800 × 36] × \[100/80 × 20/100] = 88 200
+
+OR
+
+\[352 800 × 100/80] - \[9 800 × 36]
+
+OR
+
+441 000 × 20/100
+
+&#x20;
+
+\####### (iv)
+
+Insurance for December 2024 (3)
+
+
+
+\######## Answer
+
+17 500 + \[4 500 × 28/100]
+
+OR
+
+\[4 500 × 128/100] + \[17 500 - 4 500] = 18 760
+
+&#x20;
+
+\####### (v)
+
+Salaries for November 2024 (3)
+
+
+
+\######## Answer
+
+143 750 × 9/12,5
+
+OR
+
+143 750 - \[8050 × 5]
+
+OR
+
+\[143 750 × 4/12,5] = 103 500
+
+&#x20;
+
+###### 2.2.3 Sales policy: Refer to Information I.
+
+Bluey effected changes to the sales policy from October 2024.
+
+
+
+\####### a)
+
+Explain the change in the sales policy effected by Bluey in compiling his budget for October 2024. Provide ONE point with figures. (2)
+
+
+
+\######## Answer
+
+\-Cash sales changed (from 40%) to 60% / (from R58 000) to R96 000 / by R38 000 / by 65,5% / by 20 % points.
+
+
+
+OR
+
+&#x20;
+
+\-Credit sales changed (from 60%) to 40% / (from R87 000) to R64 000 / by R23 000 / by 26,4% / by 20 % points.
+
+
+
+\####### b)
+
+The actual credit sales were higher than the budgeted credit sales for October 2024. Explain why Bluey should not be concerned. Provide TWO points with figures. (4)
+
+
+
+\######## Answer
+
+* The number of customers grew (from 540) to 729 / by 189 / by 35%.
+* Gross profit has improved (from R60 000) to R82 875/ by R22 875 / by 38,1%.
+* Total sales has improved (from R160 000) to R221 000 / by R61 000 / by 38%.
+
+
+
+\####### c)
+
+Comment on the control over delivery expenses and packing materials for October 2024. Quote figures. (4)
+
+
+
+\######## Answer
+
+\-Delivery expenses:
+
+* Effective control budgeted at 15% of sales; actual is 15% of sales. (100% utilised).
+* Overspent by R9 150 / (from R24 000) to R33 150 / by 38,1%, while total sales also increased by 38,1% only / actual sales of R221 000 exceeds the budgeted sales (R160 000).
+
+
+
+\-Packing material:
+
+* Not well controlled; actual exceeded budgeted by 33,3% / budgeted for 9% on sales and 12% has been spent.
+* Overspent by R12 120 (from R14 400) to R26 520 / by 84,2%, while total sales increased by 38,1% only.
+
+
+
+
+
+### 3
+
+\-Zephyr Traders opened on 1 January 2024 and sells portable power systems (PPS) that are used by the public to cope with load-shedding. The business is owned by Dan Grey.
+
+
+
+#### INFORMATION:
+
+##### A. Background information:
+
+* Salespersons are paid a commission only. Office workers earn monthly salaries.
+* At the time of preparing the budget, Dan was unaware that a competitor had opened a business during April 2024 in close proximity to Zephyr Traders. He therefore had to take important decisions to deal with this problem during May 2024.
+
+
+
+##### B. Cash and credit sales:
+
+>Cash sales comprise 55% of total sales. Mark-up is 60% on cost. 
+
+>Refer to the credit sales figures in the ANSWER BOOK. 
+
+>Debtors pay according to the following trend:  
+
+* 25% in the month of sales and they receive 5% discount
+* 45% in the month following the month of sales
+* 24% two months after the month of sales
+* 6% to be written off in the third month after the month of sales
+
+
+
+##### C. Purchases of stock and payment to creditors:
+
+* Stock sold is replaced in the month of sales.
+* 70% of purchases are on credit.
+* Creditors are paid in the month following the month of purchases.
+
+
+
+##### D. Business property/Rent expense:
+
+\-Dan made enquiries about taking out a 10-year mortgage loan to purchase the property. The following terms would apply, after calculations were discussed with a bank consultant:
+
+* A deposit of 20% of the loan amount will have to be paid on 1 June 2024.
+* A fixed monthly instalment of R13 800 (including interest) will then be payable on the last day of each month, commencing on 30 June 2024, for the duration of the loan
+
+
+
+##### E. Extract from the Cash Budget:
+
+||MAY 2024|JUNE 2024|
+|-|-|-|
+|RECEIPTS|R|R|
+|Cash sales|1 064 800|(i)|
+|Cash from debtors|734 382||
+|PAYMENTS|||
+|Payments to creditors|770 000|(ii)|
+|Salaries: Office workers|62 000|64 480|
+|Salary: Manager|40 500|40 500|
+|Deposit on purchase of property||220 000|
+|Instalment on loan (including interest)||13 800|
+|Hire of delivery vehicle|(iii)|34 810|
+
+\*NOTE: The vehicle hire expense will increase by 18% p.a. from 1 June 2024.
+
+
+
+##### F. Budgeted and actual figures for April and May 2024:
+
+||April 2024 BUDGETED|April 2024 ACTUAL|May 2024 BUDGETED|MAY 2024 ACTUAL|
+|-|-|-|-|-|
+|Number of salespersons|12|12|12|8|
+|Units to sell/sold|200|148|220|245|
+|Cost price per unit|R5 500|R5 500|R5 500|R5 500|
+|Mark-up %|60%|60%|60%|35%|
+|Selling price per unit|R8 800|R8 800|R8 800|R7 425|
+|Total sales|R1 760 000|R1 302 400|R1 936 000|R1 819 125|
+|Cash sales|968 000|390 720|1 064 800|509 355|
+|Credit sales|792 000|911 680|871 200|1 309 770|
+|Collection from debtors|660 924|495 690|734 380|734 380|
+|Salary: Manager|32 400|32 400|40 500|34 020|
+|Commission on sales|264 000|195 360|290 400|363 825|
+|Advertising|52 800|40 000|58 080|54 575|
+
+
+
+#### REQUIRED
+
+##### 3.1 Refer to Information A.
+
+###### 3.1.1
+
+Complete the Debtors' Collection Schedule for June 2024.  (8)
+
+
+
+\####### Answer Sheet
+
+|MONTHS|CREDIT SALES|MAY|JUNE|
+|-|-|-|-|
+|MARCH|712 800|171 072||
+|APRIL|792 000|356 400||
+|MAY|871 200|206 910||
+|JUNE|950 400|||
+|CASH FROM DEBTORS||734 382||
+
+
+
+\####### Answer
+
+|MONTHS|CREDIT SALES|MAY|JUNE|
+|-|-|-|-|
+|MARCH|712 800|171 072|{If superfluous entry, lose method on total}|
+|APRIL|792 000|356 400|190 080|
+|MAY|871 200|206 910|392 040|
+|JUNE|950 400|950 400 × \[25% × 95%] <br />OR 237 600 – 11 880|225 720|
+|CASH FROM DEBTORS||734 382|807 840|
+
+
+
+
+
+###### 3.1.2
+
+Calculate the amounts indicated by (i) to (iii) in the extract from the Cash Budget. (10)
+
+
+
+||WORKINGS|ANSWER|
+|-|-|-|
+|(i) Cash sales for June 2024|950 400 x 55/45 OR \[ (950 400 × 100/45) - 950 400]|1 161 600|
+|(ii)  Payments to creditors in June 2024|\[(1 936 000 × 100/160) × 70%] OR \[ (5 500 × 70%) × 220]|847 000|
+|(iii)  Hire of delivery vehicle expense for May 2024|34 810 ×  \[100/118]  OR \[34 810 -  (34 810 × 18/118)]|29 500|
+
+
+
+
+
+###### 3.1.3
+
+Calculate the % increase in salaries of office workers from 1 June 2024.  (4)
+
+
+
+\####### Answer
+
+(64 480 – 62 000)/ 62 000 × 100 = 4%
+
+
+
+##### 3.2 Refer to Information F
+
+\-A new competitor moved into the area during April 2024. Dan did not take any actions during April as he was not aware of the competitor.
+
+&#x20;
+
+###### 3.2.1
+
+\-Explain how the competitor affected the sales and cash flow of the business in April 2024. Provide TWO different points, with figures.  (4)
+
+
+
+\####### Answer
+
+>Any TWO valid responses
+
+* Number of units sold is 52 units (26%) less than budgeted / budgeted to sell 200 units, only sold 148 units
+* Total sales are less than budgeted by R457 600 (26%) / budgeted for total sales of R1 760 000, actual was R1 302 400
+* Credit sales is above by 35% / budgeted for 45% of total sales, actual is 70% of total sales / budgeted 90 units while actual was 104 units
+* Cash sales is less than budgeted by 25% / budgeted cash sales was 55%, actual cash sales amounted to 30% of total sales  / budgeted 110 units while actual was 44 units
+
+
+
+>Example of a complete response for 4 marks: 
+
+* Cash sales were R577 280 less than budget / budgeted R968 000 actual R390 720 / difference 59,6%. Credit sales is R119 680 more than budgeted / actual R911 680 while budget is R792 000 / difference 15,1% more
+
+&#x20;
+
+###### 3.2.2
+
+\-Explain whether Dan would be satisfied with the number of units sold in  May 2024 as a result of his decision to adjust the selling price of the product.
+
+\-Provide TWO points, with figures.  (4)
+
+
+
+\####### Answer
+
+\-TWO valid points (with figures)
+
+\-Yes / No must be implied in the figures given
+
+
+
+* Reducing the mark-up (from 60%) to 35% resulted in more units sold
+* Number of units sold is more than budgeted by 25 units (from 220 to 245 / by 11,4%)
+* Total sales budgeted amount of R1 936 000 is more than the actual of R1 819 125 / difference R116 875 / by (6%)
+* Maintaining the higher level of credit sales at 70% of total sales still contributes to the cash-flow problem created in April 2024.
+
+&#x20;
+
+###### 3.2.3
+
+\-Dan is aware that not all salespersons would be satisfied with the decisions he has taken regarding their earnings. Salesperson John was satisfied, whereas Sally was not. Give ONE reason to support John's opinion and ONE reason to support Sally's opinion. Quote figures.  (4)
+
+
+
+\####### Answer
+
+>REASON TO SUPPORT JOHN         ONE valid point (with figure)  
+
+* Commission is budgeted at 15% of sales, they received 20% of actual sales.
+* They expected average is R24 200 per person but received R45 478 each (R363 825/8).
+* They received and average of R16 280 each in April 2024, compared to R45 478 in May 2024.
+* Commission increased from R1 320 per unit to R1 485 per unit / by R165 per unit / by 12,5% per unit
+
+
+
+>REASON TO SUPPORT SALLY       ONE valid point (with figure) 
+
+* Reducing the number of salespersons from 12 to 8 persons may have increased their workload.
+* Sally may have been shifted to a new job which she must still learn losing on 15% commission / she has to settle for a fixed salary (which could be lower than the commission) / she might be worried about being retrenched (4 less salespersons).
+
+
+
+##### 3.3 Refer to Information D
+
+###### 3.3.1
+
+\-Calculate the total loan amount, including interest.  (2)
+
+&#x20;
+
+\####### Answer
+
+13 800 × 12 × 10 = 1 656 000  ( If deposit of R220 000 is added, ignore the figure, Award marks on R1 656 000 or on the R13 800 × 12 × 10)
+
+
+
+###### 3.3.2
+
+\-The owner is unsure about purchasing or renting the property. Explain ONE point in favour of purchasing the property and ONE point against this proposal. (4)
+
+
+
+\####### Answer
+
+&#x20;
+
+|IN FAVOUR OF PURCHASING THE PROPERTY|AGAINST <br />PURCHASING THE <br />PROPERTY|
+|-|-|
+|-The owner would benefit from capital gains (due to <br />appreciation of the value of the property). <br />-Property owner has tax benefit on returns (on value of <br />property). <br />-It provides stability and control over property expenses / (can save on rent expenses) \& rather pay off mortgage. <br />-The owner can borrow future loans against the value of <br />the building as security for the loan.|-Rent would be tax-deductible. <br />-Not responsible for repairs and maintenance. <br />-Avoid mortgage costs / municipal rates / transfer duties. <br />-It provides the flexibility to move to another place without <br />any commitment of a long-term mortgage. <br />-He will not be directly affected by fluctuations in interest or real estate market / avoids the financial risk <br />associated of being a property owner.|
+
+
+
+
+
+### 4
+
+\-The information relates to Sunday Stores (Pty) Ltd. The business is owned by Adam Stevens.
+
+
+
+#### INFORMATION
+
+##### A. Extract from the Projected Statement of Comprehensive Income:
+
+||OCT. 2023|NOV. 2023|DEC. 2023|
+|-|-|-|-|
+|Sales|R1 067 500|R1 085 000|R1 137 500|
+|Cost of sales||(620 000)||
+|Rent expenses|||31 640|
+|Discount allowed||(i)|12 650|
+|Depreciation|13 300|13 300|13 300|
+|Bad debts|12 000|12 180|10 710|
+|||||
+
+
+
+##### B. Extract from the Cash Budget prepared by the bookkeeper:
+
+|RECEIPTS|NOV. 2023 (R)|DEC. 2023 (R)|
+|-|-|-|
+|Cash sales|434 000||
+|Cash from debtors|610 470|?|
+|Interest on savings|1 200|(ii)|
+|Interest on fixed deposit|7 500|7 500|
+|Discount received|5 200|6 700|
+|PAYMENTS|||
+|Payments to creditors|580 000|(iii)|
+|Salaries of salespeople|72 000|72 000|
+|Rent expense|(iv)|31 640|
+|Delivery expenses|43 400|43 400|
+|Maintenance of vehicles|16 800|16 800|
+|Audit fees|72 000|0|
+|Bad debts|12 180|?|
+|Depreciation|13 300|13 300|
+
+
+
+##### C. Sales and collection from debtors:
+
+&#x20;-Credit sales comprise 60% of total sales.
+
+&#x20;-Debtors pay according to the following trends:
+
+* &#x20;40% is collected in the month of sale. They receive a 5% discount.
+* &#x20;50% is collected in the month following the month of sale.
+* &#x20;8% is collected two months after the sale.
+* &#x20;2% is written off as irrecoverable in the third month after the sale.
+
+&#x20;
+
+##### D. Purchases of stock and payments to creditors:
+
+* The mark-up percentage is 75% on cost.
+* Stock is replaced in the month of sale. A base stock is maintained.
+* All purchases of stock are on credit.
+* Creditors are paid in full two months after purchase.
+
+&#x20;
+
+##### E.
+
+\-Rent expenses are expected to increase by 13% from 1 December 2023.
+
+&#x20;
+
+##### F.
+
+\-The savings account will be increased by R84 000 on 1 December 2023.
+
+\-Interest at 4% p.a. is not capitalised and is receivable at the end of each month.
+
+
+
+##### G. Budgeted and actual figures for November 2023:
+
+
+
+||BUDGETED|ACTUAL|
+|-|-|-|
+|Average number of customers|480|640|
+|Cash sales|R434 000|R341 800|
+|Credit sales|651 000|1 068 700|
+|Total sales|1 085 000|1 410 500|
+|Salaries: Salespeople|165 000|20 000|
+|Commission: Salespeople|0|141 050|
+|Delivery expenses|43 400|79 300|
+
+
+
+##### H. Information relevant to the purchase of the property:
+
+\-Adam plans to finance the purchase of the property by acquiring a loan and using the fixed deposit that matures.
+
+
+
+|Cost of the property|R2 500 000|
+|-|-|
+|Fixed deposit to mature on 1 January 2024|1 000 000|
+|New loan from BK Bank on 1 January 2024|1 500 000|
+|Interest on loan for January 2024|18 750|
+|Monthly maintenance, rates and insurance|12 500|
+
+
+
+&#x20;
+
+#### REQUIRED:
+
+&#x20;
+
+##### 4.1 Refer to Information B.
+
+\-Identify:
+
+* TWO items that were incorrectly recorded in the Cash Budget. (2)
+* TWO items in the Cash Budget that would NOT appear in a Projected Statement of Comprehensive Income. (2)
+
+&#x20;
+
+###### Answer
+
+>Identify TWO items that were incorrectly recorded in the Cash Budget.  
+
+&#x20;-Any TWO valid items
+
+* Discount received
+* Bad debts
+* Depreciation
+
+
+
+>Identify TWO items in the Cash Budget that would NOT appear in a Projected Statement of Comprehensive Income.   
+
+\-Any TWO valid items
+
+* Cash from debtors
+* Payment to creditors
+
+
+
+
+
+##### 4.2
+
+\-Complete the Debtors' Collection Schedule for December 2023. (8)
+
+
+
+###### Answer Sheet
+
+|MONTHS|CREDIT SALES|NOVEMBER|DECEMBER|
+|-|-|-|-|
+|SEPTEMBER|535 500|42 840||
+|OCTOBER|640 500|320 250||
+|NOVEMBER|651 000|247 380||
+|DECEMBER|682 500|||
+|CASH FROM DEBTORS||610 470||
+
+
+
+
+
+###### Answer
+
+|MONTHS|CREDIT SALES|NOVEMBER|DECEMBER|
+|-|-|-|-|
+|SEPTEMBER|535 500|42 840|{Superfluous entry; <br />Lose method on total}|
+|OCTOBER|640 500|320 250|51 240|
+|NOVEMBER|651 000|247 380|325 500|
+|DECEMBER|682 500|× 40%  × 95%|259 350|
+|CASH FROM DEBTORS||610 470|636 090|
+
+
+
+&#x20;
+
+##### 4.3 Refer to Information A and B.
+
+\-Calculate the amounts indicated by (i) to (iv).  (12)
+
+||WORKING|Answer|
+|-|-|-|
+|i) Discount allowed in November 2023|651 000 × 40% × 5% OR 260 400 - 247 380 OR 247 380 × 5/95 OR \[651 000 - 247 380 - 325 500] - 65 100|13 020|
+|ii) Interest on saving account in December 2023|1 200 + (84 000 × 4% × 1/12) <br />OR<br />\[84 000 + 360 000] × 4% × 1/12|1 480|
+|iii) Payments to creditors in December 2023|\[640 500 × 100/60] × 100/175|610 000|
+|iv) Rent expenses for November 2023|31 640 × 100/113|28 000|
+
+
+
+&#x20;
+
+##### 4.4
+
+\-Refer to Information G (budgeted and actual figures).
+
+&#x20;
+
+###### 4.4.1
+
+\-In order to increase sales, Adam decided to change the way in which the salespeople are paid each month from 1 November 2023.
+
+\-The salespeople agreed to the change.
+
+* &#x20;Explain the changes that Adam made.  (2)
+* &#x20;Explain why some of the salespeople regretted their decision to agree to these changes. Quote figures or show calculations. (3)
+* Adam feels that the decision has benefitted the company, while the sales manager, Milly, is concerned that it did not benefit the company. Provide ONE point (with figures or calculations) to support EACH of these opinions.  (4)
+
+
+
+\####### Answer
+
+* Explain the changes that Adam made.
+
+\-Any valid explanation
+
+\-He introduced a commission to sales staff  / decided on a smaller or reduced fixed salary.
+
+
+
+* Explain why some of the salespersons regretted their decision to agree to these changes. Quote figures or show calculations.
+
+&#x20;>Comment
+
+\-The fixed salary plus commission of R161 050 is less than R165 000 which they earned previously. This is R3 950 or 12% less than the previous month.
+
+\-Their contribution to total sales is R325 500 (30%) above the budgeted sales (1 410 500 – 1 085 000), yet they now earned less.
+
+\- 160 (33,3%) more customers than budgeted (640 – 480), yet earned less.
+
+
+
+* Adam feels that the decision has benefitted the company, while the sales manager, Milly, is concerned that it did not benefit the company. Provide ONE point (with figures or calculations) to support EACH of these opinions.
+
+>ADAM 
+
+\-Total sales is above budget by R325 500 (1 410 500 – 1 085 000) by 30%.
+
+\-Attracted 160 more customers than expected (640 – 480)  / by 33,3%.
+
+\-Profit exceeds budget by R139 500 (604 500 – 465 000) / by 30%.
+
+
+
+>MILLY
+
+\-Credit sales above budget by R417 700 (1 068 700 – 651 000) / by 64,2% /
+
+\-Credit sales is 76% of total sales (1 410 500 – 1 068 700)
+
+\-Lower cash sales – R92 200 less than budget (434 000 – 341 800); cash flow problems.
+
+
+
+###### 4.4.2
+
+\-Adam is concerned about the escalating rent expenses and plans to
+
+purchase the property.
+
+* Calculate the net effect of this purchase on the receipts and payments in the Cash Budget.  (5)
+* Give ONE reason why Adam has decided to go ahead with this purchase.  (2)
+
+
+
+\####### Answer
+
+\[+ 1 000 000 + 1 500 000 – 2 500 000] – 18 750 – 12 500 + 31 640 – 7 500 = -7 110
+
+
+
+OR
+
+\[– 1 000 000 – 1 500 000 + 2 500 000] + 18 750  + 12 500  – 31 640  + 7 500 = + 7 110
+
+
+
+* Give ONE reason why Adam has decided to go ahead with this purchase.
+
+&#x20;
+
+>Any ONE valid point 
+
+>Response may relate to candidate’s answer above.  
+
+\-Capital growth / business acquires a fixed asset / long term stability of the business / future may be secure (sustainability)  / Savings on escalating rent expenses.
+
+
+
+
+
+### 5
+
+#### 5.1
+
+Show the amounts for the following transactions in the appropriate columns for the Cash Budget and the Projected Statement of Comprehensive Income in the ANSWER BOOK:   (6)
+
+&#x20;
+
+##### 5.1.1
+
+A computer costing R26 400 will be purchased for cash on 1 July 2023. Depreciation will amount to R550 per month
+
+
+
+##### 5.1.2
+
+A fixed deposit of R90 000 will be invested on 1 July 2023. Interest at 9% p.a. will be deposited into the business bank account at the end of each month.
+
+
+
+##### Answer
+
+NO.; CASH BUDGET\[RECEIPT; PAYMENT]; PROJECTED STATEMENT OF COMPREHENSIVE INCOME\[INCOME; EXPENSE]
+
+5.1.1; ; 26 400; ; 550
+
+5.1.2; 675; 90 000; 675;
+
+&#x20;
+
+#### 5.2
+
+The information relates to ALICE FURNISHERS (PTY) LTD for the budget period ending July 2023.
+
+
+
+##### INFORMATION:
+
+###### A.  Sales and cost of sales:
+
+||APRIL|MAY|JUNE|JULY|
+|-|-|-|-|-|
+|Sales|1 260 000|1 274 000|1 316 000|1 330 000|
+|Cost of sales|900 000|910 000|940 000|950 000|
+
+
+
+###### B.
+
+Credit sales comprise 70% of total sales. Debtors pay according to the following trend:
+
+* &#x20; 20% pay in the month of sales and receive 7,5% discount.
+* &#x20; 55% pay in the month following the month of sale.
+* &#x20; 22% pay two months after the sales month.
+* &#x20; The balance is written off thereafter
+
+
+
+###### C.
+
+Stock sold is replaced in the month of sales. A base stock is maintained. 80% of stock is purchased on credit and creditors are paid two months (60 days) after the month of purchase.
+
+&#x20;
+
+###### D.  Additional information:
+
+The business plans to take a loan on 30 June 2023. This has been
+
+negotiated with the bank at 11% p.a. interest, payable at the end of each month and commencing on 31 July 2023.
+
+
+
+###### E. Extract from the Cash Budget:
+
+|RECEIPTS|JUNE 2023 (R)|JULY 2023 (R)|
+|-|-|-|
+|Cash sales|394 800|(i)|
+|Collections from debtors|854 952|?|
+|Commission income|131 600|133 000|
+|Loan: Cheetah Bank|(ii)||
+|PAYMENTS|||
+|Cash purchase of stock|188 000|190 000|
+|Payments to creditors|720 000|(iii)|
+|Directors' fees (two directors)|52 000|49 600|
+|Salaries of workers (including drivers)|172 000|182 320|
+|Advertising|39 480|39 900|
+|Delivery expenses|65 800|66 500|
+|Packing material|78 960|79 800|
+|Interest on loan|-|5 500|
+|Municipal services|||
+|Sundry expenses|||
+
+
+
+###### F. Advertising and delivery expenses:
+
+* The business has two delivery vehicles and offer a free delivery service to customers.
+* The budget for delivery expenses is fixed at 5% of the budgeted sales, on an average distance of 2 000 km to be covered.
+
+
+
+>Actual and budgeted figures for May 2023:
+
+||BUDGETED/ <br />EXPECTED|ACTUAL|VEHICLE 1|VEHICLE 2|
+|-|-|-|-|-|
+|Sales|1 274 000|1 082 900|||
+|Advertising|38 220|36 820|||
+|Salaries of drivers|30 000|30 000|15 000|15 000|
+|Delivery expenses|63 700|54 100|35 500|18 600|
+|Petrol/Fuel|47 700|40 000|26 000|14 000|
+|Maintenance|16 000|14 100|9 500|4 600|
+|Kilometres covered|2 000 km|1 800 km|1 260 km|540 km|
+|Date purchased|||1 Mar. 2018|1 Mar. 2022|
+
+
+
+##### REQUIRED:
+
+###### 5.2.1
+
+Complete the Debtors' Collection Schedule for July 2023. (7)
+
+
+
+\####### Answer Sheet
+
+||CREDIT <br />SALES|MAY|JUNE|JULY|
+|-|-|-|-|-|
+|April|882 000|485 100|194 040||
+|May|891 800|164 983|490 490||
+|June|921 200||170 422||
+|July|931 000||||
+|||650 083|854 952||
+
+
+
+\####### Answer
+
+||CREDIT <br />SALES|MAY|JUNE|JULY|
+|-|-|-|-|-|
+|April|882 000|485 100|194 040||
+|May|891 800|164 983|490 490|196 196|
+|June|921 200||170 422|506 660|
+|July|931 000||If 20% ×92,5% 0r 186 200|172 235|
+|||650 083|854 952|875 091|
+
+
+
+&#x20;
+
+###### 5.2.2
+
+Calculate missing figures (i) to (iii) on the Cash Budget provided.   (8)
+
+
+
+Answer
+
+||WORKINGS|ANSWER|
+|-|-|-|
+|i Cash sales for July 2023|<br />1 330 000 – 931 000 OR  1 330 000 × 30% OR  931 000 × 30/70|399 000|
+|ii Loan amount in June 2023|5 500 × 12/1 × 100/11 OR (5 500 × 12)/0,11|600 000|
+|iii Payment to creditors in July 2023|910 000 × 80%|728 000|
+
+
+
+&#x20;
+
+###### 5.2.3 Salaries of workers:
+
+a) Calculate the % increase that workers will receive in July 2023.  (3)
+
+
+
+\####### Answer
+
+\[182 320 – 172 000]/172 000 × 100 OR (182 320/172 000 - 1)× 100
+
+
+
+b) Give TWO reasons why you think that workers would be satisfied with this increase.  (2)
+
+
+
+\####### Answer
+
+* Current inflation rate is accommodated.
+* State of the economy – recession / high unemployment
+* Cutbacks by businesses – rising costs
+* Cash flow problems of the business – need for a loan
+* Reduction in directors fees  (4,6%)
+* Salary increases generally higher than increase in other expenses on the budget.
+
+&#x20;
+
+###### 5.2.4 Advertising and delivery expenses: Refer to Information F.
+
+a) Comment on the effectiveness of the advertising. Provide figures or calculations. (4)
+
+
+
+\####### Answer
+
+* Sales is lower than the budget by 15% (191 100 / 1 274 000) but advertising is lower than budget by 3,7% (1 400 / 38 220).
+* Advertising is budgeted at 3% of sales (38 220 /1 274 000), actual amount used is 3,4% of sales (36 820 / 1 082 900).
+
+
+
+b) Alice is satisfied with the control over delivery expenses. Provide figures or calculations to justify her feelings. (2)
+
+
+
+\####### Answer
+
+(54 100/1 082 900 × 100 = 4.9%)  OR (1 082 900 × 5% = 54 145) OR (54 145 – 54 100 = R45)
+
+&#x20;
+
+c) Alice is, however, concerned about the control over each vehicle.  Identify a different issue (problem) for EACH vehicle that confirms her concern. Provide figures or calculations to justify her feelings. (4)
+
+
+
+\####### Answer
+
+Vehicle 1:
+
+* High maintenance, R9 500 of R16 000 / 59% of the budget.
+* Used 65,6% of the total delivery expenses incurred / R35 500 of 54 100.
+* High kilometres covered, 1 260 km of 1 800 km  / 70% of workload.
+* Vehicle 1 is 4 years older than vehicle 2, and is being over-used (1260km)
+
+
+
+Vehicle 2:
+
+* Under-utilised; covers only 540km / 30% of  workload / 720km less than V1.
+* Used R14 000 of R40 000 for  fuel  /  35% of budget for fuel / Possible abuse.
+* Delivery expenses averages R34,44 per km as against R28,17 of vehicle 1 or the budgeted average of R31,85.
+* Being paid the same salary, R15 000 for being unproductive.
+
+
+
+d) Provide TWO suggestions on how Alice can improve the use or efficiency of the vehicles.  (4)
+
+
+
+\####### Answer
+
+* Keep a log book of trips covered and supervise regularly.
+* Set targets for each driver per week, per month / balance the workload per vehicle.
+* Plan for regular maintenance / servicing of the vehicles for long-term productivity.
+* Pay drivers for work covered, instead of a fixed salary (incentive or motivation).
+* Instal tracking (GPS) device to minimise abuse or to prevent personal use.
+* Swop use of vehicles – older one for shorter trips, newer one for longer trips.
+* Combining loads / consignments going in the same direction / determine tariffs per trip based on distances covered.
+
+
+
+### 6
+
+The information relates to JR Sanitisers (Pty) Ltd. The CEO is Juanita Rose.  James Peter is the bookkeeper.
+
+
+
+#### INFORMATION:
+
+##### A. Sales, cost of sales and debtors' collection:
+
+||OCTOBER|NOVEMBER|DECEMBER|
+|-|-|-|-|
+|Total sales|R584 100|R643 500|R432 300|
+|Cost of sales|R354 000|R390 000|R262 000|
+
+
+
+* Cash sales comprise 30% of total sales.
+* Debtors settle their accounts in the month following the month of sales.
+
+
+
+###### B. Purchases of stock and payment to creditors:
+
+* A base stock is maintained. Stock sold is replaced in the same month.
+* Cash purchases comprise 15% of total purchases.
+* Creditors are paid according to the following trend:
+
+\-80% are paid in the month of purchases to receive a 5% discount.
+
+\-20% are paid in the month after purchases.
+
+
+
+&#x20;
+
+###### C. Rent income:
+
+\-Storage space is rented at a fixed rate per square metre.
+
+\-An existing tenant occupies 60 m2. His lease expires on 30 June 2023.
+
+\-A new tenant has signed a lease agreement for the period 1 December 2022 to 30 November 2023. She will occupy a 75 m2 storage area.
+
+&#x20;
+
+###### D. Salaries:
+
+* A new employee will be appointed from 1 December 2022. He will earn R14 840 per month.
+* All other employees will receive an increase of 4,5% p.a., effective from 1 December 2022.
+
+&#x20;
+
+###### E. Purchase of company vehicle for the CEO and insurance:
+
+* A new company vehicle will be purchased on 1 December 2022. A deposit of 25% of the cost of the vehicle, excluding interest, will be paid on this date.
+* The remaining balance will be paid in equal monthly instalments of R20 800 over 24 months, including interest, with effect from 31 December 2022.
+* Interest calculated for the full two-year period is R45 600.
+* The existing insurance premium will increase by the amount applicable to the new company vehicle. It will also be payable at the end of each month, from 31 December 2022.
+
+&#x20;
+
+###### F. Delivery expenses:
+
+Deliveries are outsourced to Aldo Deliveries. Delivery expenses are budgeted at a fixed percentage of the monthly sales.
+
+
+
+###### G. Extract from Cash Budget:
+
+|RECEIPTS|NOV. 2022 (R)|DEC. 2022 (R)|
+|-|-|-|
+|Cash sales|193 050|129 690|
+|Collections from debtors|408 870|(i)|
+|Loan|400 000||
+|Rent income|15 000|(ii)|
+|TOTAL RECEIPTS|||
+|PAYMENTS|||
+|Cash purchase of stock|58 500|39 300|
+|Payments to creditors|312 120|?|
+|Salaries|(iii)|55 595|
+|Purchase of vehicle: deposit|-|?|
+|Purchase of vehicle: monthly instalments|-|20 800|
+|Repairs and maintenance|30 000|30 000|
+|Advertising|40 000|40 000|
+|Delivery expenses (Aldo Deliveries)|38 610|25 938|
+|Packing material|25 740|17 280|
+|Insurance|6 500|9 700|
+|Fuel for company vehicle|-|7 500|
+|Interest on loan|6 000|6 000|
+|Dividends||190 000|
+|Telephone, water and electricity|||
+|Sundry expenses|||
+|TOTAL PAYMENTS|||
+|CASH SURPLUS/DEFICIT|174 000|(120 000)|
+|BANK (BEGINNING)|(66 000)|108 000|
+|BANK (END)|108 000|(12 000)|
+
+
+
+&#x20;
+
+###### H. Budgeted and actual figures for October 2022:
+
+||BUDGET|ACTUAL|VARIANCE|
+|-|-|-|-|
+|Number of units sold|7 080 units|11 470 units|+ 4 390 units|
+|Mark-up %|65%|45%|-20%|
+|||||
+|Sales|R584 100|R831 546|+ R247 446|
+|Cost of sales|354 000|573 480|+ 219 480|
+|Gross profit|230 100|258 066|+ 27 966|
+|Repairs and maintenance|30 000|8 000|– 22 000|
+|Advertising|40 000|28 000|– 12 000|
+|Delivery expenses (Aldo Deliveries)|35 046|42 896|+ 7 850|
+|Packing material|23 364|37 850|+ 14 486|
+
+
+
+#### REQUIRED
+
+##### 6.1
+
+Complete the Creditors' Payment Schedule for December 2022. (7)
+
+
+
+###### Answer Sheet
+
+||CREDIT <br />PURCHASES|NOVEMBER|DECEMBER|
+|-|-|-|-|
+|October|300 900|60 180||
+|November|331 500|251 940||
+|December||||
+|||312 120||
+
+
+
+###### Answer
+
+||CREDIT <br />PURCHASES|NOVEMBER|DECEMBER|
+|-|-|-|-|
+|October|300 900|60 180||
+|November|331 500|251 940|66 300|
+|December|222 700|{If × 80% × 95%}|169 252|
+|||312 120|235 552|
+
+
+
+&#x20;
+
+##### 6.2
+
+Calculate missing figures (i) to (iii) in the Cash Budget.  (10)
+
+
+
+###### Answer
+
+|NO.|WORKINGS|ANSWER|
+|-|-|-|
+|(i) Collection from debtors: December 2022|643 500 x 70%  OR  193 050 x 70/30|450 450|
+|(ii) Rent income: December 2022|15 000 + (15000/60 × 75); Be alert to alternative calculations such as:  <br />OR 15 000 one mark + (15 000 × 75/60) two marks    <br />OR 15 000 one mark + (15 000 × 125%) two marks   <br />OR 15 000 one mark + (15 000 + 3 750) two marks  <br />OR 15 000 one mark × 225% two marks                                    <br />OR R250 one mark × 135m two marks|33 750|
+|(iii) Salaries: November 2022|\[(55 595 – 14 840) × 100/104,5]  OR (40 755   – 1 755)|39 000|
+
+
+
+&#x20;
+
+##### 6.3 Refer to Information E and G.
+
+###### 6.3.1
+
+Calculate the deposit that will be paid for the purchase of the
+
+company vehicle during December 2022. (5)
+
+
+
+\####### Answer
+
+\[(20 800 × 24) - 45 600] × 25/75 = 151 200
+
+&#x20;
+
+OR
+
+
+
+(453 600 x 100/75) - 453 600 = 151 200
+
+&#x20;
+
+###### 6.3.2
+
+\-Juanita is concerned about the cash position for December 2022.
+
+She proposes moving the purchase of the vehicle to January 2023.
+
+\-Use the table in the ANSWER BOOK to show the effect of this
+
+proposal to the December 2022 Cash Budget.  (6)
+
+
+
+\####### Answer Sheet
+
+|Budgeted deficit on 31 December 2022|(120 000)|
+|-|-|
+|Deposit on vehicle||
+|||
+|||
+|||
+|Cash deficit/surplus after the proposed move||
+
+
+
+\####### Answer
+
+|Budgeted deficit on 31 December 2022|(120 000)|
+|-|-|
+|Deposit on vehicle|151 200|
+|Monthly instalment  (18 900 + 1 900)|20 800|
+|Fuel for company vehicle|7 500|
+|Insurance|3 200|
+|Cash deficit/surplus after the proposed move|62 700|
+
+
+
+##### 6.4 Refer to Information H.
+
+Juanita is concerned about her decisions in October 2022 to adjust the mark-up % and the amount actually spent on advertising. Provide TWO points to indicate whether these were wise decisions or not. Quote figures and/or calculations.     (4)
+
+
+
+###### Answer
+
+\####### POINT 1
+
+The reduction in mark-up % led to:
+
+* Sales of 4 390 units more than budgeted / from 7 080 units to 11 470 units / by 62%. OR sales exceeded the budget by R247 446 (from R584 100 to R831 546 or 42,4%)
+* Gross profit is more than budgeted by R27 966 or 12,2% (from R230 100 to R258 066) / cost of sales was more than budgeted as expected, due to more sales (by R219 480)
+
+
+
+\####### POINT 2
+
+\-Underspent on advertising by R12 000 (40 000 – 28 000) or by 30% was not significant as it did not affect sales negatively / budgeted figure was 6,8% of sales, but actual amount used was 3,4% of sales.
+
+\-It could be argued that sales could have been higher if more was spent on advertising.
+
+&#x20;
+
+##### 6.5 Refer to Information H.
+
+###### 6.5.1
+
+Explain why Juanita should be concerned about the actual amount spent on repairs and maintenance during October 2022. Quote a
+
+figure and/or a calculation. (2)
+
+
+
+\####### Answer
+
+>Figure (comparison)    
+
+\-Underspent on maintenance by R22 000 / spent only R8 000 of the R30 000 budget / 26,6% of the budget was used /  73,3% of budget was not used.
+
+&#x20;
+
+>Explanation for concern accept short statements  
+
+\-This could affect the long-run productivity of the assets / neglecting maintenance may cause disruptions to operations / cash savings in the short-run may cause fixed assets to break down or deteriorate, leading to greater expenses in the future.
+
+
+
+###### 6.5.2
+
+James feels that there has been a lack of control over the amounts spent on delivery expenses and packing material. Explain whether
+
+James' opinion is correct or not. Provide calculations. (8)
+
+
+
+\####### Answer
+
+\######## EXPLANATION ON DELIVERY EXPENSES
+
+\-The delivery costs were well maintained; service provider was able to operate more efficiently in spite of increased sales:
+
+* Delivery expenses is 22,4% more than budgeted, but units sold is more than budgeted by 62% / sales is 42,4% more than budgeted
+* Delivery cost per unit is R3,74 compared to the R4,95 budgeted.
+* Budgeted for 6% of sales actual was 5,2% of sales
+
+&#x20;
+
+\-THREE mark option: comparison with sales quoting variances:
+
+Delivery expenses is over the budget by R7 850, but sales is more than budgeted by 4 390 units / by R247 446
+
+
+
+>ONE mark option: no comparison with sales but variances mentioned:  
+
+\-Delivery expenses is over the budget by R7 850.
+
+
+
+\######## EXPLANATION ON PACKING MATERIAL
+
+>Packing material was efficiently managed / in line with the budget: 
+
+* Packing material is 62% more than budgeted and units sold is also 62% more than budgeted /  sales is 42,4% more than budgeted / cost of sales is also 62% more than budgeted.
+* Unit cost of packing material was maintained at R3,30.
+* Budgeted for 4% of sales actual was 4,6% of sales
+
+&#x20;
+
+>THREE mark option: comparison with sales quoting variances: 
+
+\-Packing material is over the budget by R14 486, but sales is more than budgeted by 4 390 units / by R247 446
+
+>ONE mark option: no comparison with sales but variances mentioned:  
+
+\-Packing material is over the budget by R14 486.
+
+&#x20;
+
+##### 6.6
+
+Juanita wants to use social media to create an on-line shopping platform to increase her sales from January 2023. Name THREE additional payments that must be included in the January 2023 budget. (3)
+
+
+
+###### Answer
+
+* Establishment of a call centre / telephone lines
+* Additional couriers services / transport and carriage costs
+* Additional delivery vehicles
+* Computer, computer hardware, file server
+* Generator / inverter / UPS / solar panels
+* Increased salaries / for drivers, assistants, IT technician, staff
+* Packaging costs / packing material
+* Insurance
+* Staff training
+* Data costs, fibre installations, internet cost
+* Software construction costs, website design
+* Additional advertising
+* IT maintenance
+
+
+
+
+
+### 7
+
+#### 7.1
+
+The following information relates to Glydis Traders for the period ending 31 July 2022.
+
+
+
+##### INFORMATION:
+
+###### A. Sales and purchases:
+
+||MAY|JUNE|JULY|
+|-|-|-|-|
+|Total sales|R962 500|R997 500|R1 015 000|
+
+
+
+* Credit sales accounts for 60% of total sales.
+* Debtors pay according to the following trend:
+
+&#x20; -40% in the month of sales, subject to a 5% discount
+
+&#x20; -45% in the month following the month of sales
+
+&#x20; -12% two months after the month of sales
+
+&#x20; -3% written off as irrecoverable in the third month after sales
+
+* The mark-up is 75% on cost.
+* Stock is replaced in the month of sales. A base stock is maintained.
+* 80% of stock is bought for cash.
+* Creditors are paid in the second month after the month of purchases.
+
+
+
+###### B. Extract from the Projected Statement of Comprehensive Income:
+
+||JUNE|JULY|
+|-|-|-|
+|Gross profit|427 500|435 000|
+|Commission income|79 800|(i)|
+|Bad debts|16 800|(ii)|
+|Salaries and wages|(iii)|196 980|
+|Discount allowed|(iv)|12 180|
+|Interest on loan|4 550|4 025|
+
+
+
+
+
+###### C. Additional information:
+
+* Commission income is a fixed percentage of total sales.
+* All employees will receive a 5% increase from 1 July 2022.
+* Part of the loan will be repaid on 1 July 2022. Interest at 14% p.a. is payable on the outstanding balance, on the last day of each month.
+
+
+
+##### REQUIRED:
+
+###### 7.1.1
+
+Complete the Debtors' Collection Schedule for July 2022.  (7)
+
+
+
+\####### Answer Sheet
+
+|MONTH|CREDIT SALES|JUNE 2022|JULY 2022|
+|-|-|-|-|
+|April 2022|567 000|68 040||
+|May 2022|577 500|259 875||
+|June 2022|598 500|227 430||
+|July 2022|609 000|||
+|RECIPTS FROM DEBTORS||555 345||
+
+
+
+\####### Answer
+
+|MONTH|CREDIT SALES|JUNE 2022|JULY 2022|
+|-|-|-|-|
+|April 2022|567 000|68 040||
+|May 2022|577 500|259 875|69 300|
+|June 2022|598 500|227 430|269 325|
+|July 2022|609 000||231 420|
+|RECIPTS FROM DEBTORS||555 345|570 045|
+
+
+
+###### 7.1.2
+
+Calculate the amounts denoted by (i) to (iv) in the extract of the Projected Statement of Comprehensive Income.  (9)
+
+
+
+\####### Answer
+
+||Workings|Answer|
+|-|-|-|
+|i. Commission income in July 2022|1 015 000 × 8%|81 200|
+|ii. Bad debts written off in July 2022|567 000 × 3%     OR  567 000 – 549 990|17 010|
+|iii. Salaries and wages in June 2022|196 980 × 100/105       OR 196 980 – 9 380|187 600|
+|iv. Discount allowed in June 2022|Discount allowed in June 2022<br />598 500 × 40% ×5%   <br />OR 227 430 × 5/95   OR  239 400 – 227 430  OR   <br />997 500 ×1,2/100|11 970|
+
+
+
+&#x20;
+
+###### 7.1.3 Calculate:
+
+\####### a)
+
+Payments to creditors in July 2022 (4)
+
+
+
+\######## Answer
+
+962 500 ×100/175 × 20%   OR  550 000 – 440 000 = 110 000
+
+
+
+\####### b)
+
+Loan amount that will be paid on 1 July 2022 (4)
+
+
+
+\######## Answer
+
+(525 × 12)/0,14 OR (390 000 - 345 000) = 45 000
+
+
+
+#### 7.2
+
+\-Frazila (PTY) LTD sells gas stoves. The information relates to the period April and May 2022.
+
+\-Peter Pillay, the CEO, became aware of a competitor, Lite Stores, which opened for business in April 2022. They sell a cheaper model stove for cash only.
+
+\-Peter was unable to respond to this threat in April. He changed his strategies in May 2022. This included a change in the delivery service. Delivery is outsourced to Speedy Couriers in April. Peter decided in May to outsource it to Prime Deliveries.
+
+
+
+##### INFORMATION:
+
+###### A. Extract of the Projected Income Statement:
+
+&#x20;; APRIL 2022\[BUDGETED; ACTUAL]; MAY 2022\[BUDGETED; ACTUAL]
+
+&#x20;Number of stoves sold; 750; 600; 750; 900
+
+&#x20;Selling price per stove; R3 780; R3 780; R3 780; ?
+
+&#x20;Cost price per stove; R2 100; R2 100; R2 100; R2 100
+
+&#x20;; R; R; R; R
+
+&#x20;Cash sales; 1 417 500; 1 247 400; 1 417 500; 958 500
+
+&#x20;Credit sales; 1 417 500; 1 020 600; 1 417 500; 2 236 500
+
+&#x20;Total sales; 2 835 000; 2 268 000; 2 835 000; 3 195 000
+
+&#x20;Cost of sales; (1 575 000); (1 260 000); (1 575 000); (1 890 000)
+
+&#x20;Gross profit; 1 260 000; 1 008 000; 1 260 000; 1 305 000
+
+&#x20;; R; R; R; R
+
+&#x20;Advertising; 120 000; 120 000; 120 000; 192 000
+
+&#x20;Delivery costs; 425 250; 408 240; 425 250; 319 500
+
+
+
+###### B. Extract from the Cash Budget:
+
+&#x20;; APRIL 2022\[BUDGETED (R); ACTUAL (R)]; MAY 2022\[BUDGETED (R); ACTUAL (R)]
+
+Cash surplus/deficit; 208 000; 243 000; 220 000; (972 000)
+
+Opening balance; 77 000; 77 000; 285 000; 320 000
+
+Closing balance; 285 000; 320 000; 505 000; (652 000)
+
+
+
+###### C. Additional information:
+
+* The business budgets to sell 750 stoves per month.
+* Purchases of stock are paid in 30 days.
+
+
+
+##### REQUIRED
+
+NOTE:  Provide figures or calculations in your explanations for all the questions below.
+
+&#x20;
+
+###### 7.2.1 Delivery expenses:
+
+Peter noticed that the full budget for April 2022 had not been used.
+
+\####### a)
+
+Explain whether Peter should be satisfied with the actual delivery
+
+cost in April 2022, or not.  (3)
+
+
+
+\######## Answer
+
+Peter should not be satisfied because
+
+* He budgets to spend 15% of sales on delivery (425 250 ÷ 2 835 000) but the actual amount spent was 18% of actual sales (408 240 ÷ 2 268 000) / +3% points
+* If he adhered to the budget of 15% on sales, then the actual amount spent should be R340 200 (2 268 000 x 15%) / R68 040 more than the budget (408 240 – 340 200)
+* Actual sales were 20% or R567 000 less than budget ( or by 150 stoves less) but delivery expense was 4% or R17 010 less than budget (425 250 – 408 240)
+* Delivery budget per stove R567, paid R680 per stove (on average)
+
+&#x20;
+
+\####### b)
+
+Explain whether Peter made a good decision in changing the
+
+delivery service provider to Prime Deliveries, or not.  (3)
+
+&#x20;
+
+\######## Answer
+
+Peter will be satisfied with the change
+
+* He budgets to spend 15% of sales (425 250 ÷ 2 835 000) but he only spent 10% of actual sales (319 500 ÷ 3 195 000) in May.
+* If he spent 15% of actual sales, as expected, it would have cost him R479 250 (3 195 000 x 15%) He made a savings of R159 750 (R479 250 – R319 500)
+* Actual sales exceeded the budget by 20% (360 000 ÷ 2 835 000) or by 150 stoves. but delivery expense was below the budget by R105 750 (425 250 – 319 500)
+* Actual sales increased by 50% (by 300 units) or by 40,1% (by R927 000), but delivery expenses dropped by 21,7% (by R88 740)
+* Budgeted R567 per stove, but paid R355 on average.
+
+&#x20;
+
+###### 7.2.2 Other strategies:
+
+\####### a)
+
+Apart from changing the delivery service, identify TWO other
+
+strategies that Peter implemented in May 2022 in response to the
+
+competitor.  (4)
+
+
+
+\######## Answer
+
+>Advertising: 
+
+* Budgeted R120 000, spent R192 000 / spent R72 000
+
+more 60% more (72 000/120 000)
+
+
+
+>Adjusted composition of cash / credit sales:   
+
+* Credit sales budgeted at 50% of total sales (1 417 500 / 2 835 000) actual was 70% of sales (2 236 500 / 3 195 000) or 58% more than budgeted (819 000 / 1 417 500)  OR
+* Sacrificed / reduced / less cash sales, budgeted 50% of sales (1 417 500 / 2 835 000), actual was 30% (958 500 / 3 195 000); or 32,4% less than budgeted (459 000 /1 417 500)
+
+
+
+>Adjusted MU% / Reduced Selling Price:  
+
+* Decreased selling price from R3 780 to R3 550 / by R230 / 6,1%  /
+* Decreased MU% from 80% to 69%
+
+&#x20;
+
+\####### b)
+
+Explain how these other strategies have affected the sales and the profit.  (4)
+
+
+
+\######## Answer
+
+>Total Sales:  
+
+* More than budget by 12,7% or by R360 000 (Credit sales: + 819 000; Cash sales: – 459 000)
+* More than the actual amount achieved in April by R927 000 / by 40,9%
+* Sold 150 units (20%) more than budgeted figure of 750 units or 300 more than April sales.
+
+
+
+>Gross profit:  
+
+* More than budgeted by 3,6% (45 000 / 1 260 000)
+* More than profit earned in April by 29,5% (297 000 / 1 008 000)
+
+&#x20;
+
+###### 7.2.3 Cash balances:
+
+\-Peter is confused about why the cash balances are not good despite the fact that sales increased in May 2022. Explain. (2)
+
+&#x20;
+
+\####### Answer
+
+>The switch to more credit sales:  emphasis on low cash sales  
+
+* Cash sales of R958 500 is less than budget by R459 000 / 32,4% less than what was expected / only 30% of the total sales.
+* Cash sales is R288 900 less than April cash sales / 23,2% less.
+
+&#x20;
+
+>Payments to creditors:  (\\\\\\\*emphasis on the large cash outlay)  
+
+* Credit terms are 30 days, April cost of sales, R1 260 000 must be paid in May, whereas debtors would pay outstanding balances over a period, (according to payment trend).
+
+
+
+### 8
+
+Shepstone Traders sell household appliances for cash and on credit. They also charge fees for repairing appliances, but only for cash. The business owner is Brian Johns.
+
+The information relates to the budget period November 2021 to January 2022.
+
+
+
+#### INFORMATION:
+
+##### A. Sales and cost of sales:
+
+||September <br />2021|October <br />2021|November <br />2021|December <br />2021|January <br />2022|
+|-|-|-|-|-|-|
+|Total sales|R735 000|R770 000|R798 000|R910 000|R882 000|
+|Cost of sales|R420 000|R440 000|R456 000|R520 000|R504 000|
+
+
+
+##### B. Credit sales: 40% of total sales are on credit.
+
+
+
+##### C. Debtors paid according to the following trend:
+
+* 30% paid in the month of sale and receive a 5% discount.
+* 45% paid in the month following the month of sale.
+* 22% paid in the second month following the month of sale.
+
+&#x20;
+
+&#x20;Bad debts are taken into account in the third month.
+
+
+
+##### D. Purchases and payments to creditors:
+
+* 80% of the stock is purchased on credit.
+* Stock sold is replaced in the month of sales.
+* Creditors are paid two months after the purchase month.
+
+
+
+##### E. Information on specific items from the Cash Budget:
+
+* Rent income will be increased by 9% p.a., effective from 1 January 2022.
+* Shepstone Traders undertake special and extensive cleaning and sanitisation during December each year. This has the effect of increasing the cleaning services budget by 65%, in December only. The normal monthly fee is expected to increase by 5% p.a. commencing on 1 January 2022.
+
+
+
+##### F. Extract from the Cash Budget:
+
+|RECEIPTS|Dec. 2021|Jan. 2022|
+|-|-|-|
+|Cash sales|R546 000|R529 200|
+|Fee income (repairs)|38 400|52 200|
+|Rent income|(a)|20 056|
+|PAYMENTS|||
+|Cash purchases|104 000|100 800|
+|Payments to creditors|352 000|(b)|
+|Consumable stores (repairs)|9 600|13 050|
+|Fuel|21 840|23 930|
+|Cleaning services|15 510|(c) <br />|
+|Salaries to sales staff|82 000|87 330|
+|Wages to repair staff|11 000|11 715|
+|Advertising|36 400|35 280|
+
+
+
+
+
+##### G. Information for November 2021:
+
+|Number of sales employees, including the driver|5|
+|-|-|
+|Number of repairs employees|2|
+
+
+
+||BUDGETED|ACTUAL|
+|-|-|-|
+|Number of customers: Sales|230|175|
+|Number of customers: Repairs|70|136|
+|Total sales|R798 000|R707 000|
+|Cash sales|478 000|142 000|
+|Credit sales|319 200|565 000|
+|Gross profit|342 000|303 000|
+|Fee income (cash only)|32 000|66 000|
+|Salaries: Sales staff|82 000|82 000|
+|Wages: Repairs staff|11 000|11 000|
+
+
+
+
+
+#### REQUIRED:
+
+##### 8.1
+
+Calculate the amounts indicated by (a)–(c) on the Debtors' Collection Schedule provided in the ANSWER BOOK.  (6)
+
+
+
+###### Answer Sheet
+
+||Credit <br />Sales <br />R|December <br />2021 <br />R|January <br />2022 <br />R|Bad debts|
+|-|-|-|-|-|
+|Oct 2021|308 000|67 760||(a)|
+|Nov 2021|319 200|143 640|70 224||
+|Dec 2021|364 000|103 740|(b)||
+|Jan 2022|352 800||(c)||
+|||315 140|||
+
+
+
+&#x20;
+
+###### Answer
+
+||Credit <br />Sales <br />R|December <br />2021 <br />R|January <br />2022 <br />R|Bad debts|
+|-|-|-|-|-|
+|Oct 2021|308 000|67 760||(a) 13 860|
+|Nov 2021|319 200|143 640|70 224||
+|Dec 2021|364 000|103 740|(b) 245 700||
+|Jan 2022|352 800||(c) 150 <br />822||
+|||315 140|||
+
+
+
+##### 8.2
+
+Calculate the amounts indicated by (a)–(c) on the Cash Budget provided in Information F. (9)
+
+
+
+###### Answer
+
+||Workings|Answer|
+|-|-|-|
+|a) Rent income for December 2021|20 056 × 100/109      or 20 056 – 1 656|18 400|
+|b) Payment to creditors in January 2022|456 000 × 80% OR  456 000 – 20%(456 000)|364 800|
+|c) Payment for cleaning services in January 2022|15 510 ×100/165 × 105/100                                   <br />OR   15 510  × 105/165|9 870|
+
+
+
+&#x20;
+
+##### 8.3 Workload of employees: Refer to Information G.
+
+Brian is concerned about the workload of his staff. He plans to reduce the sales staff by one person. The other sales staff members are not happy with this plan.
+
+&#x20;
+
+###### a)
+
+Provide TWO points that Brian can explain to his sales staff to justify his plan. Quote figures. (4)
+
+
+
+\####### Answer
+
+* He budgeted for 230 customers; only 175 was recorded / 55 less (23,9%) / 76%
+* Sales was less than budgeted (798 000 – 707 000) / by R91 000 / 11,4%
+* Salaries are set at a basic rate of R16 400 per worker (cost the business when budgeted sales are not achieved)
+
+
+
+>Assuming 5 workers (including driver) 
+
+* Each worker was expected to attend to 46 customers (230/5); but the actual is an average of 35 customers (175 /5) / 11 less / 23,9%
+* Retrenching one person will not affect the expected workload of the remaining 4 workers, projecting an average of 44 (175/4) customers (expected 46)
+
+
+
+>Assuming 4 sales staff (excluding driver) 
+
+* Each worker expected to attend to 58 (230/4) but actual is 44 (175/4) / 14 less / 24%
+* If one is retrenched, the average customers per worker is 58 (175/3) customers; same as the expected 58 (230/4).
+
+
+
+###### b)
+
+Explain why the repair staff members are not satisfied with their workload. Quote figures. (3)
+
+
+
+\####### Answer
+
+* They are over-worked. Customers (from 70 expected to 136-actual) / 66 more than expected / 94% more / 194%.  Customers prefer to repair rather than buy.
+* They are expected to attend to 35 customers per worker but attended to 68 customers (an average of an additional 33 customers per worker)
+* Fee income is R34 000 more than expected / 66 000 – 32 000 / 106%
+* Wages fixed at a basic rate of R5 500 per worker – not influenced by workload / commission, and is R10 900 less than a sales worker.
+
+
+
+###### c)
+
+What suggestions can you offer to solve the problem of the workload of employees? Provide TWO points. (4)
+
+
+
+\####### Answer
+
+* Train the sales staff member to do repairs
+* Suggest incentive bonuses / overtime pay
+* Negotiate a better wage package / commission
+* Train staff to work in other departments / rotation
+* Employ temporary staff / casual workers / employ more workers
+
+&#x20;
+
+##### 8.4 Sales trends: Refer to Information G.
+
+Comment on the cash and credit sales figures for November 2021. Explain why Brian is concerned. Quote figures.  (3)
+
+
+
+###### Answer
+
+Expected responses for 3 marks:
+
+* Cash sales are lower than expected by R336 800 / 70,3% / (478 800$ – 142 000) whilst credit sales are higher than expected by R245 800 / 77% / (565 000 – 319 200)
+* Cash sales are now only 20% of total sales (142 000/707 000) expected 60%; whilst credit sales are now 80% of total sales (565 000 / 707 000); expected 40%
+
+&#x20;
+
+##### 8.5 Variances:  The budgeted and actual figures for November 2021 are provided.
+
+&#x20;
+
+\-Comment on the control over fuel for the delivery vehicle and the consumable stores used for repairs. Quote figures.
+
+
+
+||BUDGETED  <br />(R)|ACTUAL  <br />(R)|VARIANCE|
+|-|-|-|-|
+|Sale|798 000|707 000|-91 000|
+|Fee income|32 000|66 000|+34 000|
+|Fuel for leased delivery vehicle|20 800|19 900|-900|
+|Consumable stores for repairs|8 000|12 100|+4 100|
+
+
+
+###### Answer
+
+>Fuel for delivery vehicle:
+
+\-Fuel expense is not well controlled, assuming that all customers require delivery
+
+* Budgeted at 2,6% of total sales (20 800/798 000); actual was 2,8% of actual sales (19 900/707 000)
+* Total sales less than budgeted by 11,4% / by R91 000 Fuel is less than budgeted by 4,3% / by R900
+
+
+
+>Consumable stores for repairs 
+
+* Efficient control over consumable stores / well controlled / indication of minimal wastage
+* Budgeted to spend 25% of fee income (8 000/32 000); actual usage was 18,3% (12 100/66 000)
+* Fee income is more than budgeted by 106% / by R34 000 Consumable stores are only 51,3% more than the budgeted amount / by R4 100.
+
+
+
+### 9
+
+#### 9.1
+
+Insert the relevant amount(s) for EACH transaction below into the appropriate columns for the following Cash Budget and Projected Income Statement for July 2021.
+
+&#x20;
+
+Example:  Monthly telephone costs are expected to be R4 200.
+
+NO.; CASH BUDGET FOR JULY\[RECEIPT; PAYMENT]; PROJECTED INCOME STATEMENT FOR JULY\[INCOME; EXPENSE]
+
+e.g; ; 4 200; ; 4 200
+
+&#x20;; ; ; ;
+
+
+
+&#x20;
+
+##### TRANSACTIONS FOR JULY 2021:
+
+###### 9.1.1
+
+A three-month advertising contract for R6 000 will be paid on
+
+1 July 2021. R2 000 of this amount relates to the next financial year.
+
+&#x20;
+
+###### 9.1.2
+
+On 1 July 2021, R45 000 will be invested in a fixed deposit at 8%
+
+interest p.a. Interest is not capitalised and is received at the end of
+
+each month.
+
+&#x20;
+
+###### 9.1.3
+
+Budgeted cash sales, R23 200 (cost of sales; R16 000).
+
+
+
+###### Answer Sheet
+
+NO.; CASH BUDGET FOR JULY\[RECEIPT; PAYMENT]; PROJECTED INCOME STATEMENT FOR JULY\[INCOME; EXPENSE]
+
+e.g; ; 4 200; ; 4 200
+
+&#x20;9.1.1; ; ; ;
+
+&#x20;9.1.2; ; ; ;
+
+&#x20;9.1.3; ; ; ;
+
+
+
+###### Answer Sheet
+
+NO.; CASH BUDGET FOR JULY\[RECEIPT; PAYMENT]; PROJECTED INCOME STATEMENT FOR JULY\[INCOME; EXPENSE]
+
+e.g; ; 4 200; ; 4 200
+
+&#x20;9.1.1; ; 6 000; ; 4 000
+
+&#x20;9.1.2; 300; 45 000; 300;
+
+&#x20;9.1.3; 23 200; ; 23 200; 16 000
+
+
+
+#### 9.2
+
+\-ANOKHI (PTY) LTD sells electrical appliances. The financial year ends on 30 April.
+
+\-Kayla Bester is the sole shareholder and CEO of the business.
+
+
+
+##### INFORMATION:
+
+###### A. Total sales:
+
+ACTUAL SALES\[APRIL 2021; MAY 2021]; BUDGETED SALES\[JUNE 2021; JULY 2021]
+
+R878 400; R882 000; R918 000; R936 000
+
+
+
+###### B.
+
+Credit sales comprise 60% of total sales.
+
+
+
+###### C.
+
+Goods are sold at a mark-up of 80% on cost.
+
+
+
+###### D.
+
+The business maintains a fixed-stock base level. Stock sold in a month is replaced in the same month. The cash purchases are 65% of total purchases.
+
+
+
+###### E. Creditors are paid according to the following trend:
+
+40% - settled in the month of purchased to earn 5% discount
+
+50% - settled in the month following the purchase month
+
+10% - settled in the second month after the purchase month
+
+
+
+###### F. Extract: Cash Budget for the three months ended 30 July 2021
+
+||MAY 2021 <br />(R)|JUNE 2021 <br />(R)|JULY 2021 <br />(R)|
+|-|-|-|-|
+|Receipts||||
+|Cash sales|352 800|367 200|374 400|
+|Cash from debtors|522 828|535 140|548 640|
+|Rent income|15 500|15 500|(a)|
+|Loan: Jane Investments|0|(b)|0|
+|Payments||||
+|Cash purchases|318 500|331 500|338 000|
+|Payments to creditors|167 020|170 660|?|
+|Salaries of sales assistants|41 000|41 000|(c)|
+|Directors fees|(d)|98 880|98 880|
+|Advertising|35 280|36 720|37 440|
+|Interest on loan|0|3 150|3 150|
+|Delivery expenses  <br />(ABC Deliveries)|57 330|59 670|0|
+|Delivery vehicle deposit||140 000||
+
+
+
+###### G. Additional information
+
+\####### i)
+
+Rent income is expected to increase by 9% p.a. from 1 July 2021.
+
+
+
+\####### ii)
+
+The business has negotiated a loan which will be received on
+
+1 June 2021. Interest at 13,5% p.a. is payable at the end of each
+
+month, commencing from 30 June 2021.
+
+
+
+\######## iii)
+
+The business employed five sales assistants in May and June on
+
+the same salary scale. Three of them will receive an annual bonus
+
+of 75% of their earnings in July 2021. A part-time sales assistant will be employed during July 2021 and will earn 50% of the monthly amount applicable to the others.
+
+
+
+\####### iv)
+
+Kayla earns directors' fees of R720 000 for the year. The company
+
+also employed another director, Martin, for the entire year. Martin
+
+will receive an increase of 8% p.a. on his directors' fees from                   1 June 2021.
+
+&#x20;
+
+##### REQUIRED:
+
+###### 9.2.1
+
+Complete the Creditors' Payment Schedule for the budget period
+
+ending 31 July 2021. (9)
+
+
+
+\####### Answer Sheet
+
+||CREDIT <br />PURCHASES|MAY 2021|JUNE 2021|JULY 2021|
+|-|-|-|-|-|
+|March 2021|164 500|16 450|||
+|April 2021|170 800|85 400|17 080||
+|May 2021|171 500|65 170|85 750||
+|June 2021|178 500||67 830||
+|July 2021|||||
+|Payment to creditors||167 020|170 660||
+
+
+
+\####### Answer
+
+||CREDIT <br />PURCHASES|MAY 2021|JUNE 2021|JULY 2021|
+|-|-|-|-|-|
+|March 2021|164 500|16 450|||
+|April 2021|170 800|85 400|17 080||
+|May 2021|171 500|65 170|85 750|17 150|
+|June 2021|178 500||67 830|89 250|
+|July 2021|182 000|||69 160|
+|Payment to creditors||167 020|170 660|175 560|
+
+&#x20;
+
+###### 9.2.2
+
+Calculate the amounts for (a) to (d) in the Cash Budget.   (16)
+
+&#x20;
+
+\####### Answer
+
+||WORKINGS|ANSWER|
+|-|-|-|
+|(a) Rent income in July 2021|15 500 x 1,09    or 15 500 + 1 395|16 895|
+|(b) Amount of the loan|Loan amount × 13,5% × 1/12 = 3 150 <br />(3 150 × 12)/(13,5 ÷ 100)|280 000|
+|(c) Salaries of sales assistants|41 000 +  (41 000 × 3/5 × 0,75) +  (8 200 × 50%)|63 550|
+|(d) Directors' fees|(720 000/12) + ( (38 880 ×100/108)|96 000|
+
+
+
+&#x20;
+
+###### 9.2.3
+
+Kayla extracted the following actual and budgeted figures for
+
+May 2021:
+
+
+
+||BUDGETED|ACTUAL|
+|-|-|-|
+|Total sales|R882 000|R705 600|
+|Cash from debtors|522 828|402 600|
+|Advertising|35 280|35 280|
+|Delivery expenses (ABC Deliveries)|57 330|51 200|
+
+
+
+>Comment and quote figures on the: 
+
+\####### a)
+
+Effectiveness of the advertising  (4)
+
+
+
+\######## Answer
+
+\-Although the same amount (Nil change / R0 / R35 280) as budgeted was used, actual sales was less than budgeted by 20% or by R176 400 or R882 000 R705 600; advertising was therefore not effective.
+
+
+
+\####### b)
+
+Control over delivery expenses (4)
+
+
+
+\######## Answer
+
+* Delivery expenses is lower than budgeted by R6 130 (R57 330 – R51 200) or by 10,7%, while sales were less than expected by 20% or by R176 400 (R882 000 – R705 600); delivery expenses therefore not well controlled.
+* Budgeted for 6,5% of sales – actual was 7,3% of sales (0,8% higher); delivery expenses therefore not well controlled.
+
+&#x20;
+
+
+
+###### 9.2.4
+
+Kayla decided that the business will purchase a delivery vehicle on
+
+1 June 2021.
+
+&#x20;
+
+\####### a)
+
+State TWO benefits of this decision.   (2)
+
+
+
+\######## Answer
+
+* The business will own an asset (increase in value of assets)
+* Deliveries can be made at the convenience of the business / is under the control of the business.
+* Possible savings / more economical (saves on the mark-up which would apply to a supplier) / cutting out the middleman.
+* Can be used to generate other income by outsourcing the vehicle
+
+&#x20;
+
+\####### b)
+
+Apart from the items reflected in the Cash Budget (Information F),
+
+list FOUR other items that Kayla should include in the budget.  (4)
+
+
+
+\######## Answer
+
+Any FOUR items:
+
+Insurance
+
+Repairs
+
+Delivery fee income
+
+Petrol and fuel
+
+Instalment payments and interest
+
+Additional driver
+
+Vehicle licence
+
+Toll charges
+
+Security for vehicle (garage)
+
+Maintenance
+
+Accommodation for driver (working late)
+
+
+
+### 10
+
+\-Blossom (Pty) Ltd sells expensive ladies' dresses of high quality. They also repair dresses for customers, but they aim to break even on this service.
+
+\-Customers are allowed to buy dresses for cash or on credit, but they are required to pay cash for all repairs.
+
+\-The information relates to the budget period ending 31 May 2021.
+
+
+
+#### INFORMATION:
+
+##### A. Total sales and cost of sales:
+
+||MARCH|APRIL|MAY|
+|-|-|-|-|
+|Sales|R560 000|R630 000|R770 000|
+|Cost of sales|320 000|360 000|440 000|
+
+
+
+* Goods are sold at a mark-up of 75% on cost.
+* Credit sales are expected to be 65% of total sales.
+
+
+
+##### B. Expected debtors' collection based on the past:
+
+* 40% collected in the month of sale, less 6% discount for early payment
+* 50% collected in the month following the month of sale
+* 8% collected two months after the sale
+* 2% regarded as uncollectable two months after the sale
+
+&#x20;
+
+##### C. Purchases of stock:
+
+* All purchases of stock are on credit.
+* Trading stock is replaced in the month of sale. A fixed stock level is maintained.
+* Creditors are paid in full in the month after purchasing stock.
+
+&#x20;
+
+##### D. Loan from Janet Bloom:
+
+* Janet Bloom has provided a loan to the business at an interest rate of 9% p.a. Interest is not capitalised and one-third of the loan is repaid to her on 31 December each year.
+* As the company was still experiencing cash flow problems owing to the Coronavirus lockdown in 2020, Janet agreed to increase her loan to the business on 1 April 2021.
+
+&#x20;
+
+&#x20;
+
+##### E. Salaries of sales assistants:
+
+* The sales assistants all earn the same monthly salary.
+* They were promised a 5% increase in salaries with effect from 1 April 2021.
+* The business employed two sales assistants in March and planned to employ an additional assistant from 1 April 2021.
+
+&#x20;
+
+##### F. Rent and number of customers:
+
+* The directors secured premises in a local shopping mall from Propco Ltd with enough space to cater for the expected number of customers.
+* Rent is charged per square metre according to the floor area. The rent increased by 11% p.a. commencing on 1 April.
+* The following figures were identified for planning purposes:
+
+
+
+||MARCH|APRIL|MAY|
+|-|-|-|-|
+|Floor area in square metres (m^2)|120 m^2|120 m^2|?|
+|Rent expense per m^2|?|?|?|
+|Expected average sales per customer|R7 000|R7 000|R7 000|
+|Expected number of customers|80 customers|90 customers|110 customers|
+
+
+
+##### G.  Extract from the Cash Budget:
+
+||MARCH|APRIL|MAY|
+|-|-|-|-|
+|RECEIPTS|R|R|R|
+|Cash sales|196 000|(a)|269 500|
+|Cash from debtors|278 369|355 992|?|
+|Fee income (for repairs)|15 000|15 000|15 000|
+|Loan from Janet Bloom (see Information D)||(b)||
+|||||
+|PAYMENTS||||
+|Payments to creditors|220 000|320 000|360 000|
+|Salaries of sales assistants (see Information E)|22 400|(c)|?|
+|Wages of repair staff|9 000|10 000|10 000|
+|Consumable stores (for repairs)|4 200|4 200|4 200|
+|Interest on loan|1 365|2 625|2 625|
+|Rent expense (see Information F)|(d)|39 960|39 960|
+|Advertising|10 000|12 000|30 000|
+|Audit fees|||60 000|
+
+
+
+
+
+##### H. Comparison of budgeted figures to actual figures for May 2021:
+
+||BUDGETED|ACTUAL|
+|-|-|-|
+|Number of customers|110 customers|135 customers|
+||||
+||R|R|
+|Sales|770 000|690 000|
+|Fee income (repair service)|15 000|21 000|
+|Advertising|30 000|42 000|
+|Consumable stores (for repairs)|4 200|5 520|
+|Wages (for repair staff)|12 000|18 000|
+|Audit fees|60 000|48 000|
+|Rent expense|39 960|31 968|
+|Salaries (shop assistants)|35 280|37 044|
+|Delivery expenses|6 930|4 850|
+|Packing material|19 250|13 480|
+
+
+
+#### REQUIRED:
+
+&#x20;
+
+##### 10.1
+
+Complete the Debtors' Collection Schedule for March to May 2021. (9)
+
+
+
+###### Answer Sheet
+
+|MONTHS|CREDIT SALES <br />R|MARCH <br />R|APRIL <br />R|MAY <br />R|
+|-|-|-|-|-|
+|January|204 750|16 380|||
+|February|250 250|125 125|20 020||
+|March|364 000|136 864|182 000||
+|April|409 500||153 972||
+|May|||||
+|||278 369|335 992||
+
+
+
+###### Answer
+
+|MONTHS|CREDIT SALES <br />R|MARCH <br />R|APRIL <br />R|MAY <br />R|
+|-|-|-|-|-|
+|January|204 750|16 380|||
+|February|250 250|125 125|20 020||
+|March|364 000|136 864|182 000|29 120|
+|April|409 500||153 972|204 750|
+|May|500 500||Credit sales × 40% × 94%|188 188|
+|||278 369|335 992|422 058|
+
+&#x20;
+
+##### 10.2
+
+Calculate the missing amounts indicated by (a) to (d) in the Cash Budget. (14)
+
+
+
+###### Answer
+
+||Workings|Amount|
+|-|-|-|
+|a) Cash sales for April|630 000 × 35%<br />OR: 630 000 – 409 500     OR: 360 000 × 175/100 × 35% OR: 409 500 × 35/65|R220 500|
+|b) Increase in loan from Janet Bloom|(2 625 – 1 365) ÷ 0,09 × 12<br />|R168 000|
+|c) Salaries for April 2021|22 400 × 3/2 × 1,05<br />OR: 11 760 × 3<br />OR: (11 200 + 22 400) × 1,05|R35 280|
+|d) Rent expense for March 2021|39 960 × 100/111 OR 39 960 ÷ 111% OR 39 960 ÷ 1,11                                OR 39 960 – 3 960|<br />36 000|
+
+
+
+&#x20;
+
+##### 10.3 Refer to Information G and H.
+
+###### a) Advertising:
+
+\####### i)
+
+Explain the decisions that the directors took regarding the budgeted and actual expenditure for advertising in May 2021. Quote figures or calculations.  (4)
+
+
+
+\######## Answer
+
+Expected response for 4 marks:
+
+* Advertising budget increased by R18 000 / (from R12 000) to R30 000 / by 150%.
+* Actual expenditure on Advertising exceeded the budget by R12 000 / from R30 000 to R42 000 / by 40%
+
+
+
+\####### ii)
+
+The directors ask you for a report on the effect that the advertising decisions have actually had on customers and sales in May 2021.
+
+
+
+
+
+\######## Part 1)
+
+&#x20;Provide TWO points that you would include in your report. Quote figures or calculations. (4)
+
+
+
+\######### Answer
+
+Expected responses for 4 marks:
+
+* Customers: The actual was 135 / 25 more (than the 110 expected) / 22,7% more / the business projected an increase of 20 customers / budget for 22,2% increase in customers, but actual increase (April to May) is 50%
+* Sales: The actual sales were less than budget by R80 000 (from R770 000) to R690 000 by 10,4%.
+
+
+
+\######## Part 2)
+
+Explain how the decline in the national economy has affected the
+
+average amount that customers spent in May 2021. Quote figures. (3)
+
+
+
+\######### Answer
+
+* The average sales were budgeted at R7 000 per customer but this actually dropped to R5 111 per customer (690 000 /135)
+* It appears that the increase in advertising has attracted many new customers (25) who do not have the same spending power as the company's traditional customers / sales per customer decreased (they spend R5 111 instead of R7 000 each)
+* More customers are repairing dresses rather than buying new ones. Fee income exceeded budget by R6 000 (R21 000 – R15 000) / 40%.  Sales of new dresses were R80 000 less than the budget (10,4%).
+
+Expected responses for one mark:
+
+Customers might be window-shopping / spending less / more buying on credit
+
+
+
+###### b) Consumable stores:
+
+Comment on whether the consumable stores have been well controlled or not. Quote figures or calculations.  (2)
+
+&#x20;
+
+\####### Answer
+
+\-Response for two marks:  Comment which shows that consumable stores used were well controlled and are compared to fee income, with any valid figures provided.
+
+&#x20;
+
+\-Response for one mark: Comment which shows that consumable stores were overspent without being compared to fee income, with any valid figures provided.
+
+&#x20;
+
+\-Response for no mark: Comment which shows that consumable stores were overspent without being compared to fee income, with no figures provided.
+
+&#x20;
+
+\-Expected response for full marks:   Mark comment \& figures independently
+
+* Consumable stores were budgeted at 28% (R4 200 ÷ R15 000) of fee income, while actual amount spent was 26% of actual fee income (R5 520 ÷ R21 000).
+* Consumable stores exceeded the budget by 31,4% / by R1 320 (R5 520 – R4 200) while fee income exceeded the budget by 40% / by R6 000 (R21 000 – R15 000)
+
+
+
+##### 10.4 Refer to Information F and H on Rental and customers:
+
+>The owners of the property, Propco Ltd, informed the directors of Blossom Ltd of the increase in rent planned with effect from 1 April 2021.   
+
+&#x20;
+
+>In order to economise on rent, the directors asked the owners, Propco Ltd, for a reduction of the area rented from 1 May 2021. Propco Ltd agreed to this request. Calculate the reduction of the area rented (in square metres). (4)
+
+
+
+###### Answer
+
+Reduction in rent = R39 960 – R31 968 = R7 992
+
+R39 960 /120 m^2 = R333
+
+Reduction in area = R7 992 ÷ R333
+
+= 24 m^2
+
+OR: 120 – (R31 968 ÷ 333) OR: 120 × 20%
+
+&#x20;
+
+### 11
+
+The financial year-end of Carpets Galore (Pty) Ltd is 31 October 2019. Thembi Tsomi is the sole shareholder and director.
+
+
+
+#### 11.1
+
+Indicate amounts in the appropriate blocks for the Cash Budget and Projected Income Statement for three months ending 31 January 2020.   (11)
+
+&#x20;
+
+* A printer costing R40 800 will be bought for cash on 30 November 2019. Depreciation will be R680 per month.
+* On 1 January 2020, R48 000 will be paid for a 12-month insurance contract.
+* A loan of R100 000 will be received from Viva Bank on 31 December 2019. This will be repaid in equal instalments over 20 months, commencing on  31 January 2020. Interest at 12% p.a. is paid monthly and is not capitalised.
+
+
+
+##### Answer
+
+&#x20;; CASH BUDGET\[Nov. 2019; Dec. 2019; Jan. 2020]; PROJECTED INCOME STATEMENT\[Nov. 2019; Dec. 2019; Jan. 2020]
+
+Printer bought; 40 800; ; ; ; ;
+
+Depreciation; ; ; ; ; 680; 680
+
+Insurance; ; ; 48 000; ; ; 4000
+
+Loan received; ; 100 000; ; ; ; 
+
+Loan repayments; ; ; 5 000; ; ;
+
+Interest; ; ; 1 000; ; ; 1 000
+
+&#x20;
+
+
+
+#### INFORMATION:
+
+##### A. Debtors' Collection Schedule for the period ending 31 January 2020:
+
+||CREDIT <br />SALES|NOV. 2019 COLLECTIONS|DEC. 2019 COLLECTIONS|JAN. 2020  COLLECTIONS|
+|-|-|-|-|-|
+|August|R80 000|R17 600|||
+|September|90 000|67 500|R19 800||
+|October|100 000||75 000|R22 000|
+|November|120 000|||90 000|
+||||R94 800|R112 000|
+
+
+
+##### B. Information identified from the Projected Income Statement:
+
+||SEPTEMBER 2019 Projected|SEPTEMBER 2019 Actual|OCTOBER 2019 Projected|OCTOBER 2019 Actual |
+|-|-|-|-|-|
+|Metres sold |5 000 m|3 800 m|5 000 m|6 000 m |
+|Selling price per metre|R100|R100 |R100|R88|
+|Cost price per metre|R60|R60 |R60 |R60|
+|Sales: cash|R400 000|R310 000|R400 000|R132 000|
+| : credit|90 000|70 000|100 000|396 000|
+|Total sales|490 000|380 000|500 000|528 000|
+|Cost of sales|(300 000)|(228 000)|(300 000)|(360 000)|
+|Gross profit|190 000|152 000 |200 000|168 000|
+|Director's fees|50 000 |50 000|50 000|40 000|
+|Wages: Office workers|9 200|9 200|9 200|11 040|
+|Salary: Salesperson|20 000|20 000|20 000|0|
+|Commission: Salesperson|0|0|0|52 800|
+|Advertising |5 000 |5 000 |5 000 |5 000 |
+|Packing materials|2 500|1 900|2 500|2 550|
+|Delivery and installation <br />of carpets |14 000 |14 000|14 000|16 800|
+|Staff training |15 000|0|15 000|40 000|
+
+
+
+
+
+#### REQUIRED
+
+##### 11.2 Refer to Information A: Debtors' Collection Schedule.  
+
+&#x20;
+
+Thembi is preparing projections for the period commencing 1 November 2019. Thembi does not grant discount for early payment.  
+
+&#x20;
+
+Calculate the % of debtors: 
+
+###### a)
+
+Who settle their accounts in the 2nd month following the credit sales transaction month (3)
+
+
+
+\####### Answer
+
+67 500/90 000 or 75 000/100 000 or 90 000/120 000 × 100/1 = 75%
+
+
+
+###### b)
+
+Written off as bad debts at the end of the 3rd month following the credit sales transaction month (4)
+
+
+
+\####### Answer
+
+\[(90 000 - 67 500 - 19 800) ÷ 90 000] × 100/1 = 3%
+
+&#x20;
+
+OR:    (100 000 – 75 000 – 22 000) ÷ 100 000) × 100
+
+OR: 100% – 75% – 22%
+
+
+
+##### 11.3 
+
+Refer to Information B: Projected Income Statement for September and October.   
+
+&#x20;   
+
+###### 11.3.1 
+
+Office workers are unhappy with the increase that Thembi gave them on 1 October 2019. Explain what she should say to them. Provide TWO points. Quote figures or a calculation. (6) 
+
+
+
+\####### Answer
+
+\-Any two valid and different points
+
+* They received a (large) increase of 20% (unbudgeted; which is more than inflation) (1 840 / 9 200 = 20%)
+* Sales target (under by R110 000) / GP target (under by R32 000) not reached but increase in wages (20%) granted
+* The director took a R10 000 drop in pay / reduced from R50 000 to R40 000 / by 20%
+* They received training costing R40 000 (R25 000 over budget) which will benefit them in future
+
+&#x20;   
+
+###### 11.3.2 
+
+\-Thembi pays her son, Jacob, to deliver and install carpets for customers. 
+
+\-She budgets R2,80 per metre for this. Comment on the control of this expense. Quote figures or a calculation.  (4) 
+
+
+
+\####### Answer
+
+>Expected responses for September: 
+
+\-He was overpaid in September (even though he did not meet target) 
+
+\-Figures: R14 000 / R10 640 / R3 360 
+
+
+
+>Workings: September: 
+
+\-Budget: 5 000 x 2,80 =R14 000  
+
+\-Actual should be 3 800 x 2.80 = R10 640 but spent R14 000
+
+
+
+>Expected responses for October: 
+
+\-He was paid correctly (although it was over-budget; due to improved sales) 
+
+\-Figures: R 16 800 / R14 000 / R2 800 
+
+
+
+>Workings: October: 
+
+\-Budget = R14 000 
+
+\-Actual should be : 6 000 x 2.80 = R16 800 
+
+&#x20;   
+
+###### 11.3.3 
+
+A new competitor commenced trading in the area on 1 September 2019.   
+
+\####### a)
+
+Provide figures to illustrate the impact on sales in September. (2) 
+
+
+
+\######## Answer
+
+Compare budgeted Sales to actual Sales   
+
+Sales budget was R490 000 and the actual was R380 000 / R110 000 under the budgeted amount / 22,4% drop from expected  
+
+&#x20;
+
+OR: Compare expected metres to actual metres    
+
+Sales dropped from 5 000m2 budgeted to 3 800m2 actual / 1 200m2 under budget / 24% less than expected.
+
+
+
+\####### b)
+
+Explain THREE decisions that Thembi took in October in response to the new competitor. Quote figures or a calculation. (6)
+
+
+
+\######## Answer
+
+* Promoted credit sales R296 000 above budget (R326 000 increase in actual) with incentives as opposed to cash sales (e.g. discount or extended payment period) 
+* Reduced the selling price per m to R88 per m (from R100) / Reduced mark up from 67% to 47%
+* Spent R40 000 on training but budgeted only R15 000 / Training increased to R40 000 in October (over-budget by R25 000) 
+* Changed the salary structure of the salesman from a fixed salary of R20 000 pm to a commission of R52 800/10% of sales 
+
+&#x20;
+
+###### 11.3.4 
+
+\-Stock sold is replaced in the same month. 50% of the stock is bought on credit. Creditors are paid in the month following the purchases month to receive a 5% discount.  
+
+\-Calculate the actual amount payable to creditors in November 2019. (4) 
+
+
+
+\####### Answer 
+
+360 000 × 50% × 95% = R171 000
+
+
+
+### 12
+
+You are provided with information relating to Simpiwe Clothing Shop.
+
+
+
+#### INFORMATION:   
+
+##### A. Extract from the Cash Budget 
+
+||JUNE 2019 |JULY 2019|
+|-|-|-|
+|CASH RECEIPTS|||
+|Cash sales|186 000|285 000|
+|Cash from debtors|533 430 |? |
+|Rent income|(i)|9 180 |
+|Interest on fixed deposit|1 800|2 200|
+||||
+|CASH PAYMENTS |||
+|Salaries and wages|73 400 |73 400 |
+|Fixed deposit: Protea Bank|0|(ii)|
+|Cash purchases of trading stock |?|(iii)|
+|Payment to creditors|192 000|?|
+|Insurance |3 250|3 250|
+|Drawings |21 600|21 600|
+|Sundry expenses |96 360|98 700|
+
+
+
+##### B. Cash sales are 25% of total sales.    
+
+Collections from debtors:    
+
+* 30% in the month of sales less 5% discount  
+* 65% in the following month  
+* Provision is made for 5% bad debts. 
+
+
+
+##### C. Budgeted purchases of trading stock:
+
+|April  |?|
+|-|-|
+|May|R484 000|
+|June |R496 000|
+|July|R760 000|
+
+
+
+* 40% of trading stock is bought on credit.  
+* Creditors are paid two months after the transaction month.
+
+
+
+##### D. 
+
+Rent increased by 8% in July 2019.  
+
+&#x20;  
+
+##### E. 
+
+The business has a fixed deposit of R360 000. An additional amount is budgeted to be invested on 1 July 2019. Interest (not capitalised) at 6% p.a. is receivable at the end of each month.   
+
+&#x20;  
+
+###### F. Simpiwe is concerned about the following items for May 2019:
+
+||BUDGETED (R|ACTUAL (R) |VARIANCE (R|
+|-|-|-|-|
+|Cash sales|172 000|140 000|– 32 000|
+|Credit sales|516 000|552 000|+ 36 000 |
+|Collection from debtors|475 000 |380 000|– 95 000 |
+|Advertising |36 000 |64 800|+ 28 800|
+|Payments to creditors |180 000|105 000|– 75 000|
+|Delivery expenses|0|19 000|– 19 000|
+|Packing materials|3 000|2 500|– 500 |
+
+
+
+#### REQUIRED:     
+
+##### 12.1 Refer to Information A. 
+
+Identify TWO items in the Cash Budget that will not appear in a Projected Income Statement. (2) 
+
+
+
+###### Answer
+
+Any TWO of: 
+
+Cash from debtors 
+
+Fixed deposit: Protea Bank 
+
+Cash purchases of trading stock 
+
+Payment to creditors 
+
+Drawings
+
+&#x20;  
+
+##### 12.2 
+
+Calculate the missing amounts indicated by (i) to (iii) in the Cash Budget for June and July 2019. (7) 
+
+
+
+###### Answer
+
+||Workings|Answer|
+|-|-|-|
+|i. Calculate: Rent income, June 2019 |9 180 × 100/108|8 500|
+|ii. Calculate: Fixed deposit: Protea Bank, July 2019|400 × 100/6 × 12 |80 000|
+|iii. Calculate: Cash purchases of trading stock, July 2019|760 000 × 60% |456 000|
+
+
+
+&#x20;  
+
+##### 12.3
+
+Calculate the total purchases for April 2019. (2) 
+
+
+
+###### Answer
+
+192 000/40% = 480 000
+
+&#x20;  
+
+##### 12.4 
+
+Complete the Debtors' Collection Schedule for July 2019. (8) 
+
+
+
+###### Answer Sheet
+
+||CREDIT SALES|JUNE|JULY|
+|-|-|-|-|
+|MAY |576 000|374 400||
+|JUNE||159 030 ||
+|JULY|855 000|||
+|TOTAL||533 430 ||
+
+
+
+###### Answer 
+
+||CREDIT SALES|JUNE|JULY|
+|-|-|-|-|
+|MAY|576 000|374 400||
+|JUNE|558 000|159 030| 362 700|
+|JULY|855 000|× 30% × 95%|243 675|
+|TOTAL||533 430|606 375|
+
+
+
+&#x20;  
+
+##### 12.5 Refer to Information F.  
+
+&#x20;  
+
+###### 12.5.1 Comment on the following:   
+
+\####### a)
+
+Effect of the advertising on sales (3) 
+
+
+
+\######## Answer
+
+\-Advertising was over budget by R28 800 (80%) 
+
+\-Total sales increased by R4 000 (0,6%), due to an increase in credit sales. 
+
+\-Effect on sales: The large increase in advertising was not effective / did not achieve the desired effect on sales. 
+
+
+
+\####### b)
+
+Payment to creditors  (2) 
+
+
+
+\######## Answer
+
+\-Creditors were underpaid by R75 000 (while purchases increased; if this trend continues, creditors will decrease credit limits, stop supplying on credit, may incur interest charges). 
+
+&#x20;   
+
+###### 12.5.2 Sales strategy:  
+
+\####### a)
+
+Identify TWO strategies (except advertising) that the business used to achieve sales targets for May 2019. Quote figures. (4) 
+
+
+
+\######## Answer
+
+\-Increased the credit sales, R36 000; (R412 000 more than cash sales) 
+
+\-Introduced delivery service, R19 000 
+
+
+
+\####### b)
+
+Explain whether these were good strategies, or not. Provide ONE point with figures. (2) 
+
+
+
+\######## Answer
+
+\-Not effective: 
+
+* Collection from debtors was poor (business will face cash challenges in respect of future collections) – less than budget by R95 000 or 20% 
+* Cash flow problems impacted on payments to creditors – paid R75 000 less than budget 
+* Delivery service impacted on cash flow – paid R19 000 which was not budgeted 
+* Small increase in total sales by R4 000  
+
+&#x20;
+
+OR  
+
+&#x20;
+
+Effective: 
+
+* Increase in credit sales was R36 000 – increase in number of customers 
+* Increase in sales was R4 000 – increase in number of customers
+
+
+
+
+
+### 13
+
+Donald May owns Breezy Traders that sell air-conditioner units. The budget period ends on 31 October 2018.
+
+&#x20; 
+
+#### INFORMATION:     
+
+##### A. 
+
+Cash sales comprise 60% of total sales. Mark-up is 75% on cost.  
+
+&#x20;  
+
+##### B. Debtors pay as follows:  
+
+* 20% in the month of sales and receive 5% discount  
+* 55% in the month following the month of sales  
+* 22% two months after the month of sales  
+
+&#x20;  
+
+##### C. 
+
+Stock sold is replaced in the month of sales. 50% of purchases are on credit. 
+
+Creditors are paid in the month following the month of purchases.
+
+&#x20;  
+
+##### D. Extract from Cash Budget 
+
+&#x20;
+
+||SEPTEMBER|OCTOBER|
+|-|-|-|
+|RECEIPTS|||
+|Cash sales|(i)|630 000|
+|Cash from debtors|369 340|?|
+|Rent income\* |25 600|(ii)|
+||||
+|PAYMENTS|||
+|Payments to creditors|276 000|(iii)|
+|Salaries: Manager|32 400|40 500|
+|Salaries: Sales assistants|92 400|102 102|
+
+\*NOTE: Rent income will increase by 9% in October 2018.
+
+&#x20;
+
+##### E. BUDGETED AND ACTUAL FIGURES FOR SEPTEMBER AND OCTOBER 
+
+||SEPTEMBER BUDGETED|SEPTEMBER ACTUAL|OCTOBER BUDGETED|OCTOBER ACTUAL|
+|-|-|-|-|-|
+|Units to sell/sold|240|200|250|300|
+|Selling price per unit|R4 200|R4 200|R4 200|R4 200|
+|Cash sales|?|336 000|630 000|378 000|
+|Credit sales|403 200|504 000|420 000|882 000|
+|Total sales|1 008 000|840 000|1 050 000|1 260 000|
+|Cash purchases|?|?|300 000|252 000|
+|Advertising|10 000|10 000|10 000|10 000|
+|Delivery expenses|80 000|67 200|80 000|138 240|
+|Commission on sales|30 240|25 200|31 520|46 080|
+||||||
+|Cash surplus/deficit|63 000|22 500|86 500|(12 700)|
+|Cash: Beginning|98 000|98 000|161 000|120 500|
+|Cash: End|161 000|120 500|247 500|107 800|
+||||||
+
+
+
+#### REQUIRED:    
+
+##### 13.1 
+
+Complete the Debtors' Collection Schedule for October 2018.  (7)
+
+
+
+###### Answer Sheet
+
+|MONTHS|CREDIT <br />SALES|SEP. 2018|OCT. 2018|
+|-|-|-|-|
+|July|369 600|81 312||
+|August|384 400|211 420| |
+|September|403 200|76 608| |
+|October|420 000|||
+|||369 340||
+
+
+
+###### Answer
+
+|MONTHS|CREDIT <br />SALES|SEP. 2018|OCT. 2018|
+|-|-|-|-|
+|July|369 600|81 312||
+|August|384 400|211 420|84 568|
+|September|403 200|76 608|221 760|
+|October|420 000||79 800|
+|||369 340|386 128|
+
+&#x20;  
+
+
+
+##### 13.2 
+
+Calculate the amounts indicated by (i) to (iii) in the extract from the Cash Budget. (9) 
+
+
+
+###### Answer
+
+||Working|Answer|
+|-|-|-|
+|i. Cash sales for September|403 200 x 60/40 OR 1 008 000 – 403 200 <br />OR  1 008 000 x 60%| 604 800|
+|ii. Rent income for October|25 600 x 109% OR 25 600 + 2 304|27 904|
+|iii. Payments to creditors in October |1 008 000  x 100/175  x 50%| 288 000|
+
+
+
+&#x20;  
+
+##### 13.3 
+
+Calculate the % increase in salaries of sales assistants for October 2018. 
+
+Explain whether they should be satisfied with this increase. (5) 
+
+
+
+###### Answer
+
+* Calculation: (102 102  – 92 400)/92 400 × 100 = 10,5%
+* Explanation:   
+
+\-They should be satisfied as a 10,5% increase is a fair increase which is above the current inflation rate. 
+
+OR  
+
+\-They may be dissatisfied when compared to the 25% increase to salaries of manager. 
+
+
+
+##### 13.4 
+
+\-Refer to Information E.    
+
+\-A new competitor moved into the area during September 2018. -Donald was not aware of the competitor and did not take any action during September.  
+
+
+
+&#x20; 
+
+###### 13.4.1 
+
+Explain the effect of the new competitor on any TWO items in the 
+
+budget for September. Provide figures. (4) 
+
+
+
+###### Answer    
+
+Any TWO valid points 
+
+* Total sales decreased from R1 008 000 to R840 000 (by R168 000). 
+* 40 fewer air-conditioners were sold. 
+* Cash sales are below budget (R604 800 – R336 000) / increase in credit sales (R504 000 – R403 200).  
+* Reduced delivery expenses (R67 200) and commission on sale (R25 200) due to poor sales. 
+* Cash surplus is less than budget (R22 500 compared to R63 000) / cash balance at end is less than expected (R120 500 compared to R161 000).
+
+
+
+###### 13.4.2 
+
+Identify TWO changes Donald implemented in October in response 
+
+to the new competitor. Quote figures. Give ONE reason for EACH 
+
+change. (6) 
+
+
+
+###### Answer
+
+|Item (with figures)|Possible reason |
+|-|-|
+|-Decrease in cash purchases from the expected R300 000 to R252 000 <br />-An increase in credit purchases|-To improve cash flow  <br />-To ensure supplies for increased <br />sales. |
+|Increased delivery from R67 200 to R138 240 / decided to overspend on delivery budget by R58 240|Offer of free delivery to increase sales volume  <br />Wider target market; more units sold|
+|More commission from R25 200 to R46 080 / overspent on commission by R14 560 |To motivate sales staff to sell more products|
+|Credit sales increased from <br />R504 000 to R882 000.|Sold on credit to increase number of <br />customers.|
+
+
+
+&#x20;   
+
+###### 13.4.3 
+
+Explain why Donald feels that his decisions were successful. 
+
+Provide TWO points (with figures).   (4) 
+
+
+
+###### Answer
+
+TWO valid points (with figures) 
+
+* Sales of air-conditioners exceeded budget by 50 units (300 – 250) 
+* Units sold increased from 200 to 300 / by 100 / by 50% 
+* Sales were R210 000 over budget (R1 050 000 compared to actual R1 260 000 / by 20%  
+* Total sales increased from R840 000 to R1 260 000 / by R420 000 / by 50% 
+* Increase in credit sales from the expected R420 000 to R882 000 / by R462 000 / by 110%  
+* Advertising did not increase (remained at R10 000) yet sales increased. 
+
+
+
+
+
+### 14
+
+You are provided with information relating to Magic Traders. The business is owned by Tony Salotte. 
+
+&#x20;   
+
+#### INFORMATION:      
+
+##### A. Total sales: 
+
+||ACTUAL|BUDGETED|
+|-|-|-|
+|March 2018 |R420 000||
+|April 2018 |R480 000||
+|May 2018||R300 000|
+|June 2018||R360 000|
+
+
+
+##### B. 
+
+Cash sales amount to 40% of the total sales.  
+
+&#x20;   
+
+##### C. Debtors are expected to pay as follows: 
+
+* 30% in the month of sales. They receive a 5% settlement discount. 
+* 60% in the month following the sales month 
+* 9% in two months after the sales month 
+* 1% is written off as bad debts in the third month after sales 
+
+&#x20;
+
+&#x20;  
+
+##### D. Purchases and payment to creditors: 
+
+* The business maintains a fixed-stock base level. 
+* Goods are sold at a mark-up of 50% on cost. 
+* 80% of all merchandise purchased is on credit. 
+* Creditors are paid in full in the month following the purchase month. 
+
+&#x20;
+
+&#x20;  
+
+##### E. Salaries: 
+
+* Total salaries are R101 500 for April 2018.  
+* There are 7 employees who earn the same monthly salary.  
+* 1 employee will resign and leave on 30 April 2018.   
+* 4 employees will each receive a bonus of 80% of their salaries in May 2018. 
+
+&#x20;  
+
+##### F. 
+
+The business pays wages to two cleaners, one of whom has been on sick leave in April and a substitute had to be employed. Tony is concerned that too much money is wasted on cleaning. He thinks that he should contract Gentex Cleaning Services to take over the cleaning process entirely. They will charge R8 000 per month.
+
+
+
+&#x20;    
+
+#### REQUIRED:  
+
+&#x20;    
+
+##### 14.1 
+
+Complete the following statements:  
+
+
+
+###### 14.1.1 
+
+The main purpose of a Cash Budget is to … (2) 
+
+
+
+\####### Answer
+
+\-Project / estimate the expected bank balance at end of budget period.   
+
+\-Project / estimate / monitor / control expected cash received and paid over budget period. 
+
+&#x20;  
+
+###### 14.1.2 
+
+The main purpose of a Projected Income Statement is to … (2)
+
+&#x20;
+
+\####### Answer
+
+\-Project / estimate the expected net profit for the budgeted period.  
+
+\-Project / estimate / monitor / control expected income and expenses for budget period.
+
+&#x20;    
+
+##### 14.2 
+
+Debtors' Collection Schedule and Projected Income Statement:  
+
+&#x20;    
+
+###### 14.2.1 
+
+Complete the Debtors' Collection Schedule for June 2018. (7) 
+
+&#x20;
+
+\####### Answer Sheet
+
+||CREDIT SALES|MAY 2018|JUNE 2018|
+|-|-|-|-|
+|March 2018|252 000|22 680||
+|April 2018|288 000|172 800||
+|May 2018||51 300||
+|June 2018|216 000|||
+|Cash from debtors ||246 780||
+
+
+
+\####### Answer
+
+||CREDIT SALES|MAY 2018|JUNE 2018|
+|-|-|-|-|
+|March 2018|252 000|22 680||
+|April 2018|288 000|172 800|25 920 |
+|May 2018|180 000|51 300|108 000|
+|June 2018|216 000||61 560 |
+|Cash from debtors||246 780|195 480|
+
+&#x20;   
+
+###### 14.2.2 
+
+Determine the following amounts that will appear in the Projected 
+
+Income Statement: 
+
+&#x20;
+
+\####### a)
+
+Discount allowed for May 2018 (3)
+
+
+
+\######## Answer
+
+180 000 × (30% × 5%) = 2 700
+
+OR 
+
+• 51 300 one mark × 5/95  = 2 700  
+
+• 180 000 × 30% = 54 000  – 51 300  = 2 700 
+
+&#x20;
+
+\####### b)
+
+Bad debts written off in June 2018 (3)
+
+&#x20;
+
+\######## Answer
+
+1% × 252 000 = 2 520  
+
+
+
+##### 14.3 Calculate the following:  
+
+###### a)
+
+Cash sales for May 2018 (2) 
+
+
+
+\####### Answer
+
+300 000 × 40%  
+
+OR 
+
+300 000 – 180 000 
+
+
+
+= 120 000
+
+
+
+###### b)
+
+Payment to creditors in June 2018 (4) 
+
+
+
+\####### Answer
+
+300 000 × 100/150 × 80/100 = 160 000
+
+
+
+###### c)
+
+Salaries for May 2018 (5) 
+
+
+
+\####### Answer
+
+(2 × 14 500) + (4 × 26 100) OR     
+
+(6 × 14 500) + (4 × 11 600)
+
+= 133 400
+
+&#x20;    
+
+##### 14.4 
+
+\-Tony compared the budgeted figures to the actual figures for April 2018. 
+
+||BUDGETED|ACTUAL|
+|-|-|-|
+|Sales |R480 000|R576 000|
+|Advertising |R8 000|R11 000|
+|Wages of cleaners|R9 000|R12 500|
+|Cleaning materials|R1 200|R2 700 |
+|Payment to creditors|R224 000|R0|
+
+
+
+###### 14.4.1 
+
+Tony is not concerned about the overspending in advertising. Explain why this is so. Quote figures to support your answer. (4) 
+
+
+
+\####### Answer
+
+Advertising increased by R3 000 but Sales increased by R96 000. 
+
+OR 
+
+Advertising increased by 37,5% while Sales increased by 20% on bigger base.
+
+{ 
+
+Candidates must indicate the positive effect of advertising on sales  
+
+Provide appropriate figures  one mark each }
+
+&#x20;   
+
+###### 14.4.2
+
+State ONE consequence of not paying the amount due to creditors in April 2018.   (2) 
+
+
+
+\####### Answer
+
+* Credit to the business will be stopped by the creditors.   
+* The credit ratings of business will decrease / could be blacklisted / report to credit bureau 
+* Business will be charged interest for slow payment. 
+* Legal action can be taken by the creditors 
+
+&#x20;   
+
+###### 14.4.3 
+
+Refer to the figures above and to Information F. State TWO points in favour of appointing Gentex Cleaning Services. Also explain ONE point that Tony should consider before making this decision. (6)
+
+
+
+\####### Answer
+
+>TWO points
+
+* Outsourced cleaning could cost less than budgeted/actual for wages and cleaning materials 
+* Easier to budget (fixed contract amount) 
+* Expertise / professionalism / specialisation of the cleaning company  
+* No interruption or extra costs due to workers on sick leave etc. 
+* No storage space needed for cleaning materials  
+* Leads to reduction in administration costs 
+* VAT input can be claimed from SARS 
+* The cleaners can be rotated between different clients if necessary 
+
+
+
+>Explanation
+
+\-Any valid explanation
+
+* Whether it will make the current employees redundant / retrench or reassign the existing cleaners (consider the ethics of this) 
+* Reliability of the new cleaning company 
+* Honesty of the workers of the outsourced business 
+* Negative image of outsourcing to the company 
+* Whether outsourcing conflicts with their social responsibility programmes 
+* Instructions to cleaners have to be given through the cleaning firm’s managers 
+* Terms of the contract regarding fee increases
+
+
+
+### 15
+
+You are provided with information relating to Lamba Traders, a business owned  by Larry Lamba. The business sells cleaning materials for cash and on credit. They deliver goods free of charge to local customers.
+
+
+
+#### INFORMATION:
+
+##### A. Debtors' Collection Schedule for the period ending 28 February 2018:
+
+&#x20;; CREDIT SALES R; COLLECTIONS\[NOV.2017 (R); DEC. 2017 (R); JAN. 2018 (R); FEB. 2018 (R)]
+
+September; 112 000; 16 800; ; ;
+
+October; 134 400; 75 264; 20 160; ;
+
+November; 224 000; 56 000; 125 440; 33 600;
+
+December; 358 400; ; 89 600; 200 704; 53 760
+
+January; 179 200; ; ; 44 800; 100 352
+
+February; 112 000; ; ; ; 28 000
+
+; ; 148 064; 235 200; 279 104; 182 112
+
+
+
+##### B. The debtors' clerk presented the following age analysis at the end of October 2017: 
+
+|TOTAL|CURRENT <br />MONTH |1 MONTH|2 MONTHS|3 MONTHS +|
+|-|-|-|-|-|
+|100%|18%|40%|23%|19%|
+
+
+
+##### C. Extract from the Projected Income Statement:
+
+||NOV. 2017|DEC. 2017|JAN. 2018 |FEB. 2018|
+|-|-|-|-|-|
+|Interest on loan (rate 8,5% p.a.) |R2 975|R2 975 |R2 465|R2 465|
+
+
+
+##### D. Figures provided by the accountant on 31 October 2017:
+
+||PROJECTED|ACTUAL|VARIANCE |
+|-|-|-|-|
+|Total sales|320 000|290 000 |–30 000|
+| Cash sales|96 000|50 000|–46 000|
+|Credit sales|224 000|240 000|+16 000|
+|Advertising |5 000|1 000|–4 000|
+|Packing material|4 800|4 800|0|
+|Delivery expenses|12 800 |12 500|–300|
+
+
+
+&#x20;  
+
+#### REQUIRED:  
+
+##### 15.1 
+
+\-Explain the main purpose of a Cash Budget and a Projected Income Statement. (2) 
+
+
+
+###### Answer
+
+>Explain the main purpose of a Cash Budget. 
+
+\-Explanation  
+
+* To predict the cash balances / cash flow for a period 
+* To project / plan / forecast receipts and payments. 
+
+&#x20;
+
+>Explain the main purpose of a Projected Income Statement. 
+
+\-Explanation  
+
+* To predict the profit that will be earned for a period    
+* To plan / forecast income and expenses.  
+
+&#x20;  
+
+##### 15.2 Debtors:  Refer to Information A and Information B. 
+
+\-The credit terms allow debtors to settle accounts by the end of the month following the sales transaction month. No discount is allowed. However, based on past experience, Larry expects debtors to pay according to the Debtors' Collection Schedule.  
+
+&#x20;  
+
+###### 15.2.1 Use the November figures to calculate the following: 
+
+\####### a)
+
+% of debtors that are expected to comply with the credit terms 
+
+
+
+\######## Answer
+
+(56 000 + 125 440)/224 000 × 100 = 81%
+
+
+
+\####### b)
+
+% of bad debts expected (9) 
+
+
+
+\######## Answer
+
+(224 000 – 56 000 –125 440 – 33 600)/224 000 × 100 = 4%
+
+&#x20;  
+
+###### 15.2.2 
+
+\-Larry does not believe that his debtors' control clerk, Shirley, 
+
+deserves a bonus on 31 October 2017. Provide evidence to support 
+
+his opinion. Offer Larry advice to improve debtors' collections  
+
+(TWO points). (4) 
+
+
+
+\####### Answer
+
+>Evidence:
+
+58% of the amounts owed are still within the credit terms   
+
+OR 
+
+42% of the amounts owed are not complying with terms  
+
+
+
+>Advice:
+
+\-Expected responses: 
+
+* Contact debtors through statements / phone calls / SMS / reminders 
+* Offer discounts for prompt payments.  
+* Give her a bonus if she collects the outstanding amounts 
+* Charge interest 
+* Refuse to sell to debtors who are not compliant 
+* Improve screening process (so that bad debtors do not open accounts).  
+
+>Note: Do not accept implement screening of debtors (i.e. already debtors) 
+
+&#x20;  
+
+##### 15.3 Projected Income Statement: Refer to Information C and Information D.  
+
+&#x20;  
+
+###### 15.3.1 Calculate: 
+
+\####### a)
+
+\-The fixed % of sales used by Larry to budget for delivery 
+
+expenses (2)
+
+
+
+\######### Answer
+
+4%
+
+
+
+\####### b)
+
+\-The amount of the loan to be repaid on 31 December 2017 (4)
+
+&#x20;  
+
+\######### Answer
+
+(2 975 – 2 465) × 12  ÷   0,085   = R72 000           
+
+&#x20;                              
+
+OR 
+
+(2 975 – 2 465) × 12 × 100/8,5 = R72 000 
+
+&#x20;            
+
+OR
+
+(2 975 × 12 ÷ 0,085)/420 000 – (2 465 × 12 ÷ 0,085)/348 000 = 72 000 
+
+
+
+OR               
+
+(1 200 × 2 975)/8,5   –   (1 200 × 2 465)/8,5    = 72 000 
+
+&#x20;                                
+
+
+
+###### 15.3.2 Refer to variances in Information D.   
+
+Explain why Larry would feel that all these variances are problems 
+
+for his business.   (9) 
+
+
+
+\####### Answer
+
+|Sales |Cash sales are under budget, while credit sales are over budget. This will contribute to cash flow problem of the business. |
+|-|-|
+|Advertising |The full advertising budget was not used (under-spent) <br />which could have led to the decline in sales.|
+|Packing materials |There was no saving in packing materials (misuse of <br />packing materials)  despite the decline in sales. |
+|Delivery expenses |There should have been a bigger saving in delivery <br />expenses as sales decreased by 9,4%, while delivery <br />expenses decreased by only 2,3%. / 4,3% of total sales <br />while budget was 4%.|
+
+
+
+
+
+### 16
+
+You are provided with information relating to XYZ Furnishers owned by Piet Morake.
+
+
+
+#### INFORMATION:  
+
+##### A. Sales, purchases of stock and cost of sales:  
+
+* Total sales:  
+
+||ACTUAL|PROJECTED|
+|-|-|-|
+|MARCH|R120 000||
+|APRIL|R135 000||
+|MAY||R150 000|
+|JUNE||R180 000|
+
+
+
+* 40% of sales are cash, the rest is on credit. 
+* The mark-up is 50% on cost. 
+* Stock is replaced on a monthly basis. 
+* 20% of purchases are cash; the rest is on credit.
+
+
+
+##### B. Creditors' payment:  
+
+It is expected that creditors will be paid as follows: 
+
+* 75% are paid in the month of purchases to receive a 5% discount. 
+* 15% are paid in the month after purchases. 
+* 10% are paid in the second month after purchases.  
+
+&#x20;   
+
+##### C. Delivery expenses:  
+
+Piet pays Fast Deliveries to deliver goods to customers free of charge. He budgets a fixed percentage of monthly sales for this expense.  
+
+&#x20;   
+
+##### D. Salaries and wages: 
+
+Employees receive an increase of 7,5% from 1 June 2017.  
+
+&#x20;   
+
+##### E. Loan: 
+
+Part of the loan will be repaid on 1 June 2017. Interest of 15% p.a. is paid monthly and is not capitalised.   
+
+&#x20;  
+
+##### F. Extract from Cash Budget for May and June 2017:
+
+|RECEIPTS|MAY|JUNE|
+|-|-|-|
+|Cash sales|60 000|(i) |
+|Collections from debtors |78 300 |89 550|
+|Commission income|||
+|Rent income|7 500|7 750|
+||||
+|PAYMENTS|||
+|Cash purchase of stock|(ii) ||
+|Payments to creditors|74 200||
+|Delivery expenses of goods to customers|9 000|(iii)|
+|Salaries and wages|(iv)|38 700|
+|Stationery|||
+|Telephone|1 000 |1 000 |
+|Office furniture bought on credit |40 000 |0|
+|Training of staff|2 500|2 500|
+|Advertising|1 500|1 800|
+|Depreciation |12 500|12 500|
+|Loan repayment ||(v) |
+|Interest on loan|2 100|1 500|
+|Sundry expenses |3 300|3 400|
+|Cash drawings by owner|||
+|Vehicle expenses|0 |800 |
+
+
+
+
+
+##### G. After finalising the budget, the following was identified: 
+
+||MAY|JUNE|
+|-|-|-|
+|Cash deficit for the month |(19 450)|(vii)|
+|Cash at beginning of month||35 500|
+|Cash at end of month|(vi)|(7 300)|
+
+
+
+#### REQUIRED:     
+
+##### 16.1
+
+On 30 April 2017 Piet identified the figures below. Comment on the control of EACH item and give ONE point of advice in each case. (4)
+
+&#x20;
+
+||APRIL 2017: BUDGETED |APRIL 2017: ACTUAL|
+|-|-|-|
+|Telephone |1 000|3 800|
+|Staff training|2 500|800|
+
+
+
+###### Answer
+
+||COMMENT|ADVICE|
+|-|-|-|
+|Telephone|Over-spent / budget figure too low|Private calls should be controlled / keep record of all calls / charge the staff for <br />private calls / possibly increase budget  |
+|Staff training |Under-spent|This is an essential <br />expense / staff training improves the interaction with customers / this leads to efficiency and goodwill. |
+
+
+
+
+
+##### 16.2 Refer to Information C.     
+
+Identify TWO items incorrectly entered in the Cash Budget.    (2) 
+
+
+
+###### Answer
+
+Any TWO items;   Ignore superfluous items 
+
+&#x20;
+
+>Possible responses:  
+
+* Office furniture bought on credit 
+* Depreciation 
+* Credit sales 
+* Deliveries free of charge 
+* Delivery expenses on credit 
+
+##### 
+
+##### 16.3 
+
+Complete the Creditors' Payment Schedule for June 2017.    (9) 
+
+&#x20; 
+
+###### Answer Sheet
+
+|MONTH|CREDIT <br />PURCHASES|MAY|JUNE |
+|-|-|-|-|
+|March|R64 000|6 400||
+|April |R72 000|10 800||
+|May||57 000||
+|June|R96 000|||
+|||74 200||
+
+
+
+###### Answer
+
+|MONTH|CREDIT <br />PURCHASES|MAY|JUNE|
+|-|-|-|-|
+|March|R64 000|6 400||
+|April|R72 000|10 800|R7 200|
+|May|R80 000 |57 000|R12 000|
+|June|R96 000||R68 400|
+|||74 200|R87 600|
+
+
+
+&#x20;
+
+##### 16.4 
+
+Identify/Calculate the missing figures (i) to (vii) in the Cash Budget.    (21) 
+
+&#x20;  
+
+###### Answer
+
+|i. Cash sales|R180 000 × 40%|R72 000|
+|-|-|-|
+|ii. Cash purchases of stock|R150 000 × 100/150 × 20%|R20 000|
+|iii. Delivery expenses|9 000 / 150 000 ×180 000|10 800|
+|iv. Salaries and wages|38 700 × 100 /107,5 |36 000|
+|v. Repayment of loan|168 000 – 120 000 <br />OR  <br />600 ×100/15 x 12  <br />OR <br />7 200 × 100/15|48 000|
+|vi. Cash at end of month||35 500|
+|vii. Cash deficit for the month |35 500 + 7 300|(42 800)|
+
+
+
+
+
+##### 16.5 
+
+Piet wants to save on costs by not offering a free delivery service. Is this a good idea? Explain.     (3) 
+
+
+
+###### Answer
+
+Yes/No - mark independently 
+
+&#x20;
+
+Any one possible response    
+
+* Whether his competitors are offering the service or not 
+* What the reaction from his customers will be should he withdraw the service (i.e. will they go to other suppliers?) 
+* The possibility of charging customers for the delivery service 
+* The possibility of finding a cheaper delivery service 
+* The possibility of using his own vehicles instead of subcontracting / extra costs of providing his own service (e.g. depreciation of vehicle, petrol) 
+* Could have been the reason for the increase in sales
+
+
+
+##### 16.6 
+
+Piet has to replace his old equipment in July 2017 but does not have the cash available. The cost of new equipment amounts to R180 000. The new items are expected to last 5 years. Options are:  
+
+&#x20;  
+
+* Raise a new loan of R180 000 at an interest rate of 15% p.a. to be repaid over 24 months. 
+* Hire (lease) the assets from Computer Solutions at R6 250 per month. 
+* Ask a friend to become an equal partner by providing capital of R180 000.  
+
+&#x20;  
+
+\-Explain ONE advantage and ONE disadvantage of EACH option.      (6) 
+
+
+
+###### Answer
+
+|OPTION|ADVANTAGE|DISADVANTAGE|
+|-|-|-|
+|Raise a new loan|He will own the assets / they could last longer than five years if he takes good care of them.|He has to pay interest / pay a monthly instalment <br />(which must include <br />interest).|
+|Hire (lease) the <br />assets from Computer Solutions |He does not have to raise a loan / does not have to <br />pay interest on the loan / will not have to pay repair costs.|The lease charges are expensive / lease is over five years / never owns the assets but continues to pay. |
+|Ask a friend to become equal partner|He will have the necessary funds to purchase the assets (which will then <br />belong to the business) / share workload and skills / partner will share losses. |He will have to share half his profits with his new <br />partner.|
+
+
+
+### 17
+
+You are provided with the incomplete Debtors' Collection Schedule and Cash Budget of Zeppe Bazaar. 
+
+
+
+#### INFORMATION:     
+
+##### A. The Debtors' Collection Schedule for February and March 2017 
+
+|MONTH|CREDIT SALES|FEBRUARY|MARCH|
+|-|-|-|-|
+|December 2016|74 000|16 280||
+|January 2017|68 000|27 200|?|
+|February 2017|70 000|24 010|?|
+|March 2017|64 000||?|
+|Cash from debtors||67 490|?|
+
+
+
+##### B. Debtors are expected to pay as follows:  
+
+* 35% is paid in the month of sale. They receive a 2% discount.  
+* 40% is paid in the month following the sales month.  
+* 22% is paid two months after the sales month.  
+* 3% is bad debts.
+
+
+
+&#x20;
+
+##### C. 
+
+All goods are sold at a profit mark-up of 25% on cost.  
+
+&#x20;  
+
+##### D. 
+
+Stock sold is replaced in the month of sale (a stock base is maintained).  
+
+&#x20;  
+
+##### E. 
+
+All stock is purchased on credit. Creditors are paid in the month following the month of purchase to receive a 5% early settlement discount. 
+
+&#x20;  
+
+##### F. 
+
+The business employs four sales assistants on the same salary scale. They will receive an inflationary increase of 7,5%, effective from 1 March 2017. An additional sales assistant will be employed on 1 March 2017, but she will not receive the increase. 
+
+&#x20;   
+
+##### G. 
+
+A fixed deposit matures on 31 March 2017. This will be received together with interest at 8% p.a. for the last quarter of its term. 
+
+&#x20;  
+
+##### H. EXTRACT FROM BUDGET FOR FEBRUARY 2017 AND MARCH 2017
+
+||FEBRUARY BUDGETED|FEBRUARY ACTUAL|MARCH BUDGETED|
+|-|-|-|-|
+|Receipts||||
+|Cash sales|17 500|18 640|16 000|
+|Cash from debtors|67 490|43 870|?|
+|Rent income|11 200|11 200|12 544|
+|Fixed deposit (including interest)|-|-|16 830|
+|Payments||||
+|Payments to creditors (for stock)|68 000|68 000|(a)|
+|Salaries: office staff|19 000|19 000|20 900|
+|Salaries: sales assistants|20 800|20 800|(b)|
+|Municipal services|10 600|10 600|11 000|
+|Drawings|3 000|5 500| 3 000|
+|Stationery|1 200|2 600|1 200|
+|Loan instalment|5 000|5 000|5 000|
+|Maintenance of office equipment|3 800|1 500|3 800|
+|Advertising|2 400|1 000|2 400|
+
+
+
+##### I. DEBTORS' AGE ANALYSIS ON 28 FEBRUARY 2017 
+
+|Total owed |30 days|60 days|90 days|90+ days|
+|-|-|-|-|-|
+|R110 400|R53 000|R32 000|R17 800|R7 600|
+||48%|29%|16%|7%|
+
+
+
+#### REQUIRED: 
+
+##### 17.1 
+
+Calculate the expected monthly percentage of goods sold on credit. (4)
+
+
+
+###### Answer
+
+70 000/(70 000 + 17 500) × 100 = 80%
+
+
+
+##### 17.2 
+
+Complete the Debtors' Collection Schedule for March 2017. (5)
+
+
+
+###### Answer Sheet
+
+|MONTH|CREDIT SALE|FEBRUARY|MARCH|
+|-|-|-|-|
+|December 2016|74 000|16 280||
+|January 2017|68 000|27 200||
+|February 2017|70 000|24 010||
+|March 2017|64 000|||
+|Cash from debtors||67 490||
+
+
+
+###### Answer
+
+|MONTH|CREDIT SALE|FEBRUARY|MARCH|
+|-|-|-|-|
+|December 2016|74 000|16 280|0|
+|January 2017|68 000|27 200|14 960|
+|February 2017|70 000|24 010|28 000|
+|March 2017|64 000||21 952|
+|Cash from debtors||67 490|64 912|
+
+
+
+
+
+##### 17.3 
+
+The owner wants to improve the control over debtors. Credit terms are  30 days. 
+
+###### 17.3.1 
+
+Explain why the owner is concerned. Give TWO reasons with
+
+supporting figures. (4)
+
+
+
+\####### Answer
+
+* Actual amount collected from debtors in February (R43 870) is less than the budgeted amount of (R67 490) or by (R23 620) 
+* Credit terms are 30 days but records show that 52% of debtors take 60 days or more to pay/Only 48% are meeting the credit terms. 
+
+&#x20;
+
+###### 17.3.2 
+
+Suggest ONE solution for this problem. (2)
+
+
+
+\####### Answer
+
+Expected responses 
+
+* Offer discounts to encourage early/prompt payments 
+* Charge interest on overdue accounts 
+* Proper screening of debtors to ensure debtors is able to pay their debts promptly. 
+* Send regular reminders
+
+&#x20; 
+
+##### 17.4 Calculate the following:    
+
+###### 17.4.1 
+
+(a) and (b) as provided in the budget. Use budgeted figures in your
+
+calculations. (11)
+
+
+
+\####### Answer
+
+||Workings|Answer|
+|-|-|-|
+|(a) Payment to creditors|(70 000 + 17 500) × 100/125 = 70 000 × 95% <br />OR   87 500  × 100/125 = 70 000 – 3 500  <br />OR   87 500 × 0,8 – 3 500|66 500|
+|(b) Salaries of sales assistants|20 800 × 107,5% = 22 360 + 5 200<br /><br />OR <br />5 590 × 4 = 22 360       + 5 200|27 560|
+
+
+
+&#x20;
+
+###### 17.4.2 
+
+The percentage increase in rent on 1 March 2017 (4)
+
+
+
+\####### Answer
+
+(12 544 – 11 200)/ 11 200 × 100 = 12%
+
+
+
+###### 17.4.3 
+
+The amount of the interest on the investment expected to be 
+
+received in March 2017 (4)
+
+&#x20; 
+
+\####### Answer
+
+16 830 x 2 /102 = R330
+
+OR
+
+16 830 – (16830 ÷ 1,02) = R330
+
+&#x20;
+
+##### 17.5 Refer to Information H. 
+
+Identify TWO payments that you consider to be poorly managed in 
+
+February 2017. In EACH case, give a suggestion to improve the internal control of the items identified. (6)
+
+
+
+###### Answer
+
+|PAYMENT|ADVICE|
+|-|-|
+|Advertising|The business must make use of the budgeted amount for advertising to influence sales |
+|Stationery|The business should minimise wastage/theft and use stationery effectively. |
+|Drawings|Stick to the budget or amend the budget to accommodate the increase in drawings.|
+|Maintenance of office <br />equipment|Equipment must be maintained properly to prevent it from breaking down. |
+
+
+
+&#x20; 
+
+### 18
+
+&#x20;You are provided with information relating to Mayhem (Pty) Ltd.
+
+
+
+#### INFORMATION
+
+##### A. Projected Income Statement: 
+
+>Information extracted for the three months ended 31 October 2016: 
+
+||AUGUST (R)|SEPTEMBER (R)|OCTOBER (R)|
+|-|-|-|-|
+|Sales|252 000|288 000|?|
+|Cost of sales|?|(160 000)|?|
+|Rent income|?|?|12 960|
+|Discount received|3 600|4 000|?|
+|Depreciation|5 400|5 400|5 400|
+|Bad debts|2 800|3 350|?|
+|Interest on loan|6 875|6 875|?|
+
+
+
+##### B. Sales: 
+
+* Sales are expected to increase by 15% in October 2016. 
+* Credit sales comprise 60% of total sales.  
+* The mark-up percentage is 80% on cost.
+
+
+
+##### C. Debtors' collection:  
+
+* 50% is collected in the month of sale.  
+* 40% is collected in the month following the month of sale.  
+* 7% is collected two months after the sale.  
+* 3% is written off as irrecoverable.  
+
+&#x20;  
+
+##### D. Purchases: 
+
+* All purchases of stock are on credit.  
+* Stock is replaced in the month of sale. A base stock is maintained. 
+* Creditors are paid two months after purchase, subject to a 4% discount.  
+
+&#x20;  
+
+##### E. Directors' fees: 
+
+* The business had three directors earning the same monthly fee.  
+* On 30 September 2016 one of the directors resigned.   
+* The remaining directors will receive an increase of 35% in their monthly fee from 1 October 2016.  
+
+&#x20;  
+
+##### F. Loan: 
+
+* The loan was reduced by R52 800 on 30 September 2016. 
+* Interest at 12,5% p.a. is payable every month and is not capitalised. 
+
+
+
+##### G. Extract from the Cash Budget prepared by the bookkeeper: 
+
+||SEPTEMBER 2016 (R)|OCTOBER 2016 (R)|
+|-|-|-|
+|RECEIPTS|||
+|Cash sales|(a)|132 480|
+|Cash from debtors|155 280|?|
+|Rent income|12 000|12 960|
+|Discount received|3 600|5 600|
+|Fixed deposit|56 000|0|
+||||
+|PAYMENTS|||
+|Payments to creditors|156 000|(b)|
+|Directors' fees|216 000|(c)|
+|Salaries of salespersons|40 000|40 000|
+|Repayment of loan|52 800|0|
+|Interest on loan|6 875|(d)|
+|Delivery expenses|27 500|27 500|
+|Audit fees|60 000|0|
+|Bad debts|3 200|3 600|
+|Depreciation|17 400|17 400|
+
+
+
+#### REQUIRED:    
+
+##### 18.1 Refer to Information G.  
+
+&#x20;   
+
+###### 18.1.1 
+
+Identify TWO items that the bookkeeper recorded incorrectly in the Cash Budget. (2) 
+
+&#x20;    
+
+\####### Answer
+
+Any TWO of:   
+
+Discount received; Depreciation;  Bad debts
+
+
+
+###### 18.1.2 
+
+Identify TWO items in the Cash Budget that would NOT appear in a Projected Income Statement. (2) 
+
+
+
+\####### Answer
+
+&#x20;
+
+Any TWO of:  
+
+* Cash from debtors  
+* Fixed deposit matures 
+* Payments to creditors 
+* Repayment of loan 
+
+&#x20;  
+
+##### 18.2 
+
+Complete the Debtors' Collection Schedule for October 2016. (9) 
+
+
+
+###### Answer sheet
+
+|MONTHS|CREDIT SALES|SEPTEMBER|OCTOBER|
+|-|-|-|-|
+|July|120 000|8 400||
+|August|151 200|60 480||
+|September|172 800|86 400||
+|October||||
+|||155 280||
+
+
+
+###### Answer
+
+|MONTHS|CREDIT SALES|SEPTEMBER|OCTOBER|
+|-|-|-|-|
+|July|120 000|8 400||
+|August|151 200|60 480|10 584|
+|September|172 800|86 400|69 120|
+|October|198 720||99 360|
+|||155 280|179 064|
+
+
+
+##### 18.3 
+
+Calculate the missing amounts indicated by (a) to (d) in the Cash Budget. (18) 
+
+
+
+###### Answer
+
+||WORKINGS|AMOUNT|
+|-|-|-|
+|(a) Cash sales for September|288 000 × 40%<br />OR <br />132 480 × 100/115|R115 200|
+|(b) Payments to creditors for October|252 000 × 100/180 × 96/100|R134 400|
+|(c) Directors' fees for October|216 000 × 2/3 × 135/100<br />(72 000 + 25 200) × 2|R194 400|
+|(d) Interest on loan for October|6 875 - (12,5% × 52 800 ÷ 12)<br /><br />OR<br />(660 000 – 52 800) × 12,5% ÷ 12|R6 325|
+
+
+
+&#x20;  
+
+##### 18.4 
+
+The directors compared the budgeted figures to the actual figures for September 2016. 
+
+
+
+||BUDGETED|ACTUAL|
+|-|-|-|
+|Sales|R288 000|R489 600|
+|Salaries: Salespersons|R40 000|R12 000|
+|Commission: Salespersons|R0|R66 150|
+|Packing material|R14 400|R17 280|
+
+
+
+###### 18.4.1 
+
+The directors changed the method of payment to the salespersons. 
+
+Explain how this has benefitted the salespersons and the business. 
+
+Quote figures. (4) 
+
+
+
+\####### Answer
+
+>Explain how this has benefitted the salespersons. Quote figures.  
+
+Although the salaries were reduced from R40 000 to R12 000, they received a commission of R66 150 (total: R78 150) / 95,4% or R38 150 more than their previous salaries. 
+
+
+
+>Explain how this has benefitted the business. Quote figures.  
+
+\-Actual sales are higher than the budgeted sales by R201 600  
+
+(489 600 – 288 000); sales are 70% higher than budget.  
+
+&#x20;   
+
+###### 18.4.2 
+
+The directors are not concerned about the overspending on packing 
+
+material. Explain why this is so. Quote figures or calculations. (5)
+
+
+
+\####### Answer
+
+\-Sales were 70% over budget, while packing materials were only 20% over budget.  
+
+OR  
+
+\-Packing materials were budgeted at 5% of sales, while actual packing materials were only 3,5% of sales. 
+
+
+
+\-Response for one mark: 
+
+Packing materials will increase if sales increase. 
+
+
+
+### 19
+
+#### 19.1
+
+\-You are provided with information relating to Kobus Hardware, owned by Kobus Groenewald. 
+
+
+
+##### INFORMATION
+
+###### A.
+
+|An extract from the Cash Budget |MARCH 2016|APRIL 2016|
+|-|-|-|
+|CASH RECEIPTS|||
+|Cash sales|(a)|237 600|
+|Cash from debtors|144 400|?|
+|Rent income |3 000 |(c)|
+|Loan:  Bull Bank|-|180 000|
+|Commission income|26 600|28 000|
+||||
+|CASH PAYMENTS |||
+|Cash purchases of trading stock|(b)|257 500|
+|Payments to creditors for stock|32 350|28 250|
+|Salaries and wages|61 240|61 240|
+|Loan instalment |-|(d)|
+|Interest on loan|-|(e)|
+|Insurance|2 260|2 260|
+|Drawings|18 000|18 000|
+|Delivery expenses|30 000|30 000|
+|Sundry expenses|87 600|89 790|
+||||
+|Cash surplus/(deficit)|||
+|Bank:  Opening balance|||
+|Bank:  Closing balance|(75 300)|(44 900)|
+
+
+
+###### B. 
+
+The business has only one supplier. Commission of 7% of total sales is receivable in the month following the sales. 
+
+&#x20; 
+
+###### C.
+
+Cash sales amount to 60% of total sales.  
+
+&#x20;  
+
+###### D. 
+
+Total sales for February 2016 were R380 000.  
+
+&#x20;  
+
+###### E. 
+
+10% of the trading stock is bought on credit. Creditors are paid in full in the month following the month of purchase. 
+
+&#x20;
+
+&#x20;  
+
+###### F. Collection from debtors: 
+
+* 45% settle accounts in the month of sales and receive 5% discount. 
+* 50% settle accounts in the following month.  
+* Provision is made for 5% bad debts. 
+
+&#x20; 
+
+###### G. 
+
+\-A tenant rented a storage room in our building. He moved in on 
+
+15 March 2016 and was required to pay only half the rent amount.         
+
+He was informed that rent increases by 5,5% on 1 April each year. 
+
+&#x20; 
+
+###### H. 
+
+\-Sundry expenses are expected to increase by a fixed percentage        
+
+each month. 
+
+&#x20;  
+
+###### I. 
+
+The loan, at 10,5% p.a. interest, will be taken out on 1 April 2016. 
+
+* The loan will be repaid in 24 equal monthly instalments commencing on 30 April 2016. 
+* Interest on the loan is also payable at the end of each month commencing on 30 April 2016. Interest is not capitalised. 
+
+&#x20;  
+
+###### J. 
+
+The bank has granted Kobus an overdraft facility of R40 000.  
+
+&#x20;  
+
+###### K. 
+
+Kobus is concerned about the following items, which were under/over budget for February 2016:
+
+
+
+|Item|Budgeted|Actual|Under/over budget|
+|-|-|-|-|
+|Collection from debtors|174 200|61 800|Under|
+|Payments to creditors|39 400|15 600|Under|
+|Insurance|2 260|0|Under|
+|Drawings|18 000|52 000|Over|
+
+
+
+##### REQUIRED:     
+
+###### 19.1.1 
+
+Calculate the missing amounts indicated by (a) to (e) in the Cash Budget for March and April 2016. (17)
+
+
+
+\####### Answer
+
+||Calculation|Amount|
+|-|-|-|
+|(a)|28 000 ÷ 7% × 60|240 000|
+|(b)|R28 250 × 90/10|R254 250|
+|(c)|(3 000 × 2) × 105,5%|6 330|
+|(d)|180 000 ÷ 24|R7 500|
+|(e)|180 000 × 10,5% × 1/12|R1 575|
+
+
+
+&#x20;    
+
+###### 19.1.2 
+
+Complete the Debtors' Collection Schedule for April 2016.  (8) 
+
+&#x20;
+
+\####### Answer Sheet
+
+||CREDIT SALES|MARCH|APRIL|
+|-|-|-|-|
+|FEBRUARY||76 000||
+|MARCH||68 400||
+|APRIL|158 400|||
+|||144 400||
+
+
+
+\####### Answer Sheet
+
+||CREDIT SALES|MARCH|APRIL|
+|-|-|-|-|
+|FEBRUARY|152 000|76 000||
+|MARCH|160 000 |68 400|80 000 |
+|APRIL|158 400||67 716|
+|||144 400|147 716|
+
+
+
+&#x20;   
+
+###### 19.1.3 
+
+Calculate the percentage increase in sundry expenses.  (4)
+
+
+
+\####### Answer 
+
+(89 790 - 87 600)/87 600 = 2,5%
+
+&#x20;    
+
+###### 19.1.4 
+
+The Cash Budget for March and April 2016 indicates that this business will face serious financial difficulties. Identify TWO items to support this statement. Quote relevant figures. (4)
+
+
+
+\####### Answer
+
+* The overdraft in March is R75 300 and April is R44 900. (This exceeds the overdraft limit of R40 000 as approved by bank.) 
+* The business is going to acquire a loan of R180 000 in April 2016. 
+
+&#x20;     
+
+###### 19.1.5 Refer to Information K. 
+
+Explain why each of the items reflects a problem for the business. State TWO points in EACH case.  (4 x 2) (8)
+
+&#x20; 
+
+\####### Answer
+
+|Item|Explanation |
+|-|-|
+|Collection from debtors|• Collections are much lower than expected.  <br />• This will cause a cash flow problem. <br />• Internal control of debtors is poor. |
+|Payments to creditors |• These are a lot lower than they should have been. <br />• Suppliers will stop selling to the business.  <br />• Interest can be charged by the creditors. <br />• Poor credit rating for the business. |
+|Insurance |• The policy will lapse (risk of being uninsured).  <br />• It will be difficult to replace assets. <br />• There could be an increase in premiums in future. |
+|Drawings|• This puts strain on meeting more important business <br />expenses. <br />• This creates a further cash flow problem. <br />• It is not ethical for the owner to draw more money <br />while the business is struggling. (Increased loans, <br />overdraft)|
+
+
+
+&#x20;
+
+#### 19.2
+
+\-You are the internal auditor for Kobus Hardware. Kobus is concerned that he is spending too much on delivering goods to customers. He has provided you with figures for a typical month, February 2016.
+
+
+
+##### INFORMATION:   
+
+###### A. 
+
+Kobus has three delivery vehicles and employs three drivers to transport goods to his customers free of charge. The drivers are expected to work five days per week. There are four weeks in February.    
+
+&#x20;
+
+###### B. 
+
+Some customers live close by while others live further away.                 
+
+None of the customers live more than 20 km from the shop                  
+
+(i.e. maximum 40 km round trip). 
+
+&#x20; 
+
+###### C. Information from the accounting records for February 2016: 
+
+||Vehicle 1|Vehicle 2|Vehicle 3|
+|-|-|-|-|
+|Name of driver|Leroy|Fred|Bheki|
+|Date of purchase|1 Mar. 2014|2 Feb. 2012|1 May 2007|
+|Carrying value|R270 000|R102 000|R1|
+|Number of days driver worked|12|20|20|
+|Salary of driver per month|R8 000|R5 000|R5 000|
+|Number of deliveries made|48|80|120|
+|Average number of trips per day|4|4|6|
+|Kilometres travelled|1 300|4 600|3 000|
+|Average number of kilometres per trip|27|58|25|
+|Petrol (litres) used|59|209|214|
+|Kilometres per litre|22|22|14|
+|Petrol costs (R11,31 per litre)|R668|R2 365|R2 424|
+|Petrol costs per km|R0,51|R0,51|R0,81|
+
+
+
+&#x20;
+
+##### REQUIRED: 
+
+\-Identify ONE problem regarding each vehicle/driver. Quote figures to support your answers. Give Kobus ONE point of advice for EACH problem identified. (9)
+
+
+
+||Problem with figures |Advice |
+|-|-|-|
+|Vehicle 1 (Leroy)|Leroy was absent for 8 days./   <br />He is the highest paid driver, <br />R8 000 where other drivers earn <br />R5 000. |Investigate the reason for his absence./Only <br />pay for the number of days at work. |
+|Vehicle 2 (Fred)|Fred is travelling too many <br />kilometres (4 600 km for 80 trips <br />= 58 km per trip) which is higher than the maximum of 40 km per <br />customer./He is travelling more km than Bheki (4 200 compared to 2 800 km) but doing fewer trips (70 compared to 110).|Possible disciplinary <br />action against Fred for unauthorised use of vehicle. /Improve internal control over the use of the vehicles.|
+|Vehicle 3 (Bheki) |Bheki is doing the most number of trips (120) but his vehicle is the oldest and the most expensive to run (R0,81 per km).|Consider replacing this vehicle as it is <br />expensive to maintain.|
+
+
+
+
+
+### 20
+
+#### 20.1
+
+Benny Bruce owns Bruce Traders. You are provided with information for two months.
+
+
+
+##### INFORMATION:   
+
+&#x20;
+
+###### A. Extract from the Projected Income Statement:  
+
+||NOVEMBER 2015|DECEMBER 2015|
+|-|-|-|
+|Sales|R1 050 000|R997 500|
+|Cost of sales|600 000|570 000|
+|Commission income|7 000|8 000|
+|Sundry expenses|22 500|?|
+|Depreciation|2 200|2 200|
+|Wages and salaries|?|256 000|
+|Bad debts|19 500|34 125|
+|Advertisements|0|11 000|
+|Discount allowed|20 475|18 900|
+|Interest expense (9% p.a.)|3 780|3 510|
+
+
+
+###### B. ADDITIONAL INFORMATION:  
+
+\####### (i) 
+
+Cash sales amount to 40% of all sales.  
+
+&#x20;
+
+\####### (ii) 
+
+A mark-up of 75% on cost is maintained. Stock is replaced in the same month as sales.   
+
+&#x20;
+
+\####### (iii) 
+
+20% of all purchases of stock are bought for cash.  
+
+&#x20;
+
+\####### (iv) 
+
+All creditors are paid in full in 30 days (in the month following the purchase). 
+
+&#x20;
+
+\####### (v) 
+
+Commission is received one month after it is earned. Commission is budgeted to increase by R1 000 per month. 
+
+&#x20;
+
+\####### (vi) 
+
+Sundry expenses consist of cash items only. It is expected to decrease by 8% each month. 
+
+&#x20;
+
+\####### (vii) 
+
+Wages and salaries for December 2015 include a bonus of R40 000 for the manager. A wage and salary increase of 8% for all employees will be applied from 1 December 2015. 
+
+&#x20;
+
+\####### (viii) 
+
+Advertisements will appear in a newspaper on the first day of each month, commencing on 1 December. Payment to cover three 
+
+advertisements will be made in full on 15 November.   
+
+
+
+\####### (ix) 
+
+The interest rate is 9% p.a. Interest is not capitalised and is paid monthly. A portion of the loan will be repaid on 30 November 2015. 
+
+
+
+##### REQUIRED: 
+
+\-Complete the Cash Budget for November and December 2015. Certain figures have been entered for you. (25)
+
+
+
+###### Answer Sheet
+
+||NOVEMBER 2015 (R)|DECEMBER 2015 (R)|
+|-|-|-|
+|CASH RECEIPTS|||
+|Cash sales||399 000|
+|Cash from debtors|536 025|597 975|
+|Commission income|||
+|Total receipts|||
+|CASH PAYMENTS:|||
+|Cash purchases of stock||114 000|
+|Payments to creditors|520 000||
+|Sundry expenses|22 500||
+||||
+||||
+||||
+||||
+|Total payments|935 280|874 210|
+|Surplus (deficit)|26 745||
+|Opening bank balance|(56 000)||
+|Closing bank balance|(29 255)||
+
+
+
+###### Answer 
+
+||NOVEMBER 2015 (R)|DECEMBER 2015 (R)|
+|-|-|-|
+|CASH RECEIPTS|||
+|Cash sales| 420 000|399 000|
+|Cash from debtors|536 025|597 975|
+|Commission income|6 000|7 000|
+|Total receipts|962 025|1 003 975|
+|CASH PAYMENTS:|||
+|Cash purchases of stock|120 000|114 000|
+|Payments to creditors|520 000|480 000|
+|Sundry expenses|22 500|20 700|
+|Wages and salaries|200 000|256 000|
+|Advertisements|33 000|0|
+|Repayment of loan|36 000||
+|Interest on loan|3 780|3 510|
+|Total payments|935 280|874 210|
+|Surplus (deficit)|26 745||
+|Opening bank balance|(56 000)||
+|Closing bank balance|(29 255)||
+
+
+
+#### 20.2  
+
+\-You are provided with information from SLEEPEZI BEDS (PTY) LTD for two months ending 31 October 2015. The business sells one type of bed. 
+
+
+
+##### INFORMATION:   
+
+&#x20;
+
+###### A. Expected sales, cost of sales and deliveries: 
+
+* The business budgets on selling 300 beds per month. 
+* The cost price of each bed is R3 000 and the selling price is R5 000. No discounts are allowed. 
+* The stock of beds is replaced in the month of sale.   
+* Suppliers are paid in the month of purchase. 
+* The business uses Cape Deliveries to deliver the beds to each customer. 
+
+&#x20;
+
+###### B. Extract from the Cash Budget: 
+
+||SEPTEMBER 2015 Projected|SEPTEMBER 2015 ACTUAL|OCTOBER 2015 PROJECTED|OCTOBER 2015 ACTUAL|
+|-|-|-|-|-|
+|Cash surplus (deficit) for month|110 000|125 000|120 000|(440 000)|
+|Cash at beginning of month|105 000|105 000|215 000|230 000|
+|Cash at end of month|215 000|230 000|335 000|(210 000)|
+
+
+
+###### C. Extract from the Projected Income Statement:
+
+||SEPTEMBER 2015 PROJECTED|SEPTEMBER 2015 ACTUAL|OCTOBER 2015 PROJECTED|OCTOBER 2015 ACTUAL|
+|-|-|-|-|-|
+|Number of beds sold|300 beds|320 beds|300 beds|240 beds|
+|Cash sales|1 200 000|1 280 000|1 200 000|300 000|
+|Credit sales|300 000|320 000|300 000|900 000|
+|Total sales|1 500 000|1 600 000|1 500 000|1 200 000|
+|Cost of sales|(900 000)|(960 000)|(900 000)|(720 000)|
+|Gross profit|600 000|640 000|600 000|480 000|
+|Operating expenses|(313 000)|(323 000)|(407 600)|(374 960)|
+|Directors' fees|80 000|80 000|80 000|36 000|
+|Salaries and wages|30 000|30 000|31 800|31 800|
+|Advertising|10 000|10 000|10 000|40 000|
+|Delivery costs (Cape deliveries)|150 000|160 000|150 000|168 000|
+|Audit fees|0|0|90 000|50 000|
+|Rent expense|28 000|28 000|30 800|34 160|
+|Sundry expenses|15 000|15 000|15 000|15 000|
+||||||
+|Operating profit|287 000|317 000|192 400|105 040|
+
+
+
+##### REQUIRED: 
+
+###### 20.2.1 
+
+Calculate the percentage increase in the amount budgeted for salaries and wages for October 2015. Should the employees be 
+
+satisfied with this? Explain. (3)
+
+
+
+\####### Answer
+
+1 800/30 000 × 100 = 6%
+
+
+
+Should the employees be satisfied with this? Explain. 
+
+Yes / No – compare to inflation rate / compare to directors fees
+
+&#x20; 
+
+###### 20.2.2 
+
+The financial director is pleased with the work being done by the bookkeeper and internal auditor. Identify an expense that indicates that he is correct. Explain your answer. (3)
+
+
+
+\####### Answer
+
+\-Audit fees   
+
+\-Explain your answer.  Any valid explanation     Part-marks for partial answers 
+
+\-The audit fees are much lower than expected, which means that they spent less time on the audit / records were in order      
+
+###### 
+
+###### 20.2.3 
+
+A competitor, BB Beds, which sells only for cash, opened a store 
+
+nearby on 1 October 2015. 
+
+&#x20;
+
+\####### a)
+
+Comment on how the new competitor has affected the sales of 
+
+Sleepezi Beds. Provide figures. (4)
+
+
+
+\######## Answer
+
+* Cash sales are ¼ of the amount budgeted 
+* Cash sales projected R1,2m while actual was R300 000 
+* Actual cash sales for Sept were R1,28m and dropped to R300 000 in Oct 
+* Budgeted cash sales was 80% but actually achieved 20% 
+* Sales decreased by 60 beds 
+* Gross profit decreased by R120 000 (R2 000 gross profit per bed) 
+* Sales decreased by R400 000 
+
+
+
+\####### b)
+
+Explain how Sleepezi Beds has responded to this problem. 
+
+Provide THREE points. Provide figures. (9)
+
+
+
+\######## Answer
+
+|Point 1|They deliberately increased credit sales (R300 000 was budgeted but R900 000 was sold on credit).|
+|-|-|
+|Point 2 |They increased delivery expenses to expand their target market / improve after-sales service. (Budgeted R150 000 but spent R168 000; 12% increase).|
+|Point 3|They spent R40 000 on advertising (Budgeted R10 000; 300% overspent). / Decreased directors fees by R44 000 to fund more <br />advertising R30 000. |
+
+
+
+&#x20; 
+
+###### 20.2.4 Cash balances: 
+
+&#x20;
+
+\####### a) 
+
+Comment on the cash balances. Provide figures. (2) 
+
+
+
+\######## Answer
+
+* Disappointing / they expected a closing balance of R335 000 
+* The actual balance is an overdraft of R210 000 (difference R545 000) 
+* Actual balance for Sept is R230 000 while Oct reflects an overdraft of R210 000. (Difference R440 000).
+
+&#x20;
+
+\####### b)
+
+Explain how the directors can improve the cash balances in future. Explain TWO points. (4)
+
+
+
+\######## Answer
+
+>Expected responses for 2 marks: 
+
+* Encourage debtors to pay faster
+* Negotiate with creditors for longer payment terms 
+* Raise more capital / issue more shares 
+* Move to cheaper premises
+* Charge clients for deliveries 
+* Take out a loan (to reduce the overdraft and interest)
+* Decrease mark-up to increase sales
+* Look for alternative income e.g. commission
+
+&#x20;
+
+>Expected responses for 1 mark:
+
+\-Decrease expenses / increase income / decrease rent / increase sales
+
+
+
+### 21
+
+You are provided with information relating to Brakpan Stationers. The business is owned by Vukile Radebe and his wife, Lydia. The shop is managed by Alvin Alberts, however he has been offered a job by a competitor at an increased salary.
+
+
+
+#### INFORMATION  
+
+##### A. Sales and debtors' collection:  
+
+* The TOTAL sales for April 2015 and May 2015 have been estimated as follows: 
+
+|April 2015 |70 000|
+|-|-|
+|May 2015|78 750|
+
+
+
+* 80% of all sales are for cash. The rest is on credit.  
+* Debtors are expected to pay as follows:  
+
+\-60% within the same month of sale, subject to a 4% discount  
+
+\-38% in the month following the month of sale  
+
+\-2% of debts are written off in the second month following the 
+
+month of sale 
+
+
+
+* Debtors' collection schedule: 
+
+||CREDIT <br />SALES <br />|2015 <br />MARCH <br />R |2015 <br />APRIL  <br />R|2015 <br />MAY <br />R |
+|-|-|-|-|-|
+|February|R 31 500|11 970|||
+|March|10 500 |(a)|3 990||
+|April|14 000||8 064|(b) |
+|May|(c)||||
+|||18 018|12 054||
+
+&#x20; 
+
+##### B. Purchases of merchandise and payment to creditors:  
+
+* The business works on a fixed-stock base where the stock sold in a month is replaced at the end of that month. 
+* The business uses a mark-up of 75% on cost.  
+* 70% of all merchandise is purchased on credit.  
+* Creditors are paid in full in the month following the month of 
+
+purchase. 
+
+
+
+##### C. Salaries:    
+
+\-Shop assistants     
+
+* The business has 12 shop assistants employed on equal pay in  March 2015. Nine of the shop assistants are entitled to a bonus equal to 80% of the monthly salary during April 2015. 
+* All shop assistants will receive a general increase during May 2015.  
+
+&#x20;     
+
+##### D. Loan:  
+
+An additional loan will be taken from Atlantic Bank on 1 April 2015 at 14% p.a. interest. 
+
+&#x20;
+
+&#x20;     
+
+##### E. Extract from the Cash Budget for the three months ending 31 May 2015: 
+
+|RECEIPT|MARCH BUDGETED|APRIL BUDGETED|APRIL ACTUAL|MAY BUDGETED|
+|-|-|-|-|-|
+|Cash sale of stock|42 000|56 000|59 200|63 000|
+|Collection from debtors|18 018|12 054|12 800|?|
+|Rent income|5 600|6 160|6 160|6 160|
+|Additional loan acquired|0|?|?|0|
+|PAYMENTS|||||
+|Cash purchase of stock|9 000|12 000|28 000|13 500|
+|Payment to creditors|58 500|21 000|21 000|?|
+|Salaries of shop<br />assistants|102 000|?|?|110 160|
+|Salary of manager|16 000|16 000|40 000|19 200|
+|Interest on loan          <br />(14% p.a.)|6 300|7 175|7 175|7 175|
+|Delivery expenses (for <br />deliveries to customers)|9 200|9 200|0|9 200|
+|Insurance (paid annually) |0|27 000|27 000|-|
+|Advertising|0|0|0|20 000|
+|Purchase of vehicle |0|0|180 000|0|
+|Vehicle expenses |0|0|4 000|4 000|
+|Sundry expenses|5 300|5 300|5 300|5 800|
+
+
+
+#### REQUIRED:      
+
+##### 6.1 
+
+Explain the importance of comparing budgeted figures with actual figures achieved for the same period. (2) 
+
+
+
+###### Answer
+
+\-One valid explanation   
+
+* Deviations can be determined and remedial measures will be put in place  
+* Establish whether the budgeting was realistic 
+* To identify trends of mismanagement of cash 
+
+&#x20;     
+
+##### 6.2 
+
+Calculate the missing amounts (indicated by a, b and c) in the Debtors' Collection Schedule for the budgeted period March to May 2015. (4) 
+
+
+
+###### Answer
+
+|a|6 048|
+|-|-|
+|b|5 320|
+|c|15 750|
+
+
+
+&#x20;     
+
+##### 6.3 
+
+Calculate the following budgeted figures:  
+
+&#x20;     
+
+###### 6.3.1 
+
+Total sales for March 2015 (2)
+
+
+
+\####### Answer
+
+10 500  × 100/20 = 52 500
+
+&#x20;
+
+###### 6.3.2 
+
+Amount for payments to creditors during May 2015 (4)
+
+
+
+\####### Answer
+
+70 000 × 100/175  × 70%  = 28 000
+
+OR
+
+12 000/30 × 70   = 28 000
+
+
+
+###### 6.3.3 
+
+Salaries of the shop assistants for April 2015 (3) 
+
+
+
+\####### Answer
+
+102 000/12 = 8 500 
+
+8 500 × 3 = 25 500 
+
+15 300 × 9 = 137 700 
+
+25 500 + 137 700 = 163 200
+
+
+
+###### 6.3.4 
+
+The percentage increase in the salary of the manager expected in May 2015 (3) 
+
+
+
+\####### Answer
+
+(19 200 – 16 000)/16 000  = 20%
+
+
+
+###### 6.3.5 
+
+Amount of the additional loan expected to be acquired on 
+
+1 April 2015 (3) 
+
+
+
+\####### Answer
+
+875 × (100 × 12) /14  = 75 000
+
+&#x20;     
+
+##### 6.4 
+
+An official of the local municipality has offered to recommend Brakpan Stationers to supply stationery to the value of R500 000. However, he will only do this if Vukile pays him R20 000 in cash.  
+
+&#x20;     
+
+Give Vukile advice in this regard. State TWO points.  (4) 
+
+
+
+###### Answer
+
+Any two suggestions 
+
+* This is actually a bribe which is unethical. 
+* If this information is made public, it will have a negative effect on the business in the future. 
+* Vukile must tender formally to the municipality to secure the contract through the normal processes.
+
+&#x20;     
+
+###### 6.5 
+
+\-Vukile's wife is angry that he has not been adhering to the cash budget. 
+
+\-Vukile says that he deliberately did not keep to the budget because he wanted to improve the overall results of the business.  
+
+&#x20;
+
+• Identify THREE over-payments in April. Provide figures to support your answer. Provide a valid reason for each over-payment to support Vukile's decisions.  (6)
+
+• Explain how this difference of opinion with his wife can be avoided in future.  (2)
+
+• State TWO other strategies that Vukile and his wife could consider in future to improve the results of the business. (2)
+
+
+
+###### Answer
+
+||Over-payment with figures|Valid reason|
+|-|-|-|
+|1|The bonus of the manager in <br />February 2015 (R24 000) was <br />not taken into account.|He has retained the services <br />of a valuable employee|
+|2|Purchase of vehicle <br />(R180 000) |The difference between motor <br />vehicle expenses and delivery <br />expenses is R5 200 per month|
+|3|Cash purchase of <br />merchandise (R28 000) was <br />significantly higher than the <br />budgeted figure (R12 000) |Possibly to take advantage of <br />bulk discounts on purchases |
+
+
+
+&#x20;
+
+>Explain how this difference of opinion with his wife can be avoided in future.   
+
+\-As they are jointly running the business they should have a specific meeting to determine the budget jointly and Vukile should consult his wife before spending on unbudgeted items.    
+
+&#x20;
+
+State TWO other strategies that Vukile and his wife could consider 
+
+in future to improve the results of the business. 
+
+&#x20;
+
+Any two valid points:   
+
+* Advertise monthly. 
+* Reduce number of shop assistants. 
+* Reinstate deliveries to customers. 
+* Negotiate longer credit terms with creditors.
+
+&#x20;
+
+&#x20;
+
+&#x20;
+
+&#x20;
+
+&#x20;
+
+&#x20;
+
+&#x20;
+
+&#x20;
+
+
+

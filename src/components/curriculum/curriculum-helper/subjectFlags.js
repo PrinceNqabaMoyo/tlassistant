@@ -1,6 +1,11 @@
+import { curriculumData } from '../../../curriculumData';
+
 export const buildSubjectFlags = ({ selectedGrade, selectedSubject }) => {
-    const subjectNameLower = selectedSubject?.name?.toLowerCase?.() || '';
-    const gradeString = String(selectedGrade);
+    const rawName = typeof selectedSubject === 'string'
+        ? selectedSubject
+        : (selectedSubject?.name || selectedSubject?.id || '');
+    const subjectNameLower = rawName.toLowerCase();
+    const gradeString = String(selectedGrade || '');
     const gradeNumber = parseInt(selectedGrade, 10);
 
     return {
@@ -44,12 +49,25 @@ export const buildSubjectFlags = ({ selectedGrade, selectedSubject }) => {
 };
 
 export const buildAvailableTopics = ({ selectedGrade, selectedSubject }) => {
-    const availableTopicsRaw = selectedSubject?.topicsByGrade?.[selectedGrade]?.topics || [];
+    const rawName = typeof selectedSubject === 'string'
+        ? selectedSubject
+        : (selectedSubject?.name || selectedSubject?.id || '');
+    const subjectNameLower = rawName.toLowerCase();
+    const gradeString = String(selectedGrade || '');
+
+    let availableTopicsRaw = selectedSubject?.topicsByGrade?.[selectedGrade]?.topics;
+    if (!availableTopicsRaw || availableTopicsRaw.length === 0) {
+        // Fallback to curriculumData
+        const matchedKey = Object.keys(curriculumData).find(
+            (k) => k.toLowerCase() === subjectNameLower
+        );
+        if (matchedKey && curriculumData[matchedKey]?.[gradeString]?.topics) {
+            availableTopicsRaw = curriculumData[matchedKey][gradeString].topics;
+        }
+    }
     let availableTopics = (Array.isArray(availableTopicsRaw) ? availableTopicsRaw : [])
         .map((topic) => (typeof topic === 'string' ? topic : topic?.name))
         .filter(Boolean);
-
-    const subjectNameLower = selectedSubject?.name?.toLowerCase?.() || '';
 
     const isGrade11AccountingCheck = String(selectedGrade) === '11' && subjectNameLower.includes('accounting');
     if (isGrade11AccountingCheck) {

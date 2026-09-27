@@ -1,0 +1,617 @@
+# Representing chemical change
+
+
+
+## NOTES
+
+### Introduction
+
+\-As we have already mentioned, a number of changes can occur when elements are combined with one another. These changes may either be physical or chemical.
+
+\-In this chapter we will look at chemical changes. One way of representing chemical changes is through balanced chemical equations.
+
+\-A chemical equation describes a chemical reaction by using symbols for the elements involved. For example, if we look at the reaction between iron (Fe) and sulphur (S) to form iron sulphide (FeS), we could represent these changes in a sentence, in a word equation or using chemical symbols:
+
+
+
+\-Sentence: Iron reacts with sulphur to form iron sulphide.
+
+\-Word equation: Iron + sulphur → iron sulphide.
+
+\-Chemical symbols: Fe + S → FeS
+
+
+
+>Another example would be:
+
+\-Sentence: Ammonia reacts with oxygen to form nitrogen monoxide and water.
+
+\-Word equation: Ammonia + oxygen → nitrogen monoxide + water.
+
+\-Chemical symbols: 4NH\_3 + 5O\_2 → 4NO + 6H\_2O
+
+
+
+\-Compounds on the left of the arrow are called the reactants and these are needed for the reaction to take place.
+
+\-The compounds on the right are called the products and these are
+
+what is formed from the reaction.
+
+\-In order to be able to write a balanced chemical equation, there are a number of important things that need to be done:
+
+
+
+1. Know the chemical symbols for the elements involved in the reaction
+2. Be able to write the chemical formulae for different reactants and products
+3. Balance chemical equations by understanding the laws that govern chemical change
+4. Know the state symbols for the equation
+
+
+
+\-We will look at each of these steps separately in the next sections.
+
+
+
+### Chemical symbols
+
+\-It is very important to know the chemical symbols for common elements in the periodic table, so that you are able to write chemical equations and to recognise different compounds.
+
+\-Revise symbol knowledge from 1st Term and lower grades.
+
+
+
+### Writing chemical formulae
+
+\-A chemical formula is a concise way of giving information about the atoms that make up a particular chemical compound.
+
+\-A chemical formula shows each element by its symbol and also shows how many atoms of each element are found in that compound. The number of atoms (if greater than one) is shown as a subscript.
+
+\-The following exercise serves as revision. If you do not recall how to write chemical formulae refer back to chapter 1.
+
+
+
+### Balancing Chemical Equations
+
+#### The law of conservation of mass
+
+\-In order to balance a chemical equation, it is important to understand the law of conservation of mass.
+
+>DEF:- The law of conservation of mass states that the mass of a closed system of substances will remain constant, regardless of
+
+the processes acting inside the system. Matter can change form, but cannot be created or destroyed.
+
+\-For any chemical equation (in a closed system) the mass of the reactants must be equal to the mass of the products. In order to make sure that this is the case, the number of atoms of each element in the reactants must be equal to the number of atoms of those same elements in the products.
+
+\-A closed reaction is one in which none of the products are lost to the environment.
+
+
+
+\-An example is shown below:
+
+|Fe|+|S|→|FeS|
+|-|-|-|-|-|
+|Mass of one atom of Fe = 55,8|+|Mass of one atom of S = 32,1|→|Mass of one atom of FeS = 87,9|
+||Total mass of reactants = 87,9|||Total products mass = 87,9|
+
+
+
+\-A chemical equation that is balanced will always reflect the law of conservation of mass and the law of conservation of atoms.
+
+
+
+### Steps to balance a chemical equation through inspection
+
+\-When balancing a chemical equation, there are a number of steps that need to be followed.
+
+
+
+\-Step1: Identify the reactants and the products in the reaction and write their chemical formulae.
+
+\-Step2: Write the equation by putting the reactants on the left of the arrow and the products on the right.
+
+\-Step 3: Count the number of atoms of each element in the reactants and the number of atoms of each element in the products.
+
+\-Step 4: If the equation is not balanced, change the coefficients of the molecules until the number of atoms of each element on either side of the equation balance.
+
+\-Step 5: Check that the atoms are in fact balanced.
+
+\-Step 6: (we will look at this a little later): Add any extra details to the equation e.g. phase symbols.
+
+
+
+### State symbols and other information
+
+\-The state (phase) of compounds can be expressed in the chemical equation. This is done by placing the correct label on the right hand side of the formula. The following four labels can be used:
+
+1. (g) for gaseous compounds
+2. (ℓ) for liquids
+3. (s) for solid compounds
+4. (aq) for an aqueous (water) solution
+
+
+
+\-To show that heat is needed for a reaction, a Greek delta (∆) is placed above the arrow.
+
+\-For example: NH\_4Cl  Δ͢   NH\_3 + HCl
+
+
+
+## ACTIVITIES AND EXAMPLES
+
+#### Activity 1: Revising common chemical symbols
+
+* Write down the chemical symbols and names of all the elements that you know.
+* Compare your list with another learner and add any symbols and names that you don’t have.
+* Know the symbols for at least the first thirty six elements in the periodic table. You should also learn the symbols for other common elements that are not in the first thirty six.
+* Set a short test on naming elements and compounds for someone else in the class and then exchange tests with them so that you each have the chance to answer a test.
+
+
+
+#### Activity 2: Balancing chemical equations
+
+##### 1\. 
+
+You will need: coloured balls (or marbles), prestik, a sheet of paper and coloured pens.
+
+We will try to balance the following equation:
+
+Al +O\_2 → Al\_2O\_3
+
+\-Take one ball of one colour. This represents a molecule of Al. Take two balls of another colour and stick them together. This represents a molecule of O\_2. Place these molecules on your left. Now take two balls of the first colour and three balls of the second colour to form Al2O3. Place this compound on your right. 
+
+\-On a piece of paper draw coloured circles to represent the balls. Draw a line down the centre of the paper to represent the molecules on the left and on the right.
+
+Count the number of balls on the left and the number on the right. 
+
+\-Do you have the same number of each colour on both sides? If not, the equation is not balanced. How many balls of each colour will you have to add to each side to make the number of balls the same? How would you add these balls?
+
+\-You should find that you need four balls of the first colour for Al and three pairs of balls of the second colour (i.e. six balls in total) for O2 on the left side. On the right side you should find that you need 2 clusters of balls for Al2O3. We say that the balanced equation is:
+
+4Al + 3O\_2 → 2Al\_2O\_3 
+
+
+
+##### 2\. 
+
+\-Use jelly tots and toothpicks to build the following
+
+chemical equation. Make sure that your atoms are balanced. Use the same colour jelly tots for the same atoms.
+
+C + H\_2O → CO\_2 + CO + H\_2
+
+
+
+\-Add compounds until the atoms are balanced. Write the equation down and use a coefficient to indicate how many compounds you used. For example if you had to use three water molecules then write 3H\_2O.
+
+
+
+##### 3 
+
+Use ball and stick drawings to balance the atoms in the following reaction:
+
+NH\_3 +O\_2 →NO+H\_2O
+
+Use your drawings to write a balanced chemical equation for the reaction.
+
+
+
+##### 4 
+
+\-Lead (Pb), lead (IV) oxide (PbO\_2) and sulphuric acid (H\_2SO\_4) are used in car batteries. The following reaction takes place: Pb + PbO\_2 + H\_2SO\_4 → PbSO\_4+H\_2O
+
+\-Cut out circles from four different colours of paper to represent each of the atoms. Build a few of the compounds (Pb PbO\_2 H2\_SO\_4). These are the reactants.
+
+\-Do not build the products. Rearrange the atoms so that the products are formed.
+
+\-Add more reactants if needed to balance the atoms (e.g. you will need two H\_2SO\_4 molecules). Use what you have learnt to write a balanced equation for the reaction.
+
+
+
+### Activity 3: The relationship between product and reactant
+
+#### Aim:
+
+To investigate the relationship between the amount of product and the amount of reactant.
+
+
+
+#### Apparatus:
+
+• flask
+
+• measuring cylinder
+
+• water-bowl
+
+• delivery tube
+
+• funnel with stop cock
+
+• stopper
+
+• sodium hydrogen carbonate (NaHCO\_3)powder
+
+• dilute sulphuric acid (H\_2SO\_4)
+
+
+
+#### Method:
+
+1. Weigh 20g of NaHCO\_3 and place it into a flask.
+2. Set up the above apparatus.
+3. Measure out 5ml of H\_2SO\_4 and carefully pour this into the funnel (make sure that the stop cock is closed).
+4. Slowly add the H\_2SO\_4 to the NaHCO\_3 by opening the stop cock.
+5. Observe what happens.
+6. Record the volume of gas collected in the measuring cylinder.
+7. Repeat the above steps but this time use 10ml of H\_2SO\_4.
+8. Write a balanced equation for this reaction. (Hint: carbon dioxide gas is formed, as well as water and sodium sulphate.)
+
+
+
+#### Results and discussion: 
+
+\-You should observe that more gas is formed when using more H\_2SO\_4.
+
+
+
+### EXAMPLE 1:  Balancing chemical equations 1
+
+\-Balance the following equation:
+
+Mg + HCl → MgCl\_2 + H\_2
+
+
+
+#### SOLUTION
+
+\-Step 1: Identify the reactants and products
+
+\-This has been done in the question.
+
+
+
+\-Step 2: Write the equation for the reaction
+
+This has been done in the question.
+
+
+
+\-Step 3: Count the number of atoms of each element in the reactants and products
+
+Reactants: Mg = 1 atom; H = 1 atom; Cl = 1 atom
+
+Products: Mg = 1 atom; H = 2 atoms; Cl = 2 atoms
+
+
+
+\-Step 4: Balance the equation
+
+The equation is not balanced since there are two chlorine atoms in the product and only one in the reactants. If we add a coefficient of two to the HCl to increase the number of H and Cl atoms in the reactants, the equation will look like this:
+
+Mg + 2HCl → MgCl\_2 + H\_2
+
+
+
+\-Step 5: Check that the atoms are balanced
+
+If we count the atoms on each side of the equation, we find the following:
+
+Reactants: Mg = 1; H = 2; Cl = 2
+
+Products: Mg = 1; H = 2; Cl = 2
+
+The equation is balanced. The final equation is:
+
+Mg + 2HCl → MgCl\_2 + H\_2
+
+
+
+### Example 2: Balancing chemical equations 2
+
+\-Balance the following equation:
+
+CH\_4 + O\_2 → CO\_2 + H\_2O
+
+
+
+#### SOLUTION
+
+\-Step1: Count the number of atoms of each element in the reactants and products
+
+Reactants: C = 1; H = 4; O = 2
+
+Products: C = 1; H = 2; O = 3
+
+
+
+\-Step 2: Balance the equation
+
+\-If we add a coefficient of 2 to H\_2O, then the number of hydrogen atoms in the products will be 4, which is the same as for the reactants.
+
+The equation will be:
+
+CH\_4 + O\_2 → CO\_2 + 2H\_2O
+
+
+
+\-Step 3: Check that the atoms balance
+
+Reactants: C = 1; H = 4; O = 2 
+
+
+
+\-Products: C = 1; H = 4; O = 4
+
+You will see that, although the number of hydrogen atoms now
+
+balances, there are more oxygen atoms in the products. You now need to repeat the previous step. 
+
+\-If we put a coefficient of 2 in front of O\_2, then we will increase the number of oxygen atoms in the reactants by
+
+2\. The new equation is:
+
+CH\_4 + 2O\_2 → CO\_2 + 2H\_2O
+
+\-When we check the number of atoms again, we find that the number of atoms of each element in the reactants is the same as the number in the products. The equation is now balanced.
+
+
+
+### Example 3: Balancing chemical equations 3
+
+\-In our bodies, sugar (C\_6H\_12O\_6) reacts with the oxygen we breathe into produce carbon dioxide, water and energy. Write the balanced equation for this reaction.
+
+
+
+#### SOLUTION
+
+\-Step 1: Identify the reactants and products in the reaction.
+
+Reactants: sugar (C\_6H\_12O\_6) and oxygen (O\_2)
+
+Products: carbon dioxide (CO\_2) and water (H\_2O)
+
+
+
+\-Step 2: Write the equation
+
+C\_6H\_12O\_6 + O\_2 → CO\_2 + H\_2O
+
+
+
+\-Step 3: Count the number of atoms of each element in the reactants and in the products
+
+Reactants: C = 6; H = 12; O = 8
+
+Products: C = 1; H = 2; O = 3
+
+
+
+\-Step 4: Balance the equation
+
+\-It is easier to start with carbon as it only appears once on each side. If we add a 6 in front of CO\_2, the equation looks like this:
+
+C\_6H\_12O\_6 + O\_2 → 6CO\_2 + H\_2O
+
+Reactants: C = 6; H =12; O = 8
+
+Products: C = 6; H = 2; O = 13
+
+
+
+Step 5 : Change the coefficients again to try to balance the equation.
+
+Let us try to get the number of hydrogens the same this time.
+
+C\_6H\_12O\_6 + O\_2 → 6CO\_2 + 6H\_2O
+
+Reactants: C = 6; H = 12; O = 8
+
+Products: C = 6; H = 12; O = 18
+
+
+
+Step 6 : Now we just need to balance the oxygen atoms.
+
+C\_6H\_12O\_6 + 6O\_2 → 6CO\_2 + 6H\_2O
+
+Reactants: C = 6; H = 12; O = 18
+
+Products: C = 6; H = 12; O = 18
+
+
+
+### Example 4: Balancing chemical equations 4
+
+Solid zinc metal reacts with aqueous hydrochloric acid to form an aqueous solution of zinc chloride (ZnCl2) and hydrogen gas. Write a balanced equation for this reaction.
+
+
+
+#### SOLUTION
+
+\-Step 1 : Identify the reactants and products
+
+The reactants are zinc (Zn) and hydrochloric acid (HCl). The products are zinc chloride (ZnCl\_2) and hydrogen (H\_2)
+
+
+
+\-Step 2 : Write the equation
+
+Zn + HCl → ZnCl\_2 + H\_2
+
+
+
+\-Step 3 : Balance the equation
+
+\-You will notice that the zinc atoms balance but the chlorine and hydrogen atoms do not. Since there are two chlorine atoms on the right and only one on the left, we will give HCl a coefficient of 2 so that there will be two chlorine atoms on each side of the equation.
+
+Zn + 2HCl → ZnCl\_2 + H\_2
+
+
+
+\-Step 4 : Check that all the atoms balance
+
+When you look at the equation again, you will see that all the atoms are now balanced.
+
+
+
+\-Step 5 : Ensure all details (e.g. state symbols) are added
+
+In the initial description, you were told that zinc was a metal, hydrochloric acid and zinc chloride were in aqueous solutions and hydrogen was a gas.
+
+Zn (s) +HCl (aq) → ZnCl\_2(aq)+H\_2(g)
+
+
+
+## EXERCISES
+
+### Exercise 1
+
+#### 1\. 
+
+Write down the chemical formula for each of the following compounds:
+
+a. iron (III) chloride
+
+b. zinc nitrate
+
+c. aluminium sulphate
+
+d. calcium hydroxide
+
+e. magnesium carbonate
+
+f. the product when carbon reacts with oxygen
+
+g. the product when hydrogen reacts with nitrogen
+
+h. potassium oxide
+
+i. copper (II) bromide
+
+j. potassium dichromate
+
+
+
+#### 2\. 
+
+Write down the name for each of the following compounds:
+
+a. SO\_2
+
+b. KMnO\_4
+
+c. (NH\_4)\_2SO\_4
+
+d. BaF\_2
+
+e. Cr(HSO\_4)\_3
+
+f. CH\_4
+
+
+
+### Exercise 2
+
+\-Balance the following equations:
+
+1. Mg+O\_2 →MgO
+2. Ca+H\_2O→Ca(OH)\_2+H\_2
+3. CuCO\_3 +H\_2SO\_4 →CuSO\_4+H\_2O+CO\_2
+4. CaCl\_2 +Na\_2CO\_3 → CaCO\_3 +NaCl
+5. C\_12H\_22O\_11 +O\_2 → H\_2O+CO\_2
+6. Barium chloride reacts with sulphuric acid to produce barium sulphate and hydrochloric acid.
+7. Ethane (C\_2H\_6) reacts with oxygen to form carbon dioxide and steam.
+8. Ammoniumcarbonate is often used as a smelling salt. Balance the following reaction for the decomposition of ammonium carbonate: (NH\_4)\_2CO\_3(s) → NH\_3(aq) +CO\_2(g) +H\_2O(ℓ
+9. Hydrogen fuel cells are extremely important in the development of alternative energy sources. Many of these cells work by reacting hydrogen and oxygen gases together to form water, a reaction which also produces electricity. Balance the following equation: H\_2(g) + O\_2(g) → H\_2O(ℓ)
+10. The synthesis of ammonia (NH\_3), made famous by the German chemist Fritz Haber in the early 20th century, is one of the most important reactions in the chemical industry. Balance the following equation used to produce ammonia: N\_2(g) + H\_2(g) → NH\_3(g)
+
+
+
+### Exercise 3
+
+\-Write balanced equations for each of the following reactions, include state symbols:
+
+1. Lead (II) nitrate solution reacts with a potassium iodide solution to form a precipitate (solid) of lead iodide while potassium nitrate remains in solution.
+2. When heated, aluminium metal reacts with solid copper oxide to produce copper metal and aluminium oxide (Al\_2O\_3).
+3. When calcium chloride solution is mixed with silver nitrate solution, a white precipitate (solid) of silver chloride appears. Calcium nitrate (Ca(NO\_3)\_2) is also produced in the solution.
+4. Solid ammonium carbonate decomposes to form three gaseous products.
+
+
+
+### End of chapter exercises
+
+#### 1\. 
+
+Propane is a fuel that is commonly used as a heat source for engines and homes. Balance the following equation for the combustion of propane:
+
+C\_3H\_8(ℓ) + O\_2(g) → CO\_2(g)+H\_2O(ℓ)
+
+
+
+#### 2\. 
+
+\-Methane (CH\_4) burns in oxygen according to the following reaction.
+
+>DIAGRAM\[
+
+\-Ball and stick representation of the reactants side: CH\_3 + O\_2 → ? + ?
+
+
+
+\-a. Complete the diagrams by drawing ball-and-stick models of the products.
+
+\-b. Write a balanced chemical equation for the reaction and include state symbols.
+
+
+
+#### 3\. 
+
+\-Chemical weapons were banned by the Geneva Protocol in 1925. According to this protocol, all chemicals that release suffocating and poisonous gases are not to be used as weapons. White phosphorus, a very reactive allotrope of phosphorus, was recently used during a military attack. Phosphorus burns vigorously in oxygen. Many people got severe
+
+burns and some died as a result. The equation for this spontaneous reaction is: P\_4 (s) + O\_2 (g) → P\_2O\_5(s)
+
+
+
+\-a. Balance the chemical equation.
+
+\-b. Prove that the law of conservation of mass is obeyed during this chemical reaction.
+
+\-c. Name the product formed during this reaction.
+
+\-d. Classify the reaction as a synthesis or decomposition reaction. Give a reason for your answer.
+
+
+
+#### 4\.
+
+\-The following diagrams represent the combustion of ethane (C\_2H\_6). Complete the diagrams and write a balanced equation for the reaction. Indicate the state symbols.
+
+
+
+#### 5\. 
+
+\-Balance the following chemical equation:
+
+N\_2O\_5 → NO\_2 + O\_2
+
+\-Draw submicroscopic diagrams to represent this reaction.
+
+
+
+#### 6\. 
+
+\-Sulphur can be produced by the Claus process. This two-step process involves reacting hydrogen sulphide with oxygen and then reacting the sulphur dioxide that is produced with more hydrogen sulphide. The equations for these two reactions are:
+
+H\_2S + O\_2 →SO\_2 + H\_2O
+
+H\_2S + SO\_2 → S + H\_2O
+
+Balance these two equations.
+
+
+
+#### 7\. 
+
+Aspartame, an artificial sweetener, has the formula C\_14H\_18N\_2O\_2. Write the balanced equation for its combustion (reaction with O\_2) to form CO\_2 gas, liquid H\_2O, and N\_2 gas.
+

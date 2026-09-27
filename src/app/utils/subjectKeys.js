@@ -3,6 +3,8 @@ export const getSubjectKeyFromSelection = ({
   selectedGrade,
   selectedSubject,
 } = {}) => {
-  const subjectName = selectedSubject?.name || 'all';
+  const subjectName = typeof selectedSubject === 'string' 
+    ? selectedSubject 
+    : (selectedSubject?.name || selectedSubject?.id || 'all');
   return `${selectedCurriculumKey || 'all'}_${selectedGrade || 'all'}_${subjectName}`;
 };

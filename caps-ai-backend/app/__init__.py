@@ -45,7 +45,7 @@ def create_app():
     # Register blueprints
     from .api.math import math_bp
     from .api.accounting import accounting_bp
-    # from .api.curriculum import curriculum_bp  # Temporarily disabled due to ChromaDB issues
+    from .api.curriculum import curriculum_bp
     from .api.thumbnails import thumbnails_bp
     from .api.payments import payments_bp
     from .api.statistics import stats_bp
@@ -66,7 +66,7 @@ def create_app():
 
     app.register_blueprint(math_bp, url_prefix='/api/math')
     app.register_blueprint(accounting_bp, url_prefix='/api/accounting')
-    # app.register_blueprint(curriculum_bp, url_prefix='/api/curriculum')  # Temporarily disabled
+    app.register_blueprint(curriculum_bp, url_prefix='/api/curriculum')
     app.register_blueprint(thumbnails_bp, url_prefix='/api/thumbnails')
     app.register_blueprint(payments_bp, url_prefix='/api/payments')
     app.register_blueprint(stats_bp, url_prefix='/api/statistics')
@@ -88,5 +88,50 @@ def create_app():
     @app.route('/')
     def health_check():
         return {"status": "ok", "message": "TLAssistant Backend API is running."}
+
+    @app.route('/api/generate', methods=['POST'])
+    def unified_generate():
+        from flask import request, jsonify
+        from .services.generator_registry import generate_variant, resolve_generator_key
+        data = request.get_json() or {}
+        subject = data.get('subject', 'Mathematics')
+        grade = str(data.get('grade', '10'))
+        topic = data.get('topic', 'Algebraic Expressions')
+        count = int(data.get('count', 1))
+        seed = data.get('seed')
+        subskill = data.get('subskill', 'mixed')
+        difficulty = data.get('difficulty', 'medium')
+        mode = data.get('mode', 'compound')
+        extra_config = {
+            'mode': mode,
+            'exam_type': data.get('exam_type'),
+            'paper': data.get('paper', 1),
+            'term': data.get('term', 1),
+        }
+        try:
+            questions = generate_variant(
+                topic=topic,
+                subskill=subskill,
+                difficulty=difficulty,
+                count=count,
+                seed=seed,
+                grade=grade,
+                subject=subject,
+                extra_config=extra_config,
+            )
+            return jsonify({
+                "success": True,
+                "questions": questions,
+                "metadata": {
+                    "subject": subject,
+                    "grade": grade,
+                    "topic": topic,
+                    "resolved_key": resolve_generator_key(topic, grade=grade, subject=subject),
+                    "seed": seed,
+                    "total_questions": len(questions),
+                }
+            })
+        except Exception as e:
+            return jsonify({"success": False, "error": str(e)}), 400
 
     return app

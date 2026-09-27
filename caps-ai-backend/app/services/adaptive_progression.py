@@ -2,6 +2,7 @@ from typing import Dict, Any, List, Optional
 
 from app.services.student_model import StudentModel
 from app.services.generator_registry import generate_variant
+from app.services.prerequisite_tree import get_prerequisite
 
 
 # Standard package thresholds
@@ -133,7 +134,7 @@ def evaluate_pro_progression(
         threshold=0.6,
     )
 
-    if mode in ("practice", "assessment") and (is_struggling or weak_subskills or consecutive_incorrect >= 3):
+    if mode in ("practice", "assessment") and (is_struggling or weak_subskills or consecutive_incorrect >= 2):
         target = weak_subskills[0] if weak_subskills else {"subskill": subskill, "mastery_score": mastery}
         try:
             variants = generate_variant(
@@ -144,13 +145,36 @@ def evaluate_pro_progression(
             )
         except Exception:
             variants = []
+
+        prereq = get_prerequisite(subject, grade, topic, target.get("subskill"))
+        prerequisite_banner = None
+        if prereq and str(grade).isdigit() and str(prereq.get("target_grade", "")).isdigit():
+            if int(grade) > int(prereq["target_grade"]):
+                prerequisite_banner = {
+                    "gap_title": prereq["gap_title"],
+                    "target_grade": prereq["target_grade"],
+                    "target_topic": prereq["target_topic"],
+                    "target_subskill": prereq["target_subskill"],
+                    "explanation": prereq["explanation"],
+                    "micro_drill_title": prereq["micro_drill_title"],
+                    "route": prereq.get("route", ""),
+                }
+
+        action = "regress_prerequisite" if prerequisite_banner else "intervene"
+        reason = (
+            f"Prerequisite gap detected — step down to Grade {prerequisite_banner['target_grade']}: {prerequisite_banner['gap_title']}"
+            if prerequisite_banner
+            else f"Weak subskill detected: {target['subskill']} (mastery={mastery:.2f})"
+        )
+
         return {
-            "action": "intervene",
+            "action": action,
             "next_mode": "practice",
             "target_subskill": target["subskill"],
             "mastery": mastery,
             "streak": consecutive_incorrect,
-            "reason": f"Weak subskill detected: {target['subskill']} (mastery={mastery:.2f})",
+            "reason": reason,
+            "prerequisite_banner": prerequisite_banner,
             "intervention": {
                 "type": "micro_practice",
                 "questions": variants,

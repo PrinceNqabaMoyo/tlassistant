@@ -272,3 +272,6 @@ curriculum_mapper = CurriculumMapper()
 def get_curriculum_mapping() -> CurriculumMapper:
     """Get the global curriculum mapper instance"""
     return curriculum_mapper
+
+
+get_curriculum_mapper = get_curriculum_mapping

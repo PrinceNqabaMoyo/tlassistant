@@ -1,0 +1,6328 @@
+# COST ACCOUNTING
+
+## Curriculum requirements
+
+\-Definition and explanation of accounting concepts unique to a manufacturing business
+
+\-Preparation, presentation, analysis, interpretation and reporting on cost information for manufacturing enterprises:
+
+* preparation of a production cost statement with notes for manufacturing costs
+* preparation of a short-form Income Statement with notes for administration cost and selling \& distribution cost
+* calculation of gross profit on finished goods sold
+* calculation of variable and fixed costs
+* calculation of the cost of a product using variable and fixed costs
+* calculation of cost per unit
+* calculation of contribution per unit
+* calculation of breakeven point
+* calculation of total cost of production.
+
+\-Integration of ethical issues relating to manufacturing: product
+
+quality, product age, raw materials, support for local products,
+
+price-fixing, theft, fraud, etc.
+
+\-Integration of internal audit and control processes relating to
+
+manufacturing
+
+
+
+## NOTES
+
+N/A
+
+
+
+## Architypes
+
+### 1 (40 Marks)
+
+Ace Calculators produces one type of basic school calculator. The business uses the periodic inventory system.
+
+
+
+#### INFORMATION:
+
+\-Information extracted from the financial records on 28 February 2013:
+
+
+
+||R|
+|-|-|
+|Administration cost|485 000|
+|Direct/Raw material cost|1 161 000|
+|Factory overhead cost|810 000|
+|Selling and distribution cost|245 000|
+|Direct labour cost|?|
+|Prime cost|1 797 000|
+|Total cost of production of finished goods|2 460 000|
+|Work-in-process (1 March 2012)|102 000|
+|Work-in-process (28 February 2013)|?|
+|Finished goods stock (1 March 2012)|202 800|
+|Finished goods stock (28 February 2013)|500 200|
+|Sales (26 500 calculators at R130 each)|3 445 000|
+|Cost of sales|?|
+|||
+
+
+
+&#x20;
+
+#### REQUIRED:
+
+##### 1.1.1 (5)
+
+Indicate the cost accounts that would be affected by the following in a manufacturing business:
+
+&#x20;
+
+###### (a)
+
+Rent paid for factory buildings
+
+
+
+###### (b)
+
+Overtime paid to factory workers
+
+
+
+###### (c)
+
+Commission paid to salespersons
+
+
+
+###### (d)
+
+Cost of raw materials used in the production
+
+
+
+###### (e)
+
+Salary of internal auditor
+
+&#x20;
+
+###### Answer
+
+|(a)|Rent paid for factory buildings|Factory overhead|
+|-|-|-|
+|(b)|Overtime paid to factory workers|Direct labour|
+|(c)|Commission paid to salespersons|Selling and distribution|
+|(d)|Cost of raw materials used in the production|Direct/raw materials|
+|(e)|Salary of internal auditor|Administration|
+
+
+
+
+
+##### 1.1.2
+
+\-Prepare the Production Cost Statement for the year ended
+
+28 February 2013.   (10)
+
+
+
+###### Answer
+
+|Direct material cost|1 161 000|
+|-|-|
+|Direct labour cost|636 000|
+|Prime cost|1 797 000|
+|Factory overhead cost|810 000|
+|Total production costs|2 607 000|
+|Work-in-process at beginning of year|102 000|
+||2 709 000|
+|Work-in-process at end of year|(249 000)|
+|Cost of production of finished goods|2 460 000|
+
+
+
+&#x20;
+
+##### 1.1.3
+
+30 000 calculators were produced during the financial year.
+
+Calculate the cost of production per unit. (3)
+
+
+
+###### Answer
+
+R2 460 000 ÷ 30 000 = R82,00 per unit
+
+
+
+#### 1.2
+
+\-The information provided relates to MALOMA DAIRY for the year ended 28 February 2013. This dairy is owned by Mark Maloma. The business produces flavoured milk which is sold in bottles.
+
+&#x20;
+
+##### INFORMATION:
+
+\-The number of units produced and sold increased from 420 000 bottles in 2012 to 540 000 bottles in 2013.
+
+\-The following figures apply to the 2013 financial year:
+
+
+
+||TOTAL|PER UNIT|
+|-|-|-|
+|Sales (540 000 x R6,60)|R3 564 000|R6,60|
+|Variable costs|R1 458 000|R2,70|
+|Fixed costs|R972 000|R1,80|
+
+
+
+###### 1.2.1
+
+\-Calculate the break-even point and comment on the level of
+
+production for the year.  (7)
+
+
+
+\####### Answer
+
+972 000/(6,60 - 2,70) = 249 230 or 249 231
+
+
+
+Comment:
+
+The level pf production (540 000 000 bottles) greatly exceeds the break-even point (249 230). The owners should be satisfied as this means that the business will be earning a very good profit.
+
+&#x20;
+
+###### 1.2.2
+
+\-Despite the fact that the factory workers were given a 10% wage
+
+increase, the direct material cost per unit has dropped by 50 cents
+
+per unit. What could have caused the difference? What comment
+
+would you make to Mark about the control of this item?  (3)
+
+&#x20;
+
+\####### Answer
+
+The workers are operating very efficiently, possibly because Mark has motivated them with an increase which exceeds the inflation rate/ possibly because he has trained them well.
+
+
+
+Comment: This is very good. They should aim to maintain the control over this item by continued monitoring and training if necessary.
+
+
+
+###### 1.2.3
+
+\-The fixed costs per unit dropped from R1,90 in 2012 to R1,80 in
+
+2013\. Should Mark be satisfied with this? What comment would
+
+you make to Mark about the control of this item? Provide figures to
+
+support your answer.  (4)
+
+
+
+\####### Answer
+
+>NO.
+
+\-Total fixed costs have increased by R174 000.
+
+\-In 2012 fixed costs were 420 000 × R1,90 = R798 000
+
+\-In 2013 fixed costs were: 540 000× R1,80 = R972 000
+
+\-He must investigate the reasons for the difference (R174 000)
+
+
+
+>The following is a poor answer and earns only 1 mark:
+
+\-He should be happy because fixed costs per unit dropped by 10 cents.
+
+&#x20;
+
+###### 1.2.4
+
+\-You are the internal auditor and you have noticed that the business is using bottles bought from Apex Products as containers for the flavoured milk. The contract with Apex Products was signed by the office manager, Alex Fynn. While working late one night, you noticed that Apex Products delivered a laptop to Mr Fynn.
+
+&#x20;
+
+* Will this be a concern to you? Give a reason for your answer.
+* Explain what action you would take as internal auditor. State THREE points.  (8)
+
+&#x20;
+
+&#x20;####### Answer
+
+Yes. It appears that Alex Fynn might have taken a bribe from Apex Products, which is unethical.
+
+
+
+Action and explanation:
+
+* Investigate whether Mr Fynn had the authority to sign the contract, whether the contract went out to tender (whether the business' procurement policies were adhered to and what the price of other bottle suppliers are).
+* Question Mr Fynn on the acceptance of the laptop and if a suitable explanation is not provided, report the facts to the owner of the business for possible disciplinary sanction of Mr Fynn.
+* If any internal control procedures are deficient, rectify these immediately and ensure that fair tenders are applied in future.
+
+&#x20;
+
+&#x20;
+
+### &#x20;2
+
+#### 2.1 FLOWERPOTS MANUFACTURERS
+
+The business manufactures large concrete flowerpots. Their financial year ended on 29 February 2024.
+
+&#x20;
+
+##### INFORMATION:
+
+###### A. Direct/Raw materials cost:
+
+The business uses a high quality concrete mix to make the pots.
+
+
+
+\-Production requirements:
+
+* 4 800 units were produced and sold during the financial year.
+* Each complete pot requires 1,4 packets of direct materials (concrete mix).
+* The business allows for wastage of 10% of direct materials (concrete mix).
+* The cost price of concrete mix was maintained at R125 per packet for the financial year.
+
+&#x20;
+
+###### B. Direct labour cost:
+
+* Direct labour budgeted for the year amounted to R1 117 200.
+* The business has 7 direct workers. Each worker is required to work 1 680 hours per year and is paid the same hourly rate.
+
+&#x20;
+
+\-The following items have not yet been recorded:
+
+* One worker resigned on 31 October 2023. This worker did not work overtime.
+* Three of the direct workers were required to work overtime of 60 hours each during the year. Overtime rate is 1,6 times the normal hourly rate.
+
+&#x20;
+
+###### C. Extract of pre-adjustment amounts on 29 February 2024:
+
+\-The bookkeeper calculated the factory overhead cost as R1 132 700.
+
+\-Other pre-adjustment amounts on 29 February 2024:
+
+||R|
+|-|-|
+|Office salaries|247 800|
+|Advertising|27 450|
+|Rental of sales department property|25 200|
+|Bad debts|18 700|
+
+
+
+\-Adjustments to factory overheads:
+
+* The clerk was paid a salary of R9 200 per month, which was recorded as an administration cost. 20% must be allocated to the office and the rest to production.
+* Rent of R126 000 was shared and recorded according to the following floor area by the bookkeeper:
+
+&#x20;
+
+|TOTAL|FACTORY|OFFICE|SALES|
+|-|-|-|-|
+|600 m^2|400 m^2|80 m^2|120 m^2|
+
+
+
+* However, since the beginning of the financial year, the annual rent has increased to R157 500 as the size of the factory has increased. The bookkeeper did not consider the increased rent of R157 500 and the following adjusted floor areas:
+
+&#x20;
+
+|TOTAL|FACTORY|OFFICE|SALES|
+|-|-|-|-|
+|800 m^2|600 m^2|80 m^2|120 m^2|
+
+
+
+##### REQUIRED:
+
+###### 2.1.1 Refer to Information A.
+
+Calculate the direct/raw material cost. (4)
+
+
+
+\####### Answer
+
+\[4 800 × 1,4] × 1,1 × R125 = 924 000
+
+&#x20;
+
+###### 2.1.2 Refer to Information B.
+
+Calculate the direct labour cost. (7)
+
+
+
+\####### Answer
+
+|Direct labour budgeted for the year|1 117 200|
+|-|-|
+|\[1 117 200/7] - \[159 600 × 8/12]|= (53 200)|
+|(3 × 60 × 1,6) × 95|= 27 360|
+||1 091 360|
+
+
+
+&#x20;
+
+&#x20;
+
+###### 2.1.3 Refer to Information C.
+
+Complete the Factory Overhead Cost Note. (8)
+
+
+
+\####### Answer
+
+|Incorrect factory overheads|1 132 700|
+|-|-|
+|Factory indirect labour|88 320|
+|Factory rental   \[157 500 x 600/800] - \[126 000 x 400/600]|34 125|
+||1 255 145|
+
+
+
+
+
+#### 2.2
+
+\-TIMEPIECE MANUFACTURERS makes watches and is owned by Jabu Tallies. The financial year ended on 31 August 2024.
+
+
+
+\-NOTE: Where comments or explanations are required, you should:
+
+* Quote calculations, figures and/or trends
+* Give an explanation or a reason in each case
+
+
+
+##### INFORMATION:
+
+###### i
+
+||31 August 2024 <br />(R)|31 August 2023 <br />(R)|
+|-|-|-|
+|Total sales|3 712 800|2 880 900|
+|Gross profit|1 237 600|960 300|
+|Total variable cost|2 748 200|2 217 420|
+|Total fixed cost|1 820 000|1 820 000|
+
+
+
+###### ii. Cost per unit
+
+||31 August 2024<br />(R)|31 August 2023<br />(R)|
+|-|-|-|
+|Variable costs per unit|755|762|
+|Direct material cost|450|520|
+|Direct labour cost|185|132|
+|Selling and distribution cost|120|110|
+
+
+
+###### iii. Units
+
+||31 August 2024 (Units)|31 August 2023 (Units)|
+|-|-|-|
+|Number of units produced and sold|3 640|2 910|
+|Break-even point|6 868|7 983|
+
+
+
+###### iv. Selling price
+
+||31 August 2024|31 August 2023|
+|-|-|-|
+|Selling price per unit|R1 020|R990|
+
+
+
+&#x20;
+
+##### REQUIRED:
+
+&#x20;
+
+###### 2.2.1
+
+Comment on the level of production and break-even point on
+
+31 August 2024. (4)
+
+
+
+\####### Answer
+
+>For FOUR marks: 
+
+* Produced and sold 3 640 units below the BEP 6 868 / made a loss on 3 228 units.
+* Loss on 3 228 (1 845) units has improved compared to 2023 loss on 5 073 units.
+
+&#x20;
+
+>For TWO marks (max): 
+
+* BEP decreased by 1 115 units / (from 7 983) to 6 868 / by 14%.
+* Units produced increased by 730 units / (from 2 910) to 3 640 / by 25%.
+
+&#x20;
+
+###### 2.2.2
+
+Comment on the gross profit earned by the business and the price
+
+charged for the watches. In your opinion, explain if Jabu's customers found the 2024 price reasonable. Provide figures.  (4)
+
+
+
+\####### Answer
+
+* Gross profit has increased (from R960 300) to R1 237 600 / by R277 300 / by 28,9%.
+* Number of units sold increased (from 2 910) to 3 640 / by 730 units / by 25% / Total sales increased (from R2 880 900) to R3 712 800 / by R831 900 / by 28,9%.
+* Selling price increased (from R990) to R1 020 / by R30 / by 3% which is reasonable for the customers and is within the inflation rate.
+
+&#x20;
+
+\-For FOUR marks: Be aware of comments being combined.
+
+* Price increased with 3%, 25% more units sold, and GP increased with 28,9%.
+
+&#x20;
+
+###### 2.2.3
+
+Identify the TWO main costs that would have a positive effect on the selling price. In each case, provide a strategy that Jabu would have implemented. (4)
+
+
+
+\####### Answer
+
+|Main costs|Strategies|
+|-|-|
+|Direct material cost|-Change to a cheaper supplier / local suppliers / bulk purchase at lower price. <br /> <br />-Less wastage due to improved supervision / better trained workers / technology used.|
+|Total fixed cost|-Economies of scale, total fixed cost remained the same (R1 820 000) even though more units were produced.|
+|Selling and distribution <br />cost|-Offer more reliable distribution systems to increase customer satisfaction. <br />-additional advertising / free delivery contributed to increased sales|
+
+
+
+&#x20;
+
+###### 2.2.4
+
+Jabu wishes to increase his profit by R300 000 during the next financial year, while maintaining the costs. Calculate the price that he would have to charge his customers in order to produce 400 extra units. (4)
+
+
+
+\####### Answer
+
+\[300 000/400] + 755 = R1 505
+
+
+
+
+
+### 3
+
+#### 3.1
+
+\-Choose a cost category from COLUMN B that matches the example in COLUMN A.
+
+||COLUMN A|COLUMN B|
+|-|-|-|
+|3.1.1|Delivery expenses|A. factory overhead|
+|3.1.2|Office stationery|B. selling and distribution|
+|3.1.3|Salary of the factory supervisor|C. direct material|
+|||D. administration|
+
+
+
+##### Answer
+
+3.1.1 B selling \& distribution
+
+3.1.2 D administration
+
+3.1.3 A factory overheads
+
+
+
+#### 3.2
+
+NARDO MANUFACTURERS makes uniforms for construction workers. The financial year ended on 29 February 2024.
+
+
+
+##### INFORMATION:
+
+###### A. Factory overhead costs:
+
+\-The bookkeeper calculated the factory overhead cost as R258 200.
+
+\-The following errors and omissions were identified and must be taken into account:
+
+&#x20;
+
+\####### (i)
+
+\-Water and electricity expense was omitted from the factory overhead cost. 75% of this expense must be allocated to the factory and the remaining 25% to administration. R9 600 was correctly allocated to administration.
+
+&#x20;
+
+\####### (ii)
+
+\-The total rent expense, R142 800, was recorded in the Factory Overhead Cost Account. This should have been shared according to floor area as follows:
+
+|Factory|Sales Department|Administration|
+|-|-|-|
+|220 m^2|120 m^2|80 m^2|
+
+
+
+\####### (iii)
+
+Insurance expense, R48 000, was allocated to factory overheads in error using the ratio 4 : 2 : 1. However, the correct ratio is 5 : 2 : 1.
+
+
+
+&#x20;
+
+###### B. Raw material stock:
+
+\-Stock of raw material (fabric) transferred to the factory is valued using the FIFO method. Stock records revealed the following:
+
+||Quantity <br />(metres)|Cost per <br />metre|Total cost|
+|-|-|-|-|
+|Stock on 1 March 2023|8 000 m|R10,50|R84 000|
+|Purchases of fabric|62 000 m||R739 600|
+|June 2023|42 000 m|R11,80|R495 600|
+|October 2023|20 000 m|R12,20|R244 000|
+|Total fabric available|70 000 m||R823 600|
+|Issued to factory|59 500 m|?|?|
+
+
+
+###### C.  Work-in-progress stock:
+
+||29 Feb. 2024|28 Feb. 2023|
+|-|-|-|
+|Balance|?|R30 700|
+
+
+
+###### D. Production:
+
+20 200 uniforms were produced during the financial year at a cost of R79,00 per uniform.
+
+
+
+##### REQUIRED:
+
+###### 3.2.1
+
+Calculate the correct factory overhead cost by taking into account the errors and omissions. (7)
+
+
+
+\####### Answer Sheet
+
+|Incorrect amount calculated by bookkeeper|258 200|
+|-|-|
+|||
+|||
+|||
+|TOTAL||
+
+
+
+
+
+\####### Answer
+
+|Incorrect amount calculated by bookkeeper|258 200|
+|-|-|
+|Water and electricity|+ 28 800|
+|Rent expense (–142 800 + 74 800 OR 13 600 × 5)|– 68 000|
+|Insurance   (– 48 000 + 52 500  OR 12 000 – 7500 OR 12 000 × 3/8 )|+ 4 500|
+|TOTAL|223 500|
+
+
+
+&#x20;
+
+###### 3.2.2
+
+Complete the Production Cost Statement for the financial year. (10)
+
+
+
+\####### Answer Sheet
+
+|Direct material cost||
+|-|-|
+|||
+|Prime cost|1 405 800|
+|Factory overhead cost||
+|Total manufacturing cost||
+|Work-in-progress (1 March 2023)|30 700|
+|||
+|||
+|Cost of production of finished goods||
+
+
+
+\####### Answer
+
+|Direct material cost<br />(\[84 000 + 495 600] + 115 900) OR  (\[84 000 + 739 600] -  128 100 )|695 500|
+|-|-|
+|Direct labour cost                (Balancing figure PC – DMC Must be DLC for this line )|710 300|
+|Prime cost|1 405 800|
+|Factory overhead cost (Operation PC + FOH)|223 500|
+|Total manufacturing cost|1 629 300|
+|Work-in-progress (1 March 2023)|30 700|
+||1 660 000|
+|Work-in-progress (29 February 2024)   (Balancing figure accept a positive figure must be WIP for this item)|(64 200)|
+|Cost of production of finished goods|1 595 800|
+
+
+
+
+
+#### 3.3
+
+\-Kyla's Hiking Gear Store, owned by Kyla Coetzee, makes hiking bags and hiking jackets.
+
+>\\\\\\\[NOTE: Where comments or explanations are required, you must: 
+
+* Quote calculations, figures and/or trends
+* Give a reason or an explanation in each case]
+
+
+
+##### INFORMATION
+
+||Hiking bags 2024|Hiking bags 2023|Hiking jackets 2024|Hiking jackets 2023|
+|-|-|-|-|-|
+|Variable cost per unit|R615,00|R442,00|R336,00|R285,00|
+|Direct material cost per unit|R320,00|R230,00|R116,00|R115,00|
+|Direct labour cost per unit|R135,00|R132,00|R175,00|R110,00|
+|Selling \& distribution cost  <br />  per unit|R160,00|R80,00|R45,00|R60,00|
+|Fixed cost per unit|R170,00|R175,00|R196,50|R130,00|
+|Total fixed costs|R714 000|R700 000|R786 000|R780 000|
+|Factory overhead cost|R510 000|R500 000|R532 000|R530 000|
+|Administration cost|R204 000|R200 000|R254 000|R250 000|
+|Selling price per unit|R780,00|R750,00|R600,00|R600,00|
+|Units produced and sold|4 200 units|4 000 units|4 000 units|6 000 units|
+|Break-even number of units|4 328 units|2 273 units|2 978 units|2 477 units|
+|Net profit/loss|(R21 120)|R531 916|R269 808|R1 109 745|
+
+* The inflation rate is currently 6%.
+* Wages and salaries increased by 4% in 2024.
+
+
+
+##### REQUIRED:
+
+###### 3.3.1
+
+Comment on the control over direct material cost of hiking bags. Quote figures. Give TWO reasons that may have contributed to the change in the unit cost.  (4)
+
+
+
+\####### Answer
+
+\-Not well controlled  (above the inflation rate of 6%) as DMC increased (from R230) to R320 / by R90 / by 39%.
+
+
+
+\-Any TWO valid reasons
+
+* Wastage / theft of material in production.
+* Scarcity of material caused increase in price / market conditions.
+* Change of supplier.
+* Additional transport / storage costs / import duties / exchange rate.
+* Poor quality of materials / cutting of material OR better quality materials therefore more expensive.
+* Lack of supervision / poor internal control / unskilled workers (re-cutting)
+* Faulty equipment / poor technology
+
+&#x20;
+
+###### 3.3.2
+
+Explain whether the decision to increase the selling and distribution cost of hiking bags was beneficial to the business or not. Quote figures.  (3)
+
+
+
+\####### Answer
+
+* &#x20;An increase in BEP (from 2 273 units) to 4 328 units / by 2 055 units /   by 90%.
+* A very small increase in production (from 4 000 units) to 4 200 units / by 200 units / by 5%.
+* A loss on 128 bags in 2024 against a profit of 1 727 bags in 2023 / A loss of R21 120 for 2024 against a profit of R531 916 in 2023.
+
+&#x20;
+
+###### 3.3.3
+
+Kyla plans to increase the production of hiking bags by an additional 2 500 units over the next financial year. Assuming no change to the current cost structure, calculate the additional net profit that she could expect to earn in 2025.  (5)
+
+
+
+\####### Answer
+
+\[2 500(780-615) - 21 120] = 391 380
+
+OR
+
+> 1 105 500   –   714 120
+
+OR
+
+&#x20;(4 200 + 2 500 – 4 328)   x   165
+
+OR
+
+>Let the expected profit = y 
+
+(714 000 + y)/(780 - 615) = (4 328 + 2 372)
+
+y = 1 105 500 - 714 000 = 391 500
+
+&#x20;
+
+###### 3.3.4
+
+Comment on the fixed cost per unit of hiking jackets and explain the major cause for the change in this unit cost.   (4)
+
+
+
+\####### Answer
+
+>Comment: Although the fixed cost per unit increased (from R130) to R196,50 / by R66,50 / by 51,1%, the total fixed cost is relatively constant and well controlled; and fixed costs are not related to the level of production. 
+
+
+
+>Explanation:
+
+* A decrease in production (from 6 000 units to 4 000 units) contributed to the increase in the fixed cost per unit / Resulted in less units produced to carry the fixed cost i.e. dis-economies of scale.
+* Inefficiency in manufacturing process due to equipment breakdowns or wastage of resources.
+
+>\\\\\\\[Do not accept increase of R6 000 in total fixed cost for this question] 
+
+&#x20;
+
+###### 3.3.5
+
+Identify the production cost of hiking jackets that should be of serious concern to Kyla. Provide TWO valid solutions to this problem.  (4)
+
+
+
+\####### Answer
+
+\-Direct labour cost   \[Do not accept any other alternatives for this question]
+
+\-DLC increased (from R110) to R175 / by R65 / by 59%.
+
+
+
+>Any 2 valid solutions
+
+* Monitor overtime usage to identify area of concern / control overtime
+* Monitor / better supervision of work during normal time
+* Have back-up plans for load-shedding (disruptions)
+* Set targets to be completed at regular intervals / performance incentives must be tied to productivity targets / pay according to units produced
+* Training / cross-training of employees to perform multiple tasks
+* Recruit skilled employees
+* Adopt new technology (advanced machinery) to complete hiking jackets in less time / ensure greater accuracy and consistency
+
+
+
+
+
+### 4
+
+#### 4.1
+
+\-T2FIT Manufacturers, owned by Mark Fit, manufactures T-shirts. The financial year ended on 28 February 2023.
+
+
+
+##### INFORMATION:
+
+###### A. Stock records:
+
+\####### (i)  Raw material (fabric to manufacture T-shirts):
+
+* Fabric is issued from the storeroom to the factory for production.
+* The weighted-average method is used to determine the value of  the fabric.
+
+\-NOTE: 1,2 metres of fabric is required to make one T-shirt.
+
+&#x20;
+
+\-The following information was extracted from the records:
+
+||METRES|AMOUNT (R)|
+|-|-|-|
+|Stock balance on 1 March 2022|1 600 m|64 800|
+|Purchases|18 800 m|894 000|
+|April 2022|6 400 m|288 000|
+|August 2022|7 000 m|336 000|
+|January 2023|5 400 m|270 000|
+|Available for use|20 400 m|958 800|
+|Raw material issued to the factory|18 900 m|?|
+|Stock balance on 28 February 2023|1 500 m|?|
+
+
+
+\####### (ii)  Work-in-progress stock:
+
+||28 Feb. 2023|1 Mar. 2022|
+|-|-|-|
+|Balance|235 500|0|
+
+
+
+
+
+###### B. Factory overhead costs:
+
+\-The bookkeeper calculated the factory overheads as R600 000. However, he made the following errors which must be corrected:
+
+&#x20;
+
+\####### (i)
+
+\-The closing stock of factory indirect material, R7 000, was omitted.
+
+&#x20;
+
+\####### (ii)
+
+\-The total water and electricity cost for the year, R84 000, was
+
+included in factory overheads. This should be allocated as follows:
+
+
+
+|Office|15%|
+|-|-|
+|Selling and distribution|25%|
+|Factory|60%|
+
+
+
+\####### (iii)
+
+\-Factory insurance of R45 000 was allocated according to the old ratio of 3 : 1 : 2 for factory, sales and office respectively. It should
+
+have been allocated according to floor space, as follows:
+
+
+
+|Factory|Sales|Office|
+|-|-|-|
+|1 500 m^2|300 m^2|600 m^2|
+
+
+
+###### C. Additional information:
+
+\####### (i)
+
+\-Direct labour cost, R408 600
+
+
+
+\####### (ii)
+
+Number of T-shirts manufactured, 15 000 units
+
+
+
+&#x20;
+
+##### REQUIRED:
+
+###### 4.1.1
+
+\-Refer to Information A.
+
+\-Calculate the direct material cost. (4)
+
+
+
+\####### Answer
+
+&#x20;\[958 800 / 20 400] × 18 900 = R888 300
+
+OR
+
+\[64 800 + 894 000] -  \[1 500 × 47] = R888 300
+
+&#x20;
+
+###### 4.1.2
+
+\-Refer to Information B.
+
+\-Calculate the factory overhead costs for the year by completing the table in the ANSWER BOOK. (7)
+
+&#x20;
+
+\####### Answer Sheet
+
+|Incorrect total|600 000|
+|-|-|
+|||
+|||
+|||
+|Correct total for factory overhead costs||
+
+
+
+\####### Answer
+
+|Incorrect total|600 000|
+|-|-|
+|Indirect material|(7 000)|
+|Water and electricity(\[84 000 × 40%] OR \[12 600 + 21 000] OR \[-84 000 + (84 000 × 60%)])|(33 600)|
+|Insurance (\[90 000 × 5/8] - 45 000 OR 45 000 - \[90 000 - 56 250])|11 250|
+|Correct total for factory overhead costs|570 650 (must include 600 000)|
+
+
+
+
+
+###### 4.1.3
+
+\-Prepare the Production Cost Statement for the year ended
+
+28 February 2023. (5)
+
+
+
+\####### Answer Sheet
+
+|||
+|-|-|
+|Direct labour costs|408 600|
+|||
+|||
+|Total cost of production||
+|||
+|||
+|||
+|Cost of production of finished goods||
+
+
+
+\####### Answer
+
+|Direct material costs|888 300|
+|-|-|
+|Direct labour costs|408 600|
+|Prime costs|1 296 900|
+|Factory overhead costs|570 650|
+|Total cost of production|1 867 550|
+|Work-in-progress (beginning)|0|
+||1 867 550|
+|Work-in-progress (end of year)|(235 500)|
+|Cost of production of finished goods|1 632 050|
+
+
+
+&#x20;
+
+###### 4.1.4
+
+\-Calculate the cost of the wastage of raw materials. (4)
+
+
+
+\####### Answer
+
+>Metres: (18 900 - 18 000) × R47 = R42 300
+
+OR
+
+>\\\\\\\[(15 750 - 15 000) × 1,2] × R47 = R42 300
+
+OR
+
+>888 300 - 846 000 = 42 300
+
+###### 
+
+###### 4.1.5
+
+\-Mark is concerned about the increase in the cost of raw materials over the financial year. Provide TWO strategies that Mark can use to address the problem of wastage.  (2)
+
+
+
+\####### Answer
+
+Any TWO valid strategies
+
+Possible responses:
+
+* Improve the training of factory workers.
+* Use cutting patterns / cutting technology / cutting machines / order pre-cut fabric.
+* Use material of a better quality / cheaper supplier / change suppliers.
+* Regular servicing/maintaining of machines.
+* Use offcuts effectively for related products, e.g. caps, hoodies.
+* Pay incentives/bonuses for minimising wastage; encourage efficiency.
+* Increase supervision / monitor production to ensure workers are not careless.
+
+
+
+#### 4.2
+
+Lighting Kings (PTY) LTD manufactures light bulbs. Richard Smith, the CEO (chief executive officer), intended to reduce the production cost of Orion bulbs due to technological changes and to introduce the new Starlet bulbs by setting up a new factory.
+
+
+
+##### INFORMATION
+
+||FACTORY A- ORION|FACTORY A- ORION|FACTORY B - STARTLET|
+|-|-|-|-|
+||2023|2022|2023|
+|Number of units produced and sold|163 000|198 860|225 000|
+|Total cost of production per unit|R36,00|R28,54|R49,04|
+|Break-even units|149 145|124 808|122 104|
+|||||
+||R|R|R|
+|Total sales|7 498 000|8 352 120|15 300 000|
+|Selling price per unit|46,00|42,00|68,00|
+|Variable costs per unit|26,00|18,10|40,90|
+|Direct material|10,60|10,20|22,50|
+|Direct labour|11,20|6,70|14,80|
+|Selling and distribution|4,20|1,20|3,60|
+|||||
+|Total fixed cost|2 982 900|2 982 900|3 309 000|
+|Fixed cost per unit|18,30|15,00|14,71|
+|Factory overhead cost|2 314 600|2 314 600|2 640 700|
+|Factory overhead cost per unit|14,20|11,64|11,74|
+|Administration cost|668 300|668 300|668 300|
+|Administration cost per unit|4,10|3,36|2,97|
+
+
+
+##### REQUIRED:
+
+###### 4.2.1
+
+\-Do a calculation to confirm that the 2023 break-even point of 149 145 units for Orion bulbs is correct. (3)
+
+
+
+\####### Answer
+
+(163 000 × 18,30)/(46 - 26) = 149 145
+
+
+
+OR
+
+
+
+\[46 × 149 145] - \[26 × 149 145] - 2 982 900 = 0
+
+&#x20;
+
+###### 4.2.2
+
+\-Identify and explain TWO cost items (with figures) that may have contributed to the increase in the cost of production per unit.
+
+\-Provide a reason in each case. Note that the current inflation rate is 7%. (6)
+
+
+
+\####### Answer
+
+|Cost item|Direct labour cost|Factory overhead cost|
+|-|-|-|
+|Figures|per unit cost increased from R6,70 to R11,20/by R4,50/by 67,2%|per unit increased (from R11,64) to R14,20 / by R2,56 / by 22%|
+|Reason|-Poor supervision <br />-Excessive overtime / linked to load shedding or other disruptions / needed to meet targets  <br />-Inflationary increases in wages (not linked to <br />production). <br />-Poor or lack of effective training.  <br />-Poor recruitment policy.  <br />-Lack of motivation – no incentives or rewards for effort.|-Diseconomies of scale / drop in production while FOHC remains constant / economies of scale not being achieved.  <br />-Poor management / supervision of production <br />process – drop in production. <br />{Do not accept increases in specific expenses such as rent or <br />electricity (total FOHC was constant over the two years).  }|
+
+
+
+&#x20;
+
+###### 4.2.3
+
+\-Explain whether the new Starlet bulbs were a good idea or not.
+
+\-Provide TWO points. Quote figures. (4)
+
+
+
+\####### Answer
+
+Any TWO valid points
+
+Comparison: Starlet exceeds or is better than Orion
+
+|Better sales revenue|By R7 802 000 (15 300 000 – 7 498 000) / by 104%|
+|-|-|
+|More units sold|By 62 000 units (225 000 – 163 000) / by 38%|
+|Better profit|By 89 041 units above BEP (102 896 – 13 855)  <br />Better CPU by R7,10 (27,10 – 20,00) includes VC  <br />By R2 511 382 (2 788 482 – 277 100).|
+|Less units to break-even|By 27 041 (149 145 – 122 104)|
+|\* Significant profit on   <br />  sales of Starlet bulbs|Produced and sold 102 896 units above the BEP <br />(225 000 – 122 104) OR profit of R2 788 482.|
+
+
+
+&#x20;
+
+Negatives trends in Orion:
+
+|More expensive to <br />produce|BEP increased by 24 337 units (149 145 – 124 808) <br />Marginal increase of 13 855 units above the BEP.|
+|-|-|
+|Not popular – drop in <br />production / sales levels|By 35 860 units (198 860 – 163 000) / 18%|
+|Drop in sales revenue|By R854 120 (8 352 120 – 7 498 000) / 10,2%|
+
+
+
+
+
+### 5
+
+#### 5.1
+
+LADOO MANUFACTURERS makes leather purses. The financial year ended on 28 February 2023.
+
+
+
+##### INFORMATION:
+
+###### A.
+
+Work-in-progress stock balance on 1 March 2022 was R542 000.
+
+&#x20;
+
+###### B.  Details of the workers in production:
+
+|Number of workers|40|
+|-|-|
+|Basic (normal) wage rate|R60 per hour|
+|Normal time hours worked by each worker|1 920 hours|
+|Overtime (in total)|R1 142 000|
+
+
+
+###### C.
+
+The bookkeeper calculated the factory overhead cost at R2 638 600.
+
+The following costs were omitted and must be taken into account:
+
+* Insurance is a fixed monthly premium for the entire financial year.  The amount paid, R235 950, includes the premium for March 2023.  2/3 of this expense relates to the factory.
+* Water and electricity allocated to the office was R69 200. Note that water and electricity is shared according to floor space, as follows:
+
+|Factory|Sales|Office|
+|-|-|-|
+|560 m^2|240 m^2|160 m^2|
+
+
+
+* The following entry must be corrected:
+
+\-Rent of R316 000 was recorded in the factory overhead cost. However, the bookkeeper used the incorrect ratio of 2 : 5 : 1 for Factory, Sales and Office. The correct ratio is 5 : 2 : 1 respectively.
+
+
+
+###### D.
+
+Total prime cost for the year amounted to R12 500 000.
+
+&#x20;
+
+###### E.
+
+Total production for the year, 33 500 units, were produced at a cost of R475 per unit.
+
+
+
+##### REQUIRED:
+
+###### 5.1.1 Refer to Information C.
+
+\-Calculate the factory overhead cost.  (8)
+
+&#x20;
+
+\####### Answer sheet
+
+|TOTAL before corrections|2 638 600|
+|-|-|
+|||
+|||
+|||
+|||
+
+
+
+\####### Answer
+
+|TOTAL before corrections|2 638 600|
+|-|-|
+|Insurance  (\[235 950 – 18 150] × 2/3)  or (  \[235 950 × 12/13] × 2/3)|145 200|
+|Water and electricity (69 200 × \[560/160]  OR  415 200 × \[560/960] )|242 200|
+|Rent expenses (\[1 264 000 × 5/8] - 316 00 OR 316 000 × 3/2 OR 158 000 × 3)|474 000|
+||3 500 000|
+
+
+
+
+
+###### 5.1.2
+
+Prepare the Production Cost Statement on 28 February 2023.  (10)
+
+
+
+\####### Answer sheet
+
+|||
+|-|-|
+|||
+|PRIME COST|12 500 000|
+|||
+|TOTAL MANUFACTURING COST||
+|Work-in-progress at beginning of the year|542 000|
+|||
+|Work-in-progress at end of the year||
+|COST OF PRODUCTION OF FINISHED GOODS||
+
+
+
+&#x20;####### Answer
+
+|Direct material cost|6 750 000|
+|-|-|
+|Direct labour cost (\[40 × 60 × 1 920] +  1 142 000 )||
+|PRIME COST|12 500 000|
+|Factory overhead cost|3 500 000|
+|TOTAL MANUFACTURING COST|16 000 000|
+|Work-in-progress at beginning of the year|542 000|
+||16 542 000|
+|Work-in-progress at end of the year|(629 500)|
+|COST OF PRODUCTION OF FINISHED GOODS|15 912 500|
+
+
+
+#### 5.2
+
+The business manufactures designer shirts. The financial year ends on  30 April each year. The business is owned by Lez Styles.
+
+&#x20;
+
+##### INFORMATION:
+
+###### A. Lez's general strategic decisions with effect from 1 May 2023:
+
+* Lez decided to improve the quality of the shirts to be more competitive and to export to retailers in other countries.
+* He changed to a new supplier of the fabric (raw materials) and employed some highly skilled and creative workers to replace workers who resigned or retired.
+* Factory overheads for 2023 included a training programme for factory workers (R600 000) and the hiring of equipment with the latest technology for R1,4 m per year.
+
+
+
+###### B. Production and cost
+
+||2023|2022|
+|-|-|-|
+|Number of units produced and sold|10 500 shirts|6 500 shirts|
+|Selling price|R1 830|R1 430|
+|Break-even point|4 815 shirts|4 267 shirts|
+
+||2023 Total|2023 Per Unit|2022 Total|2022 Per Unit|
+|-|-|-|-|-|
+|VARIABLE COSTS|5 916 000|563|3 047 500|469|
+|Direct materials cost|3 780 000|360|1 787 500|275|
+|Direct labour cost|936 000|89|960 000|148|
+|Selling and distribution cost|1 200 000|114|300 000|46|
+||||||
+|FIXED COSTS|6 100 000|581|4 100 000|631|
+|Factory overhead cost|5 600 000|533|3 600 000|554|
+|Administration cost|500 000|48|500 000|77|
+|TOTAL COST OF PRODUCTION|12 016 000|1 144|7 147 500|1 100|
+
+
+
+
+
+###### C.
+
+\-Lez undertook a short course on managerial accounting to enable him to analyse the production costs more effectively every month. He has analysed the following production costs:
+
+
+
+|Raw materials:|2023|2022|
+|-|-|-|
+|Cost of fabric per metre|R200|R110|
+|Metres of fabric per shirt (including wastage)|1,8 metres|2,5 metres|
+|Fabric used in metres|43 200 metres|44 000 metres|
+
+|Direct workers:|||
+|-|-|-|
+|Number of direct workers|12 workers|15 workers|
+|Average wages per worker p.a.|R78 000|R64 000|
+|Hours per worker per year|1 920 hours|1 920 hours|
+|Hours worked by all workers|23 040 hours|28 800 hours|
+|Average number of shirts produced per worker|875 shirts|433 shirts|
+
+
+
+
+
+##### REQUIRED:
+
+&#x20;
+
+\-NOTE:  Provide evidence in the form of figures or calculations to support the comments and explanations required below.
+
+&#x20;
+
+###### 5.2.1 Break-even point, production and profit:
+
+* Do a calculation to confirm that the break-even point for 2023 is correct.  (3)
+* Comment on the level of production and the break-even point for the past two years. Explain whether Lez Styles would be happy about the trends in these results and the profit he is earning. Provide figures or calculations.  (4)
+
+
+
+\####### Answer
+
+* CALCULATION
+
+\[5 600 000 + 500 000]/(R1 830 - R563) OR \[10 500 × 581]/(R1 830 - R563) =  4 814,5  or 4 815 units (given)
+
+
+
+OR
+
+&#x20; Sales at BEP - total FC -  VC at BEP = 0
+
+8 810 576,2 – 6 100 000 – 2 710 576,2 = 0
+
+
+
+* COMMENT
+
+&#x20;-Explanation  (must include comparison between production and BEP for full marks)
+
+\-Comparative figures
+
+&#x20;
+
+>Possible responses for 4 marks:   
+
+* The business produced 5 685 units more than  BEP (10 500 – 4 815) / made a profit on 5 685 units / on 54% of units produced / profit of R7 202 895 (R1 267 x 5 685).
+* The business made a profit on 5 685 units in 2023 compared to a profit on 2 233 units / on 34% of units produced in 2022 (6 500 – 4 267); an additional 3 452 units.
+
+&#x20;
+
+>Response for 2 marks maximum: 
+
+\-If production is not compared to BEP, award marks for only ONE option below:
+
+* Production increased by 4 000 units (10 500 – 6 500) / by 61,5%.
+* BEP increased by 548 units (4 815 - 4 267) / 12,8%.
+
+&#x20;
+
+###### 5.2.2 Fixed costs:
+
+Explain why Lez is not concerned about the fixed costs increasing to R6,1 m in 2023. Quote figures.  (4)
+
+
+
+\####### Answer
+
+* Enjoys economies of scale due to an increase in production (from 6 500 units) to 10 500 units / by 4 000 units / by 61,5%.
+* Fixed cost per unit decreased (from R631) to R581 / by R50 / by 7,9%, due to increased production.
+
+###### 
+
+###### 5.2.3 Selling and distribution cost:
+
+a) Identify how the selling and distribution costs in total and per unit changed over the two years.  (2)
+
+
+
+\####### Answer
+
+>Actual comparative amounts (figures):
+
+\-Total S\&D costs increased (from R300 000) to R1 200 000 / by R900 000 / 300%.
+
+
+
+>Per-unit comparative figures:
+
+\-The unit costs increased (from R46) to R114 / by R68 / by 148%.
+
+
+
+b) Explain TWO reasons why Lez deliberately wanted to adjust this cost. (2)
+
+
+
+\####### Answer
+
+Any TWO valid reasons.
+
+* Wanted to be more competitive in the international market.
+* Wanted to reach a wider market – appeal to foreign markets.
+* More affordable to overseas customers / will be prepared to pay.
+* Needed to spend more to take into account exchange rates.
+* Anticipated more expensive shipping costs and custom duties.
+
+&#x20;
+
+###### 5.2.4 Direct material and direct labour: Refer to Information A and C.
+
+\-Lez made specific decisions to improve the business and its product.
+
+\-Explain how the decisions he took have benefited the business by
+
+providing:
+
+
+
+a)TWO separate points relating to the raw material   (6)
+
+
+
+\####### Answer
+
+|TWO different points explained|Specific figure/s|
+|-|-|
+|Prepared to pay a higher price for a better quality material to produce a better quality shirt.|Paid R200 (R110 in 2022) /  <br />81,2% per metre more.|
+|Increasing the price did not deter or discourage customers from buying the new shirts.|4 000 more shirts sold /  <br />SP increased (from R1 430) to <br />R1 830 / by R400 / by 28%|
+|Good quality material resulted in less wastage in production.|-Used 1,8m material per shirt in 2023 (2,5m in 2022).<br />-Used 43 200m to make 10 500 shirts in 2023 (44 000m for 6 500 shirts in 2022) / 800m or 1,8% less.|
+
+
+
+
+
+b)TWO separate points relating to the direct labour       (6)
+
+&#x20;
+
+\####### Answer
+
+|TWO different points explained|Specific figure/s|
+|-|-|
+|Better recruitment and training <br />resulted in a more motivated and efficient workforce.|Produced an extra 4 000 units / 62% more in 2023.  <br />Average output per worker increase (from 433) to 875 shirts / 442 more / 5,5 shirts per hour compared to 3,4 <br />shirts per hour in 2022.|
+|Investment in equipment and training resulted in reduced direct labour cost.|DLC decreased by R24 000 /  <br />DLC per unit decreased (from R148) to R89 / by 40%.|
+|Decreasing the number of workers and paying an higher average wage (in recognition of skills) led to better performance in production.|From 15 to 12 workers / <br />Average wage increase(from <br />R64 000) to R78 000 / by R14 000 / by 22%.|
+|Maintaining the hours worked per worker resulted in a drop in the total hours in production (\& a drop in total wages) but did not negatively affect <br />production.|1 920 hours per worker / total hours dropped (from 28 800) to 23 040 / by 5 760 / 20%. <br />DLC decreased by R24 000.|
+
+
+
+### 6
+
+#### 6.1
+
+Choose an example from COLUMN B that matches a cost category in    COLUMN A. Write only the letter (A–E) next to the question numbers  (1.1.1 to 1.1.4) in the ANSWER BOOK, e.g. 1.1.5 F.
+
+||COLUMN A|COLUMN B|
+|-|-|-|
+|6.1.1|Administration|A. carriage on raw material purchased|
+|6.1.2|Direct material|B. salary of the factory foreman|
+|6.1.3|Selling and distribution|C. rent expense for the office building|
+|6.1.4|Factory overhead|D. workers in production|
+|6.1.5||E. commission paid to sales staff|
+
+
+
+##### Answer
+
+|6.1.1|C|
+|-|-|
+|6.1.2|A|
+|6.1.3|E|
+|6.1.4|B|
+
+
+
+
+
+#### 6.2
+
+Weza Stitches, owned by Annie Brown, manufactures bathroom towel sets.  Anne buys fabric from local suppliers. The information relates to the financial year ended 30 June 2022. Note that there were no work-in-progress stock balances.
+
+
+
+##### INFORMATION:
+
+###### A. Direct labour cost:
+
+* Six workers were employed in production in 2021 and 2022.
+* Each of them worked 1 840 hours normal time during the year at R40 per hour.
+* The overtime register reflected a combined total of 230 hours worked at 1,6 times the normal time rate.
+* Production staff received a production bonus of 8% of the normal time wages.
+
+&#x20;
+
+###### B. Factory overhead cost:
+
+The bookkeeper calculated the factory overhead cost as R541 600.
+
+However, he made the following errors, which must still be adjusted:
+
+* He included the entire insurance expense of R32 500 to the factory overhead cost, instead of only 60% of this expense.
+* He allocated R54 000 to factory water and electricity using the  ratio 3 : 2 : 2 for factory, sales and office respectively. This expense should have been split in the ratio 2 : 1 : 1.
+
+&#x20;
+
+###### C. Additional information: (after taking all corrections into account)
+
+||30 JUNE 2022 TOTAL|30 JUNE 2022 Per unit|30 JUNE 2021 TOTAL|30 JUNE 2021 Per unit|
+|-|-|-|-|-|
+|Variable costs:|R1 561 600|R244|R1 317 750|R251|
+|Direct material|R652 800|R102|R672 000|R128|
+|Direct labour|?|?|R498 750|R95|
+|Selling and distribution|||R147 000|R28|
+||||||
+|Fixed costs:|R806 400|R126|R792 750|R151|
+|Factory overheads|||||
+|Administration|||||
+||||||
+|Number of units <br />produced and sold|6 400 units||5 250 units||
+|Break-even point|6 156 units||6 954 units||
+|Selling price per unit||R375||R365|
+
+
+
+
+
+##### REQUIRED:
+
+###### 1.2.1
+
+Calculate the following for the financial year ended 30 June 2022:
+
+\####### a)
+
+Direct labour cost (7)
+
+
+
+\######## Answer
+
+(6 × 1 840 × R40) + (230 × R64 × R40 × 1,6) + 35 328 = 491 648
+
+
+
+OR
+
+
+
+(441 600 × 108%) + 14 720 = 491 648
+
+
+
+\####### b)
+
+Factory overhead cost (6)
+
+&#x20;
+
+\######## Answer Sheet
+
+|Total before corrections|541 600|
+|-|-|
+|Insurance||
+|Water and electricity||
+|TOTAL||
+
+
+
+\######## Answer
+
+|Total before corrections|541 600|
+|-|-|
+|Insurance ( – 32 500 + 19 500 or 32 500 x 40%)|-13 000|
+|Water and electricity (-54 000 + \[126 000 × 2/4])|+9 000|
+|TOTAL|537 600|
+
+
+
+\####### c)
+
+Total cost of production  (4)
+
+
+
+\######## Answer
+
+652 800 + 491 648 + 537 600 = R1 682 048
+
+&#x20;
+
+###### 6.2.2
+
+Annie is concerned that fixed costs increased to R806 400. Explain
+
+why she should not be concerned. Provide TWO points. Quote
+
+figures.  (4)
+
+
+
+\####### Answer
+
+* Economies of scale was achieved due to an increase in production by 1 150 units / from 5 250 to 6 400 / 21,9%
+* Fixed costs per unit decreased by R25 / from R151 to R126 / by 16,6% (as fixed costs remain relatively stable / not influenced by the level of production )
+* Total fixed cost increased by R13 650 / from R792 750 to R806 400 / by 1,7% which is below the inflation rate.
+
+&#x20;
+
+###### 6.2.3 Refer to Information C.
+
+Comment on whether the production staff deserves the production
+
+bonus that they received. Provide THREE points, with figures.   (6)
+
+&#x20;
+
+\####### Answer
+
+>POINT 1:
+
+* Production increased from 5 250 to 6 400 units / by 1 150 units / by 21,9%
+* BEP decreased from 6 954 to 6 156 / by 798 units / by 11,5%
+* The business made a profit on 244 units (or R31 964) compared to a loss on 1 704 units (or R194 256) last year.
+
+
+
+>POINT 2:
+
+* Direct material cost per unit decreased from R128 to R102 /by R26 / by 20,3%; an indication of  good control / less wastage / efficiency in production / better training
+* Direct labour cost per unit decreased from  R95,00 to R76,82 / by R18,18 / by 19,1% (see 1.2.1 DLC); an indication that it is being well managed; meeting targets during normal time.
+
+
+
+>POINT 3:
+
+* Overtime was limited to only 230 hours / 12,5% of normal time / 11,1% of total hours spent in production (small proportion of time spent in production / saving the company on overtime rates)
+* Decrease in total variable costs from R251 per unit to R244 / by R7,00 / 2,8%
+
+
+
+###### 6.2.4
+
+Annie wants to improve her profit by R50 000 during the next financial year while maintaining costs. Calculate the additional units that must be produced to achieve this target. (4)
+
+
+
+\####### Answer
+
+50 000/(375 - 244) = 382 units
+
+
+
+
+
+### 7
+
+#### 7.1
+
+\-Stylish Suits, owned by Fiona Radebe, manufactures one type of  fashionable men's suit. The financial year ended on 31 March 2022.
+
+
+
+##### INFORMATION:
+
+###### A. Raw material stock:
+
+* During the financial year, the business purchased 12 250 metres of fabric for the manufacture of suits: R5 512 500. This was secured in the storeroom.
+* Fabric was issued to the factory to meet the production target of 3 000 suits, as follows: 3,2 metres of fabric and an allowance of 5% thereof for wastage required to manufacture one suit.
+
+
+
+###### B.  Finished goods stock:
+
+||31 March 2022|31 March 2021|
+|-|-|-|
+|Finished goods|R195 000|R260 000|
+
+
+
+###### C. Direct and indirect labour costs:
+
+|Employee <br />description|No. of <br />employees|Basic monthly salary per employee|Total annual <br />bonus|
+|-|-|-|-|
+|Factory machinists|40|R9 800|?|
+|Factory supervisors|3|R17 500|R84 000|
+
+
+
+* The factory machinists are involved in the production of suits.
+* The earnings of the supervisors have been recorded as factory overheads.
+* Annual bonuses were paid to all employees. The bonus budget is distributed between the machinists and the supervisors in the  ratio 5 : 2 respectively.
+* All employees pay 1% of their gross earnings to the UIF. The employer contributes to this fund on the R-for-R basis.
+
+
+
+###### D. The bookkeeper provisionally calculated the following amounts for the current financial year:
+
+|Factory overhead cost|R941 500|
+|-|-|
+|Selling and distribution cost|866 400|
+|Administration costs|532 200|
+
+
+
+
+
+&#x20;
+
+###### E. The bookkeeper omitted to record the following adjustments when he calculated the amounts reflected in Information D above:
+
+* An invoice of R59 500 for consumable stores was not recorded. The factory used 60% of this and the office used the balance.
+* Rent paid for the selling and distribution section amounted to R186 000. Rent is apportioned according to floor space as follows:
+
+|Factory|Selling and distribution|Administration|
+|-|-|-|
+|400 m^2|300 m^2|100 m^2|
+
+
+
+* Factory insurance of R31 500 per month was paid and correctly recorded. The premium was increased by 8% from 1 January 2022. The premiums for January to March 2022 had not been paid or recorded yet.
+
+
+
+###### F. Production and sales:
+
+* 3 000 suits were manufactured during the financial year at a unit cost of R3 750.
+* Total sales for the financial year amounted to R18 104 000.
+
+
+
+##### REQUIRED:
+
+###### 7.1.1
+
+\-Calculate the following for the Production Cost Statement:
+
+\####### a)
+
+Direct material cost  (6)
+
+
+
+\######## Answer
+
+3 000 × 3,2m × 105% × 450 = 4 536 000
+
+
+
+Be aware of various permutations for calculations, e.g.
+
+9 600 × 105% × 450   or 10 080 × 450   or 3 000 × 3,36 × 450
+
+
+
+OR
+
+5 512 500  –   (2 170 × 450)
+
+
+
+\####### b)
+
+Direct labour cost  (6)
+
+
+
+\######## Answer
+
+40 × 9 800 × 12; 4 704 000
+
+Bonus payments; 210 000
+
+Gross wage; 4 914 000
+
+
+
+UIF (1% of gross);  49 140
+
+
+
+DLC = Gross wage + UIF = 4 963 140
+
+
+
+\####### c)
+
+Factory overhead cost (7)
+
+
+
+\######## Answer
+
+TOTAL; 941 500
+
+Consumable stores; 35 700
+
+Rent expense; 248 000
+
+Insurance; 102 060
+
+TOTAL; 1 327 260
+
+&#x20;
+
+###### 7.1.2
+
+\-Complete the Abridged Statement of Comprehensive Income (Income Statement) for the year ended 31 March 2022.   (11)
+
+
+
+\####### Answer Sheet
+
+|Sales|18 104 000|
+|-|-|
+|Cost of sales||
+|Gross profit||
+|Operating expenses||
+|Selling and distribution cost (866 400 +||
+|Administration costs (532 200||
+|Net profit for the year||
+
+
+
+
+
+\####### Answer
+
+|Sales|18 104 000|
+|-|-|
+|Cost of sales \[(260 000 + (3 000 × 3 750) - 195 000) OR (4 536 000 + 4 963 140 + 1 327 260) ]|(11 315 000) or 10 891 400|
+|Gross profit (Sales - COS)|6 789 000  OR 7 212 600|
+|Operating expenses|(1 670 400)|
+|Selling and distribution cost (866 400 + 186 000)|1 052 400|
+|Administration costs (532 200 + 23 800 + 62 000)|618 000|
+|Net profit for the year|5 118 600 or 5 542 200|
+
+
+
+
+
+#### 7.2 Unit cost and break-even analysis:
+
+Fiona also owns three other factories that manufacture shirts, shoes and ties respectively. Their financial year ended on 31 March 2022.
+
+&#x20;
+
+NOTE:
+
+* Production is based on orders received.
+* The current inflation rate is 6%.
+
+
+
+##### INFORMATION:
+
+The following information relates to the financial years ended 31 March:
+
+DETAILS; SHIRT FACTORY\[2022; 2021]; SHOE FACTORY\[2022; 2021]; TIE FACTORY\[2022; 2021]
+
+Fixed cost per unit; R94,20; R97,90; R117,90; R97,80; R40,90; R45,80
+
+Factory overhead cost; R45,80; R45,50; 73,10; R62,30; 21,80; R24,00
+
+Administration; R45,80; R48,50; R73,10; R62,30; R21,80; R24,00
+
+Variable cost per unit; R246,60; R216,50; R282,40; R256,20; R148,20; R138,50
+
+Direct material; R67,90; R66,00; R132,40; R123,50; R48,00; R36,30
+
+Direct labour; R136,70; R110,00; R105,20; R97,20; R81,10; R80,40
+
+Selling and distribution; R42,00; R40,50; R44,80; R35,50; R19,10; R21,80
+
+Selling price per unit; R360,00; R340,00; R460,00; R420,00; R200,00; R200,00
+
+Units produced and sold; 22 000; 20 000; 15 000; 21 200; 27 500; 24 000
+
+Break-even point; 7.2.1; 15 855; 9 958; 12 658; 21 713; 17 874
+
+
+
+##### REQUIRED:
+
+###### 7.2.1
+
+Calculate the break-even point for shirts in 2022. (4)
+
+
+
+\####### Answer
+
+(94,20 × 22 000)/(360 - 246,60) = 18 275,1
+
+&#x20;
+
+###### 7.2.2
+
+Fiona has invested in new equipment to make the shoes. She knows that she has saved 10% of the fixed costs for shoes, but she cannot understand why the fixed costs per unit increased. Explain. Provide figures. (2)
+
+
+
+\####### Answer
+
+* Production decreased from 21 200 units to 15 000 units / by 6 200 units / by 29,2% causing fixed cost per unit to increase from R97,80 to R117,90 / by R20,10 / by 20,6%  / dis-economies of scale / fixed costs not influenced by the level of production.
+* Fixed costs (FOHC) in 2021 were R1 320 760; and reduced to R1 096 500 in 2022 / difference: R 224 260 or 16,9% Although there was a reduction in total fixed costs, the fixed cost per unit increased due to decline in production (by 6 200 units).
+
+&#x20;
+
+###### 7.2.3
+
+Identify the variable cost that caused the biggest problem in EACH
+
+factory. Provide figures. Give a valid solution for EACH problem
+
+identified.  (9)
+
+
+
+\####### Answer
+
+||COST (with figures)|SOLUTION|
+|-|-|-|
+|SHIRT|-Direct labour (DLC)  <br />-Increased from  <br />R110,00 to R136,70 /  by R26,70 / by 24,3%|-Train (factory) workers to be more <br />efficient <br />-Improve supervision <br />-Reduce / control overtime / use <br />casual, cheaper labour after hours <br />-Set targets for normal time hours <br />(time and motion studies)  <br />-Incentives / bonuses if targets met|
+|SHOE|-Selling and distribution (SDC) <br />-Increased from  <br />R35,50 to R44,80 /  <br />by R9,30 / by 26,2%|-Reduce / monitor / look for cheaper / <br />more effective advertising <br />-Salespersons can be assigned to <br />other tasks when production drops <br />-Offer commission to salespersons <br />instead of a (fixed) basic salary  <br />-Outsource / reduce / monitor / insert <br />trackers to delivery services / use <br />cost-efficient vehicles (hybrid)|
+|TIE|-Direct material (DMC)  <br />-Increased from  <br />R36,30 to R48,00 /  <br />by R11,70 / by 32,2%|-Source cheaper suppliers (without <br />compromising quality)  <br />-Local supplier / reduce transport and storage costs  <br />-Buy in bulk to take advantage of <br />bulk discounts  <br />-Use off cuts (by-products) / minimise wastage <br />-Train / supervise (factory) workers|
+
+
+
+
+
+### 8
+
+#### 8.1
+
+The information relates to the financial year ended 28 February 2021 of Prudy Manufacturers. The business produces one style of travelling bag. The owner is Prudy Sithole.
+
+
+
+##### INFORMATION:
+
+###### A. Stock balances:
+
+||28 February 2021|1 March 2020|
+|-|-|-|
+|Finished goods stock|R96 000|R72 000|
+
+
+
+\-There is no work-in-progress at the beginning or end of the year.
+
+
+
+###### B.
+
+Raw material issued to the factory for production, R1 494 000.
+
+
+
+###### C.  Production wages:
+
+\-Information extracted from the production wages records:
+
+|NET WAGES PAID TO <br />PRODUCTION WORKERS|TOTAL DEDUCTIONS|
+|-|-|
+|R647 400|22% of gross wages|
+
+
+
+###### D. The bookkeeper calculated the following costs for the year ended 28 February 2021:
+
+&#x20;
+
+|Factory overhead cost|R520 280|
+|-|-|
+|Selling and distribution cost|R224 960|
+|Administration cost|R187 760|
+
+
+
+It was discovered that she did not take the following into account:
+
+* The telephone account of R22 400 was posted in error to the  factory overhead cost. This expense relates to the office.
+* The entire amount of rent expense, R98 400, was posted to the factory overhead cost. This expense should have been split in the ratio 7 : 2 : 1 between the factory, sales and administration departments.
+* The insurance expense of R26 400 was divided equally between the factory overhead cost and the sales department in error. 60% of  this expense relates to the factory and the balance applies to the  sales department.
+
+
+
+###### E. Sales:
+
+Total sales for the year amounted to R4 433 600.
+
+
+
+##### REQUIRED:
+
+Complete the following for the year ended 28 February 2021:
+
+###### 8.1.1
+
+Production Cost Statement   (10)
+
+
+
+\####### Answer Sheet
+
+|Direct material cost|1 494 000|
+|-|-|
+|||
+|Prime cost||
+|Factory overhead cost       <br />(520 280||
+|Cost of production of finished goods||
+
+
+
+\####### Answer Sheet
+
+|Direct material cost|1 494 000|
+|-|-|
+|Direct labour cost  (647 400 × 100/78 or + 182 600|830 000|
+|Prime cost|2 324 000|
+|Factory overhead cost       <br />(520 280 – 22 400 – 29 520 + 2 640|471 000|
+|Cost of production of finished goods|2 795 000|
+
+
+
+&#x20;
+
+###### 8.1.2
+
+Abridged Statement of Comprehensive Income (Income Statement) (11)
+
+
+
+\####### Answer Sheet
+
+|Sales|4 433 600|
+|-|-|
+|Cost of sales||
+|Gross profit||
+|Other expenses||
+|Selling and distribution costs <br />(224 960||
+|Administration cost <br />(187 760||
+|Net profit for the year||
+
+
+
+\####### Answer
+
+|Sales|4 433 600|
+|-|-|
+|Cost of sales (72 000 +2 795 000 {see PCS (2.1.1)} – 96 000 )|(2 771 000)|
+|Gross profit  {Sales – COS}|1 662 600|
+|Other expenses|(462 000)|
+|Selling and distribution costs <br />(224 960 + 19 680 – 2 640)|242 000|
+|Administration cost <br />(187 760 + 22 400 + 9 840)|220 000|
+|Net profit for the year|1 200 600|
+
+
+
+#### 8.2
+
+After completing the statements in QUESTION 2.1, the internal auditor of  Prudy Manufacturers suspects that the raw material (fabric) is not being controlled well in the storeroom and the factory.
+
+
+
+##### INFORMATION:
+
+###### A. Raw material (fabric):
+
+Fabric used in production is issued to the factory from the storeroom, as required. The record of fabric is as follows:
+
+
+
+||METRES|TOTAL AMOUNT|
+|-|-|-|
+|Raw material issued to factory|12 450|R1 494 000|
+|Balance on 1 March 2020|2 700|324 000|
+|Purchase of fabric during the year|10 800|1 296 000|
+|Balance on 28 February 2021|850|102 000|
+
+
+
+###### B. Additional information:
+
+* Fabric is purchased at a fixed cost price of R120 per metre.
+* It takes 1,5 metres of fabric to make one travel bag.
+* 7 800 bags were produced during the financial year.
+
+
+
+##### REQUIRED
+
+##### 8.2.1 Calculate:
+
+###### a)
+
+The metres of fabric missing from the storeroom
+
+&#x20;
+
+\####### Answer
+
+(2 700 + 10 800 – 12 450) – 850  = 200 metres
+
+
+
+###### b)
+
+The metres of fabric wasted in the factory
+
+
+
+\####### Answer
+
+12 450 - (7 800 × 1,5) = 750m
+
+&#x20;
+
+###### c)
+
+Apart from installing cameras, provide a specific strategy to improve internal control in the storeroom and factory. In EACH case, provide a different point.
+
+
+
+\####### Answer
+
+>Internal control strategy for Fabric missing from storeroom
+
+* Physical counts / random inspections / keep detailed stock records / control or monitor the movement of fabric
+* Rotation / division of duties / storeroom manager to be accountable
+* Improve security at receipt / dispatch points / limit access to storeroom
+* Storeroom staff to have lockers (no bags allowed in storeroom)
+
+&#x20;
+
+>Internal control strategy for metres of fabric wasted in the factory:
+
+* Improve training
+* Use cutting patterns / technology
+* Improve supervision
+* Make use /or buy good quality material
+* Effective use of off-cuts
+* Incentives for minimizing wastage
+* Regular servicing of machines
+
+
+
+##### 8.2.2
+
+Calculate the total cost of fabric lost and wasted and explain how this loss should be shown in the statements mentioned in
+
+QUESTION 8.1.   (3)
+
+
+
+\####### Answer
+
+(200 + 750) × R120 OR \[(200 × 120) + (750 × 120)] = 114 000
+
+
+
+>Explanation:
+
+\-Any valid answer, e.g.
+
+* Amount shown as an expense item (on the Income Statement)
+* Examples of possible expense items:  e.g. loss due to theft / administrative cost / selling and distribution cost  increased direct material cost / adjust factory overhead cost / cost of sales
+
+
+
+#### 8.3
+
+\-ROSEMARY'S TOY FACTORY manufactures toy teddy bears. There is no work-in-progress stock at the beginning or end of each year. The financial year ends on 31 December.
+
+\-Rosemary decided to address the problem of low profits made in 2020 by making some changes to improve sales and production.
+
+
+
+##### INFORMATION:
+
+&#x20;; 31 DECEMBER 2021\[AMOUNT (R); UNIT COST (R)]; 31 DECEMBER 2020\[AMOUNT (R); UNIT COST (R)]
+
+&#x20;Direct material cost; 490 000; 100,00; 320 000; 80,00
+
+&#x20;Direct labour cost; 274 400; 56,00; 288 000; 72,00
+
+&#x20;Selling and distribution cost; 176 400; 36,00; 96 000; 24,00
+
+&#x20;VARIABLE COST; 940 800; 192,00; 704 000; 176,00
+
+&#x20;Factory overhead costs; 160 000; 32,65; 160 000; 40,00
+
+&#x20;Administration cost; 64 000; 13,06; 64 000; 16,00
+
+&#x20;FIXED COST; 224 000; 45,71; 224 000; 56,00
+
+&#x20;; ; ; ;
+
+&#x20;Selling price per unit; ; R255; ; R240
+
+&#x20;; ; ; ;
+
+&#x20;Units produced and sold; 4 900 units; ; 4 000 units;
+
+&#x20;Break-even point; 3 556 units; ; 3 500 units;
+
+
+
+##### REQUIRED:
+
+###### 8.3.1
+
+\-Provide a calculation to confirm that the break-even point for the 2021 financial year is correct.  (3)
+
+
+
+\####### Answer
+
+224 000/(255 - 192) = 3 556 units
+
+
+
+OR
+
+Sales at BEP - Total FC - VC at BEP = 0
+
+(255 × 3555,55) - 224 000 - (192 × 3 555,55) = 0
+
+
+
+&#x20;
+
+###### 8.3.2
+
+\-Explain why Rosemary is pleased with the production level, sales and break-even point. Quote figures. (4)
+
+
+
+\####### Answer
+
+* Produced and sold 1 344 units above the BEP (4 900 – 3 556) / making a profit on 1 344 units
+* Made a profit (includes production and sales) on 1 344 units (4 900 – 3 556) in 2021 compared to 500 units (4 000 – 3 500) in 2020 / profit on an additional 844 units (168,8%)
+* Profit (includes production and sales) was R84 672 (1 344 x R63) in 2021 and R32 000 (500 x R64) in 2020; an increase in of R52 763 (164,8%)
+* Sales / production increased by 900 units (4 900 – 4 000) / by 22,5% whereas BEP increased by only 56 (3 556 – 3 500) / by 1,6%. – good control over costs.
+
+&#x20;
+
+###### 8.3.3
+
+\-Explain to Rosemary why the fixed cost per unit decreased from
+
+R56,00 to R45,71.  (2)
+
+
+
+\####### Answer
+
+&#x20;
+
+* Economies of scale: As more units are produced, fixed cost per unit would decrease
+* Increased production (by 900 units) resulted in a decrease in fixed cost per unit, due to fixed cost remaining fairly constant or not influenced by levels of production
+* The average fixed cost per unit would decrease as units produced increases / total fixed costs (constant) are divided by a large number of units.
+
+&#x20;
+
+###### 8.3.4
+
+\-Rosemary made deliberate decisions regarding variable costs to improve the business.
+
+\-Explain the decisions that she might have taken on these costs and
+
+how these could have had positive effects on the business. Quote
+
+figures. (6)
+
+
+
+\####### Answer
+
+\-Direct material cost
+
+* Increased from R80 to R100 per unit / by R20 / 25%
+* improved quality of teddy bears; justifies price increase
+* Better quality – satisfied customers – less returns – improved sales – higher profits
+
+
+
+\-Direct labour cost
+
+* Decreased from R72 to R56 per unit / by R16 / 22,2%
+* Improved efficiency through training
+* Better supervision of normal-time targets / more control over overtime.
+* Shift from physical labour to machines
+
+
+
+\-Selling and distribution cost
+
+* Increased from R24 to R36 per unit / by R12 / 50%
+* More advertising increased sales
+* Delivering to a wider area / offered free delivery
+* Commission to motivate sales persons
+
+
+
+### 9
+
+#### 9.1
+
+Choose a cost category from COLUMN B that matches a description in COLUMN A. (3)
+
+
+
+|COLUMN A|COLUMN B|
+|-|-|
+|9.1.1 Commission to salespersons|A. factory overhead cost|
+|9.1.2 Wages of factory maintenance staff|B. administration cost|
+|9.1.3 Office stationery expenses|C. direct labour cost|
+||D. direct material cost|
+||E. selling and distribution cost|
+
+
+
+##### Answer
+
+|COLUMN A|COLUMN B|
+|-|-|
+|9.1.1 Commission to salespersons|E. selling and distribution cost|
+|9.1.2 Wages of factory maintenance staff|A. factory overhead cost|
+|9.1.3 Office stationery expenses|B. administration cost|
+|||
+|||
+
+
+
+
+
+#### 9.2
+
+\-MEISIES OUTFITTERS manufactures clothing products. The owner is Minnie Zitha.  The information relates to school dresses which is one of the products they manufacture. Dresses are manufactured according to orders received and there is no work-in-progress. The financial year ended on 30 April 2021.
+
+
+
+##### INFORMATION:
+
+###### A.  Raw material stock (fabric used to make the dresses):
+
+\-Fabric is issued to the factory using the weighted-average method.
+
+||UNITS <br />(metres)|COST <br />per metre|TOTAL <br />COST|
+|-|-|-|-|
+|Stock of fabric on 1 May 2020|9 000|R14,20|R127 800|
+|Fabric purchased during the year|33 000|R17,00|R561 000|
+||42 000||R688 800|
+|Fabric issued to the factory|29 000|R16,40|R475 600|
+
+
+
+###### B. Production and sales:
+
+* Manufacturing one dress requires 1,6 metres of fabric.
+* 17 800 dresses were produced and sold during the financial year at R75 per dress.
+
+
+
+###### C.  Direct labour cost for the year:
+
+||WORKERS|HOURS <br />PER <br />WORKER|RATE|TOTAL|
+|-|-|-|-|-|
+|Basic wage (normal time)\*|8|1 250|R25|R250 000|
+|Total overtime worked|8|720|R45|R259 200|
+|Total employer's contributions||||R26 250|
+|TOTAL||1 970||R535 450|
+
+\*Normal time comprises a 5-day week of 8 hours per day. The factory operates for 46 weeks each year.
+
+
+
+###### D.  Factory overhead costs:
+
+\-The following costs were extracted from the records on 30 April 2021:
+
+|Factory rent expense|R122 400|
+|-|-|
+|Water and electricity|81 600|
+|Insurance on factory equipment|20 720|
+|Salary of the dressmaking supervisor|76 960|
+|Delivery expenses|36 800|
+|Wages of cleaners|155 760|
+|Depreciation: dressmaking machines|30 300|
+|Sundry factory expenses (dressmaking section)|10 670|
+
+
+
+&#x20;
+
+* Factory rent is split according to floor space occupied. The dressmaking section occupies 320 m2 of the total factory space of 1 280 m^2.
+* 15% of the total water and electricity account must be allocated to the dressmaking section.
+* Insurance on factory equipment was paid up to 30 June 2021. Dressmaking equipment comprises ⅓ of the total factory equipment.
+* Only one of the six cleaners, Susan, was allocated to the dressmaking section. Susan earns 10% less than the other five cleaners.
+
+&#x20;
+
+&#x20;
+
+###### E. Additional information relating to the dressmaking section:
+
+* Total variable costs amounted to R1 094 700 (R61,50 per unit)
+* Fixed costs, comprising factory overhead costs and administration costs, totalled R229 500
+
+
+
+
+
+##### REQUIRED:
+
+###### 9.2.1 Refer to Information D.
+
+\-Complete the Factory Overhead Cost Note for the school dresses. (10)
+
+
+
+\####### Answer Sheet
+
+|||
+|-|-|
+|||
+|||
+|||
+|Salary of dressmaking supervisor|76 960|
+|Depreciation on machines|30 300|
+|Sundry factory expenses|10 670|
+|TOTAL||
+
+
+
+\####### Answer
+
+|Factory rent   122 400 x 320/1280|30 600|
+|-|-|
+|Water and electricity 81 600 x 15%|12 240|
+|Insurance 20 720 x 12/14 x 1/3|5 920|
+|Indirect labour / wages to cleaners|23 760|
+|Salary of dressmaking supervisor|76 960|
+|Depreciation on machines|30 300|
+|Sundry factory expenses|10 670|
+|TOTAL|190 450|
+
+
+
+&#x20;
+
+###### 9.2.2
+
+Calculate the total cost of production of school dresses produced. (4)
+
+
+
+\####### Answer
+
+&#x20;475 600 + 535 450  + 190 450 = 1 201 500
+
+&#x20;
+
+###### 9.2.3
+
+Minnie is concerned about wastage of fabric in the dressmaking
+
+section. Calculate the cost of this wastage to the business. (5)
+
+&#x20;
+
+\####### Answer
+
+(29 000 – 28 480) x R16,40 = 8 528 OR
+
+(29 000 × 16,40) - ( 17 800 × 1,6m × 16,40) = 8 528OR
+
+(18 125 - 17 800) × 1,6m × R16,40 =  8 528
+
+
+
+&#x20;
+
+###### 9.2.4
+
+The internal auditor expressed concern about the direct labour cost for the school dresses.
+
+
+
+\####### a)
+
+Explain the problem that is of concern to the auditor.  Quote figures.  (3)
+
+
+
+\######## Answer
+
+* Normal hours worked is less than expected by 590 (1 840 – 1 250) / 32%.
+* Overtime hours is high; 36,5% of total production time worked (720/1 970)
+* Overtime pay is R9 200 more than the normal time pay (259 200 – 250 000) / exceeds normal time pay by R9 200.
+
+
+
+\####### b
+
+State TWO possible causes of this problem.  (2)
+
+
+
+\######## Answer
+
+\-Any TWO reasons  accept short, incomplete statements if message is clear
+
+* Interruptions due to load-shedding/lockdown (Covid -19 related) /strikes
+* Fluctuating periods of high and low demand (opening of schools/each term)
+* Poor supervision during normal time / deliberate wasting of time.
+* Authorizing overtime / exploiting overtime (due to higher overtime rate)
+
+&#x20;
+
+###### 9.2.5
+
+Provide a calculation to confirm that the break-even point for the current financial year is 17 000 units.  (3)
+
+&#x20;
+
+\####### Answer
+
+&#x20; 229 500 /(75,00 - 61,50) =  17 000 units
+
+&#x20;
+
+###### 9.2.6
+
+Comment on the level of production achieved and the break-even point calculated above. Quote figures.  (2)
+
+
+
+\####### Answer
+
+Comment (must compare production to BEP)   figures 
+
+&#x20;
+
+* The business produced 800 units more than the BEP (17 800 – 17 000) / the business is making a profit on 800 units.
+* Low profitability (on only 800 units) considering the wastage of material and time lost in production.
+
+&#x20;
+
+###### 9.2.7
+
+Calculate the extra profit that would be earned if an additional 500 dresses are made and sold. Assume that all costs are unchanged.   (3)
+
+
+
+\####### Answer
+
+500 × (75,00 - 61,50) = R6 750
+
+
+
+OR (17 500 × 13,50) - 229 500
+
+
+
+OR
+
+(18 300 × 13,50) - (17 800 × 13,50)
+
+
+
+OR (500 × 75) - (500 × 61,50) = R6 750
+
+
+
+
+
+### 10
+
+#### 10.1
+
+\-PERFECT FIT MANUFACTURERS produces formal shirts. The financial year ended 28 February 2021.
+
+
+
+##### INFORMATION:
+
+###### A. Stock on hand:
+
+||28 FEBRUARY 2021|1 MARCH 2020|
+|-|-|-|
+|Work-in-progress|?|R230 000|
+|Finished goods|400 shirts, valued using FIFO method|900 shirts at R380 <br />= R342 000|
+
+
+
+###### B. The bookkeeper calculated the costs below. Some errors were made.
+
+|Direct material cost|R1 575 000|
+|-|-|
+|Selling and distribution cost|R385 000|
+|Administration cost|R256 400|
+|Direct labour cost|?|
+|Factory overhead cost|R518 800|
+
+
+
+###### C. Errors and omissions:
+
+* Payment to Quick Deliveries, R75 000 for carriage on raw materials, was incorrectly allocated to selling and distribution cost.
+* The entire insurance amount of R25 200 was transferred to the Administration Cost Account. Two-thirds (2/3) of this expense should be allocated to the factory.
+* The Factory Overhead Cost Account included an amount of R117 600 for water and electricity. The bookkeeper had incorrectly allocated this expense to factory, administration, and selling and distribution in the ratio 6 : 3 : 1. The correct ratio is 5 : 4 : 1.
+
+
+
+###### D. Prime cost:
+
+>R2 550 000 (after adjustments)  
+
+&#x20;
+
+###### E. Production and sales for the year:
+
+* 7 600 shirts were produced at a unit cost of R420 each.
+* 8 100 shirts were sold for R4 860 000.
+
+
+
+##### REQUIRED:
+
+###### 10.1.1
+
+Prepare the Production Cost Statement. (14)
+
+
+
+\####### Answer Sheet
+
+|Direct material cost||
+|-|-|
+|||
+|Prime cost|2 550 000|
+|Factory overhead cost||
+|Total manufacturing cost||
+|||
+|||
+|Work-in-progress (end)||
+|Total cost of production||
+
+
+
+\####### Answer
+
+|Direct material cost (1 575 000 + 75 000)|1 650 000|
+|-|-|
+|Direct labour cost|900 000|
+|Prime cost|2 550 000|
+|Factory overhead cost \[ 518 800 + 16 800 + ((117 600 × 5/6) - 117 600)]|516 000|
+|Total manufacturing cost|3 066 000|
+|Work-in-progress (beginning)|230 000|
+||3 296 000|
+|Work-in-progress (end)|3 296 000|
+|Total cost of production ( 7 600 × R420 )|3 192 000|
+
+&#x20;
+
+###### 10.1.2 Calculate:
+
+\####### a)
+
+Gross profit earned on sale of shirts (5)
+
+
+
+\######## Answer
+
+4 860 000 – (342 000 + 3 192 000 – (400 × 420) = 1 494 000
+
+OR:       (900 × 220)    + (7 200 × 180)
+
+
+
+\####### b)
+
+Mark-up % achieved on shirts  (2)
+
+
+
+\######## Answer
+
+1 494 000/ (342 000 + 3 192 000 – 168 000)  = 1 494 000/3 366 000 × 100 = 44,4%
+
+
+
+OR: 3 366 000 × (100 + y/100) = 4 860 000      y = 44,4%
+
+
+
+#### 10.2 LEATHER MANUFACTURERS
+
+\-Leather Manufacturers is owned by Tello Andrews. They produce leather purses and leather jackets. The financial year ends on 28/29 February each year.
+
+
+
+##### INFORMATION:
+
+||PURSES 2021|PURSES 2020|JACKETS 2021|JACKETS 2020|
+|-|-|-|-|-|
+|Direct material cost per unit|R100|R125|R360|R180|
+|Direct labour cost per unit|R135|R105|R280|R240|
+|Selling and distribution cost per unit|R20|R30|R60|R45|
+|Total variable cost per unit|R255|R260|R700|R465|
+||||||
+|Total fixed costs|R936 000|R836 000|R1 706 250|R2 000 000|
+||||||
+|Number of units produced and sold|24 000|22 000|3 631|6 350|
+|Break-even number of units|?|20 900|3 750|5 000|
+||||||
+|Selling price per unit|R295|R300|R1 170|R780|
+
+
+
+
+
+##### REQUIRED:
+
+&#x20;
+
+###### PURSES
+
+\####### 10.2.1
+
+Calculate the break-even point for purses for the year ended
+
+28 February 2021. (4)
+
+
+
+\######## Answer
+
+R936 000/(R295 - R255) = 23 400 units
+
+&#x20;
+
+\####### 10.2.2
+
+Comment on the level of production achieved and the break-even point for purses for 2021. Quote figures. (4)
+
+
+
+\######## Answer
+
+>Compulsory response:  
+
+\-Comparison of BEP to level of production for 2021
+
+(Do not mark optional responses if marks are earned on compulsory response)
+
+&#x20;
+
+>Optional responses:  
+
+\-Comparison of BEP 2021 to 2020 with figures
+
+OR: Comparison of Production 2021 to 2020 with figures
+
+&#x20;(Max two marks in total (mark one optional response only)
+
+
+
+>Expected responses for 4 marks: 
+
+* The business produced 600 units more than break-even / profit on 600 units / R24 000 extra profit
+* BEP compared to production reflects a profit on 600 units in 2021 compared to a profit on 1 100 units in 2020 / this is a decrease in profits on 500 units (1100 – 600) in 2021 compared to 2020
+
+&#x20;
+
+>Expected response for 2 marks in total: 
+
+* Production increased by 2 000 units (24 000 – 22 000) / to 24 000 units / by 9% and/or BEP increased by 2 500 units (23 400– 20 900) / to 23 400 / by 12%
+
+&#x20;
+
+\####### 10.2.3
+
+Apart from inflation and wage increases, give TWO other possible
+
+reasons for the increase in the direct labour cost per unit for purses.
+
+(4)
+
+
+
+\######## Answer
+
+TWO valid reasons -Explanations not needed
+
+* Overtime paid at higher rates endorsed or approved / bonus for good performance or extra time / negotiate higher fringe benefits / targets not met during normal time / overtime was needed to meet targets
+* Low productivity of workers (not productive or efficient)
+* Interruptions (due to malfunctioning machines / load-shedding / COVID-19 lockdown
+* Higher qualifications of workers / employed higher-skilled workers
+* Poorly trained workers / lack of supervision / time wasted in re-doing work.
+
+&#x20;
+
+\####### 10.2.4
+
+Give TWO reasons for the decrease in the direct material cost per unit for purses. (2)
+
+
+
+\######## Answer
+
+Any TWO valid reasons       
+
+* Cheaper (new) or local suppliers used
+* Took advantage of bulk discounts / negotiated discounts
+* Better supervision / less wastage / better control over issuing / use of material
+* Better cutting methods / use patterns or technology / better skilled workers / better training of workers
+* Cheaper transport costs / petrol costs / using own transport
+
+&#x20;
+
+###### JACKETS
+
+\####### 10.2.5
+
+Although Tello was aware that importing leather for the jackets would increase the direct material cost per unit, he thought that this would improve the quality of the jackets.
+
+
+
+\######## a)
+
+Explain why the direct material cost per unit for jackets would
+
+probably increase if raw material were imported. State TWO points.  (2)
+
+
+
+\######### Answer
+
+TWO valid points
+
+* Additional / increase in transport costs e.g. freight, shipping
+* High quality material not available locally
+* Custom duties / import duties / taxes
+* Better packaging
+* Different / weak exchange rate
+
+
+
+\######## b)
+
+Provide figures to prove that Tello was correct about the effect this
+
+decision would have on the cost of the jackets.  (2)
+
+
+
+\######### Answer
+
+Direct material cost per unit increased (from R180) to R360 / by 100% / by R180 / it doubled. (Note: could mention effect on total Variable Cost).
+
+&#x20;
+
+\####### 10.2.6
+
+Calculate the % increase in the selling price of the jackets.  (3)
+
+
+
+\######## Answer
+
+(1 170 - 780)/780 × 100 = 50%
+
+&#x20;
+
+\####### 10.2.7
+
+Explain the impact of the increase in the selling price of jackets on the sales and profit. Quote figures or calculations. (4)
+
+
+
+\######## Answer
+
+ONE reason
+
+* Units produced and sold decreased by 2 719 units / (from 6 350) to 3 631 / by 42,8%.
+* The BEP dropped by 1 250 units / from 5 000 to 3 750 / by 25%
+* Made loss on 119 units in 2021 and profit on 1 350 units in 2020 / sales dropped from R4 953 000 to R4 248 270 / by R704 730 / by 14,2%
+
+&#x20;
+
+\-For candidates who pick up the reversed figures in BEP/Production:
+
+* OR 1 250 units less / from 5 000 – 3 750 / by 25%
+* OR 2 719 units less / from 6 350 – 3 631 / by 42,8%
+* OR Made a loss on1 350 units in 2020 and a profit on 119 units in 2020 / sales increased from R3 900 000 to R4 387 500 / by R487 500 / by 12,5%
+
+&#x20;
+
+\####### 10.2.8
+
+Tello wants to increase profits on jackets by an additional R250 000 in the next financial year. Assuming the cost structure remains the same, calculate the total number of additional units he must produce to achieve this target. (4)
+
+
+
+\######## Answer
+
+250 000/(1 170 - 700) = 532 UNITS
+
+
+
+ALTERNATIVE:   For candidates who pick up reversed figures in BEP and production i.e. move from loss to profit; Do not penalise for using / not using a previous loss.
+
+&#x20;
+
+OR: 532 + 119       OR:    (250 000 + 55 930)/470  = 651 UNITS
+
+OR: Use BEP calculation to calculate the units
+
+&#x20;      Accept 4 163 two marks –3 750 one mark
+
+&#x20;                    (1 706 250 + 250 000) ÷ 470  = 413 UNITS
+
+
+
+### 11
+
+Sihle Sangweni owns two separate factories that manufacture products according to orders received. There is no work-in-progress stock. The year-end is 28 February.
+
+
+
+#### INFORMATION
+
+##### A. DESKS FACTORY
+
+###### Extract of pre-adjustment amounts on 28 February 2019
+
+||R|
+|-|-|
+|Indirect labour|296 500|
+|Depreciation of factory plant|166 000|
+|Advertising|24 500|
+|Water and electricity|248 000|
+|Rent expense|345 600|
+|Insurance allocated to sales department|12 600|
+|Factory sundry expenses|107 700|
+
+
+
+###### Adjustments to factory overheads for desks:
+
+* Water and electricity for February 2019, R18 000, must be taken into account. 80% is allocated to the factory. The balance is an administration cost.
+* Rent must be allocated according to floor area:  Factory: 810 m^2           Office: 180 m^2           Sales department: 90 m^2
+* 75% of insurance must be allocated to the factory. The balance applies to the sales department.
+
+
+
+##### B. INFORMATION FOR BOTH FACTORIES
+
+###### >Fixed and Variable Costs
+
+|COSTS|(DESKS 2019)Amount|(DESKS 2019) Per unit|Unit Costs CHAIRS 2019|Unit Costs CHAIRS 2018|
+|-|-|-|-|-|
+|Variable Costs|||||
+|Direct material|R3 060 000|R340|R165|R124|
+|Direct labour|?|R160|R90|R70|
+|Selling and distribution|R720 000|R80|R50|R60|
+|Total variable costs||R580|R305|R250|
+|Fixed Costs|||||
+|Factory overheads|||R76|R75|
+|Administration|R360 000|R40|R20|R18|
+
+
+
+###### >SELLING PRICES
+
+||DESKS 2019|CHAIRS 2019|CHAIRS 2018|
+|-|-|-|-|
+|Per Unit|R750|R390|R370|
+
+
+
+###### >UNITS
+
+||DESKS 2019|CHAIRS 2019|CHAIRS 2018|
+|-|-|-|-|
+|Produced and sold|9 000|16 000|15 000|
+|Break-even point|8 471|18 071|12 400|
+
+
+
+
+
+#### 11.1 Indicate whether the following statements are TRUE or FALSE. (3)
+
+##### 11.1.1
+
+Wages of factory cleaners is a direct labour cost.
+
+&#x20;
+
+##### 11.1.2
+
+Delivery costs of finished goods to retailers are a selling and distribution cost.
+
+&#x20;
+
+##### 11.1.3
+
+Depreciation on office equipment is an administration cost.   (3×1)
+
+
+
+##### Answer
+
+|11.1.1|False|
+|-|-|
+|11.1.2|True|
+|11.1.3|True|
+
+
+
+#### 11.2 DESKS FACTORY
+
+&#x20;
+
+##### REQUIRED:
+
+###### 11.2.1
+
+Complete the Factory Overhead Cost Note. (8)
+
+
+
+\###### Answer Sheet
+
+|Indirect labour|R 296 500|
+|-|-|
+|Depreciation on factory plant |166 000|
+|||
+|||
+|||
+|||
+|||
+
+
+
+\###### Answer 
+
+|Indirect labour|R 296 500|
+|-|-|
+|Depreciation on factory plant|166 000|
+|Water and electricity (248 000 + 18 000) × 80% OR – 53 200 <br />   198 400 + 14 400 |212 800|
+|Factory rent (345 600 × 810/1080) or – 86 400|259 200|
+|Insurance (12 600 × 75/25) or × 3 OR  50 400 – 12 600 |37 800|
+|Factory sundry expenses |107 700|
+||1 080 000|
+
+
+
+&#x20;
+
+###### 11.2.2
+
+Calculate the total cost of production of finished goods.  (5)
+
+
+
+\####### Answer
+
+3 060 000 + (9 000 × 160) + 1 080 000 = R5 580 000
+
+OR
+
+9 000 × (340 + 160 + 120) 
+
+&#x20;
+
+###### 11.2.3
+
+Sihle wants to produce an additional 1 500 desks, while maintaining the selling price and costs. Calculate the additional profit he can expect. (4)
+
+
+
+\####### Answer
+
+1 500 × 170 = R255 000
+
+
+
+#### 11.3 CHAIRS FACTORY
+
+&#x20;
+
+##### REQUIRED:
+
+&#x20;
+
+###### 11.3.1
+
+Provide a calculation to confirm the break-even point for 2019. (4)
+
+
+
+\####### Answer
+
+(16 000 × 96)/(390 - 305) OR (1 216 000 + 320 000)/(390 -305) 
+
+
+
+OR
+
+7 047 690 – 5 511 655 – 1 536 000 = 35 or  0
+
+&#x20;
+
+###### 11.3.2
+
+Comment on the break-even point and the production level achieved.
+
+Quote figures.  (4)
+
+
+
+\####### Answer
+
+Reponses for four marks: 
+
+* Produced 16 000 units but BEP is 18 071(or see 11.3.1) units so they will make a loss 
+* Produced 2 071 less than BEP so they will make a loss.  
+* Production increased from 15 000 to 16 000 units (by 1 000) and BEP increased from 12 400 to 18 071 units (by 5 671).       
+* In 2018 they made a profit on 2 600 units. 
+
+&#x20;
+
+###### 11.3.3
+
+\-Raw material consists of wood only. In 2019 the cost is R120 per square metre (m2) and 1,2 m2 of wood is needed to make one chair.
+
+\-During the year, 22 000 m2 wood was dispatched to the factory. Sihle feels that the wood raw material was not well controlled.
+
+&#x20;
+
+\####### a)
+
+Provide a calculation to support his opinion. (4)
+
+
+
+\######## Answer
+
+|METRES |Actual issue: 22 000m   Budget: 16 000 × 1,2 = 19 200m <br />OR: Wastage = 2 800m|
+|-|-|
+|OR: <br />UNITS |Expected: 22 000 /1,2  =18 334  Actual: 16 000 OR  2 334 fewer chairs made|
+|OR: <br />TOTAL <br />COSTS|Expected: = R2 640 000  Actual = R2 304 000; OR Extra cost = R336 000 |
+|OR: UNIT <br />COSTS |Expected: 1,2 × R120  = R144   Actual= R165          <br />OR Extra unit cost = R21 per unit extra|
+|OR: <br />% PROD|DMC increased by 33% (R165 –R124; 41÷124)<br />Units produced increased by 7% (1 000 ÷ 15 000) |
+
+
+
+
+
+\####### b)
+
+Identify TWO possible causes of this problem. Provide a solution for EACH.  (4)
+
+
+
+\######## Answer
+
+|POSSIBLE CAUSES|SOLUTION FOR EACH |
+|-|-|
+|Wastage / unskilled <br />workers  |Train workers; supervise regularly <br />Use technology (stencils / templates) |
+|Damage (fire / water)|Secure storage / check deliveries |
+|Theft of wood |Internal controls / stock counts / supervision / <br />buy in smaller quantities / install cameras|
+|Poor quality wood|Source other suppliers / check deliveries|
+
+
+
+
+
+###### 11.3.4
+
+Give TWO reasons for the increase in direct labour cost. Provide a
+
+solution for EACH. Note that wages and salaries increased by 5% in the current financial year. (4)
+
+
+
+\####### Answer
+
+|REASONS|SOLUTION FOR EACH|
+|-|-|
+|Load shedding |Generator or solar power|
+|Workers dissatisfied <br />with increase / Protests|Engagement / communicate with union|
+|Inflation / wage <br />increase / bonus |Improve productivity |
+|Overtime |Restrict overtime / more workers (avoid overtime) |
+|Inefficient / slow <br />workers|Pay per unit produced / improve monitoring <br />procedures / training programme |
+
+
+
+
+
+### 12
+
+#### 12.1 
+
+Choose the correct term from those given in brackets. Write only the term next to the question numbers (12.1.1 to 12.1.4) in the ANSWER BOOK. (4)
+
+
+
+##### 12.1.1 
+
+Wages paid to the factory cleaner is considered to be (direct/indirect) labour.  
+
+&#x20;
+
+###### Answer
+
+Indirect
+
+
+
+##### 12.1.2 
+
+Bad debts must be shown as a (selling and distribution/ factory overhead) cost. 
+
+
+
+###### Answer
+
+Selling and distribution
+
+&#x20;
+
+##### 12.1.3
+
+Rent paid for the factory building is regarded as a (fixed/variable) cost. 
+
+
+
+###### Answer
+
+Fixed
+
+&#x20; 
+
+##### 12.1.4 
+
+Carriage on purchases of raw materials is regarded as a/an (direct material/indirect material) cost.    
+
+
+
+###### Answer
+
+Direct material
+
+
+
+#### 12.2 ZINZI MANUFACTURERS  
+
+\-Information is provided for the financial year ended 31 December 2018.  The business manufactures leather jackets according to orders received. There is no work-in-progress stock. 
+
+
+
+##### INFORMATION:
+
+###### A. Raw material:
+
+|Stock balance:|Metres|Cost per metre|Total amount |
+|-|-|-|-|
+|1 January 2018|920|R65|R59 800 |
+|31 December 2018|1 195 |?|?|
+
+
+
+###### B. Purchases for the year: 
+
+|Date|Metres|Cost per metre|Total amount|
+|-|-|-|-|
+|February 2018 |5 200|R75|R390 000|
+|May 2018|2 480|R80|R198 400|
+|September 2018 |930|R90|R83 700 |
+|TOTAL|8 610 ||R672 100|
+
+
+
+
+
+###### C. Factory Overhead Costs:    
+
+\-The bookkeeper calculated the factory overhead cost at R84 330. He did not take into account the following expenses: 
+
+|Insurance|R31 200|
+|-|-|
+|Rent expense|R114 000|
+|Water and electricity for the administration section|R7 110|
+
+
+
+* 60% of the insurance relates to the factory.  
+* The rent must be allocated between the factory, sales and administration in the ratio 5 : 2 : 1. 
+* 15% of the water and electricity expense relate to the office.   50% must be allocated to the factory.   
+
+
+
+###### D.
+
+||2018 TOTAL AMOUNT|2018 PER UNIT|2017 PER UNIT|
+|-|-|-|-|
+|Fixed costs:|R264 000|R44|R36|
+|Factory overheads|||R26|
+|Administration|||R10|
+|||||
+|Variable costs||R165|R150|
+|Direction materials|||R94|
+|Direct labour|R330 000|R50|R38|
+|Selling and distribution|||R18|
+
+
+
+###### E. Additional information:
+
+||2018|2017|
+|-|-|-|
+|Number of jackets produced and sold|6 000 units|7 560 units|
+|Break-even point|?|3 888 units|
+|Selling price per jacket|R300|R220|
+|Inflation rate|5%||
+
+
+
+#### REQUIRED:   
+
+##### 12.2.1 Raw material stock:   
+
+>Calculate:  
+
+###### a)
+
+The value of the closing stock using the first-in-first-out stock 
+
+valuation method (5)
+
+&#x20;
+
+\####### Answer
+
+930 × 90 = 83 700
+
+265 × 80 = 21 200
+
+83 700 + 21 200 = 104 900
+
+
+
+###### b)
+
+The direct material cost    (4) 
+
+
+
+\####### Answer
+
+59 800 + 672 100 – 104 900 = 627 000 
+
+&#x20;    
+
+##### 12.2.2 Refer to Information C. 
+
+Calculate the correct factory overhead cost for the year. (8) 
+
+
+
+###### Answer Sheet
+
+|TOTAL b/f|84 330|
+|-|-|
+|||
+|||
+|||
+|||
+
+
+
+###### Answer
+
+|TOTAL b/f|84 330|
+|-|-|
+|Insurance (31 200 x 60%)|18 720|
+|Rent expense (114 000 x 5/8) |71 250|
+|Water and electricity (7 110 ×50/15)|23 700|
+||198 000|
+
+
+
+&#x20;    
+
+##### 12.2.3 The owner is concerned about the increase in the following:   
+
+###### a)
+
+Total fixed cost per unit  
+
+&#x20;
+
+###### b)
+
+Direct labour cost per unit   
+
+&#x20;    
+
+\-Provide evidence (figures) to justify his concern. In each case, also give a possible reason for the increase in EACH unit cost, apart from normal inflation. (6)
+
+
+
+###### Answer
+
+|EVIDENCE |REASON|
+|-|-|
+|Total fixed cost per unit <br />Increased by R8 per unit (22%) (from R36 to R44)|Changes in economies of scale <br />Fewer units produced|
+|Direct labour cost per unit <br />Increased by R12 per unit (32%) (from R38 to R50)|More overtime worked due to strikes Inefficiency / Poor supervision of workers / Surplus workers not <br />gainfully employed / Hours lost due to load shedding|
+
+
+
+&#x20;
+
+##### 12.2.4 Break-even:   
+
+###### a)
+
+Calculate the break-even point on 31 December 2018.    (4)
+
+
+
+\####### Answer
+
+R264 000/(300 - 165) = 1 956 or 1 955 or 1 955,6 units
+
+&#x20;
+
+###### b)
+
+Explain whether or not there was any improvement in the trends of 
+
+the level of production and the break-even point from one year to the next. Quote figures. (4)
+
+
+
+\####### Answer
+
+\-Production decreased from 7 560 – 6 000 (1 560 units / 20,6%) 2marks 
+
+\-The BEP decreased from 3 888 units to 1 956 units (1 932 / 49,7%) 2marks 
+
+&#x20;
+
+OR: for four marks                                       
+
+\-In 2018 production exceeds BEP by 4 044 (6 000 – 1 956) units while in 2017 production exceeds BEP by 3 672 units (7 560 – 3 888). 
+
+&#x20;
+
+###### c)
+
+The owner cannot understand why he is making a better profit this 
+
+year. Explain how this happened. Provide TWO points. Quote figures. (5)
+
+
+
+\####### Answer
+
+>For three marks: 
+
+• The business is making a profit on more units this year (4 044 this year; 3 672 last year), 372 units more                                
+
+&#x20;
+
+>For two marks: 
+
+• The selling price per jacket increased from R220 to R300 (R80 more per jacket) 
+
+&#x20;
+
+OR: 
+
+>For two marks only if first bullet not provided: 
+
+• A decrease in BEP by 1 932 units
+
+
+
+
+
+### 13
+
+#### 13.1
+
+Indicate whether the following statements are TRUE or FALSE. (3)    
+
+##### 13.1.1 
+
+Bad debts are an administration cost.  
+
+&#x20;   
+
+##### 13.1.2 
+
+Indirect labour is a factory overhead cost.  
+
+&#x20;   
+
+##### 13.1.3 
+
+Rent expense is a fixed cost.  
+
+
+
+##### Answer
+
+|13.1.1|False|
+|-|-|
+|13.1.2|True|
+|13.1.3|True|
+
+
+
+
+
+#### 13.2
+
+KRIGE SHIRTS  manufactures shirts. The financial year-end is 31 July 2018.
+
+
+
+##### INFORMATION:
+
+###### A.
+
+||31 JULY 2018 |1 AUGUST 2017|
+|-|-|-|
+|Work-in-progress stock balance |?|R35 570|
+
+
+
+###### B. 
+
+\-Raw materials issued to factory: R528 300
+
+
+
+###### C. Direct labour: 
+
+|Number of factory workers |4|
+|-|-|
+|Normal time expected per worker per year|1 960 hours|
+|Normal time rate|R90 per hour|
+|Bonuses to workers:|12% of normal wages|
+
+NOTE: One worker worked only 1 680 hours and received a reduced bonus of R12 146.
+
+
+
+###### D. 
+
+Factory overheads were calculated at R360 880 for the year. However, this excludes insurance of R48 750 paid for the period 1 August 2017 to 31 August 2018. Insurance must be allocated to the factory, administration and sales in the ratio 4 : 3 : 2. 
+
+
+
+###### E. Production for the year: 
+
+17 500 shirts at a cost of R95 per shirt 
+
+
+
+##### REQUIRED:  
+
+###### 13.2.1 Refer to Information C. 
+
+Calculate direct labour cost.  (9) 
+
+
+
+\####### Answer
+
+|3 × 1 960 × 90|529 200|
+|-|-|
+|529 200 × 12%|63 504|
+|1 × 1 680 × 90|151 200|
+||12 146|
+|Sum|756 050|
+
+
+
+&#x20;   
+
+###### 13.2.2 
+
+Production Cost Statement for the year ended 31 July 2018  (12)
+
+
+
+\####### Answer Sheet
+
+|Direct material cost|528 300|
+|-|-|
+|||
+|Prime cost ||
+|||
+|Total production cost||
+|Work-in-progress (1 August 2017)||
+|||
+|||
+|Cost of production of finished goods||
+
+
+
+\####### Answer
+
+|Direct material cost|528 300|
+|-|-|
+|Direct labour cost|756 050|
+|Prime cost|1 284 350|
+|Factory overhead cost  <br />360 880 + 4/9 × (48 750 - 3 750 )  <br />360 880   +  (21 667 – 1 667) <br />360 880 + (45 000 – 15 000 – 10 000) |380 880|
+|Total production cost|1 665 230|
+|Work-in-progress (1 August 2017)|35 570|
+||1 700 800|
+|Work-in-progress (31 July 2018)|(38 300) |
+|Cost of production of finished goods|1 662 500 |
+
+
+
+
+
+#### 13.3  
+
+GEMMA'S MANUFACTURERS manufactures security gates. The financial year-end is 31 August 2018. 
+
+&#x20;
+
+##### INFORMATION FOR YEAR ENDED 31 AUGUST:
+
+###### A.
+
+|Variable Costs|Fixed costs|2018 TOTAL AMOUNT|2018 UNIT COST|2017 UNIT COST|
+|-|-|-|-|-|
+||||||
+|Direct materials||75 600|R180|R148|
+|Direct labour||105 840|R252|R244|
+|Selling and distribution||60 900|R145|R136|
+|Total Variable Cost||242 340|R577||
+||Factory overheads|67 200|R160|R156|
+||Administration|51 660|R123|R127|
+
+
+
+###### B. Additional information: 
+
+||2018|2017|
+|-|-|-|
+|Total sales|R382 200|R475 200|
+|Selling price per unit|R910|R880 |
+|Units produced and sold|420 units|540 units|
+|Break-even point |?|435 units|
+
+
+
+##### REQUIRED:     
+
+###### 13.3.1 
+
+Calculate the break-even point for the year ended                             
+
+31 August 2018. (5) 
+
+
+
+\####### Answer
+
+(67 200 + 51 660)/(910 - 577) = 356,9 OR 357 units
+
+&#x20;   
+
+###### 13.3.2 
+
+Compare and comment on the break-even point and the production level achieved over the last two years. Quote figures. (6) 
+
+
+
+\####### Answer
+
+&#x20;
+
+\-Compulsory response:                                                            
+
+\-Comparison of the BEP with the level of production of 2018   
+
+\-Business produced 63 units (15%) more than the BEP (420 – 357) see 13.3.1 
+
+OR:  
+
+\-The business made a profit on only 63 units (420 – 357) compared to 105 units last year (540 – 435) 
+
+&#x20;
+
+\-Other optional responses:  
+
+\-Comparison of 2017 and 2018 BEP or production
+
+* BEP decreased from 435 units in 2017 to 357 units in 2018 (78 units; 17,9%) 
+* The business produced 120 units (22,2%) less than last year (540 – 420
+
+&#x20;   
+
+###### 13.3.3 
+
+Give TWO reasons for the increase in direct material cost. Suggest ONE way to control this cost. (5) 
+
+
+
+\####### Answer
+
+>REASONS:      
+
+Any TWO valid reasons.    
+
+\-Inflationary increases / transport costs / increase in fuel price / scarcity.  
+
+\-Wastage due to poor workmanship.  
+
+\-Theft of material (in the factory) due to poor internal controls. 
+
+\-VAT increased to 15% 
+
+\-Change in exchange rate (if raw materials imported) 
+
+\-Changed suppliers (more expensive) / Better quality raw materials 
+
+&#x20;
+
+>SUGGESTION:    
+
+Any ONE valid suggestion  
+
+\-Look for cheaper suppliers without compromising quality.  
+
+\-Negotiate transport and delivery discounts.  
+
+\-Take advantage of bulk discounts.  
+
+\-Recycle waste material / use off-cuts 
+
+\-Train and supervise workers to minimise wastage.  
+
+\-Control stock regularly to identify shortages.  
+
+\-Buy stock as required to avoid stock piling and possible theft.
+
+
+
+### 14
+
+#### 14.1
+
+Glamour Dress Creations manufactures one type of ladies' dress. The financial year ended on 28 February 2017. 
+
+
+
+##### INFORMATION:  
+
+###### A. Stock balances, among others, were taken from the General 
+
+Ledger:
+
+||28 FEBRUARY 2017|1 MARCH 2016|
+|-|-|-|
+|Work-in-process stock|?|R76 000|
+|Finished goods stock|R190 000|R110 000|
+
+
+
+
+
+###### B. Information extracted from the financial records on 28 February 2017: 
+
+|Administration cost|R259 010|
+|-|-|
+|Raw/Direct material cost|918 550|
+|Factory overhead cost|227 240|
+|Selling and distribution cost |410 000|
+|Net wages paid to factory workers (direct labour)|753 300|
+|SARS: PAYE|48 600|
+|UIF deductions|1%|
+|Sales|?|
+|Cost of sales|1 860 000|
+
+
+
+###### C. The following information has not been taken into account:    
+
+* A problem was identified regarding the valuation of the closing stock of raw materials: 5 000 metres of material on hand, with a unit cost of R2,75 per metre, were erroneously recorded as R3,80 per metre. This must be corrected.  
+* Rent expense was omitted from the figures above. Total rent paid for the financial year amounted to R87 100. The rent for March 2017 has been paid in advance. The rent was increased by R650 on 1 December 2016. 80% of this expense must be allocated to the factory and the balance must be regarded as an office expense. 
+* The employer contributes 1% to UIF on behalf of the employees.   
+
+&#x20;     
+
+###### D. 
+
+The business uses a mark-up percentage of 75% on cost. During the financial year special discounts of R85 000 were offered to cash customers who bought in bulk. 
+
+
+
+##### REQUIRED:       
+
+###### 14.1.1 
+
+Prepare the Production Cost Statement for the year ended 
+
+28 February 2017.     (21) 
+
+
+
+\####### Answer Sheet
+
+|||
+|-|-|
+|||
+|Prime cost||
+|||
+|Work-in-process (1 March 2016) |76 000|
+|||
+|||
+|Cost of production of finished goods||
+
+
+
+\####### Answer Sheet
+
+|Raw/Direct materials cost  (918 550 + 5 250)|923 800|
+|-|-|
+|Direct labour cost (753 300  + 48 600 + 8 100  + 8 100)<br />OR: Solve for Y:   y = 753 300 + 48 600 + (0,01y)<br />y = 810 000 DLC = 810 000 + 8 100<br />OR  753 300+48 600+801 900 = 99%    DLC = 101%    801 900 × 101/99 |818 100|
+|Prime cost|1 741 900 |
+|Factory overhead cost (227 240 + 63 960)|291 200|
+|Total manufacturing cost|2 033 100 |
+|Work-in-process (1 March 2016)|76 000|
+||2 109 100|
+|Work-in-process (28 February 2017) |(169 100)|
+|Cost of production of finished goods (1 860 000 + 190 000 – 110 000)|1 940 000|
+
+
+
+
+
+###### 14.1.2 
+
+Calculate the net profit for the year ended 28 February 2017.     (7)
+
+
+
+\####### Answer
+
+3 170 000  – 1 860 000 – 410 000 – (259 010 + 15 990) = 625 000
+
+
+
+#### 14.2
+
+\-George Mkhize is the owner of Lighting Solutions, a manufacturing business that produces one type of energy-saving light bulb. The financial year ended on 31 December 2017. 
+
+>NOTE:  
+
+\-Production is based on orders received; therefore there are no balances for work-in-process. 
+
+\-The current inflation rate is 8%. 
+
+
+
+##### INFORMATION:  
+
+\-Information from the records of Lighting Solutions on 31 December:
+
+||TOTAL  (2017)|UNIT COST (2017)|TOTAL (2017)|UNIT COST (2016)|
+|-|-|-|-|-|
+|Fixed costs: |575 000 |11,50|428 400|10,20|
+|Factory overhead cost|395 000|(14.2.1)|310 800|7,40|
+|Administration cost |180 000||117 600|2,80|
+||||||
+|Variable costs:|1 200 000 |24,00|936 600 |22,30|
+|Direct material cost |435 000|8,70|344 400|8,20|
+|Direct labour cost |560 000|11,20|441 000|10,50|
+|Selling and distribution cost |205 000|4,10|151 200|3,60|
+
+
+
+>
+
+||2017|2016|
+|-|-|-|
+|Selling price per unit|R45,00 |R41,50 |
+|Number of units produced and sold|50 000 |42 000|
+|Break-even point (units)|?|22 313 |
+
+
+
+##### REQUIRED:        
+
+###### 14.2.1 
+
+Calculate the factory overhead cost per unit for the year ended 31 December 2017. (2) 
+
+
+
+\####### Answer
+
+395 000 /50 000 = R7,90
+
+&#x20;     
+
+###### 14.2.2 
+
+Explain why George would not be concerned about the 28,1% increase in total variable cost from R936 000 to R1 200 000.  (3) 
+
+
+
+\####### Answer
+
+\-Any valid comment 
+
+\-The variable cost per unit increased up by 7,6%  which is less than inflation rate      
+
+\-An additional 8 000 units were produced (19% increase in production) 
+
+\-There was an increase in units produced and therefore greater profits. 
+
+&#x20;     
+
+###### 14.2.3 
+
+Give TWO reasons for the increase in the selling and distribution cost per unit. (2) 
+
+
+
+\####### Answer
+
+TWO valid reasons 
+
+* Advertising costs may have increased 
+* Increase in fuel price 
+* Commission to sales staff increased 
+* Due to inflation
+
+&#x20;     
+
+###### 14.2.4 
+
+George wants to know if the production level for this financial year is satisfactory. 
+
+
+
+\####### a)
+
+Calculate the break-even point for the year ended 31 December 2017. (4) 
+
+
+
+\######## Answer
+
+&#x20;575 000/((45 - 24) = 27 381 units
+
+
+
+\####### b)
+
+Comment on the production level for 2017. State TWO points. Quote figures. (4) 
+
+&#x20;     
+
+\######## Answer
+
+* The business produced and sold 50 000 units.  This is 8 000 units more than the production achieved in the previous financial year (42 000 units). 
+* The business produced 22 619 (50 000 – 27 381) units more than the BEP. 
+* There is an increase of (22 619 – 19 687) 2 932 units over the BEP when compared to the previous financial year. 
+
+
+
+###### 14.2.5 
+
+Lighting Solutions are considering importing raw materials because it is cheaper and of a higher quality. Name TWO aspects that they must consider before finalising their decision. (2) 
+
+
+
+\####### Answer
+
+Any TWO relevant aspects 
+
+Fluctuation in exchange rates (impact on cost/selling price) 
+
+Additional / increasing import costs (transportation and custom duties)  
+
+Time delays (availability and/or delivery) 
+
+Support for local suppliers (impact on the local economy)  
+
+Not easy to return damaged goods 
+
+
+
+### 15
+
+#### 15.1
+
+Choose ONE cost account for each of the following descriptions. (4)
+
+
+
+\[direct labour cost;    direct/raw materials cost;    factory overheads cost;  administration cost;    selling and distribution cost ]
+
+
+
+##### 15.1.1 
+
+Bad debts written off during the financial year  
+
+&#x20;   
+
+##### 15.1.2 
+
+Pension fund contributions paid on behalf of the workers in the production process 
+
+&#x20; 
+
+##### 15.1.3 
+
+Transport costs paid for raw materials purchased  
+
+&#x20;   
+
+##### 15.1.4 
+
+Depreciation on office equipment  
+
+
+
+##### Answer
+
+|15.1.1|Selling and distribution cost|
+|-|-|
+|15.1.2|Direct labour cost |
+|15.1.3|Direct/raw materials cost|
+|15.1.4|Administration cost|
+
+
+
+
+
+#### 15.2
+
+The information relates to Tight-Fit Manufacturers, a business that 
+
+manufactures denim jeans, for the financial year ended 31 March 2018. 
+
+
+
+##### INFORMATION:
+
+###### A. Stock balances on 31 March:
+
+||2018|2017|
+|-|-|-|
+|Work-in-process|?|R147 500|
+|Finished goods|R118 000|R231 000|
+
+
+
+###### B. 
+
+\####### Raw materials (fabric):  
+
+Raw materials, consisting of metres of fabric, are issued by the 
+
+storeroom to the factory.  
+
+
+
+\####### Storeroom stock records:
+
+||METRES|TOTAL AMOUNT R|
+|-|-|-|
+|Stock on 1 April 2017 |5 000|535 000|
+|Purchases: |18 700|2 072 000|
+|July 2017|6 200|620 000|
+|October 2017|4 800|528 000|
+|January 2018|7 700|924 000|
+|Total available for production|23 700|2 607 000|
+|Stock on 31 March 2018|3 900|?|
+
+
+
+###### C. Figures provided by the bookkeeper on 31 March 2018:
+
+|Wages of factory workers (direct labour) |R3 522 000|
+|-|-|
+|Factory overhead cost (see Information D below)|R746 670|
+|Administration cost |R655 700|
+|Selling and distribution cost |R413 900|
+
+
+
+###### D. 
+
+\-Adjustments must be made to factory overhead cost in respect of the following: 
+
+* Insurance of factory plant and equipment paid was R69 600 and incorrectly debited to the Administration Cost Account. Included in this is a new annual premium of R17 400 paid on 1 January 2018. 
+* Rent is allocated according to the floor space. However, the bookkeeper correctly allocated only R14 820 to the administration section. 
+
+|FACTORY|ADMINISTRATION <br />OFFICE |TOTAL <br />FLOOR AREA|
+|-|-|-|
+|520 m^2|130 m^2 |650 m^2 |
+
+
+
+###### E. Details from the Income Statement for the year ended 31 March 2018: 
+
+|Sales|R9 747 000|
+|-|-|
+|Cost of sales|6 518 000|
+|Gross profit|3 229 000|
+
+
+
+
+
+##### REQUIRED:       
+
+###### 15.2.1 Calculate:  
+
+\####### a)
+
+The value of the closing stock of raw materials of fabric using the weighted-average method  (4) 
+
+
+
+\######## Answer
+
+2 607 000/23 700
+
+
+
+\####### b)
+
+The value of direct/raw materials issued for production (3) 
+
+
+
+\######## Answer
+
+(535 000 +2 072 000) -  429 000 =  2 178 000
+
+OR (23 700 – 3 900) × 110
+
+
+
+\####### c)
+
+The correct factory overhead costs (6) 
+
+&#x20;  
+
+\######## Answer
+
+746 670 + 56 550  + 59 280 = 862 500
+
+&#x20;  
+
+###### 15.2.2 
+
+Complete the Production Cost Statement on 31 March 2018.     (12) 
+
+&#x20;     
+
+\######## Answer Sheet
+
+|||
+|-|-|
+|Direct labour cost ||
+|Prime cost ||
+|||
+|Total manufacturing costs||
+|Work-in-process at beginning of year|147 500|
+|||
+|||
+|Cost of production of finished goods||
+
+
+
+\######## Answer 
+
+|Direct materials cost|2 178 000 |
+|-|-|
+|Direct labour cost|3 522 000|
+|Prime cost|5 700 000|
+|Factory overhead cost |862 500 |
+|Total manufacturing costs|6 562 500|
+|Work-in-process at beginning of year|147 500|
+|\*Cost of production of FG:       231 + x = 6518 + 118  or 231 – 118 – 6518 = -x                                                  or -118 – 6518 + 231 as long as answer is positive|6 710 000|
+|Work-in-process at end of year |(305 000) |
+|Cost of production of finished goods (118 000 + 6 518 000  – 231 000)|6 405 000|
+
+
+
+###### 15.2.3 
+
+The business purchases raw materials from an overseas supplier, 
+
+although there are numerous local suppliers. Give TWO reasons why the business should support local suppliers. (2)
+
+
+
+\####### Answer
+
+&#x20;-Any TWO relevant reasons        
+
+* No import charges will be paid 
+* Less transport costs 
+* Prices more stable / prices not influenced by fluctuations in exchange rates. 
+* Creates more employment opportunities to people from the country / enhances GDP of the country / helps small or new businesses / improves standard of living 
+* No delays in the case of emergency orders or returns / more convenient to transport goods 
+* Money stays in the country / improves exchange rate 
+* Less crime if employment increases 
+* Goodwill of the community (Ubuntu) 
+
+
+
+#### 15.3
+
+\-Break-Time Manufacturers is a manufacturing business that produces lunch boxes for school children.
+
+
+
+##### INFORMATION ON 30 APRIL: 
+
+||2018 TOTAL COST|2018 PER UNIT|2017 TOTAL COST|2017 PER UNIT|
+|-|-|-|-|-|
+|Direct labour cost <br />(basic and overtime) |?|R7,56|R1 646 400|R5,60|
+|Total fixed costs|R3 102 500|R9,36|R1 989 000|R6,77|
+|Total variable costs |R6 464 250|R19,50|R4 704 000|R16,00|
+|Selling price per unit||R28,00||R24,50|
+|Number of units produced <br />and sold |331 500 units||249 000 units||
+|Break-even point |?||234 000 units||
+
+
+
+
+
+##### REQUIRED:  
+
+###### 15.3.1 
+
+Calculate the following for the year ended 30 April 2018:  
+
+\####### a)
+
+Direct labour cost (2)
+
+
+
+\######## Answers
+
+331 500 x R7,56 = R2 506 140 
+
+
+
+\####### b)
+
+Break-even point (4)
+
+&#x20;
+
+\######## Answers
+
+R3 102 500/(R28 - R19,50) = 365 000 units
+
+&#x20;     
+
+###### 15.3.2 
+
+Explain why the owner should be concerned about the break-even 
+
+point. Quote figures. (3) 
+
+
+
+\####### Answer
+
+* The business produced and sold 331 500 units.  This is below the break-even point of 365 000 units (33 500 units less) see 2.3.1 
+* The BEP has increased by 131 000 units (56%) while the number of units produced and sold increased by 37 500 units (13%). 
+
+&#x20;     
+
+###### 15.3.3 
+
+The owner is concerned about the direct labour cost. 
+
+\####### a)
+
+Explain why the owner would NOT be satisfied with the direct 
+
+labour cost per unit. Quote figures.  (3)
+
+
+
+\######## Answer
+
+* Trend: The increase in the labour cost is R1,96 per unit (R5,60 to R7,56) / 35% increase / DLC per unit went up by 35% while units produced went by 13% 
+* Explanation: This exceeds the inflation rate / workers have been inefficient / production volume did not increase as much as the DLC per unit 
+
+
+
+\####### b)
+
+Give ONE solution to this problem. (2)
+
+&#x20;
+
+\######## Answer
+
+* Set production targets of production (during normal hours) / time and motion studies. 
+* Better supervision to ensure workers are on duty during normal working hours/ Set limits on overtime hours and ensure foreman controls this.  
+* Reconsider conditions of service e.g. minimum normal hours, overtime rate. 
+* Have plans for disruption due to power cuts, strikes etc. 
+* Engage in skills training to improve efficiency of workers. 
+* Use machines more extensively 
+* Negotiate affordable / reasonable increases (in line with inflation) in salaries/ wages. 
+
+
+
+### 16
+
+#### 16.1
+
+GEVEN MANUFACTURERS produces wooden tables. 
+
+
+
+##### INFORMATION:   
+
+###### A. Stock on hand: 
+
+||28 FEBRUARY 2017 |1 MARCH 2016|
+|-|-|-|
+|Work-in-process|? |R160 000|
+|Finished goods|400 tables,  valued using FIFO method |1 200 tables at R280 = R336 000 |
+
+
+
+
+
+###### B. Production and sales for the year: 
+
+* 7 200 tables were produced at a unit cost of R330 each. 
+* 8 000 tables were sold for R4 080 000. 
+
+&#x20; 
+
+###### C. Costs (before adjustments): 
+
+|Administration |R148 400 |
+|-|-|
+|Factory overheads|R487 200|
+|Direct materials |R1 050 000|
+|Direct labour|? |
+|Selling and distribution |R422 000|
+
+
+
+>Adjustments:   
+
+* Payment to EZ Transport, R102 000, was incorrectly allocated to Selling and Distribution. This was actually meant for delivering wood to the factory. 
+* The cleaning contract for the year, R126 000, was shared between Factory and Administration in the ratio 2 : 1. However, 80% should have been allocated to Factory. 
+
+
+
+###### D. Prime cost: R1 800 000 (after adjustments)
+
+
+
+&#x20; 
+
+##### REQUIRED:  
+
+>Prepare the following for the year ended 28 February 2017:    
+
+
+
+###### 16.1.1 
+
+Production Cost Statement      (14) 
+
+
+
+\####### Answer Sheet
+
+|Direct material cost||
+|-|-|
+|Direct labour cost||
+|Prime cost||
+|Factory overhead cost||
+|||
+|||
+|||
+|||
+|Total cost of production||
+
+
+
+&#x20;####### Answer
+
+|Direct material cost (1 050 000 + 102 000)| 1 152 000|
+|-|-|
+|Direct labour cost| 648 000|
+|Prime cost| 1 800 000|
+|Factory overhead cost (487 200 + 16 800)|504 000|
+|| 2 304 000|
+|Work-in process (beginning) |160 000|
+||2 464 000 |
+|Work-in process (end)| (88 000) |
+|Total cost of production| 2 376 000|
+
+
+
+&#x20;  
+
+###### 16.1.2 
+
+Abridged Income Statement   (14)
+
+
+
+\####### Answer Sheet
+
+|<br />Sales ||
+|-|-|
+|Cost of sales <br />OR       ||
+|Gross profit||
+|Administration cost||
+|Selling and distribution cost||
+|Net profit ||
+
+
+
+\####### Answer
+
+|<br />Sales| 4 080 000|
+|-|-|
+|Cost of sales  (336 000 + 2 376 000 – 132 000 )<br />OR (1 200 × R280) + (6 800 × R330)|(2 580 000) |
+|Gross profit|1 500 000|
+|Administration cost (148 400 + (– 42 000 + 25 200)| (131 600) |
+|Selling and distribution cost  (422 000 – 102 000)| (320 000)|
+|Net profit|1 048 400|
+
+
+
+#### 16.2
+
+Gymwear Manufacturers is owned by Jan Fiks. They produce shoes and shirts for gym training. Jan requires assistance in interpreting his 2017 results. 
+
+Note that one pair of shoes comprises one unit. 
+
+
+
+##### INFORMATION:
+
+||SHIRTS 2017|SHIRTS 2016|SHOES 2017|SHOES 2016|
+|-|-|-|-|-|
+|Break-even point |?|11 522|3 842|4 317|
+|Units produced and sold|16 100|25 000|7 750|6 500|
+|Net profit |R500 400|R620 000|R2 379 750|R1 183 000|
+|Selling price per unit  |R302|R290|R1 640|R1 260|
+|Selling price of competitors| R310|R290|R1 100|R1 250|
+|Total fixed costs (factory <br />overhead and administration)|R530 000|R530 000|R2 340 000|R2 340 000|
+|Total fixed cost per unit |?|?|R302|R360|
+|Total variable costs per unit|R238|R244|R1 031|R718|
+| Direct material costs per <br /> unit |R92|R116|R456|R330|
+| Direct labour costs per unit |R131|R100|R381|R360 |
+| Selling and distribution costs per unit |R15|R28|R194|R28|
+|Unit cost of production |R242|R228|R1 100|R1 004|
+
+
+
+##### REQUIRED:   
+
+###### 16.2.1 Shirts: 
+
+\####### a)
+
+Calculate the break-even point for shirts.     (4) 
+
+
+
+\######## Answer
+
+530 000 ÷ (302 – 238) = 8 281,25 / 8 282 / 8 281 / 8281,3
+
+&#x20;   
+
+\####### b)
+
+Jan is not satisfied with the variable costs per unit, even though the total variable costs per unit decreased by R6. 
+
+&#x20; 
+
+\######## i)
+
+Identify ONE variable cost (with figures) that has not been well controlled. Give TWO possible reasons for this problem. (4)
+
+
+
+\######### Answer
+
+\-Direct labour cost Increased by R31 (31% from R100 to R131)
+
+
+
+>Reasons:
+
+\-Expected responses: 
+
+* Negotiated wage increase / applied minimum wage / inflation / increased salary scales (for qualifications) 
+* Paid bonuses to some workers 
+* Excessive overtime 
+* Lack of productivity (inefficiency) of workers 
+* Inexperienced / poorly trained workers 
+* High staff turnover rate 
+* Old equipment affects productivity 
+* Work hours lost due to training time (workers paid for training) / due to load-shedding (power-cuts) / due to paid sick leave 
+* Errors in calculation of wages (over-paid) 
+
+&#x20;
+
+\######## ii)
+
+Explain why Jan might be concerned about the large decreases in the other TWO variable costs.  (4)
+
+
+
+\######### Answer
+
+||Using cheaper material |Inferior quality.|
+|-|-|-|
+|Comment on DMC |Economising on material |May affect the quality of the <br />product |
+||||
+|Comment <br />on S\&DC|Reduced advertising or <br />reduced commission / reduced <br />remuneration of salespersons |May cause sales to drop / may <br />demotivate salespersons|
+||Reduced distances for deliveries / discontinuing the <br />service in certain areas |Leads to loss of customers |
+||Out-sourcing /using cheaper service providers|Might be inferior and negatively <br />affect business in future |
+
+
+
+
+
+
+
+\####### c)
+
+Jan does not understand why the unit cost of production has increased when neither his fixed costs nor the variable costs have increased. Explain why this is so. State ONE point (with figures).     (4) 
+
+&#x20;
+
+\######### Answer
+
+Expected responses: 
+
+* No economies of scale / decrease in production by 8 900 units (25 000 to 16 100) 
+* Lower production increased FC per unit by R11,72 or 55,2% (R21,20 to R32,92) 
+
+
+
+&#x20;  
+
+###### 16.2.2 Shoes:  
+
+\####### a)
+
+Calculate the % increase in the selling price of shoes.     (3) 
+
+
+
+\######## Answer
+
+(1 640–1 260)/1 260 × 100 = 30,2%
+
+
+
+\####### b)
+
+Jan decided to improve the quality of the shoes and to export them. Explain how the direct material costs and the selling and distribution costs were affected by this decision. Provide figures.     (4) 
+
+
+
+\######## Answer
+
+* DMC increased from R330 to R456 (by R126/by 38%/38,2%)  
+* S\&DC increased from R28 to R194 (by R166/by 593%/592,8%)
+
+
+
+\####### c)
+
+Jan was concerned that the increase in price would have a negative impact on the business. Explain whether his concern was justified. State TWO points.     (4) 
+
+
+
+\######## Answer
+
+* Sales increased (by 1 250 units) / customers still supported the business (despite increase in price)   
+* Net profit increased (by R1 196 750) / price did not negatively affect sales)  
+* BEP decreased (due to increased contribution per unit) by 475 units / The business now exceeds BEP by bigger margin (3 908 units). 
+
+
+
+### 17
+
+#### 17.1
+
+Choose the correct word(s) from those given in brackets. 
+
+
+
+##### 17.1.1 
+
+The wages of factory cleaners are classified as (direct labour/ factory overhead) cost. 
+
+
+
+###### Answer 
+
+factory overhead 
+
+
+
+##### 17.1.2 
+
+Factory rent is a (fixed/variable) cost.   
+
+
+
+###### Answer
+
+fixed 
+
+&#x20; 
+
+##### 17.1.3 
+
+Packing materials used are regarded as a/an (selling and distribution/ administration) cost. 
+
+
+
+###### Answer
+
+selling and distribution
+
+
+
+##### 17.1.4
+
+Break-even point refers to the (minimum/maximum) number of units that must be produced and sold to cover all costs.  (4 x 1)    (4) 
+
+
+
+###### Answer
+
+minimum
+
+
+
+#### 17.2  
+
+The information relates to Infinity Hats, a business that manufactures one type of hat. The financial year ended on 28 February 2017.
+
+
+
+##### INFORMATION:  
+
+###### A. Extract from stock records on 28 February 2017: 
+
+||2017 |2016|
+|-|-|-|
+|Work-in-process|R94 000 |R?|
+|Indirect factory materials|R8 750|R5 950|
+
+
+
+###### B. Transactions/Information for year ended 28 February 2017: 
+
+|Raw materials issued for production|R?|
+|-|-|
+|Indirect materials purchased|36 000|
+|Salaries and wages|2 900 000 |
+|Rent expense |291 000|
+|Insurance|49 200 |
+|Telephone allocated to the administration section|28 800 |
+|Sundry factory expenses|189 856|
+
+
+
+###### C. 
+
+45% of salaries and wages are paid to employees who work directly in the production process and 10% must be allocated as the salary of the factory foreman.
+
+
+
+###### D. 
+
+Rent expense must be distributed according to floor space used. The factory occupies 2 400 m2. Selling and distribution and the 
+
+administration sections occupy the remaining 600 m2.    
+
+&#x20;     
+
+###### E. 
+
+The insurance premium has been paid up to 31 May 2017. Insurance is shared between factory, selling and distribution and the administration sections in the ratio 4 : 4 : 2. 
+
+&#x20;
+
+###### F. 
+
+20% of the telephone expense must be allocated to the factory.  
+
+The remaining amount is shared equally between selling and distribution and the administration sections. 
+
+&#x20;
+
+###### G. 
+
+40 000 hats were produced during the financial year at a cost of R120 per hat. 
+
+
+
+##### REQUIRED:        
+
+###### 17.2.1 
+
+Prepare the Factory Overhead Cost Note.     (14) 
+
+
+
+\####### Answer
+
+|Indirect factory materials (5 950 + 36 000 – 8 750)|33 200|
+|-|-|
+|Salaries and wages (2 900 000 × 10%)|290 000|
+|Rent expense (291 000 ×240/300)|232 800|
+|Insurance (49 200 x 12/15  × 4/10)|15 744|
+|Telephone \[(28 800 × 20/40) / 57 600 × 20/80 ]|14 400|
+|Sundry factory expenses|189 856|
+||776 000|
+
+
+
+&#x20;     
+
+###### 17.2.2 
+
+Complete the Production Cost Statement for the year ended 
+
+28 February 2017.    (10) 
+
+
+
+\####### Answer Sheet
+
+|||
+|-|-|
+|||
+|Prime cost ||
+|||
+|Total manufacturing cost |4 824 000|
+|||
+|||
+|||
+|Cost of production of finished goods||
+
+
+
+\####### Answer
+
+|Direct materials cost |2 743 000|
+|-|-|
+|Direct labour cost|1 305 000|
+|Prime cost|4 048 000|
+|Factory overhead cost|776 000|
+|Total manufacturing cost|4 824 000|
+|Work-in-process at beginning|70 000|
+||4 894 000 |
+|Work-in-process at end   |(94 000) |
+|Cost of production of finished goods|4 800 000|
+
+
+
+&#x20;     
+
+###### 17.2.3 
+
+Infinity Hats are considering importing raw materials at a lower price than they are currently paying.  
+
+Provide TWO points they should consider before deciding.      (4) 
+
+
+
+\####### Answer
+
+Any TWO valid points  
+
+* Exchange rate fluctuations 
+* Import duties changing in future  
+* Time lags for imports \& returns 
+* The quality of raw material 
+* Possibility of job losses 
+* Support for local businesses / effect on the economy 
+* Transport costs 
+
+
+
+#### 17.3
+
+\-You are provided with information relating to Sanyati Bakery for the past two years.  
+
+\-The business produces doughnuts and cakes. The owner, Damon Barker, compared the net profit of the past two financial years and noticed that it had decreased by R730 700.   
+
+
+
+##### INFORMATION: 
+
+||DOUGHNUT FACTORY 2016|DOUGHNUT FACTORY 2015|CAKE FACTORY 2016|CAKE FACTORY 2015|
+|-|-|-|-|-|
+|A. Fixed costs|R372 000|R372 000|R206 000|R122 000|
+|B. Variable costs per unit|||||
+|Direct materials|R4,50|R5,00|R22,50|R15,00|
+|Direct labour|R3,20|R2,00|R10,60|R10,20|
+|Selling and distribution|R1,95 |R2,00|R9,80|R9,50 |
+|Total|R9,65|R9,00|R42,90|R34,70|
+||||||
+|C. Additional information|||||
+|Selling price of Sanyati <br />  Bakery (per unit) |R12,00|R14,00|R65,00|R50,00|
+|Selling price of <br />competitor (per unit)|R13,00|R12,50|R55,00|R67,00|
+|Net profit |R192 000|R1 028 000|R191 800|R23 500 |
+||||||
+|D. Units produced and sold|240 000|280 000|18 000|15 000|
+||||||
+|E. Break-even point |158 298|78 316|9 321|13 465|
+
+
+
+##### REQUIRED:  
+
+###### 17.3.1 Refer to Information B. 
+
+\-Identify the production cost that caused the biggest problem in the following and provide relevant figures. In EACH case, give Damon a solution to the problem.    (6)
+
+&#x20;
+
+\####### a)
+
+Doughnut factory
+
+&#x20;
+
+\####### b)
+
+Cake factory 
+
+
+
+\####### Answer
+
+||PROBLEM WITH FIGURES|SOLUTION|
+|-|-|-|
+|Doughnut <br />factory |Direct labour cost <br />Increased from R2,00 to <br />R3,20 (60%) or by R1,20 |Train the workers <br />Skills development / training <br />Increase supervision <br />Control overtime/supervise <br />normal time/set targets |
+|Cake <br />factory|Direct material cost <br />Increased from R15,00 to <br />R22,50 (50%) or by R7,50|Look for cheaper materials <br />Buy in bulk <br />Use local suppliers (closer) <br />Control wastage|
+
+
+
+&#x20;
+
+###### 17.3.2 
+
+Provide workings to show that the break-even point of 158 298 units for the doughnuts in 2016 was correctly calculated.    (3) 
+
+
+
+\####### Answer
+
+372 000/(12,00 - 9,65) = 158 298
+
+&#x20;     
+
+###### 17.3.3 
+
+Explain why Damon should be concerned over the break-even point of doughnuts. Quote figures.    (3) 
+
+
+
+\####### Answer
+
+* BEP increased from 78 316 to 158 298 (by 79 982) while production decreased.  
+* BEP increased considerably, while producing 40 000 units fewer which led to a lower profit. 
+* In 2015 made a profit on 201 684 units: in 2016 only on 81 702 units
+
+&#x20;     
+
+###### 17.3.4 
+
+Damon is concerned about the points listed in parts a and b below. Comment on these points in respect of EACH product. Quote figures.    (6) 
+
+&#x20;
+
+\######## a)
+
+Prices that the customers are willing to pay 
+
+
+
+\######## b)
+
+Demand for both products 
+
+
+
+\####### Answer
+
+|PRODUCT|||
+|-|-|-|
+|Doughnuts|>Explanations:  <br />• Customers not willing to buy doughnuts although price dropped <br />• Price dropped and sales decreased <br />• Sales decreased despite the decrease in price<br /><br />>Figures: <br />-For prices: by R2  (from R14 to R12 / decreased to R12) <br />-For units: by 40 000 units (from 280 000 to 240 000 units / decreased to 240 000 units) ||
+|Cakes |>Explanations: <br />• Customers are willing to pay much more for the product even though the price increased <br />• Price and sales increased <br /><br />>Figures: <br />-For prices: by R15  (from R50 to R65 / increased to R65) <br />-For units: by 3 000 units (from 15 000 to 18 000 units / <br />increased to 18 000 units) ||
+
+
+
+### 18
+
+#### 18.1 
+
+The following information relates to Moses Manufacturers, a small business that manufactures photo frames. The financial year ended on 30 April 2016. 
+
+
+
+##### INFORMATION: 
+
+###### A.
+
+|Stock records |30 APRIL 2016|30 APRIL 2015|
+|-|-|-|
+|Raw material stock|R58 560|R37 600|
+|Work-in-process stock|?|R142 000|
+
+
+
+* Purchases of raw materials for the financial year amounted to R555 000. 
+* Defective material valued at R21 000 was returned to suppliers.
+
+&#x20;
+
+###### B. 
+
+The business produced 39 000 units at a cost of R45 each.
+
+
+
+###### C. The following information was calculated on 30 April 2016.
+
+||R|
+|-|-|
+|Direct material cost|?|
+|Direct labour cost|716 960|
+|Factory overhead cost (See D below)|468 450|
+|Selling and distribution cost (See D below)|609 850|
+|Administration  cost (See D below)|443 950|
+|Cost of production of finished goods|?|
+|Gross profit|1 250 000|
+
+
+
+###### D. The following items must be taken into account:  
+
+* Administration cost includes the annual insurance premium of R22 750; however, 60% must be allocated to the factory. 
+* Factory overhead cost includes the full amount of rent paid, R36 300. However, this should have been allocated according to floor area. The areas are: factory 400 square metres, office 120 square metres, shop 80 square metres. 
+
+
+
+##### REQUIRED:   
+
+###### 18.1.1 
+
+Prepare the Production Cost Statement for the year ended 
+
+30 April 2016. (16)
+
+
+
+\####### Answer Sheet
+
+|Direct  labour cost |716 960|
+|-|-|
+|||
+|Prime cost||
+|||
+|Total manufacturing cost||
+|Work-in-process (1 May 2015)|142 000 |
+|||
+|||
+|Cost of production of finished goods  ||
+
+
+
+\####### Answer
+
+|Direct  labour cost|716 960|
+|-|-|
+|Direct material cost     (37 600 + 555 000 – 21 000 – 58 560) |513 040|
+|Prime cost|1 230 000|
+|Factory overhead cost (468 450 + 13 650 - 12 100) |470 000|
+|Total manufacturing cost|1 700 000|
+|Work-in-process (1 May 2015)|142 000|
+||1 842 000|
+|Work-in-process (30 April 2016)|(87 000) |
+|Cost of production of finished goods|1 755 000 |
+
+
+
+###### 18.1.2
+
+Complete the abridged (shortened) Income Statement to calculate 
+
+the net profit for the year ended 30 April 2016. (8)
+
+
+
+\####### Answer Sheet
+
+|Gross profit|1 250 000|
+|-|-|
+|||
+|||
+|Net profit||
+
+
+
+
+
+\####### Answer
+
+|Gross profit|1 250 000|
+|-|-|
+|Selling and distribution cost (609 850 + 4 840)| (614 690)|
+|Administration cost (443 950  – 13 650 + 7 260)| (437 560)|
+|Net profit| 197 750|
+
+
+
+
+
+#### 18.2 UNIT COSTS AND BREAK-EVEN ANALYSIS
+
+\-Bill's Manufacturers is a business that produces pencil cases. Bill is concerned about his cost of production.
+
+
+
+##### INFORMATION:
+
+||PENCIL CASES UNIT COSTS 2017|PENCIL CASES UNIT COSTS 2016|
+|-|-|-|
+|Variable costs |R11,60|R11,00|
+|Direct material cost|6,03|5,80|
+|Direct labour cost|4,05|3,50|
+|Selling and distribution cost|1,52|1,70|
+|Fixed cost|R5,40|R5,50|
+|Factory overhead cost|3,50|3,65|
+|Administration cost|1,90|1,85|
+||||
+|Selling price per unit|R17,80|R16,50|
+||Units|Units|
+|Units produced and sold|80 000|65 000|
+|Break-even units|?|65 000|
+
+NOTE: Take the inflation rate of 8% into account.
+
+&#x20; 
+
+##### REQUIRED:   
+
+
+
+###### 18.2.1 
+
+Explain the difference between *fixed cost* and *variable cost*.  (2)
+
+
+
+\####### Answer  
+
+* Fixed costs remain the same irrespective of the number of items manufactured. 
+* Variable costs vary in direct proportion to the number of items manufactured.
+
+&#x20;
+
+###### 18.2.2 
+
+Calculate the break-even point for 2017. (5)
+
+
+
+\####### Answer
+
+(80 000 × 5.40)/(R17,80 - 11,60) = 69 678 units (accepts 66 677)
+
+&#x20;
+
+###### 18.2.3 
+
+Comment on the break-even point and the level of production for 
+
+2016 and 2017. Explain why the owner should be satisfied or not. (6) 
+
+&#x20;
+
+\####### Answer
+
+* In 2016 the break-even point was 65 000 units and they produced 65 000 units. The business broke even.    
+* In 2017 the break-even point was 69 678/ 69 677 units and they produced 80 000 units. The business made a profit on 10 322/10 323 units.   
+
+
+
+###### 18.2.4 
+
+Identify the variable cost that should be of great concern to the
+
+owner. Explain and provide a calculation to support your answer. (4)
+
+
+
+\####### Answer
+
+Direct labour cost    
+
+Figures        
+
+Explanation      No part marks 
+
+&#x20;
+
+\-Direct labour cost increased from R3,50 to R4,05 / by 55 cents / by 15,7% 
+
+&#x20;
+
+\-Explanation:  DLC increased by more than the inflation or by more than DMC
+
+&#x20;
+
+###### 18.2.5 
+
+Despite the fact that there was a decrease in the fixed costs per 
+
+unit, the owner is still not satisfied with his control over the fixed 
+
+costs. Explain and provide calculation(s) to support his opinion. (4)
+
+
+
+\####### Answer
+
+* Fixed costs in 2017 = R432 000 
+* Fixed costs in 2016 = R65 000 × R5,50 = R357 500  
+* Fixed costs increased by R74 500, i.e. 21% or 20,8%
+
+&#x20; 
+
+&#x20;
+
+### 19
+
+#### 19.1 CONCEPTS
+
+Give ONE cost category for each of the following descriptions by choosing a cost category from the list below. 
+
+&#x20;
+
+\[direct material cost;  direct labour cost;  factory overhead cost;  
+
+administration cost;  selling and distribution cost ]
+
+
+
+##### 19.1.1  
+
+Salaries paid to office workers  
+
+
+
+###### Answer
+
+Administration cost
+
+&#x20;   
+
+##### 19.1.2 
+
+Cost of raw materials used in the production process 
+
+
+
+###### Answer
+
+Direct material cost 
+
+&#x20;   
+
+##### 19.1.3 
+
+Commission paid to salespersons 
+
+
+
+###### Answer
+
+Selling and distribution cost 
+
+&#x20;   
+
+##### 19.1.4 
+
+Rent paid for factory buildings          
+
+
+
+###### Answer
+
+Factory overhead cost
+
+
+
+#### 19.2
+
+You are provided with information relating to Gugu Manufacturers for the year ended 29 February 2016. The business produces one style of handbag.
+
+&#x20;
+
+##### INFORMATION: 
+
+###### A. Workers involved in the manufacturing process:
+
+* Number of Workers = 5
+* Normal (Basic) Wage = R40 per hour
+* Normal hours = 1 920 hours
+* Overtime = Basic rate  + 75%
+* Overtime hours = 90 hours
+* Deduction: 8,5% of basic wage
+* Employer's contribution: 11,5% of basic wage 
+
+&#x20;
+
+###### B. Raw material (fabric): 
+
+Raw material purchased is kept in a storeroom before being issued to  the factory for production. Stock is valued according to the weighted average method. 
+
+&#x20;
+
+>Storeroom stock records: 
+
+||METRES|TOTAL AMOUNT (R)|
+|-|-|-|
+|Balance on 1 March 2015|1 350|131 500|
+|Purchases:|5 400|584 000|
+|May 2015|2 500|265 000|
+|September 2015|2 900|319 000|
+||||
+|Raw material issued to factory|5 500|?|
+|Stock balance on 29 February 2016|940|?|
+
+
+
+###### C. 
+
+There is no work-in-process stock.   
+
+&#x20;   
+
+###### D. 
+
+Other costs for the financial year (after all the adjustments): 
+
+|Factory overhead cost|Fixed cost|R343 340|
+|-|-|-|
+|Administration cost|Fixed cost|R226 660|
+|Selling and distribution cost|Variable cost|R217 340|
+
+
+
+
+
+###### E. Additional information on 29 February 2016:  
+
+* 4 200 handbags were produced and sold at R450 each. 
+* Total sales amounted to R1 890 000. 
+* Total variable cost per unit was R300. 
+* 1,25 metres of fabric was used to make one handbag.
+
+
+
+##### REQUIRED:  
+
+###### 19.2.1 Calculate the:   
+
+\####### a)
+
+Direct labour cost  (8) 
+
+
+
+\######## Answer
+
+(1 920 × 5 × R40) + (90 × 5 × 70) + (384 000 × 11,5%) = R459 660 
+
+
+
+OR
+
+
+
+5 x \[(1 920 × R40) + (90 × 70)] + (76 800 × 11,5%)] = R459 660
+
+
+
+\####### b) 
+
+Direct material cost (6) 
+
+&#x20;   
+
+\######## Answer
+
+(131 500 + 584 000)/(1 350 + 5 400) × 5 500 = 583 000
+
+
+
+OR  Total VC – DLC – S\&DC
+
+
+
+OR  OS + P – (CS × R106) – (Theft × R106) 
+
+131 500 + 584 000 – 99 640 – 32 860 = 583 000
+
+&#x20;
+
+###### 19.2.2   
+
+Prepare the Production Cost Statement. (8)
+
+
+
+\####### Answer Sheet
+
+|||
+|-|-|
+|||
+|Prime cost||
+|||
+|Cost of production of finished goods||
+
+
+
+&#x20;####### Answer
+
+|Direct material cost|583 000|
+|-|-|
+|Direct labour cost |459 660|
+|Prime cost|1 042 660 |
+|Factory overhead cost|343 340 |
+|Cost of production of finished goods|1 386 000|
+
+
+
+&#x20;   
+
+###### 19.2.3   The owner is concerned about the production level in 2016.  
+
+
+
+\####### a)
+
+Calculate the break-even point for 2016.  (5) 
+
+
+
+\######## Answers
+
+(343 340 + 226 660)/(450 - 300) = 3 800 units
+
+
+
+\####### b)
+
+Explain whether the owner should be concerned or not. 
+
+Provide figures. (3) 
+
+
+
+\######## Answers
+
+Possible answers: 
+
+* The owner should not be concerned as the business produced  (4 200 – 3 800) 400 units more than the break-even point. 
+* The owner should be concerned as the business produced  (4 200 – 3 800) only 400 units more than the break-even point.  
+* Owner should be concerned because they make a profit on 400 units only.
+
+&#x20;   
+
+###### 19.2.4 
+
+The owner is not satisfied with the internal control of the raw material.  
+
+Calculate the following regarding the raw material (fabric):  
+
+\####### a)
+
+Metres of fabric stolen from the storeroom (5) 
+
+&#x20; 
+
+\####### b)
+
+Metres of fabric wasted in the factory (4) 
+
+&#x20;   
+
+Provide a strategy to improve the internal control in EACH case above. (2) 
+
+
+
+\####### Answer
+
+||STOREROOM: <br />Raw material stolen |FACTORY: <br />Raw material wasted|
+|-|-|-|
+|CALCULATION: <br />metres of fabric|1 350  + 5 400   – 5 500  – 940  <br />= 310 metres|5 500 – 5 250 <br />= 250 metres |
+|STRATEGY <br />One point each |Improve physical security / Regular stock counts /  <br /> <br />Foreman to supervise / sign <br />/ account for all raw materials taken from the storeroom / division of duties.|Train workers to improve efficiency / <br /> <br />Use new updated equipment (new technology) / <br /> <br />Use templates in cutting fabric to reduce offcuts / <br />recycle the offcuts. <br /> <br />Improve supervision|
+
+
+
+
+
+### 20
+
+#### 20.1 CONCEPTS
+
+Indicate whether the following statements are TRUE or FALSE.
+
+
+
+##### 20.1.1 
+
+Commission on sales will be classified as an administration cost.  (1) 
+
+
+
+###### Answer
+
+False
+
+&#x20;    
+
+##### 20.1.2 
+
+Advertising is part of factory overhead costs.  (1) 
+
+
+
+###### Answer
+
+False
+
+&#x20;    
+
+##### 20.1.3 
+
+Carriage on raw materials purchased increases the cost of raw materials issued for production. (1)
+
+
+
+###### Answer
+
+True
+
+
+
+#### 20.2 
+
+You are provided with information relating to Star Wheels Manufacturers for the year ended 31 December 2015. The business manufactures one type of bicycle. 
+
+
+
+##### INFORMATION:   
+
+###### A. Stock balances: 
+
+||31 December 2015 |1 January 2015|
+|-|-|-|
+|Raw materials stock|||
+|Work-in-process stock|?|R160 000|
+|Finished goods stock|R95 000|R110 000|
+|Indirect factory materials|R15 100|13 200|
+
+
+
+###### B. Employees in the production process: 
+
+|Number pf employees|14 employees|
+|-|-|
+|Basic monthly salary of each employee|R7 000|
+|Total overtime hours per employee for the year|144 hours|
+|Overtime rate per hour|R65|
+
+
+
+>Employment benefits:  
+
+\-All employees in the production process work the same number of  
+
+overtime hours. 
+
+\-UIF deductions from the basic salary are 1%. The employer contributes an additional 1% of the basic salary to UIF. 
+
+
+
+###### C.
+
+The factory foreman is entitled to an annual salary of R156 000 (including UIF and pension benefits).   
+
+&#x20;
+
+###### D. Accounts appearing in the General Ledger on 31 December 2015: 
+
+|Water and electricity|R104 000|
+|-|-|
+|Rent expense|R115 200|
+|Insurance|R71 400|
+
+
+
+* 10% of the water and electricity was used by the administration office. The factory used the rest. 
+* Rent is divided between the different sections according to floor space: 
+
+
+
+||Total|Factory|Administration|Sales|
+|-|-|-|-|-|
+|Floor space|1 500 m^2|600 m^2|400 m^2|500 m^2|
+
+
+
+* Insurance of R2 800 is still outstanding for December 2015. Insurance is divided in a ratio of 3 : 2 : 2 between the factory, administration and sales departments. 
+
+
+
+###### E. 
+
+Indirect materials of R38 400 were bought for the factory during the financial year. 
+
+&#x20;
+
+###### F. The following figures were calculated for the financial year: 
+
+* Depreciation on factory equipment, R277 220 
+* Direct (raw) materials issued for manufacturing, R2 100 000 
+
+&#x20;
+
+###### G. Details from the Income Statement for the year: 
+
+|Sales of finished goods|R6 200 000|
+|-|-|
+|Cost of sales of finished goods|R4 015 000|
+
+
+
+##### REQUIRED: 
+
+###### 20.2.1 
+
+Prepare the following notes to the Production Cost Statement:   
+
+\####### a) 
+
+Direct labour cost (9)
+
+
+
+\######## Answer
+
+|Basic salary (14 × 7 000)  × 12|1 176 000 |
+|-|-|
+|Overtime (14 × 144) × 65|131 040|
+|UIF contributions (1 176 000 × 1%)|11 760|
+||1 318 800|
+
+
+
+
+
+\####### b)
+
+Factory overhead cost (13)
+
+
+
+\######## Answer
+
+|Indirect materials (13 200 + 38 400 – 15 100)|36 500|
+|-|-|
+|Salaries: foreman|156 000|
+|Electricity and water (104 000 × 90%)|93 600|
+|Rent expense (115 200 × 600/1 500)|46 080|
+|Insurance (74 200 × 3/7)|31 800|
+|Depreciation: factory plant and machinery|277 220|
+||641 200|
+
+
+
+&#x20;
+
+###### 20.2.2 
+
+Prepare the Production Cost Statement.  (10) 
+
+
+
+\####### Answer Sheet
+
+|Direct (raw) material cost|2 100 000|
+|-|-|
+|||
+|Prime cost||
+|||
+|Total manufacturing cost||
+|Work-in-process (beginning of year)|160 000|
+|||
+|||
+|Cost of production of finished goods||
+
+
+
+\####### Answer
+
+|Direct (raw) material cost|2 100 000|
+|-|-|
+|Direct labour cost|1 318 800|
+|Prime cost|3 418 800|
+|Factory overhead costs|641 200|
+|Total manufacturing cost|4 060 000|
+|Work-in-process (beginning of year)|160 000|
+||4 220 000|
+|Work-in-process at end|(220 000) |
+|Cost of production of finished goods|4 000 000|
+
+
+
+#### 20.3
+
+Nutritious Eats produces and sells one type of breakfast cereal. The sole owner is Craig Manning. The financial year-end is 31 October.
+
+
+
+##### INFORMATION:   
+
+\-The following information was taken from the accounting records:
+
+&#x20; 
+
+||31 October 2015 Total|31 October 2015 Per Unit|31 October 2014 Total|31 October 2014 Per Unit|
+|-|-|-|-|-|
+|Sales|R1 792 000|R28,00|R1 794 000|R23,00|
+|Variable cost|R1 024 000|R16,00|R975 000|R12,50|
+|Fixed costs|R736 000|R11,50|R630 000|R8,08|
+|Direct material cost|R656 000|R10,25|R592 800|R7,60|
+|Break-even point|?||60 000 units||
+|Number of units produced and sold|64 000 Units||78 000 units||
+
+&#x20;
+
+##### REQUIRED:     
+
+###### 20.3.1 
+
+Calculate the break-even point for the year ended 31 October 2015.  (4) 
+
+
+
+\####### Answer
+
+736 000/(28 - 16) = 61 333 or 61 334 units
+
+&#x20;   
+
+###### 20.3.2 
+
+Should the business be satisfied with the number of units that they  produced and sold during the current financial year? Explain. Quote figures. (3) 
+
+
+
+\####### Answer
+
+\-Yes/No  
+
+&#x20;
+
+>Reasons for Yes 
+
+\-The business sold (64 000 – 61 334) 2 666 units more than the 
+
+break-even point. 
+
+&#x20;
+
+>Reasons for No 
+
+\-The business sold (78 000 – 60 000) 18 000 more than the break
+
+even point in the previous financial year. 
+
+\-Production decreased from 78 000 – 64 000 
+
+&#x20;   
+
+###### 20.3.3 
+
+Give TWO possible reasons for the increase in the direct material cost per unit in the current financial year. (4)
+
+
+
+\####### Answer
+
+\-Any two suitable reasons 
+
+* Due to the effects of inflation, price of raw materials increased. 
+* Storage costs.  
+* Raw material obtained from new suppliers.  
+* Increase in wastage 
+* Increase in carriage 
+
+&#x20;
+
+###### 20.3.4 
+
+Craig suggests that, in order to improve financial results in the new 
+
+financial year, the quantity of cereal per box must be reduced by 10% and the selling price must remain the same. Give TWO valid reasons why he should not do this. (4)
+
+
+
+\####### Answer
+
+Any TWO valid reasons 
+
+* It is not ethical and would lead to a decrease in the customers once this information becomes public knowledge. 
+* This is deliberate product shrinkage to gain higher profits.  Could lead to legal action against the business. 
+* Product may be removed from the shelves if the contents of the product do not correspond with the information on the package. 
+
+&#x20; 
+
+### 21
+
+### 21.1
+
+The information below relates to SNAZZY HANDBAGS for the financial year ended 30 September 2015. The business manufactures one type of handbag.
+
+
+
+##### INFORMATION:
+
+###### A. Figures provided by the bookkeeper on 30 September 2015:
+
+||R|
+|-|-|
+|Administration cost|380 000|
+|Direct material cost|976 000|
+|Direct labour cost|755 000|
+|Factory overhead cost|442 080|
+|Selling and distribution cost|219 200|
+|Work-in-process: 1 October 2014|74 000|
+|30 September 2015|?|
+|Total cost of production of finished goods|2 187 500|
+
+
+
+&#x20;
+
+###### B. An internal audit revealed the following:  
+
+* Damaged raw material, valued at R17 000, that had been returned to the supplier was omitted in the calculation of the direct material cost. 
+* The factory overhead cost total included the full amount of R62 400 for rent expense. Only 2/3 of this expense must be allocated to the factory. 
+* The remainder must be split equally between the office and the sales department. 
+* The salary of a factory foreman on leave was not recorded. Details of his salary are as follows: 
+
+|Deduction for SARS: PAYE|R2 560|
+|-|-|
+|Deduction for pension fund and UIF|?|
+|Net salary|R8 320|
+
+
+
+\-The employer's contribution for pension fund and UIF amounts to R1 920. 
+
+\-The business contributes on a rand-for-rand basis. 
+
+&#x20;
+
+##### REQUIRED: 
+
+\-Prepare the Production Cost Statement on 30 September 2015. Show ALL workings. \[21]
+
+
+
+###### Answer Sheet
+
+||R|
+|-|-|
+|||
+|||
+|Prime Cost ||
+|||
+|Manufacturing cost||
+|||
+|||
+|||
+|Total cost of production||
+
+
+
+###### Answer
+
+||R|
+|-|-|
+|Direct material cost (976 000 – 17 000 ) |959 000|
+|Direct labour cost |755 000|
+|Prime Cost|1 714 000|
+|Factory overhead cost (442 080 – 20 800  + 2 560 + 8 320 + 1 920 + 1 920)|436 000|
+|Manufacturing cost|2 150 000|
+|Work-in-process (1 October 2014)|74 000|
+||2 224 000|
+|Work-in-process (30 September 2015)|(36 500) |
+|Total cost of production|2 187 500|
+
+
+
+&#x20;
+
+#### 21.2
+
+HEALTHY LIFESTYLE COOKWARE  manufactures enamel pots. 
+
+
+
+##### INFORMATION: 
+
+||ENAMEL POTS 2015|ENAMEL POTS 2014|
+|-|-|-|
+|Number of units produced and sold|27 000|32 000|
+|Total fixed cost|R2 850 000|R2 660 000|
+|Total variable cost|R2 160 000|R2 080 000|
+|Selling price per unit|R175|R160|
+|Selling price of competitor|R170|R130|
+|Break-even point in number of units|?|28 000|
+|Total sales|R4 725 000|R4 960 000|
+
+
+
+&#x20;
+
+##### REQUIRED: 
+
+###### 21.2.1 
+
+Calculate the following for the financial year ended 31 August 2015: 
+
+\####### a)
+
+Variable cost per unit (3)
+
+
+
+\######## Answer
+
+2 160 000 / 27 000  =R 80
+
+
+
+\####### b) 
+
+Break-even point  (5)
+
+
+
+\######## Answer
+
+2 850 000 / R175 – R80   = 30 000 units
+
+&#x20;  
+
+###### 21.2.2 
+
+Explain why the owner should be concerned about the break-even 
+
+point and level of production. Provide TWO points. Provide figures. (4)
+
+
+
+\####### Answer
+
+>Point 1: 
+
+\-Current production of 27 000 is less than the break-even 
+
+point of 30 000 units
+
+
+
+>Point 2:
+
+&#x20;-Low level of production / Decrease in the level of production 
+
+from 32 000 units in 2014 to 27 000 in 2015.
+
+
+
+>OR: BEP increased from 28 000 to 30 000 units-  – need to 
+
+produce more units to break even. 
+
+&#x20; 
+
+###### 21.2.3 
+
+Identify ONE other problem relating to this business.  
+
+Provide figure(s). (2)
+
+
+
+\####### Answer
+
+* Increase in VC/u from R65 to R80 / increase in FC of R190 000 / decrease in turnover by R235 000. 
+* A small percentage increase in selling price (9,4%) is not adequate to cover costs.  
+* Selling price of R175 is higher than the R170 of the competitor. Difficult to compete in the market for pots.   
+* Loss made in 2015: 4 725 000 – (2 850 000 + 2 160 000) = (285 000); compared to profit in previous year of R220 000. 
+
+&#x20; 
+
+
+
+### 22
+
+#### 22.1
+
+Princess Bin Factory manufactures one type of household bin. The financial year ended on 28 February 2015.
+
+
+
+##### INFORMATION:  
+
+###### A. The following information was extracted from the financial records on 28 February 2015:
+
+|Administration cost|R     62 930|
+|-|-|
+|Raw/Direct material cost |?|
+|Factory overhead cost|256 270|
+|Selling and distribution cost|127 100 |
+|Direct labour cost:  Normal time|452 000|
+|Prime cost|1 308 500|
+|Work-in-process stock (1 March 2014)|58 500|
+|Work-in-process stock (28 February 2015)|?|
+|Sales |2 180 000|
+|Cost of sales |?|
+
+
+
+
+
+###### B. The following information was not taken into account:    
+
+* The factory employs six workers. Each worker earned R19 000 overtime per year.   
+* Unused indirect material, R4 500.  
+* Advertising (selling and distribution) includes R3 720 for a three month contract which ends on 31 March 2015.  
+* Rent expense was omitted from the figures above. Total rent paid amounted to R91 020. The rent for February 2015 has not been paid yet. Rent was increased by R820 per month on 1 January 2015. 75% of this expense must be allocated to the factory and the balance must be transferred to the Administration Cost Account.  
+
+&#x20;   
+
+###### C. 
+
+46 500 bins were manufactured during this financial year at a unit cost of R35.  
+
+&#x20;   
+
+###### D. 
+
+The business uses a mark-up percentage of 60% on cost. Trade 
+
+discounts of R60 000 were offered to cash customers during this 
+
+financial year. 
+
+
+
+##### REQUIRED:     
+
+###### 22.1.1 
+
+Prepare the Production Cost Statement for the year ended   
+
+28 February 2015. (16) 
+
+
+
+\####### Answer Sheet
+
+|||
+|-|-|
+|||
+|Prime cost||
+|||
+|Total manufacturing cost||
+|||
+|||
+|||
+|Cost of production of finished goods||
+
+
+
+
+
+\####### Answer
+
+|Raw/Direct material cost|742 500|
+|-|-|
+|Direct labour cost     452 000  + 114 000|566 000|
+|Prime cost |1 308 500|
+|Factory overhead cost              one part correct <br />(256 270 + 75 030 (rent) – 4 500)|326 800|
+|Total manufacturing cost |1 635 300|
+|Work in process (1 March 2013)|58 500|
+||1 693 800|
+|Work in process (28 Feb 2014)|(66 300)|
+|Cost of production of finished goods|1 627 500|
+
+
+
+&#x20;   
+
+###### 22.1.2 
+
+Prepare the Income Statement for the year ended on 
+
+28 February 2015. (13) 
+
+
+
+\####### Answer sheet
+
+|||
+|-|-|
+|||
+|Gross profit||
+|Operating expenses||
+|||
+|||
+|Net profit for the year ||
+
+
+
+\####### Answer
+
+|Sales|2 180 000|
+|-|-|
+|Cost of sales      (2 180 000 + 60 000) x 100/160 |(1 400 000)|
+|Gross profit|780 000|
+|Operating expenses|(213 800)|
+|Selling and distribution cost (127 100 - 1 240) |125 860|
+|Administration costs  (62 930 + 25 010)|87 940|
+|Net profit for the year|566 200|
+
+
+
+#### 22.2
+
+\-Rob Lambert is the owner of Rob's Pencils, a manufacturing business that produces one type of pencil. The financial year ended on 30 June 2014. 
+
+\-Production is based on orders received, therefore there are no work-in-process balances.
+
+
+
+##### INFORMATION:  
+
+Financial information extracted from the records of Rob's Pencils:
+
+&#x20;; 30 JUNE 2014\[TOTAL (R); UNIT COST (R)]; 30 JUNE 2013\[TOTAL (R); UNIT COST (R)]
+
+Fixed costs; 238 000; 2,80; 236 800; 3,20
+
+Variable costs:; 998 750; 11,75; 732 600; 9,90
+
+Direct material cost; 467 500; 5,50; 296 000; 4,00
+
+Direct labour cost; 391 000; 4,60; 318 200; 4,30
+
+Selling and distribution cost; 140 250; 1,65; 118 400; 1,60
+
+
+
+&#x20;; 30 JNUE 2014; 30 JUNE 2013
+
+Selling price per unit; R14,50; R13,50
+
+Number of units produced and sold; 85 000; 74 000
+
+Break-even point (units); ?; 65 778
+
+
+
+##### REQUIRED:     
+
+###### 22.2.1 
+
+Comment on the fixed cost per unit. Note that fixed costs increased 
+
+from R236 800 in 2013 to R238 000 in 2014. (2) 
+
+
+
+\####### Answer
+
+\-The fixed cost per unit decreased from R3,20 to R2,80.  
+
+\-Economies of scale (more units were produced in 2014)
+
+&#x20;   
+
+###### 22.2.2 
+
+Rob wants to know if the level of production for this financial year 
+
+was satisfactory.  
+
+&#x20;   
+
+\####### a)
+
+Calculate the break-even point for the year ended 30 June 2014. (4) 
+
+
+
+\######## Answer
+
+238 000/(14,50 - 11,75)
+
+
+
+= 86 545,45 or 86 546 units
+
+
+
+\####### b)
+
+Do you consider the level of production to be satisfactory or not? Quote and explain figures to support your opinion. (4) 
+
+
+
+\######## Answer
+
+\-Not satisfactory  
+
+(mark according to BEP calculation above) 
+
+
+
+\-Although the business produced more goods than last year, 
+
+(85 000 – 74 000), it failed to break even this year. (86 456 – 85 000) 
+
+\-Low profit last year / loss this year.
+
+&#x20;   
+
+###### 22.2.3 
+
+Rob is concerned about the management of the variable costs. 
+
+&#x20;
+
+* Identify ONE problem regarding the variable costs. Quote appropriate figures to support your answer. 
+* Provide TWO suggestions that he can use to address the problem identified.  (6) 
+
+
+
+\####### Answer
+
+>Cost identified 
+
+\-Raw materials costs increased from R4,00 to R5,50 per unit.  
+
+&#x20;
+
+>Provide TWO suggestions that Rob can use to address the 
+
+problem identified. 
+
+&#x20;
+
+\-Any TWO suggestions: 
+
+\-Possible answers: 
+
+* Monitor production techniques to minimise wastage 
+* Train workers  
+* Buy in bulk  to take advantage of discount 
+* Look for local suppliers –  reduce transport cost 
+

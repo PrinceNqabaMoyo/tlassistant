@@ -1,4 +1,4 @@
-﻿from __future__ import annotations
+from __future__ import annotations
 
 from .adjustment_modules import (
     _gen_bad_debts_and_recoveries,

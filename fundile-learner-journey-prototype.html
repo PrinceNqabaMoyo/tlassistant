@@ -1,0 +1,1369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fundile — Learner Journey &amp; Skeuo-Modern Folder System Prototype</title>
+    <!-- Tailwind CSS 3 CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brandBlue: '#13519C',
+                        brandOrange: '#FF9100',
+                        obsidian: '#050B14',
+                        darkNavy: '#081326',
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'Inter', 'sans-serif'],
+                        display: ['Afacad', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Afacad:wght@400;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* ═══════════════════════════════════════════════════════════════ */
+        /* SKEUO-MODERN FOLDER TAB AESTHETICS (Left-Slanted Chamfer)       */
+        /* ═══════════════════════════════════════════════════════════════ */
+        .folder-tab {
+            position: relative;
+            /* Authentic Left-Slanted Shoulder: Rises from bottom-left (0, 14px) up to (14px, 0), top-right is flush */
+            clip-path: polygon(14px 0, 100% 0, 100% 100%, 0 100%, 0 14px);
+            -webkit-clip-path: polygon(14px 0, 100% 0, 100% 100%, 0 100%, 0 14px);
+            transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), 
+                        background-color 0.2s ease, 
+                        box-shadow 0.25s ease, 
+                        opacity 0.2s ease,
+                        color 0.2s ease;
+            cursor: pointer;
+            user-select: none;
+            outline: none;
+            border-left: 1px solid rgba(148, 163, 184, 0.4);
+            border-right: 1px solid rgba(148, 163, 184, 0.25);
+        }
+
+        /* 3D "Move in Front" Pop for Active Tab */
+        .folder-tab.active {
+            z-index: 30 !important;
+            background-color: #FFFFFF !important;
+            color: #0F172A !important;
+            transform: translateY(-4px) scale(1.01);
+            box-shadow: 0 -8px 24px -4px rgba(0, 0, 0, 0.14), -4px -2px 10px rgba(0, 0, 0, 0.06), 4px -2px 10px rgba(0, 0, 0, 0.06);
+            opacity: 1 !important;
+            border-bottom: 2px solid #FFFFFF !important;
+            margin-bottom: -2px;
+        }
+
+        /* Inactive Tab: Recessed behind */
+        .folder-tab.inactive {
+            z-index: 10;
+            transform: translateY(2px);
+            opacity: 0.85;
+            border-bottom: 1px solid #CBD5E1;
+        }
+
+        .folder-tab.inactive:hover {
+            opacity: 0.98;
+            transform: translateY(0px);
+            z-index: 15;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════ */
+        /* LIVELY JEWEL-TONE THEMING (High-Contrast, Crisp & Tactile)      */
+        /* ═══════════════════════════════════════════════════════════════ */
+        .tab-desk.active .tab-accent-stripe { background-color: #13519C; }
+        .tab-desk.inactive { background-color: #E2E8F0; color: #0F172A; }
+        .tab-desk.inactive .tab-accent-stripe { background-color: #13519C; }
+        .tab-desk.inactive:hover { background-color: #EDF2F7; }
+
+        .tab-accounting.active .tab-accent-stripe { background-color: #059669; }
+        .tab-accounting.inactive { background-color: #D1FAE5; color: #064E3B; }
+        .tab-accounting.inactive .tab-accent-stripe { background-color: #059669; }
+        .tab-accounting.inactive:hover { background-color: #ECFDF5; }
+
+        .tab-maths.active .tab-accent-stripe { background-color: #2563EB; }
+        .tab-maths.inactive { background-color: #DBEAFE; color: #1E3A8A; }
+        .tab-maths.inactive .tab-accent-stripe { background-color: #2563EB; }
+        .tab-maths.inactive:hover { background-color: #EFF6FF; }
+
+        .tab-physics.active .tab-accent-stripe { background-color: #0891B2; }
+        .tab-physics.inactive { background-color: #CFFAFE; color: #164E63; }
+        .tab-physics.inactive .tab-accent-stripe { background-color: #0891B2; }
+        .tab-physics.inactive:hover { background-color: #ECFEFF; }
+
+        .tab-business.active .tab-accent-stripe { background-color: #EA580C; }
+        .tab-business.inactive { background-color: #FFEDD5; color: #7C2D12; }
+        .tab-business.inactive .tab-accent-stripe { background-color: #EA580C; }
+        .tab-business.inactive:hover { background-color: #FFF7ED; }
+
+        .tab-lifesci.active .tab-accent-stripe { background-color: #0D9488; }
+        .tab-lifesci.inactive { background-color: #CCFBF1; color: #134E4A; }
+        .tab-lifesci.inactive .tab-accent-stripe { background-color: #0D9488; }
+        .tab-lifesci.inactive:hover { background-color: #F0FDFA; }
+
+        .tab-techmaths.active .tab-accent-stripe { background-color: #7C3AED; }
+        .tab-techmaths.inactive { background-color: #EDE9FE; color: #4C1D95; }
+        .tab-techmaths.inactive .tab-accent-stripe { background-color: #7C3AED; }
+        .tab-techmaths.inactive:hover { background-color: #F5F3FF; }
+
+        /* Window & Folder Depth Shadows */
+        .folder-shadow {
+            box-shadow: 0 20px 48px -10px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(226, 232, 240, 0.4);
+        }
+
+        /* Zero Scrollbars across all browsers */
+        .scrollbar-none {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .scrollbar-none::-webkit-scrollbar {
+            display: none;
+            width: 0;
+            height: 0;
+        }
+
+        /* Ambient Glow animation */
+        @keyframes pulseGlow {
+            0%, 100% { opacity: 0.35; transform: scale(1); }
+            50% { opacity: 0.65; transform: scale(1.04); }
+        }
+        .ambient-glow {
+            animation: pulseGlow 7s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body class="bg-[#050B14] text-slate-100 min-h-screen font-sans selection:bg-[#FF9100]/30 selection:text-white antialiased">
+
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- 1. TOP PROTOTYPE BAR & CONCEPT EXPLAINER                      -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <header class="border-b border-slate-800 bg-[#081326]/90 backdrop-blur-md sticky top-0 z-50 px-4 sm:px-8 py-3 flex flex-wrap items-center justify-between gap-4">
+        <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-[#13519C] to-blue-600 flex items-center justify-center font-extrabold text-white text-base shadow-md shadow-blue-900/40">
+                F
+            </div>
+            <div>
+                <h1 class="text-sm font-bold text-white tracking-tight flex items-center gap-2">
+                    <span>Fundile Learner Journey Prototype</span>
+                    <span class="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
+                        Interactive Architecture Test
+                    </span>
+                </h1>
+                <p class="text-[11px] text-slate-400">
+                    Skeuo-Modern Left-Slanted Folder Lips • 3D "Move In Front" Pop • Dual-Device Viewport (Windows 11 vs Android WebAPK)
+                </p>
+            </div>
+        </div>
+
+        <!-- Device Switcher Toggle -->
+        <div class="flex items-center gap-2 bg-slate-900/90 p-1 rounded-xl border border-slate-700/80 shadow-inner">
+            <span class="text-[11px] font-bold text-slate-400 px-2 uppercase tracking-wider hidden md:inline">Viewport:</span>
+            <button
+                type="button"
+                id="btn-desktop"
+                onclick="setViewport('desktop')"
+                class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition bg-[#13519C] text-white shadow-xs cursor-pointer"
+            >
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect width="20" height="14" x="2" y="3" rx="2"/><line x1="8" x2="16" y1="21" y2="21"/><line x1="12" x2="12" y1="17" y2="21"/></svg>
+                <span>Windows 11 Desktop PWA</span>
+            </button>
+            <button
+                type="button"
+                id="btn-mobile"
+                onclick="setViewport('mobile')"
+                class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition text-slate-400 hover:text-white hover:bg-slate-800 cursor-pointer"
+            >
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect width="14" height="20" x="5" y="2" rx="2"/><path d="M12 18h.01"/></svg>
+                <span>Android WebAPK Mobile</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- 2. ANTIGRAVITY DARK THEATER STAGE (Cosmic Canvas)              -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <main class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 overflow-hidden">
+        
+        <!-- Ambient Glowing Background Halos -->
+        <div class="absolute -left-20 top-20 w-96 h-96 rounded-full bg-[#13519C]/25 blur-[120px] pointer-events-none ambient-glow"></div>
+        <div class="absolute -right-20 top-32 w-96 h-96 rounded-full bg-[#FF9100]/20 blur-[120px] pointer-events-none ambient-glow"></div>
+
+        <!-- Theater Intro Title & Journey Rationale -->
+        <div class="text-center max-w-3xl mx-auto mb-8 sm:mb-10">
+            <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-blue-500/10 border border-blue-400/25 text-blue-300 text-xs font-bold mb-3 shadow-sm">
+                <span class="w-2 h-2 rounded-full bg-[#FF9100] animate-pulse"></span>
+                <span>The Resolved Learner Journey: Left-Slanted Lips &amp; Dynamic Mobile Real Estate</span>
+            </div>
+            <h2 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight leading-tight" style="font-family: 'Afacad', sans-serif;">
+                How a Learner Actually Navigates: The Physical Folder System
+            </h2>
+            <p class="mt-2 text-sm text-slate-300 max-w-2xl mx-auto leading-relaxed">
+                High school learners don't want a confusing card maze. They need <strong>Today's Desk</strong> for urgent homework, tactile <strong>Left-Slanted 3D Folder Tabs</strong> that physically pop forward into view, and an adaptive <strong>Mobile Orientation Engine</strong> for full 6-column ledger accounting practice.
+            </p>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════════════════ -->
+        <!-- 3. STAGE VIEWPORTS (Desktop vs Mobile Frame)                -->
+        <!-- ═══════════════════════════════════════════════════════════ -->
+        
+        <!-- ==================== DESKTOP STAGE CONTAINER ==================== -->
+        <div id="desktop-viewport" class="transition-all duration-500 max-w-5xl mx-auto">
+            
+            <!-- WINDOW FRAME (Windows 11 Desktop PWA Shell) -->
+            <div class="bg-white rounded-2xl border-2 border-slate-300 folder-shadow overflow-hidden text-slate-800 relative z-10 transition-all duration-300 flex flex-col shadow-2xl">
+                
+                <!-- ───────────────────────────────────────────────────────────── -->
+                <!-- LEVEL 1: TOP — Windows 11 Chrome / Address Bar                -->
+                <!-- ───────────────────────────────────────────────────────────── -->
+                <div class="px-4 py-2 bg-slate-100 border-b border-slate-200 flex items-center justify-between text-xs select-none">
+                    <div class="flex items-center gap-2 min-w-0">
+                        <div class="w-4 h-4 rounded bg-[#13519C] text-white flex items-center justify-center font-bold text-[9px] shadow-xs shrink-0">F</div>
+                        <span id="window-title" class="font-semibold text-slate-700 text-xs truncate">
+                            Fundile — Nqobile Dlamini (Grade 10 FET) • Today's Desk
+                        </span>
+                        <span class="hidden sm:inline-block px-2 py-0.5 rounded bg-white border border-slate-200 text-[10px] text-slate-500 font-mono shrink-0">
+                            app.fundile.co.za/learner
+                        </span>
+                    </div>
+                    <!-- Windows 11 System Controls -->
+                    <div class="flex items-center -mr-2 shrink-0">
+                        <span class="w-10 h-7 flex items-center justify-center hover:bg-slate-200 text-slate-600 transition cursor-pointer" title="Minimize">&#x2014;</span>
+                        <span class="w-10 h-7 flex items-center justify-center hover:bg-slate-200 text-slate-600 transition cursor-pointer" title="Maximize">&#x25A1;</span>
+                        <span class="w-10 h-7 flex items-center justify-center hover:bg-rose-500 hover:text-white text-slate-600 transition cursor-pointer" title="Close">&#x2715;</span>
+                    </div>
+                </div>
+
+                <!-- ───────────────────────────────────────────────────────────── -->
+                <!-- LEVEL 2: MIDDLE — User Ribbon (Brand Blue #13519C)            -->
+                <!-- ───────────────────────────────────────────────────────────── -->
+                <div class="px-5 py-2.5 bg-[#13519C] text-white flex items-center justify-between text-xs border-b border-blue-900/50 shadow-xs relative z-10">
+                    <div class="flex items-center gap-3">
+                        <div class="w-7 h-7 rounded-full bg-white text-[#13519C] font-extrabold flex items-center justify-center shadow-xs">
+                            N
+                        </div>
+                        <div>
+                            <span class="font-bold text-white text-xs block leading-tight">Nqobile Dlamini</span>
+                            <span class="text-[11px] text-blue-100/90 leading-tight">Grade 10 FET • Westville High School</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2.5 sm:gap-3">
+                        <div class="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-amber-500/25 border border-amber-300/40 text-amber-200 font-bold text-[11px] shadow-xs">
+                            <span>🔥 5-Day Streak</span>
+                        </div>
+                        <div class="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-blue-900/60 border border-blue-300/40 text-blue-100 font-bold text-[11px] shadow-xs">
+                            <span>⚡ 1,420 XP</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ───────────────────────────────────────────────────────────── -->
+                <!-- LEVEL 3: NEXT — Physical Folder Tabs (Index Lips Shelf)       -->
+                <!-- Left-slanted top corner, 3D "move in front" pop, zero scroll  -->
+                <!-- ───────────────────────────────────────────────────────────── -->
+                <div class="tab-shelf bg-[#E6EDF5] px-2 sm:px-4 pt-3.5 border-b border-slate-300 relative z-20 overflow-visible select-none">
+                    <div class="flex items-end gap-0 w-full overflow-x-auto lg:overflow-visible scrollbar-none [&::-webkit-scrollbar]:hidden -mb-[2px]">
+                        
+                        <!-- TAB 0: TODAY'S DESK (Deep Brand Blue #13519C) -->
+                        <button
+                            type="button"
+                            onclick="switchFolderTab('desk')"
+                            id="tab-desk"
+                            class="folder-tab tab-desk active flex-1 min-w-0 px-2 sm:px-3 py-2.5 sm:py-3 flex items-center justify-center gap-1.5 text-xs font-bold"
+                            title="Today's Desk: Urgent assignments &amp; tasks"
+                        >
+                            <span class="tab-accent-stripe absolute top-0 left-0 right-0 h-[4px] bg-[#13519C]"></span>
+                            <span class="w-2.5 h-2.5 rounded-full bg-[#13519C] shrink-0"></span>
+                            <span class="tracking-tight truncate">📋 <span class="hidden xl:inline">Today's </span>Desk</span>
+                            <span class="text-[10px] px-2 py-0.5 rounded-full bg-rose-500 text-white font-extrabold shadow-sm shadow-rose-500/40 shrink-0">
+                                2 Due
+                            </span>
+                        </button>
+
+                        <!-- TAB 1: ACCOUNTING (Electric Emerald #059669) -->
+                        <button
+                            type="button"
+                            onclick="switchFolderTab('accounting')"
+                            id="tab-accounting"
+                            class="folder-tab tab-accounting inactive flex-1 min-w-0 px-2 sm:px-3 py-2.5 sm:py-3 flex items-center justify-center gap-1.5 text-xs font-bold"
+                            title="Accounting: Grade 10 FET"
+                        >
+                            <span class="tab-accent-stripe absolute top-0 left-0 right-0 h-[4px] bg-[#059669]"></span>
+                            <span class="w-2.5 h-2.5 rounded-full bg-[#059669] shrink-0"></span>
+                            <span class="tracking-tight truncate">📗 Accounting</span>
+                            <span class="text-[10px] px-2 py-0.5 rounded-full bg-emerald-600 text-white font-extrabold shadow-sm shadow-emerald-500/40 shrink-0">
+                                84%
+                            </span>
+                        </button>
+
+                        <!-- TAB 2: MATHEMATICS (Bold Cobalt #2563EB) -->
+                        <button
+                            type="button"
+                            onclick="switchFolderTab('maths')"
+                            id="tab-maths"
+                            class="folder-tab tab-maths inactive flex-1 min-w-0 px-2 sm:px-3 py-2.5 sm:py-3 flex items-center justify-center gap-1.5 text-xs font-bold"
+                            title="Mathematics: Grade 10 FET"
+                        >
+                            <span class="tab-accent-stripe absolute top-0 left-0 right-0 h-[4px] bg-[#2563EB]"></span>
+                            <span class="w-2.5 h-2.5 rounded-full bg-[#2563EB] shrink-0"></span>
+                            <span class="tracking-tight truncate">📘 <span class="hidden md:inline">Maths</span><span class="md:hidden">Mat</span></span>
+                            <span class="text-[10px] px-2 py-0.5 rounded-full bg-blue-600 text-white font-extrabold shadow-sm shadow-blue-500/40 shrink-0">
+                                82%
+                            </span>
+                        </button>
+
+                        <!-- TAB 3: PHYSICAL SCIENCES (Laser Cyan #0891B2) -->
+                        <button
+                            type="button"
+                            onclick="switchFolderTab('physics')"
+                            id="tab-physics"
+                            class="folder-tab tab-physics inactive flex-1 min-w-0 px-2 sm:px-3 py-2.5 sm:py-3 flex items-center justify-center gap-1.5 text-xs font-bold"
+                            title="Physical Sciences: Grade 10 FET"
+                        >
+                            <span class="tab-accent-stripe absolute top-0 left-0 right-0 h-[4px] bg-[#0891B2]"></span>
+                            <span class="w-2.5 h-2.5 rounded-full bg-[#0891B2] shrink-0"></span>
+                            <span class="tracking-tight truncate">📙 <span class="hidden md:inline">Physics</span><span class="md:hidden">Phy</span></span>
+                            <span class="text-[10px] px-2 py-0.5 rounded-full bg-cyan-600 text-white font-extrabold shadow-sm shadow-cyan-500/40 shrink-0">
+                                68%
+                            </span>
+                        </button>
+
+                        <!-- TAB 4: BUSINESS STUDIES (Sunset Amber #EA580C / #FF9100) -->
+                        <button
+                            type="button"
+                            onclick="switchFolderTab('business')"
+                            id="tab-business"
+                            class="folder-tab tab-business inactive flex-1 min-w-0 px-2 sm:px-3 py-2.5 sm:py-3 flex items-center justify-center gap-1.5 text-xs font-bold"
+                            title="Business Studies: Grade 10 FET"
+                        >
+                            <span class="tab-accent-stripe absolute top-0 left-0 right-0 h-[4px] bg-[#EA580C]"></span>
+                            <span class="w-2.5 h-2.5 rounded-full bg-[#EA580C] shrink-0"></span>
+                            <span class="tracking-tight truncate">📕 <span class="hidden md:inline">Business</span><span class="md:hidden">Bus</span></span>
+                            <span class="text-[10px] px-2 py-0.5 rounded-full bg-[#FF9100] text-white font-extrabold shadow-sm shadow-orange-500/40 shrink-0">
+                                75%
+                            </span>
+                        </button>
+
+                        <!-- TAB 5: LIFE SCIENCES (Deep Teal #0D9488) -->
+                        <button
+                            type="button"
+                            onclick="switchFolderTab('lifesci')"
+                            id="tab-lifesci"
+                            class="folder-tab tab-lifesci inactive flex-1 min-w-0 px-2 sm:px-3 py-2.5 sm:py-3 flex items-center justify-center gap-1.5 text-xs font-bold"
+                            title="Life Sciences: Grade 10 FET"
+                        >
+                            <span class="tab-accent-stripe absolute top-0 left-0 right-0 h-[4px] bg-[#0D9488]"></span>
+                            <span class="w-2.5 h-2.5 rounded-full bg-[#0D9488] shrink-0"></span>
+                            <span class="tracking-tight truncate">🔬 <span class="hidden md:inline">Life Sci</span><span class="md:hidden">Bio</span></span>
+                            <span class="text-[10px] px-2 py-0.5 rounded-full bg-teal-600 text-white font-extrabold shadow-sm shadow-teal-500/40 shrink-0">
+                                78%
+                            </span>
+                        </button>
+
+                        <!-- TAB 6: TECH MATHS (Vivid Purple #7C3AED) -->
+                        <button
+                            type="button"
+                            onclick="switchFolderTab('techmaths')"
+                            id="tab-techmaths"
+                            class="folder-tab tab-techmaths inactive flex-1 min-w-0 px-2 sm:px-3 py-2.5 sm:py-3 flex items-center justify-center gap-1.5 text-xs font-bold"
+                            title="Technical Mathematics: Grade 10 FET"
+                        >
+                            <span class="tab-accent-stripe absolute top-0 left-0 right-0 h-[4px] bg-[#7C3AED]"></span>
+                            <span class="w-2.5 h-2.5 rounded-full bg-[#7C3AED] shrink-0"></span>
+                            <span class="tracking-tight truncate">📐 <span class="hidden md:inline">Tech Maths</span><span class="md:hidden">Tech</span></span>
+                            <span class="text-[10px] px-2 py-0.5 rounded-full bg-indigo-600 text-white font-extrabold shadow-sm shadow-indigo-500/40 shrink-0">
+                                72%
+                            </span>
+                        </button>
+
+                    </div>
+                </div>
+
+                <!-- ───────────────────────────────────────────────────────────── -->
+                <!-- LEVEL 4: BOTTOM — Active Folder Interior                      -->
+                <!-- Seamless connection with dynamic accent line & light workspace -->
+                <!-- ───────────────────────────────────────────────────────────── -->
+                <div class="folder-interior bg-white relative z-10 min-h-[580px]">
+                    
+                    <!-- Dynamic Accent Line connected to active folder tab -->
+                    <div id="interior-accent-line" class="h-[3px] w-full bg-[#13519C] transition-colors duration-300"></div>
+
+                    <!-- ==================== VIEW 1: TODAY'S DESK ==================== -->
+                    <div id="content-desk" class="p-6 sm:p-8 bg-slate-50 space-y-6">
+                        
+                        <!-- Welcome Hero Header -->
+                        <div class="bg-white p-5 rounded-2xl border border-slate-200/90 shadow-xs flex flex-wrap items-center justify-between gap-4">
+                            <div>
+                                <h3 class="text-xl font-extrabold text-slate-900 tracking-tight" style="font-family: 'Afacad', sans-serif;">
+                                    Good afternoon, Nqobile. You have 2 assignments due this week.
+                                </h3>
+                                <p class="text-xs text-slate-600 mt-0.5">
+                                    Click any teacher task below or click any subject folder tab above to jump straight into practice.
+                                </p>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span class="text-xs font-bold text-slate-700 bg-slate-100 px-3 py-1.5 rounded-xl border border-slate-200 shadow-2xs">
+                                    📅 Term 1 Benchmark Week
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Teacher Assignments Section -->
+                        <div>
+                            <div class="flex items-center justify-between mb-3">
+                                <h4 class="text-xs font-bold uppercase tracking-wider text-slate-600 flex items-center gap-1.5">
+                                    <span class="w-2.5 h-2.5 rounded-full bg-rose-500 animate-pulse"></span>
+                                    <span>Urgent School Assignments from Teachers</span>
+                                </h4>
+                                <span class="text-[11px] text-slate-500 font-medium">Auto-synced with Westville High LMS</span>
+                            </div>
+
+                            <div class="grid sm:grid-cols-2 gap-4">
+                                
+                                <!-- Task 1: Accounting (Mrs. Khumalo) -->
+                                <div class="bg-white p-5 rounded-2xl border-2 border-emerald-400 shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col justify-between">
+                                    <div>
+                                        <div class="flex items-center justify-between text-xs mb-2">
+                                            <span class="font-extrabold text-white bg-emerald-600 px-3 py-1 rounded-full shadow-xs shadow-emerald-500/40 text-xs">
+                                                Accounting • Gr 10
+                                            </span>
+                                            <span class="font-extrabold text-white bg-rose-500 px-2.5 py-1 rounded-full shadow-xs shadow-rose-500/40 text-[11px] animate-pulse">
+                                                Due Today 17:00
+                                            </span>
+                                        </div>
+                                        <h5 class="text-base font-extrabold text-slate-900 tracking-tight" style="font-family: 'Afacad', sans-serif;">
+                                            General Journal: Insolvent Debtors &amp; Bad Debts
+                                        </h5>
+                                        <p class="text-xs text-slate-600 mt-1">
+                                            Assigned by <strong>Mrs. Khumalo</strong>. 12 Marks • Record J. Dlamini dividend (40c in Rand).
+                                        </p>
+                                    </div>
+                                    <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+                                        <span class="text-[11px] text-slate-500 font-medium">Estimated: 15 mins</span>
+                                        <button
+                                            type="button"
+                                            onclick="switchFolderTab('accounting')"
+                                            class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-md shadow-emerald-600/30 transition flex items-center gap-1.5 cursor-pointer"
+                                        >
+                                            <span>Open in Accounting</span>
+                                            <span>&rarr;</span>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- Task 2: Mathematics (Mr. Botha) -->
+                                <div class="bg-white p-5 rounded-2xl border-2 border-blue-400 shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col justify-between">
+                                    <div>
+                                        <div class="flex items-center justify-between text-xs mb-2">
+                                            <span class="font-extrabold text-white bg-blue-600 px-3 py-1 rounded-full shadow-xs shadow-blue-500/40 text-xs">
+                                                Mathematics • Gr 10
+                                            </span>
+                                            <span class="font-extrabold text-white bg-amber-500 px-2.5 py-1 rounded-full shadow-xs shadow-amber-500/40 text-[11px]">
+                                                Due Friday 08:00
+                                            </span>
+                                        </div>
+                                        <h5 class="text-base font-extrabold text-slate-900 tracking-tight" style="font-family: 'Afacad', sans-serif;">
+                                            Quadratic Expressions: Trinomial Factorisation
+                                        </h5>
+                                        <p class="text-xs text-slate-600 mt-1">
+                                            Assigned by <strong>Mr. Botha</strong>. 10 Marks • Practice drill before Friday test.
+                                        </p>
+                                    </div>
+                                    <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+                                        <span class="text-[11px] text-slate-500 font-medium">Estimated: 20 mins</span>
+                                        <button
+                                            type="button"
+                                            onclick="switchFolderTab('maths')"
+                                            class="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs shadow-md shadow-blue-600/30 transition flex items-center gap-1.5 cursor-pointer"
+                                        >
+                                            <span>Open in Mathematics</span>
+                                            <span>&rarr;</span>
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <!-- Autonomous Practice Quick-Resume -->
+                        <div class="bg-white p-5 rounded-2xl border border-slate-200/90 shadow-xs hover:shadow-md transition">
+                            <div class="flex items-center justify-between text-xs mb-3">
+                                <span class="font-bold uppercase tracking-wider text-slate-600">Pick Up Where You Left Off (Self-Paced)</span>
+                                <span class="text-white font-extrabold bg-emerald-600 px-2.5 py-1 rounded-lg text-[11px] shadow-xs shadow-emerald-500/30">
+                                    Level 7 Exam Ready
+                                </span>
+                            </div>
+                            <div class="flex flex-wrap items-center justify-between gap-4">
+                                <div>
+                                    <h5 class="font-bold text-slate-900 text-sm">Accounting: Cash Receipts Journal (VAT 15% Exclusive/Inclusive)</h5>
+                                    <p class="text-xs text-slate-600 mt-0.5">Last practised yesterday. Mastery dial at 84% Bayesian Knowledge Tracing index.</p>
+                                </div>
+                                <button
+                                    type="button"
+                                    onclick="switchFolderTab('accounting')"
+                                    class="px-5 py-2.5 rounded-xl bg-[#13519C] hover:bg-blue-800 text-white text-xs font-bold transition shadow-md shadow-blue-900/30 cursor-pointer"
+                                >
+                                    Resume Autonomous Drill &rarr;
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- ==================== VIEW 2: ACCOUNTING FOLDER (Grade 10 FET) ==================== -->
+                    <div id="content-accounting" class="p-6 sm:p-8 bg-slate-50 space-y-5 hidden">
+                        
+                        <!-- Folder Sub-Bar: Curriculum Pacing & View Selector -->
+                        <div class="bg-white p-4 rounded-xl border border-emerald-300 shadow-xs flex flex-wrap items-center justify-between gap-3 text-xs">
+                            <div class="flex items-center gap-2">
+                                <span class="font-extrabold text-white bg-emerald-600 px-3 py-1 rounded-lg shadow-xs shadow-emerald-500/30">
+                                    Grade 10 Accounting • Term 1
+                                </span>
+                                <span class="text-slate-600 font-semibold">Curriculum Pacing: 88% on track with CAPS ATP</span>
+                            </div>
+                            <!-- Mode toggle within subject -->
+                            <div class="flex items-center gap-1 bg-slate-100 p-0.5 rounded-lg border border-slate-200 font-bold">
+                                <button class="px-3 py-1 rounded-md bg-emerald-600 text-white shadow-xs">1. Practice (Self-Paced)</button>
+                                <button class="px-3 py-1 rounded-md text-slate-600 hover:text-slate-900">2. Teacher Homework (1)</button>
+                            </div>
+                        </div>
+
+                        <!-- Direct Topic Selector Dropdown (No redundant card maze!) -->
+                        <div class="flex items-center gap-3">
+                            <span class="text-xs font-bold text-slate-600 uppercase tracking-wider">Active Topic:</span>
+                            <select class="bg-white border border-slate-300 text-slate-800 text-xs font-bold rounded-xl px-3 py-2 shadow-xs focus:ring-2 focus:ring-emerald-500">
+                                <option selected>Topic 1.1: Cash Receipts Journal (CRJ) &amp; VAT 15%</option>
+                                <option>Topic 1.2: Cash Payments Journal (CPJ)</option>
+                                <option>Topic 1.3: Debtors &amp; Creditors Subsidiary Ledgers</option>
+                                <option>Topic 1.4: General Journal &amp; Bad Debts Discharged</option>
+                            </select>
+                            <span class="text-xs text-emerald-800 bg-emerald-100/90 border border-emerald-300 px-3 py-1 rounded-lg font-extrabold shadow-2xs">
+                                Mastery: 84% (Exam Ready)
+                            </span>
+                        </div>
+
+                        <!-- The 2D Ledger Workspace in Action -->
+                        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                            <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                                <div>
+                                    <span class="text-[10px] font-extrabold uppercase tracking-wider text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded border border-emerald-200">
+                                        Term 1 • Authentic 2D Ledger Entry
+                                    </span>
+                                    <h4 class="text-sm sm:text-base font-extrabold text-slate-900 mt-1" style="font-family: 'Afacad', sans-serif;">
+                                        Record Cash Sales of Merchandise: R11,500 (inclusive of 15% VAT)
+                                    </h4>
+                                </div>
+                                <span class="text-sm font-extrabold text-amber-600 bg-amber-50 px-2.5 py-1 rounded-lg border border-amber-200">6 Marks</span>
+                            </div>
+
+                            <!-- 2D Accounting Table -->
+                            <div class="overflow-x-auto rounded-xl border border-slate-200 shadow-2xs">
+                                <table class="w-full text-xs text-left">
+                                    <thead class="bg-slate-100 text-slate-700 border-b border-slate-200 uppercase text-[10px] font-bold">
+                                        <tr>
+                                            <th class="p-2.5">Day</th>
+                                            <th class="p-2.5">Details</th>
+                                            <th class="p-2.5">Bank (Gross 115%)</th>
+                                            <th class="p-2.5">Sales (Excl 100%)</th>
+                                            <th class="p-2.5">Output VAT (15%)</th>
+                                            <th class="p-2.5">Cost of Sales</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-slate-100 font-mono text-xs">
+                                        <tr>
+                                            <td class="p-2.5 text-slate-600">12</td>
+                                            <td class="p-2.5 text-slate-800 font-sans font-medium">Cash / CRT</td>
+                                            <td class="p-2">
+                                                <input type="text" value="11 500" readonly class="w-28 px-2.5 py-1.5 rounded-lg border-2 border-emerald-500 bg-emerald-50 text-emerald-800 font-bold focus:outline-none">
+                                            </td>
+                                            <td class="p-2">
+                                                <input type="text" value="10 000" readonly class="w-28 px-2.5 py-1.5 rounded-lg border-2 border-emerald-500 bg-emerald-50 text-emerald-800 font-bold focus:outline-none">
+                                            </td>
+                                            <td class="p-2">
+                                                <input type="text" value="1 500" readonly class="w-24 px-2.5 py-1.5 rounded-lg border-2 border-emerald-500 bg-emerald-50 text-emerald-800 font-bold focus:outline-none">
+                                            </td>
+                                            <td class="p-2.5 text-slate-600">8 000</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <!-- 3-Tier Hint Strip -->
+                            <div class="p-3.5 bg-amber-50 border border-amber-300 rounded-xl text-xs text-amber-900 flex flex-wrap items-center justify-between gap-2 shadow-2xs">
+                                <div class="flex items-center gap-2">
+                                    <span class="font-extrabold text-amber-900 bg-amber-200/90 px-2 py-0.5 rounded text-[10px]">Tier 3 Hint:</span>
+                                    <span>When VAT is inclusive (115%), multiply gross receipt by 15/115: R11,500 × 15/115 = R1,500 VAT.</span>
+                                </div>
+                                <span class="font-extrabold text-white bg-emerald-600 px-2.5 py-1 rounded-md text-[11px] shadow-xs shadow-emerald-500/30">
+                                    6/6 Marks Credited
+                                </span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- ==================== VIEW 3: MATHEMATICS FOLDER ==================== -->
+                    <div id="content-maths" class="p-6 sm:p-8 bg-slate-50 space-y-5 hidden">
+                        <div class="bg-white p-4 rounded-xl border border-blue-300 shadow-xs flex items-center justify-between text-xs">
+                            <span class="font-extrabold text-white bg-blue-600 px-3 py-1 rounded-lg shadow-xs shadow-blue-500/30">
+                                Grade 10 Mathematics • Term 1 Algebraic Expressions
+                            </span>
+                            <span class="text-blue-800 font-extrabold bg-blue-50 border border-blue-200 px-2.5 py-1 rounded-lg">Mastery: 82%</span>
+                        </div>
+                        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-3 font-mono text-xs">
+                            <div class="flex items-center justify-between border-b border-slate-100 pb-2">
+                                <span class="font-extrabold font-sans text-base text-slate-900" style="font-family: 'Afacad', sans-serif;">
+                                    Factorise the Trinomial: x² − 7x + 12
+                                </span>
+                                <span class="text-blue-600 font-extrabold font-sans bg-blue-50 px-2 py-0.5 rounded">3 Marks</span>
+                            </div>
+                            <p class="text-slate-600 font-sans text-xs">Target format: (x + a)(x + b) where a × b = +12 and a + b = −7.</p>
+                            <div class="p-3.5 bg-blue-50 border border-blue-300 rounded-xl text-blue-950 font-bold text-sm shadow-2xs">
+                                Result: (x − 3)(x − 4)  ✓ SymPy Equivalence Confirmed
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ==================== VIEW 4: PHYSICAL SCIENCES ==================== -->
+                    <div id="content-physics" class="p-6 sm:p-8 bg-slate-50 space-y-5 hidden">
+                        <div class="bg-white p-4 rounded-xl border border-cyan-300 shadow-xs flex items-center justify-between text-xs">
+                            <span class="font-extrabold text-white bg-cyan-600 px-3 py-1 rounded-lg shadow-xs shadow-cyan-500/30">
+                                Grade 10 Physical Sciences • Term 1 Vectors &amp; Motion
+                            </span>
+                            <span class="text-cyan-800 font-extrabold bg-cyan-50 border border-cyan-200 px-2.5 py-1 rounded-lg">Mastery: 68% (Target: 80%)</span>
+                        </div>
+                        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm text-xs space-y-3">
+                            <h4 class="font-extrabold text-slate-900 text-base" style="font-family: 'Afacad', sans-serif;">Newtonian Kinematics: 1D Constant Acceleration</h4>
+                            <p class="text-slate-600">A trolley accelerates from rest at 2,5 m/s² for 4 seconds. Calculate final velocity.</p>
+                            <div class="p-3.5 bg-cyan-50 border border-cyan-300 rounded-xl text-cyan-950 font-mono font-bold shadow-2xs">
+                                vf = vi + a·Δt = 0 + (2,5)(4) = 10,0 m/s [forward]
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ==================== VIEW 5: BUSINESS STUDIES ==================== -->
+                    <div id="content-business" class="p-6 sm:p-8 bg-slate-50 space-y-5 hidden">
+                        <div class="bg-white p-4 rounded-xl border border-orange-300 shadow-xs flex items-center justify-between text-xs">
+                            <span class="font-extrabold text-white bg-[#FF9100] px-3 py-1 rounded-lg shadow-xs shadow-orange-500/30">
+                                Grade 10 Business Studies • Business Environments
+                            </span>
+                            <span class="text-orange-900 font-extrabold bg-orange-50 border border-orange-200 px-2.5 py-1 rounded-lg">Mastery: 75%</span>
+                        </div>
+                        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm text-xs space-y-3">
+                            <h4 class="font-extrabold text-slate-900 text-base" style="font-family: 'Afacad', sans-serif;">Micro, Market &amp; Macro Environments</h4>
+                            <p class="text-slate-600">Classify fuel price increases decreed by the Minister of Mineral Resources and Energy.</p>
+                            <div class="p-3.5 bg-amber-50 border border-amber-300 rounded-xl text-amber-950 font-bold shadow-2xs">
+                                Macro Environment (Economic &amp; Political Factor) • Outside Direct Management Control
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ==================== VIEW 6: LIFE SCIENCES ==================== -->
+                    <div id="content-lifesci" class="p-6 sm:p-8 bg-slate-50 space-y-5 hidden">
+                        <div class="bg-white p-4 rounded-xl border border-teal-300 shadow-xs flex items-center justify-between text-xs">
+                            <span class="font-extrabold text-white bg-teal-600 px-3 py-1 rounded-lg shadow-xs shadow-teal-500/30">
+                                Grade 10 Life Sciences • Term 1 Cell Division &amp; Mitosis
+                            </span>
+                            <span class="text-teal-900 font-extrabold bg-teal-50 border border-teal-200 px-2.5 py-1 rounded-lg">Mastery: 78%</span>
+                        </div>
+                        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm text-xs space-y-3">
+                            <h4 class="font-extrabold text-slate-900 text-base" style="font-family: 'Afacad', sans-serif;">Phase Identification: Chromosome Separation</h4>
+                            <p class="text-slate-600">Identify the stage of mitosis where spindle fibers contract and sister chromatids separate toward opposite poles.</p>
+                            <div class="p-3.5 bg-teal-50 border border-teal-300 rounded-xl text-teal-950 font-bold shadow-2xs">
+                                Correct Answer: Anaphase (Spindle contraction &amp; centromere splitting confirmed) ✓ 4/4 Marks
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ==================== VIEW 7: TECH MATHS ==================== -->
+                    <div id="content-techmaths" class="p-6 sm:p-8 bg-slate-50 space-y-5 hidden">
+                        <div class="bg-white p-4 rounded-xl border border-indigo-300 shadow-xs flex items-center justify-between text-xs">
+                            <span class="font-extrabold text-white bg-indigo-600 px-3 py-1 rounded-lg shadow-xs shadow-indigo-500/30">
+                                Grade 10 Technical Mathematics • Term 1 Mensuration &amp; Trigonometry
+                            </span>
+                            <span class="text-indigo-900 font-extrabold bg-indigo-50 border border-indigo-200 px-2.5 py-1 rounded-lg">Mastery: 72%</span>
+                        </div>
+                        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm text-xs space-y-3 font-mono">
+                            <div class="flex items-center justify-between border-b border-slate-100 pb-2 font-sans">
+                                <span class="font-extrabold text-slate-900 text-base" style="font-family: 'Afacad', sans-serif;">
+                                    Right-Angled Triangle: Hypotenuse &amp; sin(θ)
+                                </span>
+                                <span class="text-indigo-600 font-extrabold">5 Marks</span>
+                            </div>
+                            <p class="text-slate-600 font-sans text-xs">Given adjacent side = 8 cm and opposite side = 6 cm. Find hypotenuse r and sin(θ).</p>
+                            <div class="p-3.5 bg-indigo-50 border border-indigo-300 rounded-xl text-indigo-950 font-bold text-sm shadow-2xs">
+                                r = √(6² + 8²) = √(36 + 64) = √100 = 10 cm &bull; sin(θ) = 6/10 = 0.6 ✓
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ==================== MOBILE WEBAPK VIEWPORT CONTAINER ==================== -->
+        <div id="mobile-viewport" class="hidden transition-all duration-500 max-w-sm mx-auto">
+            
+            <!-- Mobile Ergonomics Bar: Orientation & Workspace Real Estate Toggle -->
+            <div id="mobile-control-bar" class="flex flex-wrap items-center justify-between gap-3 mb-5 bg-[#081326]/90 backdrop-blur-md px-4 py-3 rounded-2xl border border-slate-700/80 shadow-2xl transition-all duration-300">
+                <div class="flex items-center gap-2">
+                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                    <div>
+                        <span class="text-xs font-bold text-white block leading-tight">Mobile Ergonomics Mode</span>
+                        <span id="current-orientation-label" class="text-[11px] text-slate-300">📱 Portrait Mode • 1-Tap Collapse Enabled</span>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2 bg-slate-900 p-1 rounded-xl border border-slate-700 shadow-inner">
+                    <button
+                        type="button"
+                        id="btn-mob-portrait"
+                        onclick="setMobileOrientation('portrait')"
+                        class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition bg-[#13519C] text-white shadow-xs cursor-pointer"
+                    >
+                        <span>📱</span>
+                        <span>Portrait</span>
+                    </button>
+                    <button
+                        type="button"
+                        id="btn-mob-landscape"
+                        onclick="setMobileOrientation('landscape')"
+                        class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition text-slate-400 hover:text-white hover:bg-slate-800 cursor-pointer"
+                    >
+                        <span>🔄</span>
+                        <span>Landscape / Fullscreen</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Phone Chassis Bezel (Adaptive Android Device) -->
+            <div id="mobile-chassis" class="bg-slate-900 p-3.5 rounded-[44px] shadow-2xl border-4 border-slate-800 relative transition-all duration-500">
+                
+                <!-- Camera Punch Hole -->
+                <div id="mobile-punch-hole" class="absolute top-6 left-1/2 -translate-x-1/2 w-4 h-4 bg-black rounded-full z-40 border border-slate-800 transition-all duration-500"></div>
+
+                <!-- Phone Screen Canvas -->
+                <div id="mobile-canvas" class="bg-white rounded-[34px] overflow-hidden text-slate-800 min-h-[640px] flex flex-col justify-between relative shadow-inner transition-all duration-500">
+                    
+                    <!-- Mobile Android Status Bar -->
+                    <div class="px-6 pt-3 pb-2 bg-[#13519C] text-white flex items-center justify-between text-[11px] font-mono select-none">
+                        <span id="mob-clock">14:30</span>
+                        <div class="flex items-center gap-2">
+                            <span class="text-[10px] bg-blue-800/80 px-1.5 py-0.5 rounded border border-blue-400/30">LTE</span>
+                            <span>📶</span>
+                            <span>🔋 88%</span>
+                        </div>
+                    </div>
+
+                    <!-- WebAPK User Ribbon (Collapsible in Portrait, Auto-Hidden in Landscape) -->
+                    <div id="mob-user-ribbon" class="px-4 py-2.5 bg-[#13519C] text-white flex items-center justify-between border-t border-blue-800/40 transition-all duration-300">
+                        <div class="flex items-center gap-2.5">
+                            <div class="w-7 h-7 rounded-full bg-white text-[#13519C] flex items-center justify-center font-extrabold text-xs shadow-xs">
+                                N
+                            </div>
+                            <div>
+                                <span class="font-bold text-xs block leading-tight">Nqobile Dlamini</span>
+                                <span class="text-[10px] text-blue-100/90 leading-tight">Grade 10 FET • Westville High</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span class="text-[10px] bg-amber-400 text-slate-950 font-extrabold px-2 py-0.5 rounded-full shadow-xs">
+                                🔥 5d
+                            </span>
+                            <span class="text-[10px] bg-blue-900/80 text-blue-100 font-extrabold px-2 py-0.5 rounded-full border border-blue-400/40 shadow-xs">
+                                ⚡ 1.4k
+                            </span>
+                            <!-- 1-Tap Ribbon Collapse Button in Portrait Mode -->
+                            <button
+                                type="button"
+                                id="btn-toggle-ribbon"
+                                onclick="toggleMobileRibbon()"
+                                class="ml-1 px-2 py-0.5 rounded-md bg-white/20 hover:bg-white/30 text-white font-bold text-[10px] flex items-center gap-1 transition cursor-pointer"
+                                title="Collapse Profile Ribbon to Maximize Workspace"
+                            >
+                                <span id="ribbon-toggle-icon">▲</span>
+                                <span id="ribbon-toggle-text">Hide</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 1-Line Collapsed Ribbon Indicator (Portrait Mode) -->
+                    <div id="mob-ribbon-collapsed-bar" class="hidden px-4 py-1.5 bg-[#13519C] text-white text-[10px] font-bold flex items-center justify-between border-t border-blue-800/40 select-none">
+                        <span class="text-blue-100 flex items-center gap-1.5">
+                            <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                            <span>Workspace Maximized (Nqobile • Gr 10)</span>
+                        </span>
+                        <button type="button" onclick="toggleMobileRibbon()" class="text-amber-300 hover:text-white underline text-[10px] cursor-pointer">
+                            ▼ Show Profile
+                        </button>
+                    </div>
+
+                    <!-- ───────────────────────────────────────────────────────────── -->
+                    <!-- Mobile Interactive Content Views                             -->
+                    <!-- ───────────────────────────────────────────────────────────── -->
+                    <div class="flex-1 bg-slate-50 overflow-y-auto">
+                        
+                        <!-- MOBILE VIEW 1: TODAY'S DESK -->
+                        <div id="mob-content-desk" class="p-4 space-y-3">
+                            <div class="bg-white border-2 border-emerald-400 p-3.5 rounded-2xl shadow-sm">
+                                <div class="flex justify-between items-center text-[10px] font-extrabold mb-1">
+                                    <span class="bg-emerald-600 text-white px-2 py-0.5 rounded-full">ACCOUNTING • DUE TODAY</span>
+                                    <span class="bg-rose-500 text-white px-2 py-0.5 rounded-full font-extrabold text-[9px] shadow-xs">17:00</span>
+                                </div>
+                                <h5 class="text-xs font-bold text-slate-900 mt-1">General Journal: Debtors &amp; Bad Debts</h5>
+                                <p class="text-[11px] text-slate-600 mt-0.5">Mrs. Khumalo assigned 12 marks practice (J. Dlamini dividend).</p>
+                                <button
+                                    type="button"
+                                    onclick="switchFolderTab('accounting')"
+                                    class="mt-2.5 w-full py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl shadow-sm shadow-emerald-600/30 transition cursor-pointer"
+                                >
+                                    Open in Accounting &rarr;
+                                </button>
+                            </div>
+
+                            <div class="bg-white border-2 border-blue-400 p-3.5 rounded-2xl shadow-sm">
+                                <div class="flex justify-between items-center text-[10px] font-extrabold mb-1">
+                                    <span class="bg-blue-600 text-white px-2 py-0.5 rounded-full">MATHEMATICS • DUE FRIDAY</span>
+                                    <span class="text-white bg-amber-500 px-2 py-0.5 rounded-full text-[9px] font-bold shadow-xs">08:00</span>
+                                </div>
+                                <h5 class="text-xs font-bold text-slate-900 mt-1">Trinomial Factorisation Drill</h5>
+                                <p class="text-[11px] text-slate-600 mt-0.5">Mr. Botha • 10 Marks • Friday test prep.</p>
+                                <button
+                                    type="button"
+                                    onclick="switchFolderTab('maths')"
+                                    class="mt-2.5 w-full py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-xl shadow-sm shadow-blue-600/30 transition cursor-pointer"
+                                >
+                                    Open in Mathematics &rarr;
+                                </button>
+                            </div>
+
+                            <div class="bg-white p-3.5 rounded-2xl border border-slate-200 shadow-xs">
+                                <div class="flex items-center justify-between text-[10px] font-bold mb-1">
+                                    <span class="text-slate-500 uppercase">Self-Paced Mastery</span>
+                                    <span class="text-white bg-emerald-600 px-2 py-0.5 rounded-full font-extrabold text-[9px]">84% BKT</span>
+                                </div>
+                                <p class="text-xs font-semibold text-slate-800">Cash Receipts Journal (VAT 15%)</p>
+                                <button
+                                    type="button"
+                                    onclick="switchFolderTab('accounting')"
+                                    class="mt-2 w-full py-1.5 bg-[#13519C] hover:bg-blue-800 text-white text-[11px] font-bold rounded-xl transition cursor-pointer shadow-xs"
+                                >
+                                    Resume Autonomous Drill &rarr;
+                                </button>
+                            </div>
+
+                            <div class="bg-white p-3 rounded-2xl border border-slate-200 text-center">
+                                <span class="text-[10px] font-bold uppercase text-slate-400">Offline WebAPK Cache</span>
+                                <p class="text-[11px] font-semibold text-slate-600 mt-0.5">1.4 MB Total Data • Zero Video Buffering</p>
+                            </div>
+                        </div>
+
+                        <!-- MOBILE VIEW 2: ACCOUNTING (Dual-Mode: Portrait Cards vs Landscape Fullscreen Ledger) -->
+                        <div id="mob-content-accounting" class="p-4 space-y-3 hidden">
+                            
+                            <!-- Subject Header -->
+                            <div class="bg-emerald-600 text-white p-3.5 rounded-2xl shadow-sm flex items-center justify-between">
+                                <div>
+                                    <span class="text-[10px] font-extrabold uppercase tracking-wider text-emerald-100 block">Grade 10 Accounting</span>
+                                    <h5 class="text-xs font-extrabold text-white mt-0.5">Topic 1.1: CRJ &amp; 15% VAT</h5>
+                                </div>
+                                <span class="bg-white text-emerald-800 font-extrabold px-2.5 py-1 rounded-lg text-[10px] shadow-xs">
+                                    Mastery: 84%
+                                </span>
+                            </div>
+
+                            <!-- (A) PORTRAIT VIEW: Compact Card Grid -->
+                            <div id="mob-accounting-portrait-cards" class="bg-white p-3.5 rounded-2xl border border-slate-200 shadow-sm space-y-3">
+                                <div class="flex items-center justify-between text-xs pb-1 border-b border-slate-100">
+                                    <span class="text-[10px] font-bold uppercase text-slate-500">2D Ledger Inputs</span>
+                                    <span class="text-[10px] font-bold text-amber-600 bg-amber-50 px-2 py-0.5 rounded border border-amber-200">6 Marks</span>
+                                </div>
+                                <div class="grid grid-cols-2 gap-2 text-xs">
+                                    <div class="p-2.5 bg-emerald-50 rounded-xl border border-emerald-200">
+                                        <span class="text-[10px] text-slate-600 block font-semibold">Bank (Gross 115%)</span>
+                                        <span class="font-mono font-bold text-emerald-800 text-sm">R 11 500</span>
+                                    </div>
+                                    <div class="p-2.5 bg-emerald-50 rounded-xl border border-emerald-200">
+                                        <span class="text-[10px] text-slate-600 block font-semibold">Sales (Excl 100%)</span>
+                                        <span class="font-mono font-bold text-emerald-800 text-sm">R 10 000</span>
+                                    </div>
+                                    <div class="p-2.5 bg-emerald-50 rounded-xl border border-emerald-200">
+                                        <span class="text-[10px] text-slate-600 block font-semibold">Output VAT (15%)</span>
+                                        <span class="font-mono font-bold text-emerald-800 text-sm">R 1 500</span>
+                                    </div>
+                                    <div class="p-2.5 bg-slate-50 rounded-xl border border-slate-200">
+                                        <span class="text-[10px] text-slate-600 block font-semibold">Cost of Sales</span>
+                                        <span class="font-mono font-bold text-slate-700 text-sm">R 8 000</span>
+                                    </div>
+                                </div>
+                                <div class="p-2.5 bg-amber-50 rounded-xl border border-amber-200 text-[11px] text-amber-900">
+                                    <span class="font-bold text-amber-800">Tier 3 Hint:</span> R11,500 × 15/115 = R1,500 VAT.
+                                </div>
+                            </div>
+
+                            <!-- (B) LANDSCAPE VIEW: Fullscreen 6-Column 2D Ledger Table -->
+                            <div id="mob-accounting-landscape-ledger" class="hidden bg-white p-3.5 rounded-2xl border border-slate-200 shadow-sm space-y-3">
+                                <div class="flex items-center justify-between pb-2 border-b border-slate-100">
+                                    <div class="flex items-center gap-2">
+                                        <span class="text-[10px] font-extrabold uppercase bg-emerald-600 text-white px-2 py-0.5 rounded shadow-xs shadow-emerald-500/30">
+                                            CAPS CRJ 2D Ledger • Fullscreen Real Estate
+                                        </span>
+                                        <span class="text-xs font-bold text-slate-800 truncate">Cash Sales R11,500 (15% VAT)</span>
+                                    </div>
+                                    <span class="text-xs font-extrabold text-amber-600 bg-amber-50 px-2 py-0.5 rounded border border-amber-200">6 Marks</span>
+                                </div>
+                                <div class="overflow-x-auto rounded-xl border border-slate-200 shadow-2xs">
+                                    <table class="w-full text-xs text-left">
+                                        <thead class="bg-slate-100 text-slate-700 border-b border-slate-200 uppercase text-[10px] font-bold">
+                                            <tr>
+                                                <th class="p-2">Day</th>
+                                                <th class="p-2">Details</th>
+                                                <th class="p-2">Bank (Gross 115%)</th>
+                                                <th class="p-2">Sales (Excl 100%)</th>
+                                                <th class="p-2">Output VAT (15%)</th>
+                                                <th class="p-2">Cost of Sales</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="divide-y divide-slate-100 font-mono text-xs">
+                                            <tr>
+                                                <td class="p-2 text-slate-600">12</td>
+                                                <td class="p-2 text-slate-800 font-sans font-medium">Cash / CRT</td>
+                                                <td class="p-1.5">
+                                                    <input type="text" value="11 500" readonly class="w-24 px-2 py-1 rounded border-2 border-emerald-500 bg-emerald-50 text-emerald-800 font-bold focus:outline-none">
+                                                </td>
+                                                <td class="p-1.5">
+                                                    <input type="text" value="10 000" readonly class="w-24 px-2 py-1 rounded border-2 border-emerald-500 bg-emerald-50 text-emerald-800 font-bold focus:outline-none">
+                                                </td>
+                                                <td class="p-1.5">
+                                                    <input type="text" value="1 500" readonly class="w-20 px-2 py-1 rounded border-2 border-emerald-500 bg-emerald-50 text-emerald-800 font-bold focus:outline-none">
+                                                </td>
+                                                <td class="p-2 text-slate-600">8 000</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="p-2 bg-amber-50 border border-amber-200 rounded-xl text-[11px] text-amber-900 flex items-center justify-between">
+                                    <div class="flex items-center gap-1.5">
+                                        <span class="font-bold text-amber-800">Tier 3 Hint:</span>
+                                        <span>When VAT inclusive, R11,500 × 15/115 = R1,500 VAT.</span>
+                                    </div>
+                                    <span class="font-extrabold text-white bg-emerald-600 px-2.5 py-0.5 rounded text-[10px]">6/6 Marks Credited</span>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- MOBILE VIEW 3: MATHEMATICS -->
+                        <div id="mob-content-maths" class="p-4 space-y-3 hidden">
+                            <div class="bg-blue-600 text-white p-3.5 rounded-2xl shadow-sm flex items-center justify-between">
+                                <div>
+                                    <span class="text-[10px] font-extrabold uppercase tracking-wider text-blue-100 block">Grade 10 Mathematics</span>
+                                    <h5 class="text-xs font-extrabold text-white mt-0.5">Trinomial Factorisation</h5>
+                                </div>
+                                <span class="bg-white text-blue-900 font-extrabold px-2.5 py-1 rounded-lg text-[10px] shadow-xs">
+                                    Mastery: 82%
+                                </span>
+                            </div>
+                            <div class="bg-white p-3.5 rounded-2xl border border-slate-200 shadow-sm space-y-2">
+                                <span class="text-[10px] font-bold uppercase text-slate-400">Step-by-Step KaTeX Keypad</span>
+                                <p class="text-xs font-bold text-slate-800">Factorise: x² − 7x + 12</p>
+                                <div class="p-3 bg-blue-50 border border-blue-200 rounded-xl text-blue-950 font-bold text-xs font-mono">
+                                    (x − 3)(x − 4) ✓ Equivalence Confirmed
+                                </div>
+                                <p class="text-[11px] text-slate-500">SymPy symbolic engine verified: (−3) + (−4) = −7 and (−3) × (−4) = +12.</p>
+                            </div>
+                        </div>
+
+                        <!-- MOBILE VIEW 4: PHYSICAL SCIENCES -->
+                        <div id="mob-content-physics" class="p-4 space-y-3 hidden">
+                            <div class="bg-cyan-600 text-white p-3.5 rounded-2xl shadow-sm flex items-center justify-between">
+                                <div>
+                                    <span class="text-[10px] font-extrabold uppercase tracking-wider text-cyan-100 block">Physical Sciences</span>
+                                    <h5 class="text-xs font-extrabold text-white mt-0.5">1D Constant Acceleration</h5>
+                                </div>
+                                <span class="bg-white text-cyan-900 font-extrabold px-2.5 py-1 rounded-lg text-[10px] shadow-xs">
+                                    Mastery: 68%
+                                </span>
+                            </div>
+                            <div class="bg-white p-3.5 rounded-2xl border border-slate-200 shadow-sm space-y-2">
+                                <p class="text-xs text-slate-700">Trolley accelerates from rest at 2,5 m/s² for 4 s.</p>
+                                <div class="p-3 bg-cyan-50 border border-cyan-200 rounded-xl text-cyan-950 font-mono font-bold text-xs">
+                                    vf = 0 + (2,5)(4) = 10,0 m/s
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- MOBILE VIEW 5: BUSINESS STUDIES -->
+                        <div id="mob-content-business" class="p-4 space-y-3 hidden">
+                            <div class="bg-[#FF9100] text-white p-3.5 rounded-2xl shadow-sm flex items-center justify-between">
+                                <div>
+                                    <span class="text-[10px] font-extrabold uppercase tracking-wider text-amber-100 block">Business Studies</span>
+                                    <h5 class="text-xs font-extrabold text-white mt-0.5">Business Environments</h5>
+                                </div>
+                                <span class="bg-white text-amber-950 font-extrabold px-2.5 py-1 rounded-lg text-[10px] shadow-xs">
+                                    Mastery: 75%
+                                </span>
+                            </div>
+                            <div class="bg-white p-3.5 rounded-2xl border border-slate-200 shadow-sm space-y-2">
+                                <p class="text-xs text-slate-700">Fuel price increase decree by Minister of Mineral Resources.</p>
+                                <div class="p-3 bg-amber-50 border border-amber-200 rounded-xl text-amber-950 font-bold text-xs">
+                                    Macro Environment (Economic &amp; Political) • Outside Management Control
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- MOBILE VIEW 6: LIFE SCIENCES -->
+                        <div id="mob-content-lifesci" class="p-4 space-y-3 hidden">
+                            <div class="bg-teal-600 text-white p-3.5 rounded-2xl shadow-sm flex items-center justify-between">
+                                <div>
+                                    <span class="text-[10px] font-extrabold uppercase tracking-wider text-teal-100 block">Life Sciences</span>
+                                    <h5 class="text-xs font-extrabold text-white mt-0.5">Cell Division &amp; Mitosis</h5>
+                                </div>
+                                <span class="bg-white text-teal-950 font-extrabold px-2.5 py-1 rounded-lg text-[10px] shadow-xs">
+                                    Mastery: 78%
+                                </span>
+                            </div>
+                            <div class="bg-white p-3.5 rounded-2xl border border-slate-200 shadow-sm space-y-2">
+                                <p class="text-xs text-slate-700">Sister chromatids separating towards opposite poles.</p>
+                                <div class="p-3 bg-teal-50 border border-teal-200 rounded-xl text-teal-950 font-bold text-xs">
+                                    Anaphase (Spindle Fiber Contraction) ✓
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- MOBILE VIEW 7: TECH MATHS -->
+                        <div id="mob-content-techmaths" class="p-4 space-y-3 hidden">
+                            <div class="bg-indigo-600 text-white p-3.5 rounded-2xl shadow-sm flex items-center justify-between">
+                                <div>
+                                    <span class="text-[10px] font-extrabold uppercase tracking-wider text-indigo-100 block">Tech Maths</span>
+                                    <h5 class="text-xs font-extrabold text-white mt-0.5">Mensuration &amp; Trig</h5>
+                                </div>
+                                <span class="bg-white text-indigo-950 font-extrabold px-2.5 py-1 rounded-lg text-[10px] shadow-xs">
+                                    Mastery: 72%
+                                </span>
+                            </div>
+                            <div class="bg-white p-3.5 rounded-2xl border border-slate-200 shadow-sm space-y-2 font-mono text-xs">
+                                <p class="text-slate-700 font-sans">Sides 6 cm and 8 cm right-angled triangle.</p>
+                                <div class="p-3 bg-indigo-50 border border-indigo-200 rounded-xl text-indigo-950 font-bold">
+                                    r = √(6² + 8²) = 10 cm &bull; sin(θ) = 0.6 ✓
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- ───────────────────────────────────────────────────────────── -->
+                    <!-- Mobile Bottom Bar: Smooth Horizontal Scroll Carousel (7 Subj) -->
+                    <!-- ───────────────────────────────────────────────────────────── -->
+                    <nav id="mob-bottom-nav" class="border-t border-slate-200 bg-white/95 backdrop-blur-md px-4 py-2 flex items-center gap-3 overflow-x-auto scrollbar-none [&::-webkit-scrollbar]:hidden select-none shadow-lg shrink-0">
+                        <button
+                            type="button"
+                            id="mob-tab-desk"
+                            onclick="switchFolderTab('desk')"
+                            class="mob-nav-btn flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold transition shrink-0 whitespace-nowrap min-h-[44px] cursor-pointer bg-blue-50 text-[#13519C] border-2 border-blue-400 shadow-sm"
+                        >
+                            <span class="text-base leading-none">📋</span>
+                            <span class="leading-none">Desk</span>
+                            <span class="px-1.5 py-0.5 rounded-full bg-rose-500 text-white text-[9px] font-extrabold shadow-sm shadow-rose-500/40">2 Due</span>
+                        </button>
+
+                        <button
+                            type="button"
+                            id="mob-tab-accounting"
+                            onclick="switchFolderTab('accounting')"
+                            class="mob-nav-btn flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-medium transition shrink-0 whitespace-nowrap min-h-[44px] cursor-pointer bg-slate-50 text-slate-600 border border-slate-200 hover:text-slate-900"
+                        >
+                            <span class="text-base leading-none">📗</span>
+                            <span class="leading-none">Accounting</span>
+                            <span class="px-1.5 py-0.5 rounded-full bg-emerald-600 text-white text-[9px] font-extrabold shadow-sm shadow-emerald-500/40">84%</span>
+                        </button>
+
+                        <button
+                            type="button"
+                            id="mob-tab-maths"
+                            onclick="switchFolderTab('maths')"
+                            class="mob-nav-btn flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-medium transition shrink-0 whitespace-nowrap min-h-[44px] cursor-pointer bg-slate-50 text-slate-600 border border-slate-200 hover:text-slate-900"
+                        >
+                            <span class="text-base leading-none">📘</span>
+                            <span class="leading-none">Maths</span>
+                            <span class="px-1.5 py-0.5 rounded-full bg-blue-600 text-white text-[9px] font-extrabold shadow-sm shadow-blue-500/40">82%</span>
+                        </button>
+
+                        <button
+                            type="button"
+                            id="mob-tab-physics"
+                            onclick="switchFolderTab('physics')"
+                            class="mob-nav-btn flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-medium transition shrink-0 whitespace-nowrap min-h-[44px] cursor-pointer bg-slate-50 text-slate-600 border border-slate-200 hover:text-slate-900"
+                        >
+                            <span class="text-base leading-none">📙</span>
+                            <span class="leading-none">Physics</span>
+                            <span class="px-1.5 py-0.5 rounded-full bg-cyan-600 text-white text-[9px] font-extrabold shadow-sm shadow-cyan-500/40">68%</span>
+                        </button>
+
+                        <button
+                            type="button"
+                            id="mob-tab-business"
+                            onclick="switchFolderTab('business')"
+                            class="mob-nav-btn flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-medium transition shrink-0 whitespace-nowrap min-h-[44px] cursor-pointer bg-slate-50 text-slate-600 border border-slate-200 hover:text-slate-900"
+                        >
+                            <span class="text-base leading-none">📕</span>
+                            <span class="leading-none">Business</span>
+                            <span class="px-1.5 py-0.5 rounded-full bg-[#FF9100] text-white text-[9px] font-extrabold shadow-sm shadow-orange-500/40">75%</span>
+                        </button>
+
+                        <button
+                            type="button"
+                            id="mob-tab-lifesci"
+                            onclick="switchFolderTab('lifesci')"
+                            class="mob-nav-btn flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-medium transition shrink-0 whitespace-nowrap min-h-[44px] cursor-pointer bg-slate-50 text-slate-600 border border-slate-200 hover:text-slate-900"
+                        >
+                            <span class="text-base leading-none">🔬</span>
+                            <span class="leading-none">Life Sciences</span>
+                            <span class="px-1.5 py-0.5 rounded-full bg-teal-600 text-white text-[9px] font-extrabold shadow-sm shadow-teal-500/40">78%</span>
+                        </button>
+
+                        <button
+                            type="button"
+                            id="mob-tab-techmaths"
+                            onclick="switchFolderTab('techmaths')"
+                            class="mob-nav-btn flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-medium transition shrink-0 whitespace-nowrap min-h-[44px] cursor-pointer bg-slate-50 text-slate-600 border border-slate-200 hover:text-slate-900"
+                        >
+                            <span class="text-base leading-none">📐</span>
+                            <span class="leading-none">Tech Maths</span>
+                            <span class="px-1.5 py-0.5 rounded-full bg-indigo-600 text-white text-[9px] font-extrabold shadow-sm shadow-indigo-500/40">72%</span>
+                        </button>
+                    </nav>
+
+                </div>
+            </div>
+            <p class="text-center text-xs text-slate-400 mt-3">
+                📱 Android WebAPK View: 1-Tap Home Screen Launch • &lt; 1.4 MB Data • Works 100% Offline
+            </p>
+        </div>
+
+    </main>
+
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- 4. JAVASCRIPT STATE CONTROLLER                                -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <script>
+        const TABS = ['desk', 'accounting', 'maths', 'physics', 'business', 'lifesci', 'techmaths'];
+        
+        const THEME_COLORS = {
+            desk: '#13519C',       // Deep Royal Navy Brand Blue
+            accounting: '#059669', // Electric Emerald
+            maths: '#2563EB',      // Bold Cobalt / Royal Blue
+            physics: '#0891B2',    // Laser Cyan / Teal
+            business: '#EA580C',   // Vivid Sunset Amber / Orange
+            lifesci: '#0D9488',    // Deep Teal Life Sci
+            techmaths: '#7C3AED'   // Vivid Purple Tech Maths
+        };
+
+        const TITLES = {
+            desk: "Fundile — Nqobile Dlamini (Grade 10 FET) • Today's Desk",
+            accounting: "Fundile — Grade 10 Accounting • Cash Receipts Journal & VAT",
+            maths: "Fundile — Grade 10 Mathematics • Algebraic Trinomials",
+            physics: "Fundile — Grade 10 Physical Sciences • Constant Acceleration",
+            business: "Fundile — Grade 10 Business Studies • Business Environments",
+            lifesci: "Fundile — Grade 10 Life Sciences • Cell Division & Mitosis",
+            techmaths: "Fundile — Grade 10 Technical Mathematics • Trigonometric Ratios",
+        };
+
+        // Current Orientation State
+        let currentMobileOrientation = 'portrait';
+        let isRibbonCollapsed = false;
+
+        function getMobActiveClasses(tabId) {
+            switch(tabId) {
+                case 'desk': return 'bg-blue-50 text-[#13519C] border-2 border-blue-400 font-bold';
+                case 'accounting': return 'bg-emerald-50 text-emerald-800 border-2 border-emerald-400 font-bold';
+                case 'maths': return 'bg-blue-50 text-blue-800 border-2 border-blue-400 font-bold';
+                case 'physics': return 'bg-cyan-50 text-cyan-800 border-2 border-cyan-400 font-bold';
+                case 'business': return 'bg-amber-50 text-amber-900 border-2 border-amber-400 font-bold';
+                case 'lifesci': return 'bg-teal-50 text-teal-900 border-2 border-teal-400 font-bold';
+                case 'techmaths': return 'bg-indigo-50 text-indigo-900 border-2 border-indigo-400 font-bold';
+                default: return 'bg-blue-50 text-[#13519C] border-2 border-blue-400 font-bold';
+            }
+        }
+
+        function switchFolderTab(tabId) {
+            // Update Desktop Tab Lips & Views
+            TABS.forEach(t => {
+                const deskBtn = document.getElementById('tab-' + t);
+                const deskContent = document.getElementById('content-' + t);
+                const mobTab = document.getElementById('mob-tab-' + t);
+                const mobContent = document.getElementById('mob-content-' + t);
+
+                if (t === tabId) {
+                    if (deskBtn) {
+                        deskBtn.classList.add('active');
+                        deskBtn.classList.remove('inactive');
+                    }
+                    if (deskContent) deskContent.classList.remove('hidden');
+
+                    if (mobTab) {
+                        mobTab.className = "mob-nav-btn flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs transition shrink-0 whitespace-nowrap min-h-[44px] cursor-pointer shadow-sm " + getMobActiveClasses(t);
+                        mobTab.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+                    }
+                    if (mobContent) mobContent.classList.remove('hidden');
+                } else {
+                    if (deskBtn) {
+                        deskBtn.classList.remove('active');
+                        deskBtn.classList.add('inactive');
+                    }
+                    if (deskContent) deskContent.classList.add('hidden');
+
+                    if (mobTab) {
+                        mobTab.className = "mob-nav-btn flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-medium transition shrink-0 whitespace-nowrap min-h-[44px] cursor-pointer bg-slate-50 text-slate-600 border border-slate-200 hover:text-slate-900";
+                    }
+                    if (mobContent) mobContent.classList.add('hidden');
+                }
+            });
+
+            // Update Dynamic Interior Accent Line
+            const accentLine = document.getElementById('interior-accent-line');
+            if (accentLine && THEME_COLORS[tabId]) {
+                accentLine.style.backgroundColor = THEME_COLORS[tabId];
+            }
+
+            // Update Window Title
+            const titleEl = document.getElementById('window-title');
+            if (titleEl && TITLES[tabId]) {
+                titleEl.textContent = TITLES[tabId];
+            }
+        }
+
+        function setViewport(mode) {
+            const deskView = document.getElementById('desktop-viewport');
+            const mobView = document.getElementById('mobile-viewport');
+            const btnDesk = document.getElementById('btn-desktop');
+            const btnMob = document.getElementById('btn-mobile');
+
+            if (mode === 'desktop') {
+                deskView.classList.remove('hidden');
+                mobView.classList.add('hidden');
+                btnDesk.classList.add('bg-[#13519C]', 'text-white');
+                btnDesk.classList.remove('text-slate-400', 'hover:bg-slate-800');
+                btnMob.classList.remove('bg-[#13519C]', 'text-white');
+                btnMob.classList.add('text-slate-400', 'hover:bg-slate-800');
+            } else {
+                deskView.classList.add('hidden');
+                mobView.classList.remove('hidden');
+                btnMob.classList.add('bg-[#13519C]', 'text-white');
+                btnMob.classList.remove('text-slate-400', 'hover:bg-slate-800');
+                btnDesk.classList.remove('bg-[#13519C]', 'text-white');
+                btnDesk.classList.add('text-slate-400', 'hover:bg-slate-800');
+            }
+        }
+
+        function setMobileOrientation(mode) {
+            currentMobileOrientation = mode;
+            const container = document.getElementById('mobile-viewport');
+            const chassis = document.getElementById('mobile-chassis');
+            const canvas = document.getElementById('mobile-canvas');
+            const punchHole = document.getElementById('mobile-punch-hole');
+            const ribbon = document.getElementById('mob-user-ribbon');
+            const collapsedBar = document.getElementById('mob-ribbon-collapsed-bar');
+            const btnPortrait = document.getElementById('btn-mob-portrait');
+            const btnLandscape = document.getElementById('btn-mob-landscape');
+            const orientationLabel = document.getElementById('current-orientation-label');
+
+            const acctPortraitCards = document.getElementById('mob-accounting-portrait-cards');
+            const acctLandscapeLedger = document.getElementById('mob-accounting-landscape-ledger');
+
+            if (mode === 'landscape') {
+                // Widescreen Landscape Transformation (e.g. 720px wide x 410px high)
+                container.classList.remove('max-w-sm');
+                container.classList.add('max-w-3xl', 'w-full');
+
+                chassis.classList.remove('rounded-[44px]', 'p-3.5');
+                chassis.classList.add('rounded-[28px]', 'p-3');
+
+                canvas.classList.remove('min-h-[640px]');
+                canvas.classList.add('min-h-[390px]', 'max-h-[440px]', 'rounded-[20px]');
+
+                punchHole.classList.remove('top-6', 'left-1/2', '-translate-x-1/2');
+                punchHole.classList.add('top-1/2', 'left-3.5', '-translate-y-1/2');
+
+                // Button State Active
+                btnLandscape.classList.add('bg-[#13519C]', 'text-white');
+                btnLandscape.classList.remove('text-slate-400', 'hover:bg-slate-800');
+                btnPortrait.classList.remove('bg-[#13519C]', 'text-white');
+                btnPortrait.classList.add('text-slate-400', 'hover:bg-slate-800');
+
+                orientationLabel.textContent = "🔄 Landscape Mode • Ribbon Auto-Hidden • 6-Col Ledger Active";
+
+                // Automatically HIDE User Ribbon in landscape mode to maximize vertical real estate
+                ribbon.classList.add('hidden');
+                collapsedBar.classList.add('hidden');
+
+                // Switch to Fullscreen 6-Column 2D Ledger
+                if (acctPortraitCards) acctPortraitCards.classList.add('hidden');
+                if (acctLandscapeLedger) acctLandscapeLedger.classList.remove('hidden');
+
+            } else {
+                // Return to Portrait Chassis (max-w-sm, ~640px min-height)
+                container.classList.remove('max-w-3xl', 'w-full');
+                container.classList.add('max-w-sm');
+
+                chassis.classList.remove('rounded-[28px]', 'p-3');
+                chassis.classList.add('rounded-[44px]', 'p-3.5');
+
+                canvas.classList.remove('min-h-[390px]', 'max-h-[440px]', 'rounded-[20px]');
+                canvas.classList.add('min-h-[640px]', 'rounded-[34px]');
+
+                punchHole.classList.remove('top-1/2', 'left-3.5', '-translate-y-1/2');
+                punchHole.classList.add('top-6', 'left-1/2', '-translate-x-1/2');
+
+                btnPortrait.classList.add('bg-[#13519C]', 'text-white');
+                btnPortrait.classList.remove('text-slate-400', 'hover:bg-slate-800');
+                btnLandscape.classList.remove('bg-[#13519C]', 'text-white');
+                btnLandscape.classList.add('text-slate-400', 'hover:bg-slate-800');
+
+                orientationLabel.textContent = "📱 Portrait Mode • 1-Tap Collapse Enabled";
+
+                // Restore Ribbon based on user preference
+                if (isRibbonCollapsed) {
+                    ribbon.classList.add('hidden');
+                    collapsedBar.classList.remove('hidden');
+                } else {
+                    ribbon.classList.remove('hidden');
+                    collapsedBar.classList.add('hidden');
+                }
+
+                // Restore Portrait 2D Ledger Cards
+                if (acctPortraitCards) acctPortraitCards.classList.remove('hidden');
+                if (acctLandscapeLedger) acctLandscapeLedger.classList.add('hidden');
+            }
+        }
+
+        function toggleMobileRibbon() {
+            const ribbon = document.getElementById('mob-user-ribbon');
+            const collapsedBar = document.getElementById('mob-ribbon-collapsed-bar');
+            const toggleIcon = document.getElementById('ribbon-toggle-icon');
+            const toggleText = document.getElementById('ribbon-toggle-text');
+
+            isRibbonCollapsed = !isRibbonCollapsed;
+
+            if (isRibbonCollapsed) {
+                ribbon.classList.add('hidden');
+                collapsedBar.classList.remove('hidden');
+                if (toggleIcon) toggleIcon.textContent = '▼';
+                if (toggleText) toggleText.textContent = 'Show';
+            } else {
+                ribbon.classList.remove('hidden');
+                collapsedBar.classList.add('hidden');
+                if (toggleIcon) toggleIcon.textContent = '▲';
+                if (toggleText) toggleText.textContent = 'Hide';
+            }
+        }
+    </script>
+</body>
+</html>

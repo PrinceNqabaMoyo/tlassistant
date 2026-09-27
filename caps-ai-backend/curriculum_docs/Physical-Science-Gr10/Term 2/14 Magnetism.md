@@ -1,0 +1,382 @@
+# Magnetism
+
+
+
+## NOTES
+
+### Introduction
+
+\-Magnetism is an interaction that allows certain kinds of objects, which are called ‘magnetic’ objects, to exert forces on each other
+
+without physically touching.
+
+\-A magnetic object is surrounded by a magnetic ‘field’ that
+
+gets weaker as one moves further away from the object.
+
+\-A second object can feel a magnetic force from the first object because it feels the magnetic field of the first object.
+
+\-The further away the objects are the weaker the magnetic force will be.
+
+\-Humans have known about magnetism for many thousands of years.
+
+\-For example, lode stone is a magnetised form of the iron oxide
+
+mineral magnetite.
+
+\-It has the property of attracting iron objects. It is referred to in old European and Asian historical records; from around 800 BCE in Europe and around 2 600 BCE in Asia.
+
+
+
+### Magnetic fields
+
+\-A magnetic field is a region in space where a magnet or object made of magnetic material will experience a non-contact, magnetic force.
+
+\-A moving charged particle has a magnetic field associated with it. One example of a charged particle that occurs in most matter is the electron.
+
+\-Electrons are in constant motion inside material, orbiting the nucleus in the atom which may also be moving, rotating or
+
+vibrating.
+
+\-So electrons inside any object are moving and have magnetic fields associated with them. In most materials these fields point in various directions, so the net magnetic field is zero.
+
+\-For example, in the plastic ball below, the directions of the magnetic fields of the electrons (shown by the arrows) are pointing in different directions and cancel each other out.
+
+\-Therefore the plastic ball is not magnetic and has no magnetic field.
+
+\-In some materials (e.g. iron), called ferromagnetic materials, there are regions called do mains, where the electrons’ magnetic fields line up with each other. All the atoms in each
+
+domain are grouped together so that the magnetic fields from their electrons point the same way. The picture shows a piece of an iron needle zoomed in to show the domains with the electric fields lined up inside them.
+
+\-In permanent magnets, many domains are lined up, resulting in a net magnetic field.
+
+\-Objects made from ferromagnetic materials can be magnetised, for example by rubbing a magnet along the object in one direction. This causes the magnetic fields of most, or all, of the domains to line up in one direction. As a result the object as a whole will have a net magnetic field. It is magnetic.
+
+\-Once a ferromagnetic object has been magnetised, it can
+
+stay magnetic without another magnet being nearby (i.e. without being in another magnetic field). In the picture below, the needle has been magnetised because the magnetic fields in all the domains are pointing in the same direction.
+
+\-A ferromagnetic material is a substance that shows spontaneous magnetisation. Spontaneous means self-generated or to happen without external cause. This means that a ferromagnetic material has a magnetic field without any external factors being required.
+
+
+
+
+
+### Permanent magnets
+
+#### The poles of permanent magnets
+
+\-Because the domains in a permanent magnet all line up in a particular direction, the magnet has a pair of opposite poles, called north (usually shortened to N) and south (usually
+
+shortened to S).
+
+\-Even if the magnet is cut into tiny pieces, each piece will still have both a N and a S pole. These magnetic poles always occur in pairs. In nature, we never find a north magnetic pole or south magnetic pole on its own.
+
+\-In nature, positive and negative electric charges can be found on their own, but you never find just a north magnetic pole or south magnetic pole on its own.
+
+\-On the very small scale, zooming in to the size of atoms, magnetic fields are caused by moving charges (i.e. the negatively charged electrons).
+
+
+
+#### Magnetic attraction and repulsion
+
+\-Like (identical) poles of magnets repel one another whilst unlike (opposite) poles attract.
+
+\-This means that two N poles or two S poles will push away from each other while a N pole and a S pole will be drawn towards each other.
+
+\-Do you think the following magnets will repel or be attracted to each other?
+
+
+
+#### Representing magnetic fields
+
+\-Magnetic fields can be represented using magnetic field lines starting at the North pole and ending at the South pole.
+
+\-Although the magnetic field of a permanent magnet is
+
+everywhere surrounding the magnet (in all three dimensions), we draw only some of the field lines to represent the field (usually only a two-dimensional cross-section is shown in drawings).
+
+
+
+>DIAGRAM\\\[
+
+\-3D AND 2D of a magnet with N and S poles and magnetic field lines.
+
+]
+
+
+
+\-In areas where the magnetic field is strong, the field lines are closer together. Where the field is weaker, the field lines are drawn further apart.
+
+\-The number of field lines drawn crossing a given two-dimensional surface is referred to as the magnetic flux.
+
+\-The magnetic flux is used as a measure of the strength of the magnetic field through that surface.
+
+
+
+### Ferromagnetism
+
+\-Ferromagnetism is a phenomenon shown by materials like iron, nickel or cobalt.
+
+\-These materials can form permanent magnets. They always magnetise so as to be attracted to a magnet, no matter which magnetic pole is brought toward the unmagnetised iron/nickel/cobalt.
+
+
+
+### The compass
+
+\-A compass is an instrument which is used to find the direction of a magnetic field.
+
+\-A compass consists of a small metal needle which is magnetised itself and which is free to turn in any direction.
+
+\-Therefore, when in the presence of a magnetic field, the needle is able to line up in the same direction as the field.
+
+\-Compasses are mainly used in navigation to find direction on the earth. This works because the Earth itself has a magnetic field which is similar to that of a bar magnet.
+
+\-The compass needle aligns with the Earth’s magnetic field direction and points north-south. Once you know where north is, you can figure out any other direction.
+
+\-Some animals can detect magnetic fields, which helps them orientate themselves and navigate. Animals which can do this include pigeons, bees, Monarch butterflies, sea turtles and certain fish.
+
+
+
+### The Earth’s magnetic field
+
+
+
+\-In the picture below, you can see a representation of the Earth’s magnetic field which is very similar to the magnetic field of a giant bar magnet like the one on the right of the picture.
+
+\-The Earth has two magnetic poles, a north and a south pole just like a bar magnet.
+
+
+
+>DIAGRAM\\\[
+
+\-Earths magnetic field lines drawn around a globe with a geographic pole forming a 11,5° with the magnetic north pole.
+
+]
+
+
+
+\-The Earth’s magnetic field is thought to be caused by flowing liquid metals in the outer core of the planet which causes electric currents and a magnetic field.
+
+\-From the picture you can see that the direction of magnetic north and true north are not identical. The geographic north pole is about 11,5o away from the direction of the magnetic north pole (which is where a compass will point). However, the magnetic poles shift slightly all the time.
+
+\-Another interesting thing to note is that if we think of the Earth as a big bar magnet, and we know that magnetic field lines always point from north to south, then the compass tells us that what we call the magnetic north pole is actually the south pole of the bar magnet!
+
+
+
+#### Phenomena related to the Earth’s magnetic field
+
+##### The importance of the magnetic field to life on Earth
+
+\-The Earth’s magnetic field is very important for humans and other animals on Earth be cause it protects us from being bombarded (hit) by high energy charged particles which
+
+are emitted by the Sun.
+
+\-The stream of charged particles (mainly positively charged protons and negatively charged electrons) coming from the sun is called the solar wind.
+
+\-When these particles come close to the Earth, they are deflected by the Earth’s magnetic field and cannot shower down to the surface where they can harm living organisms. Astronauts in
+
+space are at risk of being irradiated by the solar wind because they are outside the zones where the charged particles are trapped.
+
+\-The region above Earth’s atmosphere in which charged particles are affected the Earth’s magnetic field is called the magneto
+
+sphere. Relatively often, in addition to the usual solar wind, the Sun may eject a large bubble of material (protons and electrons)
+
+with its own magnetic field from its outer atmosphere.
+
+\-Sometimes these bubbles travel towards the Earth where their magnetic fields can join with Earth’s magnetic field. When
+
+this happens a huge amount of energy is released into the Earth’s magnetosphere, causing a geomagnetic storm.
+
+\-These storms cause rapid changes in the Earth’s magnetosphere
+
+which in turn may affect electric and magnetic systems on the Earth such as power grids, cellphone networks, and other electronic systems.
+
+
+
+##### Aurorae (pronounced Or-roar-ee)
+
+\-Another effect caused by the Earth’s magnetic field is the spectacular Northern and Southern Lights, which are also called the Aurora Borealis and the Aurora Australis respectively.
+
+\-When charged particles from the solar wind reach the
+
+Earth’s magnetosphere, they spiral along the magnetic field lines towards the North and South poles.
+
+\-If they collide with particles in the Earth’s atmosphere, they
+
+can cause red or green lights which stretch across a large part of the sky and which is called the aurora.
+
+\-As this only happens close to the North and South poles, we cannot see the aurorae from South Africa. However, people living in the high Northern latitudes in Canada, Sweden, and Finland, for example, often see the Northern lights.
+
+
+
+## ACTIVITIES
+
+### Activity 1: Ferromagnetic materials and magnetisation
+
+#### 1\. 
+
+\-Find 2 paper clips. Put the paper clips close together and observe
+
+what happens.
+
+a. What happens to the paper clips?
+
+b. Are the paper clips magnetic?
+
+
+
+#### 2\.
+
+Now take a permanent bar magnet and rub it once along 1 of the
+
+paperclips. Remove the magnet and put the paper-clip which was
+
+touched by the magnet close to the other paper-clip and observe
+
+what happens. Does the untouched paper-clip experience a force
+
+on it? If so, is the force attractive or repulsive?
+
+
+
+#### 3\. 
+
+Rub the same paper-clip a few more times with the bar magnet, in
+
+the same direction as before. Put the paper-clip close to the other
+
+one and observe what happens.
+
+a. Is there any difference to what happened in step 2?
+
+b. If there is a difference, what is there as on for it?
+
+c. Is the paper-clip which was rubbed repeatedly by the magnet
+
+now magnetised?
+
+d. What is the difference between the two paper-clips at the level
+
+of their atoms and electrons?
+
+
+
+#### 4\.
+
+Now, find a metal knitting needle, or a metal ruler, or other metal
+
+object. Rub the bar magnet along the knitting needle a few times
+
+in the same direction. Now put the knitting needle close to the
+
+paper-clips and observe what happens.
+
+a. Does the knitting needle attract the paper clips?
+
+b. What does this tell you about the material of the knitting needle? Is it ferromagnetic?
+
+
+
+#### 5\. 
+
+\-Repeat this experiment with objects made from other materials.
+
+Which materials appear to be ferromagnetic and which are not?
+
+Put your answers in a table.
+
+
+
+### Activity 2: Magnetic field around a bar magnet
+
+\-Take a bar magnet and place it under a non-magnetic, thin flat surface (this is to stop the paper bending). Place a sheet of white paper on the surface over the bar magnet and sprinkle some iron filings onto the paper. 
+
+\-Give the paper a shake to evenly distribute the iron filings. In your
+
+workbook, draw the bar magnet and the pattern formed by the iron filings. Draw the pattern formed when you rotate the bar magnet to a different angle as shown alongside.
+
+
+
+### Activity 3: Magnetic field around a pair of bar magnets
+
+\-Take two bar magnets and place them a short distance apart such
+
+that they are repelling each other. Place a sheet of white paper over the bar magnets and sprinkle some iron filings on to the paper. Give the paper a shake to evenly distribute the iron filings. In your work book, draw both the bar magnets and the pattern formed by the iron filings.
+
+\-Repeat the procedure for two bar magnets attracting each other and draw what the pattern looks like for this situation. Make a note of the shape of the lines formed by the iron filings, as well as their size and their direction for both arrangements of the bar magnet. What does the pattern look like when you place both bar magnets side by side?
+
+
+
+## End of chapter exercises
+
+### 1\. 
+
+Describe what is meant by the term magnetic field.
+
+
+
+### 2\. 
+
+Use words and pictures to explain why permanent magnets have a magnetic field around them. Refer to domains in your explanation.
+
+
+
+### 3\. 
+
+What is a magnet?
+
+
+
+### 4\. 
+
+What happens to the poles of a magnet if it is cut into pieces?
+
+
+
+### 5\. 
+
+What happens when like magnetic poles are brought close together?
+
+
+
+### 6\. 
+
+What happens when unlike magnetic poles are brought close together?
+
+
+
+### 7\. 
+
+Draw the shape of the magnetic field around a bar magnet.
+
+
+
+### 8\. 
+
+Explain how a compass indicates the direction of a magnetic field.
+
+
+
+### 9\. 
+
+Compare the magnetic field of the Earth to the magnetic field of a bar magnet using words and diagrams.
+
+
+
+### 10\. 
+
+Explain the difference between the geographical north pole and the magnetic north pole of the Earth.
+
+
+
+### 11\. 
+
+Give examples of phenomena that are affected by Earth’s magnetic field.
+
+
+
+### 12\. 
+
+Draw a diagram showing the magnetic field around the Earth.
+

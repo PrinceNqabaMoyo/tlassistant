@@ -1,7 +1,10 @@
 from . import (
     term1_gov_and_society,
     term1_accounting_basics,
+    term1_source_documents,
+    term1_general_ledger,
     term2_markets_and_production,
+    term2_accounting_cycle,
     term2_crj,
     term3_cpj_and_crj,
     term3_ownership
@@ -12,7 +15,10 @@ def generate_topic_questions(subtopic, subskill="concepts", difficulty="medium",
     generators = {
         'term1_gov_and_society': term1_gov_and_society.generate,
         'term1_accounting_basics': term1_accounting_basics.generate,
+        'term1_source_documents': term1_source_documents.generate,
+        'term1_general_ledger': term1_general_ledger.generate,
         'term2_markets_and_production': term2_markets_and_production.generate,
+        'term2_accounting_cycle': term2_accounting_cycle.generate,
         'term2_crj': term2_crj.generate,
         'term3_cpj_and_crj': term3_cpj_and_crj.generate,
         'term3_ownership': term3_ownership.generate

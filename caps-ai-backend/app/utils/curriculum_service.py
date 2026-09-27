@@ -1,156 +1,170 @@
+"""Curriculum Service — Pure Python, zero-RAG, zero-ChromaDB curriculum browser.
+
+Grounded directly in `caps-wiki/` Markdown files as mandated by Rule 11:
+"Deterministic Context, Not RAG. The agent is grounded by reading the relevant
+caps-wiki/ Markdown file directly."
+"""
+from __future__ import annotations
+
 import os
-import json
-from typing import Dict, List, Any
-from langchain_chroma import Chroma
-from langchain_google_genai import GoogleGenerativeAIEmbeddings
+import re
+from pathlib import Path
+from typing import Any, Dict, List, Optional
+
 
 class CurriculumService:
-    def __init__(self):
-        self.chroma_db_dir = os.getenv('CHROMA_DB_DIR', 'chroma_db_langchain')
-        self.embeddings = GoogleGenerativeAIEmbeddings(
-            model="models/embedding-001",
-            google_api_key=os.getenv('GOOGLE_API_KEY')
-        )
-        self.vectorstore = None
-        self._initialize_vectorstore()
-    
-    def _initialize_vectorstore(self):
-        """Initialize ChromaDB vectorstore"""
-        try:
-            self.vectorstore = Chroma(
-                persist_directory=self.chroma_db_dir,
-                embedding_function=self.embeddings
-            )
-            print("ChromaDB vectorstore initialized successfully")
-        except Exception as e:
-            print(f"Error initializing ChromaDB: {e}")
-            self.vectorstore = None
-    
+    def __init__(self, wiki_dir: Optional[str] = None):
+        if wiki_dir:
+            self.wiki_path = Path(wiki_dir)
+        else:
+            base_backend = Path(__file__).resolve().parent.parent.parent
+            self.wiki_path = base_backend / "caps-wiki"
+
     def get_curriculum_data(self) -> Dict[str, Any]:
-        """Get all curriculum data from ChromaDB"""
-        if not self.vectorstore:
+        """Scans `caps-wiki/` and returns structured curriculum data by subject and grade."""
+        if not self.wiki_path.exists():
             return self._get_fallback_curriculum_data()
-        
-        try:
-            # Get all documents from ChromaDB
-            all_docs = self.vectorstore._collection.get(include=['metadatas'])
-            
-            # Process metadata to create curriculum structure
-            curriculum_data = self._process_curriculum_metadata(all_docs['metadatas'])
-            
-            return curriculum_data
-        except Exception as e:
-            print(f"Error getting curriculum data: {e}")
-            return self._get_fallback_curriculum_data()
-    
-    def get_topics_by_subject_grade(self, subject: str, grade: str) -> List[Dict[str, Any]]:
-        """Get topics for specific subject and grade"""
-        if not self.vectorstore:
-            return []
-        
-        try:
-            # Query ChromaDB for specific subject and grade
-            query = f"subject:{subject} grade:{grade}"
-            results = self.vectorstore.similarity_search(query, k=50)
-            
-            topics = []
-            for doc in results:
-                if hasattr(doc, 'metadata'):
-                    metadata = doc.metadata
-                    if metadata.get('subject', '').lower() == subject.lower() and \
-                       metadata.get('grade', '').lower() == grade.lower():
-                        topics.append({
-                            'topic': metadata.get('topic', ''),
-                            'description': metadata.get('description', ''),
-                            'difficulty': metadata.get('difficulty', ''),
-                            'estimated_hours': metadata.get('estimated_hours', 0)
-                        })
-            
-            return topics
-        except Exception as e:
-            print(f"Error getting topics: {e}")
-            return []
-    
-    def search_curriculum(self, query: str, filters: Dict[str, Any] = None) -> List[Dict[str, Any]]:
-        """Search curriculum content"""
-        if not self.vectorstore:
-            return []
-        
-        try:
-            # Apply filters to query
-            search_query = query
-            if filters:
-                for key, value in filters.items():
-                    search_query += f" {key}:{value}"
-            
-            # Search ChromaDB
-            results = self.vectorstore.similarity_search(search_query, k=20)
-            
-            search_results = []
-            for doc in results:
-                if hasattr(doc, 'metadata'):
-                    metadata = doc.metadata
-                    search_results.append({
-                        'content': doc.page_content,
-                        'subject': metadata.get('subject', ''),
-                        'grade': metadata.get('grade', ''),
-                        'topic': metadata.get('topic', ''),
-                        'relevance_score': metadata.get('relevance_score', 0)
+
+        curriculum_data: Dict[str, Dict[str, List[Dict[str, Any]]]] = {}
+
+        for subject_dir in self.wiki_path.iterdir():
+            if not subject_dir.is_dir() or subject_dir.name.startswith("."):
+                continue
+            subject_key = subject_dir.name.lower().replace("-", "_")
+            curriculum_data[subject_key] = {}
+
+            for grade_dir in subject_dir.iterdir():
+                if not grade_dir.is_dir() or grade_dir.name.startswith("."):
+                    continue
+                grade_key = grade_dir.name.lower().replace("-", "_")
+                topics_list: List[Dict[str, Any]] = []
+
+                for topic_file in grade_dir.glob("*.md"):
+                    topic_name = topic_file.stem.replace("_", " ").title()
+                    # Read brief summary / first paragraph
+                    desc = ""
+                    try:
+                        content = topic_file.read_text(encoding="utf-8")
+                        lines = [line.strip() for line in content.splitlines() if line.strip() and not line.startswith("#")]
+                        if lines:
+                            desc = lines[0][:160] + "..." if len(lines[0]) > 160 else lines[0]
+                    except Exception:
+                        desc = f"Curriculum topic for {topic_name}"
+
+                    topics_list.append({
+                        "name": topic_name,
+                        "file": topic_file.name,
+                        "description": desc,
+                        "estimated_hours": 3,
                     })
-            
-            return search_results
-        except Exception as e:
-            print(f"Error searching curriculum: {e}")
+
+                if topics_list:
+                    curriculum_data[subject_key][grade_key] = topics_list
+
+        return curriculum_data if curriculum_data else self._get_fallback_curriculum_data()
+
+    def get_topics_by_subject_grade(self, subject: str, grade: str) -> List[Dict[str, Any]]:
+        """Get topics for a specific subject and grade directly from caps-wiki."""
+        subj_clean = subject.lower().replace("_", "-")
+        grade_clean = grade.lower().replace("_", "-")
+        target_dir = self.wiki_path / subj_clean / grade_clean
+
+        if not target_dir.exists():
+            # Try alternate naming
+            subj_alt = subject.lower().replace("-", "_")
+            grade_alt = grade.lower().replace("-", "_")
+            target_dir = self.wiki_path / subj_alt / grade_alt
+
+        if not target_dir.exists():
+            fallback = self._get_fallback_curriculum_data()
+            return fallback.get(subject.lower().replace("-", "_"), {}).get(grade.lower().replace("-", "_"), [])
+
+        topics = []
+        for f in target_dir.glob("*.md"):
+            topic_name = f.stem.replace("_", " ").title()
+            desc = ""
+            try:
+                content = f.read_text(encoding="utf-8")
+                lines = [l.strip() for l in content.splitlines() if l.strip() and not l.startswith("#")]
+                if lines:
+                    desc = lines[0][:160]
+            except Exception:
+                desc = topic_name
+
+            topics.append({
+                "name": topic_name,
+                "file": f.name,
+                "description": desc,
+                "path": str(f),
+            })
+        return topics
+
+    def search_curriculum(self, query: str, filters: Optional[Dict[str, Any]] = None) -> List[Dict[str, Any]]:
+        """Searches markdown files in caps-wiki using fast pure-Python keyword scanning."""
+        if not query or not self.wiki_path.exists():
             return []
-    
-    def _process_curriculum_metadata(self, metadatas: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Process ChromaDB metadata into curriculum structure"""
-        curriculum_data = {
-            'mathematics': {},
-            'mathematical_literacy': {},
-            'technical_mathematics': {}
-        }
-        
-        for metadata in metadatas:
-            subject = metadata.get('subject', '').lower()
-            grade = metadata.get('grade', '')
-            topic = metadata.get('topic', '')
-            
-            if subject and grade and topic:
-                if subject not in curriculum_data:
-                    curriculum_data[subject] = {}
-                
-                if grade not in curriculum_data[subject]:
-                    curriculum_data[subject][grade] = []
-                
-                topic_data = {
-                    'name': topic,
-                    'description': metadata.get('description', ''),
-                    'difficulty': metadata.get('difficulty', ''),
-                    'estimated_hours': metadata.get('estimated_hours', 0)
-                }
-                
-                curriculum_data[subject][grade].append(topic_data)
-        
-        return curriculum_data
-    
+
+        query_terms = [q.lower() for q in query.split() if len(q) > 2]
+        if not query_terms:
+            return []
+
+        results: List[Dict[str, Any]] = []
+
+        for md_path in self.wiki_path.glob("**/*.md"):
+            try:
+                text = md_path.read_text(encoding="utf-8")
+                text_lower = text.lower()
+                matches = sum(text_lower.count(term) for term in query_terms)
+                if matches > 0:
+                    rel_parts = md_path.relative_to(self.wiki_path).parts
+                    subj = rel_parts[0] if len(rel_parts) > 0 else ""
+                    grd = rel_parts[1] if len(rel_parts) > 1 else ""
+
+                    # Check filters if present
+                    if filters:
+                        if filters.get("subject") and filters["subject"].lower() not in subj.lower():
+                            continue
+                        if filters.get("grade") and filters["grade"].lower() not in grd.lower():
+                            continue
+
+                    # Extract matching excerpt
+                    first_pos = min(text_lower.find(t) for t in query_terms if t in text_lower)
+                    start = max(0, first_pos - 80)
+                    end = min(len(text), first_pos + 160)
+                    snippet = "..." + text[start:end].replace("\n", " ").strip() + "..."
+
+                    results.append({
+                        "subject": subj,
+                        "grade": grd,
+                        "topic": md_path.stem.replace("_", " ").title(),
+                        "content": snippet,
+                        "relevance_score": matches,
+                        "file_path": str(md_path),
+                    })
+            except Exception:
+                continue
+
+        # Sort by relevance
+        results.sort(key=lambda x: x["relevance_score"], reverse=True)
+        return results[:20]
+
     def _get_fallback_curriculum_data(self) -> Dict[str, Any]:
-        """Fallback curriculum data when ChromaDB is not available"""
+        """Fallback curriculum hierarchy when files are unavailable."""
         return {
-            'mathematics': {
-                'grade_7': [
-                    {'name': 'Numbers and Operations', 'description': 'Basic number operations', 'difficulty': 'beginner', 'estimated_hours': 2},
-                    {'name': 'Algebra', 'description': 'Introduction to algebra', 'difficulty': 'beginner', 'estimated_hours': 3}
+            "mathematics": {
+                "grade_10": [
+                    {"name": "Algebraic Expressions", "description": "Expansion, factorisation and fractions", "estimated_hours": 3},
+                    {"name": "Equations and Inequalities", "description": "Linear and quadratic equations", "estimated_hours": 4},
+                    {"name": "Euclidean Geometry", "description": "Triangles and quadrilaterals", "estimated_hours": 4},
                 ],
-                'grade_8': [
-                    {'name': 'Linear Equations', 'description': 'Solving linear equations', 'difficulty': 'intermediate', 'estimated_hours': 4},
-                    {'name': 'Geometry', 'description': 'Basic geometric concepts', 'difficulty': 'intermediate', 'estimated_hours': 3}
+                "grade_11": [
+                    {"name": "Circle Geometry", "description": "Theorems on angles, cyclic quads and tangents", "estimated_hours": 5},
+                ],
+            },
+            "business_studies": {
+                "grade_10": [
+                    {"name": "Micro Environment", "description": "Internal business components", "estimated_hours": 3},
+                    {"name": "Market Environment", "description": "Consumers, suppliers, competitors", "estimated_hours": 3},
                 ]
             },
-            'mathematical_literacy': {
-                'grade_10': [
-                    {'name': 'Financial Mathematics', 'description': 'Basic financial calculations', 'difficulty': 'beginner', 'estimated_hours': 2},
-                    {'name': 'Data Handling', 'description': 'Basic statistics and data', 'difficulty': 'beginner', 'estimated_hours': 3}
-                ]
-            }
         }

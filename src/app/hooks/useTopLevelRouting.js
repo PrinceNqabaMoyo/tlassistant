@@ -8,6 +8,7 @@ export const useTopLevelRouting = ({
   setShowLandingPage,
   setShowSplash,
   showSplash,
+  isAnonymous,
 }) => {
   const [routePage, setRoutePage] = useState(() => {
     if (typeof window === 'undefined') return 'landing';
@@ -19,7 +20,7 @@ export const useTopLevelRouting = ({
   const previousTopLevelPageRef = useRef(null);
   const isHandlingBrowserNavigationRef = useRef(false);
 
-  const topLevelPage = resolveRoutePage(routePage, isAuthenticated, hasVerifiedAccess);
+  const topLevelPage = resolveRoutePage(routePage, isAuthenticated, hasVerifiedAccess, isAnonymous);
   const shouldRenderStandaloneLandingPage = topLevelPage === 'landing' && (!isAuthenticated || hasResolvedInitialAuthViewRef.current);
   const authMode = topLevelPage === 'signup' ? 'signup' : 'signin';
 
@@ -28,7 +29,7 @@ export const useTopLevelRouting = ({
       return;
     }
 
-    const resolvedPage = resolveRoutePage(routePage, isAuthenticated, hasVerifiedAccess);
+    const resolvedPage = resolveRoutePage(routePage, isAuthenticated, hasVerifiedAccess, isAnonymous);
 
     if (routePage !== resolvedPage) {
       setRoutePage(resolvedPage);
@@ -37,7 +38,7 @@ export const useTopLevelRouting = ({
     if (!hasResolvedInitialAuthViewRef.current) {
       hasResolvedInitialAuthViewRef.current = true;
     }
-  }, [authLoading, hasVerifiedAccess, showSplash, isAuthenticated, routePage]);
+  }, [authLoading, hasVerifiedAccess, showSplash, isAuthenticated, routePage, isAnonymous]);
 
   useEffect(() => {
     setShowLandingPage(topLevelPage === 'landing');
@@ -47,9 +48,9 @@ export const useTopLevelRouting = ({
     setShowSplash(false);
 
     if (!authLoading) {
-      setRoutePage((currentRoutePage) => resolveRoutePage(currentRoutePage, isAuthenticated, hasVerifiedAccess));
+      setRoutePage((currentRoutePage) => resolveRoutePage(currentRoutePage, isAuthenticated, hasVerifiedAccess, isAnonymous));
     }
-  }, [authLoading, hasVerifiedAccess, isAuthenticated, setShowSplash]);
+  }, [authLoading, hasVerifiedAccess, isAuthenticated, setShowSplash, isAnonymous]);
 
   const navigateToRoutePage = useCallback((nextPage) => {
     setRoutePage(nextPage);
@@ -88,13 +89,13 @@ export const useTopLevelRouting = ({
       const requestedPage = event.state?.fundilePage || getRequestedRouteFromPath(window.location.pathname);
 
       isHandlingBrowserNavigationRef.current = true;
-      setRoutePage(resolveRoutePage(requestedPage, isAuthenticated, hasVerifiedAccess));
+      setRoutePage(resolveRoutePage(requestedPage, isAuthenticated, hasVerifiedAccess, isAnonymous));
     };
 
     window.addEventListener('popstate', handlePopState);
 
     return () => window.removeEventListener('popstate', handlePopState);
-  }, [hasVerifiedAccess, showSplash, isAuthenticated]);
+  }, [hasVerifiedAccess, showSplash, isAuthenticated, isAnonymous]);
 
   useEffect(() => {
     if (showSplash || authLoading || typeof window === 'undefined') {

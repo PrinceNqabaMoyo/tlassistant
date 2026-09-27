@@ -3,7 +3,7 @@ import GraduationCapSplash from './GraduationCapSplash';
 import { renderFrame, FINAL_HOLD_DURATION } from '../../../logo-video-generator/src/canvasExporter';
 
 const splashOptions = {
-  duration: 6.0,
+  duration: 2.8, // Punchy 2.8s total animation
   formationMode: 'constellation',
   constellationVariant: 'classic',
   pixelIntensity: 24,
@@ -27,12 +27,35 @@ const SplashScreen = ({ onComplete }) => {
   const [isVisible, setIsVisible] = useState(true);
   const canvasRef = useRef(null);
   const svgHostRef = useRef(null);
+  
+  // Guard against React StrictMode / re-render double execution
+  const hasStartedRef = useRef(false);
+  const isFinishedRef = useRef(false);
+  const onCompleteRef = useRef(onComplete);
+  onCompleteRef.current = onComplete;
+
+  const finishSplash = () => {
+    if (isFinishedRef.current) return;
+    isFinishedRef.current = true;
+    setIsVisible(false);
+    window.setTimeout(() => {
+      if (typeof onCompleteRef.current === 'function') {
+        onCompleteRef.current();
+      }
+    }, 400);
+  };
 
   useEffect(() => {
+    if (hasStartedRef.current) {
+      return undefined;
+    }
+    hasStartedRef.current = true;
+
     const canvas = canvasRef.current;
     const svgElement = svgHostRef.current?.querySelector('svg');
 
     if (!canvas || !svgElement) {
+      finishSplash();
       return undefined;
     }
 
@@ -45,6 +68,7 @@ const SplashScreen = ({ onComplete }) => {
     let animationFrameId;
     let startTimestamp = null;
     let completeTimeout;
+    let fontWaitTimeout;
 
     const syncCanvasSize = () => {
       const dpr = window.devicePixelRatio || 1;
@@ -59,14 +83,9 @@ const SplashScreen = ({ onComplete }) => {
       return { width, height };
     };
 
-    const finishSplash = () => {
-      setIsVisible(false);
-      completeTimeout = window.setTimeout(() => {
-        onComplete();
-      }, 500);
-    };
-
     const draw = (timestamp) => {
+      if (isFinishedRef.current) return;
+
       if (startTimestamp === null) {
         startTimestamp = timestamp;
       }
@@ -84,20 +103,19 @@ const SplashScreen = ({ onComplete }) => {
       }
     };
 
-    let fontWaitTimeout;
-    
     const startAnimation = async () => {
-      // Ensure custom fonts (like Afacad) are fully loaded before rendering the canvas
+      // Ensure custom fonts are loaded before starting
       if (document.fonts && document.fonts.ready) {
-        // Fallback timeout in case font loading hangs
         const timeoutPromise = new Promise(resolve => {
-          fontWaitTimeout = window.setTimeout(resolve, 1000);
+          fontWaitTimeout = window.setTimeout(resolve, 800);
         });
         await Promise.race([document.fonts.ready, timeoutPromise]);
       }
 
       svgImage.onload = () => {
-        animationFrameId = window.requestAnimationFrame(draw);
+        if (!isFinishedRef.current) {
+          animationFrameId = window.requestAnimationFrame(draw);
+        }
       };
 
       svgImage.src = svgUrl;
@@ -111,10 +129,14 @@ const SplashScreen = ({ onComplete }) => {
       window.clearTimeout(fontWaitTimeout);
       URL.revokeObjectURL(svgUrl);
     };
-  }, [onComplete]);
+  }, []); // Run ONCE on mount
 
   return (
-    <div className={`fixed inset-0 z-[9999] bg-[#13519C] transition-opacity duration-500 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
+    <div 
+      onClick={finishSplash}
+      onTouchStart={finishSplash}
+      className={`fixed inset-0 z-[9999] bg-[#13519C] transition-opacity duration-400 select-none cursor-pointer ${isVisible ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+    >
       <canvas ref={canvasRef} className="h-full w-full" />
       <div ref={svgHostRef} className="hidden" aria-hidden="true">
         <GraduationCapSplash className="h-32 w-32" />

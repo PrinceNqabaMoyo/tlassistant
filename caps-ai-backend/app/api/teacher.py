@@ -333,3 +333,87 @@ def create_teacher_assessment(teacher_id):
         return jsonify({"id": assess_id, **payload}), 201
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
+
+from app.services.assignment_service import (
+    create_assignment as _create_assignment,
+    get_class_assignments as _get_class_assignments,
+    get_student_assignments as _get_student_assignments,
+    submit_assignment as _submit_assignment,
+    get_assignment_submissions as _get_assignment_submissions,
+)
+
+@teacher_bp.route('/assignments', methods=['POST'])
+def handle_create_assignment():
+    """Create homework assignment for a class."""
+    data = request.get_json(silent=True) or {}
+    class_id = data.get("class_id")
+    teacher_id = data.get("teacher_id", "tch_demo_101")
+    title = data.get("title")
+    subject = data.get("subject", "Mathematics")
+    grade = data.get("grade", "10")
+    topic = data.get("topic", "General")
+    question_count = data.get("question_count", 5)
+    due_date = data.get("due_date", "2026-09-25")
+    show_marks_immediately = data.get("show_marks_immediately", True)
+
+    if not class_id or not title:
+        return jsonify({"error": "Missing class_id or title"}), 400
+
+    try:
+        asg = _create_assignment(
+            class_id=class_id,
+            teacher_id=teacher_id,
+            title=title,
+            subject=subject,
+            grade=grade,
+            topic=topic,
+            question_count=question_count,
+            due_date=due_date,
+            show_marks_immediately=show_marks_immediately,
+        )
+        return jsonify(asg), 201
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@teacher_bp.route('/assignments/class/<class_id>', methods=['GET'])
+def handle_get_class_assignments(class_id):
+    """Fetch assignments for a specific class."""
+    assignments = _get_class_assignments(class_id)
+    return jsonify({"class_id": class_id, "assignments": assignments}), 200
+
+
+@teacher_bp.route('/assignments/student/<student_id>', methods=['GET'])
+def handle_get_student_assignments(student_id):
+    """Fetch pending and completed homework assignments for a student."""
+    class_ids = request.args.getlist("class_ids") or None
+    assignments = _get_student_assignments(student_id, class_ids)
+    return jsonify({"student_id": student_id, "assignments": assignments}), 200
+
+
+@teacher_bp.route('/assignments/<assignment_id>/submit', methods=['POST'])
+def handle_submit_assignment(assignment_id):
+    """Submit completed homework score for a student."""
+    data = request.get_json(silent=True) or {}
+    student_id = data.get("student_id")
+    student_name = data.get("student_name", "Student")
+    score = data.get("score", 0)
+
+    if not student_id:
+        return jsonify({"error": "Missing student_id"}), 400
+
+    try:
+        res = _submit_assignment(assignment_id, student_id, student_name, score)
+        return jsonify(res), 200
+    except ValueError as e:
+        return jsonify({"error": str(e)}), 404
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@teacher_bp.route('/assignments/<assignment_id>/submissions', methods=['GET'])
+def handle_get_assignment_submissions(assignment_id):
+    """Fetch all student submissions for an assignment."""
+    submissions = _get_assignment_submissions(assignment_id)
+    return jsonify({"assignment_id": assignment_id, "submissions": submissions}), 200

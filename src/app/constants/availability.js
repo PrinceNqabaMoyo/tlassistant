@@ -1,8 +1,8 @@
-export const LIVE_AVAILABILITY_HEADLINE = 'Currently live: Grade 10 and Grade 11 Accounting.';
-export const LIVE_AVAILABILITY_NOTE = 'Fundile currently supports Grade 10 and Grade 11 Accounting. More grades and subjects are coming soon.';
-export const LIVE_AVAILABILITY_DETAIL = 'If you need another subject or grade, register your interest so Fundile can prioritise rollout using real demand instead of guesswork.';
+export const LIVE_AVAILABILITY_HEADLINE = 'Complete National Curriculum Coverage: Grades 7 to 12 across all core subjects.';
+export const LIVE_AVAILABILITY_NOTE = 'Fundile currently supports Mathematics, Physical Sciences, Life Sciences, Natural Sciences, Mathematical Literacy, Economic & Management Sciences (EMS), Accounting, and Business Studies.';
+export const LIVE_AVAILABILITY_DETAIL = 'Looking for additional elective subjects, indigenous languages, or specialized school programs? Register your interest below.';
 
-export const DEMAND_CAPTURE_CURRICULUM_OPTIONS = ['CAPS', 'Cambridge', 'IEB', 'Other'];
+export const DEMAND_CAPTURE_CURRICULUM_OPTIONS = ['National Curriculum (South Africa)', 'Cambridge / International', 'Independent / Alternative Syllabi', 'Other'];
 export const DEMAND_CAPTURE_GRADE_OPTIONS = [
     'Grade 7',
     'Grade 8',
@@ -13,16 +13,29 @@ export const DEMAND_CAPTURE_GRADE_OPTIONS = [
     'Teacher / school-wide'
 ];
 export const DEMAND_CAPTURE_SUBJECT_OPTIONS = [
-    'Accounting',
     'Mathematics',
     'Physical Sciences',
     'Life Sciences',
+    'Natural Sciences',
+    'Mathematical Literacy',
+    'Economic & Management Sciences (EMS)',
+    'Accounting',
     'Business Studies',
+    'Technical Mathematics',
     'Economics',
     'Geography',
     'History',
-    'Xitsonga',
-    'Sepedi',
+    'Agricultural Sciences',
+    'Tourism',
+    'Information Technology (IT)',
+    'Computer Applications Technology (CAT)',
     'IsiZulu',
+    'IsiXhosa',
+    'Afrikaans',
+    'Sepedi',
+    'Sesotho',
+    'Setswana',
+    'Xitsonga',
+    'Tshivenda',
     'Other'
 ];

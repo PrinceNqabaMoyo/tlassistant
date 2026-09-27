@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fundile | South African National Curriculum Cognitive Engine & LMS • Grades 7–12</title>
+  
+  <!-- Fonts: Afacad, Plus Jakarta Sans, Outfit, Inter, JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Afacad:ital,wght@0,400;0,500;0,600;0,700;1,600&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              blue: '#13519C',
+              'blue-hover': '#0d3d78',
+              'blue-light': '#2563EB',
+              'blue-subtle': '#EFF6FF',
+              'blue-border': '#BFDBFE',
+              orange: '#FF9100',
+              'orange-hover': '#e68200',
+              'orange-subtle': '#FFF7ED',
+              'orange-border': '#FED7AA',
+              canvas: '#F8FAFC',
+              slate: '#0F172A',
+              card: '#FFFFFF',
+              border: '#E2E8F0',
+            }
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'Inter', 'sans-serif'],
+            display: ['Outfit', '"Plus Jakarta Sans"', 'sans-serif'],
+            afacad: ['Afacad', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          boxShadow: {
+            'subtle': '0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.05)',
+            'card': '0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05)',
+            'card-hover': '0 12px 24px -4px rgba(19, 81, 156, 0.08), 0 4px 8px -2px rgba(0, 0, 0, 0.04)',
+            'glow-dark': '0 20px 60px -15px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.1)',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    ::selection {
+      background: rgba(255, 145, 0, 0.2);
+      color: #13519C;
+    }
+    .bg-light-grid {
+      background-size: 32px 32px;
+      background-image: 
+        linear-gradient(to right, rgba(203, 213, 225, 0.4) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(203, 213, 225, 0.4) 1px, transparent 1px);
+    }
+    .radial-sun-glow {
+      background: radial-gradient(circle at 50% -10%, rgba(19, 81, 156, 0.08), rgba(255, 145, 0, 0.04) 40%, rgba(248, 250, 252, 0) 70%);
+    }
+    
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  </style>
+</head>
+<body class="bg-brand-canvas text-slate-900 font-sans antialiased selection:bg-[#13519C]/20 selection:text-[#13519C] min-h-screen flex flex-col">
+
+  <!-- ========================================== -->
+  <!-- 1. FIXED ROYAL BLUE TOP NAVBAR -->
+  <!-- ========================================== -->
+  <header class="fixed top-0 left-0 right-0 z-50 bg-[#13519C] border-b border-[#13519C]/20 h-16 transition-all duration-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center justify-between">
+      
+      <!-- Authentic Fundile Brand Logo (Orange Cap + Afacad Wordmark) -->
+      <a href="#hero" class="flex items-center shrink-0 group cursor-pointer" aria-label="Fundile Home">
+        <svg 
+          xmlns="http://www.w3.org/2000/svg" 
+          class="h-10 sm:h-12 w-auto" 
+          viewBox="0 0 2200 800" 
+          style="font-family: 'Afacad', sans-serif;"
+        >
+          <g transform="translate(23, -76)">
+            <g>
+              <g transform="translate(150, 101.77) scale(0.75)">
+                <path transform="translate(-166.4869, -27.606)" fill="#ff9100" opacity="1.000000" stroke="none" d="M281.100800,82.430374 C296.863281,82.430435 312.139648,82.430435 327.589142,82.430435 C327.589142,101.156349 327.589142,119.218277 327.589142,137.604797 C309.226532,137.604797 291.146423,137.604797 272.610504,137.604797 C272.610504,119.531845 272.610504,101.481499 272.610504,82.430305 C275.160431,82.430305 277.887573,82.430305 281.100800,82.430374 z"/>
+                <path fill="#ff9100" opacity="1.000000" stroke="none" d="M281.100800,82.430374 C296.863281,82.430435 312.139648,82.430435 327.589142,82.430435 C327.589142,101.156349 327.589142,119.218277 327.589142,137.604797 C309.226532,137.604797 291.146423,137.604797 272.610504,137.604797 C272.610504,119.531845 272.610504,101.481499 272.610504,82.430305 C275.160431,82.430305 277.887573,82.430305 281.100800,82.430374 z"/>
+                <path fill="#ff9100" opacity="1.000000" stroke="none" d="M234.051895,135.066223 C224.745880,148.067596 215.644699,160.771545 206.224594,173.920700 C191.142197,163.057236 176.346191,152.400055 161.102249,141.420258 C171.897430,126.295197 182.400925,111.578819 193.222076,96.417397 C208.472687,107.127121 223.382523,117.597542 238.759613,128.396088 C237.075623,130.779358 235.666183,132.774078 234.051895,135.066223 z"/>
+                <path fill="#ff9100" opacity="1.000000" stroke="none" d="M287.318604,233.165192 C273.012787,244.051132 258.971313,254.686829 244.461060,265.677582 C233.276215,250.872467 222.308655,236.354980 211.026871,221.421555 C225.902328,210.163956 240.315781,199.255997 254.990143,188.150589 C256.061981,189.313354 257.003143,190.179214 257.763031,191.182358 C267.103516,203.512344 276.449860,215.838257 285.690308,228.242981 C286.661530,229.546768 286.967987,231.345734 287.318604,233.165192 z"/>
+              </g>
+              <path fill="#ff9100" opacity="1.000000" stroke="none" d=" M346.618164,323.599243 C390.887054,300.100555 434.830627,276.778168 478.816315,253.535477 C490.312988,247.460464 502.069885,242.258408 515.593506,242.888382 C526.837036,243.412109 536.962891,247.456100 546.631958,252.590546 C605.086304,283.631073 663.469849,314.805176 721.830627,346.021515 C741.277954,356.423615 760.671387,366.933228 779.924744,377.688446 C788.846985,382.672546 793.581482,390.354065 793.151917,401.025787 C792.944519,406.178833 790.979065,410.274750 786.950012,412.873901 C776.925781,419.340515 766.795715,425.687531 756.382141,431.498291 C715.830627,454.125977 675.130371,476.487030 634.528320,499.024323 C603.924683,516.011719 573.575562,533.471863 542.694214,549.935608 C534.276367,554.423462 524.518555,557.463745 515.060120,558.648132 C504.622375,559.955017 494.436676,555.726318 485.240387,550.665100 C439.169922,525.310059 393.255981,499.670929 347.238922,474.218567 C315.021484,456.398865 282.718964,438.733063 250.479980,420.952118 C247.576355,419.350677 244.919174,417.307678 242.047882,415.641510 C228.019974,407.501282 231.543488,389.717133 240.164764,382.425934 C245.302017,378.081238 251.256653,374.559265 257.211456,371.349426 C286.843445,355.376984 316.597473,339.630981 346.618164,323.599243 M509.620361,444.230133 C512.299622,444.117645 515.457214,444.896881 517.584778,443.755798 C540.802307,431.303711 563.873291,418.577637 586.946411,405.857727 C591.374939,403.416290 591.300964,401.418671 586.821289,398.972992 C563.992676,386.509277 541.118408,374.128845 518.327942,361.595978 C514.570251,359.529572 511.388153,359.634857 507.630035,361.713196 C485.298676,374.062622 462.845703,386.191986 440.495819,398.508331 C438.778381,399.454742 437.540466,401.126362 436.079681,402.538502 C437.656189,403.882191 439.057922,405.543751 440.835754,406.511321 C463.496643,418.986617 486.211426,431.348831 509.620361,444.085133 z"/>
+              <path fill="#ff9100" opacity="1.000000" stroke="none" d=" M530.902283,583.963318 C579.000061,555.740784 626.738159,527.630981 675.098083,499.154999 C675.098083,501.254150 675.080383,502.833069 675.100769,504.411560 C675.431519,530.050720 676.440857,555.704041 675.899902,581.324646 C675.419739,604.060913 666.363403,623.657898 648.652710,638.331360 C640.255859,645.288208 630.888550,651.135437 621.655457,657.004822 C611.017029,663.767578 600.027039,669.975891 589.215393,676.467773 C573.771118,685.741272 558.458008,695.238708 542.890686,704.299988 C525.288452,714.545654 506.851746,716.305420 488.165741,707.565125 C473.860107,700.873718 459.910980,693.423096 445.759888,686.397583 C421.355072,674.281494 396.832611,662.399475 372.516479,650.108765 C349.411194,638.429932 333.341370,620.744141 327.668762,594.873291 C326.400208,589.087646 325.419006,583.097412 325.412933,577.200256 C325.381042,546.214417 325.703827,515.228271 325.917938,484.242279 C325.919891,483.960632 326.119965,483.680389 326.393372,482.966705 C337.198914,489.207153 347.928986,495.411743 358.666290,501.603729 C406.111877,528.964600 453.515015,556.399719 501.075989,583.558533 C505.773682,586.241089 511.401672,588.452820 516.671387,588.624268 C521.240967,588.773010 525.914856,585.716187 530.902283,583.963318 z"/>
+              <path fill="#ff9100" opacity="1.000000" stroke="none" d=" M727.104553,542.000000 C727.104492,554.662109 727.255981,566.827271 727.010742,578.984436 C726.939697,582.507202 727.955078,584.633972 730.756042,586.836365 C745.057800,598.081787 747.519531,617.167419 735.435364,629.111267 C730.770569,633.721924 731.136902,637.142212 732.927734,642.274536 C738.051880,656.959961 742.820801,671.769775 747.685852,686.545044 C751.600159,698.432983 748.005920,705.663330 735.837463,709.084167 C723.171570,712.644958 710.215027,711.725037 697.413269,709.852844 C692.003113,709.061584 687.834473,705.635925 684.933289,700.724121 C682.407043,696.447144 682.672607,692.277222 684.186523,687.836975 C689.837402,671.263672 695.343201,654.640625 701.083069,638.098511 C702.138062,635.057983 701.908508,633.276367 699.294861,630.955688 C686.045898,619.191650 687.093201,598.850830 701.525269,587.564697 C704.625305,585.140381 705.654602,582.683167 705.627808,578.857422 C705.446960,553.035034 705.451660,527.210693 705.563782,501.387695 C705.577026,498.349792 706.090027,495.091919 707.283569,492.330231 C709.385864,487.465454 715.054260,484.735840 719.237549,485.864258 C724.024475,487.155518 727.051208,491.551239 727.070496,497.516357 C727.117920,512.177490 727.097900,526.838745 727.104553,542.000000 z"/>
+            </g>
+            <text x="850" y="243" dominant-baseline="hanging" font-family="'Afacad', sans-serif" fill="#ffffff" font-size="466" font-weight="700">fundile</text>
+          </g>
+        </svg>
+      </a>
+
+      <!-- Action Buttons -->
+      <div class="flex items-center gap-3">
+        <a 
+          href="#pricing"
+          class="hidden sm:inline-flex items-center rounded-lg border border-white/20 bg-white/10 px-3.5 py-1.5 text-sm font-medium text-white transition-all duration-300 hover:bg-white/20"
+        >
+          Sign in
+        </a>
+        <a 
+          href="#pricing" 
+          class="bg-[#FF9100] text-white px-4 py-2 sm:px-6 sm:py-2 text-sm sm:text-base rounded-lg hover:bg-[#f58200] shadow-[0_4px_14px_rgba(255,145,0,0.39)] transition-all duration-300 font-semibold cursor-pointer"
+        >
+          Start free trial
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ========================================== -->
+  <!-- 2. FIXED AUDIENCE SUB-RIBBON -->
+  <!-- ========================================== -->
+  <nav class="fixed top-16 left-0 right-0 z-50 bg-white/95 border-b border-slate-200/90 shadow-xs backdrop-blur-md py-2 sm:py-2.5 transition-colors duration-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between gap-3">
+        
+        <!-- Perspective Switcher Tabs -->
+        <div class="flex items-center gap-2 sm:gap-2.5 overflow-x-auto no-scrollbar py-0.5 max-w-full">
+          <!-- Learners Tab (Active Default) -->
+          <button
+            type="button"
+            onclick="switchAudienceTab('learners')"
+            id="ribbon-btn-learners"
+            class="relative z-10 inline-flex items-center gap-2 px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-bold transition-all duration-200 cursor-pointer shrink-0 bg-white text-[#13519C] ring-2 ring-[#FF9100] shadow-md shadow-amber-500/20 scale-[1.02]"
+          >
+            <i data-lucide="graduation-cap" class="h-4 w-4 text-[#13519C] shrink-0"></i>
+            <span>Learners</span>
+            <span id="dot-learners" class="w-1.5 h-1.5 rounded-full bg-[#FF9100] shrink-0"></span>
+          </button>
+
+          <!-- Parents Tab -->
+          <button
+            type="button"
+            onclick="switchAudienceTab('parents')"
+            id="ribbon-btn-parents"
+            class="relative z-10 inline-flex items-center gap-2 px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-bold transition-all duration-200 cursor-pointer shrink-0 bg-white text-[#13519C] border border-slate-200/90 hover:bg-slate-50 hover:shadow-xs"
+          >
+            <i data-lucide="users" class="h-4 w-4 text-amber-600 shrink-0"></i>
+            <span>Parents</span>
+            <span id="dot-parents" class="hidden w-1.5 h-1.5 rounded-full bg-[#FF9100] shrink-0"></span>
+          </button>
+
+          <!-- Teachers Tab -->
+          <button
+            type="button"
+            onclick="switchAudienceTab('teachers')"
+            id="ribbon-btn-teachers"
+            class="relative z-10 inline-flex items-center gap-2 px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-bold transition-all duration-200 cursor-pointer shrink-0 bg-white text-[#13519C] border border-slate-200/90 hover:bg-slate-50 hover:shadow-xs"
+          >
+            <i data-lucide="book-open" class="h-4 w-4 text-indigo-600 shrink-0"></i>
+            <span>Teachers</span>
+            <span id="dot-teachers" class="hidden w-1.5 h-1.5 rounded-full bg-[#FF9100] shrink-0"></span>
+          </button>
+
+          <!-- School Admins Tab -->
+          <button
+            type="button"
+            onclick="switchAudienceTab('schools')"
+            id="ribbon-btn-schools"
+            class="relative z-10 inline-flex items-center gap-2 px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-bold transition-all duration-200 cursor-pointer shrink-0 bg-white text-[#13519C] border border-slate-200/90 hover:bg-slate-50 hover:shadow-xs"
+          >
+            <i data-lucide="building-2" class="h-4 w-4 text-cyan-600 shrink-0"></i>
+            <span>School Admins</span>
+            <span id="dot-schools" class="hidden w-1.5 h-1.5 rounded-full bg-[#FF9100] shrink-0"></span>
+          </button>
+        </div>
+
+        <!-- Right Helper Context Pill -->
+        <div class="shrink-0 hidden lg:flex items-center gap-2">
+          <span id="ribbon-context-text" class="text-[11px] font-semibold text-slate-500 bg-slate-100 px-3 py-1 rounded-full border border-slate-200 flex items-center gap-1.5">
+            <span class="w-2 h-2 rounded-full bg-brand-orange"></span>
+            <span>Learner Experience • Step-by-Step Scaffolding</span>
+          </span>
+        </div>
+
+      </div>
+    </div>
+  </nav>
+
+  <!-- ========================================== -->
+  <!-- 3. HERO SECTION (ZERO ROTE GUESSWORK) -->
+  <!-- ========================================== -->
+  <section id="hero" class="relative pt-28 sm:pt-36 pb-16 sm:pb-24 overflow-hidden bg-brand-canvas border-b border-slate-200/70">
+    <div class="absolute inset-0 bg-light-grid opacity-60 pointer-events-none"></div>
+    <div class="absolute inset-0 radial-sun-glow pointer-events-none"></div>
+
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-4xl mx-auto">
+        
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-slate-200 shadow-sm mb-6">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+          <span class="text-xs font-bold text-slate-700 uppercase tracking-wide">
+            South African National Curriculum Standards • Grades 7–12
+          </span>
+        </div>
+
+        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-display font-extrabold text-slate-900 tracking-tight leading-[1.12] mb-6">
+          Targeted Practice. Zero Rote Guesswork.<br class="hidden sm:inline" />
+          <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue via-blue-700 to-brand-orange">
+            100% Exam Certainty.
+          </span>
+        </h1>
+
+        <p class="text-lg sm:text-xl text-slate-600 font-normal leading-relaxed max-w-3xl mx-auto mb-10">
+          Fundile is the deterministic cognitive engine and school management system that diagnoses exactly where marks are lost, guides learners through step-by-step worked solutions with 3-tier Socratic hints, and gives teachers unlimited print-ready exam papers and memos in 3 clicks.
+        </p>
+
+        <!-- Clean, Focused CTA -->
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
+          <a href="#pricing" class="w-full sm:w-auto inline-flex items-center justify-center px-8 py-4 text-base font-bold text-white bg-brand-orange hover:bg-brand-orange-hover rounded-xl shadow-lg shadow-orange-500/25 transition-all duration-200 transform hover:-translate-y-0.5">
+            <span>Start 2-Week Free Trial</span>
+            <i data-lucide="arrow-right" class="w-5 h-5 ml-2"></i>
+          </a>
+        </div>
+
+        <!-- 4 Pillars Quick Strip -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-left max-w-4xl mx-auto">
+          <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex items-start gap-3">
+            <div class="w-8 h-8 rounded-lg bg-blue-50 text-brand-blue flex items-center justify-center shrink-0">
+              <i data-lucide="cpu" class="w-4 h-4"></i>
+            </div>
+            <div>
+              <h4 class="text-xs font-bold text-slate-900 uppercase tracking-wider">Zero-Hallucination</h4>
+              <p class="text-[12px] text-slate-500 leading-snug">Pure deterministic Python/SymPy calculations. No wrong memos.</p>
+            </div>
+          </div>
+
+          <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex items-start gap-3">
+            <div class="w-8 h-8 rounded-lg bg-orange-50 text-brand-orange flex items-center justify-center shrink-0">
+              <i data-lucide="wifi-off" class="w-4 h-4"></i>
+            </div>
+            <div>
+              <h4 class="text-xs font-bold text-slate-900 uppercase tracking-wider">1.4 MB Data Total</h4>
+              <p class="text-[12px] text-slate-500 leading-snug">Runs fully offline via Workbox. No expensive video streaming.</p>
+            </div>
+          </div>
+
+          <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex items-start gap-3">
+            <div class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
+              <i data-lucide="file-check-2" class="w-4 h-4"></i>
+            </div>
+            <div>
+              <h4 class="text-xs font-bold text-slate-900 uppercase tracking-wider">Unlimited 3-Click Exams</h4>
+              <p class="text-[12px] text-slate-500 leading-snug">Print-ready papers + marking memos generated in 3 quick clicks.</p>
+            </div>
+          </div>
+
+          <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex items-start gap-3">
+            <div class="w-8 h-8 rounded-lg bg-purple-50 text-purple-600 flex items-center justify-center shrink-0">
+              <i data-lucide="users" class="w-4 h-4"></i>
+            </div>
+            <div>
+              <h4 class="text-xs font-bold text-slate-900 uppercase tracking-wider">Humanized Roster</h4>
+              <p class="text-[12px] text-slate-500 leading-snug">Real student photo uploads, diagnostic tags, and 5-min focus fixes.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================== -->
+  <!-- 4. CORE COGNITIVE PILLARS -->
+  <!-- ========================================== -->
+  <section id="features" class="py-14 sm:py-16 bg-white border-b border-slate-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        
+        <!-- Pillar 1: Smart Diagnostic Autopsy -->
+        <div class="bg-slate-50/70 p-5 rounded-2xl border border-slate-200 shadow-xs hover:shadow-md transition duration-200">
+          <div class="flex items-center gap-2.5 text-[#13519C] font-bold text-xs uppercase tracking-wider mb-2.5">
+            <div class="w-8 h-8 rounded-lg bg-orange-50 text-brand-orange flex items-center justify-center shrink-0 border border-orange-100">
+              <i data-lucide="activity" class="w-4 h-4"></i>
+            </div>
+            <span>Smart Diagnostic Autopsy</span>
+          </div>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            Automatically pinpoints the exact calculation step where marks were lost, just like a master teacher spotting an error pattern on a graded test paper.
+          </p>
+        </div>
+
+        <!-- Pillar 2: 5-Minute Focus Fixes -->
+        <div class="bg-slate-50/70 p-5 rounded-2xl border border-slate-200 shadow-xs hover:shadow-md transition duration-200">
+          <div class="flex items-center gap-2.5 text-[#13519C] font-bold text-xs uppercase tracking-wider mb-2.5">
+            <div class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0 border border-emerald-100">
+              <i data-lucide="wrench" class="w-4 h-4"></i>
+            </div>
+            <span>5-Minute Focus Fixes</span>
+          </div>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            Quick 3-question targeted practice sessions isolated purely to the single prerequisite step you stumbled on (such as calculating 15% VAT) before resuming full problems.
+          </p>
+        </div>
+
+        <!-- Pillar 3: Fair Step Marking -->
+        <div class="bg-slate-50/70 p-5 rounded-2xl border border-slate-200 shadow-xs hover:shadow-md transition duration-200">
+          <div class="flex items-center gap-2.5 text-[#13519C] font-bold text-xs uppercase tracking-wider mb-2.5">
+            <div class="w-8 h-8 rounded-lg bg-purple-50 text-purple-600 flex items-center justify-center shrink-0 border border-purple-100">
+              <i data-lucide="check-square" class="w-4 h-4"></i>
+            </div>
+            <span>Fair Step Marking</span>
+          </div>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            You receive full method marks [M] for applying correct formulas and logic on subsequent steps, even if an early arithmetic calculation had a minor slip.
+          </p>
+        </div>
+
+        <!-- Pillar 4: Skill Radar Calibration -->
+        <div class="bg-slate-50/70 p-5 rounded-2xl border border-slate-200 shadow-xs hover:shadow-md transition duration-200">
+          <div class="flex items-center gap-2.5 text-[#13519C] font-bold text-xs uppercase tracking-wider mb-2.5">
+            <div class="w-8 h-8 rounded-lg bg-blue-50 text-[#13519C] flex items-center justify-center shrink-0 border border-blue-100">
+              <i data-lucide="radar" class="w-4 h-4"></i>
+            </div>
+            <span>Skill Radar Calibration</span>
+          </div>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            A thought-paced 2 to 4 check radar that skips drills you've already mastered and jumps straight to your optimal challenge tier without anxiety-inducing timers.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================== -->
+  <!-- 5. THE PROBLEM → THE PROMISE (FROM CURRENT APP) -->
+  <!-- ========================================== -->
+  <section id="problem-promise" class="py-20 px-4 sm:px-6 lg:px-8 bg-white border-b border-slate-200">
+    <div class="max-w-7xl mx-auto">
+      <div class="max-w-3xl mb-12">
+        <span class="text-xs font-bold uppercase tracking-[0.25em] text-[#13519C] bg-blue-50 border border-blue-200/60 px-3 py-1 rounded-full inline-block mb-3">
+          The Hidden Curriculum
+        </span>
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-slate-900 font-afacad">
+          Most learners are surprised by the exam. They should not be.
+        </h2>
+        <p class="mt-4 text-base sm:text-lg leading-relaxed text-slate-600">
+          Day-to-day classwork rarely looks like the final exam, so the real "rules of the game" stay hidden until it is too late. Fundile closes that gap: every topic is practised at exam standard, with transparent feedback on exactly where you went wrong — no surprises in November.
+        </p>
+      </div>
+
+      <div class="grid gap-6 md:grid-cols-3">
+        <div class="rounded-[28px] border border-slate-200/90 bg-slate-50/50 p-6 sm:p-7 shadow-xs">
+          <h3 class="text-lg sm:text-xl font-bold text-slate-900 mb-2">
+            Exam-standard from day one
+          </h3>
+          <p class="text-sm leading-relaxed text-slate-600">
+            Practice questions are pitched at authentic exam level from the first topic, not only at revision time.
+          </p>
+        </div>
+
+        <div class="rounded-[28px] border border-slate-200/90 bg-slate-50/50 p-6 sm:p-7 shadow-xs">
+          <h3 class="text-lg sm:text-xl font-bold text-slate-900 mb-2">
+            See where you went wrong
+          </h3>
+          <p class="text-sm leading-relaxed text-slate-600">
+            Step-by-step marking shows the exact line your method broke down — and still credits the work that was correct with fair method marks.
+          </p>
+        </div>
+
+        <div class="rounded-[28px] border border-slate-200/90 bg-slate-50/50 p-6 sm:p-7 shadow-xs">
+          <h3 class="text-lg sm:text-xl font-bold text-slate-900 mb-2">
+            Unlimited practice
+          </h3>
+          <p class="text-sm leading-relaxed text-slate-600">
+            Deterministic generators produce endless fresh variants of any question, so you practise until it is automatic.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================== -->
+  <!-- 6. A STRUCTURED, ADAPTIVE LEARNING SYSTEM (FROM CURRENT APP) -->
+  <!-- ========================================== -->
+  <section id="structured-system" class="py-20 px-4 sm:px-6 lg:px-8 bg-brand-canvas border-b border-slate-200">
+    <div class="max-w-7xl mx-auto">
+      <div class="max-w-3xl mb-12">
+        <span class="text-xs font-bold uppercase tracking-[0.25em] text-[#13519C] bg-blue-50 border border-blue-200/60 px-3 py-1 rounded-full inline-block mb-3">
+          How It Works
+        </span>
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-slate-900 font-afacad">
+          A structured, adaptive learning system.
+        </h2>
+        <p class="mt-4 text-base sm:text-lg leading-relaxed text-slate-600">
+          From diagnosing prerequisites to mastering final exam papers, our deterministic progression guides learners without calculation errors or generic chatbot guessing.
+        </p>
+      </div>
+
+      <div class="grid gap-6 md:grid-cols-3">
+        <div class="rounded-[28px] border border-slate-200 bg-white p-6 sm:p-7 shadow-xs">
+          <div class="text-xs font-bold uppercase tracking-[0.2em] text-[#13519C] mb-2">
+            Step 01
+          </div>
+          <h3 class="text-lg sm:text-xl font-bold text-slate-900 mb-2">
+            Pick a Topic or Take a Diagnostic
+          </h3>
+          <p class="text-sm leading-relaxed text-slate-600">
+            Choose the exact subject, grade, and topic you need, or begin with a diagnostic autopsy that pinpoints your baseline against the national curriculum standard.
+          </p>
+        </div>
+
+        <div class="rounded-[28px] border border-slate-200 bg-white p-6 sm:p-7 shadow-xs">
+          <div class="text-xs font-bold uppercase tracking-[0.2em] text-[#13519C] mb-2">
+            Step 02
+          </div>
+          <h3 class="text-lg sm:text-xl font-bold text-slate-900 mb-2">
+            Scaffold → Practice → Assessment
+          </h3>
+          <p class="text-sm leading-relaxed text-slate-600">
+            Progress through guided scaffolding, move to independent practice, and unlock exam-standard assessments with pre-baked 3-tier hints.
+          </p>
+        </div>
+
+        <div class="rounded-[28px] border border-slate-200 bg-white p-6 sm:p-7 shadow-xs">
+          <div class="text-xs font-bold uppercase tracking-[0.2em] text-[#13519C] mb-2">
+            Step 03
+          </div>
+          <h3 class="text-lg sm:text-xl font-bold text-slate-900 mb-2">
+            Precision Gap Autopsy & 5-Minute Focus Fixes
+          </h3>
+          <p class="text-sm leading-relaxed text-slate-600">
+            If your working stumbles, Fundile isolates the exact flawed step, awards consequential method marks, and deploys targeted 5-minute focus fixes and SimuLearn visual animations.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================== -->
+  <!-- 7. FUNDILE IS NOT AN AI CHATBOT (FROM CURRENT APP) -->
+  <!-- ========================================== -->
+  <section id="not-a-chatbot" class="py-20 px-4 sm:px-6 lg:px-8 bg-white border-b border-slate-200">
+    <div class="max-w-7xl mx-auto">
+      <div class="max-w-3xl mb-12">
+        <span class="text-xs font-bold uppercase tracking-[0.25em] text-[#13519C] bg-blue-50 border border-blue-200/60 px-3 py-1 rounded-full inline-block mb-3">
+          Active Cognitive Learning vs. Passive Chatbots
+        </span>
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-slate-900 font-afacad">
+          Fundile is not an AI chatbot.
+        </h2>
+        <p class="mt-4 text-base sm:text-lg leading-relaxed text-slate-600">
+          Generic chatbots answer questions for you, encouraging passive copy-pasting and hallucinating non-existent formulas. Fundile asks you the question, enforces authentic exam-standard method working, and intervenes with precision when your logic breaks down.
+        </p>
+      </div>
+
+      <div class="grid gap-6 md:grid-cols-2">
+        <!-- Generic AI Chatbots Column -->
+        <div class="rounded-[28px] border border-rose-200/90 bg-rose-50/40 p-6 sm:p-8 shadow-xs">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-rose-100 text-rose-700">
+              <i data-lucide="alert-triangle" class="h-5 w-5"></i>
+            </div>
+            <div>
+              <h3 class="text-lg sm:text-xl font-bold text-rose-950">Generic AI Chatbots</h3>
+              <span class="text-xs font-medium text-rose-700">Passive • Hallucination Risk • Zero Accountability</span>
+            </div>
+          </div>
+          <ul class="space-y-3.5 text-sm text-rose-900/80">
+            <li class="flex items-start gap-2.5">
+              <span class="text-rose-500 font-bold shrink-0">✕</span>
+              <span><strong>Gives the answer away:</strong> Solves homework for the learner without building neural pathways or cognitive automaticity.</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <span class="text-rose-500 font-bold shrink-0">✕</span>
+              <span><strong>Prone to hallucinations:</strong> Invents numbers, mixes up financial accounting rules, and calculates false arithmetic answers with total confidence.</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <span class="text-rose-500 font-bold shrink-0">✕</span>
+              <span><strong>Zero curriculum discipline:</strong> Unaware of South African national curriculum term weightings, official formula sheets, or method marking rubrics.</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Fundile Cognitive Engine Column -->
+        <div class="rounded-[28px] border-2 border-[#13519C] bg-white p-6 sm:p-8 shadow-md shadow-blue-900/10">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-50 text-[#13519C]">
+              <i data-lucide="sparkles" class="h-5 w-5 text-brand-orange"></i>
+            </div>
+            <div>
+              <h3 class="text-lg sm:text-xl font-bold text-slate-900">Fundile Cognitive Engine</h3>
+              <span class="text-xs font-bold text-[#13519C]">Active • 100% Deterministic • National Standard</span>
+            </div>
+          </div>
+          <ul class="space-y-3.5 text-sm text-slate-700">
+            <li class="flex items-start gap-2.5">
+              <span class="text-emerald-600 font-bold shrink-0">✓</span>
+              <span><strong>Stepwise procedure tracking:</strong> Awards authentic method marks, carry-over accuracy, and isolates the single line an error occurred.</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <span class="text-emerald-600 font-bold shrink-0">✓</span>
+              <span><strong>Zero-LLM mathematical ground truth:</strong> Seeded SymPy symbolic math and accounting ledger graph engines guarantee 100% internal consistency.</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <span class="text-emerald-600 font-bold shrink-0">✓</span>
+              <span><strong>Diagnostic error autopsies:</strong> Tags specific misconceptions (e.g. net vs gross VAT formula) and deploys 5-minute targeted focus fixes.</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================== -->
+  <!-- 7. UNIVERSAL NATIONAL CURRICULUM STANDARDS -->
+  <!-- ========================================== -->
+  <section id="curriculum-alignment" class="py-20 px-4 sm:px-6 lg:px-8 bg-brand-canvas border-b border-slate-200">
+    <div class="max-w-7xl mx-auto">
+      <div class="max-w-3xl mb-12">
+        <span class="text-xs font-bold uppercase tracking-[0.25em] text-[#13519C] bg-blue-50 border border-blue-200/60 px-3 py-1 rounded-full inline-block mb-3">
+          Curriculum Standards & Exam Alignment
+        </span>
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-slate-900 font-afacad">
+          The difference is not the curriculum — it is the preparation.
+        </h2>
+        <div class="mt-4 p-4 rounded-2xl bg-blue-50 border border-blue-200/80 text-sm sm:text-base text-slate-700 leading-relaxed">
+          <strong class="text-brand-blue block mb-1">Did you know?</strong>
+          There is only one official national curriculum standard in South Africa, which underpins public, private, and independent school examinations nationwide.
+        </div>
+        <p class="mt-4 text-base sm:text-lg leading-relaxed text-slate-600">
+          Many families believe private or independent schools follow a completely different curriculum. In reality, the South African National Curriculum forms the statutory foundation for all schools—the difference lies in preparation and assessment depth. Fundile prepares learners to excel at the highest level of examination standards across all examining bodies.
+        </p>
+      </div>
+
+      <!-- 3 Universal Preparation Pillars -->
+      <div class="grid gap-6 md:grid-cols-3">
+        <div class="rounded-[28px] border border-slate-200 bg-white p-6 sm:p-7 shadow-xs">
+          <div class="w-10 h-10 rounded-xl bg-blue-50 text-brand-blue flex items-center justify-center font-bold mb-4">
+            <i data-lucide="landmark" class="w-5 h-5"></i>
+          </div>
+          <h3 class="text-lg sm:text-xl font-bold text-slate-900 mb-2">
+            Public School Examinations
+          </h3>
+          <p class="text-sm leading-relaxed text-slate-600">
+            Comprehensive coverage of official national curriculum statements with authentic past exam question archetypes and official time pacing.
+          </p>
+        </div>
+
+        <div class="rounded-[28px] border border-slate-200 bg-white p-6 sm:p-7 shadow-xs">
+          <div class="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-700 flex items-center justify-center font-bold mb-4">
+            <i data-lucide="shield-check" class="w-5 h-5"></i>
+          </div>
+          <h3 class="text-lg sm:text-xl font-bold text-slate-900 mb-2">
+            Independent & Private School Examinations
+          </h3>
+          <p class="text-sm leading-relaxed text-slate-600">
+            Higher-order multi-step questions, unseen conceptual synthesis, and rigorous rubric definitions benchmarked for top academic standards.
+          </p>
+        </div>
+
+        <div class="rounded-[28px] border border-slate-200 bg-white p-6 sm:p-7 shadow-xs">
+          <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center font-bold mb-4">
+            <i data-lucide="home" class="w-5 h-5"></i>
+          </div>
+          <h3 class="text-lg sm:text-xl font-bold text-slate-900 mb-2">
+            Distance & Home-Education Assessments
+          </h3>
+          <p class="text-sm leading-relaxed text-slate-600">
+            Clear structured pacing with diagnostic radar checkpoints, assuring independent homeschoolers complete the national syllabus with certainty.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================== -->
+  <!-- 9. SIMPLE & TRANSPARENT PRICING (PRICE ISLANDS) -->
+  <!-- ========================================== -->
+  <section id="pricing" class="py-20 px-4 sm:px-6 lg:px-8 bg-white border-b border-slate-200">
+    <div class="max-w-7xl mx-auto">
+      
+      <div class="text-center max-w-3xl mx-auto mb-14">
+        <span class="text-xs font-bold uppercase tracking-[0.25em] text-[#13519C] bg-blue-50 border border-blue-200/60 px-3 py-1 rounded-full inline-block mb-3">
+          Simple &amp; Transparent Pricing
+        </span>
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-slate-900 font-afacad">
+          Accessible for Independent Learners. Scalable for Schools.
+        </h2>
+        <p class="mt-4 text-base sm:text-lg leading-relaxed text-slate-600">
+          Private tutoring costs R150 to R350 per hour. Fundile gives you 24/7 unlimited exam practice, diagnostic autopsies, and step-by-step guidance for less than one tutoring session.
+        </p>
+      </div>
+
+      <!-- Pricing Islands Grid (3 Distinct Audiences) -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto items-stretch">
+        
+        <!-- Island 1: Standard Individual Learner -->
+        <div class="rounded-[28px] border border-slate-200 bg-white p-7 shadow-xs flex flex-col justify-between hover:shadow-md transition">
+          <div>
+            <div class="flex justify-between items-center mb-2">
+              <span class="text-xs font-bold uppercase tracking-wider text-[#13519C]">Individual Learner</span>
+              <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-blue-50 text-[#13519C] border border-blue-200">Live Now</span>
+            </div>
+            <h3 class="text-2xl font-bold text-slate-900 mt-2">Standard Pass</h3>
+            <p class="text-xs text-slate-500 mt-1 mb-4">Complete self-paced revision for Grades 7–12.</p>
+            
+            <div class="mt-4">
+              <span class="text-4xl font-extrabold text-slate-900">R150</span>
+              <span class="text-xs font-medium text-slate-500">/ learner / month</span>
+            </div>
+
+            <ul class="mt-6 space-y-3 text-xs text-slate-600 border-t border-slate-100 pt-6">
+              <li class="flex items-center gap-2">
+                <i data-lucide="check" class="w-4 h-4 text-emerald-600 shrink-0"></i>
+                <span>Full access to all 476+ national curriculum topics</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <i data-lucide="check" class="w-4 h-4 text-emerald-600 shrink-0"></i>
+                <span>Unlimited deterministic question generator</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <i data-lucide="check" class="w-4 h-4 text-emerald-600 shrink-0"></i>
+                <span>Step-by-step Fair Step Marking (consequential accuracy)</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <i data-lucide="check" class="w-4 h-4 text-emerald-600 shrink-0"></i>
+                <span>Offline PWA installation (1.4 MB total data)</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="mt-8 pt-4">
+            <a 
+              href="mailto:info@fundile.com?subject=Start%20Standard%20Pass%20Trial" 
+              class="w-full inline-flex items-center justify-center py-3.5 px-4 rounded-xl text-xs font-bold text-[#13519C] bg-blue-50 hover:bg-blue-100 border border-blue-200 transition"
+            >
+              Start Free Trial
+            </a>
+          </div>
+        </div>
+
+        <!-- Island 2: Pro Cognitive Package (Featured) -->
+        <div class="rounded-[28px] border-2 border-[#13519C] bg-white p-7 shadow-lg shadow-blue-900/10 flex flex-col justify-between relative">
+          <div class="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full text-xs font-extrabold bg-[#13519C] text-white shadow-sm flex items-center gap-1">
+            <i data-lucide="star" class="w-3 h-3 text-[#FF9100] fill-[#FF9100]"></i>
+            <span>RECOMMENDED • 2-WEEK FREE TRIAL</span>
+          </div>
+
+          <div>
+            <div class="flex justify-between items-center mb-2 mt-2">
+              <span class="text-xs font-bold uppercase tracking-wider text-purple-700">Pro Intelligence</span>
+              <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-purple-50 text-purple-700 border border-purple-200">Full Suite</span>
+            </div>
+            <h3 class="text-2xl font-bold text-slate-900 mt-2">Pro Package</h3>
+            <p class="text-xs text-slate-500 mt-1 mb-4">Everything in Standard, plus our full Socratic cognitive tutor & SimuLearn.</p>
+            
+            <div class="mt-4">
+              <span class="text-4xl font-extrabold text-slate-900">R299</span>
+              <span class="text-xs font-medium text-slate-500">/ learner / month</span>
+            </div>
+
+            <ul class="mt-6 space-y-3 text-xs text-slate-700 border-t border-slate-100 pt-6">
+              <li class="flex items-center gap-2">
+                <i data-lucide="check" class="w-4 h-4 text-brand-orange shrink-0"></i>
+                <span><strong>Everything in Standard</strong></span>
+              </li>
+              <li class="flex items-center gap-2">
+                <i data-lucide="check" class="w-4 h-4 text-brand-orange shrink-0"></i>
+                <span>Fundile Socratic™ Tutor with on-rails suggestion chips</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <i data-lucide="check" class="w-4 h-4 text-brand-orange shrink-0"></i>
+                <span>SimuLearn visual animations (saves 95% data over video)</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <i data-lucide="check" class="w-4 h-4 text-brand-orange shrink-0"></i>
+                <span>Diagnostic error autopsies & 5-minute focus fixes</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <i data-lucide="check" class="w-4 h-4 text-brand-orange shrink-0"></i>
+                <span>Sunday WhatsApp Parent Coaching Pulse</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="mt-8 pt-4">
+            <a 
+              href="mailto:info@fundile.com?subject=Start%20Pro%202-Week%20Trial" 
+              class="w-full inline-flex items-center justify-center py-3.5 px-4 rounded-xl text-xs font-bold text-white bg-[#FF9100] hover:bg-[#f58200] shadow-md transition"
+            >
+              Start 2-Week Free Trial
+            </a>
+          </div>
+        </div>
+
+        <!-- Island 3: Whole School SGB & Institutional -->
+        <div class="rounded-[28px] border border-slate-200 bg-white p-7 shadow-xs flex flex-col justify-between hover:shadow-md transition">
+          <div>
+            <div class="flex justify-between items-center mb-2">
+              <span class="text-xs font-bold uppercase tracking-wider text-cyan-800">Schools &amp; Leadership</span>
+              <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-cyan-50 text-cyan-800 border border-cyan-200">Volume Tier</span>
+            </div>
+            <h3 class="text-2xl font-bold text-slate-900 mt-2">Institutional License</h3>
+            <p class="text-xs text-slate-500 mt-1 mb-4">Complete infrastructure for classrooms, HODs, and school governing bodies.</p>
+            
+            <div class="mt-4">
+              <span class="text-3xl font-extrabold text-slate-900">From R65</span>
+              <span class="text-xs font-medium text-slate-500">/ learner / month</span>
+            </div>
+
+            <ul class="mt-6 space-y-3 text-xs text-slate-600 border-t border-slate-100 pt-6">
+              <li class="flex items-center gap-2">
+                <i data-lucide="check" class="w-4 h-4 text-cyan-600 shrink-0"></i>
+                <span>Teacher & HOD LMS Cockpits with real student photos</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <i data-lucide="check" class="w-4 h-4 text-cyan-600 shrink-0"></i>
+                <span>Unlimited 3-click printable A4 test papers & memos</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <i data-lucide="check" class="w-4 h-4 text-cyan-600 shrink-0"></i>
+                <span>1-Click official SASAMS Excel mark sheet export</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <i data-lucide="check" class="w-4 h-4 text-cyan-600 shrink-0"></i>
+                <span>Curriculum pacing variance radar (ATP vs reality)</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <i data-lucide="check" class="w-4 h-4 text-cyan-600 shrink-0"></i>
+                <span>SGB formal quotation & invoice procurement support</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="mt-8 pt-4">
+            <a 
+              href="mailto:info@fundile.com?subject=School%20Volume%20Pricing%20Inquiry" 
+              class="w-full inline-flex items-center justify-center py-3.5 px-4 rounded-xl text-xs font-bold text-white bg-cyan-700 hover:bg-cyan-800 transition"
+            >
+              Contact info@fundile.com
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================== -->
+  <!-- 10. AUTHENTIC FOOTER WITH EXACT CONTACTS & POPIA -->
+  <!-- ========================================== -->
+  <footer class="bg-white border-t border-slate-200 py-12 px-4 sm:px-6 lg:px-8 mt-auto">
+    <div class="max-w-7xl mx-auto">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-10">
+        
+        <!-- Brand & Mission Column -->
+        <div class="md:col-span-2 space-y-4">
+          <div class="flex items-center gap-3">
+            <svg 
+              xmlns="http://www.w3.org/2000/svg" 
+              class="h-9 w-auto" 
+              viewBox="0 0 2200 800" 
+              style="font-family: 'Afacad', sans-serif;"
+            >
+              <g transform="translate(23, -76)">
+                <g>
+                  <g transform="translate(150, 101.77) scale(0.75)">
+                    <path transform="translate(-166.4869, -27.606)" fill="#ff9100" opacity="1.000000" stroke="none" d="M281.100800,82.430374 C296.863281,82.430435 312.139648,82.430435 327.589142,82.430435 C327.589142,101.156349 327.589142,119.218277 327.589142,137.604797 C309.226532,137.604797 291.146423,137.604797 272.610504,137.604797 C272.610504,119.531845 272.610504,101.481499 272.610504,82.430305 C275.160431,82.430305 277.887573,82.430305 281.100800,82.430374 z"/>
+                    <path fill="#ff9100" opacity="1.000000" stroke="none" d="M281.100800,82.430374 C296.863281,82.430435 312.139648,82.430435 327.589142,82.430435 C327.589142,101.156349 327.589142,119.218277 327.589142,137.604797 C309.226532,137.604797 291.146423,137.604797 272.610504,137.604797 C272.610504,119.531845 272.610504,101.481499 272.610504,82.430305 C275.160431,82.430305 277.887573,82.430305 281.100800,82.430374 z"/>
+                    <path fill="#ff9100" opacity="1.000000" stroke="none" d="M234.051895,135.066223 C224.745880,148.067596 215.644699,160.771545 206.224594,173.920700 C191.142197,163.057236 176.346191,152.400055 161.102249,141.420258 C171.897430,126.295197 182.400925,111.578819 193.222076,96.417397 C208.472687,107.127121 223.382523,117.597542 238.759613,128.396088 C237.075623,130.779358 235.666183,132.774078 234.051895,135.066223 z"/>
+                    <path fill="#ff9100" opacity="1.000000" stroke="none" d="M287.318604,233.165192 C273.012787,244.051132 258.971313,254.686829 244.461060,265.677582 C233.276215,250.872467 222.308655,236.354980 211.026871,221.421555 C225.902328,210.163956 240.315781,199.255997 254.990143,188.150589 C256.061981,189.313354 257.003143,190.179214 257.763031,191.182358 C267.103516,203.512344 276.449860,215.838257 285.690308,228.242981 C286.661530,229.546768 286.967987,231.345734 287.318604,233.165192 z"/>
+                  </g>
+                  <path fill="#ff9100" opacity="1.000000" stroke="none" d=" M346.618164,323.599243 C390.887054,300.100555 434.830627,276.778168 478.816315,253.535477 C490.312988,247.460464 502.069885,242.258408 515.593506,242.888382 C526.837036,243.412109 536.962891,247.456100 546.631958,252.590546 C605.086304,283.631073 663.469849,314.805176 721.830627,346.021515 C741.277954,356.423615 760.671387,366.933228 779.924744,377.688446 C788.846985,382.672546 793.581482,390.354065 793.151917,401.025787 C792.944519,406.178833 790.979065,410.274750 786.950012,412.873901 C776.925781,419.340515 766.795715,425.687531 756.382141,431.498291 C715.830627,454.125977 675.130371,476.487030 634.528320,499.024323 C603.924683,516.011719 573.575562,533.471863 542.694214,549.935608 C534.276367,554.423462 524.518555,557.463745 515.060120,558.648132 C504.622375,559.955017 494.436676,555.726318 485.240387,550.665100 C439.169922,525.310059 393.255981,499.670929 347.238922,474.218567 C315.021484,456.398865 282.718964,438.733063 250.479980,420.952118 C247.576355,419.350677 244.919174,417.307678 242.047882,415.641510 C228.019974,407.501282 231.543488,389.717133 240.164764,382.425934 C245.302017,378.081238 251.256653,374.559265 257.211456,371.349426 C286.843445,355.376984 316.597473,339.630981 346.618164,323.599243 M509.620361,444.230133 C512.299622,444.117645 515.457214,444.896881 517.584778,443.755798 C540.802307,431.303711 563.873291,418.577637 586.946411,405.857727 C591.374939,403.416290 591.300964,401.418671 586.821289,398.972992 C563.992676,386.509277 541.118408,374.128845 518.327942,361.595978 C514.570251,359.529572 511.388153,359.634857 507.630035,361.713196 C485.298676,374.062622 462.845703,386.191986 440.495819,398.508331 C438.778381,399.454742 437.540466,401.126362 436.079681,402.538502 C437.656189,403.882191 439.057922,405.543751 440.835754,406.511321 C463.496643,418.986617 486.211426,431.348831 509.620361,444.085133 z"/>
+                  <path fill="#ff9100" opacity="1.000000" stroke="none" d=" M530.902283,583.963318 C579.000061,555.740784 626.738159,527.630981 675.098083,499.154999 C675.098083,501.254150 675.080383,502.833069 675.100769,504.411560 C675.431519,530.050720 676.440857,555.704041 675.899902,581.324646 C675.419739,604.060913 666.363403,623.657898 648.652710,638.331360 C640.255859,645.288208 630.888550,651.135437 621.655457,657.004822 C611.017029,663.767578 600.027039,669.975891 589.215393,676.467773 C573.771118,685.741272 558.458008,695.238708 542.890686,704.299988 C525.288452,714.545654 506.851746,716.305420 488.165741,707.565125 C473.860107,700.873718 459.910980,693.423096 445.759888,686.397583 C421.355072,674.281494 396.832611,662.399475 372.516479,650.108765 C349.411194,638.429932 333.341370,620.744141 327.668762,594.873291 C326.400208,589.087646 325.419006,583.097412 325.412933,577.200256 C325.381042,546.214417 325.703827,515.228271 325.917938,484.242279 C325.919891,483.960632 326.119965,483.680389 326.393372,482.966705 C337.198914,489.207153 347.928986,495.411743 358.666290,501.603729 C406.111877,528.964600 453.515015,556.399719 501.075989,583.558533 C505.773682,586.241089 511.401672,588.452820 516.671387,588.624268 C521.240967,588.773010 525.914856,585.716187 530.902283,583.963318 z"/>
+                  <path fill="#ff9100" opacity="1.000000" stroke="none" d=" M727.104553,542.000000 C727.104492,554.662109 727.255981,566.827271 727.010742,578.984436 C726.939697,582.507202 727.955078,584.633972 730.756042,586.836365 C745.057800,598.081787 747.519531,617.167419 735.435364,629.111267 C730.770569,633.721924 731.136902,637.142212 732.927734,642.274536 C738.051880,656.959961 742.820801,671.769775 747.685852,686.545044 C751.600159,698.432983 748.005920,705.663330 735.837463,709.084167 C723.171570,712.644958 710.215027,711.725037 697.413269,709.852844 C692.003113,709.061584 687.834473,705.635925 684.933289,700.724121 C682.407043,696.447144 682.672607,692.277222 684.186523,687.836975 C689.837402,671.263672 695.343201,654.640625 701.083069,638.098511 C702.138062,635.057983 701.908508,633.276367 699.294861,630.955688 C686.045898,619.191650 687.093201,598.850830 701.525269,587.564697 C704.625305,585.140381 705.654602,582.683167 705.627808,578.857422 C705.446960,553.035034 705.451660,527.210693 705.563782,501.387695 C705.577026,498.349792 706.090027,495.091919 707.283569,492.330231 C709.385864,487.465454 715.054260,484.735840 719.237549,485.864258 C724.024475,487.155518 727.051208,491.551239 727.070496,497.516357 C727.117920,512.177490 727.097900,526.838745 727.104553,542.000000 z"/>
+                </g>
+                <text x="850" y="243" dominant-baseline="hanging" font-family="'Afacad', sans-serif" fill="#13519C" font-size="466" font-weight="700">fundile</text>
+              </g>
+            </svg>
+          </div>
+          <p class="text-xs text-slate-500 leading-relaxed max-w-md">
+            Fundile is South Africa’s deterministic curriculum engine and school management system. Grounded in the official National Curriculum Standards across Grades 7–12, we eliminate calculation hallucinations and empower learners, teachers, parents, and school leadership with measurable academic certainty.
+          </p>
+          <div class="flex items-center gap-3 pt-2">
+            <span class="inline-flex items-center px-2.5 py-1 rounded-md bg-emerald-50 text-emerald-800 text-[11px] font-semibold border border-emerald-200">
+              <i data-lucide="shield-check" class="w-3.5 h-3.5 mr-1 text-emerald-600"></i> POPIA Compliant (Sec 35)
+            </span>
+            <span class="inline-flex items-center px-2.5 py-1 rounded-md bg-blue-50 text-brand-blue text-[11px] font-semibold border border-blue-200">
+              <i data-lucide="check" class="w-3.5 h-3.5 mr-1 text-brand-orange"></i> 100% National Standard
+            </span>
+          </div>
+        </div>
+
+        <!-- Stakeholders & Quick Links -->
+        <div>
+          <h4 class="text-xs font-bold uppercase tracking-wider text-slate-900 mb-3">Stakeholders</h4>
+          <ul class="space-y-2 text-xs text-slate-600">
+            <li><button onclick="switchAudienceTab('learners')" class="hover:text-brand-blue transition cursor-pointer">For High School Learners</button></li>
+            <li><button onclick="switchAudienceTab('parents')" class="hover:text-brand-blue transition cursor-pointer">For Supportive Parents</button></li>
+            <li><button onclick="switchAudienceTab('teachers')" class="hover:text-brand-blue transition cursor-pointer">For Classroom Teachers</button></li>
+            <li><button onclick="switchAudienceTab('schools')" class="hover:text-brand-blue transition cursor-pointer">For School Admins & HODs</button></li>
+            <li><a href="#features" class="hover:text-brand-blue transition">Core Features</a></li>
+          </ul>
+        </div>
+
+        <!-- Contact & Legal Links -->
+        <div>
+          <h4 class="text-xs font-bold uppercase tracking-wider text-slate-900 mb-3">Institutional & Legal</h4>
+          <ul class="space-y-2 text-xs text-slate-600">
+            <li>
+              <a href="mailto:info@fundile.com" class="hover:text-brand-blue transition flex items-center gap-1">
+                <i data-lucide="mail" class="w-3 h-3 text-slate-400"></i> info@fundile.com
+              </a>
+            </li>
+            <li>
+              <a href="mailto:info@fundile.com?subject=School%20Pricing%20%26%20Institutional%20Inquiry" class="hover:text-brand-blue transition flex items-center gap-1 font-semibold text-brand-blue">
+                <i data-lucide="building-2" class="w-3 h-3"></i> Institutional Inquiries
+              </a>
+            </li>
+            <li>
+              <a href="/privacy-statement.html" class="hover:text-brand-blue transition flex items-center gap-1">
+                <i data-lucide="file-text" class="w-3 h-3 text-slate-400"></i> Privacy Policy (POPIA)
+              </a>
+            </li>
+            <li>
+              <a href="#hero" class="hover:text-brand-blue transition">Back to Top</a>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+
+      <!-- Bottom Bar -->
+      <div class="border-t border-slate-200 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-slate-500 text-xs">
+        <div>
+          © 2026 Fundile. All rights reserved. 100% Aligned with South African National Curriculum Standards.
+        </div>
+        <div class="text-slate-400 text-[11px]">
+          Trusted preparation for public, private, and independent school examinations nationwide.
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ========================================== -->
+  <!-- 11. AUDIENCE NAVIGATION & INTERACTION SCRIPT -->
+  <!-- ========================================== -->
+  <script>
+    lucide.createIcons();
+
+    let activePersona = 'learners';
+    const audienceSections = {
+      learners: 'problem-promise',
+      parents: 'not-a-chatbot',
+      teachers: 'structured-system',
+      schools: 'pricing'
+    };
+
+    const audienceLabels = {
+      learners: 'Learner Experience • Step-by-Step Scaffolding',
+      parents: 'Parent Overview • Transparent Weekly Progress',
+      teachers: 'Teacher Workflow • Instant Exam Authoring',
+      schools: 'School Administration • SASAMS & ATP Pacing'
+    };
+
+    function switchAudienceTab(role) {
+      activePersona = role;
+
+      // Update secondary ribbon pills
+      ['learners', 'parents', 'teachers', 'schools'].forEach(r => {
+        const btn = document.getElementById('ribbon-btn-' + r);
+        const dot = document.getElementById('dot-' + r);
+        if (btn) {
+          if (r === role) {
+            btn.className = 'relative z-10 inline-flex items-center gap-2 px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-bold transition-all duration-200 cursor-pointer shrink-0 bg-white text-[#13519C] ring-2 ring-[#FF9100] shadow-md shadow-amber-500/20 scale-[1.02]';
+            if (dot) dot.classList.remove('hidden');
+          } else {
+            btn.className = 'relative z-10 inline-flex items-center gap-2 px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-bold transition-all duration-200 cursor-pointer shrink-0 bg-white text-[#13519C] border border-slate-200/90 hover:bg-slate-50 hover:shadow-xs';
+            if (dot) dot.classList.add('hidden');
+          }
+        }
+      });
+
+      // Update right context label
+      const ribbonContext = document.getElementById('ribbon-context-text');
+      if (ribbonContext && audienceLabels[role]) {
+        ribbonContext.innerHTML = `<span class="w-2 h-2 rounded-full bg-brand-orange"></span><span>${audienceLabels[role]}</span>`;
+      }
+
+      // Smooth scroll to relevant section
+      const targetId = audienceSections[role];
+      if (targetId) {
+        const targetEl = document.getElementById(targetId);
+        if (targetEl) {
+          const yOffset = -80;
+          const y = targetEl.getBoundingClientRect().top + window.pageYOffset + yOffset;
+          window.scrollTo({ top: y, behavior: 'smooth' });
+        }
+      }
+    }
+  </script>
+
+</body>
+</html>

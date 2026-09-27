@@ -1,0 +1,1551 @@
+# Finance, growth and decay
+
+## Revision
+
+\-Simple interest is the interest calculated only on the initial amount  invested, the principal amount.
+
+\-Compound interest is the interest earned on the principal amount and on its accumulated interest. This means that interest is being earned on interest.
+
+\-The accumulated amount is the final amount; the sum of the principal amount and the amount of interest earned.
+
+
+
+Formula for simple interest:
+
+A = P(1 + in)
+
+
+
+Formula for compound interest:
+
+A= P(1 + i)^n
+
+where
+
+A = accumulated amount
+
+P = principal amount
+
+i = interest rate written as a decimal
+
+n = time period in years
+
+
+
+### Examples
+
+#### 1
+
+Sam wants to invest R3450 for 5 years. Wise Bank offers a savings account which pays simple interest at a rate of 12,5%perannum, and Grand Bank offers a savings account paying compound interest at a rate of 10,4% per annum. Which bank account would give Sam the greatest accumulated balance at the end of the 5 year period?
+
+
+
+##### SOLUTION
+
+###### Step 1: Calculation using the simple interest formula
+
+\-Write down the known variables and the simple interest formula
+
+P = 3450
+
+i = 0,125
+
+n = 5
+
+A = P(1 + in)
+
+
+
+\-Substitute the values to determine the accumulated amount for the Wise Bank savings account.
+
+
+
+A = 3450(1 + 0,125×5)
+
+= R 5606,25
+
+
+
+###### Step 2: Calculation using the compound interest formula
+
+\-Write down the known variables and the compound interest formula.
+
+
+
+P = 3450
+
+i = 0,104
+
+n = 5
+
+A = P(1 + i)^n
+
+
+
+\-Substitute the values to determine the accumulated amount for the Grand Bank savings account.
+
+
+
+A = 3450(1 + 0,104)^5
+
+= R 5658,02
+
+
+
+###### Step 3: Write the final answer
+
+\-The Grand Bank savings account would give Sam the highest accumulated balance at the end of the 5 year period.
+
+
+
+
+
+#### 2
+
+\-Bongani decides to put R 30 000 in an investment account.
+
+\-What compound interest rate must the investment account achieve for Bongani to double his money in 6 years?
+
+\-Give your answer correct to one decimal place.
+
+
+
+##### SOLUTION
+
+###### Step 1: Write down the known variables and the compound interest formula
+
+
+
+A = 60 000
+
+P = 30 000
+
+n = 6
+
+A = P(1 + i)^n
+
+
+
+###### Step 2: Substitute the values and solve for i
+
+60 000 = 30 000(1 + i)^6
+
+60 000 / 30 000 = (1 + i)^6
+
+2 = (1 + i)^6
+
+6√2 = 1 + i
+
+{6}√2 − 1 = i
+
+∴ i = 0,122...
+
+
+
+###### Step 3: Write the final answer and comment
+
+\-We round up to a rate of 12,3% p.a. to make sure that Bongani doubles his investment.
+
+
+
+
+
+### Questions
+
+#### 1\.
+
+Determine the value of an investment of R10 000 at 12,1% p.a. simple interest for 3 years.
+
+
+
+#### 2\.
+
+Calculate the value of R8 000 invested at 8,6 % p.a. compound interest for 4 years.
+
+
+
+#### 3\.
+
+Calculate how much interest John will earn if he invests R2 000 for 4 years at:
+
+##### a)
+
+6,7 % p.a. simple interest
+
+
+
+##### b)
+
+5,4 % p.a. compound interest
+
+
+
+#### 4\.
+
+The value of an investment grows from R2 200 to R3 850  in 8 years. Determine the simple interest rate at which it was invested.
+
+
+
+#### 5\.
+
+James had R12 000 and invested it for 5 years. If the value of his investment is R15 600, what compound interest rate did it earn?
+
+
+
+## Simple  depreciation
+
+* As soon as a new car leaves the dealership, its value decreases and it is considered “second-hand”. Vehicles, equipment, machinery and other similar assets, all lose value over time as a result of usage and age. This loss in value is called depreciation.
+
+
+
+* Assets that have a relatively long useful lifetime, such as machines, trucks, farming equipment etc., depreciate slower than assets like office equipment, computers, furniture etc. which need  to be replaced more often and therefore depreciate more quickly.
+
+
+
+* Depreciation is used to calculate the value of a company’s assets, which determines how much tax a company must pay. Companies can take depreciation in to account as an expense, and thereby reduce their taxable income. A lower taxable income means that the company will pay less income tax to SARS (South African Revenue Service).
+
+
+
+* We can calculate two different kinds of depreciation: simple decay and compound decay. Decay is also a term used to describe a reduction or decline in value. Simple decay is also called straight-line depreciation.  In the straight-line method the value of the asset is reduced by a constant amount each year, which is calculated on the principal amount.
+
+
+
+\-We notice that
+
+Total depreciation = P × i × n
+
+where,
+
+P = principal amount
+
+i = interest rate written as a decimal
+
+n = time period in years
+
+
+
+\-Therefore the depreciated value of the asset (also called the book value) can be calculated as:
+
+
+
+A = P(1 − in)
+
+
+
+\-Note the similarity to the simple interest formula A = P(1 + in). Interest increases the value of the principal amount, whereas with simple decay, depreciation reduces the value of the principal amount.
+
+
+
+Important:
+
+\-to get an accurate answer do all calculations in one step on your calculator.
+
+\-Do not round off answers in your calculations until the final answer.
+
+\-In the worked examples in this chapter, we use dots to show that the answer has not been rounded off. We always round the final answer to two decimal places (cents).
+
+
+
+### Examples
+
+#### 1
+
+A new smart phone costs R6 000 and depreciates at 22% p.a. on a straight-line basis.
+
+Determine the value of the smart phone at the end of each year over a 4 year period.
+
+
+
+##### SOLUTION
+
+###### Step 1: Calculate depreciation amount
+
+Depreciation = 6 000 × 22/100
+
+= 1 320
+
+\-Therefore the smartphone depreciates by R1 320 every year.
+
+
+
+###### Step 2: Complete a table of values
+
+|Year|Value at beginning of year|Depreciation amount|Value at end of year|
+|-|-|-|-|
+|1|R6 000|R 1 320|R4 680|
+|2|R4 680|R1 320|R3 360|
+|3|R3 360|R1 320|R2 040|
+|4|R2 040|R1 320|R720|
+
+
+
+#### 2
+
+A car is valued at R240 000. If it depreciates at 15%p.a. using straight-line depreciation, calculate the value of the car after 5 years.
+
+
+
+##### SOLUTION
+
+###### Step 1: Write down the known variables and the simple decay formula
+
+P = 240 000
+
+i = 0,15
+
+n = 5
+
+A = P(1 − in)
+
+
+
+###### Step 2: Substitute the values and solve for A
+
+A = 240 000(1 − 0,15×5)
+
+= 240 000(0,25)
+
+= 60 000
+
+
+
+###### Step 3: Write the final answer
+
+At the end of 5 years, the car is worth R60 000.
+
+
+
+
+
+#### 3
+
+A small business buys a photocopier for R12 000. For the tax return the owner depreciates this asset over 3 years using a straight-line depreciation method. What amount will he fill in on his tax format the end of each year?
+
+
+
+##### SOLUTION
+
+###### Step 1: Write down the known variables
+
+\-The owner of the business wants the photocopier to have a book value of R0 after 3 years.
+
+A = 0
+
+P = 12 000
+
+n = 3
+
+
+
+\-Therefore we can calculate the annual depreciation as
+
+Depreciation = P/n
+
+= 12 000/3
+
+= R 4000
+
+
+
+###### Step 2: Determine the book value at the end of each year
+
+\-Book value end of first year = 12 000 − 4 000
+
+= R 8 000
+
+
+
+\-Book value end of second year = 8 000 − 4 000
+
+= R4 000
+
+
+
+\-Book value end of third year = 4 000 − 4 000
+
+= R 0
+
+
+
+### Questions
+
+#### 1\.
+
+A business buys a truck for R560 000. Over a period of 10 years the value of the truck depreciates to R0 using the straight-line method. What is the value of the truck after 8 years?
+
+
+
+#### 2\.
+
+Harry wants to buy his grandpa’s donkey for R800. His grandpa is quite pleased with the offer, seeing that it only depreciated at a rate of 3%per year using the straight-line method. Grandpa bought the donkey 5 years ago. What did grandpa pay for the donkey  then?
+
+
+
+#### 3\.
+
+Seven years ago, Rocco’s drum kit cost him R12 500. It has now been valued at R2 300. What rate of simple depreciation does this represent?
+
+
+
+#### 4\.
+
+Fiona buys a DStv satellite dish for R3 000. Due to weathering, its value depreciates simply at 15% per annum. After how long will the satellite dish have a book value of zero?
+
+
+
+## Compound interest
+
+\-Compound decay can also be referred to as reducing-balance depreciation.
+
+\-In reducing-balance depreciation we calculate the depreciation on the reduced value of the asset.
+
+\-This means that the value of an asset decreases by a different amount each year
+
+
+
+Notice in the example above that we could also write the book value at the end of each year as:
+
+
+
+Book value end of first year = 60 000(1 − 0,2)
+
+Book value end of second year = 48 000(1 − 0,2) = 60 000(1−0,2)^2
+
+Book value end of third year = 38 400( 1− 0,2) = 60 000(1 − 0,2)^3
+
+Book value end of fourth year = 30 720(1 − 0,2) = 60 000(1 − 0,2)^4
+
+Book value end of fifth year = 24 576(1 − 0,2) = 60 000(1 − 0,2)^5
+
+\-Using the formula for simple decay and the observed pattern in the calculation above, we obtain the following formula for compound decay:
+
+A = P(1 − i)^n
+
+
+
+where
+
+A = book value or depreciated value
+
+P = principal amount
+
+i = interest rate written as a decimal
+
+n = time period in years
+
+
+
+\-Again, notice the similarity to the compound interest formula A = P(1 + i)^n.
+
+
+
+### Examples
+
+#### 1
+
+\-A second-hand farm tractor worth R 60 000 has a limited useful life of 5 years and depreciates at 20% p.a. on a reducing-balance basis.
+
+\-Determine the value of the tractor at the end of each year over the 5 year period.
+
+
+
+##### SOLUTION
+
+###### Step 1: Write down the known variables
+
+P = 60 000
+
+i = 0,2
+
+n = 5
+
+
+
+\-When we calculate depreciation using the reducing-balance method:
+
+\####### 1.
+
+\-the depreciation amount changes for each year.
+
+
+
+\####### 2.
+
+\-the depreciation amount gets smaller each year.
+
+
+
+\####### 3.
+
+\-the book value at the end of a year becomes the principal amount for the next year.
+
+
+
+\####### 4.
+
+\-the asset will always have some value (the book value will never equal zero).
+
+
+
+###### Step 2: Complete a table of values
+
+|Year|Book value|Depreciation|Value at end of year|
+|-|-|-|-|
+|1|R60 000|60 000 ×0,2 = 12 000|R 48 000|
+|2|R48 000|48 000 ×0,2 = 9600|R 38 400|
+|3|R38 400|38 400 ×0,2 = 7680|R 30 720|
+|4|R30 720|30 720 ×0,2 = 6144|R 24 576|
+|5|R24 576|24 576 ×0,2 = 4915,20|R 19 660,80|
+
+
+
+#### 2
+
+The number of pelican sat the Berg river mouth is decreasing at a compound rate of
+
+12 % p.a. If there are currently 3 200 pelicans in the wetlands of the Berg river mouth, what will the population be in 5 years?
+
+
+
+##### SOLUTION
+
+###### Step 1: Write down the known variables and the compound decay formula
+
+P = 3 200
+
+i = 0,12
+
+n = 5
+
+A = P(1 − i)^n
+
+
+
+###### Step 2: Substitute the values and solve for A
+
+A = 3 200(1 − 0,12)^5
+
+= 3200(0,88)^5
+
+= 1688,7421...
+
+
+
+###### Step 3: Write the final answer
+
+In 5 years, the pelican population will be approximately 1689.
+
+
+
+3
+
+1\.
+
+\-Aschool buys a minibus for R 950 000, which depreciates at 13,5% per annum.
+
+\-Determine the value of the minibus after 3 years if the depreciation is calculated:
+
+a) on a straight-line basis.
+
+
+
+b) on a reducing-balance basis.
+
+
+
+#### 2\.
+
+Which is the better option?
+
+
+
+##### SOLUTION
+
+###### Step 1: Write down known variables
+
+P = 950 000
+
+i = 0,135
+
+n = 3
+
+
+
+###### Step 2: Use the simple decay formula and solve for A
+
+A = 950000(1−3×0,135)
+
+= 950 000(0,865)
+
+= 565 250
+
+∴ A=R565250
+
+
+
+###### Step 3: Use the compound decay formula and solve for A
+
+A = 950000(1−0,135)^3
+
+= 950 000(0,865)^3
+
+= 614 853,89
+
+∴ A = R614853,89
+
+
+
+###### Step 4: Interpret the answers
+
+\-After a period of 3 years, the value of the minibus calculated on the straight-line method is less than the value of the minibus calculated on the reducing-balance method.
+
+\-The value of the minibus depreciated less on the reducing-balance basis because the amount of depreciation is calculated on a smaller amount every year, whereas the straight-line method is based on the full value of the minibus every year.
+
+
+
+#### 3
+
+\-Farmer Jack bought a tractor and it has depreciated by 20%p.a. on a reducing-balance basis.
+
+\-If the current value of the tractor is R52 429, calculate how much Farmer Jack paid for his tractor if he bought it 7 years ago.
+
+
+
+##### SOLUTION
+
+###### Step 1: Write down known variables and compound decay formula
+
+A = 52 429
+
+i = 0,2
+
+n = 7
+
+A = P(1 − i)^n
+
+
+
+###### Step 2: Substitute the values and solve for P
+
+52 429 = P(1 − 0,2)^7
+
+= P(0,8)^7
+
+∴P = 52 429/ (0,8)^7
+
+= 250000,95...
+
+
+
+###### Step 3: Write the final answer
+
+7 years ago, Farmer Jack paid R250 000 for his tractor.
+
+
+
+### QUESTIONS
+
+#### 1\.
+
+\-Jwayelani buys a truck for R89 000 and depreciates it by 9% p.a. using the compound depreciation method.
+
+\-What is the value of the truck after 14 years?
+
+
+
+#### 2\.
+
+\-The number of cormorants at the Amanzimtoti river mouth is decreasing at a compound rate of 8% p.a.
+
+\-If there are now 10 000 cormorants, how many will there be in 18 years’ time?
+
+
+
+#### 3\.
+
+\-On January 1, 2008 the value of my Kia Sorento is R320 000.
+
+\-Each year after that, the car’s value will decrease 20% of the previous year’s value.
+
+\-What is the value of the car on January 1, 2012?
+
+
+
+#### 4\.
+
+\-The population of Bonduel decrease sat a reducing-balance rate of 9,5% per annum as people migrate to the cities.
+
+\-Calculate the decrease in population over a period of 5 years if the initial population was 2 178 000.
+
+
+
+#### 5\.
+
+\-A 20 kg watermelon consists of 98% water.
+
+\-If it is left outside in the sun it loses 3% of its water each day.
+
+\-How much does it weigh after a month of 31days?
+
+
+
+#### 6\.
+
+\-Richard bought a car 15 years ago and it depreciated by 17% p.a. on a compound depreciation basis.
+
+\-How much did he pay for the car if it is now worth R5256?
+
+
+
+## Finding i
+
+### Examples
+
+#### 1
+
+\-After 4 years, the value of a computer is halved. Assuming simple decay, at what annual rate did it depreciate? Give your answer correct to two decimal places.
+
+
+
+##### SOLUTION
+
+###### Step 1: Write down known variables and simple decay formula
+
+\-Let the value of the computer be x, therefore:
+
+A = x/2
+
+P = x
+
+n = 4
+
+A = P(1 − in)
+
+
+
+###### Step 2: Substitute the values and solve for i
+
+x/2 = x(1 − 3i)
+
+1/2 = 1 − 3i
+
+∴ 3i = 1 − 1/2
+
+∴ i = 0,1667
+
+
+
+###### Step 3: Write the final answer
+
+\-The computer depreciated at a rate of 16,67% p.a.
+
+
+
+
+
+#### 2
+
+Cristina bought a fridge at the beginning of 2009 for R8 999 and sold it at the end of 2011 for R4 500. At what rate did the value of her fridge depreciate assuming a reducing-balance method? Give your answer correct to two decimal places.
+
+
+
+##### SOLUTION
+
+###### Step 1: Write down known variables and compound decay formula
+
+A = 4 500
+
+P = 8 999
+
+n = 3
+
+A = P(1 − i)^n
+
+
+
+###### Step 2: Substitute the values and solve for i
+
+4500 = 8999(1 − i)^3
+
+4500/8999 = (1 − i)^3
+
+∛(4500/8999) = 1 − i
+
+∴ i = 1 − ∛(4500/8999)
+
+= 0,206
+
+
+
+###### Step 3: Write the final answer
+
+Cristina’s fridge depreciated at a rate of 20,6% p.a.
+
+
+
+### Questions
+
+#### 1\.
+
+A machine costs R45 000 and has a scrap value of R 9000 after 10 years. Determine the annual rate of depreciation if it is calculated on the reducing balance method.
+
+
+
+#### 2\.
+
+After 15 years, an aeroplane is worth 1/6 of its original value. At what annual rate was depreciation compounded?
+
+
+
+#### 3\.
+
+Mr. Mabula buys furniture for R20 000. After 6 years he sells the furniture for R9300. Calculate the annual compoundrate of depreciation of the furniture.
+
+
+
+#### 4\.
+
+Ayanda bought a new car 7 years ago for double what it is worth to day. At what yearly compound rate did her car depreciate?
+
+
+
+
+
+## Timelines
+
+\-Interest can be compounded more than once a year. For example, an investment can be compounded monthly or quarterly.
+
+\-Below is at able of compounding terms and their corresponding numeric value(p).
+
+\-When amounts are compounded more than once per annum, we multiply the number of years by p and we also divide the interest rate by p.
+
+
+
+|Term|p|
+|-|-|
+|yearly/ annually|1|
+|half-yearly/ bi-annually|2|
+|quarterly|4|
+|monthly|12|
+|weekly|52|
+|daily|365|
+
+
+
+
+
+### Examples
+
+#### 1
+
+R5500 is invested for a period of 4 years in a savings account. For the first year, the investment grows at a simple interest rate of 11% p.a. and then at a rate of 12,5% p.a. compounded quarterly for the rest of the period. Determine the value of the investment at the end of the 4 years.
+
+
+
+##### SOLUTION
+
+###### Step 1: Draw a timeline and write down known variables
+
+
+
+>DIAGRAM\\\[
+
+\-Timeline with T\_0 to T\_4
+
+\-Under T\_0 the value R 5500 is placed
+
+\-Under wihich back to back double ended arrows, 1 from T\_0 to T\_1 has the annotation , '11% p.a. simple interest' and T\_1 to T\_4 has the annotation, '12,5% p.a. compound quarterly' under them
+
+]
+
+
+
+\-In the timeline above, the intervals are given in years. For example, T\_0 is the start of the investment, T\_1 is the end of the first year and T\_4 is the end of the fourth year.
+
+
+
+###### Step 2: Use the simple interest formula to calculate A at T1
+
+A=P(1+in)
+
+=5500(1+0,11)
+
+=R6105
+
+
+
+###### Step 3: Use the compound interest formula to calculate A at T4
+
+The investment is compounded quarterly, therefore:
+
+n =3×4
+
+= 12
+
+and i = 0,125/4
+
+
+
+\-Also notice that the accumulated amount at the end of the first year becomes the principal amount at the beginning of the second year.
+
+
+
+A=P(1 + i)^n
+
+=6105 (1+ 0,125/4)^12
+
+=R 8831,88
+
+
+
+###### Step 4: Write the final answer
+
+\-The value of the investment at the end of the 4 years is R 8831,88.
+
+
+
+#### 2
+
+R 150 000 is deposited in an investment account for a period of 6 years at an interest rate of 12% p.a. compounded half-yearly for the first 4 years and then 8,5% p.a. compounded yearly for the rest of the period. A deposit of R 8000 is made into the account after the first year and then another deposit of R 2000 is made 5 years after the initial investment. Calculate the value of the investment at the end of the 6 years.
+
+
+
+##### SOLUTION
+
+###### Step 1: Draw a timeline and write down known variables
+
+>DIAGRAM\\\[
+
+\-Timeline with T\_0 to T\_6
+
+\-Values R15 000 + R8 000 under T\_0
+
+\-Values of +R 2000 under T\_5
+
+\-The timeline is divided into 2 sections at T\_4
+
+\-The 2 sections are '12% p.a. compound half-yearly' from T\_0 to T\_4 and '8,5% p.a. compounded yearly' from T\_4 to T\_6
+
+]
+
+
+
+\-Remember to show when the additional deposits of R 8000 and R 2000 where made into the account. It is very important to note that the interest rate changes at T\_4.
+
+\-We break this question down into parts and consider each amount separately.
+
+
+
+###### Step 2: The initial deposit at T0
+
+* Between T\_0 and T\_4:
+
+\-We notice that interest for the first 4 years is compounded half-yearly, therefore:
+
+n\_1 = 4×2
+
+= 8
+
+and i\_1 = 0,12/2
+
+
+
+* Between T\_4 and T\_6:
+
+
+
+n\_2 = 2
+
+and i\_2 = 0,085
+
+
+
+\-Therefore the total growth of the initial deposit over the 6 years is:
+
+A = P(1 + i\_1)^n\_1 (1 + i\_2)^n\_2
+
+=150 000 (1 + 0,12/2)^8 (1 + 0,085)^2
+
+
+
+###### Step 3: The deposit at T\_1
+
+* Between T\_1 and T\_4:
+
+
+
+\-Interest on this deposit is compounded half-yearly for 3 years, therefore:
+
+n\_3 = 3 × 2
+
+= 6
+
+and i\_3 = 0,12/2
+
+
+
+* Between T\_4 and T\_6:
+
+n\_4 = 2
+
+and i\_4 = 0,085
+
+
+
+\-Therefore the total growth of the deposit over the 5 years is:
+
+A = P(1 + i\_3)^n\_3 (1 + i\_4)^n\_4
+
+= 8000(1 + 0,12/2)^6 (1 + 0,085)^2
+
+
+
+###### Step 4: The deposit at T\_5
+
+\-Accumulate interest for only 1 year:
+
+A = P(1 + i)^n
+
+= 2000(1 + 0,085)^1
+
+
+
+###### Step 5: Determine the total calculation
+
+\-To get as accurate an answer as possible, we do the the calculation on the calculator in one step. Using the memory and answer recall function on the calculator, we avoid rounding off until we get the final answer.
+
+
+
+A =150 000(1 + 0,12/2)^8 (1 +0,085)2 + 8000(1 + 0,12/2)^6 (1 +0,085)^2 +2000(1 + 0,085)^1
+
+= R 296 977,00
+
+
+
+###### Step 6: Write the final answer
+
+The value of the investment at the end of the 6 years is R 296 977,00.
+
+
+
+#### 3
+
+\-R 60 000 is invested in an account which offers interest at 7% p.a. compounded quarterly for the first 18 months. Thereafter the interest rate changes to 5% p.a. compounded monthly. Three years after the initial investment, R 5000 is withdrawn from the account. How much will be in the account at the end of 5 years?
+
+
+
+##### SOLUTION
+
+###### Step 1: Draw a timeline and write down known variables
+
+>DIAGRAM\\\[
+
+\-Timeline with T\_0 to T\_5
+
+\-R60 000 under T\_0 and -R5000 under T\_3
+
+\-There is a dashed line division between T\_1 and T\_2
+
+\-Annotation for T\_0 to the division line is : '7% p.a. compounded quarterly'
+
+\-Annotation from division line to T\_5 is : '5% p.a. compounded monthly'
+
+]
+
+
+
+\-Remember to show when the withdrawal of R 5000 was taken out of the account. It is also important to note that the interest rate changes after 18 months (T1 1/2).
+
+\-We break this question down into parts and consider each amount separately.
+
+
+
+###### Step 2: The initial deposit at T\_0
+
+\-Interest for the first 1,5 years is compounded quarterly, therefore:
+
+n\_1 = 1,5 ×4
+
+=6
+
+and i\_1 = 0,07/4
+
+
+
+\-Interest for the remaining 3,5 years is compounded monthly, therefore:
+
+n\_2 = 3,5 × 12
+
+= 42
+
+and i\_2 = 0,05/12
+
+
+
+\-Therefore the total growth of the initial deposit over the 5 years is:
+
+A = P(1 + i\_1)^n\_1 (1 + i\_2)^n\_2
+
+= 60 000(1 + 0,07/4)^6 (1 + 0,05/12)^42
+
+
+
+###### Step 3: The withdrawal at T\_3
+
+\-We calculate the interest that the R5000 would have earned if it had remained in the account:
+
+n = 2 × 12
+
+= 24
+
+and i = 0,05/12
+
+
+
+\-Therefore we have that:
+
+A = P(1 + i)^n
+
+= 5000(1 + 0,05/12)^24
+
+
+
+###### Step 4: Determine the total calculation
+
+\-We subtract the withdrawal and the interest it would have earned from the accumulated amount at the end of the 5years:
+
+A = 60 000(1 + 0,07/4)^6 (1 + 0,05/12)^42  − 5000(1 + 0,05/12)^24
+
+= R73 762,19
+
+
+
+###### Step 5: Write the final answer
+
+\-The value of the investment at the end of the 5 years is R73 762,19.
+
+
+
+### QUESTIONS
+
+#### 1\.
+
+\-After a 20-year period Josh’s lump sum investment matures to an amount of R 313 550. How much did he invest if his money earned interest at a rate of 13,65% p.a., compounded half yearly for the first 10 years, 8,4% p.a. compounded quarterly for the next five years and 7,2% p.a. compounded monthly for the remaining period?
+
+
+
+#### 2\.
+
+\-Sindisiwe wants to buy a motorcycle. The cost of themotorcycleis R55 000.
+
+\-In 1998 Sindisiwe opened an account at Sutherland Bank with R16 000. Then in 2003 she added R2 000 more into the account. In 2007 Sindisiwe made another change: she took R3 500 from the account. If the account pays 6% p.a. compounded half-yearly, will Sindisiwe have enough money in the account at the end of 2012 to buy the motor cycle?
+
+
+
+#### 3\.
+
+\-A loan has to be returned in two equal semi-annual instalments. If the rate of interest is 16% per annum, compounded semi-annually and each instalment is R1458, find the sum borrowed.
+
+
+
+#### 4\.
+
+\-A man named Phillip invests R10 000 into an account at North Bank at an interest rate of 7,5%p.a. compounded monthly. After 5 years the bank changes the interest rate to 8% p.a. compounded quarterly. How much money will Phillip have in his account 9 years after the original deposit?
+
+
+
+#### 5\.
+
+\-R75 000 is invested in an account which offers interest at 11%p.a. compounded monthly for the first 24 months. Then the interest rate changes to 7,7% p.a. compounded half-yearly. If R9000 is withdrawn from the account after one year and then a deposit of R3000 is made three years after the initial investment, how much will be in the account at the end of 6years?
+
+
+
+#### 6\.
+
+\-Christopher wants to buy a computer, but right now he doesn’t have enoughmoney. A friend told Christopher that in 5 years the computer will cost R9150.
+
+\-He decides to start saving money today at Durban United Bank. Christopher deposits R5000 into a savings account with an interest rate  of 7,95% p.a. compounded monthly.
+
+\-Then after 18 months the bank changes the interest rate to 6,95% p.a. compounded weekly. After another 6 months, the interest rate changes again to 7,92% p.a. compounded two times per year. How much money will Christopher have in the account after 5 years, and will he then have enough money to buy the computer?
+
+
+
+## Nominal and effective interest rates
+
+\-We have seen that although interest is quoted as a percentage per annum it can be compounded more than once a year. We therefore need away of comparing interest rates. For example, is an annual interest rate of 8% compounded quarterly higher or lower than an interest rate of 8% p.a. compounded yearly?
+
+
+
+\-An interest rate compounded more than once a year is called the nominal interest rate.
+
+In the investigation above, we determined that the nominal interest rate of 8% p.a. compounded half-yearly is actually an effective rate of 8,16% p.a.
+
+\-Given a nominal interest rate i^(m) compounde data frequency of m times per year and the effective interestrate i, the accumulated amount calculated using both interest rates will be equals owe can write:
+
+
+
+P(1 + i) = P(1 + i^(m) /m)^m
+
+∴ 1 + i =(1 + i^(m)/m)^m
+
+
+
+### EXAMPLES
+
+#### 1
+
+\-Interest on a credit card is quoted as 23% p.a. compounded monthly. What is the effective annual interest rate? Give your answer correct to two decimal places.
+
+
+
+##### SOLUTION
+
+###### Step 1: Write down the known variables
+
+\-Interest is being added monthly, therefore:
+
+m = 12
+
+i^(12) = 0,23
+
+
+
+1 + i = (1 + i^(m)/m)^m
+
+
+
+###### Step 2: Substitute values and solve for i
+
+1 + i = (1 + 0,23/12)^12
+
+∴ i = 1 − (1 + 0,23/12)^12
+
+= 25,59%
+
+
+
+###### Step 3: Write the final answer
+
+\-The effective interest rate is 25,59% per annum.
+
+
+
+
+
+#### 2
+
+Determine the nominal interest rate compounded quarterly if the effective interest rate is 9% per annum (correct to two decimal places).
+
+
+
+##### SOLUTION
+
+###### Step 1: Write down the known variables
+
+
+
+\-Interest is being added quarterly, therefore:
+
+m = 4
+
+i = 0,09
+
+1 + i = (1 + i^(m)/m)^m
+
+
+
+###### Step 2: Substitute values and solve for i^(m)
+
+1 + 0,09 = (1 + i^(4)/4)^4
+
+∜1,09= 1 + i^(4)/4
+
+∜1,09 − 1 = i^(4)/4
+
+4(∜1,09 − 1) = i^(4)
+
+∴ i^(4) = 8,71%
+
+
+
+###### Step 3: Write the final answer
+
+The nominal interest rate is 8,71% p.a. compounded quarterly.
+
+
+
+### QUESTIONS
+
+#### 1\.
+
+Determine the effective annual interest rate if the nominal interest rate is:
+
+
+
+##### a)
+
+12% p.a. compounded quarterly.
+
+
+
+##### b)
+
+14,5% p.a. compounded weekly.
+
+
+
+##### c)
+
+20% p.a. compounded daily.
+
+
+
+#### 2\.
+
+\-Consider the following:
+
+* 16,8% p.a. compounded annually.
+* 16,4%p.a. compounded monthly.
+* 16,5% p.a. compounded quarterly.
+
+
+
+##### a)
+
+Determine the effective annual interest rate of each of the nominal rates listed above.
+
+
+
+##### b)
+
+Which is the best interest rate for an investment?
+
+
+
+##### c)
+
+Which is the best interest rate for a loan?
+
+
+
+
+
+#### 3\.
+
+Calculate the effective annual interest rate equivalent to a nominal interest rate of 8,75% p.a. compounded monthly.
+
+
+
+#### 4\.
+
+Cebela is quoted a nominal interest rate of 9,15%per annum compounded every
+
+four months on her investment of R85 000. Calculate the effective rate per annum.
+
+
+
+#### 5\.
+
+Determine which of the following would be the better agreement for paying back a student loan:
+
+
+
+##### a)
+
+9,1% p.a. compounded quarterly.
+
+
+
+##### b)
+
+9% p.a. compounded monthly.
+
+
+
+##### c)
+
+9,3% p.a. compounded half-yearly.
+
+
+
+#### 6\.
+
+Miranda invests R8000 for 5 years for her son’s study fund. Determine how much money she will have at the end of the period and the effective annual interest rate if the nominal interest of 6% is compounded:
+
+
+
+||Calculation|Accumulated amount|Effective annual interest rate|
+|-|-|-|-|
+|yearly||||
+|half-yearly||||
+|quarterly||||
+|monthly||||
+
+
+
+
+
+
+
+### QUESTIONS
+
+#### 1\.
+
+Thabang buys a Mercedes worth R 385 000 in 2007. What will the value of the Mercedes be at the end of 2013 if:
+
+##### a)
+
+the car depreciates at 6% p.a. straight-line depreciation.
+
+
+
+##### b)
+
+the car depreciates at 6% p.a. reducing-balance depreciation.
+
+
+
+#### 2\.
+
+Greg enters into a 5-year hire-purchase agreement to buy a computer for R 8900. The interest rate is quoted as 11% per annum based on simple interest. Calculate the required monthly payment for this contract.
+
+
+
+#### 3\.
+
+A computer is purchased for R 16 000. It depreciates at 15% per annum.
+
+
+
+##### a)
+
+Determine the book value of the computer after 3 years if depreciation is calculated according to the straight-line method.
+
+
+
+##### b)
+
+Find the rate according to the reducing-balance method that would yield, after 3 years, the same book value as calculated in the previous question.
+
+
+
+#### 4\.
+
+Maggie invests R 12 500 for 5 years at 12% per annum compounded monthly for the first 2 years and 14% per annum compounded semi-annually for the next 3 years. How much will Maggie receive in total after 5 years?
+
+
+
+#### 5\.
+
+Tintin invests R 120 000. He is quoted a nominal interest rate of 7,2% per annum compounded monthly.
+
+
+
+##### a)
+
+Calculate the effective rate per annum (correct to two decimal places).
+
+
+
+##### b)
+
+Use the effective rate to calculate the value of Tintin’s investment if he invested the money for 3 years.
+
+
+
+##### c)
+
+Suppose Tintin invests his money for a total period of 4 years, but after 18 months makes a withdrawal of R 20 000, how much will he receive at the end of the 4 years?
+
+
+
+#### 6\.
+
+Ntombi opens accounts at a number of clothing stores and spends freely. She gets herself into terrible debt and she cannot pay off her accounts. She owes Fashion World R 5000 and the shop agrees to let her pay the bill at a nominal interest rate of 24% compounded monthly.
+
+
+
+##### a)
+
+How much money will she owe Fashion World after two years?
+
+
+
+##### b)
+
+What is the effective rate of interest that Fashion World is charging her?
+
+
+
+#### 7\.
+
+John invests R 30 000 in the bank for a period of 18 months. Calculate how much money he will have at the end of the period and the effective annual interest rate if the nominal interest of 8% is compounded:
+
+
+
+||Calculation|Accumulated amount|Effective annual interest rate|
+|-|-|-|-|
+|yearly||||
+|half-yearly||||
+|quarterly||||
+|monthly||||
+|daily||||
+
+
+
+#### 8\.
+
+Convert an effective annual interest rate of 11,6% p.a. to a nominal interest rate compounded:
+
+
+
+##### a)
+
+half-yearly
+
+
+
+##### b)
+
+quarterly
+
+
+
+##### c)
+
+monthly
+
+
+
+#### 9\.
+
+Joseph must sell his plot on the West Coast and he needs to get R300 000 on the sale of the land. If the estate agent charges him 7% commission on the selling price, what must the buyer pay for the plot?
+
+
+
+#### 10\.
+
+Mrs. Brown retired and received a lump sum of R200 000. She deposited the
+
+money in a fixed deposit savings account for 6 years. At the end of the 6 years the value of the investment was R265 000. If the interest on her investment was compounded monthly, determine:
+
+
+
+##### a)
+
+the nominal interestrate per annum
+
+
+
+##### b)
+
+the effective annual interestrate
+
+
+
+#### 11\.
+
+R145000 is invested in an account which offers interest at 9% p.a. compounded half-yearly for the first 2 years. Then the interest rate changes to 4% p.a. compounded quarterly. Four years after the initial investment, R20 000 is with drawn. 6 years after the initial investment, a deposit of R15 000 is made.
+
+Determine the balance of the account at the end of 8 years.
+

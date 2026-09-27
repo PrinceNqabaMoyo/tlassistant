@@ -2132,7 +2132,7 @@ The financial year of Pompey Stores ends on 30 June. The Pre-adjustment trial ba
 
 #### Adjustments
 
-##### 1 
+##### 1
 
 Before the stocktaking was done, the owner took the following for personal use:
 
@@ -2141,7 +2141,7 @@ Before the stocktaking was done, the owner took the following for personal use:
 
 
 
-##### 2 
+##### 2
 
 The following inventory was on hand according to the closing inventories:
 
@@ -2150,49 +2150,49 @@ The following inventory was on hand according to the closing inventories:
 
 
 
-##### 3 
+##### 3
 
 A debit note for R2 000 was issued to Super Suppliers for equipment returned. Although the equipment was returned, the transaction has not been recorded.
 
 
 
-##### 4 
+##### 4
 
 A part of the building has been leased since 1 October 2008 at R28 800 per year. The rental was increased on 1 October 2009 to R32 400 per year.
 
 
 
-##### 5 
+##### 5
 
 Included in the amount for insurance is an amount of R2400 for an annual premium paid on 1 February 2010.
 
 
 
-##### 6 
+##### 6
 
 The water and electricity account for June 2010 has been received, but not paid, R580.
 
 
 
-##### 7 
+##### 7
 
 The account of M. Clause (debtor), R300 must be written off as irrecoverable.
 
 
 
-##### 8 
+##### 8
 
 The loan was made on 1 January 2008. Interest is paid half-yearly and R10 000 is repaid annually on 1 January. The initial interest rate was 14% per year but was increased to 15% as from 1 January 2010.
 
 
 
-##### 9 
+##### 9
 
 The fixed deposit was invested on 1 January 2010 –interest receivable every three months. Provide for outstanding interest.
 
 
 
-##### 10 
+##### 10
 
 Write off depreciation on vehicles at 15% per year at cost price and on equipment at 10% per year on carrying value.
 

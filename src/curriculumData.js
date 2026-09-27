@@ -480,5 +480,106 @@ export const curriculumData = {
             ],
             "syllabus_info": true
         }
+    },
+    "Life Sciences": {
+        "10": {
+            "topics": [
+                "Biosphere and ecosystems",
+                "Biodiversity and classification",
+                "Cells: The basic units of life",
+                "Cell division (Mitosis)",
+                "Chemistry of life",
+                "History of life on Earth",
+                "Plant and animal tissues",
+                "Support and transport systems in plants",
+                "Support systems in animals"
+            ],
+            "syllabus_info": true
+        },
+        "11": {
+            "topics": [
+                "Animal nutrition",
+                "Biodiversity of animals",
+                "Biodiversity of microorganisms",
+                "Biodiversity of plants",
+                "Cellular respiration",
+                "Excretion in humans",
+                "Gaseous exchange",
+                "Human impact on the environment",
+                "Photosynthesis",
+                "Population ecology"
+            ],
+            "syllabus_info": true
+        },
+        "12": {
+            "topics": [
+                "DNA: The code of life",
+                "Meiosis",
+                "Genetics and inheritance",
+                "Human reproduction",
+                "Human responses to the environment",
+                "Endocrine system and homeostasis",
+                "Evolution by natural selection",
+                "Human evolution",
+                "Plant responses to the environment",
+                "Reproductive strategies in vertebrates"
+            ],
+            "syllabus_info": true
+        }
+    },
+    "Natural Sciences": {
+        "7": {
+            "topics": [
+                "Acids, bases and neutral substances",
+                "Biodiversity",
+                "Energy transfer to surroundings",
+                "Heat energy transfer and insulation",
+                "Periodic Table of Elements",
+                "Potential and kinetic energy",
+                "Properties of materials",
+                "Relationship of the Sun, Moon, and Earth",
+                "Separating mixtures",
+                "Sexual reproduction and variation",
+                "Sources of energy",
+                "The Biosphere"
+            ],
+            "syllabus_info": true
+        },
+        "8": {
+            "topics": [
+                "Atoms and particle model of matter",
+                "Beyond the solar system",
+                "Chemical reactions",
+                "Energy transfer in electrical systems",
+                "Interactions within the environment",
+                "Microorganisms",
+                "Photosynthesis and respiration",
+                "Series and parallel circuits",
+                "Static electricity",
+                "The Solar System and space",
+                "Visible light"
+            ],
+            "syllabus_info": true
+        },
+        "9": {
+            "topics": [
+                "Acids, bases and pH value",
+                "Birth, life and death of a star",
+                "Cells as the basic units of life",
+                "Circulatory and respiratory systems",
+                "Compounds and chemical reactions",
+                "Cost and safety with electricity",
+                "Digestive system",
+                "Electric cells and energy systems",
+                "Forces and resistance",
+                "Human reproduction",
+                "Mining of mineral resources",
+                "Reactions of metals and non-metals with oxygen",
+                "Series and parallel circuits",
+                "The atmosphere and lithosphere",
+                "The Earth as a system"
+            ],
+            "syllabus_info": true
+        }
     }
 };

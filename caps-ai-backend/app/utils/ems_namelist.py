@@ -27,16 +27,30 @@ FINANCIAL_TERMS = [
     "capital", "assets", "liabilities", "income", "expenses", "profit", "loss"
 ]
 
-def get_ems_scenario():
+BUSINESS_TYPES = [
+    "Cleaners", "Salon", "Plumbing Services", "Auto Repairs", "Deliveries", "Consulting", "Catering"
+]
+
+SUPPLIERS = [
+    "Waltons", "Office National", "Makro", "Metro Stores", "Game Stores", "Builders Warehouse"
+]
+
+def get_ems_scenario(rng=None):
     """Generates a random dictionary of EMS dressing (often smaller scale than BS)."""
+    chooser = rng.choice if rng else random.choice
     return {
-        "entrepreneur": random.choice(NAMES),
-        "area": random.choice(AREAS),
-        "item_sold": random.choice(TUCKSHOP_ITEMS),
+        "entrepreneur": chooser(NAMES),
+        "area": chooser(AREAS),
+        "item_sold": chooser(TUCKSHOP_ITEMS),
+        "business_type": chooser(BUSINESS_TYPES),
+        "competitor": chooser(SUPPLIERS),
+        "supplier": chooser(SUPPLIERS),
     }
 
-def get_random_need_and_want():
+def get_random_need_and_want(rng=None):
+    chooser = rng.choice if rng else random.choice
     return {
-        "need": random.choice(NEEDS),
-        "want": random.choice(WANTS)
+        "need": chooser(NEEDS),
+        "want": chooser(WANTS)
     }
+

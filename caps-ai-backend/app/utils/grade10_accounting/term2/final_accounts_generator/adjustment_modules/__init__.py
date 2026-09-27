@@ -1,4 +1,4 @@
-﻿from __future__ import annotations
+from __future__ import annotations
 
 from .bad_debts_and_recoveries import _gen_bad_debts_and_recoveries
 from .consumable_stores_on_hand import _gen_consumable_stores_on_hand

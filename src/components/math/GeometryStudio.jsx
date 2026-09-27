@@ -5,9 +5,9 @@ import BasicShapes from './geometry/2D/BasicShapes';
 import PythonBasicShapes from './geometry/2D/PythonBasicShapes';
 import AIGeometryAssistant from './geometry/AIGeometryAssistant';
 import InteractiveParameterControls from './geometry/InteractiveParameterControls';
-import VisualFeedbackOverlay from './geometry/VisualFeedbackOverlay';
 import ConstructionGuide from './geometry/ConstructionGuide';
-import Plotly from 'plotly.js-dist-min';
+
+const Plotly = typeof window !== 'undefined' ? window.Plotly : null;
 
 const GeometryStudio = ({ initialData, onChange, isSubmitted, setView }) => {
     const [geometryData, setGeometryData] = useState(() => {

@@ -1,0 +1,1636 @@
+{
+  "_meta": {
+    "app": "Fundile",
+    "tagline": "Adaptive learning aligned with South African National Curriculum Standards for Grades 7–12",
+    "lastUpdated": "2026-09-27",
+    "version": "0.9.0",
+    "maintainedBy": "owner",
+    "updateProtocol": "Update this file when a layer, service, route, data model, or external dependency is added or its build status changes. Do NOT update for internal function changes or bug fixes.",
+    "agentInstruction": "Read this file at session start to understand the full system. Do not ask the owner to explain the architecture — it is here. Cross-reference planning documents for detail on planned items."
+  },
+  "_workflow": {
+    "title": "Agent Maintenance Protocol — COMMIT THIS TO WORKFLOW MEMORY",
+    "description": "These instructions apply to every agent (Antigravity, Devin, or any LLM) that works on this codebase. They are not optional. Follow them in every session.",
+    "steps": [
+      "STEP 1 — SESSION START: Read fundile-architecture.json in full before writing any code. This file is the single source of truth for what is built, what is planned, and what the system constraints are. Do not ask the owner to explain the architecture.",
+      "STEP 2 — DURING SESSION: Whenever you build, partially build, or change the status of any layer, service, API route, frontend component, Firestore collection, or generator — update fundile-architecture.json immediately. Change the 'status' field from 'planned' to 'partial' or 'built'. Move items between 'built' and 'planned' arrays. Update 'lastUpdated'.",
+      "STEP 3 — WHAT TRIGGERS A JSON UPDATE: New service created → add to backendServices.built. New route added → add to apiRoutes.built. Generator completed → move from generators.planned to generators.built. Firestore collection created → update firestoreCollections. New design principle agreed with owner → append to designPrinciples. Open question resolved → remove from openQuestions.",
+      "STEP 4 — WHAT DOES NOT TRIGGER A JSON UPDATE: Internal function refactors. Bug fixes. Comment additions. Variable renames. Test additions. File moves within a service that does not change its interface.",
+      "STEP 5 — SESSION END: After all code changes are complete and before ending the session, run this command from the project root: python generate_architecture_html.py — This regenerates fundile-architecture.html from the updated JSON. Always run this last.",
+      "STEP 6 — NEVER EDIT HTML DIRECTLY: fundile-architecture.html is a generated file. Any direct edit will be overwritten by the next script run. All changes go through fundile-architecture.json."
+    ],
+    "htmlGeneratorScript": "python generate_architecture_html.py",
+    "htmlGeneratorScriptPath": "generate_architecture_html.py",
+    "jsonPath": "fundile-architecture.json",
+    "htmlPath": "fundile-architecture.html",
+    "reminder": "If you are an agent reading this: the _workflow block is not documentation for the owner — it is instructions for YOU. Follow them."
+  },
+  "techStack": {
+    "frontend": {
+      "framework": "React 18 (Vite)",
+      "language": "JSX",
+      "styling": "Vanilla CSS + Tailwind CSS (legacy pages)",
+      "mathRendering": "KaTeX",
+      "diagramRendering": "JSXGraph",
+      "bundler": "Vite",
+      "pwa": "vite-plugin-pwa & custom Service Worker (Workbox offline caching via sw.js, WebAPK / cross-platform manifest, offline telemetry queue with auto-sync)",
+      "pwaAssets": "public/manifest.json, public/sw.js, pwa-192x192.png, pwa-512x512.png, pwa-maskable-512x512.png, apple-touch-icon.png (Brand Orange #FF9100 graduation cap iconography on #13519C brand blue across all 4 PWA icons and mobile install surfaces)",
+      "entryPoint": "src/main.jsx",
+      "mainApp": "src/App.jsx"
+    },
+    "backend": {
+      "framework": "FastAPI ASGI / Flask WSGI",
+      "language": "Python 3.11+",
+      "mathLibrary": "SymPy",
+      "llmAbstraction": "caps-ai-backend/app/services/llm_provider.py",
+      "entryPoint": "caps-ai-backend/run.py",
+      "mainApp": "caps-ai-backend/MainApp.py"
+    },
+    "database": {
+      "primary": "Firebase Firestore",
+      "storage": "Firebase Storage",
+      "auth": "Firebase Authentication"
+    },
+    "llm": {
+      "primaryProvider": "Google Gemini API (Gemini 2.0 Flash / Gemini 1.5 Flash)",
+      "fallbackProvider": "Groq (Llama 3.3 70B / Llama 3.1 8B) / Hugging Face Serverless",
+      "standardModel": "google/gemini-2.0-flash",
+      "realtimeHintsModel": "google/gemini-2.0-flash",
+      "teacherReportsModel": "google/gemini-2.0-flash",
+      "fallback": "Deterministic Tier 2 hint — never surface LLM failure to student"
+    },
+    "deployment": {
+      "frontend": "Firebase Hosting",
+      "backend": "Dockerised (Dockerfile present)"
+    }
+  },
+  "layers": [
+    {
+      "id": "A",
+      "name": "Core Learning Loop",
+      "status": "built",
+      "description": "Deterministic question generation, hint delivery, procedure marking, and student model update. No LLM in the critical path.",
+      "components": [
+        "generators",
+        "procedure_tracker",
+        "student_model",
+        "adaptive_progression",
+        "workspace_ui"
+      ],
+      "dependsOn": []
+    },
+    {
+      "id": "B",
+      "name": "SimuLearn",
+      "status": "built",
+      "description": "Canonical pre-animated worked examples per archetype. Seeded, fixed per archetype — all users see the same simulation for the same question type. Data-light: animation script not video stream.",
+      "planReference": "Simulation-implementation-plan.md §1-13",
+      "components": [
+        "simulearn_service.py",
+        "SimuLearnPlayer.jsx"
+      ],
+      "dependsOn": [
+        "A"
+      ]
+    },
+    {
+      "id": "C",
+      "name": "Pro Agent (Socratic Tutor)",
+      "status": "built",
+      "description": "Single orchestrator agent with tool belt. On-rails Socratic tutoring with declarative 1-tap chips, cognitive teach-back evaluator, and 3-strike circuit breaker to SimuLearn worked examples. Topic-guardrailed.",
+      "planReference": "Simulation-implementation-plan.md §14-22",
+      "builtParts": [
+        "agent_service.py",
+        "topic_guardrail.py",
+        "llm_provider.py",
+        "orchestrator_service.py",
+        "socratic_guardrail.py",
+        "frustration_tracker.py",
+        "DeclarativeSocraticChips.jsx",
+        "teach_back_evaluator.py",
+        "SocraticTutorDrawer.jsx"
+      ],
+      "plannedParts": [],
+      "dependsOn": [
+        "A"
+      ]
+    },
+    {
+      "id": "D",
+      "name": "Complete App",
+      "status": "built",
+      "description": "Session audit files, student profile, teacher/admin mode, notification system, trial/paywall, PDF reports & printable tests, profile pictures, student dashboard with clean student monogram initials and authentic academic standing indicators.",
+      "planReference": "Complete-App-Implementation-Plan.md",
+      "phases": [
+        "D1",
+        "D2",
+        "D3",
+        "D4",
+        "D5",
+        "D6",
+        "D7",
+        "D8",
+        "D9",
+        "D10"
+      ],
+      "builtParts": [
+        "ClassDiagnosticHeatmap.jsx",
+        "AssessmentGenerator.jsx",
+        "PrintableTestModal.jsx",
+        "pdf_memo_generator.py",
+        "session_file_writer.py",
+        "report_generator.py",
+        "trial_manager.py",
+        "class_service.py",
+        "session.py",
+        "trial.py",
+        "classes.py",
+        "ParentReportModal.jsx",
+        "WhatsAppReportShare.jsx",
+        "TrialCountdownBanner.jsx",
+        "SubscriptionModal.jsx",
+        "OfflineStatusBadge.jsx",
+        "ClassManagerModal.jsx",
+        "JoinClassModal.jsx",
+        "StudentDashboard.jsx",
+        "NotificationBell.jsx",
+        "notification_service.py",
+        "notifications.py",
+        "assignment_service.py",
+        "ParentLinkModal.jsx",
+        "InstallAppModal.jsx",
+        "MobileWebApkView.jsx"
+      ],
+      "dependsOn": [
+        "A"
+      ]
+    },
+    {
+      "id": "E",
+      "name": "Gamification",
+      "status": "built",
+      "description": "Four-tier badge system (Subskill Pin → Topic Medal → Term Trophy → Subject Medallion), Ungameable XP architecture (first-mastery-only, zero decay, no cross-subject padding), XPProgressBar, BadgeCard, GamificationSummary Trophy Room.",
+      "planReference": "Complete-App-Implementation-Plan.md §15",
+      "components": [
+        "gamification_service.py",
+        "BadgeCard.jsx",
+        "XPProgressBar.jsx",
+        "GamificationSummary.jsx"
+      ],
+      "dependsOn": [
+        "A",
+        "D"
+      ]
+    },
+    {
+      "id": "F",
+      "name": "Olympiad Track (SimuLearn)",
+      "status": "built",
+      "description": "SAMO Junior + Senior Round 1 preparation. Separate from CAPS curriculum. Gated behind CAPS Silver/Gold topic badge. Technique Library, seeded problem sets, separate badge system, opt-in leaderboard. IMO proof track deferred.",
+      "planReference": "Olympiad-Track-Implementation-Plan.md",
+      "components": [
+        "olympiad_generator.py",
+        "olympiad_service.py",
+        "olympiad.py",
+        "OlympiadDashboard.jsx",
+        "TechniqueLibrary.jsx"
+      ],
+      "dependsOn": [
+        "A",
+        "E"
+      ]
+    }
+  ],
+  "capsWiki": {
+    "description": "Authoritative editorial spine. Constrains generators, guardrails, and reports. Read verbatim into agent prompts — no RAG, no embedding search. Synthesized into 476 topics across 9 subjects in curriculum_docs_auto/ with authentic exam marks, time pacing, and diagram vision annotations.",
+    "path": "caps-ai-backend/curriculum_docs_auto/",
+    "status": "built",
+    "totalTopics": 476,
+    "manualPreserved": 262,
+    "pdfExtracted": 214,
+    "diagramsExtracted": 18448,
+    "annotatorScript": "caps-ai-backend/curriculum_docs/annotate_diagrams.py (Cloud Vision: Google Gemini 1.5/2.0 Flash, Hugging Face, Ollama)",
+    "subjects": [
+      "Accounting",
+      "BusinessStudies",
+      "EMS",
+      "LifeSciences",
+      "MathematicalLiteracy",
+      "Mathematics",
+      "NaturalSciences",
+      "PhysicalSciences",
+      "TechnicalMathematics"
+    ],
+    "structure": "{subject}_{grade}/Term {term}/{pos}. {topic}.md"
+  },
+  "generators": {
+    "description": "Deterministic, seeded question generators. Same seed → byte-identical question, answer, and worked solution. Math generators use SymPy. Semantic generators use archetype pools + namelist dressing.",
+    "built": [
+      {
+        "subject": "Accounting",
+        "grade": "10",
+        "topic": "Sole Trader",
+        "files": [
+          "caps-ai-backend/app/utils/grade10_accounting/sole_trader_generator.py",
+          "caps-ai-backend/app/utils/grade10_accounting/sole_trader_transaction_analysis.py",
+          "caps-ai-backend/app/utils/grade10_accounting/sole_trader_ledger_general.py",
+          "caps-ai-backend/app/utils/grade10_accounting/sole_trader_ledger_subsidiary.py",
+          "caps-ai-backend/app/utils/grade10_accounting/ethics_generator.py",
+          "caps-ai-backend/app/utils/grade10_accounting/gaap_generator.py",
+          "caps-ai-backend/app/utils/grade10_accounting/internal_control_generator.py",
+          "caps-ai-backend/app/utils/grade10_accounting/term2/bank_reconciliation_generator.py"
+        ]
+      },
+      {
+        "subject": "Accounting",
+        "grade": "11",
+        "files": [
+          "caps-ai-backend/app/utils/grade11_accounting/",
+          "caps-ai-backend/app/utils/grade11_accounting/partnerships_financial_statements_generator.py",
+          "caps-ai-backend/app/utils/grade11_accounting/inventory_valuation_generator.py"
+        ]
+      },
+      {
+        "subject": "Accounting",
+        "grade": "12",
+        "files": [
+          "caps-ai-backend/app/utils/grade12_accounting/",
+          "caps-ai-backend/app/utils/grade12_accounting/cash_flow_statement_generator.py",
+          "caps-ai-backend/app/utils/grade12_accounting/financial_indicators_generator.py",
+          "caps-ai-backend/app/utils/grade12_accounting/budgets_variance_generator.py",
+          "caps-ai-backend/app/utils/grade12_accounting/companies_generator.py",
+          "caps-ai-backend/app/utils/grade12_accounting/debtors_age_analysis_generator.py",
+          "caps-ai-backend/app/utils/grade12_accounting/vat_analysis_generator.py",
+          "caps-ai-backend/app/utils/grade12_accounting/accounting_equation_generator.py"
+        ]
+      },
+      {
+        "subject": "Mathematics",
+        "grade": "8",
+        "files": [
+          "caps-ai-backend/app/utils/grade8_algebraic_expressions_generator.py",
+          "caps-ai-backend/app/utils/grade8_algebraic_equations_generator.py",
+          "caps-ai-backend/app/utils/grade8_exponents_generator.py",
+          "caps-ai-backend/app/utils/grade8_functions_generator.py",
+          "caps-ai-backend/app/utils/grade8_integers_generator.py",
+          "caps-ai-backend/app/utils/grade8_patterns_generator.py",
+          "caps-ai-backend/app/utils/grade8_whole_numbers_generator.py"
+        ]
+      },
+      {
+        "subject": "Mathematics",
+        "grade": "9",
+        "files": [
+          "caps-ai-backend/app/utils/grade9_algebraic_expressions_generator.py",
+          "caps-ai-backend/app/utils/grade9_algebraic_equations_generator.py",
+          "caps-ai-backend/app/utils/grade9_exponents_generator.py",
+          "caps-ai-backend/app/utils/grade9_functions_generator.py",
+          "caps-ai-backend/app/utils/grade9_integers_generator.py",
+          "caps-ai-backend/app/utils/grade9_patterns_generator.py",
+          "caps-ai-backend/app/utils/grade9_whole_numbers_generator.py",
+          "caps-ai-backend/app/utils/grade9_fractions_generator.py",
+          "caps-ai-backend/app/utils/grade9_decimal_notation_generator.py",
+          "caps-ai-backend/app/utils/grade9_mathematics/factorisation_generator.py",
+          "caps-ai-backend/app/utils/grade9_mathematics/congruence_similarity_generator.py"
+        ]
+      },
+      {
+        "subject": "Mathematics",
+        "grade": "10",
+        "files": [
+          "caps-ai-backend/app/utils/grade10_algebraic_expressions_generator.py",
+          "caps-ai-backend/app/utils/grade10_equations_inequalities_generator.py",
+          "caps-ai-backend/app/utils/grade10_exponents_generator.py",
+          "caps-ai-backend/app/utils/grade10_patterns_sequences_generator.py",
+          "caps-ai-backend/app/utils/grade10_trigonometry1_generator.py",
+          "caps-ai-backend/app/utils/grade10_mathematics/term_2/circle_geometry_generator.py",
+          "caps-ai-backend/app/utils/grade10_mathematics/term_2/analytical_geometry_generator.py",
+          "caps-ai-backend/app/utils/grade10_mathematics/_diagram.py",
+          "caps-ai-backend/app/utils/grade10_mathematics/term_4/measurements_generator.py",
+          "caps-ai-backend/app/utils/grade10_mathematics/"
+        ]
+      },
+      {
+        "subject": "Mathematics",
+        "grade": "11",
+        "files": [
+          "caps-ai-backend/app/utils/grade11_analytical_geometry_generator.py",
+          "caps-ai-backend/app/utils/grade11_equations_inequalities_generator.py",
+          "caps-ai-backend/app/utils/grade11_exponents_surds_generator.py",
+          "caps-ai-backend/app/utils/grade11_patterns_sequences_generator.py",
+          "caps-ai-backend/app/utils/grade11_mathematics/circle_geometry_theorems_generator.py",
+          "caps-ai-backend/app/utils/grade11_mathematics/trigonometry_reductions_generator.py",
+          "caps-ai-backend/app/utils/grade11_mathematics/finance_growth_decay_generator.py",
+          "caps-ai-backend/app/utils/grade11_mathematics/probability_contingency_generator.py",
+          "caps-ai-backend/app/utils/grade11_mathematics/statistics_summary_ogive_generator.py",
+          "caps-ai-backend/app/utils/grade11_mathematics/linear_programming_generator.py"
+        ]
+      },
+      {
+        "subject": "Mathematics",
+        "grade": "12",
+        "files": [
+          "caps-ai-backend/app/utils/grade12_finance_generator.py",
+          "caps-ai-backend/app/utils/grade12_functions_generator.py",
+          "caps-ai-backend/app/utils/grade12_patterns_sequences_series_generator.py",
+          "caps-ai-backend/app/utils/grade12_trigonometry_generator.py",
+          "caps-ai-backend/app/utils/grade12_mathematics/differential_calculus_generator.py",
+          "caps-ai-backend/app/utils/grade12_mathematics/analytical_geometry_circles_generator.py",
+          "caps-ai-backend/app/utils/grade12_mathematics/counting_principles_probability_generator.py",
+          "caps-ai-backend/app/utils/grade12_mathematics/bivariate_statistics_generator.py"
+        ]
+      },
+      {
+        "subject": "Mathematics",
+        "grade": "7-9",
+        "files": [
+          "caps-ai-backend/app/utils/senior_phase_math/senior_phase_pythagoras_generator.py",
+          "caps-ai-backend/app/utils/senior_phase_math/senior_phase_measurement_generator.py",
+          "caps-ai-backend/app/utils/senior_phase_math/senior_phase_data_handling_generator.py",
+          "caps-ai-backend/app/utils/senior_phase_math/senior_phase_geometry_generator.py",
+          "caps-ai-backend/app/utils/senior_phase_math/senior_phase_transformations_generator.py"
+        ]
+      },
+      {
+        "subject": "Business Studies",
+        "grade": "10",
+        "files": [
+          "caps-ai-backend/app/utils/grade10_business_studies/"
+        ]
+      },
+      {
+        "subject": "Business Studies",
+        "grade": "11",
+        "files": [
+          "caps-ai-backend/app/utils/grade11_business_studies/",
+          "caps-ai-backend/app/utils/grade11_business_studies/marketing_production_generator.py"
+        ]
+      },
+      {
+        "subject": "Business Studies",
+        "grade": "12",
+        "files": [
+          "caps-ai-backend/app/utils/grade12_business_studies/",
+          "caps-ai-backend/app/utils/grade12_business_studies/business_studies_essay_generator.py",
+          "caps-ai-backend/app/utils/grade12_business_studies/legislation_hr_generator.py",
+          "caps-ai-backend/app/utils/grade12_business_studies/investments_management_generator.py"
+        ]
+      },
+      {
+        "subject": "EMS",
+        "grade": "7",
+        "files": [
+          "caps-ai-backend/app/utils/grade7_ems/"
+        ]
+      },
+      {
+        "subject": "EMS",
+        "grade": "8",
+        "files": [
+          "caps-ai-backend/app/utils/grade8_ems/",
+          "caps-ai-backend/app/utils/grade8_ems/term1_general_ledger.py",
+          "caps-ai-backend/app/utils/grade8_ems/term1_source_documents.py",
+          "caps-ai-backend/app/utils/grade8_ems/term2_accounting_cycle.py",
+          "caps-ai-backend/app/utils/grade8_ems/senior_phase_ems_gap_generator.py"
+        ]
+      },
+      {
+        "subject": "EMS",
+        "grade": "9",
+        "files": [
+          "caps-ai-backend/app/utils/grade9_ems/"
+        ]
+      },
+      {
+        "subject": "Physical Sciences",
+        "grade": "10-12",
+        "files": [
+          "caps-ai-backend/app/utils/physical_sciences/",
+          "caps-ai-backend/app/utils/physical_sciences/mechanics_generator.py",
+          "caps-ai-backend/app/utils/physical_sciences/electrostatics_electromagnetism_generator.py",
+          "caps-ai-backend/app/utils/grade10_physical_sciences/waves_sound_light_generator.py",
+          "caps-ai-backend/app/utils/grade10_physical_sciences/matter_materials_generator.py",
+          "caps-ai-backend/app/utils/grade11_physical_sciences/vectors_newton_generator.py",
+          "caps-ai-backend/app/utils/grade12_physical_sciences/vertical_projectile_generator.py",
+          "caps-ai-backend/app/utils/grade12_physical_sciences/doppler_effect_generator.py",
+          "caps-ai-backend/app/utils/grade12_physical_sciences/stoichiometry_equilibrium_generator.py",
+          "caps-ai-backend/app/utils/grade12_physical_sciences/momentum_impulse_generator.py",
+          "caps-ai-backend/app/utils/physical_sciences/geometrical_optics_generator.py",
+          "caps-ai-backend/app/utils/physical_sciences/ideal_gases_thermal_generator.py",
+          "caps-ai-backend/app/utils/physical_sciences/work_energy_power_generator.py",
+          "caps-ai-backend/app/utils/physical_sciences/electrochemistry_generator.py"
+        ]
+      },
+      {
+        "subject": "Life Sciences",
+        "grade": "10-12",
+        "files": [
+          "caps-ai-backend/app/utils/life_sciences/",
+          "caps-ai-backend/app/utils/life_sciences/meiosis_human_reproduction_generator.py",
+          "caps-ai-backend/app/utils/life_sciences/genetics_generator.py",
+          "caps-ai-backend/app/utils/life_sciences/dihybrid_pedigree_generator.py",
+          "caps-ai-backend/app/utils/life_sciences/photosynthesis_respiration_generator.py",
+          "caps-ai-backend/app/utils/life_sciences/human_organ_systems_generator.py",
+          "caps-ai-backend/app/utils/life_sciences/environmental_population_generator.py"
+        ]
+      },
+      {
+        "subject": "Natural Sciences",
+        "grade": "7-9",
+        "files": [
+          "caps-ai-backend/app/utils/natural_sciences/",
+          "caps-ai-backend/app/utils/natural_sciences/electric_circuits_generator.py",
+          "caps-ai-backend/app/utils/natural_sciences/chemical_reactions_generator.py",
+          "caps-ai-backend/app/utils/natural_sciences/senior_phase_astronomy_generator.py"
+        ]
+      },
+      {
+        "subject": "Mathematical Literacy",
+        "grade": "10-12",
+        "files": [
+          "caps-ai-backend/app/utils/mathematical_literacy/",
+          "caps-ai-backend/app/utils/mathematical_literacy/finance_tax_generator.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/maps_scales_generator.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/tariffs_tax_brackets_generator.py"
+        ]
+      },
+      {
+        "subject": "Technical Mathematics",
+        "grade": "10-12",
+        "files": [
+          "caps-ai-backend/app/utils/technical_mathematics/",
+          "caps-ai-backend/app/utils/technical_mathematics/complex_numbers_generator.py",
+          "caps-ai-backend/app/utils/technical_mathematics/mensuration_calculus_generator.py"
+        ]
+      },
+      {
+        "subject": "Olympiad",
+        "grade": "8-12",
+        "topic": "SAMO Round 1 Non-Routine (Number Theory, Combinatorics, Geometry, Algebra)",
+        "files": [
+          "caps-ai-backend/app/utils/olympiad/olympiad_generator.py"
+        ]
+      },
+      {
+        "subject": "Foundational Mathematics",
+        "grade": "7-9",
+        "topic": "Number Bonds, Fractions & Decomposition (Greg Tang C-P-A & Dr. Anna Stokke Fluency)",
+        "files": [
+          "caps-ai-backend/app/utils/foundational_math/number_bonds_generator.py"
+        ]
+      }
+    ],
+    "planned": [
+      {
+        "subject": "History",
+        "description": "Not yet started"
+      },
+      {
+        "subject": "Geography",
+        "description": "Not yet started"
+      }
+    ]
+  },
+  "backendServices": {
+    "built": [
+      {
+        "name": "student_model",
+        "file": "caps-ai-backend/app/services/student_model.py",
+        "responsibility": "Per-subskill mastery tracking, confidence score calculation, error pattern recording. Updated in real-time by deterministic systems. Source of truth for progression decisions."
+      },
+      {
+        "name": "procedure_tracker",
+        "file": "caps-ai-backend/app/services/procedure_tracker.py",
+        "responsibility": "Parses student step-by-step working, checks SymPy equivalence per transition, localises first error, classifies error from common_errors, awards NSC-style method marks + accuracy mark with carry-over."
+      },
+      {
+        "name": "adaptive_progression",
+        "file": "caps-ai-backend/app/services/adaptive_progression.py",
+        "responsibility": "Rule-based (Standard) and AI-driven (Pro) progression decisions. Determines when student moves Scaffold → Practice → Assessment."
+      },
+      {
+        "name": "evaluation_service",
+        "file": "caps-ai-backend/app/services/evaluation_service.py",
+        "responsibility": "Marks submitted answers. Calls procedure_tracker for maths. Uses cell-level marking for tabular data. Applies marking_schema rules (required/given/must_be_empty cell classification)."
+      },
+      {
+        "name": "agent_service",
+        "file": "caps-ai-backend/app/services/agent_service.py",
+        "responsibility": "Pro Package Socratic tutor orchestration. Topic-guardrailed. Receives question context + partial student answer. Returns text + optional render payload (KaTeX, JSXGraph, accounting tables)."
+      },
+      {
+        "name": "llm_provider",
+        "file": "caps-ai-backend/app/services/llm_provider.py",
+        "responsibility": "Provider-agnostic LLM abstraction. Default: Hugging Face Serverless Inference API (Gemma). Swapping providers is a config change only."
+      },
+      {
+        "name": "orchestrator_service",
+        "file": "caps-ai-backend/app/services/orchestrator_service.py",
+        "responsibility": "Routes agent requests to correct subject-specific handler. Manages context assembly."
+      },
+      {
+        "name": "topic_guardrail",
+        "file": "caps-ai-backend/app/services/topic_guardrail.py",
+        "responsibility": "Pre-LLM deterministic check. Verifies student request is within allowed topic scope. Declines off-topic requests with redirect message."
+      },
+      {
+        "name": "generator_registry",
+        "file": "caps-ai-backend/app/services/generator_registry.py",
+        "responsibility": "Central registry mapping (subject, grade, topic) → generator function. Single lookup point for all generation requests."
+      },
+      {
+        "name": "journal_service",
+        "file": "caps-ai-backend/app/services/journal_service.py",
+        "responsibility": "Accounting journal generation orchestration (CRJ, CPJ, DJ, CJ, GJ)."
+      },
+      {
+        "name": "email_service",
+        "file": "caps-ai-backend/app/services/email_service.py",
+        "responsibility": "Outbound email dispatch. Used for trial conversion emails and weekly digests."
+      },
+      {
+        "name": "main_asgi",
+        "file": "caps-ai-backend/app/main.py",
+        "responsibility": "Unified FastAPI ASGI application with async concurrency, health checks, and WSGI backward compatibility."
+      },
+      {
+        "name": "socratic_guardrail",
+        "file": "caps-ai-backend/app/services/socratic_guardrail.py",
+        "responsibility": "Socratic Shield regex output sanitizer preventing numerical solution leaks from LLM responses."
+      },
+      {
+        "name": "frustration_tracker",
+        "file": "caps-ai-backend/app/services/frustration_tracker.py",
+        "responsibility": "3-strike circuit breaker escalating chronic failure to SimuLearn animation overlay and isomorphic seed variant."
+      },
+      {
+        "name": "ast_purity_linter",
+        "file": "caps-ai-backend/scripts/lint_purity.py",
+        "responsibility": "AST scanner verifying 100% deterministic Python and zero-LLM dependencies in generator modules."
+      },
+      {
+        "name": "sa_naming_engine",
+        "file": "caps-ai-backend/app/utils/sa_naming_engine.py",
+        "responsibility": "Deterministic demographic namelist generator reflecting South African ethnic and geographic diversity across all 9 provinces with zero copyright/trademark copying."
+      },
+      {
+        "name": "simulearn_service",
+        "file": "caps-ai-backend/app/services/simulearn_service.py",
+        "responsibility": "SimuLearn declarative animation script generator emitting ~2KB JSON replay streams for canonical worked solutions."
+      },
+      {
+        "name": "gamification_service",
+        "file": "caps-ai-backend/app/services/gamification_service.py",
+        "responsibility": "4-Tier badge system evaluation and ungameable XP calculation with streak management and zero academic inflation."
+      },
+      {
+        "name": "pdf_memo_generator",
+        "file": "caps-ai-backend/app/services/pdf_memo_generator.py",
+        "responsibility": "CAPS-aligned printable A4 test paper and marking memorandum generator with method/accuracy ticks."
+      },
+      {
+        "name": "challenge_generator",
+        "file": "caps-ai-backend/app/services/challenge_generator.py",
+        "responsibility": "Wraps existing generators with canonical challenge seeds, standardized test evaluation, and CAPS visual skill tree data."
+      },
+      {
+        "name": "session_file_writer",
+        "file": "caps-ai-backend/app/services/session_file_writer.py",
+        "responsibility": "Dual-layer audit trail: writes .md session audit file to Firebase Storage and compute-ready session_index document to Firestore at session end."
+      },
+      {
+        "name": "report_generator",
+        "file": "caps-ai-backend/app/services/report_generator.py",
+        "responsibility": "Dual-audience PDF progress report generator (Parent & Student diagnostic summaries) with ReportLab vector charts, mastery dials, and prioritized remedial drill plans."
+      },
+      {
+        "name": "trial_manager",
+        "file": "caps-ai-backend/app/services/trial_manager.py",
+        "responsibility": "14-day free trial lifecycle, 403 TRIAL_EXPIRED paywall enforcement, and tier entitlement governance."
+      },
+      {
+        "name": "class_service",
+        "file": "caps-ai-backend/app/services/class_service.py",
+        "responsibility": "Teacher LMS Cockpit: generates unique 6-character join codes, handles student enrollment, and manages class rosters in Firestore classes/{classId}."
+      },
+      {
+        "name": "notification_service",
+        "file": "caps-ai-backend/app/services/notification_service.py",
+        "responsibility": "In-app notifications (streak alerts, mastery medals, olympiad unlocks) and WhatsApp message dispatch integration."
+      },
+      {
+        "name": "olympiad_service",
+        "file": "caps-ai-backend/app/services/olympiad_service.py",
+        "responsibility": "SAMO Round 1 competition engine: CAPS mastery silver/gold gate check, seeded non-routine problem generator, technique tracking, and credential awards."
+      },
+      {
+        "name": "assignment_service",
+        "file": "caps-ai-backend/app/services/assignment_service.py",
+        "responsibility": "Teacher homework & assignment dispatch pipeline: creates assignments with targeted question seeds, tracks student submissions, and links with class rosters."
+      },
+      {
+        "name": "leaderboard_service",
+        "file": "caps-ai-backend/app/services/leaderboard_service.py",
+        "responsibility": "SAMO Olympiad track opt-in rankings, national percentile tiers, and division/province filtering."
+      },
+      {
+        "name": "combinatorial_engine",
+        "file": "caps-ai-backend/app/utils/combinatorial_engine.py",
+        "responsibility": "4-Dimensional combinatorial slot-filling engine generating near-infinite (>80,000 permutations) deterministic questions for Business Studies, EMS, and conceptual Sciences across 20 sectors, 6 ownership forms, 15 shocks, and 12 statutory frameworks across 5 cognitive modalities."
+      },
+      {
+        "name": "sa_naming_engine",
+        "file": "caps-ai-backend/app/utils/sa_naming_engine.py",
+        "responsibility": "Culturally proportional, authentic South African character, surname, location, and enterprise naming engine. Calibrated against Stats SA census demographics (Nguni 46%, Sotho-Tswana 28%, Coloured 8%, Tsonga/Venda 7%, Afrikaans 5%, English 3%, Indian 3%), covering all 9 provinces with authentic municipal hubs and regional economic sectors, and supporting all 6 enterprise forms while strictly excluding past exam trademarks and commercial brand names."
+      },
+      {
+        "name": "jev_service",
+        "file": "caps-ai-backend/app/services/jev_service.py",
+        "responsibility": "TypeSafe AI Jev System One decision layer providing sub-100ms typed classification, intent routing, guardrails, and Stokke/Tang foundational regression dispatch with zero-failure fallback and 402 circuit breaker."
+      },
+      {
+        "name": "prerequisite_tree",
+        "file": "caps-ai-backend/app/services/prerequisite_tree.py",
+        "responsibility": "Cross-grade prerequisite dependency graph (Grade 12 -> Grade 7) for Mathematics, Commercial Sciences (EMS/Accounting), and Natural/Physical Sciences. Powers adaptive cross-grade regression and prerequisite diagnostic banners."
+      }
+    ],
+    "planned": []
+  },
+  "apiRoutes": {
+    "built": [
+      {
+        "method": "POST",
+        "route": "/api/generate",
+        "handler": "caps-ai-backend/app/api/generate.py",
+        "description": "Unified seeded question generator dispatching to generator_registry with 2.5s worker thread timeout and 6-pillar normalization"
+      },
+      {
+        "method": "POST",
+        "route": "/api/evaluate",
+        "handler": "evaluation.py",
+        "description": "Mark a student submission, return score + feedback"
+      },
+      {
+        "method": "POST",
+        "route": "/api/agent",
+        "handler": "agent.py",
+        "description": "Pro Agent Socratic response"
+      },
+      {
+        "method": "POST",
+        "route": "/api/orchestrator",
+        "handler": "orchestrator.py",
+        "description": "Multi-subject orchestration"
+      },
+      {
+        "method": "GET",
+        "route": "/api/curriculum",
+        "handler": "curriculum/",
+        "description": "Curriculum structure data"
+      },
+      {
+        "method": "POST",
+        "route": "/api/teacher/*",
+        "handler": "teacher.py",
+        "description": "Teacher mode: generate assignments, mark overrides, class management"
+      },
+      {
+        "method": "GET/POST",
+        "route": "/api/admin/*",
+        "handler": "admin.py, school_admin.py",
+        "description": "Admin and school admin operations"
+      },
+      {
+        "method": "POST",
+        "route": "/api/payments/*",
+        "handler": "payments/",
+        "description": "Subscription and payment endpoints"
+      },
+      {
+        "method": "POST",
+        "route": "/api/session/end",
+        "handler": "app/api/session.py",
+        "description": "Write compute-ready session_index to Firestore and human-readable .md audit trail to Firebase Storage"
+      },
+      {
+        "method": "POST",
+        "route": "/api/reports/diagnostic",
+        "handler": "app/api/session.py",
+        "description": "Generate and stream downloadable A4 diagnostic PDF report for parent or student"
+      },
+      {
+        "method": "GET",
+        "route": "/api/trial/status",
+        "handler": "app/api/trial.py",
+        "description": "Get current trial countdown and tier entitlements"
+      },
+      {
+        "method": "POST",
+        "route": "/api/trial/check-access",
+        "handler": "app/api/trial.py",
+        "description": "Enforce 403 TRIAL_EXPIRED paywall gates on restricted features"
+      },
+      {
+        "method": "POST",
+        "route": "/api/trial/mock-upgrade",
+        "handler": "app/api/trial.py",
+        "description": "Developer test endpoint to toggle active trial, expired, standard, or pro tiers"
+      },
+      {
+        "method": "POST",
+        "route": "/api/classes/create",
+        "handler": "app/api/classes.py",
+        "description": "Teacher creates class and generates 6-character alphanumeric join code"
+      },
+      {
+        "method": "POST",
+        "route": "/api/classes/join",
+        "handler": "app/api/classes.py",
+        "description": "Learner enters 6-character code to link to class roster"
+      },
+      {
+        "method": "GET",
+        "route": "/api/classes/teacher/{teacherId}",
+        "handler": "app/api/classes.py",
+        "description": "List all active classes for a teacher"
+      },
+      {
+        "method": "GET",
+        "route": "/api/classes/{classId}",
+        "handler": "app/api/classes.py",
+        "description": "Inspect class details and student roster"
+      },
+      {
+        "method": "GET/POST",
+        "route": "/api/notifications/*",
+        "handler": "app/api/notifications.py",
+        "description": "Fetch user notification inbox, mark notifications read, and dispatch streak/milestone alerts"
+      },
+      {
+        "method": "GET/POST",
+        "route": "/api/olympiad/*",
+        "handler": "app/api/olympiad.py",
+        "description": "Check SAMO eligibility gates, generate seeded non-routine problems, submit answers, and list technique library"
+      },
+      {
+        "method": "GET/POST",
+        "route": "/api/teacher/assignments/*",
+        "handler": "app/api/teacher.py",
+        "description": "Teacher homework dispatch, class assignment queries, student submission intake, and grading overviews"
+      },
+      {
+        "method": "GET",
+        "route": "/api/gamification/status/{user_id}",
+        "handler": "app/api/gamification.py",
+        "description": "Calculate ungameable XP, levels, and badge awards"
+      },
+      {
+        "method": "POST",
+        "route": "/api/gamification/challenge/attempt",
+        "handler": "app/api/gamification.py",
+        "description": "Submit standardized ChallengeGate attempt and award Topic Medals without inflation"
+      },
+      {
+        "method": "GET",
+        "route": "/api/olympiad/leaderboard",
+        "handler": "app/api/olympiad.py",
+        "description": "National SAMO Olympiad opt-in rankings, division/province filters, and percentile tiers"
+      },
+      {
+        "method": "POST",
+        "route": "/api/trial/school/activate",
+        "handler": "app/api/trial.py",
+        "description": "Activate institutional school license code issued via procurement invoice"
+      }
+    ],
+    "planned": []
+  },
+  "frontendComponents": {
+    "built": [
+      {
+        "name": "App.jsx",
+        "path": "src/App.jsx",
+        "note": "1,266 lines (down from 2,315 lines) — modularized with mathContentUtils, tutorContentCache, PracticeExamGenerator. Compliant with Rule 4 (< 2,000 lines)."
+      },
+      {
+        "name": "Workspace.jsx",
+        "path": "src/components/workspace/Workspace.jsx",
+        "description": "Main student workspace shell"
+      },
+      {
+        "name": "KaTeXRenderer",
+        "path": "src/components/shared/KaTeXRenderer.jsx",
+        "description": "Renders LaTeX math via KaTeX"
+      },
+      {
+        "name": "JSXGraphRenderer",
+        "path": "src/components/shared/JSXGraphRenderer.jsx",
+        "description": "Renders geometric diagrams via JSXGraph"
+      },
+      {
+        "name": "RenderDispatcher",
+        "path": "src/components/shared/RenderDispatcher.jsx",
+        "description": "Routes render payloads to correct renderer"
+      },
+      {
+        "name": "ComponentOverlay",
+        "path": "src/components/shared/ComponentOverlay.jsx",
+        "description": "Overlay system for Pro Agent responses"
+      },
+      {
+        "name": "StepCanvas",
+        "path": "src/components/StepCanvas.jsx",
+        "description": "Step-by-step working pad"
+      },
+      {
+        "name": "EnhancedMathKeypad",
+        "path": "src/components/EnhancedMathKeypad.jsx",
+        "description": "Registry-driven maths keypad"
+      },
+      {
+        "name": "AiMathAssistant",
+        "path": "src/components/AiMathAssistant.jsx",
+        "description": "Pro Agent chat interface (legacy — being replaced)"
+      },
+      {
+        "name": "WorkspaceRegistry",
+        "path": "src/components/workspace/workspaceRegistry.js",
+        "description": "Maps (subject, grade, topic) → workspace component"
+      },
+      {
+        "name": "Grade-level workspaces",
+        "path": "src/components/workspace/grade7/ through grade12/",
+        "description": "Per-grade workspace implementations for all built subjects"
+      },
+      {
+        "name": "SubjectShelf",
+        "path": "src/components/navigation/SubjectShelf.jsx",
+        "description": "1-Tap top-bar pinned subject navigation shelf with clean white light navbar and strict grade filtering (Grades 7–9 Senior Phase vs Grades 10–12 FET Phase)"
+      },
+      {
+        "name": "MasteryDial",
+        "path": "src/components/student/MasteryDial.jsx",
+        "description": "Dual-track circular progress ring for Formative BKT Mastery and Evaluative marks"
+      },
+      {
+        "name": "MicroBenchmarkModal",
+        "path": "src/components/student/MicroBenchmarkModal.jsx",
+        "description": "3-question diagnostic calibration sprint with full-viewport responsive layout (laptop expansive max-w-4xl stage vs agile mobile vertical stack), authentic CAPS calculation-based questions across all topics (zero semantic memorization prompts), integrated MathKeypad with superscripts, subscripts, roots, division, live KaTeX preview, and instant Super Admin bypass button"
+      },
+      {
+        "name": "MathKeypad",
+        "path": "src/components/workspace/shared/mathx/MathKeypad.jsx",
+        "description": "Registry-driven mathematical keypad with category tabs (Topic Keys, Powers & Roots, Fractions & Div, Subscripts, Algebra, Trig & Angles, Inequalities, All Symbols), caret-splicing insertions, and KaTeX rendering",
+        "layer": "A"
+      },
+      {
+        "name": "mathKeypadRegistry",
+        "path": "src/components/workspace/shared/mathx/mathKeypadRegistry.js",
+        "description": "Registry-driven mathematical symbol dictionary mapping topics and categories to SymPy/KaTeX parseable tokens including roots, powers, subscripts, fractions, and South African comma decimals",
+        "layer": "A"
+      },
+      {
+        "name": "DeclarativeSocraticChips",
+        "path": "src/components/socratic/DeclarativeSocraticChips.jsx",
+        "description": "1-Tap suggestion chips derived from misconception tags (zero freeform chat)"
+      },
+      {
+        "name": "ClassDiagnosticHeatmap",
+        "path": "src/components/teacher/ClassDiagnosticHeatmap.jsx",
+        "description": "Teacher heatmap highlighting class-wide conceptual bottlenecks with 1-tap remedial drill dispatch"
+      },
+      {
+        "name": "WhatsAppReportShare",
+        "path": "src/components/student/WhatsAppReportShare.jsx",
+        "description": "Native wa.me mobile intent generator for parent progress digests"
+      },
+      {
+        "name": "StudentWorkspaceView",
+        "path": "src/views/StudentWorkspaceView.jsx",
+        "description": "Modularized unified student workspace view with clean white bg-slate-50 palette, top navigation toolbar, and diagnostic benchmark launcher"
+      },
+      {
+        "name": "SimuLearnPlayer",
+        "path": "src/components/simulearn/SimuLearnPlayer.jsx",
+        "description": "SimuLearn step player for canonical worked solutions at 0.1% data cost"
+      },
+      {
+        "name": "BadgeCard",
+        "path": "src/components/gamification/BadgeCard.jsx",
+        "description": "4-Tier badge card (Subskill Pin, Topic Medal, Term Trophy, Subject Medallion)"
+      },
+      {
+        "name": "XPProgressBar",
+        "path": "src/components/gamification/XPProgressBar.jsx",
+        "description": "Progress ring with level display, ungameable XP, and daily streak tracker"
+      },
+      {
+        "name": "GamificationSummary",
+        "path": "src/components/gamification/GamificationSummary.jsx",
+        "description": "Trophy room credential showcase with 4-tier filtering"
+      },
+      {
+        "name": "PrintableTestModal",
+        "path": "src/components/teacher/PrintableTestModal.jsx",
+        "description": "Print-ready A4 CAPS test paper and marking memorandum with method ticks"
+      },
+      {
+        "name": "ProgressMap",
+        "path": "src/components/gamification/ProgressMap.jsx",
+        "description": "Interactive visual CAPS curriculum skill tree with prerequisite path connectors and action popovers"
+      },
+      {
+        "name": "ChallengeGate",
+        "path": "src/components/gamification/ChallengeGate.jsx",
+        "description": "Standardized assessment examination gate with countdown timer and credential certification"
+      },
+      {
+        "name": "ChallengeResultCard",
+        "path": "src/components/gamification/ChallengeResultCard.jsx",
+        "description": "Credential celebration card showing Topic Medal grade, score, and ungameable XP awards"
+      },
+      {
+        "name": "ParentReportModal",
+        "path": "src/components/student/ParentReportModal.jsx",
+        "description": "Parent diagnostic progress report modal with PDF download, WhatsApp direct share, and key strength/focus area badges"
+      },
+      {
+        "name": "PracticeExamGenerator",
+        "path": "src/components/exam/PracticeExamGenerator.jsx",
+        "description": "Modular exam generator creating timed CAPS-standard mock exams across multiple topics"
+      },
+      {
+        "name": "TrialCountdownBanner",
+        "path": "src/components/subscription/TrialCountdownBanner.jsx",
+        "description": "Ambient trial countdown indicator with 1-tap subscription modal trigger"
+      },
+      {
+        "name": "SubscriptionModal",
+        "path": "src/components/subscription/SubscriptionModal.jsx",
+        "description": "Tier comparison matrix (Trial vs Standard vs Pro vs School) with interactive state tester"
+      },
+      {
+        "name": "OfflineStatusBadge",
+        "path": "src/components/navigation/OfflineStatusBadge.jsx",
+        "description": "South African load-shedding resilience badge with queued offline session counter and auto-sync"
+      },
+      {
+        "name": "ClassManagerModal",
+        "path": "src/components/teacher/ClassManagerModal.jsx",
+        "description": "Teacher LMS cockpit for creating classes, copying 6-char join codes, and tracking student rosters"
+      },
+      {
+        "name": "JoinClassModal",
+        "path": "src/components/student/JoinClassModal.jsx",
+        "description": "Learner modal to enter 6-char code and enroll in teacher roster"
+      },
+      {
+        "name": "StudentDashboard",
+        "path": "src/components/student/StudentDashboard.jsx",
+        "description": "Comprehensive student portal with clean white production aesthetic, dynamic user authentication state, grade-aware subjects (Senior Phase vs FET), and Super Admin quick-test toolbar",
+        "layer": "D"
+      },
+      {
+        "name": "NotificationBell",
+        "path": "src/components/navigation/NotificationBell.jsx",
+        "description": "Ambient notification bell with unread badge counter and slide-out notification drawer",
+        "layer": "D"
+      },
+      {
+        "name": "OlympiadDashboard",
+        "path": "src/components/olympiad/OlympiadDashboard.jsx",
+        "description": "SAMO Olympiad portal featuring CAPS mastery eligibility gates, practice arena, timed simulations, and credential showcase",
+        "layer": "F"
+      },
+      {
+        "name": "TechniqueLibrary",
+        "path": "src/components/olympiad/TechniqueLibrary.jsx",
+        "description": "Interactive visual catalog of Olympiad problem-solving heuristics across Number Theory, Combinatorics, Geometry, and Algebra",
+        "layer": "F"
+      },
+      {
+        "name": "Leaderboard",
+        "path": "src/components/olympiad/Leaderboard.jsx",
+        "description": "Opt-in competitive ranking surface strictly for SAMO Olympiad track with national percentile tiers",
+        "layer": "F"
+      },
+      {
+        "name": "TeacherDashboard",
+        "path": "src/components/teacher/TeacherDashboard.jsx",
+        "description": "Comprehensive teacher LMS cockpit for class rosters, 6-character code sharing, diagnostic heatmaps, and printable test generation",
+        "layer": "D"
+      },
+      {
+        "name": "SocraticTutorDrawer",
+        "path": "src/components/socratic/SocraticTutorDrawer.jsx",
+        "description": "On-rails declarative Socratic guidance interface with 1-tap misconception chips, cognitive teach-back evaluator, and 3-strike circuit breaker",
+        "layer": "C"
+      },
+      {
+        "name": "ParentLinkModal",
+        "path": "src/components/student/ParentLinkModal.jsx",
+        "description": "Parent progress linking modal generating unambiguous 6-character code (PAR8M4) and 1-tap WhatsApp digest subscription (resolves OQ1)",
+        "layer": "D"
+      },
+      {
+        "name": "badgeIconRegistry",
+        "path": "src/components/gamification/badgeIconRegistry.jsx",
+        "description": "Standardized 9-subject icon registry with Lucide components, distinctive per-subject gradients, and 4-tier frame hierarchy (resolves OQ2)",
+        "layer": "E"
+      },
+      {
+        "name": "CognitivePacingAlert",
+        "path": "src/components/student/CognitivePacingAlert.jsx",
+        "description": "45-minute continuous deliberate practice circuit breaker with ambient rest timer and SimuLearn circuit breaker",
+        "layer": "A"
+      },
+      {
+        "name": "PostExamTriageModal",
+        "path": "src/components/exam/PostExamTriageModal.jsx",
+        "description": "Post-exam diagnostic autopsy and 3-step remedial fix sequence (Cognitive Conflict Probe -> SimuLearn Replay -> Isomorphic Pair)",
+        "layer": "A"
+      },
+      {
+        "name": "LandingPage",
+        "path": "src/components/ui/LandingPage.jsx",
+        "description": "Universal public landing page with deep royal navy hero stage, radiant white content canvas, dynamic auto-hiding scroll behaviors on Fixed Blue Ribbon Header and Audience Sub-Ribbon, 1-tap app install portal, and SGB procurement routing",
+        "layer": "D"
+      },
+      {
+        "name": "PerspectiveShowcase",
+        "path": "src/components/ui/landing/PerspectiveShowcase.jsx",
+        "description": "Dynamic multi-audience visualizer container seamlessly mounting Learner, Parent, Teacher, and School Admin simulations",
+        "layer": "D"
+      },
+      {
+        "name": "HeroSimulation",
+        "path": "src/components/ui/landing/HeroSimulation.jsx",
+        "description": "Interactive learner SimuLearn replicating authentic light-theme workspace with Windows 11 system chrome, live SubjectShelf navigation, adaptive progression with circular MasteryDial (84% Exam Ready), and timed CAPS Exam Engine with post-exam diagnostic autopsy",
+        "layer": "D"
+      },
+      {
+        "name": "ParentSimulation",
+        "path": "src/components/ui/landing/ParentSimulation.jsx",
+        "description": "Interactive parent SimuLearn simulating smartphone receiving WhatsApp notification banner, opening message dispatch, and viewing official A4 diagnostic report with procedural flaw autopsy",
+        "layer": "D"
+      },
+      {
+        "name": "TeacherSimulation",
+        "path": "src/components/ui/landing/TeacherSimulation.jsx",
+        "description": "Interactive teacher simulation featuring 3-click test generator, printable A4 test paper with marking memo, and class diagnostic heatmap",
+        "layer": "D"
+      },
+      {
+        "name": "SchoolSimulation",
+        "path": "src/components/ui/landing/SchoolSimulation.jsx",
+        "description": "Interactive School Admins simulation featuring departmental pacing dashboard, remedial intervention dispatch, and SGB procurement quotation preview",
+        "layer": "D"
+      },
+      {
+        "name": "UniversalWorkspace",
+        "path": "src/components/workspace/UniversalWorkspace.jsx",
+        "description": "Single unified question workspace for all Grades 7–12 and all subjects with dynamic in-situ scaffolding and brand styling",
+        "layer": "A"
+      },
+      {
+        "name": "MathModalityRenderer",
+        "path": "src/components/workspace/modalities/MathModalityRenderer.jsx",
+        "description": "Unified KaTeX, Working Pad, and MathKeypad modality renderer with unfoldable stepwise scaffolding",
+        "layer": "A"
+      },
+      {
+        "name": "LedgerModalityRenderer",
+        "path": "src/components/workspace/modalities/LedgerModalityRenderer.jsx",
+        "description": "2D tabular accounting and EMS ledger renderer with double-entry rule prompts",
+        "layer": "A"
+      },
+      {
+        "name": "RubricModalityRenderer",
+        "path": "src/components/workspace/modalities/RubricModalityRenderer.jsx",
+        "description": "Business Studies scenario, concept keywords, and rubric-matching evaluation renderer",
+        "layer": "A"
+      },
+      {
+        "name": "DiagramModalityRenderer",
+        "path": "src/components/workspace/modalities/DiagramModalityRenderer.jsx",
+        "description": "JSXGraph interactive geometry, circuit, and scientific vector visualization renderer",
+        "layer": "A"
+      },
+      {
+        "name": "PhysicalFolderTabs",
+        "path": "src/components/navigation/PhysicalFolderTabs.jsx",
+        "description": "Skeuo-modern physical folder tab shelf with authentic left-slanted lips, 3D forward pop (z-index 30, translateY -4px), modern jewel-tone palette, and mobile swipeable carousel with 44px touch targets",
+        "layer": "D"
+      },
+      {
+        "name": "TodaysDeskView",
+        "path": "src/components/student/TodaysDeskView.jsx",
+        "description": "Action dashboard rendered on Tab 0 (Today's Desk) showing urgent teacher assignments with 1-click subject jump, autonomous mastery dials, and offline sync status",
+        "layer": "D"
+      },
+      {
+        "name": "DevSandboxWrapper",
+        "path": "src/components/sandbox/DevSandboxWrapper.jsx",
+        "description": "Live developer sandbox enabling real-time toggling between Windows 11 Desktop PWA, Android Mobile Portrait, and Android Mobile Landscape with Vite HMR",
+        "layer": "D"
+      },
+      {
+        "name": "LearnerAppContainer",
+        "path": "src/components/student/LearnerAppContainer.jsx",
+        "description": "Unified learner experience container combining PhysicalFolderTabs, TodaysDeskView, UniversalWorkspace, and live backend question generation & marking",
+        "layer": "D"
+      },
+      {
+        "name": "InstallAppModal",
+        "path": "src/components/ui/InstallAppModal.jsx",
+        "description": "Cross-platform PWA/WebAPK installation with vector QR code generation, auto-detected LAN/domain origin, and desktop/mobile tab switching",
+        "layer": "D"
+      },
+      {
+        "name": "MobileWebApkView",
+        "path": "src/components/mobile/MobileWebApkView.jsx",
+        "description": "Authentic Android WebAPK mobile interface with portrait/landscape adaptivity, dynamic auto-hiding User Profile Ribbon on scroll, 44px bottom navigation carousel, compact 2x2 cards, and fullscreen 6-column 2D ledger workspace",
+        "layer": "D"
+      }
+    ],
+    "planned": []
+  },
+  "firestoreCollections": {
+    "built": [
+      {
+        "collection": "students/{userId}/profile",
+        "description": "Student identity, grade, subjects, subscription tier, mastery map, error patterns, learning style signals, streak"
+      },
+      {
+        "collection": "students/{userId}/sessions",
+        "description": "Per-session records (legacy format — being migrated to session_index)"
+      },
+      {
+        "collection": "session_index/{sessionId}",
+        "description": "Compute-ready session record. Contains procedureSteps array and cellErrors array directly in Firestore — enabling deterministic error-rate queries without reading .md files.",
+        "keyFields": [
+          "userId",
+          "subject",
+          "topic",
+          "subskill",
+          "score",
+          "misconceptionTags",
+          "procedureSteps",
+          "cellErrors",
+          "mdStoragePath"
+        ],
+        "planRef": "Complete-App-Implementation-Plan.md §1.4a"
+      },
+      {
+        "collection": "classes/{classId}",
+        "description": "Teacher class management: student roster, 6-char join code, subject/grade, and creation timestamp."
+      },
+      {
+        "collection": "notifications/{notificationId}",
+        "description": "In-app notifications for streaks, mastery awards, olympiad unlocks, and homework alerts"
+      },
+      {
+        "collection": "students/{userId}/olympiad",
+        "description": "SAMO gate unlock status, technique mastery, problem set progress, round simulation results, olympiad badges"
+      },
+      {
+        "collection": "students/{userId}/gamification",
+        "description": "XP by subject/topic, badge status (subskills/topics/terms/medallion), challenge attempt history",
+        "planRef": "Complete-App-Implementation-Plan.md §15.4"
+      },
+      {
+        "collection": "assignments/{assignmentId}",
+        "description": "Teacher-created assignments: questions, due date, reveal toggle, class reference, student submissions"
+      }
+    ],
+    "planned": []
+  },
+  "firebaseStorage": {
+    "paths": [
+      {
+        "path": "sessions/{userId}/{year}/{month}/{sessionId}.md",
+        "description": "Human-readable audit trail of each session. Never sent to teachers/parents directly. Internal only."
+      },
+      {
+        "path": "profile-pictures/{userId}/avatar.jpg",
+        "description": "User profile picture (256x256, resized server-side). Falls back to initials avatar if null."
+      }
+    ]
+  },
+  "markingRules": {
+    "cellTypes": {
+      "required": "Student must fill. Correct value earns mark.",
+      "given": "Pre-filled in question. Not marked.",
+      "must_be_empty": "Should be blank. Filling earns -1 deduction."
+    },
+    "emptyRule": "Empty cells never earn marks. Leaving everything blank scores 0, not positive marks.",
+    "carryForward": "NSC-style method marks: if final answer wrong but working is consistent with student's own intermediate value, method marks are awarded.",
+    "markingSchema": "Every archetype defines a marking_schema block (marking_points, deductions, carry_forward_rule) stored with the question. Same archetype = same schema always.",
+    "planRef": "Complete-App-Implementation-Plan.md §12"
+  },
+  "customAgents": [
+    {
+      "id": "generator_architect",
+      "name": "Generator Architect",
+      "status": "built",
+      "specialty": "Deterministic Python & SymPy Question Generators",
+      "whenToUse": "Use when creating, expanding, or refactoring question generators for any grade/subject. Ensures 6-pillar contract compliance, pure Python (zero-LLM), AST purity, comma decimals (_decomma), and CC <= 12.",
+      "config": ".agents/agents/generator_architect.json",
+      "allowedTools": [
+        "view_file",
+        "replace_file_content",
+        "write_to_file",
+        "run_command",
+        "grep_search",
+        "find_by_name",
+        "list_dir"
+      ],
+      "keyDirectives": [
+        "Enforce 6-pillar generator contract (term metadata, deconstructible elementary sub-drills, snake_case misconception tags, teacher-editable marking schema, 3-tier pre-baked hints, native modality).",
+        "AST purity linter enforcement (python caps-ai-backend/scripts/lint_purity.py).",
+        "South African comma decimal format LaTeX output with {,}.",
+        "Cyclomatic complexity <= 12."
+      ]
+    },
+    {
+      "id": "curriculum_specialist",
+      "name": "CAPS Curriculum Specialist",
+      "status": "built",
+      "specialty": "CAPS Curriculum Alignment, Pacing & Purity Sourcing",
+      "whenToUse": "Use when checking curriculum topics, authentic exam mark allocations, term scheduling, diagram vision annotations, or diagnostic benchmark calibrations (beta = 0.30, 0.60, 0.85).",
+      "config": ".agents/agents/curriculum_specialist.json",
+      "allowedTools": [
+        "view_file",
+        "grep_search",
+        "find_by_name",
+        "list_dir",
+        "write_to_file",
+        "replace_file_content"
+      ],
+      "keyDirectives": [
+        "Primary source: caps-ai-backend/curriculum_docs_auto/ (476 topics across 9 subjects, 18,448 diagrams).",
+        "Secondary source: caps-ai-backend/curriculum_docs/.",
+        "Strict compliance with examining body branding policy (NEVER use IEB, SACAI, DBE, NSC).",
+        "CAPS cognitive level weighting: Knowledge 20%, Routine 35%, Complex 30%, Problem Solving 15%."
+      ]
+    },
+    {
+      "id": "cognitive_ui_engineer",
+      "name": "Cognitive Modality Frontend Engineer",
+      "status": "built",
+      "specialty": "React 18 / Vite UI, Native Cognitive Modalities & Modularity",
+      "whenToUse": "Use when developing student workspace UI components, KaTeX working pads, JSXGraph geometric figures, 2D accounting journals/ledgers, Declarative Socratic Chips, or SimuLearn players.",
+      "config": ".agents/agents/cognitive_ui_engineer.json",
+      "allowedTools": [
+        "view_file",
+        "replace_file_content",
+        "write_to_file",
+        "run_command",
+        "grep_search",
+        "find_by_name",
+        "list_dir"
+      ],
+      "keyDirectives": [
+        "Match cognitive modality to subject (no tables for math; KaTeX + SymPy step graphs, JSXGraph for geometry).",
+        "Strict file limit: keep files under 2,000 lines (Rule 4). Modularize proactively.",
+        "Always backup src/App.jsx before modifying.",
+        "Zero freeform chat; 1-tap declarative chips and SimuLearn circuit breakers.",
+        "Offline telemetry queuing via telemetryBuffer.js."
+      ]
+    },
+    {
+      "id": "eval_triage_architect",
+      "name": "Evaluation & Post-Exam Triage Architect",
+      "status": "built",
+      "specialty": "Memory-Decayed BKT, Post-Exam Triage & Printable Memorandums",
+      "whenToUse": "Use when implementing or calibrating answer evaluation, procedure tracking, Bayesian Knowledge Tracing with Ebbinghaus decay P(L, delta_t), post-exam diagnostic triage, or PDF test/memo generators.",
+      "config": ".agents/agents/eval_triage_architect.json",
+      "allowedTools": [
+        "view_file",
+        "replace_file_content",
+        "write_to_file",
+        "run_command",
+        "grep_search",
+        "find_by_name",
+        "list_dir"
+      ],
+      "keyDirectives": [
+        "Deterministic evaluation is the single source of truth; no LLM overrides.",
+        "Preserve consequential accuracy with carry-forward method marks.",
+        "Compute-ready Firestore session_index persistence + markdown storage audit trails.",
+        "Implement 3-step cognitive repair (Cognitive Conflict Probe -> SimuLearn Replay -> Isomorphic Pair)."
+      ]
+    },
+    {
+      "id": "architecture_governor",
+      "name": "Architecture Manifest Governor",
+      "status": "built",
+      "specialty": "Manifest Synchronization, System Integrity & Quality Gates",
+      "whenToUse": "Use at session start (Rule 0a), session change (Rule 0b), and session end (Rule 0c). Audits architecture drift, updates fundile-architecture.json, and runs generate_architecture_html.py.",
+      "config": ".agents/agents/architecture_governor.json",
+      "allowedTools": [
+        "view_file",
+        "replace_file_content",
+        "write_to_file",
+        "run_command",
+        "grep_search",
+        "find_by_name",
+        "list_dir"
+      ],
+      "keyDirectives": [
+        "Enforce Rule 0a, 0b, and 0c in every development session.",
+        "Never edit fundile-architecture.html directly; always edit JSON and run python generate_architecture_html.py.",
+        "Verify generator purity with lint_purity.py and cyclomatic complexity with radon.",
+        "Maintain App.jsx backups."
+      ]
+    },
+    {
+      "id": "systems_security_architect",
+      "name": "Systems Security & Reliability Architect",
+      "status": "built",
+      "specialty": "Production Reliability, Socket Lifecycle, Memory Bounding & POPIA",
+      "whenToUse": "Use when reviewing backend routes, external API integrations, Firestore queries, and async concurrency. Enforces connection pooling, CPU sandboxing for SymPy (2.5s timeout), query projections, circuit breakers, and POPIA Sec 35 compliance.",
+      "config": ".agents/agents/systems_security_architect.json",
+      "allowedTools": [
+        "view_file",
+        "replace_file_content",
+        "write_to_file",
+        "run_command",
+        "grep_search",
+        "find_by_name",
+        "list_dir"
+      ],
+      "keyDirectives": [
+        "Enforce socket lifecycle & connection pooling on all HTTP/database clients (preventing socket exhaustion).",
+        "Enforce query projections (select()) and cursor pagination (preventing memory explosions).",
+        "Offload CPU-bound SymPy calculations via asyncio.to_thread with 2.5s hard timeout.",
+        "Implement circuit breakers that fail closed to deterministic Tier 2 hints (never surface 500s).",
+        "Strict POPIA Sec 35 compliance: zero device GPS polling, anonymous diagnostic prompts."
+      ]
+    },
+    {
+      "id": "learner_ux_specialist",
+      "name": "Learner UX & Flow Specialist",
+      "status": "built",
+      "specialty": "Learner Psychology, Cognitive Load, Light Workspaces & 3-Stage Progression",
+      "whenToUse": "Use when refining learner workspaces, hint progression (Scaffold -> Practice -> Assessment), procedure tracker visual feedback, 44px mobile touch targets, and ungameable gamification.",
+      "config": ".agents/agents/learner_ux_specialist.json",
+      "allowedTools": [
+        "view_file",
+        "replace_file_content",
+        "write_to_file",
+        "run_command",
+        "grep_search",
+        "find_by_name",
+        "list_dir"
+      ],
+      "keyDirectives": [
+        "Focus on cognitive load reduction: clean Light Mode workspaces (bg-slate-50 canvas, crisp white cards).",
+        "Clear 3-stage progression: Scaffold (hints allowed) -> Practice (hints gated/penalized) -> Assessment (strictly ZERO hints).",
+        "Visual method marks [M] and consequential accuracy [CA] feedback."
+      ]
+    },
+    {
+      "id": "teacher_cockpit_designer",
+      "name": "Educator Cockpit Designer",
+      "status": "built",
+      "specialty": "Teacher Ergonomics, Humanized Rosters & 3-Click Exam Authoring",
+      "whenToUse": "Use when designing teacher dashboard components, D2L Brightspace-style student rosters with photo uploads, 3-click printable exam/memo generators, and 1-click micro-fix homework assignments.",
+      "config": ".agents/agents/teacher_cockpit_designer.json",
+      "allowedTools": [
+        "view_file",
+        "replace_file_content",
+        "write_to_file",
+        "run_command",
+        "grep_search",
+        "find_by_name",
+        "list_dir"
+      ],
+      "keyDirectives": [
+        "Reclaim 10 hours a week: minimize clicks on test authoring, grading, and diagnostic triage.",
+        "D2L Brightspace humanized roster: real photo upload support with SVG avatar fallbacks, live triage tags.",
+        "Unlimited printable exam generation in 3 clicks with official CAPS memos."
+      ]
+    },
+    {
+      "id": "parent_bridge_marketer",
+      "name": "Parent & Guardian Bridge Marketer",
+      "status": "built",
+      "specialty": "Parental Trust, Anxiety Relief, Sunday WhatsApp Pulse & Actionable Coaching",
+      "whenToUse": "Use when crafting parent-facing communications, Sunday 18:00 WhatsApp pulse summaries, actionable coaching recommendations, and cellular data savings comparisons (< 2MB vs 450MB).",
+      "config": ".agents/agents/parent_bridge_marketer.json",
+      "allowedTools": [
+        "view_file",
+        "replace_file_content",
+        "write_to_file",
+        "run_command",
+        "grep_search",
+        "find_by_name",
+        "list_dir"
+      ],
+      "keyDirectives": [
+        "Zero-nagging reassurance: replace app logins with instant WhatsApp digests.",
+        "Actionable encouragement prompts: give parents specific positive things to encourage rather than vague grades.",
+        "Transparent mobile data protection: highlight < 2MB weekly consumption."
+      ]
+    },
+    {
+      "id": "school_admin_strategist",
+      "name": "School Admin & HOD Strategist",
+      "status": "built",
+      "specialty": "School Administration, Term Mark Collation, ATP Curriculum Pacing & POPIA",
+      "whenToUse": "Use when building school administrative tools, class and teacher assignment workflows, customizable term mark collation schemes (SASAMS export), Annual Teaching Plan pacing heatmaps, and POPIA child privacy compliance.",
+      "config": ".agents/agents/school_admin_strategist.json",
+      "allowedTools": [
+        "view_file",
+        "replace_file_content",
+        "write_to_file",
+        "run_command",
+        "grep_search",
+        "find_by_name",
+        "list_dir"
+      ],
+      "keyDirectives": [
+        "Core administrative focus: class creation, teacher roster assignment, and student enrollment.",
+        "Customizable mark collation engine: HOD-defined weightings (quizzes, tests, exams) for official term marks.",
+        "Exact ATP curriculum coverage calculation (pacing index x class median mastery).",
+        "Departmental remediation broadcast tools and admin-controlled parent communication switches."
+      ]
+    }
+  ],
+  "workspaceSkills": [
+    {
+      "id": "caps-generator-contract",
+      "name": "CAPS Generator Contract",
+      "status": "built",
+      "file": ".agents/skills/caps-generator-contract/SKILL.md",
+      "trigger": "Use when authoring, auditing, or refactoring deterministic question generators.",
+      "summary": "Step-by-step procedures and templates to satisfy the 6-pillar generator contract: term metadata, elementary sub-drills (mode='elementary_<subskill>'), snake_case misconception tags, teacher-editable marking schemas, pre-baked 3-tier hints, and comma decimal handling.",
+      "verification": "python caps-ai-backend/scripts/lint_purity.py"
+    },
+    {
+      "id": "manifest-sync",
+      "name": "Manifest Synchronization",
+      "status": "built",
+      "file": ".agents/skills/manifest-sync/SKILL.md",
+      "trigger": "Use whenever building or changing backend services, API routes, React components, generators, or database collections.",
+      "summary": "Protocol for updating fundile-architecture.json and regenerating fundile-architecture.html. Enforces session start/mid/end maintenance workflow.",
+      "verification": "python generate_architecture_html.py"
+    },
+    {
+      "id": "curriculum-topic-curator",
+      "name": "Curriculum Topic Curator",
+      "status": "built",
+      "file": ".agents/skills/curriculum-topic-curator/SKILL.md",
+      "trigger": "Use when inspecting CAPS syllabus requirements, authentic exam marks, term pacing, or diagram vision annotations.",
+      "summary": "Curriculum navigation runbook for caps-ai-backend/curriculum_docs_auto/ (476 topics) and curriculum_docs/. Includes cognitive level weighting table and trademark avoidance checklist.",
+      "verification": "Inspect topic markdown in curriculum_docs_auto/"
+    },
+    {
+      "id": "simulearn-authoring",
+      "name": "SimuLearn Authoring",
+      "status": "built",
+      "file": ".agents/skills/simulearn-authoring/SKILL.md",
+      "trigger": "Use when creating or updating canonical step-by-step worked solution animations.",
+      "summary": "Authoring specification for data-efficient ~2KB JSON animation streams. Covers step sequencing, cell/token highlights, spotlight targets, and 3-strike frustration circuit breaker escalation.",
+      "verification": "Test in SimuLearnPlayer.jsx"
+    },
+    {
+      "id": "post-exam-triage-pipeline",
+      "name": "Post-Exam Triage Pipeline",
+      "status": "built",
+      "file": ".agents/skills/post-exam-triage-pipeline/SKILL.md",
+      "trigger": "Use when enhancing post-exam reports, diagnostic debriefs, or remedial remediation sequences.",
+      "summary": "Runbook for aggregating student telemetry by misconception tags and triggering the 3-step cognitive repair sequence: Cognitive Conflict Probe -> SimuLearn Micro-Replay -> Isomorphic Pair.",
+      "verification": "Validate in PostExamTriageModal.jsx"
+    },
+    {
+      "id": "production-security-fundamentals",
+      "name": "Production Security & Reliability",
+      "status": "built",
+      "file": ".agents/skills/production-security-fundamentals/SKILL.md",
+      "trigger": "Use when reviewing backend routes, database queries, async concurrency, external API calls, or POPIA child data compliance.",
+      "summary": "Engineering runbook preventing AI 'vibe coding' hazards: socket exhaustion via pooled singleton clients, memory spikes via query projections/cursor pagination, event loop blocking via SymPy thread sandboxing (2.5s timeout), circuit breaker fallbacks, and POPIA Sec 35 child privacy.",
+      "verification": "Audit via systems_security_architect & pytest"
+    }
+  ],
+  "packages": {
+    "trial": {
+      "duration": "14 days",
+      "hardPaywall": true,
+      "profilePersistsAfterTrial": true,
+      "features": [
+        "Scaffold + Practice modes",
+        "Pre-generated hints (Tier 1-2)",
+        "Subskill badges",
+        "First Topic Challenge per subject",
+        "Session summary panel",
+        "SimuLearn (first archetype per subject)"
+      ]
+    },
+    "standard": {
+      "features": [
+        "All trial features",
+        "Assessment mode",
+        "Term badges + Term Tests",
+        "Subject Medallions",
+        "Full ProgressMap",
+        "Weekly digest email",
+        "Parent PDF report (if linked)"
+      ]
+    },
+    "pro": {
+      "features": [
+        "All standard features",
+        "Live Socratic Pro Agent (Tier 3-4 hints)",
+        "Teach-back evaluation",
+        "Proof comprehension MCQs (Olympiad Level 4-5)"
+      ]
+    },
+    "school": {
+      "features": [
+        "All pro features",
+        "Teacher dashboard",
+        "Class management",
+        "Assignment builder",
+        "Mark book",
+        "Class PDF report",
+        "School admin dashboard",
+        "Bulk registration"
+      ]
+    }
+  },
+  "designPrinciples": [
+    "Deterministic systems always win — procedure tracker, cell marker, rubric detector are sources of truth. No LLM output may override them.",
+    "The .md session file is for audit only — never the primary data pipeline, never sent to teachers/parents.",
+    "External reports (teacher, parent) are always PDF — no raw JSON, field names, or system language.",
+    "LLM reads stripped-down Firestore JSON profile, never raw .md files or full Firestore documents.",
+    "Dual-layer data: session_index Firestore document for deterministic computation; .md file for human-readable audit.",
+    "Empty cells never earn marks. Filling a must_be_empty cell earns a deduction.",
+    "Every archetype has a fixed, reproducible marking_schema defined at generator time.",
+    "No freeform chat — declarative clickables over prompt engineering. The UI diverges: zero-setup highway for students, high-agency cockpit for teachers.",
+    "SimuLearn seeds are pre-decided per archetype by the developer — all users see the same canonical simulation.",
+    "Gamification never compromises academic quality — badges earned through demonstrated understanding, not activity volume.",
+    "The dashboard is a retention hook — profile data must be pipeline-ready from Phase D1.",
+    "Landing page changes require explicit owner approval before implementation.",
+    "No file should exceed 2000 lines — modularise before a file reaches this limit.",
+    "Always backup App.jsx before editing it.",
+    "Comma decimal separator throughout (SA/CAPS standard): LaTeX uses {,}.",
+    "Generator Contract: All generators must emit term metadata (1..4), deconstructible elementary sub-drills, standardized misconception tags, and teacher-editable marking schemas.",
+    "Exam-on-Demand with Calendar Pacing: Students can trigger full mock exams at any time, bounded by current school term (term <= selected_term) with post-exam triage debriefs.",
+    "Examining Body Trademark Policy: Never use IEB, SACAI, DBE, or NSC trademarks in marketing. Use universal public-domain statements: '100% Aligned with South African Curriculum Standards (CAPS)'.",
+    "Production Scalability at 10k Users: FastAPI ASGI architecture with asyncio.to_thread sandboxing for SymPy (2.5s timeout), client-side batched telemetry buffers, and single mastery_snapshot document reads (reducing Firestore reads by 97.5%).",
+    "LLM Infrastructure & Economics: Standardize on Google Gemini 2.0 Flash via provider abstraction for sub-dollar monthly costs at scale, maintaining 100% zero-LLM deterministic Python for Standard tier question generation and marking.",
+    "Cyclomatic Complexity Standards: Enforce maximum CC of 12 for generator code via radon/CI gates, and derive mathematical procedural_complexity_score (1..10) directly from canonical solution graph branch points.",
+    "Anti-Erosion Architectural Governance: Enforce 5-tier automated pipeline (AST purity linter banning LLM imports in generators, pytest 6-pillar contract suite, seed determinism tests, radon CC gates, and manifest synchronization) to prevent architecture drift during future development.",
+    "Zero Freeform Socratic Chat: All Socratic tutor assistance is 100% declarative and driven by dynamic 1-tap suggestion chips derived from detected misconception tags, with Socratic Shield output sanitization and a 3-strike circuit breaker to SimuLearn.",
+    "POPIA-Compliant Localization & Zero-GPS Architecture: Strict prohibition of real-time device GPS polling or spatial Maps LLMs (protecting minors under POPIA Sec 35). Regionalization is achieved via 1-tap onboarding dropdowns (Province/School) and passive edge IP headers, while ad targeting is managed externally in Meta/Google Ads Manager and amplified by the WhatsApp School-Cluster viral loop.",
+    "Curriculum Source Precedence: curriculum_docs_auto/ takes primary priority for pacing, authentic exam mark allocations, term scheduling, and diagram vision annotations, and must be used in conjunction with manually typed curriculum_docs/ when authoring and calibrating generators.",
+    "Horizontal Curriculum Provision & Diagnostic Adaptive Regression: Topics are sliced horizontally into atomic subskill parameters with strict grade-ceiling gating. Learners enter via a 3-question diagnostic benchmark ('the question is waiting'). Failures on compound questions trigger automated adaptive regression into elementary sub-drills (mode='elementary_<subskill>') and prerequisite booster registries to rebuild schema before advancing.",
+    "Curriculum Provision & Memory-Decayed BKT Guardrails: The system tracks subskill mastery with continuous Ebbinghaus time decay (P(L, Δt)), flagging topics for a 2-question refresher when dropping below 70%. Post-exam triage executes a 3-step cognitive repair sequence (Cognitive Conflict Probe → SimuLearn Micro-Replay → Isomorphic Pair). To prevent cognitive degradation, a 45-minute deliberate practice circuit breaker triggers recovery prompts, while teacher homework assignments execute via an Express Priority Lane with dual-ledger telemetry recording, and offline mobile sessions sync atomically via IndexedDB buffers.",
+    "Production Systems Reliability & Security: Strictly enforce connection pooling (singleton HTTP clients preventing socket exhaustion), bounded Firestore queries (select() projections and cursor pagination preventing memory spikes), CPU worker sandboxing for SymPy (asyncio.to_thread with 2.5s timeout), and zero-compromise child privacy under POPIA Section 35 (zero device GPS polling and PII egress stripping).",
+    "Infinite Question Breadth & 4D Combinatorial Slot-Filling: To guarantee near-unlimited question breadth (>80,000 permutations per topic) without LLM reliance or student repetition, semantic subjects utilize a 4-dimensional slot-filling engine (20 SA industrial sectors, 6 enterprise scales, 15 economic events, 12 statutory frameworks) rotating across 5 cognitive modalities (stepwise symbolic, 2D tabular ledger, drag-and-drop categorization, cloze completion, and misconception-calibrated MCQs), with unified backend dispatch via POST /api/generate.",
+    "Authentic South African Demographic & Geographic Naming Proportionality: Character names, surnames, regional locations, and fictional enterprises in questions, ledgers, and scenarios must never be copied verbatim from past exam papers or commercial trademarks. Instead, they are dynamically generated from a central deterministic engine calibrated to South Africa's demographic composition (Nguni 46%, Sotho-Tswana 28%, Coloured 8%, Tsonga/Venda 7%, Afrikaans 5%, English 3%, Indian 3%) spanning municipal hubs across all 9 provinces, ensuring proportional cultural representation, gender balance, and authentic economic context.",
+    "Multi-Audience Simulation Suite & POPIA Section 35 Reporting: The landing page features authentic, interactive cognitive simulators across four core user perspectives (Learners, Parents, Teachers, and Schools/HODs). To eliminate Meta WhatsApp API messaging fee barriers, parent progress reports are delivered as downloadable/viewable official A4 PDF diagnostic summaries with full procedural flaw autopsies and dinner conversation starters. Educator dashboards feature cross-grade systemic procedural flaw detection (aggregating common error codes across hundreds of learners with 1-click cohort remedial dispatch). In compliance with POPIA Section 35, minor data is never monetized, never advertised against, and never ingested into commercial LLM training datasets.",
+    "Unified Brand Aesthetic & UI Invariant: Question workspaces, diagnostic benchmark modals, and practice environments across all grades and subjects strictly follow the decluttered, bright, and on-brand visual design defined in fundile-ui-alternative-design.html (deep royal blue #13519C header ribbon, gold graduation cap badge, primary action orange #FF9100 CTAs with shadow-ribbon, clean white rounded-2xl cards with border-slate-200, bg-slate-50 canvas, and visible cross-grade regression banners).",
+    "Vertical Cross-Grade Prerequisite Lineage: High school topics are systematically mapped to middle school and foundational roots (Grade 12 -> Grade 7) via prerequisite_tree.py. When a learner struggles on a compound topic (e.g. Grade 11 quadratics), adaptive progression triggers cross-grade descent to lower-grade foundational micro-drills (e.g. Grade 10 trinomials) rather than repeatedly drilling the compound failure.",
+    "Pedagogical Learning Journey Harmony: Progression mechanics (Diagnostic Benchmark -> Scaffold Mode -> Practice Mode -> Assessment Mode -> Prerequisite Descent -> Post-Exam Triage) are arbitrated by learning_journey_architect to prevent conflicting signals. Gamification (XP, streaks, 4-tier badges) is strictly ungameable and calibrated to reinforce genuine conceptual mastery rather than superficial guessing.",
+    "Pro-Tier Agentic Orchestration & Cost Governance: The Pro tier Socratic tutor is governed by agentic_orchestrator_architect. All calculations and questions originate deterministically from Python/SymPy generators, while LLM interactions are strictly bound by topic guardrails, regex solution-leak shields, a 3-strike frustration circuit breaker, and per-session token budgets to prevent hallucination and runaway token costs.",
+    "Mobile-First & Touch-Native UX: All interactive elements maintain a minimum 44px touch target, modals flow into full-viewport layouts on mobile without horizontal clipping, and sticky headers consume <= 15% of vertical viewport real estate. Dynamic auto-hiding scroll behaviors are implemented in MobileWebApkView.jsx (collapsing User Profile Ribbon on downward scroll and restoring on upward scroll or near-top) and LandingPage.jsx (smoothly translating Fixed Blue Ribbon Header and Audience Sub-Ribbon offscreen on downward scroll to maximize screen real estate).",
+    "Comprehensive QA & Scale Testing: Generator determinism, mathematical solvability, responsive viewports, and consequential accuracy marking are continuously verified by qa_test_architect via Monte Carlo seed sweeps, Vitest/Playwright suites, and offline telemetry buffer validation.",
+    "Landing Page Installation & Cross-Platform PWA/WebAPK User Journey: Zero-friction cross-platform installation is provided via InstallAppModal.jsx, supporting auto-detected local network/production domain URLs, high-resolution vector QR code generation for desktop-to-mobile scanning, standalone display mode, Brand Orange (#FF9100) graduation cap iconography across all 4 PWA icons and mobile install surfaces, and custom service worker caching (public/manifest.json, public/sw.js, pwa-192x192.png, pwa-512x512.png, pwa-maskable-512x512.png, apple-touch-icon.png on #13519C brand blue)."
+  ],
+  "openQuestions": [],
+  "planningDocuments": [
+    {
+      "name": "Simulation-implementation-plan.md",
+      "path": "Simulation-implementation-plan.md",
+      "covers": "Layer B (SimuLearn) and Layer C (Pro Agent)",
+      "sizeKB": 63.8
+    },
+    {
+      "name": "Complete-App-Implementation-Plan.md",
+      "path": "Complete-App-Implementation-Plan.md",
+      "covers": "Layer D (Complete App), Layer E (Gamification)",
+      "sizeKB": 54.7
+    },
+    {
+      "name": "Olympiad-Track-Implementation-Plan.md",
+      "path": "Olympiad-Track-Implementation-Plan.md",
+      "covers": "Layer F (Olympiad Track)",
+      "sizeKB": 17.8
+    },
+    {
+      "name": "curriculum_provision_design.md",
+      "path": "curriculum_provision_design.md",
+      "covers": "Curriculum Provision & Adaptive Learning Master Plan (Grades 7–12 across 7 subject domains, Memory-Decayed BKT, Post-Readiness Exam Suite, Pacing Guardrails)",
+      "sizeKB": 67.1
+    },
+    {
+      "name": "fundile_ecosystem_and_admin_connectivity.md",
+      "path": "fundile_ecosystem_and_admin_connectivity.md",
+      "covers": "Four-Tier Ecosystem Architecture (Learner, Teacher LMS, School Admin, Superadmin), End-to-End Interconnection, and Mobile Readiness Roadmap",
+      "sizeKB": 18.5
+    }
+  ]
+}

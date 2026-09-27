@@ -1,0 +1,2757 @@
+# Euclidean geometry
+
+\-REVISE parallelogram and Midpoint theorem from grade 10
+
+
+
+## Circle geometry
+
+### Terminology
+
+The following terms are regularly used when referring to circles:
+
+* Arc —a portion of the circumference of a circle.
+* Chord —a straight line joining the ends of an arc.
+* Circumference — the perimeter or boundary line of a circle.
+* Radius (r) — any straight line from the centre of the circle to a point on the circumference.
+* Diameter — a special chord that passes through the centre of the circle. A diameter is a straight line segment from one point on the circumference to another point on the circumference that passes through the centre of the circle.
+* Segment — part of the circle that is cut off by a chord. A chord divides a circle into two segments.
+* Tangent — a straight line that makes contact with a circle at only one point on the circumference.
+
+
+
+>DRAWING\\\\\\\[
+
+\-Circle depicting the terminology
+
+]
+
+
+
+### Axioms
+
+\-An axiom is an established or accepted principle. For this section, the following are accepted as axioms.
+
+
+
+#### 1
+
+The theorem of Pythagoras states that the square of the hypotenuse of a right angled triangle is equal to the sum of the squares of the other two sides.
+
+(AC)^2 = (AB)^2 + (BC)^2
+
+
+
+>DIAGRAMS\\\\\\\[
+
+\-Right angled triangle ABC
+
+\-Each side is also part of a square so that the areas of squares add up as: (AB)^2 + (BC)^2 = (AC)^2
+
+
+
+#### 2
+
+A tangent is perpendicular to the radius (OT ⊥ ST), drawn at the point of contact with the circle.
+
+
+
+### Theorems
+
+\-A theorem is a hypothesis (proposition) that can be shown to be true by accepted mathematical operations and arguments.
+
+\-A proof is the process of showing a theorem to be correct.
+
+\-The converse of a theorem is the reverse of the hypothesis and the conclusion.
+
+\-For example, given the theorem “if A, then B”, the converse is “if B, then A”.
+
+
+
+#### 1st Theorem : Perpendicular line from circle centre bisects chord
+
+
+
+##### STATEMENT
+
+\-If a line is drawn from the centre of a circle perpendicular to a chord, then it bisects the chord.
+
+(Reason: ⊥ from centre bisects chord)
+
+
+
+##### Given:
+
+\-Circle with centre O and line OP perpendicular to chord AB.
+
+
+
+>DIAGRAM\\\\\\\[
+
+\-Circle centre O
+
+\-Chord AB
+
+\-P lies on AB
+
+\-OP is perpendicular to AB
+
+]
+
+
+
+##### Required to prove:
+
+AP = PB
+
+
+
+##### PROOF
+
+Draw OA and OB.
+
+In △OPA and in △OPB,
+
+OA^2 = OP^2 + AP^2 (Pythagoras)
+
+OB^2 = OP^2 + BP^2 (Pythagoras)
+
+
+
+and
+
+OA = OB (equal radii)
+
+∴ AP^2 =BP^2
+
+∴ AP = BP
+
+Therefore OP bisects AB.
+
+
+
+##### Alternative proof:
+
+In △OPA and in OPB,
+
+OPˆA = OPˆB (given OP ⊥ AB)
+
+OA=OB (equal radii)
+
+OP =OP (common side)
+
+
+
+∴ OPA≡ OPB (RHS)
+
+∴ AP =PB
+
+Therefore OP bisects AB.
+
+
+
+#### (THE FOLLOWING PROOF NOT FOR EXAMS) Converse of 1st theorem : Line from circle centre to mid-point of chord is perpendicular
+
+
+
+##### STATEMENT
+
+\-If a line is drawn from the centre of a circle to the mid-point of a chord, then the line is perpendicular to the chord.
+
+
+
+(Reason: line from centre to mid-point ⊥)
+
+
+
+##### Given:
+
+\-Circle with centre O and line OP to mid-point P on chord AB.
+
+
+
+>DIAGRAM\\\\\\\[
+
+\-Circle centre O
+
+\-Chord AB
+
+\-P lies on AB such that AP =  PB
+
+]
+
+
+
+##### Required to prove:
+
+\-OP ⊥ AB
+
+
+
+##### PROOF
+
+\-Draw OA and OB.
+
+
+
+In △OPA and in △OPB,
+
+OA = OB (equal radii)
+
+AP =PB (given)
+
+OP = OP (common side)
+
+∴ OPA≡ OPB (SSS)
+
+∴ OPˆA = OPˆB
+
+and OPˆA + OPˆB = 180° (∠onstr. line)
+
+∴ OPˆA = OPˆB = 90°
+
+
+
+Therefore OP ⊥ AB.
+
+
+
+#### 2nd Theorem: Perpendicular bisector of chord passes through circle centre
+
+
+
+##### STATEMENT
+
+\-If the perpendicular bisector of a chord is drawn, then the line will pass through the centre of the circle.
+
+
+
+(Reason: ⊥ bisector through centre)
+
+
+
+##### Given:
+
+Circle with mid-point P on chord AB.
+
+Line QP is drawn such that QPˆA = QˆPB = 90◦.
+
+Line RP is drawn such that RPˆA = RPˆB = 90◦.
+
+
+
+>DIAGRAM\\\\\\\[
+
+\-Circle with chord AB
+
+\-P lies on AB such that AP = PB
+
+\-Point R such that PR is perpendicular to AB
+
+\-Point Q lies on PR
+
+\-Lines QA and QB are drawn
+
+\-Dashed lines RA and RB are drawn
+
+]
+
+
+
+##### Required to prove:
+
+Circle centre O lies on the line PR
+
+
+
+##### PROOF
+
+\-Draw lines QA and QB.
+
+\-Draw lines RA and RB.
+
+
+
+In △QPA and in △QPB,
+
+AP =PB (given)
+
+QP =QP (common side)
+
+QPˆA = QPˆB = 90◦ (given)
+
+∴ QPA≡ QPB (SAS)
+
+∴ QA=QB
+
+
+
+\-Similarly it can be shown that in RPA and in RPB, RA = RB.
+
+\-We conclude that all the points that are equidistant from A and B will lie on the line PR extended.
+
+\-Therefore the centre O, which is equidistant to all points on the circumference, must also lie on the line PR.
+
+
+
+
+
+#### EXAMPLE
+
+Given OQ ⊥ PR and PR = 8 units, determine the value of x.
+
+
+
+>DIAGRAM\\\\\\\[
+
+\-Circle centre O
+
+\-Chord PR
+
+\-Point Q lies on PR such that OQ is perpendicular to PR
+
+\-Right angled triangle OPQ is drawn such that OP = 5 and OQ = x
+
+]
+
+
+
+##### SOLUTION
+
+###### Step 1: Use theorems and the given information to find all equal angles and sides on the diagram
+
+PQ = QR = 4 (⊥ from centre bisects chord)
+
+
+
+###### Step 2: Solve for x
+
+In △OQP:
+
+PQ = 4 (⊥ from centre bisects chord)
+
+OP^2 = OQ^2 + QP^2 (Pythagoras)
+
+5^2 = x^2 + 4^2
+
+∴ x^2 = 25 − 16
+
+x^2 = 9
+
+x = 3
+
+
+
+###### Step 3: Write the final answer
+
+x = 3 units.
+
+
+
+#### QUESTIONS
+
+##### 1
+
+>DIAGRAM\\\\\\\[
+
+\-Circle centre O
+
+\-Chord PR
+
+\-Point Q lies on PR such that OQ is perpendicular to PR
+
+\-Right-angled triangle OPQ
+
+\-OP = x
+
+\-OQ = 4
+
+]
+
+
+
+\-In the circle with centre O, OQ ⊥ PR, OQ =4 units and PR = 10. Determine x.
+
+
+
+##### 2
+
+>DIAGRAM\\\\\\\[
+
+\-Circle centre O
+
+\-Chord PR
+
+\-Point Q lies on PR such that OQ is perpendicular to PR
+
+\-Radius drawn from centre O to the circumference is labelled 10
+
+]
+
+
+
+\-In the circle with centre O and radius = 10 units, OQ ⊥ PR and PR = 8. Determine x.
+
+
+
+##### 3
+
+>DIAGRAM\\\\\\\\\\\\\\\[
+
+\-Circle centre O
+
+\-Chord PR
+
+\-Point Q lies on minor arc PR
+
+\-OQ is drawn such that it intersects PR at S
+
+\-OP = x
+
+]
+
+
+
+\-In the circle with centre O, OQ ⊥ PR, PR = 12 units and SQ = 2 units. Determine x.
+
+
+
+##### 4
+
+>DIAGRAM\\\\\\\\\\\\\\\[
+
+\-Circle centre O
+
+\-Chord PR and Chord SQ
+
+\-Point V lies on minor arc SQ and minor arc PR
+
+\-Line OV is drawn such that it cuts both chord PR and chord SQ at right angles.
+
+\-OV intersects SQ at T and PR at U
+
+\-ST = 5
+
+\-PU = 8
+
+\-OP = 10
+
+\-OQ is also drawn
+
+]
+
+
+
+\-In the circle with centre O, OT ⊥ SQ, OT ⊥ PR, OP =10 units, ST = 5 units and PU = 8 units. Determine TU.
+
+
+
+##### 5
+
+>DIAGRAM\\\\\\\[
+
+\-Circle centre O
+
+\-Chords PQ and PR are drawn
+
+\-PQ is 24
+
+\-PR is 25
+
+\-Point T lies on PQ such that OT is perpendicular to PQ
+
+\-Point S lies on PR such that OS is perpendicular to PR
+
+\-OT = 5
+
+\-OS = x
+
+\-Right angled triangle OQT is drawn
+
+]
+
+
+
+\-In the circle with centre O, OT ⊥ QP, OS ⊥ PR, OT = 5 units, PQ = 24 units and PR = 25 units. Determine OS = x.
+
+
+
+#### 3rd Theorem: Angle at the centre of a circle is twice the size of the angle at the circumference
+
+
+
+##### STATEMENT
+
+\-If an arc subtends an angle at the centre of a circle and at the circumference, then the angle at the centre is twice the size of the angle at the circumference.
+
+(Reason: ∠ at centre = 2∠ at circum.)
+
+
+
+##### Given:
+
+Circle with centre O, arc AB subtending A ˆOB at the centre of the circle, and APˆB at the circumference.
+
+
+
+>DIAGRAM\\\[
+
+\-3 circles with centre O and 3 different arrangements in which an arch subtends angles at the centre and circumference.
+
+\-1st arrangement: for the llm il call this the chevron type arrangement
+
+* Point A and B  are on the circumference, located on the bottom half of the circle, while point P is in the opposite top half.
+* Chords AP and BP, radii OA and OB are drawn, so that a chevron like shape is inscribed within the circle, with vertices A, B and P touching the circumference.
+* Q sits within the circle such that dashed line PQ cuts through centre O.
+
+\-2nd arrangement: for the llm il call this the quadrilateral type arrangement
+
+* All points A; P and B are arranged on the circumference in that order in the bottom half of the circle.
+* A and P are in the left half while B is in the right half of the circle.
+* Chords AP and BP, radii OA and OB are drawn such that a quadrilateral with all internal angles less than 180 is  formed with vertices A, B and P touching the circumference.
+* Q sits within the circle such that dashed line PQ cuts through centre O.
+
+\-3rd arrangement: For the llm il call this the x-type arrangement.
+
+* Points A and B are located on the bottom half of the circle while points P and B are located on the right half of the circle.
+* Such that Chord AP intersects radius OB.
+* Q sits within the circle such that dashed line PQ cuts through centre O.
+
+]
+
+
+
+##### Required to prove:
+
+AOˆB = 2APˆB
+
+
+
+##### PROOF
+
+\-Draw PO extended to Q and let AOˆQ = Oˆ\_1 and BOˆQ = Oˆ\_2.
+
+
+
+Oˆ\_1 = APˆO + PAˆO (ext. ∠ = sum int. opp. ∠s)
+
+and APˆO = PAˆO (equal radii, isosceles APO)
+
+∴ Oˆ\_1 = APˆO + APˆO
+
+Oˆ\_1 = 2APˆO
+
+
+
+\-Similarly, we can also show that Oˆ2 = 2BPˆO.
+
+
+
+\-For the first two diagrams shown above we have that:
+
+AOˆB = Oˆ\_1 + Oˆ\_2
+
+= 2APˆO + 2BPˆO
+
+= 2(APˆO + BPˆO)
+
+∴ AOˆB = 2(APˆB)
+
+
+
+\-And for the last diagram:
+
+AOˆB = Oˆ\_2 − Oˆ\_1
+
+= 2BPˆO − 2APˆO
+
+= 2(BPˆO − APˆO)
+
+∴ AOˆB = 2 (APˆB)
+
+
+
+##### EXAMPLE
+
+>DIAGRAM\\\[
+
+\-Circle centre O
+
+\-Points A, K and J lie on the circumference
+
+\-radii OH and OK are drawn
+
+\-Chords KH and JK are drawn
+
+\-angle HJˆK is a
+
+]
+
+
+
+\-Given that HK passes through circle centre O and is the diameter of the circle , find a.
+
+
+
+###### SOLUTION
+
+\####### Step 1: Use theorems and the given information to find all equal angles and sides on the diagram
+
+
+
+\####### Step 2: Solve for a
+
+In HJK:
+
+HOˆK = 180° (∠onstr. line)
+
+= 2a (∠ at centre = 2∠ at circum.)
+
+∴2 a= 180°
+
+a = 180°/2
+
+= 90°
+
+
+
+\####### Step 3: Conclusion
+
+The diameter of a circle subtends a right angle at the circumference (angles in a semi-circle).
+
+
+
+
+
+##### QUESTIONS
+
+Given O is the centre of the circle, determine the unknown angles b, c, d, e and f in the following diagrams:
+
+
+
+###### 1
+
+>DIAGRAM\\\[
+
+\-Chevron type arrangement
+
+\-The main tip of the chevron is J
+
+\-The other 2 tips are H and K
+
+\-Angle subtended at the circumference by arc HK is 45
+
+\-Angle subtended at the centre is b
+
+]
+
+
+
+###### 2
+
+>DIAGRAM\\\[
+
+\-Circle centre O
+
+\-Triangle JHK
+
+\-JK is the diameter passing through O
+
+\-Chords JH and KH are drawn
+
+\-Angle LKˆH is 35
+
+\-Angle KJˆH is c
+
+]
+
+
+
+###### 3
+
+>DIAGRAM
+
+\-X-type arrangement
+
+\-Radius OJ and OH draw
+
+\-Chord JK drawn such that it intersects radius OH
+
+\-Chord HK is drawn
+
+\-Angle JOH is 45
+
+\-Angle JKH is d
+
+]
+
+
+
+###### 4
+
+>DIAGRAM\\\[
+
+\-Quadrilateral arrangement
+
+\-Radius OK and OH are drawn
+
+\-Chords JH and KJ are drawn
+
+\-Angle KJH is 100
+
+\-The exterior angle at O is e
+
+]
+
+
+
+###### 5
+
+>DIAGRAM\\\[
+
+\-Quadrilateral arrangement
+
+\-Radii OK and OJ are drawn such that KOJ is 120
+
+\-Chords JH and HK are drawn
+
+\-Angle JHK is f
+
+\-A distractor line JK is present
+
+]
+
+
+
+#### 4th Theorem: Subtended angles in the same segment of a circle are equal
+
+
+
+##### STATEMENT
+
+If the angles subtended by a chord of the circle are on the same side of the chord, then the angles are equal.
+
+(Reason: ∠s in same seg.)
+
+
+
+
+
+##### Given:
+
+Circle with centre O, and points P and Q on the circumference of the circle. Arc AB subtends AˆPB and AˆQB in the same segment of the circle.
+
+
+
+>DIAGRAM\\\[
+
+\-Circle centre O
+
+\-Chords AQ, PB are drawn on either side of the centre O.
+
+\-Chords QB and AP are drawn such that they intersect
+
+\-dashed lines represent radii OA and OB
+
+]
+
+
+
+##### Required to prove:
+
+APˆB = AQˆB
+
+
+
+##### PROOF
+
+AOˆB = 2APˆB	(∠ at centre = 2∠ at circum.)
+
+AOˆB = 2AQˆB	(∠ at centre = 2∠ at circum.)
+
+∴ 2APˆB = 2AQˆB
+
+APˆB = AQˆB
+
+
+
+
+
+##### Extension
+
+\-Equal arcs subtend equal angles: From the theorem above we can deduce that if angles at the circumference of a circle are subtended by arcs of equal length, then the angles are equal.
+
+\-In the figure below, notice that if we were to move the two chords with equal length closer to each other, until they overlap, we would have the same situation as with the theorem above.
+
+\-This shows that the angles subtended by arcs of equal length are also equal.
+
+
+
+#### (THE FOLLOWING PROOF NOT FOR EXAMS) Converse of 4th theorem : Concyclic points
+
+
+
+##### STATEMENT
+
+\-If a line segment subtends equal angles at two other points on the same side of the line segment, then these four points are concyclic (lie on a circle).
+
+
+
+##### Given:
+
+\-Line segment AB subtending equal angles at points P and Q on the same side of the line segment AB.
+
+
+
+>DIAGRAM\\\[
+
+\-Triangles ABQ and ABR are inscribed in a circle such that chords AR and BQ intersect.
+
+\-Chord AR is extended across the circumference to point P so that an additional triangle ABP is formed.
+
+]
+
+
+
+##### Required to prove:
+
+A, B, P and Q lie on a circle.
+
+
+
+##### PROOF
+
+* Proof by contradiction:
+
+\-Points on the circumference of a circle: we know that there are only two possible options regarding a given point — it either lies on circumference or it does not.
+
+
+
+\-We will assume that point P does not lie on the circumference.
+
+
+
+\-We draw a circle that cuts AP at R and passes through A, B and Q.
+
+AˆQB = ARˆB (∠s in same seg.)
+
+but AˆQB = APˆB (given)
+
+∴ AˆRB = APˆB
+
+but AˆRB = APˆB + RBˆP (ext. ∠ =sumint. opp.)
+
+∴ RBˆP =0°
+
+
+
+\-Therefore the assumption that the circle does not pass through P must be false.
+
+\-We can conclude that A, B, Q and P lie on a circle (A, B, Q and P are concyclic).
+
+
+
+
+
+##### EXAMPLE
+
+Given FH || EI and EIˆF = 15°, determine the value of b.
+
+
+
+>DIAGRAM\\\[
+
+\-Chords FH and EI are parallel (with single parallelism tick marks)
+
+\-Chords FI and EH are drawn so that they intersect.
+
+\-Point G is located such that Chord GI intersects chords FH and EH.
+
+\-Chord GH is also drawn
+
+\-Angle EIF is 15°
+
+\-Angle IGH is b
+
+]
+
+
+
+###### SOLUTION
+
+\####### Step 1: Use theorems and the given information to find all equal angles on the diagram
+
+
+
+\####### Step 2: Solve for b
+
+HFˆI = 15° (alt. ∠, FH || EI)
+
+and b = HFˆI (∠s in same seg.)
+
+∴ b = 15°
+
+
+
+##### QUESTIONS
+
+###### 1
+
+&#x20;Find the values of the unknown angles a, b, c and d.
+
+
+
+\####### a)
+
+>DIAGRAMS\\\[
+
+\-Chords AD; BC are drawn such that Chords AC and BD intersect
+
+\-Angle CBD is 21°
+
+\-Angle CAD is a
+
+]
+
+
+
+\####### b)
+
+>DIAGRAM\\\[
+
+\-Chords JK and ML are drawn such that Chords JL and KM intersect
+
+\-Angle MLJ is 24°
+
+\-One angle at the intersection is 102°
+
+\-Angle MKJ is b
+
+\-Angle KJL is c
+
+]
+
+
+
+\####### c)
+
+>DIAGRAM\\\[
+
+\-Chords OP and NQ are parallel
+
+\-Chords OQ and NP are drawn such that they intersect
+
+\-One of the angles at the intersection is labelled 17°
+
+\-Angle OPN is d]
+
+
+
+
+
+###### 2
+
+>DIAGRAM\\\[
+
+\-Chord UV subtends 2 angles at points S and R at the circumference
+
+\-Chords UR and US are drawn so that angle URV = 35° and angle SUV = e
+
+\-Chord VT is drawn so that it intersects US and UR
+
+\-Chords TR and VS are also drawn such that angles TRU = 45° and RVS = 15°
+
+]
+
+
+
+\####### a)
+
+Given TVˆS = SVˆR, determine the value of e.
+
+
+
+\####### b)
+
+Is TV a diameter of the circle? Explain your answer.
+
+
+
+###### 3
+
+>DIAGRAM\\\[
+
+\-Circle centre O
+
+\-Chord XZ passes through O and subtends angles at point W and Y on the circumference either side of XZ.
+
+\-Chord WY is drawn intersecting XZ at point T
+
+\-Angle XWY is 35°
+
+\-Angle WZX is f
+
+]
+
+
+
+\-Given circle with centre O, WT = TY and XWˆT = 35°. Determine f.
+
+
+
+
+
+#### 5th Theorem: Opposite angles of a cyclic quadrilateral
+
+
+
+##### STATEMENT
+
+\-The opposite angles of a cyclic quadrilateral are supplementary.
+
+
+
+\-(Reason: opp. ∠s cyclic quad.)
+
+
+
+\-Cyclic quadrilaterals are quadrilaterals with all four vertices lying on the circumference of a circle (concyclic).
+
+
+
+##### Given:
+
+\-Circle with centre O with points A, B, P and Q on the circumference such that ABPQ is a cyclic quadrilateral.
+
+
+
+>DIAGRAM\\\[
+
+\-Circle centre O
+
+\-Cyclic quadrilateral ABPQ
+
+\-Dashed radii OA and OP are drawn.
+
+\-The smaller angle at O is labelled 1 and the larger angle is labelled 2.
+
+]
+
+
+
+##### Required to prove:
+
+ABˆP + AQˆP = 180° and QAˆB + QPˆB = 180°
+
+
+
+##### PROOF
+
+Draw AO and OP. Label Oˆ\_1 and Oˆ\_2.
+
+Oˆ\_1 = 2ABˆ\_P (∠ at centre = 2∠at circum.)
+
+Oˆ\_2 = 2AQˆ\_P (∠ at centre = 2∠ at circum.)
+
+and Oˆ\_1 + Oˆ\_2 = 360° (∠s around a point)
+
+∴2ABˆP + 2AQˆP = 360°
+
+ABˆP + AQˆP = 180°
+
+
+
+\-Similarly, we can show that QAˆB + QPˆB = 180°.
+
+
+
+##### By Extension
+
+* Converse: interior opposite angles of a quadrilateral
+
+\-If the interior opposite angles of a quadrilateral are supplementary, then the quadrilateral is cyclic.
+
+
+
+* Exterior angle of a cyclic quadrilateral
+
+\-If a quadrilateral is cyclic, then the exterior angle is equal to the interior opposite angle.
+
+
+
+#### Methods for proving a quadrilateral is cyclic
+
+\-There are three ways to prove that a quadrilateral is a cyclic quadrilateral:
+
+
+
+|DIAGRAM|Method of proof|Reason|
+|-|-|-|
+|Quadrilateral PQRS|If Pˆ+ Rˆ =180° or Sˆ+ Qˆ = 180°, then PQRS is a cyclic quad.|opp. int. angles suppl.|
+|Lines PS and QR drawn side by side. PS > QR. Lines PR and QS are drawn and intersect|If Pˆ = Qˆ or Sˆ = Rˆ, then PQRS is a cyclic quad.|angles in the same segment|
+|Quadrilateral PQRS. Then side PQ is extended to T.|If TQˆR = Sˆ, then PQRS is a cyclicquad.|ext. angle equal to int. opp. angle|
+
+
+
+
+
+##### EXAMPLES
+
+###### 1
+
+>DIAGRAM\\\[
+
+\-Circle centre O
+
+\-PQ is a diameter passing through O
+
+\-Cyclic quadrilateral PQRS
+
+\-Diagonal QS is drawn
+
+\-Angle QPS = 34
+
+\-Angle PQS = b
+
+\-Angle QSP = a
+
+\-Angle QRS = c
+
+]
+
+
+
+\-Given the circle with centre O and cyclic quadrilateral PQRS. SQ is drawn and SˆPQ = 34°. Determine the values of a, b and c.
+
+
+
+\####### SOLUTION
+
+\######## Step 1: Use theorems and the given information to find all equal angles on the diagram
+
+
+
+\######## Step 2: Solve for b
+
+SˆPQ + c = 180° (opp. ∠s cyclic quad supp.)
+
+∴ c = 180° − 34°
+
+= 146°
+
+a = 90° (∠ in semi circle)
+
+
+
+\-In PSQ:
+
+a + b + 34° = 180°  (∠sum of )
+
+∴ b = 180°− 90°− 34°
+
+= 56°
+
+
+
+###### 2
+
+>DIAGRAM\\\[
+
+\-Circle centre O.
+
+\-Diameter CD passes through O
+
+\-B sits on the circumference so that triangle BCD is inscribed
+
+\-Side CB is extended to A beyond the circumference and side CD is extended to E beyond the circumference
+
+\-AE is drawn such that it is perpendicular to CE
+
+\-Triangle AEC is a right-angled triangle, with angle E as 90°
+
+]
+
+
+
+\-Prove that ABDE is a cyclic quadrilateral.
+
+
+
+\####### SOLUTION
+
+\######## Step 1: Use theorems and the given information to find all equal angles on the diagram
+
+
+
+\######## Step 2: Prove that ABDE is a cyclic quadrilateral
+
+DBˆC = 90° (∠ in semi circle)
+
+and Eˆ= 90° (given)
+
+∴DBˆC = Eˆ
+
+∴ABDE is a cyclic quadrilateral (ext. ∠ equals int. opp. ∠)
+
+
+
+##### QUESTIONS
+
+###### 1\.
+
+Find the values of the unknown angles.
+
+
+
+\####### a
+
+>DIAGRAM\\\[
+
+\-Cyclic quadrilateral WXYZ
+
+\-Angle at X is 106°
+
+\-Angle at Y is 87°
+
+\-Angle at W is a
+
+\-Angle at Z is b
+
+]
+
+
+
+\####### b
+
+>DIAGRAM\\\[
+
+\-Cyclic quadrilateral HIJK
+
+\-Angle HIJ = 114°
+
+\-HK is extended to L beyond the circumference so that angle JKL is a
+
+]
+
+
+
+\####### c
+
+>DIAGRAM\\\[
+
+\-Cyclic quadrilateral UVWX
+
+\-Diagonal VX is drawn
+
+\-Angle at U is 86°
+
+\-Angle XVW is 57°
+
+\-Angle VXW is a
+
+]
+
+
+
+###### 2
+
+Prove that ABCD is a cyclic quadrilateral:
+
+
+
+\####### a
+
+>DIAGRAM\\\[
+
+\-2 triangles ADC and BDC share side DC
+
+\-Sides AC and BD intersect at M
+
+\-Angle DAC is 40°
+
+\-Angle BCM = BCA = 32°
+
+\-The angle opposite angle DMC at the intersection is 72°
+
+]
+
+
+
+\####### b
+
+>DIAGRAM\\\[
+
+\-Qudrilateral ABCD
+
+\-AB is shorter than and parallel to DC
+
+\-Side AD = AB, each with double tick marks
+
+\-Diagonal BD is drawn
+
+\-Angle BCD is 70°
+
+\-Angle ABD = 35°
+
+]
+
+
+
+#### 6th Theorem: Two tangents drawn from the same point outside a circle
+
+##### STATEMENT
+
+\-If two tangents are drawn from the same point outside a circle, then they are equal in length.
+
+\-(Reason: tangents from same point equal)
+
+\-A tangent is a line that touches the circumference of a circle at only one place.
+
+\-The radius of a circle is perpendicular to the tangent at the point of contact.
+
+
+
+##### Given:
+
+\-Circle with centre O and tangents PA and PB, where A and B are the respective points of contact for the two lines.
+
+
+
+>DIAGRAM\\\[
+
+\-Circle centre O
+
+\-Dashed radii OA and OB are drawn
+
+\-Tangents at A and B meet at P
+
+\-Dashed line OP is drawn
+
+]
+
+
+
+##### Required to prove:
+
+AP = BP
+
+
+
+##### PROOF
+
+In △AOP and △BOP,
+
+OˆAP = OˆBP = 90◦ (tangent⊥radius)
+
+AO = BO (equal radii)
+
+OP = OP (common side)
+
+∴ AOP ≡ BOP (RHS)
+
+∴ AP = BP
+
+
+
+##### Example
+
+\-In the diagram below AE = 5 cm, AC = 8 cm and CE = 9 cm. Determine the values of a, b and c.
+
+
+
+>DIAGRAM\\\[
+
+\-Triangle ACE
+
+\-Circle is inscribe inside the triangle so that the side of the triangle are tangents of the circle
+
+\-Side AC forms a tangent at B
+
+\-Side CE forms a tangent at D
+
+\-Side EA forms a tangent at F
+
+\-AB = a
+
+\-CD = b
+
+\-DE = c
+
+]
+
+
+
+
+
+###### SOLUTION
+
+\-Step 1: Use theorems and the given information to find all equal angles on the diagram
+
+
+
+\-Step 2: Solve for a, b and c
+
+AB = AF = a (tangents from A)
+
+EF = ED = c (tangents from E)
+
+CB = CD = b (tangents from C)
+
+
+
+∴ AE = a + c = 5
+
+and AC = a + b = 8
+
+and CE = b +c = 9
+
+
+
+\-Step 3: Solve for the unknown variables using simultaneous equations
+
+
+
+a +c=5 ...(1)
+
+a +b=8 ...(2)
+
+b +c =9 ...(3)
+
+
+
+\-Subtract equation (1) from equation (2) and then substitute into equation (3):
+
+(2) −(1) b−c =8−5
+
+=3
+
+∴ b =c+3
+
+
+
+\-Substitute into (3) c + 3 + c = 9
+
+2c = 6
+
+c =3
+
+∴ a=2
+
+and b = 6
+
+
+
+##### QUESTION
+
+\-Find the values of the unknown lengths.
+
+
+
+###### 1
+
+>DIAGRAM\\\[
+
+\-Circle centre J
+
+\-Radii JG and JI are drawn
+
+\-JG = 5cm
+
+\-Tangents at G and I meet at H
+
+\-HI is 8cm
+
+\-Line JH is drawn.
+
+JH = d
+
+]
+
+
+
+###### 2
+
+>DIAGRAM\\\[
+
+\-Circle centre O
+
+\-Radii OK, OM and OP are drawn
+
+\-OK = 2cm
+
+\-Tangents at K and M meet at L
+
+\-KL = 6cm
+
+\-Tangent at P meets the tangent at M at point N
+
+\-LN = 7,5 cm
+
+\-ON is drawn
+
+\-ON = d
+
+]
+
+
+
+###### 3
+
+>DIAGRAM\\\[
+
+\-Circle with tangents at R and Q
+
+\-Tangents meet at S
+
+\-RS = 3 cm
+
+\-QS = f
+
+]
+
+
+
+#### 7th Theorem: Tangent-chord theorem
+
+
+
+##### STATEMENT
+
+\-The angle between a tangent to a circle and a chord drawn at the point of contact, is equal to the angle which the chord subtends in the alternate segment.
+
+\-(Reason: tan. chord theorem)
+
+
+
+##### Given:
+
+\-Circle with centre O and tangent SR touching the circle at B. Chord AB subtends Pˆ\_1 and Qˆ\_1
+
+
+
+>DIAGRAM\\\[
+
+\-Circle centre O
+
+\-Cyclic quadrilateral APBQ
+
+\-Chord AB is drawn as a diagonal
+
+\-dashed line diameter BT cuts through AQ
+
+\-dashed line chord AT is drawn
+
+\-These results in 3 triangles: APB with the internal angle at P as Pˆ\_1; Triangle ABT with the internal angle at T as Tˆ\_1 and ABQ with the internal angle at Q as Qˆ\_1.
+
+\-Tangent SR touches the circle at B
+
+]
+
+
+
+##### Required to prove:
+
+1\. ABˆR = APˆB
+
+2\. ABˆS = AQˆB
+
+
+
+##### PROOF
+
+\-Draw diameter BT and join T to A.
+
+\-Let ATˆB = T\_1.
+
+ABˆS +ABˆT = 90° (tangent ⊥ radius)
+
+BAˆT = 90° (∠ in semi circle)
+
+∴ ABˆT +T\_1 = 90° (∠ sum of BAT)
+
+∴ ABˆS =T\_1
+
+but Q1 = T\_1 (∠s in same segment)
+
+∴ Q\_1 =ABˆS
+
+
+
+ABˆS +ABˆR = 180° (∠s on str. line)
+
+
+
+Qˆ\_1 + Pˆ\_1 = 180° (opp. ∠scyclicquad. supp.)
+
+∴ ABˆS + ABˆR = Q\_1 + P\_1
+
+and ABˆS = Q\_1
+
+∴ ABˆR = P\_1
+
+
+
+##### EXAMPLE
+
+\-Determine the values of h and s.
+
+
+
+>DIAGRAM\\\[
+
+\-Circle with inscribed triangle RSQ
+
+\-Tangent OP touches the circle at Q
+
+\-Angle RSQ = 4h
+
+\-Angle QRS = 4h - 70
+
+\-Angle OQS is h + 20
+
+\-Angle PQR = s
+
+]
+
+
+
+###### SOLUTION
+
+
+
+\####### Step 1: Use theorems and the given information to find all equal angles on the diagram
+
+
+
+\####### Step 2: Solve for h
+
+OQˆS = SRˆQ (tangent chord theorem)
+
+h + 20° = 4h − 70°
+
+90° = 3h
+
+∴ h = 30°
+
+
+
+\####### Step 3: Solve for s
+
+PQˆR = QSˆR (tangent chord theorem)
+
+s = 4h
+
+= 4(30°)
+
+= 120°
+
+
+
+##### QUESTIONS
+
+###### 1\.
+
+\-Find the values of the unknown letters, stating reasons.
+
+
+
+\####### a
+
+>DIAGRAM\\\[
+
+\-Circle with triangle QRS inscribed
+
+\-Tangent OP, parallel to SR touches the circle at Q
+
+\-Angle PQR is 33°
+
+\-Angle QSR = a
+
+\-Angle QRS = b
+
+]
+
+
+
+
+
+\####### b
+
+>DIAGRAM\\\[
+
+\-Circle with triangle QRS inscribed
+
+\-RS = SQ
+
+\-Tangent OP touches the circle at Q
+
+\-Angle PQR is 72°
+
+\-Angle QSR = c
+
+\-Angel QRS = d
+
+]
+
+
+
+\####### c
+
+>DIAGRAM\\\[
+
+\-Circle with inscribed triangle QRS
+
+\-Tangent OP touches the circle at Q
+
+\-Angle PQR = 38°
+
+\-Angle OQS = 47°
+
+\-Angle QSR = f
+
+\-Angle QRS = g
+
+]
+
+
+
+\####### d
+
+>DIAGRAM\\\[
+
+\-Circle with inscribed triangle OPQ
+
+\-Tangents at O and Q intersect at R
+
+\-Angle OPQ is 66°
+
+\-Angle ORQ is l
+
+]
+
+
+
+\####### e
+
+>DIAGRAM\\\[
+
+\-Circle with inscribed triangle QRS
+
+\-Tangent OP touches the circle at Q
+
+\-Angle RQS = 39°
+
+\-Angle PQR = 101°
+
+\-Angle OQS = i
+
+\-Angle QSR = j
+
+]
+
+
+
+\####### f
+
+>DIAGRAM\\\[
+
+\-Circle with inscribed triangle QST
+
+\-Tangent OR touches the circle at Q
+
+\-Angle SQT = 90°
+
+\-Angle TSQ = 34°
+
+\-Angle OQS = m
+
+\-Angle TQR = n
+
+\-Angle STQ = o
+
+]
+
+
+
+\####### g
+
+>DIAGRAM\\\[
+
+\-Circle centre O with inscribed triangle QST
+
+\-QS is a diameter passing through O
+
+\-Tangent PR touches the circle at Q
+
+\-Angle RQT = 52°
+
+\-Angle TQS = p
+
+\-Angle QST = q
+
+\-Angle STQ = r
+
+]
+
+
+
+###### 2
+
+\-O is the centre of the circle and SPT is a tangent, with OP ⊥ ST. Determine a, b and c, giving reasons.
+
+
+
+>DIAGRAM\\\[
+
+\-Circle centre O with inscribed triangle MNP
+
+\-Radii OP and ON are drawn
+
+\-Tangent ST touches the circle at P
+
+\-Angle NPT = 64°
+
+\-Angle OPN = a
+
+\-Angle PMN = b
+
+\-Angle PON = c
+
+]
+
+
+
+###### 3
+
+>DIAGRAM\\\[
+
+\-Circle with inscribed triangle ABC
+
+\-Tangent PL touches the circle at A
+
+\-Line PB intersects AC at D
+
+\-Angle PAD = A\_1
+
+\-Angle CAB = A\_2
+
+\-Angle BAL = A\_3
+
+\-Angle ABP = B\_1
+
+\-Angle PBC = B\_2
+
+]
+
+
+
+\-Given AB = AC, AP || BC and Aˆ\_2 = Bˆ\_2. Prove:
+
+
+
+\####### a)
+
+PAL is a tangent to the circle ABC.
+
+
+
+\####### b)
+
+AB is a tangent to the circle ADP.
+
+
+
+#### Converse: tangent-chord theorem
+
+\-If a line drawn through the end point of a chord forms an angle equal to the angle subtended by the chord in the alternate segment, then the line isa tangent to the circle.
+
+\-(Reason: ∠ between line and chord = ∠ in alt. seg. )
+
+
+
+##### Examples
+
+###### 1
+
+\->DIAGRAM\[
+
+\-Circle centre O
+
+\-Inscribed triangle ACE such that AE is a diameter passing through O
+
+\-Tangent BD touches the circle at C
+
+\-OB is drawn perpendicular to AE such that it intersect AC at F
+
+\-The Diameter AE is extend beyond the circunference by portion ED so that triangle OBD is formed
+
+\-Radius OC is drawn
+
+]
+
+
+
+\-BD is a tangent to the circle with centre O, with BO ⊥ AD.
+
+
+
+\-Prove that:
+
+###### 
+
+\####### 1.
+
+CFOE is a cyclic quadrilateral
+
+
+
+\####### 2.
+
+FB =BC
+
+
+
+\####### 3.
+
+∠AOˆC = 2BFˆC
+
+
+
+\####### 4.
+
+Will DC beatangent to the circle passing through C,F,O and E? Motivate your answer.
+
+
+
+\####### SOLUTION
+
+\######## Step 1: Prove CFOE is a cyclic quadrilateral by showing opposite angles are supplementary
+
+BO ⊥ OD (given)
+
+∴ F ˆOE = 90°
+
+F ˆCE = 90° (∠ in semi circle)
+
+∴ CFOE is a cyclic quad. (opp. ∠s suppl.)
+
+
+
+\######## Step 2: Prove BFC is an isosceles triangle
+
+\-To show that FB = BC we first prove BFC is an isosceles triangle by showing that BˆFC = BˆCF.
+
+
+
+BˆCF = C ˆEO (tangent-chord)
+
+C ˆEO = BˆFC (ext. ∠ cyclic quad. CFOE)
+
+∴ BˆFC =BˆCF
+
+∴ FB=BC ( BFC isosceles)
+
+
+
+\######## Step 3: Prove AˆOC = 2BˆFC
+
+AˆOC = 2AˆEC (∠at centre = 2∠ at circum.)
+
+and AˆEC = BˆFC (ext. ∠ cyclic quad. CFOE)
+
+∴ AˆOC = 2BˆFC
+
+
+
+\######## Step 4: Determine if DC is a tangent to the circle through C, F, O and E
+
+
+
+\-Proof by contradiction.
+
+
+
+Let us assume that DC is a tangent to the circle passing through the points C, F, O and E:
+
+∴ DˆCE = CˆOE (tangent-chord)
+
+
+
+And using the circle with centre O and tangent BD we have that:
+
+DˆCE = CˆAE (tangent-chord)
+
+but CˆAE = 1/2CˆOE  (∠ at centre = 2∠ at circum.)
+
+∴DˆCE ≠ CˆOE
+
+
+
+\-Therefore our assumption is not correct and we can conclude that DC is not a tangent to the circle passing through the points C, F, O and E.
+
+
+
+###### 2
+
+>DIAGRAM\\\[
+
+\-Circle with triangle AEC inscribed
+
+\-Tangent BC is drawn so that triangle ABC is formed with AB cutting across the circumference
+
+\-Side AE is extended to touch tangent BC at point H
+
+\-Point D lies on AB and point F lies on AC such that DF is parallel to BC
+
+\-Lines CD and EF are drawn
+
+]
+
+
+
+\-FD is drawn parallel to the tangent CB
+
+
+
+Prove that:
+
+\####### 1.
+
+FADE is a cyclic quadrilateral
+
+
+
+\####### 2.
+
+FEˆA = Bˆ
+
+
+
+
+
+\####### SOLUTION
+
+\######## Step 1: Prove FADE is a cyclic quadrilateral using angles in the same segment
+
+FDˆC = DCˆB (alt. ∠s FD || CB)
+
+and DCˆB = CAˆE (tangent-chord)
+
+∴FDˆC = CAˆE
+
+∴FADE is a cyclic quad. (∠s in same seg.)
+
+
+
+\######## Step 2: Prove FEˆA = Bˆ
+
+FDˆA=ˆB (corresp.∠s FD CB)
+
+and FEˆA = FDˆA (∠s same seg.cyclic quad. FADE)
+
+∴ FEˆA= Bˆ
+
+
+
+## REVISION
+
+### 1
+
+>DIAGRAM\\\[
+
+\-Circle centre O
+
+\-radii OA and OB are drawn such that they form triangle AOB with chord AB
+
+\-radii OC and OD are drawn such that OD bisects a chord CE at point F.
+
+\-chord DE is constructed
+
+\-As a result, arc CD subtends an angle at the centre and an angle at E
+
+\-Also, arc BC subtends an angle at the centre and at A
+
+\-Angles BOC and COD each have an × signifying that they are equal
+
+\-Angle ABO is labelled x.
+
+]
+
+
+
+\-AOC is a diameter of the circle with centre O. F is the mid-point of chord EC.
+
+BOˆC = COˆD and Bˆ = x. Express the following angles in terms of x, stating reasons:
+
+
+
+#### a)
+
+Aˆ
+
+
+
+#### b)
+
+COˆD
+
+
+
+#### c)
+
+Dˆ
+
+
+
+### 2
+
+>DIAGRAM\\\[
+
+\-Circle centre M has an inscribed triangle DEG
+
+\-EG is a diameter passing through M
+
+\-Chord DE subtends an angle at point F on the circumference
+
+\-Chord DF is drawn so that triangle DEF is also inscribed.
+
+\-Radius MF is drawn
+
+\-Angle GED = E\_1
+
+\-Angle GEF = E\_2
+
+\-Angle EDF = D\_1
+
+\-Angle FDG = D\_2
+
+\-Angle MFD = F\_1
+
+\-Angle MFE = F\_2
+
+\-Angle EMF = M\_1
+
+\-Angle FMG = M\_2
+
+]
+
+
+
+\-D, E, F and G are points on circle with centre M. Fˆ\_1 = 7° and Dˆ\_2 = 51°.
+
+\-Determine the sizes of the following angles, stating reasons:
+
+#### a)
+
+Mˆ\_1
+
+
+
+#### b)
+
+Dˆ\_1
+
+
+
+#### c)
+
+Fˆ\_2
+
+
+
+#### d)
+
+Gˆ
+
+
+
+#### e)
+
+Eˆ\_1
+
+
+
+### 3
+
+>DIAGRAM\\\[
+
+\-2 circles centre O and centre M intersect at points A and B on their circumferences such that point O lies on the circumference of circle centre M.
+
+\-Chord AB is drawn
+
+\-Triangle ABC is inscribed in circle centre O
+
+\-Chord AB subtends an angle at centre O, and an angle at point D on the circumference of circle centre M
+
+\-Chord BD is drawn and it subtends an angle at point O.
+
+\-Angle ADO is D\_1
+
+\-Angle ODB is D\_2
+
+]
+
+
+
+\-O is a point on the circle with centre M. O is also the centre of a second circle.
+
+\-DA cuts the smaller circle at C and ˆD1 = x. Express the following angles in terms of x, stating reasons:
+
+
+
+#### a)
+
+Dˆ\_2
+
+
+
+#### b)
+
+OAˆB
+
+
+
+#### c)
+
+OBˆA
+
+
+
+#### d)
+
+AOˆB
+
+
+
+#### e)
+
+Cˆ
+
+
+
+### 4
+
+>DIAGRAM\\\[
+
+\-Circle centre O
+
+\-Triangle ABC is inscribed
+
+\-Point M is the midpoint of BC such that AM is a diameter.
+
+\-Radius OC is drawn
+
+]
+
+
+
+\-O is the centre of the circle with radius 5 cm and chord BC = 8 cm. Calculate the lengths of:
+
+
+
+#### a)
+
+OM
+
+
+
+#### b)
+
+AM
+
+
+
+#### c)
+
+AB
+
+
+
+### 5
+
+>DIAGRAM\\\[
+
+\-Circle centre O
+
+\-Arc AB subtends an angle of 70 at the centre and an angle at point C on the circumference so that AC and OB intersect
+
+\-Radius OA and chord CB are parallel
+
+\-Angle OAC = x
+
+]
+
+
+
+\-AO || CB in circle with centre O. AˆOB = 70° and OAˆC = x. Calculate the value of x, giving reasons.
+
+
+
+### 6
+
+>DIAGRAM\\\[
+
+\-Circle centre O
+
+\-Diameter PQ subtends an angle at point R on the circumference so that triangle PQR is inscribed.
+
+\-Radius OS is drawn such that it intersects chord RP at T
+
+\-Chord QS is drawn such that a triangle OQS is formed
+
+\-Angle SQO = x
+
+]
+
+
+
+\-PQ is a diameter of the circle with centre O. SQ bisects PQˆR and PQˆS = x.
+
+
+
+a)
+
+Write down two other angles that are also equal to x.
+
+
+
+b)
+
+Calculate P ˆOS in terms of x, giving reasons.
+
+
+
+c)
+
+Prove that OS is a perpendicular bisector of PR.
+
+
+
+
+
+### 7
+
+>DIAGRAM\\\[
+
+\-Circle centre O with cyclic quadrilateral ABCD
+
+\-Sides AB = AD (tick marks shown)
+
+\-Diagonal BD is a diameter passing through O
+
+\-Radius OC is drawn
+
+\-Angle OCD = 35
+
+]
+
+
+
+\-BOˆD is a diameter of the circle with centre O. AB = AD and OCˆD = 35◦.
+
+
+
+\-Calculate the value of the following angles, giving reasons:
+
+
+
+#### a)
+
+ODˆC
+
+
+
+#### b)
+
+COˆD
+
+
+
+#### c)
+
+CBˆD
+
+
+
+#### d)
+
+BAˆD
+
+
+
+#### e)
+
+ADˆB
+
+
+
+### 8
+
+>DIAGRAM\\\[
+
+\-Circle centre O
+
+\-Arc QR subtends 3 angles:  an angle at O; an angle at P on the circumference and an angle at T outside the circle
+
+\-QT is an extension of QP beyond the circumference such that PT = RP
+
+\-The angle subtended by arc QR at O is x
+
+\-Angle PRT = y
+
+]
+
+
+
+\-QP in the circle with centre O is protracted to T so that PR = PT. 
+
+\-Express y in terms of x.
+
+
+
+### 9
+
+>DIAGRAM\[
+
+\-Circle centre O
+
+\-Chord CD subtends two angles on the circumference at E and B, with chords CE and DE intercepting each other (x-type)
+
+\-The diameter AB passes through O and intersects CD at right angles
+
+\-Chord DE intersects diameter AB at F
+
+\-The radius OC is drawn
+
+]
+
+
+
+\-O is the centre of the circle with diameter AB. CD⊥AB at P and chord DE cuts AB at F. Prove that:
+
+#### a) 
+
+CBˆP = DPˆB
+
+
+
+#### b) 
+
+C EˆD = 2CBˆA
+
+
+
+#### c) 
+
+ABˆD = 1/2COˆA
+
+
+
+
+
+### 10
+
+>DIAGRAM\[
+
+\-Circle centre O
+
+\-Chord QP
+
+\-A diameter cuts QP at S at a right angle and touches the circumference at R.
+
+\-Radius OQ is drawn
+
+]
+
+
+
+\-In the circle with centre O, OR ⊥ QP, PQ = 30 mm and RS = 9 mm. Determine the length of OQ.
+
+
+
+### 11
+
+>DIAGRAM\[
+
+\-Circle centre M
+
+\-Cyclic quadrilateral PQRS
+
+\-Diagonals (chords) PR and QS are drawn
+
+\-PS and QR are extended beyond the cicumference and meet at T
+
+]
+
+
+
+\-P, Q, R and S are points on the circle with centre M. PS and QR are extended and meet at T. PQ = PR and P ˆQR = 70◦.
+
+
+
+#### a) 
+
+Determine, stating reasons, three more angles equal to 70◦.
+
+
+
+#### b) 
+
+If QPˆS = 80◦, calculate SRˆT, STˆR and PQˆS.
+
+
+
+#### c) 
+
+Explain why PQ is a tangent to the circle QST at point Q.
+
+
+
+#### d) 
+
+Determine PMˆQ.
+
+
+
+### 12
+
+>DIAGRAM
+
+\-Circle centre O
+
+\-Diameter QP passes through O  and is extended from P beyond the circumference to A
+
+\-Diameter PQ subtends an angle at C on the circumference forming an inscribed triangle CQP
+
+\-Chord QC is extended from C  beyond the circumference to B such that AB is perpendicular to AQ and a right angled triangle ABQ is form
+
+\-Line AC is drawn forming a tangent to the circle
+
+]
+
+
+
+\-POQ is a diameter of the circle with centre O. QP is protruded to A and AC is a tangent to the circle. BA ⊥ AQ and BCQ is a straight line. Prove:
+
+
+
+#### a) 
+
+PCˆQ = B ˆAP
+
+
+
+#### b) 
+
+BAPC is a cyclic quadrilateral
+
+
+
+#### c) 
+
+AB =AC
+
+
+
+
+
+#### 13
+
+>DIAGRAM\[
+
+\-Circle centre O
+
+\-Triangle ABC is inscribed
+
+\-The tangents at A and B meet at T
+
+\-Radii OA and OB are drawn
+
+\-Angle ATB is x
+
+]
+
+
+
+\-TA and TB are tangents to the circle with centre O. C is a point on the circumference and ATˆB = x. 
+
+\-Express the following in terms of x, giving reasons:
+
+
+
+#### a) 
+
+ABˆT
+
+
+
+#### b) 
+
+OBˆA
+
+
+
+#### c) 
+
+Cˆ
+
+
+
+### 14
+
+>DIAGRAM\[
+
+\-Circle centre O
+
+\-Diameter AOB subtends an angle at C forming triangle ABC
+
+\-Chord BE is drawn such that it intercepts chord AC
+
+\-Radius OE is drawn such that it intercepts AC at D
+
+\-OE and BC are parallel (tick marks)
+
+] 
+
+
+
+\-AOB is a diameter of the circle AECB with centre O. OE || BC and cuts AC at D.
+
+#### a) 
+
+Prove AD = DC
+
+
+
+#### b) 
+
+Show that AˆBC is bisected by EB
+
+
+
+#### c) 
+
+If OEˆB = x, express BAˆC in terms of x
+
+
+
+#### d) 
+
+Calculate the radius of the circle if AC = 10 cm and DE = 1cm
+
+
+
+
+
+### 15
+
+>DIAGRAM\[
+
+\-Circle with cyclic quadrilateral PQRS
+
+\-PQ and RS are parallel (tick marks)
+
+\-RS is extended from S beyond the circumference so that it meets the tangent at Q at point T
+
+\-A tangent at S meets tangent QT at point V
+
+\-Diagonals QR and PS intersect at W
+
+\-Angle SQT is x
+
+\-Angle QRP is y
+
+]
+
+
+
+\-PQ and RS are chords of the circle and PQ||RS. The tangent to the circle at Q meets RS protruded at T. 
+
+\-The tangent at S meets QT at V. QS and PR are drawn.
+
+\-Let TQˆS = x and QRˆP = y. Prove that:
+
+
+
+#### a)
+
+&#x20;TVˆS = 2QRˆS
+
+
+
+#### b) 
+
+QVSW is a cyclic quadrilateral
+
+
+
+#### c) 
+
+QPˆS + Tˆ = PRˆT
+
+
+
+#### d) 
+
+W is the centre of the circle
+
+
+
+### 16
+
+>DIAGRAM\[
+
+\-2 circles intersect at point F and D
+
+\-DF is a chord common to both circles
+
+\-In the 1st circle DF subtends an angle at point E on the circumference forming triangle DEF where DF = EF (tick marks)
+
+\-In the 2nd circle a chord BF is drawn and extended beyond the circumference to a point T such that it forms a tangent to the 1st circle at F
+
+\-Chord ED in the 1st circle is extended beyond D into the 2nd circle and touches its circumference at C
+
+\-Chord BC is drawn so that quadrilateral BCEF occupying both circles is realized.
+
+\-Chord EF in the 1st circle is extended into the 2nd circle so that it touches its circumference at A
+
+\-Chord AC is drawn such that triangle ACE occupying both circles is realized 
+
+\-AC intersects BT at K
+
+\-Angles AFK = F\_1; AFD = F\_2; EFD = F\_3 and TFE = F\_4
+
+\-Angles FDC = D\_1 and FDE = D\_2
+
+\-Angles ACB = C\_1 and ACE = C\_2
+
+]
+
+
+
+The two circles shown intersect at points F and D. BFT is a tangent to the
+
+smaller circle at F. Straight line AFE is drawn such that DF = EF. CDE is a
+
+straight line and chord AC and BF cut at K. Prove that:
+
+
+
+#### a) 
+
+BT||CE
+
+
+
+#### b) 
+
+BCEF is a parallelogram
+
+
+
+#### c) 
+
+AC = BF
+
+
+

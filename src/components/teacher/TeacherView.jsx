@@ -6,7 +6,9 @@ import SubmissionsDashboard from './SubmissionsDashboard';
 import ClassManager from './ClassManager';
 import HomeworkManager from './HomeworkManager';
 import AssessmentManager from './AssessmentManager';
-import { TeacherDashboard, StudentManagement, QuestionGeneration } from '../forms/TeacherForms';
+import ClassDiagnosticHeatmap from './ClassDiagnosticHeatmap';
+import TeacherDashboard from './TeacherDashboard';
+import { StudentManagement, QuestionGeneration } from '../forms/TeacherForms';
 import FeatureGatePanel from '../ui/FeatureGatePanel';
 import { CLASS_ASSIGNMENTS_BLOCKED_MESSAGE } from '../../app/constants/access';
 
@@ -79,9 +81,25 @@ const TeacherView = ({ view, setView, db, currentUser }) => {
                 return <HomeworkManager db={db} currentUser={currentUser} onBack={() => setView('dashboard')} />;
             case 'assessments':
                 return <AssessmentManager db={db} currentUser={currentUser} onBack={() => setView('dashboard')} />;
+            case 'classDiagnostics':
+                return (
+                    <div className="p-4 sm:p-6 max-w-5xl mx-auto space-y-4">
+                        <button
+                            onClick={() => setView('dashboard')}
+                            className="flex items-center gap-2 text-sm text-slate-400 hover:text-white transition-colors"
+                        >
+                            <ChevronLeft className="w-4 h-4" /> Back to Teacher Dashboard
+                        </button>
+                        <ClassDiagnosticHeatmap
+                            onAssignRemedialDrill={(diag) => {
+                                console.log('[Teacher LMS] Dispatched remedial drill for:', diag.misconception);
+                            }}
+                        />
+                    </div>
+                );
             case 'dashboard': 
             default: 
-                return <TeacherDashboard currentUser={currentUser} db={db} onSelect={handleDashboardSelect} />; 
+                return <TeacherDashboard currentUser={currentUser} db={db} onNavigate={handleDashboardSelect} />; 
         } 
     }; 
     

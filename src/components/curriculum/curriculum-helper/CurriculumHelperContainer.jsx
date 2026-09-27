@@ -12,6 +12,8 @@ import { getAvailableRepositories } from './repositories';
 import TopicListSection from './components/TopicListSection';
 import TopicOverviewSection from './components/TopicOverviewSection';
 import RepositoryModals from './components/RepositoryModals';
+import MicroBenchmarkModal from '../../student/MicroBenchmarkModal';
+import { isOwnerEmail } from '../../../app/constants/access';
 
 const CurriculumHelperContainer = React.memo(({
     onClose,
@@ -37,6 +39,15 @@ const CurriculumHelperContainer = React.memo(({
     const [selectedComponent, setSelectedComponent] = useState(null);
     const [isComponentOverlayVisible, setIsComponentOverlayVisible] = useState(false);
     const [isComponentFullscreen, setIsComponentFullscreen] = useState(false);
+    const [pendingTopicRoute, setPendingTopicRoute] = useState(null);
+    const [showDiagnosticModal, setShowDiagnosticModal] = useState(false);
+
+    const isSuperAdmin = Boolean(
+        currentUser?.isSuperAdmin ||
+        currentUser?.isOwner ||
+        (currentUser?.email && isOwnerEmail(currentUser?.email)) ||
+        (currentUser?.email && currentUser?.email.toLowerCase().includes('admin'))
+    );
 
     const flags = useMemo(
         () => buildSubjectFlags({ selectedGrade, selectedSubject }),
@@ -89,6 +100,28 @@ const CurriculumHelperContainer = React.memo(({
         setView('workspace');
     };
 
+    const handleBenchmarkComplete = (answers) => {
+        if (pendingTopicRoute) {
+            const calKey = `fundile_benchmark_${pendingTopicRoute.subjectName}_${selectedGrade}_${pendingTopicRoute.topicName.replace(/\s+/g, '_')}`;
+            try {
+                localStorage.setItem(calKey, JSON.stringify({ calibrated: true, answers }));
+            } catch (e) {}
+
+            setShowDiagnosticModal(false);
+            navigateToWorkspaceWithMode(
+                pendingTopicRoute.scaffoldRoute,
+                pendingTopicRoute.displayName,
+                pendingTopicRoute.topicData
+            );
+            setPendingTopicRoute(null);
+        }
+    };
+
+    const handleBenchmarkClose = () => {
+        setShowDiagnosticModal(false);
+        setPendingTopicRoute(null);
+    };
+
     const handleTopicSelect = (topic) => {
         const topicName = typeof topic === 'string' ? topic : topic?.name;
         if (!topicName) return;
@@ -97,6 +130,22 @@ const CurriculumHelperContainer = React.memo(({
         const scaffoldRoute = getScaffoldRouteForTopic(topicName, flags);
 
         if (scaffoldRoute) {
+            const subjectName = typeof selectedSubject === 'object' ? (selectedSubject?.name || selectedSubject?.id || 'Mathematics') : (selectedSubject || 'Mathematics');
+            const calKey = `fundile_benchmark_${subjectName}_${selectedGrade}_${topicName.replace(/\s+/g, '_')}`;
+            const isCalibrated = localStorage.getItem(calKey);
+
+            if (!isCalibrated || isSuperAdmin) {
+                setPendingTopicRoute({
+                    scaffoldRoute,
+                    displayName: getTopicDisplayName(topicName, flags),
+                    topicData,
+                    topicName,
+                    subjectName,
+                });
+                setShowDiagnosticModal(true);
+                return;
+            }
+
             navigateToWorkspaceWithMode(
                 scaffoldRoute,
                 getTopicDisplayName(topicName, flags),
@@ -163,6 +212,26 @@ const CurriculumHelperContainer = React.memo(({
                 setIsComponentFullscreen={setIsComponentFullscreen}
             />
 
+            {isSuperAdmin && helperView === 'topics' && (
+                <div className="mb-6 bg-amber-50 border border-amber-200 rounded-xl p-3.5 flex items-center justify-between gap-3 text-xs text-amber-900 shadow-2xs">
+                    <div className="flex items-center gap-2">
+                        <span className="px-2 py-0.5 rounded bg-amber-200 text-amber-900 font-bold uppercase tracking-wider text-[10px]">
+                            ⚡ Super Admin
+                        </span>
+                        <span>Diagnostic testing active: Selecting a topic will launch the diagnostic test (instant bypass button available).</span>
+                    </div>
+                    <button
+                        onClick={() => {
+                            Object.keys(localStorage).filter(k => k.startsWith('fundile_benchmark_')).forEach(k => localStorage.removeItem(k));
+                            alert('All diagnostic benchmarks cleared for testing!');
+                        }}
+                        className="px-2.5 py-1 bg-amber-200 hover:bg-amber-300 text-amber-900 rounded font-semibold transition-colors shrink-0 cursor-pointer"
+                    >
+                        Reset All Benchmarks
+                    </button>
+                </div>
+            )}
+
             {helperView === 'topics' && (
                 <TopicListSection
                     selectedSubject={selectedSubject}
@@ -193,6 +262,16 @@ const CurriculumHelperContainer = React.memo(({
                     getTopicTerm={getTopicTermForCurrentFlags}
                 />
             )}
+
+            <MicroBenchmarkModal
+                isOpen={showDiagnosticModal}
+                topicTitle={pendingTopicRoute?.topicName || 'Topic Calibration'}
+                subject={pendingTopicRoute?.subjectName || (typeof selectedSubject === 'object' ? selectedSubject?.name : selectedSubject) || 'Mathematics'}
+                grade={String(selectedGrade || '7')}
+                currentUser={currentUser}
+                onCompleteBenchmark={handleBenchmarkComplete}
+                onClose={handleBenchmarkClose}
+            />
         </div>
     );
 });

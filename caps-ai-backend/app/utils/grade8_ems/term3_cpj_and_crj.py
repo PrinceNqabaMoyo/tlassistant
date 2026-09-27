@@ -50,8 +50,8 @@ def _cpj_table_pool(rng, mode="scaffold"):
     Generates tabular CPJ questions.
     Grade 8 CPJ columns: Doc No, Day, Name of Payee, Bank, Wages, Stationery, Sundry Accounts Amount, Sundry Accounts Details.
     """
-    scenario = get_ems_scenario()
-    business_name = f"{scenario['entrepreneur']} {scenario['business_type']}s"
+    scenario = get_ems_scenario(rng)
+    business_name = f"{scenario['entrepreneur']}'s {scenario['business_type']}"
     month = "July 2024"
     
     transactions = []
@@ -103,6 +103,7 @@ def _cpj_table_pool(rng, mode="scaffold"):
     cell_hints["r2_c7"] = "Expectation: Sundry details. Connection: Money taken for personal use is called 'Drawings'."
 
     ui_rows = []
+    correct_map = {}
     for i, row in enumerate(data_rows):
         ui_row = []
         for j, val in enumerate(row):

@@ -1,5 +1,31 @@
 from typing import Dict, Any, List, Optional
 from datetime import datetime, timezone, timedelta
+import math
+
+
+def calculate_decayed_mastery(
+    raw_mastery: float,
+    last_updated: Optional[datetime],
+    lambda_decay: float = 0.015,
+    current_time: Optional[datetime] = None,
+) -> float:
+    """
+    Computes Ebbinghaus memory-decayed mastery score:
+        P(L_{k, t}) = P(L_{k, t-1}) * e^(-lambda * delta_t)
+    where delta_t is days elapsed since last practice.
+    """
+    if raw_mastery <= 0:
+        return 0.0
+    if not last_updated:
+        return round(raw_mastery, 3)
+    now = current_time or datetime.now(timezone.utc)
+    if last_updated.tzinfo is None:
+        last_updated = last_updated.replace(tzinfo=timezone.utc)
+    delta_days = (now - last_updated).total_seconds() / 86400.0
+    if delta_days <= 0:
+        return round(raw_mastery, 3)
+    decayed = raw_mastery * math.exp(-lambda_decay * delta_days)
+    return round(max(0.0, min(1.0, decayed)), 3)
 
 
 class StudentModel:
@@ -72,9 +98,89 @@ class StudentModel:
         grade: str,
         topic: str,
         subskill: str,
+        apply_decay: bool = True,
+        lambda_decay: float = 0.015,
     ) -> float:
+        """Returns the current mastery score, optionally decayed by time elapsed since last updated."""
         mastery = self._get_mastery(user_id, subject, grade, topic, subskill)
-        return mastery.get("mastery_score", 0.0)
+        raw = mastery.get("mastery_score", 0.0)
+        if not apply_decay or raw <= 0:
+            return raw
+        last_updated = mastery.get("lastUpdated")
+        return calculate_decayed_mastery(raw, last_updated, lambda_decay=lambda_decay)
+
+    def get_mastery_details(
+        self,
+        user_id: str,
+        subject: str,
+        grade: str,
+        topic: str,
+        subskill: str,
+        lambda_decay: float = 0.015,
+    ) -> Dict[str, Any]:
+        """
+        Returns full mastery record with raw score, time-decayed score, and status:
+        - 'exam_ready': decayed score >= 0.80
+        - 'refresh_recommended': raw >= 0.80 but decayed < 0.70 (schema memory alert)
+        - 'proficient': decayed score >= 0.60
+        - 'developing': decayed score >= 0.40
+        - 'novice': decayed score < 0.40
+        """
+        mastery = self._get_mastery(user_id, subject, grade, topic, subskill)
+        raw = mastery.get("mastery_score", 0.0)
+        last_updated = mastery.get("lastUpdated")
+        decayed = calculate_decayed_mastery(raw, last_updated, lambda_decay=lambda_decay) if raw > 0 else 0.0
+
+        if raw >= 0.80 and decayed < 0.70:
+            status = "refresh_recommended"
+        elif decayed >= 0.80:
+            status = "exam_ready"
+        elif decayed >= 0.60:
+            status = "proficient"
+        elif decayed >= 0.40:
+            status = "developing"
+        else:
+            status = "novice"
+
+        return {
+            "subject": subject,
+            "grade": grade,
+            "topic": topic,
+            "subskill": subskill,
+            "raw_mastery": raw,
+            "decayed_mastery": decayed,
+            "mastery_score": decayed,
+            "status": status,
+            "needs_refresh": status == "refresh_recommended",
+            "submissions": mastery.get("submissions", 0),
+            "lastUpdated": last_updated,
+        }
+
+    def get_topics_needing_refresh(self, user_id: str, threshold: float = 0.70) -> List[Dict[str, Any]]:
+        """
+        Scans all subskills previously mastered (raw >= 0.80) where Ebbinghaus decay
+        has dropped current retention below the threshold (< 0.70).
+        """
+        if not self.db or not user_id:
+            return []
+
+        summary = self.get_all_mastery_summary(user_id)
+        refresh_needed = []
+        for item in summary:
+            raw = item.get("mastery_score", 0.0)
+            last_updated = item.get("lastUpdated")
+            decayed = calculate_decayed_mastery(raw, last_updated) if raw > 0 else 0.0
+            if raw >= 0.80 and decayed < threshold:
+                refresh_needed.append({
+                    "subject": item.get("subject"),
+                    "grade": item.get("grade"),
+                    "topic": item.get("topic"),
+                    "subskill": item.get("subskill"),
+                    "raw_mastery": raw,
+                    "decayed_mastery": decayed,
+                    "last_updated": last_updated,
+                })
+        return refresh_needed
 
     def get_weak_subskills(
         self,

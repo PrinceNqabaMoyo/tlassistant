@@ -36,6 +36,7 @@ Two layers, in order of fidelity:
    This is shared with Plan 3 (it IS the maths answer surface).
 
 2. **Free-form / drawn working (later).**
+-NOTE: There will be no freeform anything. If there are diagrams there will only be about questions where a user has to label or choose among a set of options.
    Canvas or photo of handwritten working → OCR/diagram-spec extraction. Much harder;
    explicitly a phase-2 stretch goal, not in the first slice.
 

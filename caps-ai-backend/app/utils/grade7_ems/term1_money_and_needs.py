@@ -94,8 +94,8 @@ def _typed_question(rng, item, mode="scaffold"):
 
 def _concept_pool(rng):
     """Dynamic concept pool that utilizes ems_namelist for variations."""
-    scenario = get_ems_scenario()
-    need_want = get_random_need_and_want()
+    scenario = get_ems_scenario(rng)
+    need_want = get_random_need_and_want(rng)
     
     return [
         _with_metadata({
@@ -159,8 +159,8 @@ def _concept_pool(rng):
 
 def _discussion_pool(rng):
     """Dynamic discussion pool that utilizes ems_namelist for variations."""
-    scenario = get_ems_scenario()
-    need_want = get_random_need_and_want()
+    scenario = get_ems_scenario(rng)
+    need_want = get_random_need_and_want(rng)
     
     return [
         _with_metadata({

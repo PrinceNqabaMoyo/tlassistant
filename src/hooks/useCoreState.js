@@ -1,23 +1,42 @@
 import { useState } from 'react';
 
- const getInitialShowSplash = () => {
-     if (typeof window === 'undefined') {
-         return true;
-     }
+/**
+ * Checks whether the current window was launched as an installed app
+ * (Standalone Desktop PWA or Mobile WebAPK) vs a regular web browser tab.
+ */
+export const isStandaloneApp = () => {
+    if (typeof window === 'undefined') return false;
+    return (
+        window.matchMedia('(display-mode: standalone)').matches ||
+        window.navigator.standalone === true ||
+        document.referrer.includes('android-app://')
+    );
+};
 
-     try {
-         const hasSeenSplashThisSession = window.sessionStorage.getItem('fundileSplashSeen') === 'true';
+const getInitialShowSplash = () => {
+    if (typeof window === 'undefined') {
+        return false;
+    }
 
-         if (hasSeenSplashThisSession) {
-             return false;
-         }
+    // Do NOT show splash screen on normal browser page visits.
+    // Only display splash screen when launched as an installed app (PWA / WebAPK).
+    if (!isStandaloneApp()) {
+        return false;
+    }
 
-         window.sessionStorage.setItem('fundileSplashSeen', 'true');
-         return true;
-     } catch {
-         return true;
-     }
- };
+    try {
+        const hasSeenSplashThisSession = window.sessionStorage.getItem('fundileSplashSeen') === 'true';
+
+        if (hasSeenSplashThisSession) {
+            return false;
+        }
+
+        window.sessionStorage.setItem('fundileSplashSeen', 'true');
+        return true;
+    } catch {
+        return false;
+    }
+};
 
 export const useCoreState = () => {
     const [loading, setLoading] = useState(false);

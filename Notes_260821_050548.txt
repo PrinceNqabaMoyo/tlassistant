@@ -1,0 +1,3 @@
+The basic design of the user journey is that user's don't just get notes as a pathway..they encounter  them as explanations 
+The app is question first notes after. The presumption is that each user ihas knowledge/schema before hand and the app is based on a constructivist philosophy of education.
+Explainer notes should make assumptions that user's already know references to other sections of the notes. If you make a reference in a note it has to have a link to the note section being referred to

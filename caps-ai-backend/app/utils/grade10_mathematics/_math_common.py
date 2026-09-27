@@ -316,6 +316,39 @@ def with_metadata(
     return question
 
 
+def make_function_transform(
+    *,
+    prefix: str,
+    prompt: str,
+    target_params: Dict[str, float],
+    sliders: List[str],
+    marks: int = 2,
+    tolerance: float = 0.0,
+    explanation: str = "",
+    hint: Optional[str] = None,
+) -> Dict[str, Any]:
+    """A question answered by dragging parameter sliders on the function grapher.
+    The learner manipulates ``a`` / ``q`` (and possibly ``b``) until the curve
+    matches a dashed target. The submitted ``{a, q, b}`` is compared to
+    ``target_params`` structurally (within ``tolerance``) — never pixels — so it
+    is the function-graph analogue of ``diagram_select`` / ``number_line_build``.
+    The interactive diagram itself is attached via ``with_metadata(diagram_spec=)``.
+    """
+    return {
+        "id": make_id(f"{prefix}_ftrans"),
+        "question_type": "function_transform",
+        "prompt": prompt,
+        "prompt_latex": "",
+        "target_params": {k: float(v) for k, v in target_params.items()},
+        "sliders": list(sliders),
+        "tolerance": float(tolerance),
+        "explanation": explanation,
+        "marks": int(marks),
+        "hint_trigger": hint or "",
+        "guidelines": [hint] if hint else [],
+    }
+
+
 # --------------------------------------------------------------------------- #
 # Generic generate() dispatcher used by each topic module
 # --------------------------------------------------------------------------- #

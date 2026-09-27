@@ -7,8 +7,8 @@ import { canBypassSignupGradeRestriction, LIVE_SIGNUP_GRADES } from '../../app/c
 // Curriculum shell structure for the signup form
 const curriculumShell = {
     'CAPS': {
-        name: 'South African CAPS',
-        description: 'The national curriculum for South Africa.',
+        name: 'South African National Curriculum',
+        description: 'The official national curriculum for South Africa.',
         grades: [7, 8, 9, 10, 11, 12]
     },
     'Cambridge': { 

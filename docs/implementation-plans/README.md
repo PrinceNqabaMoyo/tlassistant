@@ -20,11 +20,16 @@ documents, not code — safe to read before/while implementing.
 | Topic | Plan | Status |
 |-------|------|--------|
 | 1. Algebraic Expressions | (shipped in PR #6) | ✅ done |
-| 2. Exponents | `mathematics/gr10_t1_04_exponents.md` | planned |
-| 3. Patterns & Sequences | `mathematics/gr10_t1_05_patterns_sequences.md` | planned |
-| 4. Equations & Inequalities | `mathematics/gr10_t1_06_equations_inequalities.md` | planned |
+| 2. Exponents | `mathematics/gr10_t1_04_exponents.md` | ✅ done |
+| 3. Patterns & Sequences | `mathematics/gr10_t1_05_patterns_sequences.md` | ✅ done |
+| 4. Equations & Inequalities | `mathematics/gr10_t1_06_equations_inequalities.md` | ✅ done |
 | 5. Trigonometry | (shipped in PR #6) | ✅ done |
 
-**Recommended build order for the 3 outstanding topics:**
-Exponents → Equations & Inequalities → Patterns & Sequences
-(rationale in `gr10_t1_06_equations_inequalities.md`).
+### Grade 10, Term 2
+| Topic | Plan | Status |
+|-------|------|--------|
+| 7. Functions | `mathematics/gr10_t2_07_functions.md` | in progress |
+
+Functions is the Gr10 Term 2 topic. It introduces the reusable, parametric
+`function_graph` Diagram Spec + interactive parameter-manipulation grapher
+(shareable across grades' mathematics and Technical Mathematics).

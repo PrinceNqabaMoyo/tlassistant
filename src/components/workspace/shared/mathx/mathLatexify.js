@@ -8,7 +8,8 @@ export const latexify = (text) => {
     let s = String(text || '');
     if (!s.trim()) return '';
 
-    // sqrt(...) / cbrt(...) -> \sqrt{...}
+    // Radicals: sqrt(...) / cbrt(...) / root(n, ...)
+    s = s.replace(/root\(([^,]+),\s*([^()]*)\)/g, '\\sqrt[$1]{$2}');
     s = s.replace(/sqrt\(([^()]*)\)/g, '\\sqrt{$1}');
     s = s.replace(/cbrt\(([^()]*)\)/g, '\\sqrt[3]{$1}');
 
@@ -16,11 +17,21 @@ export const latexify = (text) => {
     s = s.replace(/\^\(([^()]*)\)/g, '^{$1}');
     s = s.replace(/\^(-?\w+)/g, '^{$1}');
 
-    // Simple fraction a/b (single tokens) -> \frac{a}{b}
+    // Subscripts: x_1, T_n, x_(n-1)
+    s = s.replace(/_([A-Za-z0-9]+)/g, '_{$1}');
+    s = s.replace(/_\(([^()]*)\)/g, '_{$1}');
+
+    // Fractions: (a)/(b) or simple tokens
+    s = s.replace(/\(([^()]+)\)\/\(([^()]+)\)/g, '\\frac{$1}{$2}');
     s = s.replace(/([A-Za-z0-9.,]+)\/([A-Za-z0-9.,]+)/g, '\\frac{$1}{$2}');
 
-    // Multiplication / functions
-    s = s.replace(/\*/g, ' \\cdot ');
+    // Multiplication / functions / symbols
+    s = s.replace(/\*/g, ' \\times ');
+    s = s.replace(/\+\-/g, ' \\pm ');
+    s = s.replace(/!=/g, ' \\neq ');
+    s = s.replace(/<=/g, ' \\leq ');
+    s = s.replace(/>=/g, ' \\geq ');
+    s = s.replace(/\bapprox\b/g, ' \\approx ');
     s = s.replace(/\bpi\b/g, '\\pi');
     s = s.replace(/\btheta\b/g, '\\theta');
     s = s.replace(/\bdeg\b/g, '^{\\circ}');

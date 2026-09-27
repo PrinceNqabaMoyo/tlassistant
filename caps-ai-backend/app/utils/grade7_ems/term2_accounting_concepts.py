@@ -94,7 +94,7 @@ def _typed_question(rng, item, mode="scaffold"):
 
 def _concept_pool(rng):
     """Dynamic concept pool that utilizes ems_namelist and random money values for variations."""
-    scenario = get_ems_scenario()
+    scenario = get_ems_scenario(rng)
     money_value = rng.randint(500, 10000)
     
     return [
@@ -164,7 +164,7 @@ def _concept_pool(rng):
 
 def _discussion_pool(rng):
     """Dynamic discussion pool that utilizes ems_namelist for variations."""
-    scenario = get_ems_scenario()
+    scenario = get_ems_scenario(rng)
     
     return [
         _with_metadata({

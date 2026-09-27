@@ -6,8 +6,9 @@ import { GradeSelector } from '../forms/StudentForms';
 import { SubjectDashboard } from '../forms/StudentForms';
 import { StudyModeSelector } from '../forms/StudentForms';
 import ClassworkView from './ClassworkView';
+import StudentDashboard from './StudentDashboard';
 import { Loader2 } from 'lucide-react';
-import { CLASS_ASSIGNMENTS_BLOCKED_MESSAGE } from '../../app/constants/access';
+import { CLASS_ASSIGNMENTS_BLOCKED_MESSAGE, isOwnerEmail } from '../../app/constants/access';
 
 const StudentView = ({
     view, setView, allCurricula, getAgentResponse, navigationStack, setNavigationStack, updateHelperNavigationLabel,
@@ -18,6 +19,8 @@ const StudentView = ({
     const isLockedStudent = (
         props.currentUser?.role === 'student' &&
         !props.currentUser?.isSuperAdmin &&
+        !props.currentUser?.isOwner &&
+        !isOwnerEmail(props.currentUser?.email) &&
         props.currentUser?.curriculum &&
         props.currentUser?.grade
     );
@@ -128,6 +131,16 @@ const StudentView = ({
     }, [isLockedStudent, props.currentUser?.curriculum, props.currentUser?.grade, props.currentUser?.role]);
 
     switch (view) {
+        case 'student_dashboard':
+            return <StudentDashboard
+                currentUser={props.currentUser}
+                onNavigateToSubject={(subj) => {
+                    handleSelectSubject(subj);
+                }}
+                onSelectGrade={(gr) => {
+                    props.setSelectedGrade?.(gr);
+                }}
+            />;
         case 'dashboard':
         case 'curriculum':
             // For students, use their stored curriculum and grade preferences

@@ -37,7 +37,8 @@ from app.utils.grade10_mathematics.term_1 import (
     patterns_sequences_generator,
     trigonometry_generator,
 )
-
+from app.utils.grade10_mathematics.term_2 import euclidean_geometry_generator
+from app.utils.grade10_mathematics.term_2 import functions_generator
 grade10_mathematics_bp = Blueprint("grade10_mathematics", __name__)
 
 GENERATORS = {
@@ -46,6 +47,8 @@ GENERATORS = {
     "grade10_math_exponents": exponents_generator.generate,
     "grade10_math_equations_inequalities": equations_inequalities_generator.generate,
     "grade10_math_patterns_sequences": patterns_sequences_generator.generate,
+    "grade10_math_functions": functions_generator.generate,
+    "grade10_math_euclidean_geometry": euclidean_geometry_generator.generate,
 }
 
 

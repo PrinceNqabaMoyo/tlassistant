@@ -1,22 +1,34 @@
 import React, { useState, useEffect } from 'react';
-import { ChevronLeft, ChevronDown, ChevronUp, Settings, Lock, CheckCircle2, ArrowLeftRight, Loader2 } from 'lucide-react';
+import {
+    ChevronLeft,
+    ChevronDown,
+    ChevronUp,
+    Settings,
+    Lock,
+    CheckCircle2,
+    ArrowLeftRight,
+    ArrowRight,
+    Loader2,
+    GraduationCap,
+    GitBranch,
+} from 'lucide-react';
 import { UserFriendlyError } from '../../ui/UserFriendlyError';
 
 /**
- * WorkspaceModeShell — shared UI wrapper for scaffold/marking views.
+ * WorkspaceModeShell — shared UI wrapper for scaffold/practice/marking views.
  *
- * Design language mirrors "Workspace UI.js":
- *   • bg-slate-50 page, max-w-5xl centered container
- *   • Configuration Panel for selecting mode, difficulty, subskill
- *   • Question Overlay with background blur
- *   • Soft mode pills (scaffold / marking)
- *   • Indigo / emerald / amber colour palette
+ * Design language strictly follows "fundile-ui-alternative-design.html":
+ *   • bg-brand-blue (#13519C) header ribbon with gold graduation cap & topic badge
+ *   • Thin orange progress ribbon (bg-gradient-to-r from-brand-orange to-brand-amber)
+ *   • bg-slate-50 canvas with white rounded-2xl cards and shadow-sm / shadow-lift
+ *   • Primary action CTAs in bg-brand-orange (#FF9100) with shadow-ribbon
+ *   • Cross-grade regression banner (rounded-2xl border-brand-orange/30 bg-amber-50/70)
  */
 
 const modeColors = {
-    scaffold: 'bg-indigo-50 text-indigo-700 border-indigo-200',
-    practice: 'bg-emerald-50 text-emerald-700 border-emerald-200',
-    marking: 'bg-amber-50 text-amber-700 border-amber-200',
+    scaffold: 'bg-brand-blue text-white border-brand-blue shadow-xs font-semibold',
+    practice: 'bg-brand-blue text-white border-brand-blue shadow-xs font-semibold',
+    marking: 'bg-brand-blue text-white border-brand-blue shadow-xs font-semibold',
 };
 
 const MODES = ['scaffold', 'practice', 'marking'];
@@ -38,40 +50,48 @@ const getRouteBase = (mode) => {
     return mode.slice(0, mode.length - routeMode.length - 1); // -1 for the underscore
 };
 
-const WorkspaceModeShell = ({
-    workspaceMode,
-    setWorkspaceMode,
-    onBack,
-    selectedSubject,
-    selectedGrade,
-    topic,
-    subskills = [],
-    difficulty,
-    setDifficulty,
-    subskill,
-    setSubskill,
-    onGenerate,
-    children,
-    questionSlot,
-    onNext,
-    renderVisualAids,
-    availableModes = ['scaffold', 'practice', 'marking'],
-    subscriptionTier = 'standard', // 'standard' | 'pro' | 'owner'
-    showDifficultyControl = true,
-    disableSubskillControl = false,
-    showConfigBackButton = true,
-    onCheck,
-    onCompare,
-    isChecked = false,
-    isComparing = false,
-    isGenerating = false,
-    generationError = null,
-    isSuperAdmin = false,
-}) => {
+export const EmbeddedWorkspaceContext = React.createContext(false);
+
+const WorkspaceModeShell = (props) => {
+    const {
+        workspaceMode,
+        setWorkspaceMode,
+        onBack,
+        selectedSubject,
+        selectedGrade,
+        topic,
+        subskills = [],
+        difficulty,
+        setDifficulty,
+        subskill,
+        setSubskill,
+        onGenerate,
+        children,
+        questionSlot,
+        onNext,
+        renderVisualAids,
+        availableModes = ['scaffold', 'practice', 'marking'],
+        subscriptionTier = 'standard', // 'standard' | 'pro' | 'owner'
+        showDifficultyControl = true,
+        disableSubskillControl = false,
+        showConfigBackButton = true,
+        onCheck,
+        onCompare,
+        isChecked = false,
+        isComparing = false,
+        isGenerating = false,
+        generationError = null,
+        isSuperAdmin = false,
+        autoStart = false,
+    } = props;
+
+    const isEmbeddedFromContext = React.useContext(EmbeddedWorkspaceContext);
+    const isEmbedded = props.isEmbedded || isEmbeddedFromContext;
+
     const currentMode = getRouteMode(workspaceMode) || 'scaffold';
     const routeBase = getRouteBase(workspaceMode);
 
-    const [showQuestion, setShowQuestion] = useState(false);
+    const [showQuestion, setShowQuestion] = useState(autoStart);
 
     // Sync internal state with props when they change
     const [localDifficulty, setLocalDifficulty] = useState(difficulty || 'easy');
@@ -116,6 +136,12 @@ const WorkspaceModeShell = ({
         setShowQuestion(true);
     };
 
+    useEffect(() => {
+        if (autoStart) {
+            handleGenerate();
+        }
+    }, [autoStart]);
+
     // Build subtitle from available info
     const subtitleParts = [
         selectedGrade ? `Grade ${selectedGrade}` : null,
@@ -138,6 +164,7 @@ const WorkspaceModeShell = ({
 
     // Hide scrollbar on mount, restore on unmount
     useEffect(() => {
+        if (isEmbedded) return;
         document.body.classList.add('scrollbar-hide');
         document.documentElement.classList.add('scrollbar-hide');
 
@@ -145,11 +172,46 @@ const WorkspaceModeShell = ({
             document.body.classList.remove('scrollbar-hide');
             document.documentElement.classList.remove('scrollbar-hide');
         };
-    }, []);
+    }, [isEmbedded]);
 
     return (
-        <div className="min-h-screen bg-slate-50 px-4 py-6 sm:px-6 relative overflow-x-hidden">
-            <div className="max-w-5xl mx-auto space-y-6 relative">
+        <div className={isEmbedded ? "w-full h-full relative overflow-y-auto" : "min-h-screen bg-slate-50 relative overflow-x-hidden"}>
+            {/* ── Fixed Top Brand Ribbon (fundile-ui-alternative-design.html) ── */}
+            {!isEmbedded && (
+                <>
+                    <header className="sticky top-0 z-30 bg-brand-blue border-b border-white/10 h-14 sm:h-16 shadow-lg shadow-brand-blue/20 px-4 sm:px-8">
+                        <div className="max-w-6xl mx-auto h-full flex items-center justify-between">
+                            <div className="flex items-center gap-2.5 text-white">
+                                <span className="grid place-items-center h-8 w-8 sm:h-9 sm:w-9 rounded-xl bg-white/10 ring-1 ring-white/20">
+                                    <GraduationCap className="h-4 w-4 sm:h-5 sm:w-5 text-brand-amber" />
+                                </span>
+                                <span className="font-display font-bold text-lg sm:text-xl tracking-tight">Fundile</span>
+                            </div>
+                            <div className="flex items-center gap-2 text-xs font-medium text-white/80">
+                                {selectedGrade && (
+                                    <span className="hidden sm:inline px-3 py-1 rounded-full bg-white/10 border border-white/15">
+                                        Grade {selectedGrade}
+                                    </span>
+                                )}
+                                {selectedSubject?.name && (
+                                    <span className="hidden sm:inline px-3 py-1 rounded-full bg-white/10 border border-white/15">
+                                        {selectedSubject.name}
+                                    </span>
+                                )}
+                                <span className="px-3 py-1 rounded-full bg-brand-orange/90 font-semibold text-white shadow-xs">
+                                    {topic || 'Question Workspace'}
+                                </span>
+                            </div>
+                        </div>
+                    </header>
+                    {/* Gradient progress ribbon */}
+                    <div className="h-1.5 w-full bg-slate-100 mb-6">
+                        <div className="h-full bg-gradient-to-r from-brand-orange to-brand-amber" style={{ width: '68%' }} />
+                    </div>
+                </>
+            )}
+
+            <div className={`max-w-5xl mx-auto space-y-6 relative ${isEmbedded ? '' : 'px-4 sm:px-6 pb-12'}`}>
 
                 {/* ── Header (Visible in Config View) ── */}
                 {!showQuestion && (
@@ -168,7 +230,7 @@ const WorkspaceModeShell = ({
                             {showConfigBackButton && onBack && (
                                 <button
                                     onClick={onBack}
-                                    className="flex items-center gap-1 px-4 py-2 rounded-xl border border-slate-200 bg-white text-slate-700 hover:bg-slate-50 transition-colors text-sm font-medium shadow-sm"
+                                    className="flex items-center gap-1 px-4 py-2 rounded-xl border border-slate-200 bg-white text-slate-700 hover:bg-slate-50 transition-colors text-sm font-medium shadow-sm cursor-pointer"
                                 >
                                     <ChevronLeft className="h-4 w-4" />
                                     Back
@@ -183,36 +245,6 @@ const WorkspaceModeShell = ({
                     <div className="transition-all duration-300 transform translate-y-0 opacity-100">
                         <div className="rounded-2xl shadow-sm border border-slate-200 bg-white overflow-hidden">
                             <div className="p-4 sm:p-6 space-y-6">
-                                {/* Mode Selection */}
-                                {availableModes.length > 1 && (
-                                    <div className="space-y-2">
-                                        <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide">Mode</p>
-                                        <div className="flex flex-wrap gap-2">
-                                            {availableModes.map((m) => {
-                                                const locked = m === 'marking' && isMarkingLocked;
-                                                return (
-                                                    <button
-                                                        key={m}
-                                                        onClick={() => handleModeSwitch(m)}
-                                                        className={`text-xs px-3 py-2 rounded-full border transition-all duration-200 capitalize flex items-center gap-1 ${
-                                                            locked
-                                                                ? 'bg-slate-100 text-slate-400 border-slate-200 cursor-not-allowed opacity-60'
-                                                                : localMode === m
-                                                                    ? modeColors[m]
-                                                                    : 'bg-white text-slate-500 border-slate-200 hover:bg-slate-50'
-                                                        }`}
-                                                        disabled={locked}
-                                                        title={locked ? 'Upgrade to Pro for AI-powered marking' : ''}
-                                                    >
-                                                        {locked && <Lock className="h-3 w-3" />}
-                                                        {m}
-                                                        {locked && <span className="text-[10px] ml-0.5 font-semibold">PRO</span>}
-                                                    </button>
-                                                );
-                                            })}
-                                        </div>
-                                    </div>
-                                )}
 
                                 {/* Controls Grid */}
                                 <div className={configurationGridClassName}>
@@ -225,7 +257,11 @@ const WorkspaceModeShell = ({
                                                     <button
                                                         key={level}
                                                         onClick={() => setLocalDifficulty(level)}
-                                                        className={`flex-1 px-3 py-2 rounded-xl text-sm capitalize border transition-all duration-200 ${localDifficulty === level ? 'bg-slate-800 text-white border-slate-800 shadow-md' : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50'}`}
+                                                        className={`flex-1 px-3 py-2 rounded-xl text-sm capitalize border transition-all duration-200 cursor-pointer ${
+                                                            localDifficulty === level
+                                                                ? 'bg-brand-blue text-white border-brand-blue shadow-md font-semibold'
+                                                                : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50 font-medium'
+                                                        }`}
                                                     >
                                                         {level}
                                                     </button>
@@ -241,7 +277,7 @@ const WorkspaceModeShell = ({
                                             <select
                                                 value={localSubskill}
                                                 onChange={(e) => setLocalSubskill(e.target.value)}
-                                                className="w-full px-3 py-3 rounded-xl border text-sm bg-white transition-all border-slate-200 focus:outline-none focus:ring-2 focus:ring-slate-300 cursor-pointer"
+                                                className="w-full px-3 py-3 rounded-xl border text-sm bg-white transition-all border-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-blue/30 focus:border-brand-blue cursor-pointer"
                                             >
                                                 {subskills.length > 0 ? (
                                                     subskills.map((s) => (
@@ -258,7 +294,7 @@ const WorkspaceModeShell = ({
                                     <div className="flex items-end">
                                         <button
                                             onClick={handleGenerate}
-                                            className="w-full rounded-xl h-12 text-sm font-semibold bg-slate-900 text-white hover:bg-slate-800 transition-all shadow-lg active:scale-95"
+                                            className="w-full rounded-xl h-12 text-sm font-semibold bg-brand-orange text-white hover:bg-brand-orangeDark transition-all shadow-ribbon active:scale-95 cursor-pointer"
                                         >
                                             Generate Question
                                         </button>
@@ -271,94 +307,111 @@ const WorkspaceModeShell = ({
 
                 {/* ── Overlay Background Blur ── */}
                 {showQuestion && (
-                    <div className="fixed inset-0 bg-slate-900/20 backdrop-blur-sm z-40 transition-opacity duration-300" />
+                    <div className={`${isEmbedded ? 'absolute' : 'fixed'} inset-0 bg-slate-900/20 backdrop-blur-sm z-40 transition-opacity duration-300`} />
                 )}
 
                 {/* ── Question Content Overlay ── */}
                 {showQuestion && (
-                    <div className="fixed inset-0 z-50 overflow-y-auto px-4 py-8 sm:px-6 scrollbar-hide">
-                        <div className="max-w-5xl mx-auto space-y-6">
+                    <div className={`${isEmbedded ? 'absolute px-2 py-3' : 'fixed px-4 py-8 sm:px-6'} inset-0 z-50 overflow-y-auto scrollbar-hide`}>
+                        <div className={isEmbedded ? "space-y-3" : "max-w-5xl mx-auto space-y-6"}>
 
-                            {/* Card 1: Header + Meta + Question Prompt */}
-                            <div className="rounded-2xl shadow-xl border border-slate-200 bg-white overflow-hidden p-4 sm:p-6 space-y-6">
-
-                                {/* Internal Header (Title + Breadcrumbs + Back to Config) */}
-                                <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-4 pb-4 border-b border-slate-100">
-                                    <div>
-                                        <h1 className="text-xl sm:text-2xl font-bold text-slate-800">
-                                            Question Workspace
-                                        </h1>
-                                        {subtitleParts.length > 0 && (
-                                            <p className="text-slate-500 text-xs sm:text-sm mt-1">
-                                                {subtitleParts.join(' • ')}
-                                            </p>
-                                        )}
-                                    </div>
-                                    <div>
-                                        <button
-                                            onClick={() => setShowQuestion(false)}
-                                            className="flex items-center gap-1 px-4 py-2 rounded-xl border border-slate-200 bg-white text-slate-700 hover:bg-slate-50 transition-colors text-sm font-medium shadow-sm"
-                                        >
-                                            <ChevronLeft className="h-4 w-4" />
-                                            Back
-                                        </button>
-                                    </div>
-                                </div>
-
-                                {/* Meta Pills */}
-                                <div className="flex flex-wrap items-center justify-between gap-3 text-xs">
-                                    <div className="flex flex-wrap gap-2">
-                                        <span className={`px-3 py-1 rounded-full border capitalize ${modeColors[localMode]}`}>
-                                            {localMode}
-                                        </span>
-                                        {showDifficultyControl && (
-                                            <span className="px-3 py-1 rounded-full border bg-slate-100 text-slate-700 capitalize">
-                                                {localDifficulty}
-                                            </span>
-                                        )}
-                                        <span className="px-3 py-1 rounded-full border bg-slate-100 text-slate-700">
-                                            {selectedSubskillLabel}
-                                        </span>
-                                    </div>
-                                </div>
-
-                                {questionSlot ? (
-                                    <div>{questionSlot}</div>
-                                ) : isGenerating ? (
-                                    <div className="rounded-xl border border-indigo-200 bg-indigo-50 px-6 py-8 flex flex-col items-center justify-center text-center space-y-3">
-                                        <Loader2 className="w-8 h-8 text-indigo-600 animate-spin" />
-                                        <p className="text-sm font-semibold text-indigo-900">
-                                            Generating your question...
-                                        </p>
-                                        <p className="text-xs text-indigo-700 max-w-sm">
-                                            This usually takes a few seconds. We're putting together the perfect problem for you.
-                                        </p>
-                                    </div>
-                                ) : (
-                                    <div className="rounded-xl border border-amber-200 bg-amber-50 px-4 py-4 space-y-2">
-                                        <div className="text-sm font-semibold text-amber-900">
-                                            <UserFriendlyError error={generationError || "Question generation did not complete."} isSuperAdmin={isSuperAdmin} />
+                            {/* Card 1: Header + Meta + Question Prompt (Only when NOT embedded) */}
+                            {!isEmbedded && (
+                                <div className="rounded-2xl shadow-xl border border-slate-200 bg-white overflow-hidden p-4 sm:p-6 space-y-6">
+                                    {/* Internal Header (Title + Breadcrumbs + Back to Config) */}
+                                    <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-4 pb-4 border-b border-slate-100">
+                                        <div>
+                                            <h1 className="text-xl sm:text-2xl font-bold text-slate-800">
+                                                Question Workspace
+                                            </h1>
+                                            {subtitleParts.length > 0 && (
+                                                <p className="text-slate-500 text-xs sm:text-sm mt-1">
+                                                    {subtitleParts.join(' • ')}
+                                                </p>
+                                            )}
+                                        </div>
+                                        <div>
+                                            <button
+                                                onClick={() => setShowQuestion(false)}
+                                                className="flex items-center gap-1 px-4 py-2 rounded-xl border border-slate-200 bg-white text-slate-700 hover:bg-slate-50 transition-colors text-sm font-medium shadow-sm cursor-pointer"
+                                            >
+                                                <ChevronLeft className="h-4 w-4" />
+                                                Back
+                                            </button>
                                         </div>
                                     </div>
-                                )}
-                            </div>
+
+                                    {/* Meta Pills */}
+                                    <div className="flex flex-wrap items-center justify-between gap-3 text-xs">
+                                        <div className="flex flex-wrap gap-2">
+                                            <span className="px-3 py-1 rounded-full border bg-brand-blue/10 text-brand-blue border-brand-blue/20 font-bold uppercase tracking-wider text-[11px]">
+                                                Practice &amp; Mastery
+                                            </span>
+                                            {showDifficultyControl && (
+                                                <span className="px-3 py-1 rounded-full border bg-slate-100 text-slate-700 capitalize">
+                                                    {localDifficulty}
+                                                </span>
+                                            )}
+                                            <span className="px-3 py-1 rounded-full border bg-slate-100 text-slate-700">
+                                                {selectedSubskillLabel}
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    {questionSlot ? (
+                                        <div className="rounded-xl border border-slate-200 bg-slate-50 p-4 sm:p-5">{questionSlot}</div>
+                                    ) : isGenerating ? (
+                                        <div className="rounded-xl border border-blue-200 bg-blue-50 px-6 py-8 flex flex-col items-center justify-center text-center space-y-3">
+                                            <Loader2 className="w-8 h-8 text-brand-blue animate-spin" />
+                                            <p className="text-sm font-semibold text-slate-900">
+                                                Generating your question...
+                                            </p>
+                                            <p className="text-xs text-slate-600 max-w-sm">
+                                                This usually takes a few seconds. We're putting together the perfect problem for you.
+                                            </p>
+                                        </div>
+                                    ) : (
+                                        <div className="rounded-xl border border-amber-200 bg-amber-50 px-4 py-4 space-y-2">
+                                            <div className="text-sm font-semibold text-amber-900">
+                                                <UserFriendlyError error={generationError || "Question generation did not complete."} isSuperAdmin={isSuperAdmin} />
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+                            )}
+
+                            {/* Compact Loader for Embedded Mode */}
+                            {isGenerating && isEmbedded && (
+                                <div className="rounded-xl border border-blue-200 bg-blue-50 px-4 py-6 flex flex-col items-center justify-center text-center space-y-2">
+                                    <Loader2 className="w-6 h-6 text-brand-blue animate-spin" />
+                                    <p className="text-xs font-semibold text-slate-900">
+                                        Generating your question...
+                                    </p>
+                                </div>
+                            )}
 
                             {/* Card 2: Answer / Interaction */}
-                            <div className="rounded-2xl shadow-xl border border-slate-200 bg-white overflow-hidden">
-                                <div className="p-4 sm:p-6">
-                                    {children}
-                                </div>
+                            {!isGenerating && (
+                                <div className="rounded-2xl shadow-xl border border-slate-200 bg-white overflow-hidden">
+                                    {isEmbedded && questionSlot && (
+                                        <div className="p-3 border-b border-slate-100 bg-slate-50 text-xs font-semibold text-slate-700 leading-relaxed max-h-24 overflow-y-auto whitespace-pre-wrap">
+                                            {questionSlot}
+                                        </div>
+                                    )}
+                                    <div className={isEmbedded ? "p-3" : "p-4 sm:p-6"}>
+                                        {children}
+                                    </div>
 
-                                {/* Check / Compare Footer */}
-                                {(onCheck || onCompare) && localMode !== 'marking' && (
-                                    <div className="border-t border-slate-200 bg-slate-50 px-4 sm:px-6 py-3 flex flex-wrap gap-3">
+                                {/* Check / Compare / Next Footer */}
+                                {(onCheck || onCompare || onNext) && localMode !== 'marking' && (
+                                    <div className="border-t border-slate-200 bg-slate-50 px-4 sm:px-6 py-3 flex flex-wrap gap-3 items-center">
                                         {onCheck && (
                                             <button
                                                 onClick={onCheck}
-                                                className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold transition-all shadow-sm active:scale-95 ${
+                                                className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold transition-all shadow-sm active:scale-95 cursor-pointer ${
                                                     isChecked
                                                         ? 'bg-emerald-600 text-white hover:bg-emerald-700'
-                                                        : 'bg-indigo-600 text-white hover:bg-indigo-700'
+                                                        : 'bg-brand-blue text-white hover:bg-brand-cobalt'
                                                 }`}
                                             >
                                                 <CheckCircle2 className="h-4 w-4" />
@@ -368,28 +421,61 @@ const WorkspaceModeShell = ({
                                         {onCompare && isChecked && (
                                             <button
                                                 onClick={onCompare}
-                                                className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold transition-all shadow-sm active:scale-95 ${
+                                                className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold transition-all shadow-sm active:scale-95 cursor-pointer ${
                                                     isComparing
                                                         ? 'bg-amber-600 text-white hover:bg-amber-700'
-                                                        : 'bg-white text-slate-700 border border-slate-300 hover:bg-slate-100'
+                                                        : 'bg-white text-brand-blue border border-brand-blue/30 hover:bg-blue-50'
                                                 }`}
                                             >
                                                 <ArrowLeftRight className="h-4 w-4" />
-                                                {isComparing ? 'Showing Answers' : 'Compare'}
+                                                {isComparing ? 'Showing Answers' : 'Compare memo'}
+                                            </button>
+                                        )}
+                                        {onNext && (
+                                            <button
+                                                onClick={onNext}
+                                                className="ml-auto flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold bg-brand-orange text-white hover:bg-brand-orangeDark transition shadow-ribbon active:scale-95 cursor-pointer"
+                                            >
+                                                Next <ArrowRight className="h-4 w-4" />
                                             </button>
                                         )}
                                     </div>
                                 )}
                             </div>
+                            )}
 
-                            {/* Next Button */}
-                            {onNext && (
+                            {/* Standalone Next Button when not in footer */}
+                            {onNext && (!onCheck && !onCompare) && (
                                 <button
                                     onClick={onNext}
-                                    className="w-full rounded-xl h-12 text-sm font-semibold bg-slate-900 text-white hover:bg-slate-800 transition-all shadow-lg active:scale-95"
+                                    className="w-full rounded-xl h-12 text-sm font-semibold bg-brand-orange text-white hover:bg-brand-orangeDark transition-all shadow-ribbon active:scale-95 cursor-pointer flex items-center justify-center gap-2"
                                 >
-                                    Next Question
+                                    Next Question <ArrowRight className="h-4 w-4" />
                                 </button>
+                            )}
+
+                            {/* ── Prerequisite Gap Banner (Cross-grade regression made visible) ── */}
+                            {props.prerequisiteBanner && (
+                                <div className="rounded-2xl border border-brand-orange/30 bg-amber-50/70 p-4 sm:p-5 flex items-start gap-3 shadow-sm">
+                                    <span className="h-9 w-9 shrink-0 grid place-items-center rounded-xl bg-brand-orange/15 text-brand-orange">
+                                        <GitBranch className="h-5 w-5" />
+                                    </span>
+                                    <div className="flex-1">
+                                        <p className="font-semibold text-slate-900 text-sm">
+                                            Prerequisite gap detected — step down to Grade {props.prerequisiteBanner.target_grade}
+                                        </p>
+                                        <p className="text-xs text-slate-600 mt-0.5 leading-relaxed">
+                                            {props.prerequisiteBanner.explanation || `You're missing ${props.prerequisiteBanner.target_subskill || 'foundational subskill'}. A 5-minute foundational micro-drill is recommended before continuing.`}
+                                        </p>
+                                        <button
+                                            type="button"
+                                            onClick={() => props.onStartMicroDrill && props.onStartMicroDrill(props.prerequisiteBanner)}
+                                            className="mt-2 text-xs font-bold text-brand-blue hover:underline flex items-center gap-1 cursor-pointer"
+                                        >
+                                            Start micro-drill ({props.prerequisiteBanner.target_topic} · Grade {props.prerequisiteBanner.target_grade}) →
+                                        </button>
+                                    </div>
+                                </div>
                             )}
 
                             {/* Visual Aids Panel (Collapsible) */}

@@ -1,15 +1,43 @@
 export const OWNER_EMAILS = ['princenqaba@gmail.com', 'princenqabamoyo@outlook.com'];
 
-export const LIVE_SIGNUP_GRADES = [10, 11];
+export const LIVE_SIGNUP_GRADES = [7, 8, 9, 10, 11, 12];
 
 export const LIVE_SUBJECT_MATRIX = {
   CAPS: {
-    10: ['Accounting'],
-    11: ['Accounting'],
+    7: ['Economic and Management Sciences', 'EMS', 'Mathematics', 'Natural Sciences'],
+    8: ['Economic and Management Sciences', 'EMS', 'Mathematics', 'Natural Sciences'],
+    9: ['Economic and Management Sciences', 'EMS', 'Mathematics', 'Natural Sciences'],
+    10: [
+      'Accounting',
+      'Mathematics',
+      'Business Studies',
+      'Physical Sciences',
+      'Life Sciences',
+      'Mathematical Literacy',
+      'Technical Mathematics',
+    ],
+    11: [
+      'Accounting',
+      'Mathematics',
+      'Business Studies',
+      'Physical Sciences',
+      'Life Sciences',
+      'Mathematical Literacy',
+      'Technical Mathematics',
+    ],
+    12: [
+      'Accounting',
+      'Mathematics',
+      'Business Studies',
+      'Physical Sciences',
+      'Life Sciences',
+      'Mathematical Literacy',
+      'Technical Mathematics',
+    ],
   },
 };
 
-export const COMING_SOON_SUBJECT_MESSAGE = 'This subject is coming soon. Fundile currently supports Grade 10 and Grade 11 Accounting.';
+export const COMING_SOON_SUBJECT_MESSAGE = 'This topic or elective is currently being updated to latest exam guidelines. Standard practice is live across all core national curriculum subjects.';
 
 export const CLASS_ASSIGNMENTS_BLOCKED_MESSAGE = 'This facility is not yet available in South Africa.';
 

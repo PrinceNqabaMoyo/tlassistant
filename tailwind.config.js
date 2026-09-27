@@ -7,7 +7,23 @@ export default { // <--- Changed this line
     "./public/index.html",
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        brand: {
+          blue: '#13519C',
+          navy: '#081326',
+          cobalt: '#0f3e77',
+          sky: '#2B7BD8',
+          orange: '#FF9100',
+          orangeDark: '#f58200',
+          amber: '#FFD166',
+        },
+      },
+      boxShadow: {
+        ribbon: '0 4px 14px rgba(255,145,0,0.39)',
+        lift: '0 16px 50px rgba(19,81,156,0.14)',
+      },
+    },
   },
   plugins: [],
 }

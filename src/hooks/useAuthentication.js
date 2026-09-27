@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { initializeApp } from 'firebase/app';
-import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth';
+import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, signInAnonymously } from 'firebase/auth';
 import { getFirestore, doc, setDoc, getDoc, updateDoc } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
 import { firebaseConfig } from '../constants/sourceDocuments';
@@ -171,8 +171,9 @@ export const useAuthentication = () => {
                             setCurrentUser({
                                 ...userData,
                                 uid: user.uid,
-                                email: user.email,
+                                email: user.email || `anon_${user.uid}@explore.fundile.com`,
                                 emailVerified: user.emailVerified,
+                                isAnonymous: user.isAnonymous,
                                 isOwner,
                                 isSuperAdmin: isOwner, // backward compat
                                 tier: effectiveTier,
@@ -206,8 +207,9 @@ export const useAuthentication = () => {
                             await setDoc(doc(dbInstance, 'users', user.uid), newUserData);
                             setCurrentUser({
                                 uid: user.uid,
-                                email: user.email,
+                                email: user.email || `anon_${user.uid}@explore.fundile.com`,
                                 emailVerified: user.emailVerified,
+                                isAnonymous: user.isAnonymous,
                                 isOwner,
                                 isSuperAdmin: isOwner, // backward compat
                                 tier: isOwner ? 'owner' : 'standard',
@@ -301,6 +303,41 @@ export const useAuthentication = () => {
         }
     };
 
+    const signInAsAnonymous = async () => {
+        if (!auth || !db) {
+            return { success: false, error: 'Firebase services not available' };
+        }
+        
+        try {
+            const userCredential = await signInAnonymously(auth);
+            const user = userCredential.user;
+            
+            const userDoc = await getDoc(doc(db, 'users', user.uid));
+            if (!userDoc.exists()) {
+                const userData = {
+                    email: `anon_${user.uid}@explore.fundile.com`,
+                    role: 'student',
+                    createdAt: new Date(),
+                    tier: 'standard',
+                    subscribedGrades: [],
+                    subscribedSubjects: [],
+                    isAnonymous: true,
+                    exploreQuestionsUsed: 0,
+                    paymentReference: buildPaymentReference(user.uid),
+                    subscriptionExpiry: null,
+                    isOwner: false,
+                    ...buildSubscriptionFields(false)
+                };
+                await setDoc(doc(db, 'users', user.uid), userData);
+            }
+            
+            return { success: true, user: userCredential.user };
+        } catch (error) {
+            console.error('Anon sign in error:', error);
+            return { success: false, error: error.message };
+        }
+    };
+
     const refreshCurrentUser = async () => {
         if (!auth || !db || !auth.currentUser) {
             return { success: false, error: 'No authenticated user found' };
@@ -323,8 +360,9 @@ export const useAuthentication = () => {
             setCurrentUser({
                 ...userData,
                 uid: user.uid,
-                email: user.email,
+                email: user.email || `anon_${user.uid}@explore.fundile.com`,
                 emailVerified: user.emailVerified,
+                isAnonymous: user.isAnonymous,
                 isOwner,
                 isSuperAdmin: isOwner,
                 tier: effectiveTier,
@@ -365,7 +403,7 @@ export const useAuthentication = () => {
         auth, // Return the Firebase Auth instance directly
         db,   // Return the Firestore instance directly
         storage,
-        authService: { signUp, signIn, handleLogout },
+        authService: { signUp, signIn, signInAsAnonymous, handleLogout },
         dbService: db,
         currentUser,
         authLoading,

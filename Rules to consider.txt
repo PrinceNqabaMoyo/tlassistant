@@ -1,1 +1,8 @@
-When you encounter [DIAGRAM:] you need to pay closer attention and decide if you can generate a diagram
+>When you encounter [DIAGRAM:] you need to pay closer attention and decide if you can generate a diagram
+For essay questions, the marks allocated to the answers in the curriculum doc .md are the maximum mark that can be given to a section, and the total for the essay should not exceed the usual 40 marks. A student may write more marking points in one section than another and still score high. also ensure a user isn't allocated all marks for overkill on one aspect of the essay.
+
+>When you encounter >>Comment- this is my notes to you. consider them when coding.
+
+>Pay attention particularly in physical science and natural science. A lot of anologies are used. But experience has taught me that some analogies cause more misconception among students. Please critically analyse analogies based on current best practices in science education, and use the best you know wherever you can. 
+
+>In science subjects, activities, experiments and diagrams should be simulated. Some diagrams are static in textbooks but for the medium we use can be dynamic simulations. consider this.

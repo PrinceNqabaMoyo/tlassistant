@@ -267,6 +267,552 @@ function renderNumberLine(spec, { id }) {
 }
 
 /**
+ * Render a triangle spec into a JSXGraph board.
+ */
+function renderTriangle(spec, { id }) {
+    const pts = spec.points || {};
+    const xs = Object.values(pts).map((p) => p[0]);
+    const ys = Object.values(pts).map((p) => p[1]);
+    const pad = 1.5;
+    const bbox = [Math.min(...xs) - pad, Math.max(...ys) + pad, Math.max(...xs) + pad, Math.min(...ys) - pad];
+
+    const board = JSXGraph.initBoard(id, {
+        boundingbox: bbox,
+        axis: false,
+        grid: false,
+        showNavigation: false,
+        showCopyright: false,
+        keepAspectRatio: true,
+        pan: { enabled: false },
+        zoom: { enabled: false },
+    });
+
+    const P = {};
+    const verts = spec.vertices || ['A', 'B', 'C'];
+    verts.forEach((name) => {
+        const [x, y] = pts[name] || [0, 0];
+        P[name] = board.create('point', [x, y], {
+            name: name,
+            size: 1,
+            fixed: true,
+            showInfobox: false,
+            label: { offset: [6, 6], fontSize: 14, strokeColor: COLORS.label },
+            fillColor: COLORS.line,
+            strokeColor: COLORS.line,
+        });
+    });
+
+    const edges = [];
+    const trianglesList = (spec.triangles && spec.triangles.length > 0)
+        ? spec.triangles
+        : [verts];
+
+    trianglesList.forEach((tVerts) => {
+        for (let i = 0; i < tVerts.length; i++) {
+            const from = tVerts[i];
+            const to = tVerts[(i + 1) % tVerts.length];
+            if (!P[from] || !P[to]) continue;
+            const seg = board.create('segment', [P[from], P[to]], {
+                strokeColor: COLORS.line,
+                strokeWidth: 2.5,
+                fixed: true,
+                highlight: false,
+            });
+            edges.push({ from, to, seg });
+            const label = (spec.side_labels || {})[`${from}${to}`] || (spec.side_labels || {})[`${to}${from}`] || '';
+            if (label) {
+                const a = pts[from];
+                const b = pts[to];
+                const dx = b[0] - a[0];
+                const dy = b[1] - a[1];
+                const len = Math.hypot(dx, dy) || 1;
+                const nx = -dy / len;
+                const ny = dx / len;
+                board.create('text', [
+                    (a[0] + b[0]) / 2 + nx * 0.45,
+                    (a[1] + b[1]) / 2 + ny * 0.45,
+                    label,
+                ], {
+                    fontSize: 15, fixed: true, anchorX: 'middle', anchorY: 'middle',
+                    strokeColor: COLORS.label, highlight: false,
+                });
+            }
+        }
+    });
+
+    // Tick marks for equal sides
+    (spec.equal_sides || []).forEach((group) => {
+        group.forEach((edgeKey) => {
+            const edge = edges.find((e) => e.from + e.to === edgeKey || e.to + e.from === edgeKey);
+            if (!edge) return;
+            const a = pts[edge.from];
+            const b = pts[edge.to];
+            const mx = (a[0] + b[0]) / 2;
+            const my = (a[1] + b[1]) / 2;
+            const dx = b[0] - a[0];
+            const dy = b[1] - a[1];
+            const len = Math.hypot(dx, dy) || 1;
+            const ux = -dy / len * 0.2;
+            const uy = dx / len * 0.2;
+            board.create('segment', [[mx - ux, my - uy], [mx + ux, my + uy]], {
+                strokeColor: COLORS.line, strokeWidth: 2, fixed: true, highlight: false,
+            });
+        });
+    });
+
+    // Helper to find connected neighbor vertices along drawn edges
+    const getConnectedNeighbors = (v) => {
+        const neighbors = [];
+        edges.forEach((e) => {
+            if (e.from === v && !neighbors.includes(e.to)) neighbors.push(e.to);
+            else if (e.to === v && !neighbors.includes(e.from)) neighbors.push(e.from);
+        });
+        return neighbors;
+    };
+
+    // Right angle square (supports single vertex string or array of vertices)
+    const rightAngleVerts = Array.isArray(spec.right_angle_at)
+        ? spec.right_angle_at
+        : (spec.right_angle_at ? [spec.right_angle_at] : []);
+    rightAngleVerts.forEach((v) => {
+        if (!P[v]) return;
+        const adj = getConnectedNeighbors(v);
+        if (adj.length >= 2) {
+            board.create('angle', [P[adj[0]], P[v], P[adj[1]]], {
+                type: 'square', radius: 0.4, fillColor: COLORS.hint, fillOpacity: 0.5,
+                strokeColor: COLORS.hint, fixed: true, name: '', withLabel: false, highlight: false,
+            });
+        }
+    });
+
+    // Angle arcs and labels
+    const angleVals = spec.angle_values || {};
+    const angleLabels = spec.angle_labels || {};
+    verts.forEach((v) => {
+        if (!P[v]) return;
+        const adj = getConnectedNeighbors(v);
+        if (adj.length < 2) return;
+        const hasLabel = angleLabels[v];
+        const hasValue = angleVals[v] !== undefined;
+        if (hasLabel || hasValue) {
+            const ang = board.create('angle', [P[adj[0]], P[v], P[adj[1]]], {
+                radius: 0.7, fillColor: COLORS.angle, fillOpacity: 0.12,
+                strokeColor: COLORS.angle, fixed: true,
+                name: angleLabels[v] || '',
+                label: { fontSize: 14, strokeColor: COLORS.angle },
+                highlight: false,
+            });
+        }
+    });
+
+    // Explicit angle arcs if spec.angles is provided
+    (spec.angles || []).forEach((ang) => {
+        const arms = ang.arms || [];
+        if (arms.length >= 3 && P[arms[0]] && P[arms[1]] && P[arms[2]]) {
+            board.create('angle', [P[arms[0]], P[arms[1]], P[arms[2]]], {
+                radius: ang.radius || 0.7,
+                fillColor: COLORS.angle,
+                fillOpacity: 0.12,
+                strokeColor: COLORS.angle,
+                fixed: true,
+                name: ang.label || '',
+                label: { fontSize: 14, strokeColor: COLORS.angle },
+                highlight: false,
+            });
+        }
+    });
+
+    return () => {
+        try { JSXGraph.freeBoard(board); } catch { /* already freed */ }
+    };
+}
+
+/**
+ * Render a quadrilateral spec into a JSXGraph board.
+ */
+function renderQuadrilateral(spec, { id }) {
+    const pts = spec.points || {};
+    const xs = Object.values(pts).map((p) => p[0]);
+    const ys = Object.values(pts).map((p) => p[1]);
+    const pad = 1.5;
+    const bbox = [Math.min(...xs) - pad, Math.max(...ys) + pad, Math.max(...xs) + pad, Math.min(...ys) - pad];
+
+    const board = JSXGraph.initBoard(id, {
+        boundingbox: bbox,
+        axis: false,
+        grid: false,
+        showNavigation: false,
+        showCopyright: false,
+        keepAspectRatio: true,
+        pan: { enabled: false },
+        zoom: { enabled: false },
+    });
+
+    const P = {};
+    const verts = spec.vertices || ['A', 'B', 'C', 'D'];
+    verts.forEach((name) => {
+        const [x, y] = pts[name] || [0, 0];
+        P[name] = board.create('point', [x, y], {
+            name: name,
+            size: 1,
+            fixed: true,
+            showInfobox: false,
+            label: { offset: [6, 6], fontSize: 14, strokeColor: COLORS.label },
+            fillColor: COLORS.line,
+            strokeColor: COLORS.line,
+        });
+    });
+
+    // Polygon fill
+    if (verts.length >= 3) {
+        board.create('polygon', verts.map((v) => P[v]), {
+            fillColor: COLORS.fill,
+            fillOpacity: 0.06,
+            borders: { visible: false },
+            vertices: { visible: false },
+            withLines: false,
+            fixed: true,
+            highlight: false,
+        });
+    }
+
+    // Sides
+    const edges = [];
+    for (let i = 0; i < verts.length; i++) {
+        const from = verts[i];
+        const to = verts[(i + 1) % verts.length];
+        const seg = board.create('segment', [P[from], P[to]], {
+            strokeColor: COLORS.line,
+            strokeWidth: 2.5,
+            fixed: true,
+            highlight: false,
+        });
+        edges.push({ from, to, seg });
+        const label = (spec.side_labels || {})[`${from}${to}`] || '';
+        if (label) {
+            const a = pts[from];
+            const b = pts[to];
+            const dx = b[0] - a[0];
+            const dy = b[1] - a[1];
+            const len = Math.hypot(dx, dy) || 1;
+            const nx = -dy / len;
+            const ny = dx / len;
+            board.create('text', [
+                (a[0] + b[0]) / 2 + nx * 0.45,
+                (a[1] + b[1]) / 2 + ny * 0.45,
+                label,
+            ], {
+                fontSize: 15, fixed: true, anchorX: 'middle', anchorY: 'middle',
+                strokeColor: COLORS.label, highlight: false,
+            });
+        }
+    }
+
+    // Diagonals
+    if (spec.diagonals && verts.length === 4) {
+        const d1 = board.create('segment', [P[verts[0]], P[verts[2]]], {
+            strokeColor: COLORS.hint, strokeWidth: 1.5, dash: 2,
+            fixed: true, highlight: false,
+        });
+        const d2 = board.create('segment', [P[verts[1]], P[verts[3]]], {
+            strokeColor: COLORS.hint, strokeWidth: 1.5, dash: 2,
+            fixed: true, highlight: false,
+        });
+    }
+
+    // Tick marks for equal sides
+    (spec.equal_sides || []).forEach((group) => {
+        group.forEach((edgeKey) => {
+            const edge = edges.find((e) => e.from + e.to === edgeKey || e.to + e.from === edgeKey);
+            if (!edge) return;
+            const a = pts[edge.from];
+            const b = pts[edge.to];
+            const mx = (a[0] + b[0]) / 2;
+            const my = (a[1] + b[1]) / 2;
+            const dx = b[0] - a[0];
+            const dy = b[1] - a[1];
+            const len = Math.hypot(dx, dy) || 1;
+            const ux = -dy / len * 0.2;
+            const uy = dx / len * 0.2;
+            board.create('segment', [[mx - ux, my - uy], [mx + ux, my + uy]], {
+                strokeColor: COLORS.line, strokeWidth: 2, fixed: true, highlight: false,
+            });
+        });
+    });
+
+    // Angle arcs and labels
+    const angleLabels = spec.angle_labels || {};
+    verts.forEach((v) => {
+        if (!P[v]) return;
+        const adj = verts.filter((n) => n !== v);
+        if (adj.length < 2) return;
+        const prev = adj[0];
+        const next = adj[1];
+        if (angleLabels[v]) {
+            board.create('angle', [P[prev], P[v], P[next]], {
+                radius: 0.7, fillColor: COLORS.angle, fillOpacity: 0.12,
+                strokeColor: COLORS.angle, fixed: true,
+                name: angleLabels[v],
+                label: { fontSize: 14, strokeColor: COLORS.angle },
+                highlight: false,
+            });
+        }
+    });
+
+    return () => {
+        try { JSXGraph.freeBoard(board); } catch { /* already freed */ }
+    };
+}
+
+/**
+ * Render an angle diagram spec into a JSXGraph board.
+ */
+function renderAngleDiagram(spec, { id }) {
+    const board = JSXGraph.initBoard(id, {
+        boundingbox: [-2, 2, 4, -2],
+        axis: false,
+        grid: false,
+        showNavigation: false,
+        showCopyright: false,
+        keepAspectRatio: true,
+        pan: { enabled: false },
+        zoom: { enabled: false },
+    });
+
+    const O = board.create('point', [0, 0], {
+        name: spec.vertex || 'O', size: 1, fixed: true, showInfobox: false,
+        label: { offset: [6, 6], fontSize: 14, strokeColor: COLORS.label },
+        fillColor: COLORS.line, strokeColor: COLORS.line,
+    });
+
+    const arms = spec.arms || ['OA', 'OB'];
+    const armPts = [];
+    if (arms.length >= 2) {
+        const p1 = board.create('point', [3, 0], {
+            name: arms[0], size: 1, fixed: true, showInfobox: false,
+            label: { offset: [6, 6], fontSize: 14, strokeColor: COLORS.label },
+            fillColor: COLORS.line, strokeColor: COLORS.line,
+        });
+        const p2 = board.create('point', [Math.cos((spec.angle_value || 60) * Math.PI / 180) * 3, Math.sin((spec.angle_value || 60) * Math.PI / 180) * 3], {
+            name: arms[1], size: 1, fixed: true, showInfobox: false,
+            label: { offset: [6, 6], fontSize: 14, strokeColor: COLORS.label },
+            fillColor: COLORS.line, strokeColor: COLORS.line,
+        });
+        armPts.push(p1, p2);
+        board.create('segment', [O, p1], { strokeColor: COLORS.line, strokeWidth: 2.5, fixed: true, highlight: false });
+        board.create('segment', [O, p2], { strokeColor: COLORS.line, strokeWidth: 2.5, fixed: true, highlight: false });
+    }
+
+    if (spec.angle_arc && armPts.length === 2) {
+        board.create('angle', [armPts[0], O, armPts[1]], {
+            radius: 1.2, fillColor: COLORS.angle, fillOpacity: 0.12,
+            strokeColor: COLORS.angle, fixed: true,
+            name: spec.angle_label || `${spec.angle_value || 60}°`,
+            label: { fontSize: 14, strokeColor: COLORS.angle },
+            highlight: false,
+        });
+    }
+
+    (spec.supplementary_angles || []).forEach((sa) => {
+        const sx = Math.cos((sa.value || 120) * Math.PI / 180) * 3;
+        const sy = Math.sin((sa.value || 120) * Math.PI / 180) * 3;
+        const sp = board.create('point', [sx, sy], {
+            name: sa.vertex || '', size: 1, fixed: true, showInfobox: false,
+            label: { fontSize: 14, strokeColor: COLORS.label },
+            fillColor: COLORS.line, strokeColor: COLORS.line,
+        });
+        board.create('segment', [O, sp], { strokeColor: COLORS.line, strokeWidth: 2.5, fixed: true, highlight: false });
+    });
+
+    return () => {
+        try { JSXGraph.freeBoard(board); } catch { /* already freed */ }
+    };
+}
+
+/**
+ * Render a parallel-transversal spec into a JSXGraph board.
+ */
+function renderParallelTransversal(spec, { id }) {
+    const board = JSXGraph.initBoard(id, {
+        boundingbox: [-0.5, 3, 6.5, -0.5],
+        axis: false,
+        grid: false,
+        showNavigation: false,
+        showCopyright: false,
+        keepAspectRatio: false,
+        pan: { enabled: false },
+        zoom: { enabled: false },
+    });
+
+    const y1 = 2.5;
+    const y2 = 0.5;
+
+    // Two parallel horizontal lines
+    const line1 = board.create('segment', [[0, y1], [6, y1]], {
+        strokeColor: COLORS.line, strokeWidth: 2.5, fixed: true, highlight: false,
+    });
+    const line2 = board.create('segment', [[0, y2], [6, y2]], {
+        strokeColor: COLORS.line, strokeWidth: 2.5, fixed: true, highlight: false,
+    });
+
+    // Transversal
+    const trans = board.create('segment', [[1.5, -0.2], [4.5, 3.2]], {
+        strokeColor: COLORS.line, strokeWidth: 2.5, fixed: true, highlight: false,
+    });
+
+    // Labels
+    board.create('text', [0.2, y1 + 0.25, spec.line1_label || 'AB'], {
+        fontSize: 14, fixed: true, anchorX: 'left', anchorY: 'middle', strokeColor: COLORS.label, highlight: false,
+    });
+    board.create('text', [0.2, y2 - 0.25, spec.line2_label || 'CD'], {
+        fontSize: 14, fixed: true, anchorX: 'left', anchorY: 'middle', strokeColor: COLORS.label, highlight: false,
+    });
+    board.create('text', [4.7, 2.9, spec.transversal_label || 'EF'], {
+        fontSize: 14, fixed: true, anchorX: 'left', anchorY: 'middle', strokeColor: COLORS.label, highlight: false,
+    });
+
+    // Given angle arc
+    const given = spec.given_angle || 50;
+    const pos = spec.given_position || 'top_left_interior';
+    const isTop = pos.startsWith('top');
+    const isLeft = pos.includes('left');
+    const isExterior = pos.includes('exterior');
+
+    const ly = isTop ? y1 : y2;
+    const tx = isLeft ? 2.2 : 3.8;
+    const ty = isTop ? (isExterior ? 3.0 : 1.8) : (isExterior ? 0.0 : 1.2);
+
+    const angPt1 = board.create('point', [tx + (isLeft ? -0.8 : 0.8), ly], { visible: false, fixed: true });
+    const angPt2 = board.create('point', [tx, ly], { visible: false, fixed: true });
+    const angPt3 = board.create('point', [tx + (isLeft ? -0.6 : 0.6), ty], { visible: false, fixed: true });
+
+    board.create('angle', [angPt1, angPt2, angPt3], {
+        radius: 0.7, fillColor: COLORS.angle, fillOpacity: 0.12,
+        strokeColor: COLORS.angle, fixed: true,
+        name: `${given}°`,
+        label: { fontSize: 14, strokeColor: COLORS.angle },
+        highlight: false,
+    });
+
+    return () => {
+        try { JSXGraph.freeBoard(board); } catch { /* already freed */ }
+    };
+}
+
+/**
+ * Render circle geometry specs into a JSXGraph board.
+ * Supports:
+ * - circle_subtended_angle (angle at center = 2 * angle at circumference)
+ * - circle_cyclic_quad (cyclic quad opposite angles, exterior angle)
+ * - circle_tangent_secant (tangent-chord theorem, radius perpendicular to tangent)
+ */
+function renderCircleGeometry(spec, { id, interactive, selectedEdge, graded, correctEdge, selectRef }) {
+    const pts = spec.points || {};
+    const centerKey = spec.center || 'O';
+    const centerCoord = pts[centerKey] || [0, 0];
+    const radius = spec.radius || 3.0;
+
+    const pad = 1.6;
+    const bbox = [
+        centerCoord[0] - radius - pad,
+        centerCoord[1] + radius + pad,
+        centerCoord[0] + radius + pad,
+        centerCoord[1] - radius - pad,
+    ];
+
+    const board = JSXGraph.initBoard(id, {
+        boundingbox: bbox,
+        axis: false,
+        grid: false,
+        showNavigation: false,
+        showCopyright: false,
+        keepAspectRatio: true,
+        pan: { enabled: false },
+        zoom: { enabled: false },
+    });
+
+    // 1. Create Points
+    const P = {};
+    Object.entries(pts).forEach(([name, [x, y]]) => {
+        const isCenter = name === centerKey;
+        const displayName = spec.vertex_labels?.[name] !== undefined ? spec.vertex_labels[name] : name;
+        P[name] = board.create('point', [x, y], {
+            name: displayName,
+            size: isCenter ? 2 : 2.5,
+            fixed: true,
+            showInfobox: false,
+            label: { offset: [6, 6], fontSize: 13, strokeColor: COLORS.label },
+            fillColor: isCenter ? COLORS.hint : COLORS.line,
+            strokeColor: COLORS.line,
+            visible: displayName !== '',
+        });
+    });
+
+    // 2. Draw Circle around center
+    if (P[centerKey]) {
+        board.create('circle', [P[centerKey], radius], {
+            strokeColor: COLORS.line,
+            strokeWidth: 2,
+            fillColor: COLORS.fill,
+            fillOpacity: 0.04,
+            fixed: true,
+            highlight: false,
+        });
+    }
+
+    // 3. Draw Lines / Chords / Tangents
+    const edgeColor = (edge) => {
+        if (graded) {
+            if (edge === correctEdge) return COLORS.correct;
+            if (edge === selectedEdge && selectedEdge !== correctEdge) return COLORS.wrong;
+            return COLORS.line;
+        }
+        if (edge === selectedEdge) return COLORS.select;
+        return COLORS.line;
+    };
+
+    (spec.lines || []).forEach((pair) => {
+        const from = pair[0];
+        const to = pair[1];
+        if (!P[from] || !P[to]) return;
+        const edge = from < to ? from + to : to + from;
+        const seg = board.create('segment', [P[from], P[to]], {
+            strokeColor: edgeColor(edge),
+            strokeWidth: edge === selectedEdge ? 4 : 2,
+            fixed: true,
+            highlight: interactive,
+            highlightStrokeColor: interactive ? COLORS.select : edgeColor(edge),
+            highlightStrokeWidth: interactive ? 4 : 2,
+            cursor: interactive ? 'pointer' : 'default',
+        });
+        if (interactive && !graded) {
+            seg.on('down', () => selectRef.current && selectRef.current(edge));
+        }
+    });
+
+    // 4. Draw Angle Arcs with labels
+    (spec.angles || []).forEach((ang) => {
+        const arms = ang.arms || [];
+        if (arms.length >= 3 && P[arms[0]] && P[arms[1]] && P[arms[2]]) {
+            board.create('angle', [P[arms[0]], P[arms[1]], P[arms[2]]], {
+                radius: ang.radius || 0.7,
+                fillColor: COLORS.angle,
+                fillOpacity: 0.12,
+                strokeColor: COLORS.angle,
+                fixed: true,
+                name: ang.label || '',
+                label: { fontSize: 13, strokeColor: COLORS.angle },
+                highlight: false,
+            });
+        }
+    });
+
+    return () => {
+        try { JSXGraph.freeBoard(board); } catch { /* already freed */ }
+    };
+}
+
+/**
  * DiagramRenderer — turns a Diagram Spec (see backend ``_diagram.py``) into a
  * JSXGraph figure. The same spec renders a static figure or, when
  * ``interactive``, an answer surface whose clickable sides emit edge keys back
@@ -309,6 +855,28 @@ const DiagramRenderer = ({
             return renderNumberLine(spec, { id: idRef.current });
         }
 
+        if (spec.kind === 'triangle') {
+            return renderTriangle(spec, { id: idRef.current });
+        }
+
+        if (spec.kind === 'quadrilateral') {
+            return renderQuadrilateral(spec, { id: idRef.current });
+        }
+
+        if (spec.kind === 'angle_diagram') {
+            return renderAngleDiagram(spec, { id: idRef.current });
+        }
+
+        if (spec.kind === 'parallel_transversal') {
+            return renderParallelTransversal(spec, { id: idRef.current });
+        }
+
+        if (['circle_subtended_angle', 'circle_cyclic_quad', 'circle_tangent_secant'].includes(spec.kind)) {
+            return renderCircleGeometry(spec, {
+                id: idRef.current, interactive, selectedEdge, graded, correctEdge, selectRef,
+            });
+        }
+
         return undefined;
     }, [specKey, interactive, selectedEdge, graded, correctEdge]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -317,7 +885,9 @@ const DiagramRenderer = ({
     const isRightTriangle = spec.kind === 'right_triangle';
     const isNumberLine = spec.kind === 'number_line';
     const isDotPattern = spec.kind === 'dot_pattern';
-    if (!isRightTriangle && !isNumberLine && !isDotPattern) return null;
+    const isCircleGeometry = ['circle_subtended_angle', 'circle_cyclic_quad', 'circle_tangent_secant'].includes(spec.kind);
+    const isGeometry = ['triangle', 'quadrilateral', 'angle_diagram', 'parallel_transversal'].includes(spec.kind) || isCircleGeometry;
+    if (!isRightTriangle && !isNumberLine && !isDotPattern && !isGeometry) return null;
 
     if (isDotPattern) {
         return (

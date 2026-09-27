@@ -1,0 +1,2342 @@
+# Analysis and interpretation of financial statements (Sole trader)
+
+
+
+## Curriculum requirements
+
+Analysis and interpretation of financial statements and notes:
+
+* gross profit on sales
+* gross profit on cost of sales
+* net profit on sales
+* operating expenses on sales
+* operating profit on sales
+* current ratio
+* acid test ratio
+* solvency ratio
+* return on equity
+
+
+
+## Notes
+
+### Introduction to concepts
+
+\-The analysis and interpretation of Financial Statements is an evaluation process aimed at evaluating current and previous financial positions and results of an enterprise. A  ratio is the relationship between two different figures expressed in simple terms. In order to be useful, the ratios should express meaningful relationships and be compared to measures of comparative figures.
+
+The aim of analysis and interpreting the Financial Statements of a business is thus to determine the following:
+
+
+
+#### Profitability
+
+A measure of the business success through comparing profit made with the amount sold or invested. It is also a way to assess whether there may be a cost control problem.
+
+
+
+#### Return
+
+Determines if the investors (owners) in the business are receiving a reasonable return on the money they have invested.
+
+
+
+#### Solvency
+
+The ability to meet financial obligations on time, or to pay long-term debts.
+
+
+
+#### Liquidity
+
+The ease and speed at which an investment can be converted into cash. Also referred to as the ability to pay short-term debts using short-term assets.
+
+
+
+#### Risk
+
+What is the financial risk of the business (i.e. to what extent is the company financed on borrowed funds).
+
+
+
+### Ratios
+
+#### Steps in the analysis process:
+
+Ratio
+
+↓
+
+Information
+
+↓
+
+Calculation
+
+↓
+
+Comparison with previous years
+
+↓
+
+Analysis and interpretation
+
+
+
+#### Profitability of the business
+
+* Percentage gross profit on turnover
+* Percentage gross profit on cost of sales
+* Percentage net profit on turnover
+* Percentage total expenses on turnover
+* Percentage operating profit on turnover
+
+
+
+
+
+#### Liquidity of the business
+
+* Current ratio
+* Acid test ratio
+* Rate of inventory turnover (Grade 11)
+* Number of months' inventory on hand (Grade 11)
+* Average debtors' collection period (Grade11)
+* Average creditors' payment period (Grade11)
+
+
+
+#### Solvency of the business
+
+* Solvency ratio
+
+
+
+#### The financial risk associated with the business
+
+* Debt/Equity ratio (gearing ratio)
+
+
+
+#### The return on investment for the owners of the business
+
+* Percentage return on average owners' equity
+* Let us discuss each ratio in depth.
+
+
+
+### Ratios in depth
+
+
+
+#### Profitability
+
+##### (a) + (b) Gross profit on sales and gross profit on cost of sales
+
+\-The gross profit of a business is the amount by which the sales exceed the cost of sales for a specific accounting period.
+
+\-The gross profit a business aims to achieve can be deduced from the kind of business activity and the policy that is being followed with regard to the profit mark-up. For example, a business can follow a policy of fixed mark-up of 25% on the cost price of
+
+each article.
+
+
+
+>Cost price of an article  R3 000
+
+>25% on cost price   R750
+
+>Sales price R3 750
+
+
+
+\-If the gross profit of R750 is calculated as a percentage of sales (turnover), the percentage is:
+
+&#x20;>750/3 750 ×100/1
+
+= 20%
+
+
+
+\-If the gross profit of R750 is calculated as a percentage of the cost of sales, the percentage is:
+
+&#x20;750/3 000 × 100/1
+
+&#x20;= 25%
+
+&#x20;
+
+\-A profit mark-up of 20% on sales is thus the same as a profit mark-up of 25% on cost of sales.
+
+\-If this profit mark-up is strictly maintained by the business on all sales, the same percentages will be obtained from the final results reflected in the Income Statement, for example:
+
+
+
+Sales for the year (240 articles)	R900 000
+
+Less: Cost of sales				R720 000
+
+Gross profit					R180 000
+
+&#x20;
+
+\-Gross profit expressed as a percentage of sales is:
+
+&#x20;180 000/900 000 × 100/1
+
+&#x20;= 20%
+
+
+
+\-Gross profit expressed as a percentage of Cost of sales is:
+
+&#x20;180 000/720 000 × 100/1
+
+&#x20;= 25%
+
+
+
+\-There is thus no variation of the profit mark-up in this example. -The mark-up is maintained according to the policy.
+
+
+
+###### a) Percentage gross profit on turnover
+
+> is equal to Gross profit/Turnover × 100/1 
+
+>Turnover = sales – Debtors' Allowances 
+
+>Gross profit = Turnover – Cost of sales 
+
+\-This ratio presents the gross profit of a certain financial year as a percentage of the net sales/turnover for a particular year. If the business adds a constant percentage of profit to the cost price, it should be shown in the percentage of the gross profit. Should the two numbers differ, it may be due to the following reasons:
+
+* Theft
+* Sales calculations could have been incorrect.
+* Trade discount could have been allowed.
+
+
+
+###### b) Percentage gross profit on cost of sales
+
+> is equal to Gross profit/Cost of sales × 100/1 
+
+\-This ratio presents the gross profit of a certain percentage of cost of sales. The ratio determines whether the purchasing policy and storage of inventory is applied successfully. If this percentage decreases from the previous year, it is possibly due to theft in the warehouse.
+
+
+
+##### c) Percentage operating profit on turnover
+
+>  is equal to Operating profit/Turnover × 100/1 
+
+
+
+\-This percentage represents the operating profit as a percentage of turnover. This ratio is done to take the income and expenses into account in order to manage the business before any interest. The ratio is used in order to determine how expenses can be managed.
+
+\-The lower the percentage, the better the expenses in the business is managed.
+
+
+
+###### d) Net profit on turnover
+
+> is equal to Net profit/Turnover × 100/1 
+
+\-The net profit for a certain financial period is represented as a percentage of the sales.
+
+\-This percentage should be ⅓ of the percentage gross profit on turnover. If the percentage differs greatly from the gross profit on turnover, the expenses are too high.
+
+\-The percentage net profit on turnover must be compared to the previous year's percentage in order to determine whether the expenses are managed. The higher the percentage, the better the expenses are being managed.
+
+
+
+###### e) Total expenses as a percentage of turnover
+
+> is equal to Operating expenses/Turnover × 100/1
+
+\-This is the percentage of total expenses on turnover. This percentage shows the part of the sales used for operating expenses.
+
+\-This relates to cost control. This number is compared to the previous year and should remain the same or decrease. The lower the percentage, the better expenses are managed.
+
+
+
+#### Liquidity
+
+\-Liquidity refers to whether the business is able to meet its short-term obligations with the funds available – whether the business can pay its current liabilities. These current liabilities can be paid only from current assets that can be converted to cash.
+
+
+
+##### a) Current ratio
+
+Current assets : Current liabilities
+
+\-The current ratio measures the extent to which the current assets of the business cover the current liabilities. The ratio is always presented as x : 1. The current assets are divided by the current liabilities. The greater the ratio of current assets to current
+
+liabilities, the greater the business' ability to meet its short term obligations. If the ratio is 2 : 1 there are current assets of R2 for each R1 of current liabilities.
+
+&#x20;
+
+##### b) Acid test ratio
+
+Current assets – Inventories : Current liabilities
+
+\-A disadvantage of operating capital is that the liquidity of the current assets cannot be taken into account. Trading stock must be converted to cash, could be dated, could be stolen or could break. To calculate the acid test ratio, the inventories should be subtracted from the current assets. Inventories consist of Trading stock and consumable stores on hand. Both the amounts must be deducted.
+
+\-The ratio is expressed as x : 1. The business is regarded as liquid if the ratio is greater than 1, thus 1,2 ; 1. For each R1 current liability there are R1,20 available in the form of assets.
+
+
+
+#### Solvency of the business
+
+##### Solvency ratio
+
+>Total assets : Total liabilities 
+
+>Total assets = Tangible assets + Fixed deposit + Current assets 
+
+>Total liabilities = Non-current liabilities + Current liabilities 
+
+\-Solvency refers to the business's degree of solvency – in other words whether the business will be able to meet its long term obligations.
+
+
+
+\-A business is:
+
+* Solvent = Total assets > Total liabilities
+* Insolvent = Total assets < Total liabilities
+
+\-The ratio is expressed as x : 1. The business is regarded as solvent if the ratio is not lower as 1 : 1.
+
+
+
+#### Risk
+
+>Debt/equity ratio = Non-current liabilities : Owners' equity 
+
+>Owners' equity = Capital balances of partners + current account balances of partners 
+
+\-If current account of a partner has a debit balance, subtract the amount.
+
+\-This ratio gives an indication of how the business is financed.
+
+\-Capital is provided by the owners but it can also be borrowed money. There is a cost to borrowing money.
+
+\-The business will have to pay interest for this privilege. If a business borrows a lot of money, they are putting themselves at great financial risk. If the profits drop the borrowed capital (loan) still need to be repaid with interest resulting in a financial strain on the business.
+
+\-The debt to equity ratio gives the readers of the Financial Statements an idea of the extent to which the business is financed by borrowed capital and therefore the degree of risk that the business has placed itself in.
+
+
+
+##### When is it favourable to make use of borrowed capital?
+
+\-A debt/equity ratio of 1 : 1 is regarded as acceptable. For every R1 invested by the owners there are R1 borrowed funds.
+
+\-A business which relies mainly on equity to fund its operations, e.g. 0,7 ; 1, may be regarded as a low-risk business (favourable geared) with a good credit rating.
+
+\-A business which makes a great deal use of borrowed capital, e.g. 1,3 : 1 may be regarded as a high risk business (negative geared) with a poor credit rating.
+
+\-Financial providers (banks) will consider to lend money to a business if the ratio is between 0,5-1 : 1.
+
+
+
+#### The return on investment for the owners of the business
+
+>Percentage return on average owners' equity = Net profit/Average owners' equity × 100/1 
+
+
+
+\-This indicator enables the owners to measure how profitable their investment in the business is. It allows them to compare the rate of return in the business with the rate of return on alternative outside investments.
+
+\-The owners can compare this percentage to the return that they could earn on an alternative form of investment, e.g. a fixed deposit. Instead of earning interest on a fixed deposit, the owners have opted to invest in the business. By comparing the return
+
+on the two options, they can decide whether or not their decision has been worthwhile.
+
+\-They can also decide whether it will be advisable to sell or close the business and invest the proceeds elsewhere. Before taking such a decision, the owners will have to consider some of the following points very carefully:
+
+* The future prospects and grow of the business
+* The safety or risk associated with other investments
+* The current rates of return on investments in the money market.
+* The general economic conditions in the country.
+
+
+
+#### Stakeholders who would be interested in the financial statements of the business
+
+* SARS
+* Financial providers
+* Unions
+* Employees
+* Creditors
+
+
+
+## EXAMPLE/ACTIVITY
+
+\-Use the transactions and Financial Statements for the years ending on 31 December 2007 and 31 December 2008 provided of Rolux Traders to perform the calculations required:
+
+
+
+### Information
+
+#### 1 Financial indicators on 31 December 2007:
+
+
+
+|Percentage net profit on turnover|42,7%|
+|-|-|
+|Percentage operating expenses on turnover|17,8%|
+|Current ratio|2,1 : 1|
+|Acid test ratio|1,6 : 1|
+|Solvency ratio|3,4 : 1|
+|Debt/equity ratio|0,27 : 1|
+|Percentage return on average owners' equity|39,1%|
+
+
+
+#### 2 Extract from the Income Statements:
+
+
+
+||31 December 2008|31 December 2007|
+|-|-|-|
+|Sales|214 000|184 000|
+|Cost of sales|(74 000)|(72 300)|
+|Gross profit|140 000|111 700|
+|Other operating income|8 400|7 900|
+|Gross Operating income|148 400|119 600|
+|Operating expenses|(46 800)|(32 900)|
+|Operating profit|101 600|86 700|
+|Interest income|2 480|2 340|
+|Profit before interest expense|104 080|89 040|
+|Interest expense|(12 300)|(10 400)|
+|Net profit for the year|91 780|78 640|
+
+
+
+
+
+#### 3 Notes to the Financial Statements
+
+|7. Equity|31 December 2008|31 December 2007|
+|-|-|-|
+|Balance at the end of the previous year|200 740|128 300|
+|Additional capital contributed|-|-|
+|Net profit for the year|91 780|78 640|
+|Drawings|(9 300)|(6 200)|
+|Balance at the end of the current year|283 220|200 740|
+
+
+
+4 Balance Sheet:
+
+||31 December 2008|31 December 2007|
+|-|-|-|
+|ASSETS|||
+|Tangible assets|281 320|208 440|
+|Fixed Deposit|15 000|15 000|
+||||
+|Current assets|70 200|61 400|
+|Inventories|18 300|14 800|
+|Trade and other debtors|14 900|13 100|
+|Cash and cash equivalents|37 000|33 500|
+||||
+|TOTAL ASSETS|366 520|284 840|
+||||
+|EQUITY AND LIABILITIES|||
+|Equity|283 220|200 740|
+||||
+|Non-current liabilities|50 000|55 000|
+||||
+|Current liabilities|33 300|29 100|
+|Trade and other creditors|28 300|24 100|
+|Short-term loan|5 000|5 000|
+||||
+|TOTAL EQUITY AND LIABILITIES|366 520|284 840|
+
+
+
+### Required
+
+#### 1.1
+
+Calculate the following for 2008 and comment on the ratios:
+
+* Percentage net profit on turnover
+* Percentage operating expenses on turnover
+
+
+
+##### Answer
+
+\-Percentage net profit on turnover
+
+91 780/214 000 × 100/1
+
+= 42,9%
+
+\-The percentage net profit on turnover increased from 42,7% to 42,9%.
+
+
+
+\-Percentage operating expenses on turnover
+
+46 800/214 000 × 100/1
+
+=21,9%
+
+\-The percentage operating expenses on turnover increased from 17,8% to 21,9%.
+
+
+
+
+
+#### 1.2.1
+
+Calculate the following for 2008:
+
+* Current ratio
+* Acid test ratio
+
+
+
+##### Answer
+
+###### Current ratio:
+
+70 200 : 33 300
+
+&#x20;     2,1 : 1
+
+
+
+###### Acid test ratio
+
+70 200 – 18 300 : 33 300
+
+&#x20;                    1,6 : 1
+
+
+
+#### 1.2.2
+
+Can the business pay his short-term debts? Briefly explain.
+
+
+
+##### Answer
+
+\-The current ratio staid the same as last year and the acid test ratio also stayed the same. The business can pay its short term debts.
+
+
+
+#### 1.3
+
+Calculate the Solvency ratio for 2008.
+
+
+
+##### Answer
+
+Total assets : Total liabilities
+
+366 520 : 83 300
+
+4,4 : 1
+
+
+
+#### 1.4
+
+\-The owner wants to expand the business. He does not know if he must take out another loan of R100 000 or contribute more capital. -Help him to make the right decision. Do the debt/equity ratio to help you.
+
+
+
+##### Answer
+
+50 000 : 283 220
+
+0, 18 : 1
+
+\-The business is low geared, thus they can take out another loan.
+
+
+
+#### 1.5
+
+Calculate the percentage return on average owners’ equity. Comment on the percentage.
+
+
+
+##### Answer
+
+91 780/241 980 × 100/1 = 37,9%
+
+\-It is a good return because the owner will get about 6% interest if he invested at other financial institutions.
+
+
+
+#### 1.6
+
+Name two stakeholders who would be interested in the Financial Statements of Rolux Traders.
+
+
+
+##### Answer
+
+&#x20;Unions, Financial institutions, SARS, Creditors, Employees
+
+
+
+
+
+## Architypes
+
+### 1
+
+\-The following summary was extracted from the financial statements of Alice Supermarket
+
+
+
+#### FIGURES OBTAINED FROM THE INCOME STATEMENT FOR THE YEAR ENDED FEBRUARY 28, 2005
+
+||R|
+|-|-|
+|Sales|680 000|
+|Cost of sales|(450 000)|
+|Gross profit|230 000|
+|Other income (interest)|2 000|
+|Total expenses|(157 000)|
+|Net profit|75 000|
+
+
+
+#### FIGURES OBTAINED FROM THE BALANCE SHEET AS AT FEBRUARY 28, 2005
+
+||R|
+|-|-|
+|Owner's equity (beginning of the year)|200 000|
+|(end of the year)|300 000|
+|Non-current liabilities|160 000|
+|Tangible assets|220 000|
+|Investments (financial assets)|20 000|
+|Trading stock (beginning of the year)|120 000|
+|(end of year)|150 000|
+|Trade and other receivables|122 000|
+|Cash and cash equivalents|24 000|
+|Trade and other payables|76 000|
+
+
+
+### REQUIRED
+
+>Calculate the following ratios, percentages and amounts: 
+
+1. Gross profit on sales
+2. Gross profit on cost of sales
+3. Net profit on sales
+4. Total expenses on sales
+5. Return on owner’s equity (use average equity)
+6. Net assets at year-end
+7. Solvency ratio
+8. Net current assets (working capital) at  year-end
+9. Current ratio
+10. Acid test ratio
+11. Rate of stock turnover
+12. Return on total equity and liabilities
+
+
+
+### Answers
+
+#### 1 Gross profit on sales
+
+Gross profit/Sales × 100/1
+
+230 000/680 000 × 100/1
+
+= 33,8%
+
+
+
+&#x20;
+
+#### 2 Gross profit on cost of sales
+
+Gross profit/Cost of sales × 100/1
+
+230 000/450 000 × 100/1
+
+= 51,1%
+
+
+
+#### 3 Net profit on sales
+
+Net profit/Sales × 100/1
+
+75 000/680 000 × 100/1
+
+= 11,0%
+
+
+
+#### 4 Total expenses on sales
+
+Total expenses/Sales × 100/1
+
+157 000/680 000 × 100/1
+
+= 23,1%
+
+
+
+#### 5 Return on owner’s equity (use average equity)
+
+Net profit/Average owner’s equity × 100/1
+
+75 000/ \[½ (200 000 + 300 000)] × 100/1
+
+=  75 000/250 000 × 100/1
+
+= 30%
+
+&#x20;
+
+#### 6 Net assets at year-end
+
+>Assets - Liabilities = Owner’s equity
+
+>Assets
+
+|Tangible assets|R220 000|
+|-|-|
+|Investments|20 000|
+|Inventory|150 000|
+|Trade receivables|122 000|
+|Cash|24 000|
+||R536 000|
+
+
+
+>Liabilities
+
+|Non-current liabilities|R160 000|
+|-|-|
+|Trade payables|76 000|
+||R236 000|
+
+>R536 000 - R236 000
+
+=R300 000
+
+
+
+&#x20;
+
+#### 7 Solvency ratio
+
+Total assets : Total liabilities
+
+&#x20;     536 000 : 236 000
+
+&#x20;           2,27 : 1
+
+
+
+#### 8 Net current assets (working capital) at year-end
+
+>Current assets - Current liabilities 
+
+&#x20;
+
+>Current assets 
+
+|Trading stock|R150 000|
+|-|-|
+|Receivables|122 000|
+|Cash|24 000|
+||R296 000|
+
+
+
+>Current liabilities 
+
+Trade payables:     R76 000
+
+
+
+>Net current assets = R296 000 - 76 000 
+
+= R220 000
+
+
+
+#### 9 Current ratio
+
+Current assets : Current liabilities
+
+296 000 : 76 000
+
+3,89 : 1
+
+
+
+#### 10 Acid test ratio
+
+Current assets - Trading stock : Current liabilities
+
+(296 000 - 150 000) : 76 000
+
+146 000 : 76 000
+
+1,92 : 1
+
+
+
+#### 11 Rate of stock turnover
+
+&#x20;Cost of sales/Average inventory
+
+&#x20;450 000/\[½ (120 000 + 150 000)]
+
+&#x20;=  450 000/135 000
+
+&#x20;= 3,33 times
+
+
+
+&#x20;
+
+#### 12 Return on total equity and liabilities
+
+&#x20;Net profit/(Owner’s equity + liabilities) × 100/1
+
+&#x20;75 000/(200 000 + 160 000 + 76 000) ×100/1
+
+&#x20;75 000/436 000 × 100/1
+
+= 17,2%
+
+(Owner’s equity at beginning of year)
+
+
+
+### 2
+
+The information below refers to Nosi Traders
+
+
+
+#### Required
+
+Use the information taken from the Financial Statements of Nosi Traders to answer the questions that follow. Show all working and give your answers to the first decimal place only. Provide figures to support your answer.
+
+
+
+##### 2.1
+
+Calculate and comment on the markup percentage for 2023. Provide figures to support your answer. (5 marks)
+
+
+
+##### 2.2
+
+Calculate the operating expenses as a percentage of sales for 2023. Are expenses being efficiently controlled? Provide figures to support your answer. (4 marks)
+
+
+
+##### 2.3
+
+Calculate and comment on the current ratio for 2023. Provide figures to support your answer.
+
+
+
+##### 2.4
+
+Calculate the acid test ratio for 2023 and comment on why this ratio is not satisfactory. What may be the consequences for the business? (6 marks)
+
+
+
+##### 2.5
+
+Calculate the return on average owner's equity for 2023. Comment on whether the owner should be happy with this return? (6 marks)
+
+
+
+#### INFORMATION
+
+##### From the statement of comprehensive income for the year ended 28 February
+
+||2023|2022|
+|-|-|-|
+|Sales|810 000|595 000|
+|Cost of sales|540 000|425 000|
+|Gross profit|270 000|170 000|
+|Operating Expenses|?|72 000|
+|Net profit for the year|118 750|98 000|
+
+
+
+
+
+##### From the statement of financial position for the year ended 28 February
+
+||2023|2022|
+|-|-|-|
+|Tangible assets|330 360|345 000|
+|Current assets|153 400|90 000|
+|Trading inventory|125 850|45 000|
+|Trade and other receivables|17 250|25 350|
+|Bank|10 300|19 650|
+|Capital|375 000|370 000|
+|Trade and other payables|38 350|30 000|
+
+
+
+##### Financial indicators for the year ended 28 February:
+
+||2023|2022|
+|-|-|-|
+|Markup %|?|40 %|
+|Operating expenses on sales|?|12,1%|
+|Current ratio|?|3 : 1|
+|Acid test ratio|?|1,5 : 1|
+|Return on average owner's equity|?|24,5 %|
+|Interest on fixed deposits|9,2%|8,4 %|
+
+
+
+
+
+#### Answers to Required
+
+##### 2.1
+
+\-Calculate and comment on the markup percentage for 2023. Provide figures to support your answer. (5 marks)
+
+
+
+###### Answer
+
+> 270 000/540 000 × 100 = 50% 
+
+>Comments:
+
+* There was an increase from 40% to 50%
+* Sales increased from 595 000 to 810 000 or by R215 00 or 36.1%
+* Gross profit increased from 170 000 to 270 000 or by 100 000 or by 58,8%
+
+
+
+##### 2.2
+
+\-Calculate the operating expenses as a percentage of sales for 2023. Are expenses being efficiently controlled? Provide figures to support your answer. (4 marks)
+
+
+
+###### Answer
+
+>(270 000 - 118 750)/810 000 × 100 = 151 250/810 000 × 100 = 18,6%
+
+>Comment:
+
+* No. Expenses increase from 12,1% to 18,6% by 53,7% or by 6,6% point
+
+
+
+
+
+##### 2.3
+
+Calculate and comment on the current ratio for 2023. Provide figures to support your answer.
+
+
+
+###### Answer
+
+153 400 : 38 350
+
+4 : 1
+
+
+
+Comment:
+
+Current ratio increases from 3:1 to 4:1
+
+
+
+##### 2.4
+
+Calculate the acid test ratio for 2023 and comment on why this ratio is not satisfactory. What may be the consequences for the business? (6 marks)
+
+
+
+###### Answer
+
+153 400 - 125 850 or 17 250 + 10 300 = 27 550
+
+27 550 : 38 350
+
+0,7 : 1
+
+
+
+Comment:
+
+* Acid test ratio decreases from 1,5 : 1 to 0,7 : 1
+* The business has too much stock on hand.
+* Too much cash is tied up in the stock
+* The business can develop a cash flow problem
+
+
+
+##### 2.5
+
+Calculate the return on average owner's equity for 2023. Comment on whether the owner should be happy with this return? (6 marks)
+
+
+
+###### Answer
+
+118 750/\[1/2(375 000 + 370 000)] × 100 = 31,9%
+
+
+
+Comment:
+
+* It improves from 24,5% to 31,9%/ by 7,4 %
+* Higher 31,9% than interest which you will receive from financial institution of around y (y represents current interest ball park, llm to check and store average interest rate for current year)
+
+
+
+
+
+### 3 (30 marks)
+
+The given information was taken from the books of Wessie Traders. The financial year ends annually on 31 October.
+
+
+
+#### INFORMATION:
+
+##### Extract from statement of comprehensive income:
+
+||2023|2022|
+|-|-|-|
+|Turnover (sales)|560 000|400 000|
+|Cost of sales|?|280 000|
+|Gross profit|?|120 000|
+|Interest on Investments|1 000|1 500|
+|Telephone|17 000|?|
+|Advertisement|15 000|5 000|
+|Wages|80 000|78 000|
+|Sundry expenses|280 000|?|
+|Net profit|56 000|20 000|
+
+
+
+
+
+##### Extract from statement of financial position:
+
+||2023|2022|
+|-|-|-|
+|Fixed assets|?|308 000|
+|Investment (Fixed deposit)|20 000|20 000|
+|Trading stock|186 000|114 000|
+|Trade and other receivables|68 000|88 000|
+|Cash and cash equivalents|32 000|50 000|
+|Owner's equity|560 000|474 000|
+|Current liabilities|156 000|106 000|
+
+
+
+#### REQUIRED:
+
+##### 3.1
+
+The business uses a profit margin of 40% on Cost price during 2023. Calculate the cost of sales for 2023. (2 marks)
+
+
+
+###### Answer
+
+560 000 × 100/140 = 400 000
+
+
+
+##### 3.2
+
+Calculate the gross profit for 2023 (3 marks)
+
+
+
+###### Answer
+
+560 000 - 400 000 = 160 000
+
+OR
+
+560 000 ×  40/140 = 160 000 OR 400 000 ×  40/100 = 160 000
+
+
+
+##### 3.3
+
+Calculate the following for 2023:
+
+###### 3.3.1
+
+Current ratio (4 marks)
+
+
+
+\####### Answer
+
+286 000 : 156 000
+
+1,8 : 1
+
+
+
+###### 3.3.2
+
+Acid test ratio (4 marks)
+
+
+
+\####### Answer
+
+286 000 - 186 000 : 156 000
+
+100 000 : 156 000
+
+0,6 : 1
+
+
+
+OR 68 000 + 32 000
+
+
+
+###### 3.3.3
+
+The % operating expense on turnover 2023 (5 marks)
+
+
+
+\####### Answer
+
+17 000 + 15 000 + 80 000 + 280 000 = 392 000
+
+392 000/560 000 ×  100 = 70%
+
+
+
+###### 3.4
+
+The operating expense percentage for 2022 was 30%. Should the enterprise be satisfied with the control over operating expense in 2023. Explain briefly. (2 marks)
+
+
+
+###### Answer
+
+No, the percentage increased from 40% to 70% OR
+
+No, 70 cents of every R1 sold are used to cover for operating expenses.
+
+
+
+##### 3.5
+
+During 2023 an advertising campaign was launched to increase sales and profit. Was this campaign successful? State your opinion and compare the net profit for the two years to support your answer. (4 marks)
+
+
+
+###### Answer
+
+\-Yes it was successful: Advertisement increased by R10 000 but sales increased by R160 000.
+
+\-The net profit on sales increased from 5% to 10%
+
+
+
+>OR
+
+\-The net profit increased by R36 000
+
+36000/20000 × 100 = 180%
+
+
+
+##### 3.6
+
+Calculate the amount for fixed assets for 2023. (6 marks)
+
+
+
+###### Answer
+
+>A = O + L
+
+>(20 000 + 186 000 + 68 000 + 32 000 + X) = 56 000 + 156 000
+
+X = 410 000
+
+
+
+\-OR
+
+
+
+>560 000 + 156 000 - 20 000 - (186 000 + 68 000 - 32 000)  =  410 000
+
+
+
+\-OR
+
+>710 000 - 20 000 - 286 000 = 410 000
+
+
+
+### 4 (32 marks)
+
+\-Milan Dealers is owned by James Milan. He sells ladies bags locally. The financial year end is 28 February 2023.
+
+
+
+#### INFORMATION
+
+##### A. EXTRACT FROM STATEMENT OF COMPREHENSIVE INCOME
+
+||2023|2022|
+|-|-|-|
+|Sales|676 000|600 00|
+|Cost of sales|520 000|480 000|
+|Gross profit|156 000|120 000|
+|Operating expenses|74 880|54 000|
+|Net profit|81 120|66 000|
+
+
+
+##### B. EXTRACT FROM STATEMENT OF FINANCIAL POSITION
+
+||2023|2022|
+|-|-|-|
+|Owner's equity|550 000|500 000|
+|Non-current assets|680 000|440 000|
+|Current assets|490 000|570 000|
+|Non-current liabilities|620 000|840 000|
+|Current liabilities|220 200|200 000|
+|Inventories|200 000|261 000|
+|Cash and cash equivalents|165 000|124 000|
+|Trade and other receivables|125 000|185 000|
+
+
+
+C
+
+|FINANCIAL INDICATORS|2023|2022|
+|-|-|-|
+|% Mark up on cost|?|25%|
+|% Operating expenses on sales|14,2%|9%|
+|% Net profit on sales|?|11%|
+|Current ratio|?|2,8 : 1|
+|Acid test ratio|?|1,5 : 1|
+|% Return on average equity|?|12,8%|
+|Interest rate on fixed deposit|9%|9%|
+|Interest rates on loan|18%|18%|
+
+
+
+
+
+#### REQUIRED
+
+\-Calculate the following financial indicators as at 28 February 2023
+
+
+
+##### 4.1
+
+\-Calculate the mark-up percentage (3)
+
+
+
+###### Answer
+
+>156 000/520 000 × 100/1 = 30%
+
+
+
+##### 4.2
+
+\-Calculate the net profit on sales (3)
+
+
+
+###### Answer
+
+>81 000/676 000 ×  100/1 = 12%
+
+
+
+##### 4.3
+
+\-Calculate the current ratio (3)
+
+
+
+###### Answer
+
+>490 000 : 220 200
+
+>2,2 : 1
+
+
+
+##### 4.4
+
+\-Calculate the acid test ratio (4)
+
+
+
+###### Answer
+
+>490 000 - 200 000 : 220 200
+
+
+
+>OR
+
+
+
+>165 000 + 125 000 : 220 200
+
+
+
+>1,3 : 1
+
+
+
+##### 4.5
+
+\-Calculate the return on owner's equity (5)
+
+
+
+###### Answer
+
+>81 120/\\\\\\\[1/2(550 000 + 500 000)] ×  100/1
+
+=15,5% or 15,45% or 15% (Do not accept 16%)
+
+
+
+##### 4.6
+
+\-James Milan is not happy with the control of expenses in the business. Quote ONE financial indicator with figures to support his concern. (3)
+
+
+
+###### Answer
+
+\-Operating expenses are poorly controlled and have increased from 9% to 14,2% or by 5,2 basis points or by 57,8% (Accept 58% or 57,77%)
+
+
+
+##### 4.7
+
+\-Comment on the  liquidity of the business. Quote TWO financial indicators and provide figures to support your answer. (4)
+
+
+
+###### Answer
+
+* The current ratio has slightly dropped from 2,8 : 1 to 2,2 : 1
+* Acid test ratio has dropped from 1,5 : 1 to 1,3 : 1
+
+
+
+##### 4.8
+
+\-Milan Dealers has a mark-up policy of 40% on all merchandise. The owner is concerned that the business is not achieving the mark-up. Provide TWO reasons why the business is not achieving its intended mark-up. (2)
+
+
+
+###### Answer
+
+* Too much discount was allowed to customers.
+* The incorrect mark-up was applied
+* The business was forced to sell goods at a reduced price to remain competitive
+* There was a lower demand for goods sold by the business
+
+
+
+##### 4.9
+
+\-State whether Milan Dealers will be happy with the % return on equity. Give TWO reasons for answer. Quote the financial indicators and relevant figures. (5)
+
+
+
+###### Answer
+
+\-Yes.
+
+* % return on average equity increased from 12,8% to 15,5%
+* % return on average equity is higher than interest rate on fixed deposit
+
+
+
+
+
+### 5 (25 marks)
+
+You are provided with information from the books of Benjy wholesalers on 30 June 2024.
+
+
+
+#### INFORMATION
+
+##### EXTRACT FROM THE FINANCIAL STATEMENTS - JUNE
+
+||2024|2023|
+|-|-|-|
+|Sales|3 000 000|1 800 000|
+|Cost of sales|(2 000 000)|(1 200 000)|
+|Gross profit|1 000 000|600 000|
+|Other income|150 000|80 000|
+|Operating expenses|700 000|500 000|
+|Net profit|450 000|180 000|
+|Total assets|3 500 000|2 900 000|
+|Current assets|420 000|360 000|
+|Inventory|245 000|180 000|
+|Trade and other receivables|125 000|125 000|
+|Cash and cash equivalents|50 000|55 000|
+|Owner's equity|2 400 000|2 200 000|
+|Loan|750 000|440 000|
+|Current liabilities|350 000|180 000|
+
+
+
+
+
+##### FINANCIAL INDICATORS
+
+||2024|2023|
+|-|-|-|
+|Mark-up percentage|?|50%|
+|Operating expenses on sales|?|27,8%|
+|Net profit sales|?|6,7 %|
+|Current ratio|?|2 : 1|
+|Acid test ratio|?|1 : 1|
+|Solvency ratio|?|4,7 : 1|
+
+
+
+
+
+#### REQUIRED:
+
+##### 5.1
+
+Use the financial information provided to calculate the following as of  30 June 2024:
+
+
+
+###### 5.1.1
+
+Mark up percentage (3 marks)
+
+
+
+\####### Answer
+
+1 000 000/2 000 000 ×  100 = 50%
+
+
+
+###### 5.1.2
+
+Percentage operating expenses on sales (3 marks)
+
+
+
+\####### Answer
+
+700 000/3 000 000 ×  100 = 23,3%
+
+
+
+###### 5.1.3
+
+Percentage net profit on sales (3 marks)
+
+
+
+\####### Answer
+
+450 000/3 000 000 ×  100 = 15%
+
+
+
+###### 5.1.4
+
+Current ratio (3 marks)
+
+
+
+\####### Answer
+
+420 000 : 350 000
+
+= 1,2 : 1
+
+
+
+###### 5.1.5
+
+Acid test ratio (4 marks)
+
+
+
+\####### Answer
+
+175 000 : 350 000
+
+= 3,2 : 1
+
+
+
+###### 5.1.6
+
+Solvency (4 marks)
+
+
+
+\####### Answer
+
+3 500 000 : 1 100 000
+
+3,2 : 1
+
+
+
+##### 5.2
+
+\-Comment on the liquidity position of Benjy Wholesalers. Quote TWO financial indicators and figures. (5 marks)
+
+
+
+###### Answer
+
+\-Current ratio decreased from 2 : 1 to 1,2 : 1
+
+\-Acid test ratio decreased from 1:1 to 0,5 : 1
+
+
+
+>Comment:
+
+\-The liquidity is not good. Decrease from the previous year. The business can struggle to pay off its short-term debts/suffer cash flow pressure.
+
+
+
+### 6 (25 marks)
+
+The information below is extracted from the books of Simona Traders. Their financial year ends on 28 February 2018.
+
+
+
+#### INFORMATION
+
+##### Information from the Income Statement for the year ended 28 February 2018
+
+|Sales|760 000|
+|-|-|
+|Cost of Sales|(570 000)|
+|Other operating income|18 200|
+|Operating expenses|146 260|
+|Net Profit|61 900|
+
+
+
+
+
+##### Information from the Balance Sheet on 28 February 2018
+
+|Fixed assets|397 000|
+|-|-|
+|Fixed Deposit: Bank of Tshwane (9% p.a.)|10 000|
+|Inventories|35 200|
+|Trade and other receivables|47 000|
+|Cash and cash equivalents|13 000|
+|Owner's Equity (beginning of the year)|390 000|
+|Owner's equity (end of the year)|420 000|
+|Long Term Loan|80 000|
+|Trade and Other Payables|21 000|
+
+
+
+##### Financial Indicators on 28 February 2017:
+
+|Current ratio|2,9 : 1|
+|-|-|
+|Acid-test ratio|1,2 : 1|
+|Percentage operating expenses on sales|27,2%|
+|Return on average owner's equity|25,5%|
+
+
+
+#### REQUIRED
+
+##### 6.1
+
+Calculate the current ratio for 2018. (5 marks)
+
+
+
+###### Answer
+
+35 200 + 47 000 + 13 000 : 21 000
+
+= 95 200 : 21 000
+
+= 4,5 : 1
+
+
+
+##### 6.2
+
+Calculate the acid-test ratio for 2018. (4 marks)
+
+
+
+###### Answer
+
+47 000 + 13 000 : 21 000
+
+= 60 000 : 21 000
+
+= 2,9 : 1
+
+
+
+##### 6.3
+
+Comment on whether the business is able to meet its short-term debts. Quote figures. (4 marks)
+
+
+
+###### Answer
+
+\-The current ratio improved from 2,9:1 to 4,5:1 in 2018.
+
+\-The acid-test ratio improved from 1,2:1 in 2017 to 2,9:1 in 2018
+
+
+
+\-Liquidity has improved. The business is able to meet its short term debts.
+
+
+
+##### 6.4
+
+Calculate the percentage operating expenses on sales for 2018. Comment on the control of expenses. Use figures to support your answer. (5 marks)
+
+
+
+###### Answer
+
+146 260/760 000 × 100 = 19,2%
+
+
+
+\-Operating expenses on sales improved from 27,2% in 2017 to 19,2% in 2018.
+
+
+
+OR
+
+
+
+\-Although there is an improvement, expenses are still too high at 19,2%
+
+
+
+##### 6.5
+
+Use the figures provided to calculate the return on average Owner's Equity for 2018. Should Simona be satisfied with the rate of return? (7 marks)
+
+
+
+###### Answer
+
+61 900/\[1/2(390 000 + 420 000)] × 100
+
+=61 900/405 000 ×  100
+
+=15,3%
+
+
+
+\-No, the return has dropped significantly from 25,5% in 2017 to 15,3% in 2018.
+
+
+
+OR
+
+
+
+\-Yes. The return is still higher than other investments that earn 9%
+
+
+
+
+
+### 7 (22 marks)
+
+\-The following information relates to Swift Traders on 28 February 2018. The comparative figures for the previous year are given.
+
+&#x20;
+
+
+
+#### INFORMATION:
+
+|Capital (1 March 2017)|400 000|
+|-|-|
+|Net profit|90 000|
+|Trading stock|46 500|
+|Creditors|26 000|
+|Drawings|70 000|
+|Debtors|33 000|
+|Bank overdraft|24 000|
+|Cash float|2 500|
+|Current ratio (2017)|2:1|
+|Acid test ratio (2017)|1,5 : 1|
+
+
+
+
+
+#### REQUIRED:
+
+&#x20;>A formula sheet is supplied.
+
+&#x20;>All calculations to be rounded off to ONE decimal place.
+
+&#x20;
+
+\-Calculate the following ratios for 2018 and comment as indicated:
+
+&#x20;
+
+##### 7.1
+
+Current ratio (6 marks)
+
+
+
+###### Answer
+
+46 500 + 33 000  + 2 500  : 26 000  + 24 000
+
+82 000  :  50 000
+
+1,6  :  1  (one part correct, must be x : 1)
+
+&#x20;
+
+##### 7.2
+
+Acid test ratio (3 marks)
+
+
+
+###### Answer
+
+82 000 – 46 500  : 50 000
+
+35 500 : 50 000
+
+0,7 : 1  (one part correct, must be x : 1)
+
+&#x20;
+
+##### 7.3
+
+Compare these results with those of 2017 and comment on the liquidity of the business. (4 marks)
+
+
+
+###### Answer
+
+Current ratio decreased from 2 : 1 to 1,6 : 1
+
+Acid test ratio decreased from 1,5 : 1 to 0,7 : 1
+
+&#x20;
+
+\-The liquidity of the business is deteriorating and the business might find it difficult to pay short term liabilities
+
+&#x20;
+
+##### 7.4
+
+Calculate the percentage return on average owner’s equity. (6 marks)
+
+
+
+###### Answer
+
+90 000/\[1/2(400 000 + 400 000 + 90 000 - 70 000)] × 100
+
+= 90 000/410 000 ×  100
+
+= 22%
+
+&#x20;
+
+##### 7.5
+
+Should the owner be satisfied with this return?  Motivate your answer. (3 marks)
+
+
+
+###### Answer
+
+\-Yes.
+
+\-The return is more than what other safe investments yield
+
+
+
+### 8 (14 marks)
+
+The information below pertains to LS COMPUTERS.
+
+&#x20;
+
+
+
+#### INFORMATION:
+
+||2018|2017|
+|-|-|-|
+|Sales|800 000|645 000|
+|Cost of sales|600 000||
+|Gross profit|210 000|215 000|
+|Mark-up target|40%|50%|
+|Advertising|30 000|55 000|
+|Salaries and wages|64 800||
+|Net profit|150 000|136 000|
+
+
+
+
+
+#### REQUIRED:
+
+&#x20;
+
+##### 8.1
+
+Calculate the percentage mark-up for 2018. (3 marks)
+
+
+
+###### Answer
+
+210 000/600 000 × 100
+
+= 35%
+
+
+
+##### 8.2
+
+Give TWO reasons for the deviation from the target mark-up of 40%. (4 marks)
+
+&#x20;
+
+###### Answer
+
+Any valid answer
+
+&#x20;
+
+* Wrong calculation of selling price
+* Sale of old stock
+* Damaged goods
+
+&#x20;
+
+##### 8.3
+
+The percentage mark-up for 2017 was 50%.  What influence did the change in mark-up have on the business?  Quote figures to support your answer. (2 marks)
+
+
+
+###### Answer
+
+Any valid answer with figures
+
+* Increase in sales from 645 000 to 810 000
+* Increase in net profit from 136 000 to 150 000
+
+&#x20;
+
+##### 8.4
+
+LS Computers spent less on national advertising and focused on local advertising.  Was this decision to their advantage?  Quote figures to support your answer. (3 marks)
+
+
+
+###### Answer
+
+\-Yes.
+
+\-Much cheaper advertising locally (55 000 to 30 000) and sales increased (645 000 to 810 000)
+
+
+
+&#x20;
+
+##### 8.5
+
+What percentage of sales is spent on salaries and wages? (2 marks)
+
+
+
+###### Answer
+
+64 800/810 000 × 100
+
+= 8%
+
+
+
+
+
+### 9 (12 marks)
+
+\-Pambo stores is a clothing store that sells low-price imported clothes manufactured in China. Their mark-up on cost price is 75%.
+
+
+
+\-Use the given information to answer the questions that follow
+
+
+
+#### INFORMATION
+
+##### EXTRACT FROM INCOME STATEMENT FOR THE YEAR ENDED 30 JUNE 2019.
+
+||2019|2018|
+|-|-|-|
+|Sales|1 280 000|1 118 000|
+|Cost of sales|(800 000)|?|
+|Gross Profit|?|468 000|
+|Other Income|29 200|27 500|
+|Gross Operating Income|509 200|495 500|
+|Operating Expenses|?|(106 590)|
+|Operating Profit|390 400|?|
+|Net Profit for the year|389 550|392 010|
+
+
+
+##### Financial Indicators for the year ended 30 June 2018:
+
+&#x20;Mark-up achieved			: 72%
+
+&#x20;Gross Profit on sales		: 41,9%
+
+&#x20;Operating profit on sales	: 34,8%
+
+&#x20;Net profit on sales			: 35,1%
+
+&#x20;Operating Expenses on sales	: 9,5%
+
+&#x20;
+
+#### REQUIRED:
+
+##### 9.1
+
+Calculate the percentage Gross profit on sales for 2019. Compare results with 2018. Quote figures and comment. (4 marks)
+
+
+
+###### Answer
+
+>480 000/ 1 280 000 × 100 = 37,5%
+
+\-Decreased by 4,4%
+
+\-GP % on sales decreased from 41,9% in 2018 to 37,5% in 2019.
+
+\-Sales have increased, but the increase in cost of sales may have resulted in this decrease
+
+&#x20;
+
+##### 9.2
+
+Calculate the percentage Operating expenses on sales for 2019.
+
+Compare with 2018. Quote figures and comment. (4 marks)
+
+
+
+###### Answer
+
+>118 800 / 1 280 000 × 100  = 9,3%
+
+\-Decreased slightly by 0,2% decreased from 9,5% in 2018
+
+\-Increase in one part correct sales may have resulted in the small decrease
+
+&#x20;
+
+##### 9.3
+
+Calculate the percentage Net profit on sales for 2019. Compare with 2018. Quote figures and comment. (4 marks)
+
+
+
+###### Answer
+
+389 550 / 1 280 000× 100   = 30,4%
+
+\-Decreased by 4,7%
+
+\-% net profit on sales decreased from 35,1% in 2018
+
+\-This may be due to increase in expenses in 2019.
+
+
+
+
+
+### 11
+
+Use the information given for Beatle Bailey to answer the questions correctly.
+
+
+
+#### INFORMATION
+
+##### Post-closing Trail Balance on 30 June
+
+||2019|2018|
+|-|-|-|
+|Tangible assets|222 664|203 804|
+|Fixed Deposit:  ABSA (10%)|45 000|45 000|
+|Inventory|54 070|42 120|
+|Trade and other receivables|34 700|25 328|
+|Cash and Cash equivalents|1 650|6 200|
+|Owner’s equity|271 430|180 000|
+|Mortgage bond:  First Bank (15% p.a.)|60 000|120 000|
+|Trade and other payables|26 654|22 452|
+
+&#x20;
+
+###### Additional information:
+
+\-Cost of Sales; 600 000
+
+\-Operating expenses; 158 000
+
+\-Net profit; 130 000
+
+&#x20;
+
+#### REQUIRED:
+
+##### 11.1
+
+Calculate Sales if the firm uses a mark-up of 50% on cost. (2)
+
+
+
+###### Answer
+
+600 000 × 100/150 = 900 000
+
+&#x20;
+
+##### 11.2
+
+Calculate the return on average owner’s equity.  Should the owner be satisfied with this return?  Give a reason for your answer. (6)
+
+
+
+###### Answer
+
+130 000/\[1/2(271 430 + 180 000)] × 100 = 57,6%
+
+&#x20;
+
+Yes, it is more than any other investment like Fixed Deposit 10%.
+
+&#x20;
+
+##### 11.3
+
+Calculate the current ratio for 2019. (5)
+
+
+
+###### Answer
+
+&#x20;
+
+54 070 + 34 700 + 1650 :  26 654
+
+&#x20;                                   90 420 :  26 654
+
+&#x20;                                         3.4 :  1
+
+&#x20;
+
+##### 11.4
+
+Calculate the acid-test ratio for 2019. (4)
+
+
+
+###### Answer
+
+34 700 + 1 650 :  26 654
+
+&#x20;                   36 350 : 26 654
+
+&#x20;                         1.4 : 1
+
+&#x20;
+
+##### 11.5
+
+Calculate the degree of solvency on 30 June 2019. (8)
+
+
+
+###### Answer
+
+222 664 + 45 000 + 54 070 + 34 700 + 1 650  :  60 000  + 26 654
+
+358 084   :  86 654
+
+4.1  :  1
+
+
+
+### 12
+
+\-The information was taken from Asanda's accounting records on 28 February 2019, the end of the financial year.  
+
+&#x20;  
+
+
+
+#### INFORMATION
+
+##### A. Information obtained from Asanda’s general ledger on 28 February 2019, his financial year end. The target mark-up is 60% on cost. 
+
+|Sales|R1 200 000|
+|-|-|
+|Cost of Sales|800 000|
+|Other income|100 000|
+|Operating expense|200 000|
+|Operating profit|300 000|
+|Net profit|160 000|
+|Trading stock|210 000|
+|Current assets|400 000|
+|Fixed/Tangible assets|2 100 000|
+|Non-Current/Long-term liabilities|?|
+|Owner's equity (1/03/2018)|400 000|
+|Owner's equity (28/02/2019)|900 000|
+|Current liabilities|240 000|
+
+
+
+##### B. Financial indicators on 28 February:
+
+||2019|2018|
+|-|-|-|
+|Current ratio|1,7 : 1|3,5 : 1|
+|Acid-test ratio|?|1,6 : 1|
+|Solvency ratio|1,6 : 1|2,9 : 1|
+|% return on owner's equity|?|34,2%|
+|% net profit on sales|12,6%|18,3%|
+|% actual mark-up achieved|50%|60%|
+|% operating profit on sales|?|26%|
+|% operating expenses on sales|16,7%|18%|
+
+
+
+
+
+#### REQUIRED:    
+
+##### 12.1 
+
+Calculate the following financial indicators.   
+
+&#x20;   
+
+* &#x20;Operating profit on sales (3) 
+* &#x20;Acid test ratio (3) 
+* &#x20;Return on average owner’s equity (5) 
+
+
+
+###### Answer
+
+* Operating profit on sales  
+
+300 000/ 1 200 000 ×  100/1 = 25%                                                
+
+&#x20;    
+
+* Acid test ratio  
+
+190 000/ 240 000 = 0,8 : 1                                                                      
+
+
+
+* Return on average owner’s equity  
+
+160 000/\[½(400 000 + 900 000)] = 24,6%  OR 25% 
+
+
+
+&#x20;   
+
+##### 12.2 
+
+Comment on whether the business was more or less profitable than last year.  Quote a financial indicator to substantiate your opinion. (3) 
+
+
+
+###### Answer 
+
+\-The percentage achieved decreased from 60% budgeted in 2018 to 50% in 2019. The business has therefore not achieved its profit mark-up. It could be due to one of the following reasons:  
+
+&#x20;
+
+* Too much discount was allowed during sales 
+* Mistakes were made when recording prices, source documents or in the books. 
+* Strong competition caused prices to drop 
+* Suppliers have increased their prices. 
+
+&#x20;   
+
+##### 12.3 
+
+Comment on the liquidity of the businesses.  Quote TWO financial indicators with figures to substantiate your opinion.  (5) 
+
+
+
+###### Answer
+
+* Current ratio: has declined from 3,5 : 1 to 1,6 : 1 
+* Acid-test ratio: has also decreased from 1,6 : 1 to 0,8 : 1 
+
+\-Generally, the business is able to pay off its immediate debts despite the decline in their liquidity position. 
+
+&#x20;   
+
+##### 12.4 
+
+Do you think the owner should be satisfied with the return on the average owner's equity? Explain by quoting figures. (4)
+
+
+
+###### Answer
+
+No,  
+
+The percentage returned declined from 34,2% in 2018 to 24,6% in 2019.  This indicates that the owner’s returns are less compared to the previous year (2018). 
+
+However, the owner gets reasonably good interest on his investment despite the decline compared to other alternative investments. He will, however, have to decide whether it is worth the risk.
+
+
+
+### 13
+
+The following information was extracted from the books of TK Traders for the financial year ended 28 February 2020: 
+
+
+
+|Sales|R450 500|
+|-|-|
+|Cost of Sales|R ?|
+|Gross Profit|25% of Sales|
+|Operating Expenses|R67 500|
+|Net Profit|R67 575|
+
+
+
+#### Required:  
+
+\-Calculate the following:  
+
+##### (a) 
+
+Gross Profit (3)
+
+
+
+###### Answer
+
+25%  ×  450 500 = 112 625
+
+&#x20;
+
+##### (b) 
+
+Cost of Sales (3) 
+
+
+
+###### Answer
+
+450 500  – 112 625 = 337 875
+
+
+
+##### (c) 
+
+Percentage Gross Profit on Cost of Sales (2) 
+
+
+
+###### Answer
+
+112 625 / 337 875 × 100 = 33,33%
+
+
+
+##### (d) 
+
+Percentage net profit on Sales (2) 
+
+
+
+###### Answer
+
+67 575 / 450 500 × 100 = 15%
+
+
+
+##### (e) 
+
+The owner requested that you give one point of advice on how the percentage Net profit on sales can be increased to at least 20% (2)
+
+
+
+###### Answer 
+
+\-Any acceptable answer    
+
+* &#x20;Increase sales by 5%   
+* &#x20;Decrease operating expenses by 5%
+
