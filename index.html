@@ -24,7 +24,28 @@
 
     <!-- Phase 2: Plotly for Graphs & Mermaid for Timelines -->
     <script src="https://cdn.plot.ly/plotly-2.32.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.0/dist/mermaid.min.js"></script>
+    <script>
+      // Lightweight mobile error banner to prevent silent blank screens on LAN / mobile WebViews
+      window.addEventListener('error', function (e) {
+        var errBanner = document.getElementById('fundile-fatal-err-banner');
+        if (!errBanner) {
+          errBanner = document.createElement('div');
+          errBanner.id = 'fundile-fatal-err-banner';
+          errBanner.style.cssText = 'position:fixed;top:0;left:0;right:0;z-index:999999;background:#991B1B;color:#FFF;padding:12px 16px;font-family:-apple-system,BlinkMacSystemFont,sans-serif;font-size:12px;line-height:1.4;word-break:break-word;box-shadow:0 4px 12px rgba(0,0,0,0.5);';
+          if (document.body) {
+            document.body.prepend(errBanner);
+          } else {
+            document.documentElement.appendChild(errBanner);
+          }
+        }
+        var msg = e && (e.message || (e.error && e.error.message)) ? (e.message || e.error.message) : 'Runtime Error';
+        var src = e && e.filename ? ' (' + e.filename.split('/').pop() + ':' + e.lineno + ')' : '';
+        errBanner.innerHTML = '<strong>App Error:</strong> ' + msg + src + ' <button onclick="this.parentNode.remove()" style="margin-left:8px;background:rgba(255,255,255,0.2);border:none;color:#fff;border-radius:4px;padding:2px 6px;cursor:pointer;">Dismiss</button>';
+      });
+      window.addEventListener('unhandledrejection', function (e) {
+        console.warn('Unhandled Promise rejection:', e.reason);
+      });
+    </script>
     <title>Fundile | Curriculum-Aligned Learning Assistant</title>
   </head>
   <body>
@@ -32,13 +53,48 @@
     <script src="/runtime-config.js"></script>
     <script type="module" src="/src/main.jsx"></script>
     <script>
-      if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-          navigator.serviceWorker.register('/sw.js')
-            .then((reg) => console.log('Fundile PWA Service Worker active:', reg.scope))
-            .catch((err) => console.warn('PWA SW registration failed:', err));
-        });
-      }
+      (function() {
+        var isLocalDev = window.location.port === '5173' ||
+          window.location.hostname === 'localhost' ||
+          window.location.hostname === '127.0.0.1' ||
+          window.location.hostname.startsWith('192.168.') ||
+          window.location.hostname.startsWith('10.');
+
+        if (isLocalDev) {
+          // In local dev mode, unregister stale service workers and clear browser caches
+          // so old cached production bundles do NOT intercept Vite dev modules on mobile LAN
+          if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.getRegistrations().then(function(registrations) {
+              for (var i = 0; i < registrations.length; i++) {
+                registrations[i].unregister().then(function(success) {
+                  if (success) console.log('Unregistered stale dev SW');
+                });
+              }
+            }).catch(function(err) {
+              console.warn('Dev SW unregister error:', err);
+            });
+          }
+
+          if ('caches' in window) {
+            caches.keys().then(function(names) {
+              for (var j = 0; j < names.length; j++) {
+                caches.delete(names[j]);
+              }
+            }).catch(function(err) {
+              console.warn('Dev cache clear error:', err);
+            });
+          }
+        } else {
+          // Production PWA Service Worker registration
+          if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+              navigator.serviceWorker.register('/sw.js')
+                .then(function(reg) { console.log('Fundile PWA Service Worker active:', reg.scope); })
+                .catch(function(err) { console.warn('PWA SW registration failed:', err); });
+            });
+          }
+        }
+      })();
     </script>
   </body>
 </html>

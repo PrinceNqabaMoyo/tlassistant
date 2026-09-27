@@ -148,6 +148,11 @@ const LandingPage = ({ db, onGetStarted, onSignIn, onViewSubscription, palette =
 
     const handlePerspectiveChange = (perspective) => {
         setActivePerspective(perspective);
+        // Automatically scroll the clicked tab button into center view
+        const tabEl = document.getElementById(`audience-tab-${perspective}`);
+        if (tabEl) {
+            tabEl.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+        }
         const el = document.getElementById('how-it-works');
         if (el) {
             const yOffset = -110;
@@ -225,13 +230,14 @@ const LandingPage = ({ db, onGetStarted, onSignIn, onViewSubscription, palette =
                                 { id: 'learners', label: 'Learners', icon: GraduationCap, iconColor: 'text-[#13519C]' },
                                 { id: 'parents', label: 'Parents', icon: Users, iconColor: 'text-amber-600' },
                                 { id: 'teachers', label: 'Teachers', icon: BookOpen, iconColor: 'text-indigo-600' },
-                                { id: 'schools', label: 'School Admins', icon: Building2, iconColor: 'text-cyan-600' },
+                                { id: 'schools', label: 'School Admins', shortLabel: 'Schools', icon: Building2, iconColor: 'text-cyan-600' },
                             ].map((tab) => {
                                 const Icon = tab.icon;
                                 const isActive = activePerspective === tab.id;
                                 return (
                                     <button
                                         key={tab.id}
+                                        id={`audience-tab-${tab.id}`}
                                         type="button"
                                         onClick={() => handlePerspectiveChange(tab.id)}
                                         className={`relative z-10 inline-flex items-center gap-2 px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-bold transition-all duration-200 cursor-pointer shrink-0 ${
@@ -241,7 +247,8 @@ const LandingPage = ({ db, onGetStarted, onSignIn, onViewSubscription, palette =
                                         }`}
                                     >
                                         <Icon className={`h-4 w-4 ${tab.iconColor} shrink-0`} />
-                                        <span>{tab.label}</span>
+                                        <span className="sm:hidden">{tab.shortLabel || tab.label}</span>
+                                        <span className="hidden sm:inline">{tab.label}</span>
                                         {isActive && (
                                             <span className="w-1.5 h-1.5 rounded-full bg-[#FF9100] shrink-0" />
                                         )}
@@ -262,7 +269,7 @@ const LandingPage = ({ db, onGetStarted, onSignIn, onViewSubscription, palette =
             </div>
 
             {/* 1. HERO STAGE (Above the Fold) — Signature Deep Royal Navy / Cobalt Atmosphere */}
-            <div className="relative min-h-[92vh] sm:min-h-screen bg-[#081326] bg-[radial-gradient(ellipse_at_top,_rgba(19,81,156,0.45)_0%,_rgba(8,19,38,0.98)_55%,_#050c18_100%)] text-white pt-28 sm:pt-32 pb-20 sm:pb-28 px-4 sm:px-6 lg:px-8 overflow-hidden">
+            <div className="relative min-h-[92vh] sm:min-h-screen bg-[#081326] bg-[radial-gradient(ellipse_at_top,_rgba(19,81,156,0.45)_0%,_rgba(8,19,38,0.98)_55%,_#050c18_100%)] text-white pt-24 sm:pt-32 pb-12 sm:pb-28 px-4 sm:px-6 lg:px-8 overflow-hidden">
                 {/* Ambient Atmospheric Glows */}
                 <div className="absolute -left-24 top-40 z-0 h-72 w-72 rounded-full blur-3xl bg-[#13519C]/30 pointer-events-none" />
                 <div className="absolute right-0 top-24 z-0 h-96 w-96 rounded-full blur-3xl bg-[#FF9100]/15 pointer-events-none" />
@@ -271,7 +278,7 @@ const LandingPage = ({ db, onGetStarted, onSignIn, onViewSubscription, palette =
 
                 <div className="relative z-10 max-w-7xl mx-auto">
                     <ScrollReveal delay={0.1}>
-                        <section ref={heroRef} id="learner-screen-top" className="flex flex-col items-center justify-between text-center pb-6 pt-4 min-h-[calc(100vh-11rem)] max-w-4xl mx-auto relative z-10 box-border scroll-mt-32 sm:scroll-mt-36">
+                        <section ref={heroRef} id="learner-screen-top" className="flex flex-col items-center justify-between text-center pb-4 pt-2 min-h-[calc(100vh-10rem)] max-w-4xl mx-auto relative z-10 box-border scroll-mt-32 sm:scroll-mt-36">
                             {/* Top & Middle Group */}
                             <div className="flex flex-col items-center justify-center flex-1 w-full gap-4">
                                 <div className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium border border-[#2B7BD8]/40 bg-[#13519C]/20 text-blue-100 shadow-xs">
@@ -299,10 +306,10 @@ const LandingPage = ({ db, onGetStarted, onSignIn, onViewSubscription, palette =
                                         <span
                                             className="block"
                                             style={{
-                                                transform: `translateY(calc(${-slotIdx} * 1.1em))`,
-                                                transition: slotSettled ? 'none' : 'transform 0.25s cubic-bezier(0.4,0,0.2,1)',
-                                                lineHeight: '1.1',
-                                                willChange: 'transform',
+                                                 transform: `translateY(calc(${-slotIdx} * 1.1em))`,
+                                                 transition: slotSettled ? 'none' : 'transform 0.25s cubic-bezier(0.4,0,0.2,1)',
+                                                 lineHeight: '1.1',
+                                                 willChange: 'transform',
                                             }}
                                         >
                                             {SLOT_ITEMS.map((item, i) => (
@@ -342,29 +349,29 @@ const LandingPage = ({ db, onGetStarted, onSignIn, onViewSubscription, palette =
                                 {/* CTA row */}
                                 <div 
                                     ref={ctaRowRef}
-                                    className={`mt-4 w-full flex flex-col items-center transition-all duration-1000 ease-out transform ${
+                                    className={`mt-2.5 sm:mt-4 w-full flex flex-col items-center transition-all duration-1000 ease-out transform ${
                                         showDetails ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'
                                     }`}
                                 >
-                                    <div className="flex flex-col sm:flex-row items-center justify-center gap-3 w-full max-w-lg">
+                                    <div className="flex flex-row items-center justify-center gap-2.5 w-full max-w-md px-1 sm:px-0">
                                         <button
                                             type="button"
                                             onClick={onGetStarted}
-                                            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl bg-[#FF9100] px-8 py-3.5 text-sm sm:text-base font-semibold text-white shadow-[0_16px_50px_rgba(255,145,0,0.3)] transition hover:bg-[#f58200] cursor-pointer"
+                                            className="flex-1 inline-flex items-center justify-center gap-1.5 sm:gap-2 rounded-xl bg-[#FF9100] px-3 py-2.5 sm:px-8 sm:py-3.5 text-xs sm:text-base font-semibold text-white shadow-[0_16px_50px_rgba(255,145,0,0.3)] transition hover:bg-[#f58200] cursor-pointer whitespace-nowrap"
                                         >
-                                            {HERO_COPY.primaryCta}
-                                            <ArrowRight className="h-4.5 w-4.5" />
+                                            <span>{HERO_COPY.primaryCta}</span>
+                                            <ArrowRight className="h-4 w-4 sm:h-4.5 sm:w-4.5" />
                                         </button>
                                         <button
                                             type="button"
                                             onClick={() => setShowInstallModal(true)}
-                                            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl border border-white/20 bg-white/10 backdrop-blur-md px-6 py-3.5 text-sm sm:text-base font-semibold text-white transition hover:bg-white/20 cursor-pointer shadow-lg hover:border-white/30"
+                                            className="inline-flex items-center justify-center gap-1.5 sm:gap-2 rounded-xl border border-white/20 bg-white/10 backdrop-blur-md px-3 py-2.5 sm:px-6 sm:py-3.5 text-xs sm:text-base font-semibold text-white transition hover:bg-white/20 cursor-pointer shadow-lg hover:border-white/30 whitespace-nowrap shrink-0"
                                         >
                                             <span>📲</span>
                                             <span>Install App</span>
                                         </button>
                                     </div>
-                                    <p className="mt-3 text-xs font-medium text-white/60">
+                                    <p className="mt-2 sm:mt-3 text-xs font-medium text-white/60">
                                         {HERO_COPY.trialNote}
                                     </p>
                                 </div>

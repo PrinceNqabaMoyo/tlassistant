@@ -1240,6 +1240,11 @@ export default function App() {
     return <VerificationScreen auth={auth} currentUser={effectiveCurrentUser} onContinueToDashboard={handleVerificationComplete} onLogout={handleAppLogout} statusMessage={authStatusMessage} />;
   }
 
+  // If student: render the modern unified LearnerAppContainer (desktop folder tabs on PC, mobile bottom carousel on phone)
+  if (effectiveRole === 'student' || !effectiveRole) {
+    return <LearnerAppContainer isSandboxMode={false} currentUser={effectiveCurrentUser} />;
+  }
+
   return (
     <AppShell shellProps={{ ...shellProps, children: <RenderRoleContent roleContentProps={roleContentProps} /> }} />
   );

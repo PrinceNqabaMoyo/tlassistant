@@ -7,12 +7,14 @@ import {
     Loader2,
     GraduationCap,
     GitBranch,
+    X,
 } from 'lucide-react';
 import MathText from './shared/mathx/MathText';
 import MathModalityRenderer from './modalities/MathModalityRenderer';
 import LedgerModalityRenderer from './modalities/LedgerModalityRenderer';
 import RubricModalityRenderer from './modalities/RubricModalityRenderer';
 import DiagramModalityRenderer from './modalities/DiagramModalityRenderer';
+import MasteryDial from '../student/MasteryDial';
 
 /**
  * UniversalWorkspace — single unified question workspace for all Grades 7–12 and all subjects.
@@ -35,16 +37,22 @@ export default function UniversalWorkspace({
     generationError,
     result,
     isEmbedded = false,
+    formativeMastery = 78,
+    evaluativeScore = 82,
+    initialProgressionMode = 'practice',
+    onProgressionModeChange,
 }) {
+    const [progressionMode, setProgressionMode] = useState(initialProgressionMode); // 'scaffold' | 'practice' | 'exam'
+    const [showMasteryModal, setShowMasteryModal] = useState(false);
     const [isChecked, setIsChecked] = useState(false);
     const [isComparing, setIsComparing] = useState(false);
-    const [showDynamicScaffold, setShowDynamicScaffold] = useState(false);
+    const [showDynamicScaffold, setShowDynamicScaffold] = useState(initialProgressionMode === 'scaffold');
 
     useEffect(() => {
         setIsChecked(false);
         setIsComparing(false);
-        setShowDynamicScaffold(false);
-    }, [question?.id]);
+        setShowDynamicScaffold(progressionMode === 'scaffold');
+    }, [question?.id, progressionMode]);
 
     const handleCheckWrapper = async (userAnswer) => {
         if (onCheck) {
@@ -128,6 +136,78 @@ export default function UniversalWorkspace({
                             Back
                         </button>
                     )}
+                </div>
+
+                {/* ── 3-Tier Progression Mode Switcher & Adaptive Progress Dial ── */}
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-2.5 sm:p-3 rounded-2xl bg-white border border-slate-200/90 shadow-xs">
+                    {/* 3-Tier Progression Mode Switcher */}
+                    <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-xl w-full sm:w-auto">
+                        {[
+                            { id: 'scaffold', label: '1. Scaffold', icon: '🧱', desc: 'Step-by-step guided problem solving' },
+                            { id: 'practice', label: '2. Practice', icon: '🎯', desc: 'Autonomous formative mastery drill' },
+                            { id: 'exam', label: '3. Exam Mode', icon: '📝', desc: 'Timed test condition with mark allocations' },
+                        ].map((m) => {
+                            const isActive = progressionMode === m.id;
+                            return (
+                                <button
+                                    key={m.id}
+                                    type="button"
+                                    onClick={() => {
+                                        setProgressionMode(m.id);
+                                        if (onProgressionModeChange) onProgressionModeChange(m.id);
+                                        if (m.id === 'scaffold') setShowDynamicScaffold(true);
+                                    }}
+                                    className={`flex-1 sm:flex-initial flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition cursor-pointer ${
+                                        isActive
+                                            ? 'bg-white text-[#13519C] shadow-xs'
+                                            : 'text-slate-600 hover:text-slate-900'
+                                    }`}
+                                    title={m.desc}
+                                >
+                                    <span>{m.icon}</span>
+                                    <span>{m.label}</span>
+                                </button>
+                            );
+                        })}
+                    </div>
+
+                    {/* Adaptive Progress Dial / Mastery Pill */}
+                    <button
+                        type="button"
+                        onClick={() => setShowMasteryModal(true)}
+                        className="inline-flex items-center gap-2.5 px-3 py-1.5 rounded-xl bg-slate-50 hover:bg-slate-100 border border-slate-200/90 transition cursor-pointer text-left shrink-0 self-end sm:self-auto"
+                        title="Click to view full BKT Formative Mastery Dial"
+                    >
+                        {/* Mini Circular Gauge */}
+                        <div className="relative w-7 h-7 flex items-center justify-center shrink-0">
+                            <svg className="w-7 h-7 transform -rotate-90">
+                                <circle cx="14" cy="14" r="11" stroke="#e2e8f0" strokeWidth="2.5" fill="transparent" />
+                                <circle
+                                    cx="14" cy="14" r="11"
+                                    stroke={formativeMastery >= 80 ? '#10b981' : formativeMastery >= 60 ? '#13519C' : '#f59e0b'}
+                                    strokeWidth="2.5"
+                                    fill="transparent"
+                                    strokeDasharray={2 * Math.PI * 11}
+                                    strokeDashoffset={(2 * Math.PI * 11) * (1 - (formativeMastery / 100))}
+                                    strokeLinecap="round"
+                                />
+                            </svg>
+                            <span className="absolute text-[8px] font-extrabold text-slate-800">
+                                {formativeMastery}%
+                            </span>
+                        </div>
+                        <div className="leading-tight">
+                            <div className="flex items-center gap-1">
+                                <span className="text-xs font-bold text-slate-900">
+                                    {formativeMastery >= 80 ? 'Exam Ready' : formativeMastery >= 60 ? 'Proficient' : 'Foundation'}
+                                </span>
+                                <span className="text-[10px] text-emerald-600 font-extrabold">BKT</span>
+                            </div>
+                            <span className="text-[10px] text-slate-500">
+                                Formative Mastery
+                            </span>
+                        </div>
+                    </button>
                 </div>
 
                 {/* Question Card */}
@@ -274,6 +354,52 @@ export default function UniversalWorkspace({
                     </div>
                 )}
             </div>
+
+            {/* Full BKT Mastery Dial Modal */}
+            {showMasteryModal && (
+                <div 
+                    className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/60 backdrop-blur-sm animate-in fade-in duration-200"
+                    onClick={() => setShowMasteryModal(false)}
+                >
+                    <div 
+                        className="relative max-w-sm w-full bg-slate-900 text-white rounded-3xl p-6 shadow-2xl border border-slate-800"
+                        onClick={(e) => e.stopPropagation()}
+                    >
+                        <button
+                            type="button"
+                            onClick={() => setShowMasteryModal(false)}
+                            className="absolute top-4 right-4 p-2 rounded-full text-slate-400 hover:text-white hover:bg-white/10 transition cursor-pointer"
+                        >
+                            <X className="w-5 h-5" />
+                        </button>
+                        <div className="text-left mb-4">
+                            <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#FF9100]">
+                                Cognitive Engine
+                            </span>
+                            <h3 className="text-lg font-bold text-white mt-0.5">
+                                Adaptive Mastery Dial
+                            </h3>
+                            <p className="text-xs text-slate-400 mt-1 leading-relaxed">
+                                Formative mastery modeled via Bayesian Knowledge Tracing with Ebbinghaus memory decay calibration.
+                            </p>
+                        </div>
+                        <MasteryDial
+                            formativeMastery={formativeMastery}
+                            evaluativeScore={evaluativeScore}
+                            size={160}
+                        />
+                        <div className="mt-4 pt-3 border-t border-slate-800 text-center">
+                            <button
+                                type="button"
+                                onClick={() => setShowMasteryModal(false)}
+                                className="w-full py-2.5 px-4 rounded-xl bg-white/10 hover:bg-white/20 text-white font-semibold text-xs transition cursor-pointer"
+                            >
+                                Close
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

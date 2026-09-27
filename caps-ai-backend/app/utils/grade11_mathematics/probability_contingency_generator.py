@@ -214,10 +214,11 @@ def _build_mutually_exclusive_drill(r, difficulty: str) -> Dict[str, Any]:
         "carry_forward_rule": "consequential_accuracy",
     }
 
+    rel_sym = '=' if is_mut_excl else r'\neq'
     hints = {
         "nudge": r"Use the addition rule: $P(A \cup B) = P(A) + P(B) - P(A \cap B)$.",
         "concept": "Events $A$ and $B$ are mutually exclusive if and only if they cannot occur at the same time, meaning $P(A \\cap B) = 0$.",
-        "breakdown": f"1. $P(A \\cap B) = P(A) + P(B) - P(A \\cup B) = {p_a_str} + {p_b_str} - {p_union_str} = {p_inter_str}$.\n2. Since $P(A \\cap B) {'=' if is_mut_excl else r'\\neq'} 0$, the events are {concl_word}.",
+        "breakdown": f"1. $P(A \\cap B) = P(A) + P(B) - P(A \\cup B) = {p_a_str} + {p_b_str} - {p_union_str} = {p_inter_str}$.\n2. Since $P(A \\cap B) {rel_sym} 0$, the events are {concl_word}.",
     }
 
     return make_math_question(
@@ -301,11 +302,12 @@ def _build_independent_events_drill(r, difficulty: str) -> Dict[str, Any]:
         final_latex=concl_str,
     )
 
+    comp_sym = '=' if is_independent else r'\neq'
     marking_schema = {
         "total_marks": 3,
         "marking_points": [
             {"id": "mp1", "desc": rf"Correct calculation of P(A) x P(B) = {prod_str}", "marks": 1, "editable": True},
-            {"id": "mp2", "desc": rf"Direct comparison: {p_inter_str} {'=' if is_independent else r'\neq'} {prod_str}", "marks": 1, "editable": True},
+            {"id": "mp2", "desc": rf"Direct comparison: {p_inter_str} {comp_sym} {prod_str}", "marks": 1, "editable": True},
             {"id": "mp3", "desc": rf"Correct conclusion: Events are {concl_word}", "marks": 1, "editable": True},
         ],
         "deductions": [{"rule": "stated_conclusion_without_numerical_proof", "penalty": -2}],

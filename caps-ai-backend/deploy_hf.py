@@ -33,6 +33,8 @@ def deploy_to_huggingface():
         "curriculum_docs/*",
         "curriculum_docs_auto/*",
         "tests/*",
+        "chroma_db_langchain/*",
+        "*.sqlite3",
     ]
 
     print("=== Hugging Face Deployment Pipeline ===")
@@ -66,10 +68,10 @@ def deploy_to_huggingface():
             ignore_patterns=IGNORE_PATTERNS,
             delete_patterns="*", # This ensures files deleted locally are also deleted on Hugging Face
         )
-        print("\n✅ Deployment completed successfully!")
+        print("\n[SUCCESS] Deployment completed successfully!")
         print(f"Check your space at: https://huggingface.co/spaces/{REPO_ID}")
     except Exception as e:
-        print(f"\n❌ Deployment failed: {e}")
+        print(f"\n[FAILED] Deployment failed: {e}")
 
 if __name__ == "__main__":
     ensure_huggingface_hub()

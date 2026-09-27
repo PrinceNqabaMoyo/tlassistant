@@ -623,7 +623,8 @@ def _build_exponential_features(r, difficulty: str) -> Dict[str, Any]:
     a = r.choice([1, 1, 2, -1])
     b = r.choice([2, 3])
     q = r.randint(-3, 3)
-    eq = f"f(x) = {('' if a == 1 else ('-' if a == -1 else num(a) + ' \\cdot '))}{b}^{{x}} {_signed(q)}"
+    a_prefix = '' if a == 1 else ('-' if a == -1 else num(a) + r' \cdot ')
+    eq = f"f(x) = {a_prefix}{b}^{{x}} {_signed(q)}"
     spec = _diagram.function_graph(
         family="exponential", a=a, q=q, b=b, domain=[-4, 4],
         features={"asymptotes": {"horizontal": q}},

@@ -1,7 +1,10 @@
 export const getApiBaseUrl = () => {
-  // 1. Fallback to local development if running on localhost (Highest priority to override any baked-in env vars)
-  if (typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')) {
-     return 'http://localhost:5001'; 
+  // 1. Fallback to local development if running on localhost or local LAN IP (Highest priority for local testing)
+  if (typeof window !== 'undefined') {
+    const host = window.location.hostname;
+    if (host === 'localhost' || host === '127.0.0.1' || host.startsWith('192.168.') || host.startsWith('10.')) {
+      return `http://${host}:5001`; 
+    }
   }
 
   // 2. Check window runtime config (useful if they inject it at runtime, not build time)

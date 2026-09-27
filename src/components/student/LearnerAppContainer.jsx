@@ -18,13 +18,24 @@ import { buildApiUrl } from '../../utils/apiBaseUrl';
  * - Direct Backend Connectivity: Communicates with caps-ai-backend for question generation and marking.
  */
 
+export const getDefaultTopicForSubject = (subjectId) => {
+  const s = String(subjectId || '').toLowerCase();
+  if (s.includes('accounting')) return 'Cash Receipts Journal';
+  if (s.includes('math') && !s.includes('tech')) return 'Algebraic Expressions';
+  if (s.includes('physics') || s.includes('physical')) return 'Motion in 1D';
+  if (s.includes('business')) return 'Business Environments';
+  if (s.includes('life') || s.includes('bio')) return 'Cell Division & Mitosis';
+  if (s.includes('tech')) return 'Mensuration & Trigonometry';
+  return null;
+};
+
 export default function LearnerAppContainer({
   currentUser = null,
   initialTab = 'desk',
   isSandboxMode = true, // Enables the live dev sandbox viewport switcher
 }) {
   const [activeTab, setActiveTab] = useState(initialTab);
-  const [activeTopic, setActiveTopic] = useState(null);
+  const [activeTopic, setActiveTopic] = useState(() => getDefaultTopicForSubject(initialTab));
   const [question, setQuestion] = useState(null);
   const [isGenerating, setIsGenerating] = useState(false);
   const [isChecking, setIsChecking] = useState(false);
@@ -46,23 +57,8 @@ export default function LearnerAppContainer({
 
     setActiveTab(normalized);
     setResult(null);
-
-    // If switching to a subject, set default topic for that subject
-    if (normalized === 'accounting') {
-      setActiveTopic('Cash Receipts Journal');
-    } else if (normalized === 'mathematics') {
-      setActiveTopic('Algebraic Expressions');
-    } else if (normalized === 'physical_sciences') {
-      setActiveTopic('Motion in 1D');
-    } else if (normalized === 'business_studies') {
-      setActiveTopic('Business Environments');
-    } else if (normalized === 'life_sciences') {
-      setActiveTopic('Cell Division & Mitosis');
-    } else if (normalized === 'technical_mathematics') {
-      setActiveTopic('Mensuration & Trigonometry');
-    } else {
-      setActiveTopic(null);
-    }
+    const defTopic = getDefaultTopicForSubject(normalized);
+    setActiveTopic(defTopic);
   }, []);
 
   // Jump from Today's Desk directly into a specific assignment
@@ -76,7 +72,8 @@ export default function LearnerAppContainer({
       subjectId;
 
     setActiveTab(normalized);
-    setActiveTopic(topicName);
+    const chosenTopic = topicName || getDefaultTopicForSubject(normalized);
+    setActiveTopic(chosenTopic);
     setResult(null);
   }, []);
 
@@ -103,13 +100,15 @@ export default function LearnerAppContainer({
   }, [currentGrade]);
 
   const generateLocalFallback = (subjectId, topicName) => {
-    if (subjectId === 'accounting') {
+    const s = String(subjectId || '').toLowerCase();
+    if (s.includes('accounting')) {
       setQuestion({
         id: 'acct_crj_101',
         modality: 'ledger',
         title: 'Cash Receipts Journal (15% VAT)',
         instruction: 'Complete the CRJ entry for Cash Sales of merchandise: Cost of sales R1,200 with a 50% mark-up on cost (VAT inclusive at 15%).',
         marks: 12,
+        difficulty: 'medium',
         columns: ['Day', 'Details', 'Bank (115%)', 'Sales (100%)', 'Output VAT (15%)', 'Cost of Sales'],
         rows: 3,
         table_schema: {
@@ -117,14 +116,53 @@ export default function LearnerAppContainer({
           rows: 3,
         },
       });
-    } else if (subjectId === 'mathematics') {
+    } else if (s.includes('math') && !s.includes('tech')) {
       setQuestion({
         id: 'math_factor_201',
         modality: 'math',
         title: 'Algebraic Trinomial Factorisation',
         instruction: 'Factorise the expression completely over the integers: \\(x^2 - 5x - 24\\)',
         marks: 3,
+        difficulty: 'medium',
         worked_solution: '(x - 8)(x + 3)',
+      });
+    } else if (s.includes('physics') || s.includes('physical')) {
+      setQuestion({
+        id: 'phys_motion_301',
+        modality: 'math',
+        title: 'Motion in One Dimension',
+        instruction: 'A racing car starts from rest and accelerates uniformly at \\(2.5\\,\\text{m}\\cdot\\text{s}^{-2}\\) along a straight track for \\(6\\,\\text{s}\\). Calculate the final velocity of the car in \\(\\text{m}\\cdot\\text{s}^{-1}\\).',
+        marks: 4,
+        difficulty: 'medium',
+        worked_solution: 'v_f = v_i + a\\Delta t = 0 + (2.5)(6) = 15\\,\\text{m}\\cdot\\text{s}^{-1}',
+      });
+    } else if (s.includes('business')) {
+      setQuestion({
+        id: 'bus_env_401',
+        modality: 'rubric',
+        title: 'Business Environments Analysis',
+        instruction: 'Outline the three main business environments (Micro, Market, and Macro) and describe the extent of control management has over each environment.',
+        marks: 8,
+        difficulty: 'medium',
+      });
+    } else if (s.includes('life') || s.includes('bio')) {
+      setQuestion({
+        id: 'life_mitosis_501',
+        modality: 'rubric',
+        title: 'Cell Division: Mitosis Stages',
+        instruction: 'Identify the specific phase of mitosis during which sister chromatids are pulled apart toward opposite poles by spindle fibres, and state its biological significance.',
+        marks: 5,
+        difficulty: 'medium',
+      });
+    } else if (s.includes('tech')) {
+      setQuestion({
+        id: 'tech_trig_601',
+        modality: 'math',
+        title: 'Technical Trigonometry & Mensuration',
+        instruction: 'Calculate the length of an arc that subtends a central angle of \\(\\theta = 60^\\circ\\) in a circle with radius \\(r = 14\\,\\text{cm}\\). Express your answer in centimetres to two decimal places.',
+        marks: 4,
+        difficulty: 'medium',
+        worked_solution: 's = r\\theta = 14 \\times \\left(\\frac{60\\pi}{180}\\right) \\approx 14.66\\,\\text{cm}',
       });
     } else {
       setQuestion({
@@ -133,14 +171,19 @@ export default function LearnerAppContainer({
         title: `${subjectId.toUpperCase()} Practice`,
         instruction: `Answer the practice question for ${topicName || subjectId}.`,
         marks: 5,
+        difficulty: 'medium',
       });
     }
   };
 
-  // Trigger question fetch when active subject changes
+  // Automatic useEffect: navigating to any subject or topic automatically invokes fetchQuestion
   useEffect(() => {
-    if (activeTab !== 'desk') {
-      fetchQuestion(activeTab, activeTopic);
+    if (activeTab && activeTab !== 'desk') {
+      const targetTopic = activeTopic || getDefaultTopicForSubject(activeTab);
+      if (!activeTopic && targetTopic) {
+        setActiveTopic(targetTopic);
+      }
+      fetchQuestion(activeTab, targetTopic);
     }
   }, [activeTab, activeTopic, fetchQuestion]);
 
@@ -228,6 +271,8 @@ export default function LearnerAppContainer({
               onNext={() => fetchQuestion(activeTab, activeTopic)}
               result={result}
               isEmbedded={true}
+              formativeMastery={78}
+              evaluativeScore={82}
             />
           </div>
         )}

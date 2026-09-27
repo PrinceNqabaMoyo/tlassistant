@@ -8,8 +8,6 @@ import {
   CheckCircle2, 
   Copy, 
   Check, 
-  Sparkles, 
-  ArrowRight,
   ShieldCheck,
   Zap,
   WifiOff,
@@ -20,13 +18,7 @@ import { QRCodeSVG } from 'qrcode.react';
 
 /**
  * InstallAppModal
- * Unified cross-device install portal for Desktop PWA and Mobile WebAPK.
- * 
- * Invariants:
- * - Desktop Tab: One-click native PWA installation on Windows/macOS with zero address bar.
- * - Mobile Tab (Desktop view): Renders high-resolution vector QR code for 1-scan mobile installation.
- * - Mobile Tab (Mobile view): Direct 1-tap "Add to Home Screen / Install" button.
- * - Automatically detects local IP (e.g. https://192.168.1.84:5173) or production domain.
+ * Clean, lightweight cross-device installation modal for Desktop PWA and Mobile WebAPK.
  */
 export default function InstallAppModal({ isOpen, onClose }) {
   const [activeTab, setActiveTab] = useState('mobile'); // 'mobile' | 'desktop'
@@ -51,7 +43,7 @@ export default function InstallAppModal({ isOpen, onClose }) {
     window.addEventListener('beforeinstallprompt', handleBeforeInstall);
     window.addEventListener('appinstalled', handleAppInstalled);
 
-    if (window.matchMedia('(display-mode: standalone)').matches) {
+    if (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) {
       setIsInstalled(true);
     }
 
@@ -89,100 +81,81 @@ export default function InstallAppModal({ isOpen, onClose }) {
       setDeferredPrompt(null);
     } else {
       // Browser fallback instructions
-      alert('To install, click the Install (⊕) icon in your browser address bar, or open your browser menu (⋮) and select "Install Fundile".');
+      alert('To install, tap your browser menu (⋮ or ⊕) and select "Install app" or "Add to Home Screen".');
     }
   };
 
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-md animate-in fade-in duration-200">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/60 backdrop-blur-sm animate-in fade-in duration-200">
       <div 
-        className="relative w-full max-w-lg bg-white rounded-3xl shadow-2xl border border-slate-200 overflow-hidden text-slate-800"
+        className="relative w-full max-w-md bg-white rounded-3xl shadow-2xl border border-slate-200 overflow-hidden text-slate-800"
         onClick={(e) => e.stopPropagation()}
       >
         
-        {/* Header Bar */}
-        <div className="bg-[#081326] text-white p-5 sm:p-6 relative">
+        {/* Clean White Header Bar */}
+        <div className="bg-white border-b border-slate-100 p-5 sm:p-6 pb-4 relative text-slate-900">
           <button 
             type="button"
             onClick={onClose}
-            className="absolute top-4 right-4 p-2 rounded-full text-slate-400 hover:text-white hover:bg-white/10 transition cursor-pointer"
+            className="absolute top-4 right-4 p-2 rounded-full text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition cursor-pointer"
             aria-label="Close modal"
           >
             <X className="w-5 h-5" />
           </button>
 
-          <div className="flex items-center gap-2 mb-1.5">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-            <span className="text-[11px] font-extrabold uppercase tracking-wider text-emerald-300">
-              Direct Device Installation
-            </span>
-          </div>
-          <h3 className="text-xl sm:text-2xl font-bold tracking-tight text-white flex items-center gap-2">
-            <span>Get the Fundile App</span>
+          <h3 className="text-xl font-bold tracking-tight text-slate-900">
+            Install Fundile App
           </h3>
-          <p className="text-xs sm:text-sm text-slate-300 mt-1">
-            Install Fundile on your device for distraction-free full-screen learning with zero buffering.
-          </p>
 
-          {/* Mode Switcher Tabs */}
-          <div className="flex items-center gap-2 mt-4 bg-slate-900/80 p-1 rounded-xl border border-slate-700/80">
+          {/* Clean Segmented Neutral Switcher */}
+          <div className="flex items-center gap-1 mt-3 bg-slate-100 p-1 rounded-xl">
             <button
               type="button"
               onClick={() => setActiveTab('mobile')}
-              className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-lg text-xs font-bold transition cursor-pointer ${
+              className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-lg text-xs transition cursor-pointer ${
                 activeTab === 'mobile'
-                  ? 'bg-[#13519C] text-white shadow-sm'
-                  : 'text-slate-400 hover:text-white'
+                  ? 'bg-white text-[#13519C] shadow-xs font-bold'
+                  : 'text-slate-600 hover:text-slate-900 font-medium'
               }`}
             >
               <Smartphone className="w-4 h-4" />
-              <span>Mobile Phone (Android / iOS)</span>
+              <span>Mobile Phone</span>
             </button>
             <button
               type="button"
               onClick={() => setActiveTab('desktop')}
-              className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-lg text-xs font-bold transition cursor-pointer ${
+              className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-lg text-xs transition cursor-pointer ${
                 activeTab === 'desktop'
-                  ? 'bg-[#13519C] text-white shadow-sm'
-                  : 'text-slate-400 hover:text-white'
+                  ? 'bg-white text-[#13519C] shadow-xs font-bold'
+                  : 'text-slate-600 hover:text-slate-900 font-medium'
               }`}
             >
               <Monitor className="w-4 h-4" />
-              <span>Computer (Windows / Mac)</span>
+              <span>Computer (PC / Mac)</span>
             </button>
           </div>
         </div>
 
         {/* Modal Body */}
-        <div className="p-5 sm:p-6">
+        <div className="p-5 sm:p-6 pt-4">
           
-          {/* ───────────────────────────────────────────────────────────── */}
           {/* TAB 1: MOBILE APP (SCAN QR CODE ON PC / DIRECT INSTALL ON PHONE) */}
-          {/* ───────────────────────────────────────────────────────────── */}
           {activeTab === 'mobile' && (
             <div className="flex flex-col items-center text-center">
               
               {!isMobileDevice ? (
-                // Computer View: Scan QR Code with Phone
+                // Computer View: Scan Clean QR Code with Phone
                 <>
-                  <div className="bg-slate-50 p-4 rounded-2xl border-2 border-dashed border-slate-300 shadow-inner flex flex-col items-center">
+                  <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex flex-col items-center">
                     <QRCodeSVG 
                       value={installUrl} 
                       size={180}
-                      bgColor="#F8FAFC"
-                      fgColor="#081326"
+                      bgColor="#FFFFFF"
+                      fgColor="#0F172A"
                       level="Q"
                       includeMargin={false}
-                      imageSettings={{
-                        src: '/pwa-192x192.png',
-                        x: undefined,
-                        y: undefined,
-                        height: 38,
-                        width: 38,
-                        excavate: true,
-                      }}
                     />
                     <div className="mt-2.5 flex items-center gap-1.5 text-[11px] font-bold text-slate-500">
                       <QrCode className="w-3.5 h-3.5 text-[#13519C]" />
@@ -192,54 +165,49 @@ export default function InstallAppModal({ isOpen, onClose }) {
 
                   <div className="mt-4 text-left w-full space-y-2">
                     <div className="flex items-start gap-2.5 text-xs text-slate-600">
-                      <span className="w-5 h-5 rounded-full bg-blue-100 text-[#13519C] font-bold flex items-center justify-center shrink-0 text-[11px]">1</span>
+                      <span className="w-5 h-5 rounded-full bg-blue-50 text-[#13519C] font-bold flex items-center justify-center shrink-0 text-[11px]">1</span>
                       <span>Scan the QR code with your smartphone camera.</span>
                     </div>
                     <div className="flex items-start gap-2.5 text-xs text-slate-600">
-                      <span className="w-5 h-5 rounded-full bg-blue-100 text-[#13519C] font-bold flex items-center justify-center shrink-0 text-[11px]">2</span>
+                      <span className="w-5 h-5 rounded-full bg-blue-50 text-[#13519C] font-bold flex items-center justify-center shrink-0 text-[11px]">2</span>
                       <span>Tap the link that appears on your phone screen.</span>
                     </div>
                     <div className="flex items-start gap-2.5 text-xs text-slate-600">
-                      <span className="w-5 h-5 rounded-full bg-blue-100 text-[#13519C] font-bold flex items-center justify-center shrink-0 text-[11px]">3</span>
+                      <span className="w-5 h-5 rounded-full bg-blue-50 text-[#13519C] font-bold flex items-center justify-center shrink-0 text-[11px]">3</span>
                       <span>Tap <strong>"Install app"</strong> in Chrome (or <strong>"Add to Home Screen"</strong> in Safari).</span>
                     </div>
                   </div>
 
-                  <div className="mt-4 pt-3 border-t border-slate-200 w-full flex items-center justify-between gap-2">
-                    <span className="text-[11px] text-slate-500 truncate text-left max-w-[240px]">
+                  <div className="mt-4 pt-3 border-t border-slate-100 w-full flex items-center justify-between gap-2">
+                    <span className="text-[11px] text-slate-400 truncate text-left max-w-[220px]">
                       {installUrl}
                     </span>
                     <button
                       type="button"
                       onClick={handleCopyLink}
-                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-300 hover:border-slate-400 bg-white text-xs font-semibold text-slate-700 transition cursor-pointer"
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-200 hover:border-slate-300 bg-white text-xs font-semibold text-slate-700 transition cursor-pointer"
                     >
                       {copied ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
-                      <span>{copied ? 'Copied Link!' : 'Copy Link'}</span>
+                      <span>{copied ? 'Copied!' : 'Copy Link'}</span>
                     </button>
                   </div>
                 </>
               ) : (
-                // Direct Mobile View: Tap to Install
-                <div className="space-y-4 w-full text-center py-2">
-                  <img 
-                    src="/pwa-192x192.png" 
-                    alt="Fundile Icon" 
-                    className="w-16 h-16 rounded-2xl shadow-lg mx-auto object-cover" 
-                  />
+                // Direct Mobile View: Tap to Install (Sleek, minimal, pure white)
+                <div className="space-y-4 w-full text-center py-1">
                   <div>
-                    <h4 className="font-bold text-slate-900 text-base">Install Fundile on your Phone</h4>
+                    <h4 className="font-bold text-slate-900 text-base">Install Fundile on this phone</h4>
                     <p className="text-xs text-slate-500 mt-1">
-                      Runs 100% full screen with bottom thumb navigation and offline cache.
+                      Runs 100% full screen with bottom navigation and offline cache.
                     </p>
                   </div>
 
                   {isIos ? (
                     <div className="space-y-3">
-                      <div className="p-3.5 bg-blue-50/90 border border-blue-200/80 rounded-2xl text-left text-xs text-slate-700 space-y-2.5">
+                      <div className="p-3.5 bg-blue-50/70 border border-blue-200/70 rounded-2xl text-left text-xs text-slate-700 space-y-2.5">
                         <div className="flex items-center gap-1.5 font-bold text-[#13519C]">
                           <Smartphone className="w-4 h-4 text-[#13519C]" />
-                          <span>iOS / Safari 1-Tap Setup:</span>
+                          <span>iOS / Safari 2-Step Setup:</span>
                         </div>
                         <div className="flex items-center gap-2.5">
                           <span className="w-5 h-5 rounded-full bg-[#13519C] text-white font-bold flex items-center justify-center shrink-0 text-[11px]">1</span>
@@ -250,23 +218,20 @@ export default function InstallAppModal({ isOpen, onClose }) {
                           <span>Scroll down and select <strong>"Add to Home Screen"</strong> (<PlusSquare className="w-3.5 h-3.5 inline mx-0.5 text-[#13519C]" />).</span>
                         </div>
                       </div>
-                      <p className="text-[11px] text-slate-500">
-                        Launches like an authentic native iOS app with full-screen gestures.
-                      </p>
                     </div>
                   ) : (
                     <div className="space-y-2">
                       <button
                         type="button"
                         onClick={handleTriggerInstall}
-                        className="w-full py-3.5 px-6 rounded-xl bg-[#FF9100] hover:bg-[#f58200] text-white font-bold text-sm shadow-md shadow-orange-500/30 transition flex items-center justify-center gap-2 cursor-pointer"
+                        className="w-full py-3.5 px-6 rounded-xl bg-[#FF9100] hover:bg-[#e07f00] text-white font-bold text-sm shadow-md shadow-orange-500/25 transition flex items-center justify-center gap-2 cursor-pointer"
                       >
                         <Download className="w-4 h-4" />
                         <span>{isInstalled ? 'App Already Installed' : 'Install Mobile WebAPK Now'}</span>
                       </button>
                       <p className="text-[11px] text-slate-500">
                         {deferredPrompt 
-                          ? '1-tap install: Fundile will install directly to your home screen & app drawer.' 
+                          ? '1-tap install directly to your phone’s app drawer.' 
                           : 'Tip: If prompt does not appear, tap Chrome menu (⋮) → "Install app".'}
                       </p>
                     </div>
@@ -293,19 +258,17 @@ export default function InstallAppModal({ isOpen, onClose }) {
             </div>
           )}
 
-          {/* ───────────────────────────────────────────────────────────── */}
-          {/* TAB 2: DESKTOP / LAPTOP APP                                  */}
-          {/* ───────────────────────────────────────────────────────────── */}
+          {/* TAB 2: DESKTOP / LAPTOP APP */}
           {activeTab === 'desktop' && (
             <div className="space-y-4">
-              <div className="flex items-start gap-3 p-3.5 rounded-2xl bg-blue-50/80 border border-blue-200">
+              <div className="flex items-start gap-3 p-3.5 rounded-2xl bg-blue-50/70 border border-blue-200/70">
                 <div className="p-2.5 rounded-xl bg-[#13519C] text-white shrink-0">
                   <Monitor className="w-5 h-5" />
                 </div>
                 <div>
                   <h4 className="text-sm font-bold text-blue-950">Standalone Desktop Application</h4>
                   <p className="text-xs text-blue-800/80 mt-0.5 leading-relaxed">
-                    Installs directly to your Windows 11 Taskbar or macOS Dock with <strong>zero address bar and no browser tabs</strong>.
+                    Installs directly to your Windows Taskbar or macOS Dock with <strong>zero address bar and no browser tabs</strong>.
                   </p>
                 </div>
               </div>

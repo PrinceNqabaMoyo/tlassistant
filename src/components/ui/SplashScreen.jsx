@@ -103,6 +103,9 @@ const SplashScreen = ({ onComplete }) => {
       }
     };
 
+    // Safety fallback timeout so splash screen NEVER hangs as a blank screen on mobile devices
+    const safetyFallbackTimeout = window.setTimeout(finishSplash, 3000);
+
     const startAnimation = async () => {
       // Ensure custom fonts are loaded before starting
       if (document.fonts && document.fonts.ready) {
@@ -118,6 +121,11 @@ const SplashScreen = ({ onComplete }) => {
         }
       };
 
+      svgImage.onerror = () => {
+        console.warn('Splash SVG failed to load, completing splash fallback');
+        finishSplash();
+      };
+
       svgImage.src = svgUrl;
     };
 
@@ -127,6 +135,7 @@ const SplashScreen = ({ onComplete }) => {
       window.cancelAnimationFrame(animationFrameId);
       window.clearTimeout(completeTimeout);
       window.clearTimeout(fontWaitTimeout);
+      window.clearTimeout(safetyFallbackTimeout);
       URL.revokeObjectURL(svgUrl);
     };
   }, []); // Run ONCE on mount

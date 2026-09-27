@@ -183,7 +183,7 @@
         <span class="status-badge status-built">Built</span>
         <div class="layer-name">Complete App</div>
         <div class="layer-desc">Session audit files, student profile, teacher/admin mode, notification system, trial/paywall, PDF reports &amp; printable tests, profile pictures, student dashboard with clean student monogram initials and authentic academic standing indicators.</div>
-        <div class="layer-deps">Built: <span>ClassDiagnosticHeatmap.jsx, AssessmentGenerator.jsx, PrintableTestModal.jsx, pdf_memo_generator.py, session_file_writer.py, report_generator.py, trial_manager.py, class_service.py, session.py, trial.py, classes.py, ParentReportModal.jsx, WhatsAppReportShare.jsx, TrialCountdownBanner.jsx, SubscriptionModal.jsx, OfflineStatusBadge.jsx, ClassManagerModal.jsx, JoinClassModal.jsx, StudentDashboard.jsx, NotificationBell.jsx, notification_service.py, notifications.py, assignment_service.py, ParentLinkModal.jsx, InstallAppModal.jsx, MobileWebApkView.jsx</span></div>
+        <div class="layer-deps">Built: <span>ClassDiagnosticHeatmap.jsx, AssessmentGenerator.jsx, PrintableTestModal.jsx, pdf_memo_generator.py, session_file_writer.py, report_generator.py, trial_manager.py, class_service.py, session.py, trial.py, classes.py, ParentReportModal.jsx, WhatsAppReportShare.jsx, TrialCountdownBanner.jsx, SubscriptionModal.jsx, OfflineStatusBadge.jsx, ClassManagerModal.jsx, JoinClassModal.jsx, StudentDashboard.jsx, NotificationBell.jsx, notification_service.py, notifications.py, assignment_service.py, ParentLinkModal.jsx, InstallAppModal.jsx, MobileWebApkView.jsx, Header.jsx</span></div>
         <div class="layer-deps">Depends on: <span>A</span></div>
         <div class="layer-deps">Plan: <span>Complete-App-Implementation-Plan.md</span></div>
       </div>
@@ -230,7 +230,7 @@
             <p>Live sandbox to test every frontend component, backend service, paywall rule, offline sync queue, and deterministic engine without leaving the architecture report.</p>
           </div>
           <div class="testhub-stats">
-            <div class="testhub-stat">Built Components: <strong>63</strong></div>
+            <div class="testhub-stat">Built Components: <strong>64</strong></div>
             <div class="testhub-stat">Backend Services: <strong>32</strong></div>
             <div class="testhub-stat">API Endpoints: <strong>24</strong></div>
             <div class="testhub-stat">PWA Offline: <strong>Active (sw.js)</strong></div>
@@ -876,7 +876,7 @@
         <div class="test-card-header">
           <div class="test-card-title">
             <span>📁 Complete Frontend Component Directory &amp; Quick-Launch Matrix</span>
-            <span class="test-card-tag">63 Built Production Components</span>
+            <span class="test-card-tag">64 Built Production Components</span>
           </div>
           <div style="display:flex;gap:0.4rem;align-items:center;">
             <input type="text" id="comp-filter-input" class="test-input" placeholder="Filter components by name..." style="width:220px;padding:0.3rem 0.6rem;" oninput="filterComponentTable()">
@@ -1166,7 +1166,7 @@
           <td><strong>LandingPage</strong></td>
           <td><span class="status-badge status-built">Layer D</span></td>
           <td class="mono muted" style="font-size:0.75rem">src/components/ui/LandingPage.jsx</td>
-          <td class="muted" style="font-size:0.78rem">Universal public landing page with deep royal navy hero stage, radiant white content canvas, dynamic auto-hiding scroll behaviors on Fixed Blue Ribbon Header and Audience Sub-Ribbon, 1-tap app install portal, and SGB procurement routing</td>
+          <td class="muted" style="font-size:0.78rem">Universal public landing page with deep royal navy hero stage, horizontal hero CTA row preserving 'See how it works' above-the-fold geometry on mobile, radiant white content canvas, dynamic auto-hiding scroll behaviors on Fixed Blue Ribbon Header, mobile audience selector auto-scroll with responsive 'Schools' label, 1-tap app install portal, and SGB procurement routing</td>
           <td><button class="test-btn test-btn-sm" onclick="scrollToTestModule('track1')">⚡ Test Module</button></td>
         </tr><tr class="comp-row" data-name="perspectiveshowcase" data-layer="d">
           <td><strong>PerspectiveShowcase</strong></td>
@@ -1202,7 +1202,7 @@
           <td><strong>UniversalWorkspace</strong></td>
           <td><span class="status-badge status-built">Layer A</span></td>
           <td class="mono muted" style="font-size:0.75rem">src/components/workspace/UniversalWorkspace.jsx</td>
-          <td class="muted" style="font-size:0.78rem">Single unified question workspace for all Grades 7–12 and all subjects with dynamic in-situ scaffolding and brand styling</td>
+          <td class="muted" style="font-size:0.78rem">Single unified question workspace for all Grades 7–12 and all subjects featuring restored 3-Tier Progression Mode Switcher (1. Scaffold, 2. Practice, 3. Exam Mode), Adaptive Progress Dial (MasteryDial) mini gauge with full BKT Formative Mastery breakdown modal, dynamic in-situ scaffolding, and brand styling</td>
           <td><button class="test-btn test-btn-sm" onclick="scrollToTestModule('generator')">⚡ Test Module</button></td>
         </tr><tr class="comp-row" data-name="mathmodalityrenderer" data-layer="a">
           <td><strong>MathModalityRenderer</strong></td>
@@ -1250,19 +1250,25 @@
           <td><strong>LearnerAppContainer</strong></td>
           <td><span class="status-badge status-built">Layer D</span></td>
           <td class="mono muted" style="font-size:0.75rem">src/components/student/LearnerAppContainer.jsx</td>
-          <td class="muted" style="font-size:0.78rem">Unified learner experience container combining PhysicalFolderTabs, TodaysDeskView, UniversalWorkspace, and live backend question generation &amp; marking</td>
+          <td class="muted" style="font-size:0.78rem">Unified learner experience container combining PhysicalFolderTabs, TodaysDeskView, UniversalWorkspace, automated backend question fetching on tab/topic selection, LAN IP routing to port 5001, and live evaluation</td>
           <td><button class="test-btn test-btn-sm" onclick="scrollToTestModule('track1')">⚡ Test Module</button></td>
         </tr><tr class="comp-row" data-name="installappmodal" data-layer="d">
           <td><strong>InstallAppModal</strong></td>
           <td><span class="status-badge status-built">Layer D</span></td>
           <td class="mono muted" style="font-size:0.75rem">src/components/ui/InstallAppModal.jsx</td>
-          <td class="muted" style="font-size:0.78rem">Cross-platform PWA/WebAPK installation with vector QR code generation, auto-detected LAN/domain origin, and desktop/mobile tab switching</td>
+          <td class="muted" style="font-size:0.78rem">Simplified, clean white cross-platform PWA/WebAPK installation modal with un-obscured high-resolution vector QR code, neutral segmented controls (Mobile vs Computer), zero dark-navy headers/teal badges, and one-tap install trigger</td>
           <td><button class="test-btn test-btn-sm" onclick="scrollToTestModule('track1')">⚡ Test Module</button></td>
         </tr><tr class="comp-row" data-name="mobilewebapkview" data-layer="d">
           <td><strong>MobileWebApkView</strong></td>
           <td><span class="status-badge status-built">Layer D</span></td>
           <td class="mono muted" style="font-size:0.75rem">src/components/mobile/MobileWebApkView.jsx</td>
           <td class="muted" style="font-size:0.78rem">Authentic Android WebAPK mobile interface with portrait/landscape adaptivity, dynamic auto-hiding User Profile Ribbon on scroll, 44px bottom navigation carousel, compact 2x2 cards, and fullscreen 6-column 2D ledger workspace</td>
+          <td><button class="test-btn test-btn-sm" onclick="scrollToTestModule('track1')">⚡ Test Module</button></td>
+        </tr><tr class="comp-row" data-name="header" data-layer="d">
+          <td><strong>Header</strong></td>
+          <td><span class="status-badge status-built">Layer D</span></td>
+          <td class="mono muted" style="font-size:0.75rem">src/components/ui/Header.jsx</td>
+          <td class="muted" style="font-size:0.78rem">Persistent sticky royal blue (#13519C) header ribbon for logged-in web browser users featuring white FundileLogo, prominent 'Start Free Trial' action, 'Install App' modal trigger (hidden in standalone mode), notification center, superadmin role/tier switchers, and secure log out</td>
           <td><button class="test-btn test-btn-sm" onclick="scrollToTestModule('track1')">⚡ Test Module</button></td>
         </tr>
             </tbody>
@@ -2445,7 +2451,7 @@
           <td><strong>LandingPage</strong></td>
           <td><span class="status-badge status-built">Built</span></td>
           <td>D</td>
-          <td class="muted">Universal public landing page with deep royal navy hero stage, radiant white content canvas, dynamic auto-hiding scroll behaviors on Fixed Blue Ribbon Header and Audience Sub-Ribbon, 1-tap app install portal, and SGB procurement routing</td>
+          <td class="muted">Universal public landing page with deep royal navy hero stage, horizontal hero CTA row preserving 'See how it works' above-the-fold geometry on mobile, radiant white content canvas, dynamic auto-hiding scroll behaviors on Fixed Blue Ribbon Header, mobile audience selector auto-scroll with responsive 'Schools' label, 1-tap app install portal, and SGB procurement routing</td>
         </tr>
 <tr>
           <td><strong>PerspectiveShowcase</strong></td>
@@ -2481,7 +2487,7 @@
           <td><strong>UniversalWorkspace</strong></td>
           <td><span class="status-badge status-built">Built</span></td>
           <td>A</td>
-          <td class="muted">Single unified question workspace for all Grades 7–12 and all subjects with dynamic in-situ scaffolding and brand styling</td>
+          <td class="muted">Single unified question workspace for all Grades 7–12 and all subjects featuring restored 3-Tier Progression Mode Switcher (1. Scaffold, 2. Practice, 3. Exam Mode), Adaptive Progress Dial (MasteryDial) mini gauge with full BKT Formative Mastery breakdown modal, dynamic in-situ scaffolding, and brand styling</td>
         </tr>
 <tr>
           <td><strong>MathModalityRenderer</strong></td>
@@ -2529,19 +2535,25 @@
           <td><strong>LearnerAppContainer</strong></td>
           <td><span class="status-badge status-built">Built</span></td>
           <td>D</td>
-          <td class="muted">Unified learner experience container combining PhysicalFolderTabs, TodaysDeskView, UniversalWorkspace, and live backend question generation &amp; marking</td>
+          <td class="muted">Unified learner experience container combining PhysicalFolderTabs, TodaysDeskView, UniversalWorkspace, automated backend question fetching on tab/topic selection, LAN IP routing to port 5001, and live evaluation</td>
         </tr>
 <tr>
           <td><strong>InstallAppModal</strong></td>
           <td><span class="status-badge status-built">Built</span></td>
           <td>D</td>
-          <td class="muted">Cross-platform PWA/WebAPK installation with vector QR code generation, auto-detected LAN/domain origin, and desktop/mobile tab switching</td>
+          <td class="muted">Simplified, clean white cross-platform PWA/WebAPK installation modal with un-obscured high-resolution vector QR code, neutral segmented controls (Mobile vs Computer), zero dark-navy headers/teal badges, and one-tap install trigger</td>
         </tr>
 <tr>
           <td><strong>MobileWebApkView</strong></td>
           <td><span class="status-badge status-built">Built</span></td>
           <td>D</td>
           <td class="muted">Authentic Android WebAPK mobile interface with portrait/landscape adaptivity, dynamic auto-hiding User Profile Ribbon on scroll, 44px bottom navigation carousel, compact 2x2 cards, and fullscreen 6-column 2D ledger workspace</td>
+        </tr>
+<tr>
+          <td><strong>Header</strong></td>
+          <td><span class="status-badge status-built">Built</span></td>
+          <td>D</td>
+          <td class="muted">Persistent sticky royal blue (#13519C) header ribbon for logged-in web browser users featuring white FundileLogo, prominent 'Start Free Trial' action, 'Install App' modal trigger (hidden in standalone mode), notification center, superadmin role/tier switchers, and secure log out</td>
         </tr></tbody></table></div></section></div><div id="tab-firestore" class="tab-panel"><section><h2>Firestore Collections</h2><div class="table-wrap">
           <table><thead><tr><th>Collection</th><th>Status</th><th>Description</th></tr></thead>
           <tbody><tr>
@@ -2584,8 +2596,8 @@
           <td><span class="status-badge status-built">Built</span></td>
           <td class="muted">Teacher-created assignments: questions, due date, reveal toggle, class reference, student submissions</td>
         </tr></tbody></table></div></section></div><div id="tab-stack" class="tab-panel"><section><h2>Tech Stack</h2>
-          <div class="stack-grid"><div class="stack-card"><h3>Frontend</h3><dl><dt>framework</dt><dd>React 18 (Vite)</dd><dt>language</dt><dd>JSX</dd><dt>styling</dt><dd>Vanilla CSS + Tailwind CSS (legacy pages)</dd><dt>mathRendering</dt><dd>KaTeX</dd><dt>diagramRendering</dt><dd>JSXGraph</dd><dt>bundler</dt><dd>Vite</dd><dt>pwa</dt><dd>vite-plugin-pwa &amp; custom Service Worker (Workbox offline caching via sw.js, WebAPK / cross-platform manifest, offline telemetry queue with auto-sync)</dd><dt>pwaAssets</dt><dd>public/manifest.json, public/sw.js, pwa-192x192.png, pwa-512x512.png, pwa-maskable-512x512.png, apple-touch-icon.png (Brand Orange #FF9100 graduation cap iconography on #13519C brand blue across all 4 PWA icons and mobile install surfaces)</dd><dt>entryPoint</dt><dd>src/main.jsx</dd><dt>mainApp</dt><dd>src/App.jsx</dd></dl></div>
-<div class="stack-card"><h3>Backend</h3><dl><dt>framework</dt><dd>FastAPI ASGI / Flask WSGI</dd><dt>language</dt><dd>Python 3.11+</dd><dt>mathLibrary</dt><dd>SymPy</dd><dt>llmAbstraction</dt><dd>caps-ai-backend/app/services/llm_provider.py</dd><dt>entryPoint</dt><dd>caps-ai-backend/run.py</dd><dt>mainApp</dt><dd>caps-ai-backend/MainApp.py</dd></dl></div>
+          <div class="stack-grid"><div class="stack-card"><h3>Frontend</h3><dl><dt>framework</dt><dd>React 18 (Vite)</dd><dt>language</dt><dd>JSX</dd><dt>styling</dt><dd>Vanilla CSS + Tailwind CSS (legacy pages)</dd><dt>mathRendering</dt><dd>KaTeX</dd><dt>diagramRendering</dt><dd>JSXGraph</dd><dt>bundler</dt><dd>Vite</dd><dt>pwa</dt><dd>vite-plugin-pwa &amp; custom Service Worker with development isolation in index.html (unregisters stale dev SWs and purges cache on localhost/LAN 192.168.x to prevent mobile LAN cache poisoning; enables full Workbox/sw.js offline caching in production)</dd><dt>pwaAssets</dt><dd>public/manifest.json, public/sw.js, pwa-192x192.png, pwa-512x512.png, pwa-maskable-512x512.png, apple-touch-icon.png (Brand Orange #FF9100 graduation cap iconography on #13519C brand blue across all 4 PWA icons and mobile install surfaces)</dd><dt>entryPoint</dt><dd>src/main.jsx</dd><dt>mainApp</dt><dd>src/App.jsx</dd></dl></div>
+<div class="stack-card"><h3>Backend</h3><dl><dt>framework</dt><dd>FastAPI ASGI / Flask WSGI</dd><dt>language</dt><dd>Python 3.11+</dd><dt>mathLibrary</dt><dd>SymPy</dd><dt>llmAbstraction</dt><dd>caps-ai-backend/app/services/llm_provider.py</dd><dt>entryPoint</dt><dd>caps-ai-backend/run.py</dd><dt>mainApp</dt><dd>caps-ai-backend/MainApp.py</dd><dt>lanRouting</dt><dd>Auto-detected LAN IP (192.168.x / 10.x) and localhost routing to port 5001 via src/utils/apiBaseUrl.js for real-time mobile cross-device testing</dd></dl></div>
 <div class="stack-card"><h3>Database &amp; Auth</h3><dl><dt>primary</dt><dd>Firebase Firestore</dd><dt>storage</dt><dd>Firebase Storage</dd><dt>auth</dt><dd>Firebase Authentication</dd></dl></div>
 <div class="stack-card"><h3>Deployment</h3><dl><dt>frontend</dt><dd>Firebase Hosting</dd><dt>backend</dt><dd>Dockerised (Dockerfile present)</dd></dl></div></div></section></div><div id="tab-packages" class="tab-panel"><section><h2>Package Tiers</h2>
           <div class="packages"><div class="pkg">
@@ -2641,11 +2653,12 @@
 <div class="principle"><span class="principle-num">31</span>Multi-Audience Simulation Suite &amp; POPIA Section 35 Reporting: The landing page features authentic, interactive cognitive simulators across four core user perspectives (Learners, Parents, Teachers, and Schools/HODs). To eliminate Meta WhatsApp API messaging fee barriers, parent progress reports are delivered as downloadable/viewable official A4 PDF diagnostic summaries with full procedural flaw autopsies and dinner conversation starters. Educator dashboards feature cross-grade systemic procedural flaw detection (aggregating common error codes across hundreds of learners with 1-click cohort remedial dispatch). In compliance with POPIA Section 35, minor data is never monetized, never advertised against, and never ingested into commercial LLM training datasets.</div>
 <div class="principle"><span class="principle-num">32</span>Unified Brand Aesthetic &amp; UI Invariant: Question workspaces, diagnostic benchmark modals, and practice environments across all grades and subjects strictly follow the decluttered, bright, and on-brand visual design defined in fundile-ui-alternative-design.html (deep royal blue #13519C header ribbon, gold graduation cap badge, primary action orange #FF9100 CTAs with shadow-ribbon, clean white rounded-2xl cards with border-slate-200, bg-slate-50 canvas, and visible cross-grade regression banners).</div>
 <div class="principle"><span class="principle-num">33</span>Vertical Cross-Grade Prerequisite Lineage: High school topics are systematically mapped to middle school and foundational roots (Grade 12 -&gt; Grade 7) via prerequisite_tree.py. When a learner struggles on a compound topic (e.g. Grade 11 quadratics), adaptive progression triggers cross-grade descent to lower-grade foundational micro-drills (e.g. Grade 10 trinomials) rather than repeatedly drilling the compound failure.</div>
-<div class="principle"><span class="principle-num">34</span>Pedagogical Learning Journey Harmony: Progression mechanics (Diagnostic Benchmark -&gt; Scaffold Mode -&gt; Practice Mode -&gt; Assessment Mode -&gt; Prerequisite Descent -&gt; Post-Exam Triage) are arbitrated by learning_journey_architect to prevent conflicting signals. Gamification (XP, streaks, 4-tier badges) is strictly ungameable and calibrated to reinforce genuine conceptual mastery rather than superficial guessing.</div>
+<div class="principle"><span class="principle-num">34</span>Pedagogical Learning Journey Harmony: Progression mechanics (Diagnostic Benchmark -&gt; Scaffold Mode -&gt; Practice Mode -&gt; Assessment Mode -&gt; Prerequisite Descent -&gt; Post-Exam Triage) are arbitrated by learning_journey_architect to prevent conflicting signals. In UniversalWorkspace.jsx, the restored 3-Tier Progression Mode Switcher (1. Scaffold, 2. Practice, 3. Exam Mode) and the Adaptive Progress Dial (MasteryDial mini gauge &amp; modal) provide explicit cognitive transitions between step-by-step guidance, autonomous mastery drilling, and timed CAPS exam conditions. Gamification (XP, streaks, 4-tier badges) is strictly ungameable and calibrated to reinforce genuine conceptual mastery rather than superficial guessing.</div>
 <div class="principle"><span class="principle-num">35</span>Pro-Tier Agentic Orchestration &amp; Cost Governance: The Pro tier Socratic tutor is governed by agentic_orchestrator_architect. All calculations and questions originate deterministically from Python/SymPy generators, while LLM interactions are strictly bound by topic guardrails, regex solution-leak shields, a 3-strike frustration circuit breaker, and per-session token budgets to prevent hallucination and runaway token costs.</div>
-<div class="principle"><span class="principle-num">36</span>Mobile-First &amp; Touch-Native UX: All interactive elements maintain a minimum 44px touch target, modals flow into full-viewport layouts on mobile without horizontal clipping, and sticky headers consume &lt;= 15% of vertical viewport real estate. Dynamic auto-hiding scroll behaviors are implemented in MobileWebApkView.jsx (collapsing User Profile Ribbon on downward scroll and restoring on upward scroll or near-top) and LandingPage.jsx (smoothly translating Fixed Blue Ribbon Header and Audience Sub-Ribbon offscreen on downward scroll to maximize screen real estate).</div>
+<div class="principle"><span class="principle-num">36</span>Mobile-First &amp; Touch-Native UX: All interactive elements maintain a minimum 44px touch target, modals flow into full-viewport layouts on mobile without horizontal clipping, and sticky headers consume &lt;= 15% of vertical viewport real estate. In LandingPage.jsx, the mobile audience selector automatically centers active tabs with smooth auto-scroll and responsive short labels ('Schools' vs 'School Admins'), while the hero CTA row utilizes a compact horizontal layout preserving 'See how it works' strictly above the mobile fold. Dynamic auto-hiding scroll behaviors are implemented in MobileWebApkView.jsx and LandingPage.jsx to maximize screen real estate.</div>
 <div class="principle"><span class="principle-num">37</span>Comprehensive QA &amp; Scale Testing: Generator determinism, mathematical solvability, responsive viewports, and consequential accuracy marking are continuously verified by qa_test_architect via Monte Carlo seed sweeps, Vitest/Playwright suites, and offline telemetry buffer validation.</div>
-<div class="principle"><span class="principle-num">38</span>Landing Page Installation &amp; Cross-Platform PWA/WebAPK User Journey: Zero-friction cross-platform installation is provided via InstallAppModal.jsx, supporting auto-detected local network/production domain URLs, high-resolution vector QR code generation for desktop-to-mobile scanning, standalone display mode, Brand Orange (#FF9100) graduation cap iconography across all 4 PWA icons and mobile install surfaces, and custom service worker caching (public/manifest.json, public/sw.js, pwa-192x192.png, pwa-512x512.png, pwa-maskable-512x512.png, apple-touch-icon.png on #13519C brand blue).</div></div></section></div><div id="tab-oq" class="tab-panel"><section><h2>Open Questions</h2>
+<div class="principle"><span class="principle-num">38</span>Cross-Platform App Installation &amp; PWA Reliability: Installation is streamlined via a simplified, clean white InstallAppModal.jsx featuring an un-obscured high-resolution vector QR code, neutral segmented controls (Mobile Phone vs PC/Mac), zero dark-navy headers or teal badges, auto-detected LAN/domain URLs, and Brand Orange (#FF9100) graduation cap iconography across all 4 PWA icons and mobile install surfaces. To prevent mobile LAN cache poisoning during local Wi-Fi testing, development service worker isolation in index.html dynamically unregisters stale dev workers and purges caches on localhost/192.168.x while reserving sw.js caching for production.</div>
+<div class="principle"><span class="principle-num">39</span>Persistent Sticky Authenticated Navigation &amp; Automated Backend Dispatch: Logged-in web browser users in Header.jsx &amp; App.jsx are anchored by a persistent sticky royal blue (#13519C) header ribbon with white FundileLogo, prominent 'Start Free Trial' action, context-aware 'Install App' modal trigger, student notification center, superadmin role/tier switchers, and secure log out. In LearnerAppContainer.jsx, question generation dispatches automatically on tab/topic navigation, routing seamlessly to caps-ai-backend on port 5001 via auto-detected LAN IPs (192.168.x / 10.x) and localhost.</div></div></section></div><div id="tab-oq" class="tab-panel"><section><h2>Open Questions</h2>
           <div class="questions"></div></section></div><div id="tab-workflow" class="tab-panel"><section><h2>Agent Workflow Protocol</h2>
           <div class="questions"><div class="question"><span class="q-id">1</span>STEP 1 — SESSION START: Read fundile-architecture.json in full before writing any code. This file is the single source of truth for what is built, what is planned, and what the system constraints are. Do not ask the owner to explain the architecture.</div><div class="question"><span class="q-id">2</span>STEP 2 — DURING SESSION: Whenever you build, partially build, or change the status of any layer, service, API route, frontend component, Firestore collection, or generator — update fundile-architecture.json immediately. Change the 'status' field from 'planned' to 'partial' or 'built'. Move items between 'built' and 'planned' arrays. Update 'lastUpdated'.</div><div class="question"><span class="q-id">3</span>STEP 3 — WHAT TRIGGERS A JSON UPDATE: New service created → add to backendServices.built. New route added → add to apiRoutes.built. Generator completed → move from generators.planned to generators.built. Firestore collection created → update firestoreCollections. New design principle agreed with owner → append to designPrinciples. Open question resolved → remove from openQuestions.</div><div class="question"><span class="q-id">4</span>STEP 4 — WHAT DOES NOT TRIGGER A JSON UPDATE: Internal function refactors. Bug fixes. Comment additions. Variable renames. Test additions. File moves within a service that does not change its interface.</div><div class="question"><span class="q-id">5</span>STEP 5 — SESSION END: After all code changes are complete and before ending the session, run this command from the project root: python generate_architecture_html.py — This regenerates fundile-architecture.html from the updated JSON. Always run this last.</div><div class="question"><span class="q-id">6</span>STEP 6 — NEVER EDIT HTML DIRECTLY: fundile-architecture.html is a generated file. Any direct edit will be overwritten by the next script run. All changes go through fundile-architecture.json.</div></div><div style="margin-top:0.8rem;padding:0.8rem 1rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;"><h3 style="margin-bottom:0.4rem;color:var(--accent)">HTML Generator Command</h3><code style="color:var(--built)">python generate_architecture_html.py</code></div></section></div>
 

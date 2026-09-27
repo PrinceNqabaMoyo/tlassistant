@@ -5,12 +5,18 @@ import { useState } from 'react';
  * (Standalone Desktop PWA or Mobile WebAPK) vs a regular web browser tab.
  */
 export const isStandaloneApp = () => {
-    if (typeof window === 'undefined') return false;
-    return (
-        window.matchMedia('(display-mode: standalone)').matches ||
-        window.navigator.standalone === true ||
-        document.referrer.includes('android-app://')
-    );
+    try {
+        if (typeof window === 'undefined') return false;
+        const matchesStandalone = Boolean(window.matchMedia && window.matchMedia('(display-mode: standalone)').matches);
+        const isIosStandalone = Boolean(window.navigator && window.navigator.standalone === true);
+        const referrer = (typeof document !== 'undefined' && document.referrer) ? String(document.referrer) : '';
+        const isAndroidApp = Boolean(referrer && referrer.includes('android-app://'));
+
+        return Boolean(matchesStandalone || isIosStandalone || isAndroidApp);
+    } catch (err) {
+        console.warn('Error evaluating isStandaloneApp:', err);
+        return false;
+    }
 };
 
 const getInitialShowSplash = () => {

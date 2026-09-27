@@ -33,7 +33,7 @@
       "mathRendering": "KaTeX",
       "diagramRendering": "JSXGraph",
       "bundler": "Vite",
-      "pwa": "vite-plugin-pwa & custom Service Worker (Workbox offline caching via sw.js, WebAPK / cross-platform manifest, offline telemetry queue with auto-sync)",
+      "pwa": "vite-plugin-pwa & custom Service Worker with development isolation in index.html (unregisters stale dev SWs and purges cache on localhost/LAN 192.168.x to prevent mobile LAN cache poisoning; enables full Workbox/sw.js offline caching in production)",
       "pwaAssets": "public/manifest.json, public/sw.js, pwa-192x192.png, pwa-512x512.png, pwa-maskable-512x512.png, apple-touch-icon.png (Brand Orange #FF9100 graduation cap iconography on #13519C brand blue across all 4 PWA icons and mobile install surfaces)",
       "entryPoint": "src/main.jsx",
       "mainApp": "src/App.jsx"
@@ -44,7 +44,8 @@
       "mathLibrary": "SymPy",
       "llmAbstraction": "caps-ai-backend/app/services/llm_provider.py",
       "entryPoint": "caps-ai-backend/run.py",
-      "mainApp": "caps-ai-backend/MainApp.py"
+      "mainApp": "caps-ai-backend/MainApp.py",
+      "lanRouting": "Auto-detected LAN IP (192.168.x / 10.x) and localhost routing to port 5001 via src/utils/apiBaseUrl.js for real-time mobile cross-device testing"
     },
     "database": {
       "primary": "Firebase Firestore",
@@ -159,7 +160,8 @@
         "assignment_service.py",
         "ParentLinkModal.jsx",
         "InstallAppModal.jsx",
-        "MobileWebApkView.jsx"
+        "MobileWebApkView.jsx",
+        "Header.jsx"
       ],
       "dependsOn": [
         "A"
@@ -1053,7 +1055,7 @@
       {
         "name": "LandingPage",
         "path": "src/components/ui/LandingPage.jsx",
-        "description": "Universal public landing page with deep royal navy hero stage, radiant white content canvas, dynamic auto-hiding scroll behaviors on Fixed Blue Ribbon Header and Audience Sub-Ribbon, 1-tap app install portal, and SGB procurement routing",
+        "description": "Universal public landing page with deep royal navy hero stage, horizontal hero CTA row preserving 'See how it works' above-the-fold geometry on mobile, radiant white content canvas, dynamic auto-hiding scroll behaviors on Fixed Blue Ribbon Header, mobile audience selector auto-scroll with responsive 'Schools' label, 1-tap app install portal, and SGB procurement routing",
         "layer": "D"
       },
       {
@@ -1089,7 +1091,7 @@
       {
         "name": "UniversalWorkspace",
         "path": "src/components/workspace/UniversalWorkspace.jsx",
-        "description": "Single unified question workspace for all Grades 7–12 and all subjects with dynamic in-situ scaffolding and brand styling",
+        "description": "Single unified question workspace for all Grades 7–12 and all subjects featuring restored 3-Tier Progression Mode Switcher (1. Scaffold, 2. Practice, 3. Exam Mode), Adaptive Progress Dial (MasteryDial) mini gauge with full BKT Formative Mastery breakdown modal, dynamic in-situ scaffolding, and brand styling",
         "layer": "A"
       },
       {
@@ -1137,19 +1139,25 @@
       {
         "name": "LearnerAppContainer",
         "path": "src/components/student/LearnerAppContainer.jsx",
-        "description": "Unified learner experience container combining PhysicalFolderTabs, TodaysDeskView, UniversalWorkspace, and live backend question generation & marking",
+        "description": "Unified learner experience container combining PhysicalFolderTabs, TodaysDeskView, UniversalWorkspace, automated backend question fetching on tab/topic selection, LAN IP routing to port 5001, and live evaluation",
         "layer": "D"
       },
       {
         "name": "InstallAppModal",
         "path": "src/components/ui/InstallAppModal.jsx",
-        "description": "Cross-platform PWA/WebAPK installation with vector QR code generation, auto-detected LAN/domain origin, and desktop/mobile tab switching",
+        "description": "Simplified, clean white cross-platform PWA/WebAPK installation modal with un-obscured high-resolution vector QR code, neutral segmented controls (Mobile vs Computer), zero dark-navy headers/teal badges, and one-tap install trigger",
         "layer": "D"
       },
       {
         "name": "MobileWebApkView",
         "path": "src/components/mobile/MobileWebApkView.jsx",
         "description": "Authentic Android WebAPK mobile interface with portrait/landscape adaptivity, dynamic auto-hiding User Profile Ribbon on scroll, 44px bottom navigation carousel, compact 2x2 cards, and fullscreen 6-column 2D ledger workspace",
+        "layer": "D"
+      },
+      {
+        "name": "Header",
+        "path": "src/components/ui/Header.jsx",
+        "description": "Persistent sticky royal blue (#13519C) header ribbon for logged-in web browser users featuring white FundileLogo, prominent 'Start Free Trial' action, 'Install App' modal trigger (hidden in standalone mode), notification center, superadmin role/tier switchers, and secure log out",
         "layer": "D"
       }
     ],
@@ -1594,11 +1602,12 @@
     "Multi-Audience Simulation Suite & POPIA Section 35 Reporting: The landing page features authentic, interactive cognitive simulators across four core user perspectives (Learners, Parents, Teachers, and Schools/HODs). To eliminate Meta WhatsApp API messaging fee barriers, parent progress reports are delivered as downloadable/viewable official A4 PDF diagnostic summaries with full procedural flaw autopsies and dinner conversation starters. Educator dashboards feature cross-grade systemic procedural flaw detection (aggregating common error codes across hundreds of learners with 1-click cohort remedial dispatch). In compliance with POPIA Section 35, minor data is never monetized, never advertised against, and never ingested into commercial LLM training datasets.",
     "Unified Brand Aesthetic & UI Invariant: Question workspaces, diagnostic benchmark modals, and practice environments across all grades and subjects strictly follow the decluttered, bright, and on-brand visual design defined in fundile-ui-alternative-design.html (deep royal blue #13519C header ribbon, gold graduation cap badge, primary action orange #FF9100 CTAs with shadow-ribbon, clean white rounded-2xl cards with border-slate-200, bg-slate-50 canvas, and visible cross-grade regression banners).",
     "Vertical Cross-Grade Prerequisite Lineage: High school topics are systematically mapped to middle school and foundational roots (Grade 12 -> Grade 7) via prerequisite_tree.py. When a learner struggles on a compound topic (e.g. Grade 11 quadratics), adaptive progression triggers cross-grade descent to lower-grade foundational micro-drills (e.g. Grade 10 trinomials) rather than repeatedly drilling the compound failure.",
-    "Pedagogical Learning Journey Harmony: Progression mechanics (Diagnostic Benchmark -> Scaffold Mode -> Practice Mode -> Assessment Mode -> Prerequisite Descent -> Post-Exam Triage) are arbitrated by learning_journey_architect to prevent conflicting signals. Gamification (XP, streaks, 4-tier badges) is strictly ungameable and calibrated to reinforce genuine conceptual mastery rather than superficial guessing.",
+    "Pedagogical Learning Journey Harmony: Progression mechanics (Diagnostic Benchmark -> Scaffold Mode -> Practice Mode -> Assessment Mode -> Prerequisite Descent -> Post-Exam Triage) are arbitrated by learning_journey_architect to prevent conflicting signals. In UniversalWorkspace.jsx, the restored 3-Tier Progression Mode Switcher (1. Scaffold, 2. Practice, 3. Exam Mode) and the Adaptive Progress Dial (MasteryDial mini gauge & modal) provide explicit cognitive transitions between step-by-step guidance, autonomous mastery drilling, and timed CAPS exam conditions. Gamification (XP, streaks, 4-tier badges) is strictly ungameable and calibrated to reinforce genuine conceptual mastery rather than superficial guessing.",
     "Pro-Tier Agentic Orchestration & Cost Governance: The Pro tier Socratic tutor is governed by agentic_orchestrator_architect. All calculations and questions originate deterministically from Python/SymPy generators, while LLM interactions are strictly bound by topic guardrails, regex solution-leak shields, a 3-strike frustration circuit breaker, and per-session token budgets to prevent hallucination and runaway token costs.",
-    "Mobile-First & Touch-Native UX: All interactive elements maintain a minimum 44px touch target, modals flow into full-viewport layouts on mobile without horizontal clipping, and sticky headers consume <= 15% of vertical viewport real estate. Dynamic auto-hiding scroll behaviors are implemented in MobileWebApkView.jsx (collapsing User Profile Ribbon on downward scroll and restoring on upward scroll or near-top) and LandingPage.jsx (smoothly translating Fixed Blue Ribbon Header and Audience Sub-Ribbon offscreen on downward scroll to maximize screen real estate).",
+    "Mobile-First & Touch-Native UX: All interactive elements maintain a minimum 44px touch target, modals flow into full-viewport layouts on mobile without horizontal clipping, and sticky headers consume <= 15% of vertical viewport real estate. In LandingPage.jsx, the mobile audience selector automatically centers active tabs with smooth auto-scroll and responsive short labels ('Schools' vs 'School Admins'), while the hero CTA row utilizes a compact horizontal layout preserving 'See how it works' strictly above the mobile fold. Dynamic auto-hiding scroll behaviors are implemented in MobileWebApkView.jsx and LandingPage.jsx to maximize screen real estate.",
     "Comprehensive QA & Scale Testing: Generator determinism, mathematical solvability, responsive viewports, and consequential accuracy marking are continuously verified by qa_test_architect via Monte Carlo seed sweeps, Vitest/Playwright suites, and offline telemetry buffer validation.",
-    "Landing Page Installation & Cross-Platform PWA/WebAPK User Journey: Zero-friction cross-platform installation is provided via InstallAppModal.jsx, supporting auto-detected local network/production domain URLs, high-resolution vector QR code generation for desktop-to-mobile scanning, standalone display mode, Brand Orange (#FF9100) graduation cap iconography across all 4 PWA icons and mobile install surfaces, and custom service worker caching (public/manifest.json, public/sw.js, pwa-192x192.png, pwa-512x512.png, pwa-maskable-512x512.png, apple-touch-icon.png on #13519C brand blue)."
+    "Cross-Platform App Installation & PWA Reliability: Installation is streamlined via a simplified, clean white InstallAppModal.jsx featuring an un-obscured high-resolution vector QR code, neutral segmented controls (Mobile Phone vs PC/Mac), zero dark-navy headers or teal badges, auto-detected LAN/domain URLs, and Brand Orange (#FF9100) graduation cap iconography across all 4 PWA icons and mobile install surfaces. To prevent mobile LAN cache poisoning during local Wi-Fi testing, development service worker isolation in index.html dynamically unregisters stale dev workers and purges caches on localhost/192.168.x while reserving sw.js caching for production.",
+    "Persistent Sticky Authenticated Navigation & Automated Backend Dispatch: Logged-in web browser users in Header.jsx & App.jsx are anchored by a persistent sticky royal blue (#13519C) header ribbon with white FundileLogo, prominent 'Start Free Trial' action, context-aware 'Install App' modal trigger, student notification center, superadmin role/tier switchers, and secure log out. In LearnerAppContainer.jsx, question generation dispatches automatically on tab/topic navigation, routing seamlessly to caps-ai-backend on port 5001 via auto-detected LAN IPs (192.168.x / 10.x) and localhost."
   ],
   "openQuestions": [],
   "planningDocuments": [

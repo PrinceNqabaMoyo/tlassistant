@@ -315,6 +315,7 @@ def _build_compound_impulse(r: random.Random) -> Dict[str, Any]:
             f"does not exceed the safety threshold of {_fmt_sa(f_threshold)} N."
         )
 
+        ineq_sym = ' > ' if is_fatal else r' \le '
         sample_answer = (
             rf"\textbf{{1. Net force on the vehicle:}}\\"
             rf"\text{{Taking {pos_dir} as positive:}}\\"
@@ -325,7 +326,7 @@ def _build_compound_impulse(r: random.Random) -> Dict[str, Any]:
             rf"\therefore F_{{\text{{net}}}} = {_fmt_sa(f_net_mag)}\text{{ N {neg_dir}}}\\\\"
             rf"\textbf{{2. Safety assessment:}}\\"
             rf"|F_{{\text{{net}}}}| = {_fmt_sa(f_net_mag)}\text{{ N}} "
-            rf"{' > ' if is_fatal else ' \\le '} {_fmt_sa(f_threshold)}\text{{ N}}\\"
+            rf"{ineq_sym} {_fmt_sa(f_threshold)}\text{{ N}}\\"
             rf"\therefore \text{{{fatal_verdict}}}"
         )
 

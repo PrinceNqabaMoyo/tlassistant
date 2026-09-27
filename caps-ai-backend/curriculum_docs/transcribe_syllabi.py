@@ -284,8 +284,8 @@ def run_syllabi_pipeline(subject_filter=None, grade_filter=None, delay=3.0, prov
             final_pages = [cached_pages[i] for i in pages_to_process if i in cached_pages]
 
             if len(final_pages) == len(pages_to_process):
-                # Header with metadata
-                header = f"""# {t['subject']} Grade {re.sub(r'^[^\d]*', '', t['grade'])} — Official CAPS Curriculum Syllabus & Pacing Guide
+                grade_clean = re.sub(r'^[^\d]*', '', t['grade'])
+                header = f"""# {t['subject']} Grade {grade_clean} — Official CAPS Curriculum Syllabus & Pacing Guide
 
 > **Document Type:** Official Department of Basic Education CAPS Curriculum and Assessment Policy Statement (CAPS)
 > **Subject:** {t['subject']}
