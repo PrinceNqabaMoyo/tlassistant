@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import studentStore from '../../services/studentStore';
 import { 
   ClipboardCheck, 
   Calendar, 
@@ -30,6 +31,18 @@ export default function TodaysDeskView({
   onOpenSubject = () => {},
   onStartBenchmark = () => {},
 }) {
+  const [storeState, setStoreState] = useState(() => studentStore.getState());
+  useEffect(() => {
+    const unsub = studentStore.subscribe((newState) => {
+      setStoreState({ ...newState });
+    });
+    return unsub;
+  }, []);
+
+  const deskDues = storeState.deskDues ?? 0;
+  const physSub = studentStore.getSubject('physical_sciences');
+  const busSub = studentStore.getSubject('business_studies');
+  const lifeSub = studentStore.getSubject('life_sciences');
   return (
     <div className="p-4 sm:p-8 bg-slate-50 min-h-[560px] space-y-6 animate-fadeIn font-sans">
       
@@ -37,7 +50,7 @@ export default function TodaysDeskView({
       <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs flex flex-wrap items-center justify-between gap-4">
         <div>
           <h2 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight font-display">
-            Good afternoon, {studentName}. You have 2 assignments due this week.
+            Good afternoon, {studentName}. {deskDues > 0 ? `You have ${deskDues} assignments due this week.` : 'All assignments are up to date! Select a subject folder above for practice or diagnostic evaluation.'}
           </h2>
           <p className="text-xs sm:text-sm text-slate-500 mt-1">
             Complete your scheduled classwork below, or click any subject folder above for autonomous practice.
@@ -152,7 +165,9 @@ export default function TodaysDeskView({
           <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-2xs space-y-2">
             <div className="flex items-center justify-between text-xs">
               <span className="font-bold text-slate-800">Physical Sciences</span>
-              <span className="text-cyan-700 bg-cyan-50 font-bold px-1.5 py-0.5 rounded text-[11px]">68% BKT</span>
+              <span className="text-cyan-700 bg-cyan-50 font-bold px-1.5 py-0.5 rounded text-[11px]">
+                {physSub.status === 'diagnostic_required' ? 'Diagnostic Due' : `${physSub.formativeMastery}% BKT`}
+              </span>
             </div>
             <p className="text-xs text-slate-600">Motion in 1D: Constant acceleration calculations.</p>
             <button
@@ -167,7 +182,9 @@ export default function TodaysDeskView({
           <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-2xs space-y-2">
             <div className="flex items-center justify-between text-xs">
               <span className="font-bold text-slate-800">Business Studies</span>
-              <span className="text-amber-700 bg-amber-50 font-bold px-1.5 py-0.5 rounded text-[11px]">75% BKT</span>
+              <span className="text-amber-700 bg-amber-50 font-bold px-1.5 py-0.5 rounded text-[11px]">
+                {busSub.status === 'diagnostic_required' ? 'Diagnostic Due' : `${busSub.formativeMastery}% BKT`}
+              </span>
             </div>
             <p className="text-xs text-slate-600">Micro vs Market vs Macro Environments.</p>
             <button
@@ -182,7 +199,9 @@ export default function TodaysDeskView({
           <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-2xs space-y-2">
             <div className="flex items-center justify-between text-xs">
               <span className="font-bold text-slate-800">Life Sciences</span>
-              <span className="text-teal-700 bg-teal-50 font-bold px-1.5 py-0.5 rounded text-[11px]">80% BKT</span>
+              <span className="text-teal-700 bg-teal-50 font-bold px-1.5 py-0.5 rounded text-[11px]">
+                {lifeSub.status === 'diagnostic_required' ? 'Diagnostic Due' : `${lifeSub.formativeMastery}% BKT`}
+              </span>
             </div>
             <p className="text-xs text-slate-600">Mitosis: Identifying cell division stages from diagrams.</p>
             <button

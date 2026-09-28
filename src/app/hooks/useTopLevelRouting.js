@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { getRequestedRouteFromPath, resolveRoutePage, routePathMap } from '../constants/routes';
+import { isStandaloneApp } from '../../hooks/useCoreState';
 
 export const useTopLevelRouting = ({
   authLoading,
@@ -12,7 +13,11 @@ export const useTopLevelRouting = ({
 }) => {
   const [routePage, setRoutePage] = useState(() => {
     if (typeof window === 'undefined') return 'landing';
-    return getRequestedRouteFromPath(window.location.pathname);
+    const req = getRequestedRouteFromPath(window.location.pathname);
+    if (isStandaloneApp() && req === 'landing') {
+      return isAuthenticated ? 'dashboard' : 'signin';
+    }
+    return req;
   });
 
   const hasResolvedInitialAuthViewRef = useRef(false);
@@ -21,7 +26,8 @@ export const useTopLevelRouting = ({
   const isHandlingBrowserNavigationRef = useRef(false);
 
   const topLevelPage = resolveRoutePage(routePage, isAuthenticated, hasVerifiedAccess, isAnonymous);
-  const shouldRenderStandaloneLandingPage = topLevelPage === 'landing' && (!isAuthenticated || hasResolvedInitialAuthViewRef.current);
+  const isStandalone = isStandaloneApp();
+  const shouldRenderStandaloneLandingPage = !isStandalone && topLevelPage === 'landing' && (!isAuthenticated || hasResolvedInitialAuthViewRef.current);
   const authMode = topLevelPage === 'signup' ? 'signup' : 'signin';
 
   useEffect(() => {
@@ -29,7 +35,10 @@ export const useTopLevelRouting = ({
       return;
     }
 
-    const resolvedPage = resolveRoutePage(routePage, isAuthenticated, hasVerifiedAccess, isAnonymous);
+    let resolvedPage = resolveRoutePage(routePage, isAuthenticated, hasVerifiedAccess, isAnonymous);
+    if (isStandaloneApp() && resolvedPage === 'landing') {
+      resolvedPage = isAuthenticated ? 'dashboard' : 'signin';
+    }
 
     if (routePage !== resolvedPage) {
       setRoutePage(resolvedPage);
@@ -41,14 +50,19 @@ export const useTopLevelRouting = ({
   }, [authLoading, hasVerifiedAccess, showSplash, isAuthenticated, routePage, isAnonymous]);
 
   useEffect(() => {
-    setShowLandingPage(topLevelPage === 'landing');
-  }, [topLevelPage, setShowLandingPage]);
+    setShowLandingPage(!isStandalone && topLevelPage === 'landing');
+  }, [topLevelPage, setShowLandingPage, isStandalone]);
 
   const handleSplashComplete = useCallback(() => {
     setShowSplash(false);
 
     if (!authLoading) {
-      setRoutePage((currentRoutePage) => resolveRoutePage(currentRoutePage, isAuthenticated, hasVerifiedAccess, isAnonymous));
+      setRoutePage((currentRoutePage) => {
+        if (isStandaloneApp() && currentRoutePage === 'landing') {
+          return isAuthenticated ? 'dashboard' : 'signin';
+        }
+        return resolveRoutePage(currentRoutePage, isAuthenticated, hasVerifiedAccess, isAnonymous);
+      });
     }
   }, [authLoading, hasVerifiedAccess, isAuthenticated, setShowSplash, isAnonymous]);
 

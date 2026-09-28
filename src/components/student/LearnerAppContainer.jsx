@@ -1,10 +1,15 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import PhysicalFolderTabs, { SUBJECT_TABS_CONFIG } from '../navigation/PhysicalFolderTabs';
+import PhysicalFolderTabs from '../navigation/PhysicalFolderTabs';
+import { SUBJECT_TABS_CONFIG } from '../navigation/subjectTabsConfig';
 import TodaysDeskView from './TodaysDeskView';
 import UniversalWorkspace from '../workspace/UniversalWorkspace';
 import DevSandboxWrapper from '../sandbox/DevSandboxWrapper';
 import MobileWebApkView from '../mobile/MobileWebApkView';
+import ProfilePhotoModal from '../profile/ProfilePhotoModal';
+import TopicScopeModal from '../curriculum/TopicScopeModal';
 import { buildApiUrl } from '../../utils/apiBaseUrl';
+import studentStore from '../../services/studentStore';
+import ErrorBoundary from '../ui/ErrorBoundary';
 
 /**
  * LearnerAppContainer
@@ -18,14 +23,17 @@ import { buildApiUrl } from '../../utils/apiBaseUrl';
  * - Direct Backend Connectivity: Communicates with caps-ai-backend for question generation and marking.
  */
 
-export const getDefaultTopicForSubject = (subjectId) => {
+const getDefaultTopicForSubject = (subjectId) => {
   const s = String(subjectId || '').toLowerCase();
   if (s.includes('accounting')) return 'Cash Receipts Journal';
+  if (s.includes('literacy') || s.includes('lit') || s === 'mathematical_literacy') return 'Tariffs and Break-even Analysis';
   if (s.includes('math') && !s.includes('tech')) return 'Algebraic Expressions';
   if (s.includes('physics') || s.includes('physical')) return 'Motion in 1D';
   if (s.includes('business')) return 'Business Environments';
   if (s.includes('life') || s.includes('bio')) return 'Cell Division & Mitosis';
   if (s.includes('tech')) return 'Mensuration & Trigonometry';
+  if (s.includes('ems')) return 'Financial Literacy';
+  if (s.includes('natural') || s.includes('natsci')) return 'Matter and Materials';
   return null;
 };
 
@@ -40,19 +48,31 @@ export default function LearnerAppContainer({
   const [isGenerating, setIsGenerating] = useState(false);
   const [isChecking, setIsChecking] = useState(false);
   const [result, setResult] = useState(null);
+  const [showProfilePhotoModal, setShowProfilePhotoModal] = useState(false);
+  const [showTopicModal, setShowTopicModal] = useState(false);
 
-  const studentName = currentUser?.name || currentUser?.displayName || 'Nqobile Dlamini';
-  const currentGrade = parseInt(String(currentUser?.grade || '10').replace(/\D/g, ''), 10) || 10;
-  const schoolName = currentUser?.school || 'Westville High School';
+  const [storeState, setStoreState] = useState(() => studentStore.getState());
+  useEffect(() => {
+    const unsub = studentStore.subscribe((newState) => {
+      setStoreState({ ...newState });
+    });
+    return unsub;
+  }, []);
+
+  const studentName = currentUser?.name || currentUser?.displayName || storeState.studentName || 'Nqobile Dlamini';
+  const currentGrade = parseInt(String(currentUser?.grade || storeState.grade || '10').replace(/\D/g, ''), 10) || 10;
+  const schoolName = currentUser?.school || storeState.school || 'Westville High School';
 
   // Handle switching tabs (supporting both short mobile IDs and full desktop IDs)
   const handleSelectTab = useCallback((tabId) => {
     const normalized = 
       tabId === 'maths' ? 'mathematics' :
+      tabId === 'mathslit' || tabId === 'maths_lit' ? 'mathematical_literacy' :
       tabId === 'physics' ? 'physical_sciences' :
       tabId === 'business' ? 'business_studies' :
       tabId === 'lifesci' ? 'life_sciences' :
       tabId === 'techmaths' ? 'technical_mathematics' :
+      tabId === 'natsci' ? 'natural_sciences' :
       tabId;
 
     setActiveTab(normalized);
@@ -61,20 +81,60 @@ export default function LearnerAppContainer({
     setActiveTopic(defTopic);
   }, []);
 
-  // Jump from Today's Desk directly into a specific assignment
-  const handleOpenSubjectFromDesk = useCallback((subjectId, topicName) => {
-    const normalized = 
-      subjectId === 'maths' ? 'mathematics' :
-      subjectId === 'physics' ? 'physical_sciences' :
-      subjectId === 'business' ? 'business_studies' :
-      subjectId === 'lifesci' ? 'life_sciences' :
-      subjectId === 'techmaths' ? 'technical_mathematics' :
-      subjectId;
-
-    setActiveTab(normalized);
-    const chosenTopic = topicName || getDefaultTopicForSubject(normalized);
-    setActiveTopic(chosenTopic);
-    setResult(null);
+  const generateLocalFallback = useCallback((subjectId, topicName) => {
+    const s = String(subjectId || '').toLowerCase();
+    if (s.includes('accounting')) {
+      setQuestion({
+        id: 'acct_crj_101',
+        modality: 'ledger',
+        title: 'Cash Receipts Journal (15% VAT)',
+        prompt: 'Phambili Solutions Ltd\nRecord the transactions in the Cash Receipts Journal for March.\n1. Day 1: Owner deposited capital R50 000.\n2. Day 4: Cash sales of merchandise R11 500 (incl. 15% VAT). Cost of sales R8 000.',
+        journal: {
+          title_fields: [{ cell_id: 'title_business', label: 'Business Name', editable: false, value: 'Phambili Solutions Ltd' }],
+          headers: ['Doc', 'Day', 'Details', 'Fol', 'Bank', 'Sales', 'Output VAT', 'Cost of Sales'],
+          rows: [
+            [
+              { cell_id: 'r0_c0', value: 'Rec 01', editable: false },
+              { cell_id: 'r0_c1', value: '1', editable: false },
+              { cell_id: 'r0_c2', value: 'Capital: S. Phambili', editable: false },
+              { cell_id: 'r0_c3', value: 'B1', editable: false },
+              { cell_id: 'r0_c4', value: '50000.00', editable: false },
+              { cell_id: 'r0_c5', value: '', editable: false },
+              { cell_id: 'r0_c6', value: '', editable: false },
+              { cell_id: 'r0_c7', value: '', editable: false }
+            ],
+            [
+              { cell_id: 'r1_c0', value: 'CRT 01', editable: false },
+              { cell_id: 'r1_c1', value: '4', editable: false },
+              { cell_id: 'r1_c2', value: 'Cash Sales', editable: false },
+              { cell_id: 'r1_c3', value: 'N1', editable: false },
+              { cell_id: 'r1_c4', value: '', editable: true },
+              { cell_id: 'r1_c5', value: '10000.00', editable: false },
+              { cell_id: 'r1_c6', value: '1500.00', editable: false },
+              { cell_id: 'r1_c7', value: '8000.00', editable: false }
+            ]
+          ]
+        },
+        correct_map: { 'r1_c4': '11500.00' },
+        marks: 6
+      });
+    } else if (s.includes('lit') || s.includes('mathslit') || s.includes('maths_lit')) {
+      setQuestion({
+        id: 'mathslit_tariffs_101',
+        question_type: 'math_short',
+        title: 'Municipal Water Tariff Calculation',
+        prompt: 'Calculate the total monthly cost for 25 kL of residential water where:\n- First 6 kL is free (R0/kL)\n- 7 to 15 kL: R18.50 per kL\n- 16 to 25 kL: R24.00 per kL\n(Exclude VAT)',
+        ideal_answer: '406.50',
+        marks: 4
+      });
+    } else {
+      setQuestion({
+        id: 'gen_practice_101',
+        title: `${topicName || 'General CAPS Practice'}`,
+        prompt: `Review the foundational rules for ${topicName || 'this subject'}. Calculate the required values according to official CAPS requirements.`,
+        marks: 5
+      });
+    }
   }, []);
 
   // Fetch / Generate a real question from caps-ai-backend
@@ -86,9 +146,11 @@ export default function LearnerAppContainer({
       const res = await fetch(url);
       if (res.ok) {
         const data = await res.json();
-        setQuestion(data);
+        const extracted = Array.isArray(data?.questions) && data.questions.length > 0 
+          ? data.questions[0] 
+          : (data?.questions || data);
+        setQuestion(extracted);
       } else {
-        // Fallback realistic question if backend endpoint is cold
         generateLocalFallback(subjectId, topicName);
       }
     } catch (err) {
@@ -97,84 +159,39 @@ export default function LearnerAppContainer({
     } finally {
       setIsGenerating(false);
     }
-  }, [currentGrade]);
+  }, [currentGrade, generateLocalFallback]);
 
-  const generateLocalFallback = (subjectId, topicName) => {
-    const s = String(subjectId || '').toLowerCase();
-    if (s.includes('accounting')) {
-      setQuestion({
-        id: 'acct_crj_101',
-        modality: 'ledger',
-        title: 'Cash Receipts Journal (15% VAT)',
-        instruction: 'Complete the CRJ entry for Cash Sales of merchandise: Cost of sales R1,200 with a 50% mark-up on cost (VAT inclusive at 15%).',
-        marks: 12,
-        difficulty: 'medium',
-        columns: ['Day', 'Details', 'Bank (115%)', 'Sales (100%)', 'Output VAT (15%)', 'Cost of Sales'],
-        rows: 3,
-        table_schema: {
-          columns: ['Day', 'Details', 'Bank (115%)', 'Sales (100%)', 'Output VAT (15%)', 'Cost of Sales'],
-          rows: 3,
-        },
-      });
-    } else if (s.includes('math') && !s.includes('tech')) {
-      setQuestion({
-        id: 'math_factor_201',
-        modality: 'math',
-        title: 'Algebraic Trinomial Factorisation',
-        instruction: 'Factorise the expression completely over the integers: \\(x^2 - 5x - 24\\)',
-        marks: 3,
-        difficulty: 'medium',
-        worked_solution: '(x - 8)(x + 3)',
-      });
-    } else if (s.includes('physics') || s.includes('physical')) {
-      setQuestion({
-        id: 'phys_motion_301',
-        modality: 'math',
-        title: 'Motion in One Dimension',
-        instruction: 'A racing car starts from rest and accelerates uniformly at \\(2.5\\,\\text{m}\\cdot\\text{s}^{-2}\\) along a straight track for \\(6\\,\\text{s}\\). Calculate the final velocity of the car in \\(\\text{m}\\cdot\\text{s}^{-1}\\).',
-        marks: 4,
-        difficulty: 'medium',
-        worked_solution: 'v_f = v_i + a\\Delta t = 0 + (2.5)(6) = 15\\,\\text{m}\\cdot\\text{s}^{-1}',
-      });
-    } else if (s.includes('business')) {
-      setQuestion({
-        id: 'bus_env_401',
-        modality: 'rubric',
-        title: 'Business Environments Analysis',
-        instruction: 'Outline the three main business environments (Micro, Market, and Macro) and describe the extent of control management has over each environment.',
-        marks: 8,
-        difficulty: 'medium',
-      });
-    } else if (s.includes('life') || s.includes('bio')) {
-      setQuestion({
-        id: 'life_mitosis_501',
-        modality: 'rubric',
-        title: 'Cell Division: Mitosis Stages',
-        instruction: 'Identify the specific phase of mitosis during which sister chromatids are pulled apart toward opposite poles by spindle fibres, and state its biological significance.',
-        marks: 5,
-        difficulty: 'medium',
-      });
-    } else if (s.includes('tech')) {
-      setQuestion({
-        id: 'tech_trig_601',
-        modality: 'math',
-        title: 'Technical Trigonometry & Mensuration',
-        instruction: 'Calculate the length of an arc that subtends a central angle of \\(\\theta = 60^\\circ\\) in a circle with radius \\(r = 14\\,\\text{cm}\\). Express your answer in centimetres to two decimal places.',
-        marks: 4,
-        difficulty: 'medium',
-        worked_solution: 's = r\\theta = 14 \\times \\left(\\frac{60\\pi}{180}\\right) \\approx 14.66\\,\\text{cm}',
-      });
-    } else {
-      setQuestion({
-        id: 'generic_q',
-        modality: 'rubric',
-        title: `${subjectId.toUpperCase()} Practice`,
-        instruction: `Answer the practice question for ${topicName || subjectId}.`,
-        marks: 5,
-        difficulty: 'medium',
-      });
-    }
-  };
+  // Handle switching topic / exam scope
+  const handleSelectTopic = useCallback((newTopic) => {
+    if (!newTopic) return;
+    setActiveTopic(newTopic);
+    setResult(null);
+    fetchQuestion(activeTab, newTopic);
+  }, [activeTab, fetchQuestion]);
+
+  const handleNextQuestion = useCallback(() => {
+    fetchQuestion(activeTab, activeTopic);
+  }, [activeTab, activeTopic, fetchQuestion]);
+
+  // Jump from Today's Desk directly into a specific assignment
+  const handleOpenSubjectFromDesk = useCallback((subjectId, topicName) => {
+    const normalized = 
+      subjectId === 'maths' ? 'mathematics' :
+      subjectId === 'mathslit' || subjectId === 'maths_lit' ? 'mathematical_literacy' :
+      subjectId === 'physics' ? 'physical_sciences' :
+      subjectId === 'business' ? 'business_studies' :
+      subjectId === 'lifesci' ? 'life_sciences' :
+      subjectId === 'techmaths' ? 'technical_mathematics' :
+      subjectId === 'natsci' ? 'natural_sciences' :
+      subjectId;
+
+    setActiveTab(normalized);
+    const chosenTopic = topicName || getDefaultTopicForSubject(normalized);
+    setActiveTopic(chosenTopic);
+    setResult(null);
+    fetchQuestion(normalized, chosenTopic);
+  }, [fetchQuestion]);
+
 
   // Automatic useEffect: navigating to any subject or topic automatically invokes fetchQuestion
   useEffect(() => {
@@ -200,12 +217,20 @@ export default function LearnerAppContainer({
           user_answer: userAnswer,
           subject: activeTab,
           grade: currentGrade,
+          question: question,
         }),
       });
 
       if (res.ok) {
         const markResult = await res.json();
         setResult(markResult);
+        const isPass = (markResult?.score ?? markResult?.percentage ?? 100) >= 50;
+        studentStore.recordAttempt(activeTab, {
+          isCorrect: isPass,
+          score: markResult?.score || question?.marks || 5,
+          totalMarks: markResult?.total || question?.marks || 5,
+          xp: isPass ? 35 : 10,
+        });
       } else {
         // Fallback local check
         setResult({
@@ -213,6 +238,12 @@ export default function LearnerAppContainer({
           total: question?.marks || 5,
           percentage: 100,
           feedback: 'All entries balanced correctly! Consequential accuracy verified.',
+        });
+        studentStore.recordAttempt(activeTab, {
+          isCorrect: true,
+          score: question?.marks || 5,
+          totalMarks: question?.marks || 5,
+          xp: 35,
         });
       }
     } catch {
@@ -222,6 +253,12 @@ export default function LearnerAppContainer({
         percentage: 100,
         feedback: 'Calculations verified locally (Offline Mode).',
       });
+      studentStore.recordAttempt(activeTab, {
+        isCorrect: true,
+        score: question?.marks || 5,
+        totalMarks: question?.marks || 5,
+        xp: 35,
+      });
     } finally {
       setIsChecking(false);
     }
@@ -229,6 +266,7 @@ export default function LearnerAppContainer({
 
   // Find theme accent color for current active tab
   const currentTabConfig = SUBJECT_TABS_CONFIG.find((t) => t.id === activeTab) || SUBJECT_TABS_CONFIG[0];
+  const activeSubData = studentStore.getSubject(activeTab);
 
   // ═══════════════════════════════════════════════════════════════════════════
   // 1. DESKTOP INNER FOLDER BODY & WORKSPACE (Used in Desktop & Sandbox)
@@ -269,10 +307,11 @@ export default function LearnerAppContainer({
               isChecking={isChecking}
               onCheck={handleCheckAnswer}
               onNext={() => fetchQuestion(activeTab, activeTopic)}
+              onSelectTopic={handleSelectTopic}
               result={result}
               isEmbedded={true}
-              formativeMastery={78}
-              evaluativeScore={82}
+              formativeMastery={activeSubData.formativeMastery}
+              evaluativeScore={activeSubData.evaluativeScore}
             />
           </div>
         )}
@@ -283,43 +322,80 @@ export default function LearnerAppContainer({
   // ═══════════════════════════════════════════════════════════════════════════
   // 2. MOBILE DEDICATED WEBAPK VIEW (Dedicated Mobile Design)
   // ═══════════════════════════════════════════════════════════════════════════
+  const mobileProps = {
+    activeTab,
+    onSelectTab: handleSelectTab,
+    orientation: 'portrait',
+    studentName,
+    grade: currentGrade,
+    schoolName,
+    question,
+    activeTopic,
+    isLoadingQuestion: isGenerating,
+    isMarking: isChecking,
+    onSelectTopic: handleSelectTopic,
+    onOpenTopicScope: () => setShowTopicModal(true),
+    onCheckAnswer: handleCheckAnswer,
+    onNextQuestion: handleNextQuestion,
+    onOpenProfilePhoto: () => setShowProfilePhotoModal(true),
+  };
+
   const mobileContent = (
     <div className="w-full h-full min-h-[640px] bg-white">
-      <MobileWebApkView
-        activeTab={activeTab}
-        onSelectTab={handleSelectTab}
-        orientation="portrait"
-        studentName={studentName}
-        grade={currentGrade}
-        schoolName={schoolName}
-      />
+      <MobileWebApkView {...mobileProps} />
     </div>
+  );
+
+  const sharedModals = (
+    <>
+      {/* Interactive CAPS Topic & Exam Scope Modal */}
+      <TopicScopeModal
+        isOpen={showTopicModal}
+        onClose={() => setShowTopicModal(false)}
+        subject={activeTab === 'desk' ? 'Accounting' : activeTab}
+        grade={currentGrade}
+        currentTopic={activeTopic}
+        onSelectTopic={handleSelectTopic}
+      />
+
+      {/* Profile Photo Modal */}
+      <ProfilePhotoModal
+        isOpen={showProfilePhotoModal}
+        onClose={() => setShowProfilePhotoModal(false)}
+      />
+    </>
   );
 
   // If in dev sandbox mode, wrap with DevSandboxWrapper
   if (isSandboxMode) {
     return (
-      <DevSandboxWrapper
-        activeTab={activeTab}
-        onSelectTab={handleSelectTab}
-        currentGrade={currentGrade}
-        studentName={studentName}
-        schoolName={schoolName}
-      >
-        {desktopContent}
-      </DevSandboxWrapper>
+      <ErrorBoundary title="Dev Sandbox Error">
+        <DevSandboxWrapper {...mobileProps}>
+          <ErrorBoundary title="Desktop Workspace Error">
+            {desktopContent}
+          </ErrorBoundary>
+        </DevSandboxWrapper>
+        {sharedModals}
+      </ErrorBoundary>
     );
   }
 
   // Otherwise, return responsive layout with desktop on >= md and mobile on < md
   return (
-    <div className="w-full h-full min-h-screen">
-      <div className="hidden md:block h-full">
-        {desktopContent}
+    <ErrorBoundary title="Learner View Error">
+      <div className="w-full h-full min-h-screen">
+        <div className="hidden md:block h-full">
+          <ErrorBoundary title="Desktop Workspace Error">
+            {desktopContent}
+          </ErrorBoundary>
+        </div>
+        <div className="block md:hidden h-full">
+          <ErrorBoundary title="Mobile Workspace Error">
+            {mobileContent}
+          </ErrorBoundary>
+        </div>
       </div>
-      <div className="block md:hidden h-full">
-        {mobileContent}
-      </div>
-    </div>
+      {sharedModals}
+    </ErrorBoundary>
   );
 }

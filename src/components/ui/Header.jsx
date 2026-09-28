@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Bell, LogOut, X, Smartphone } from 'lucide-react';
 import FundileLogo from './FundileLogo';
 import InstallAppModal from './InstallAppModal';
+import ProfilePhotoModal from '../profile/ProfilePhotoModal';
 import { isStandaloneApp } from '../../hooks/useCoreState';
 
 const formatNotificationDate = (value) => {
@@ -42,14 +43,13 @@ const Header = ({
   setSuperAdminMode,
   superAdminTier,
   setSuperAdminTier,
-  brandPalette,
-  setBrandPalette,
   onStartTrial,
   onNavigateToSubscription,
 }) => {
   const [showNotifications, setShowNotifications] = useState(false);
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
   const [showInstallModal, setShowInstallModal] = useState(false);
+  const [showProfilePhotoModal, setShowProfilePhotoModal] = useState(false);
 
   const unreadNotificationCount = studentNotifications.filter((notification) => !notification.isRead).length;
   const systemNoticeCount = pendingAssignments.length > 0 ? 1 : 0;
@@ -111,42 +111,77 @@ const Header = ({
 
             {currentUser && (
               <>
+                {/* Profile Photo Avatar Button */}
+                {(() => {
+                  const userPhoto = currentUser?.photoURL || (typeof window !== 'undefined' ? localStorage.getItem('fundile_user_photoURL') : null);
+                  const userInitials = (currentUser?.name || currentUser?.displayName || 'FL')
+                    .split(' ')
+                    .filter(Boolean)
+                    .map((n) => n[0])
+                    .slice(0, 2)
+                    .join('')
+                    .toUpperCase();
+
+                  return (
+                    <button
+                      type="button"
+                      onClick={() => setShowProfilePhotoModal(true)}
+                      className="group relative h-9 w-9 sm:h-10 sm:w-10 rounded-full ring-2 ring-white/40 hover:ring-[#FF9100] transition-all overflow-hidden flex items-center justify-center bg-white/20 text-white font-bold text-xs sm:text-sm shrink-0 cursor-pointer shadow-inner"
+                      title="Update Profile Picture"
+                    >
+                      {userPhoto ? (
+                        <img src={userPhoto} alt={currentUser.name || 'User'} className="h-full w-full object-cover" />
+                      ) : (
+                        <span>{userInitials}</span>
+                      )}
+                      <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity text-xs">
+                        📸
+                      </div>
+                    </button>
+                  );
+                })()}
+
                 <span className="text-white font-medium hidden md:inline text-xs sm:text-sm" style={{ fontFamily: 'Afacad, sans-serif' }}>
                   Welcome, {currentUser.name} ({currentUser.role})
                 </span>
 
                 {currentUser.isSuperAdmin && (
                   <div className="flex flex-col sm:flex-row items-end sm:items-center gap-1 sm:gap-2 lg:gap-3 justify-end flex-1 min-w-0">
-                    <div className="flex flex-wrap items-center gap-1 sm:space-x-2 bg-white/10 rounded-full p-1 justify-end">
-                      <button
-                        type="button"
-                        onClick={() => setSuperAdminMode && setSuperAdminMode('student')}
-                        className={`px-2 sm:px-3 py-1 rounded-full text-[10px] sm:text-sm ${superAdminMode === 'student' ? 'bg-white/30 text-white' : 'text-white/80 hover:bg-white/20'}`}
-                      >
-                        Student
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => setSuperAdminMode && setSuperAdminMode('teacher')}
-                        className={`px-2 sm:px-3 py-1 rounded-full text-[10px] sm:text-sm ${superAdminMode === 'teacher' ? 'bg-white/30 text-white' : 'text-white/80 hover:bg-white/20'}`}
-                      >
-                        Teacher
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => setSuperAdminMode && setSuperAdminMode('admin')}
-                        className={`px-2 sm:px-3 py-1 rounded-full text-[10px] sm:text-sm ${superAdminMode === 'admin' ? 'bg-white/30 text-white' : 'text-white/80 hover:bg-white/20'}`}
-                      >
-                        Admin
-                      </button>
+                    {/* 5-Role Super Admin Switcher */}
+                    <div className="flex flex-wrap items-center gap-1 sm:space-x-1.5 bg-white/10 rounded-full p-1 justify-end">
+                      {[
+                        { role: 'student', label: 'Student' },
+                        { role: 'parent', label: 'Parent' },
+                        { role: 'teacher', label: 'Teacher' },
+                        { role: 'school', label: 'School' },
+                        { role: 'admin', label: 'Super Admin' },
+                      ].map((item) => (
+                        <button
+                          key={item.role}
+                          type="button"
+                          onClick={() => setSuperAdminMode && setSuperAdminMode(item.role)}
+                          className={`px-2 sm:px-2.5 py-1 rounded-full text-[10px] sm:text-xs transition-colors cursor-pointer ${
+                            superAdminMode === item.role
+                              ? 'bg-white/30 text-white font-bold shadow-xs'
+                              : 'text-white/80 hover:bg-white/20'
+                          }`}
+                        >
+                          {item.label}
+                        </button>
+                      ))}
                     </div>
 
-                    <div className="flex flex-wrap items-center gap-0.5 sm:space-x-2 bg-purple-500/30 rounded-full p-1 justify-end">
+                    {/* Tier Switcher */}
+                    <div className="flex flex-wrap items-center gap-0.5 sm:space-x-1.5 bg-purple-500/30 rounded-full p-1 justify-end">
                       <span className="hidden sm:inline px-2 text-[10px] font-medium uppercase tracking-[0.1em] text-white/70">Tier:</span>
                       <button
                         type="button"
                         onClick={() => setSuperAdminTier && setSuperAdminTier('standard')}
-                        className={`px-2 sm:px-3 py-1 rounded-full text-[10px] sm:text-sm ${superAdminTier === 'standard' ? 'bg-purple-500 text-white' : 'text-white/80 hover:bg-purple-500/50'}`}
+                        className={`px-2 sm:px-3 py-1 rounded-full text-[10px] sm:text-xs transition-colors cursor-pointer ${
+                          superAdminTier === 'standard'
+                            ? 'bg-purple-500 text-white font-bold shadow-xs'
+                            : 'text-white/80 hover:bg-purple-500/50'
+                        }`}
                       >
                         <span className="sm:hidden">Std</span>
                         <span className="hidden sm:inline">Standard</span>
@@ -154,27 +189,13 @@ const Header = ({
                       <button
                         type="button"
                         onClick={() => setSuperAdminTier && setSuperAdminTier('pro')}
-                        className={`px-2 sm:px-3 py-1 rounded-full text-[10px] sm:text-sm ${superAdminTier === 'pro' ? 'bg-purple-500 text-white' : 'text-white/80 hover:bg-purple-500/50'}`}
+                        className={`px-2 sm:px-3 py-1 rounded-full text-[10px] sm:text-xs transition-colors cursor-pointer ${
+                          superAdminTier === 'pro'
+                            ? 'bg-purple-500 text-white font-bold shadow-xs'
+                            : 'text-white/80 hover:bg-purple-500/50'
+                        }`}
                       >
                         Pro
-                      </button>
-                    </div>
-
-                    <div className="flex flex-wrap items-center gap-1 sm:gap-2 rounded-full bg-white/10 p-1 hidden sm:flex">
-                      <span className="hidden sm:inline px-2 text-xs font-medium uppercase tracking-[0.2em] text-white/70">Palette</span>
-                      <button
-                        type="button"
-                        onClick={() => setBrandPalette && setBrandPalette('dark')}
-                        className={`px-2 sm:px-3 py-1 rounded-full text-[10px] sm:text-sm ${brandPalette === 'dark' ? 'bg-white/30 text-white' : 'text-white/80 hover:bg-white/20'}`}
-                      >
-                        Dark
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => setBrandPalette && setBrandPalette('light')}
-                        className={`px-2 sm:px-3 py-1 rounded-full text-[10px] sm:text-sm ${brandPalette === 'light' ? 'bg-white/30 text-white' : 'text-white/80 hover:bg-white/20'}`}
-                      >
-                        Light
                       </button>
                     </div>
                   </div>
@@ -290,6 +311,12 @@ const Header = ({
       <InstallAppModal
         isOpen={showInstallModal}
         onClose={() => setShowInstallModal(false)}
+      />
+
+      {/* Mount ProfilePhotoModal for taking/uploading profile photo */}
+      <ProfilePhotoModal
+        isOpen={showProfilePhotoModal}
+        onClose={() => setShowProfilePhotoModal(false)}
       />
     </header>
   );

@@ -39,11 +39,12 @@ import CumulativeFrequencyCurve from './CumulativeFrequencyCurve';
 import ComplexNumberPlane from './ComplexNumberPlane';
 import ConicSections from './ConicSections';
 import GeometryStudio from './GeometryStudio';
+import ComplexPlaneExplorer from './ComplexPlaneExplorer';
 
 // Import thumbnail registry
 import MathComponentThumbnail, { hasThumbnail } from './ThumbnailRegistry';
 
-const MathComponentsRepository = ({ onSelectComponent, isVisible, selectedSubject, selectedGrade, aiRequest = null, setView }) => {
+const MathComponentsRepository = ({ onSelectComponent, isVisible, selectedSubject, selectedGrade, setView }) => {
     // Custom scrollbar styles
     useEffect(() => {
         const style = document.createElement('style');
@@ -76,8 +77,7 @@ const MathComponentsRepository = ({ onSelectComponent, isVisible, selectedSubjec
     const [selectedComponent, setSelectedComponent] = useState(null);
     const [componentData, setComponentData] = useState(null);
     const [isSubmitted, setIsSubmitted] = useState(false);
-    const [aiMode, setAiMode] = useState(false);
-    const [aiParameters, setAiParameters] = useState(null);
+    const [_AI_MODE, setAiMode] = useState(false);
     const [isFullScreen, setIsFullScreen] = useState(false);
 
     // All available mathematical components with metadata
@@ -124,6 +124,22 @@ const MathComponentsRepository = ({ onSelectComponent, isVisible, selectedSubjec
                 showAxes: true,
                 showUnitCircle: false,
                 showPolarForm: false
+            }
+        },
+        {
+            id: 'complex_plane_explorer',
+            name: 'Complex Plane Explorer',
+            description: 'Cognitive visualizer for the origin of imaginary unit i (y = x² + q with 3D orthogonal root extender) and Argand 90° rotation proof',
+            icon: Compass,
+            category: 'Number Systems',
+            gradeLevel: '10-12',
+            subjects: ['Mathematics', 'Technical Mathematics'],
+            componentType: 'complex_plane_explorer_data',
+            initialData: {
+                activeTab: 'origin',
+                qValue: 1,
+                realPart: 2,
+                imagPart: 1,
             }
         },
         {
@@ -1112,6 +1128,13 @@ const MathComponentsRepository = ({ onSelectComponent, isVisible, selectedSubjec
                                     onChange={setComponentData}
                                     isSubmitted={isSubmitted}
                                     setView={setView}
+                                />
+                            )}
+                            {selectedComponent.id === 'complex_plane_explorer' && (
+                                <ComplexPlaneExplorer
+                                    initialData={componentData}
+                                    onChange={setComponentData}
+                                    isSubmitted={isSubmitted}
                                 />
                             )}
                             

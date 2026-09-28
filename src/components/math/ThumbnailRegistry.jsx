@@ -19,9 +19,7 @@ import StatisticalAnalysisThumbnail from './StatisticalAnalysisThumbnail';
 import ProbabilitySimulatorThumbnail from './ProbabilitySimulatorThumbnail';
 import AlgebraicExpressionBuilderThumbnail from './AlgebraicExpressionBuilderThumbnail';
 import GeometryStudioThumbnail from './GeometryStudioThumbnail';
-
-console.log('🔍 ThumbnailRegistry: All imports loaded');
-console.log('🔍 ThumbnailRegistry: AlgebraicExpressionBuilderThumbnail imported as:', AlgebraicExpressionBuilderThumbnail);
+import ComplexPlaneExplorerThumbnail from './ComplexPlaneExplorerThumbnail';
 
 // Registry of thumbnail components - using actual component IDs from MathComponentsRepository
 const thumbnailRegistry = {
@@ -45,34 +43,24 @@ const thumbnailRegistry = {
     'probability_simulator': ProbabilitySimulatorThumbnail,
     'algebraic_expression_builder': AlgebraicExpressionBuilderThumbnail,
     'geometry_studio': GeometryStudioThumbnail,
+    'complex_plane_explorer': ComplexPlaneExplorerThumbnail,
     'test': TestThumbnail, // Test thumbnail
     // Add more thumbnails here as they are created
 };
 
-console.log('🔍 ThumbnailRegistry: Registry created with keys:', Object.keys(thumbnailRegistry));
-console.log('🔍 ThumbnailRegistry: algebraic_expression_builder mapped to:', thumbnailRegistry['algebraic_expression_builder']);
-
 // Component to render thumbnails based on component ID
 const MathComponentThumbnail = ({ componentId, width = 80, height = 60 }) => {
-    console.log('🔍 MathComponentThumbnail render called with:', { componentId, width, height });
-    
     const ThumbnailComponent = thumbnailRegistry[componentId];
-    console.log('🔍 MathComponentThumbnail: ThumbnailComponent found:', ThumbnailComponent);
-    
     if (!ThumbnailComponent) {
-        console.error('❌ MathComponentThumbnail: No thumbnail available for componentId:', componentId);
         return null; // No thumbnail available for this component
     }
-    
-    console.log('🔍 MathComponentThumbnail: Rendering thumbnail with props:', { width, height });
     return <ThumbnailComponent width={width} height={height} />;
 };
 
 // Helper function to check if a component has a thumbnail
+// eslint-disable-next-line react-refresh/only-export-components
 export const hasThumbnail = (componentId) => {
-    const hasThumb = componentId in thumbnailRegistry;
-    console.log('🔍 hasThumbnail called for:', componentId, 'Result:', hasThumb);
-    return hasThumb;
+    return componentId in thumbnailRegistry;
 };
 
 export default MathComponentThumbnail;

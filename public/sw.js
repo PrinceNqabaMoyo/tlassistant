@@ -1,5 +1,23 @@
 // Fundile PWA Service Worker
 const CACHE_NAME = 'fundile-v1';
+
+// Development kill-switch: Never intercept or cache Vite dev server on localhost or LAN
+const isDev = self.location.hostname === 'localhost' || 
+              self.location.hostname === '127.0.0.1' || 
+              self.location.port === '5173' || 
+              self.location.hostname.startsWith('192.168.') || 
+              self.location.hostname.startsWith('10.');
+
+if (isDev) {
+  self.addEventListener('install', () => self.skipWaiting());
+  self.addEventListener('activate', (event) => {
+    event.waitUntil(
+      caches.keys().then((keys) => Promise.all(keys.map((k) => caches.delete(k))))
+        .then(() => self.registration.unregister())
+    );
+  });
+}
+
 const STATIC_ASSETS = [
   '/',
   '/index.html',

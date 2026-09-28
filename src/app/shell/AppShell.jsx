@@ -43,6 +43,8 @@ export default function AppShell({ shellProps }) {
     setIsKeypadVisible,
     studentNotifications,
     superAdminMode,
+    superAdminTier,
+    setSuperAdminTier,
   } = shellProps;
 
   return (
@@ -61,6 +63,8 @@ export default function AppShell({ shellProps }) {
         studentNotifications={studentNotifications}
         superAdminMode={superAdminMode}
         setSuperAdminMode={setSuperAdminMode}
+        superAdminTier={superAdminTier}
+        setSuperAdminTier={setSuperAdminTier}
         brandPalette={brandPalette}
         setBrandPalette={setBrandPalette}
       />

@@ -11,8 +11,9 @@ export const isStandaloneApp = () => {
         const isIosStandalone = Boolean(window.navigator && window.navigator.standalone === true);
         const referrer = (typeof document !== 'undefined' && document.referrer) ? String(document.referrer) : '';
         const isAndroidApp = Boolean(referrer && referrer.includes('android-app://'));
+        const hasStandaloneParam = Boolean(typeof window !== 'undefined' && window.location && window.location.search && window.location.search.includes('standalone=true'));
 
-        return Boolean(matchesStandalone || isIosStandalone || isAndroidApp);
+        return Boolean(matchesStandalone || isIosStandalone || isAndroidApp || hasStandaloneParam);
     } catch (err) {
         console.warn('Error evaluating isStandaloneApp:', err);
         return false;

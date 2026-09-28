@@ -806,6 +806,17 @@ TOPIC_ALIASES: Dict[str, str] = {
     "scatter plots": "grade12_math_bivariate_statistics",
     # Accounting aliases
     "sole trader": "grade10_accounting_sole_trader",
+    "cash receipts journal": "grade10_accounting_sole_trader",
+    "cash receipts journal (crj)": "grade10_accounting_sole_trader",
+    "crj": "grade10_accounting_sole_trader",
+    "cash payments journal": "grade10_accounting_sole_trader",
+    "cash payments journal (cpj)": "grade10_accounting_sole_trader",
+    "cpj": "grade10_accounting_sole_trader",
+    "cash receipts & payments journals": "grade10_accounting_sole_trader",
+    "debtors journal": "grade10_accounting_sole_trader",
+    "debtors allowances journal": "grade10_accounting_sole_trader",
+    "creditors journal": "grade10_accounting_sole_trader",
+    "creditors allowances journal": "grade10_accounting_sole_trader",
     "gaap": "grade10_accounting_gaap",
     "ethics": "grade10_accounting_ethics",
     "internal control": "grade10_accounting_internal_control",
@@ -1384,7 +1395,19 @@ def generate_variant(
         config["seed"] = seed
         random.seed(seed)
 
-    result = generator(subskill=subskill, difficulty=difficulty, count=count, **config)
+    try:
+        result = generator(subskill=subskill, difficulty=difficulty, count=count, **config)
+    except TypeError:
+        try:
+            result = generator(difficulty=difficulty, count=count, **config)
+        except TypeError:
+            try:
+                result = generator(difficulty=difficulty, **config)
+            except TypeError:
+                try:
+                    result = generator(**config)
+                except TypeError:
+                    result = generator()
     term_val = int(config.get("term", 1))
     return _normalize_generator_result(result, default_term=term_val)
 

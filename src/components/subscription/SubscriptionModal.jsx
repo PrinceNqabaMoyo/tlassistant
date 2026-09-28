@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Check, X, Sparkles, Zap, Shield, HelpCircle, ArrowRight, School, RefreshCw } from 'lucide-react';
+import InAppPaymentModal from './InAppPaymentModal';
 
 /**
  * SubscriptionModal Component (Layer D — Phase D2)
@@ -17,6 +18,8 @@ export default function SubscriptionModal({
   const [schoolLicenseKey, setSchoolLicenseKey] = useState('');
   const [licenseFeedback, setLicenseFeedback] = useState({ error: '', success: '' });
   const [showLicenseInput, setShowLicenseInput] = useState(false);
+  const [paymentModalOpen, setPaymentModalOpen] = useState(false);
+  const [selectedPlanForPayment, setSelectedPlanForPayment] = useState(null);
 
   if (!isOpen) return null;
 
@@ -101,6 +104,37 @@ export default function SubscriptionModal({
     } finally {
       setIsUpdating(false);
     }
+  };
+
+  const handleOpenPayment = (tierKey) => {
+    const isAnnual = billingCycle === 'annual';
+    if (tierKey === 'standard') {
+      setSelectedPlanForPayment({
+        tier: 'standard',
+        name: 'Fundile Standard',
+        price: isAnnual ? 708 : 79,
+        billingCycle,
+      });
+    } else {
+      setSelectedPlanForPayment({
+        tier: 'pro',
+        name: 'Fundile Pro',
+        price: isAnnual ? 1428 : 149,
+        billingCycle,
+      });
+    }
+    setPaymentModalOpen(true);
+  };
+
+  const handlePaymentSuccess = (result) => {
+    setPaymentModalOpen(false);
+    onUpdateTier({
+      tier: result.tier,
+      days_remaining: result.days_remaining || (result.billingCycle === 'annual' ? 365 : 30),
+      trial_expired: false,
+      is_active: true,
+    });
+    onClose();
   };
 
   return (
@@ -199,7 +233,7 @@ export default function SubscriptionModal({
               </div>
 
               <button
-                onClick={() => handleSimulateTier('standard')}
+                onClick={() => handleOpenPayment('standard')}
                 disabled={isUpdating || currentStatus.tier === 'standard'}
                 className={`mt-6 w-full py-2.5 rounded-lg text-xs font-bold transition flex items-center justify-center gap-2 cursor-pointer ${
                   currentStatus.tier === 'standard'
@@ -264,7 +298,7 @@ export default function SubscriptionModal({
               </div>
 
               <button
-                onClick={() => handleSimulateTier('pro')}
+                onClick={() => handleOpenPayment('pro')}
                 disabled={isUpdating || currentStatus.tier === 'pro'}
                 className={`mt-6 w-full py-2.5 rounded-lg text-xs font-bold transition flex items-center justify-center gap-2 cursor-pointer ${
                   currentStatus.tier === 'pro'
@@ -415,6 +449,13 @@ export default function SubscriptionModal({
           </div>
         </div>
       </div>
+
+      <InAppPaymentModal
+        isOpen={paymentModalOpen}
+        onClose={() => setPaymentModalOpen(false)}
+        plan={selectedPlanForPayment}
+        onSuccess={handlePaymentSuccess}
+      />
     </div>
   );
 }

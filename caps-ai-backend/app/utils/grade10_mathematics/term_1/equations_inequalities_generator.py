@@ -41,9 +41,12 @@ def _build_linear_equations(r, difficulty: str) -> Dict[str, Any]:
         c = nonzero(r, 2, 6)
         d = nonzero(r, 1, 5)
         e = nonzero(r, -9, 9)
+        while a == e * c:
+            e = nonzero(r, -9, 9)
         restriction = sp.solve(c * symbol + d, symbol)[0]
         expr = sp.Eq((a * symbol + b) / (c * symbol + d), e)
-        ans = sp.solve(expr, symbol)[0]
+        sols = sp.solve(expr, symbol)
+        ans = sols[0] if sols else sp.Rational(e * d - b, a - e * c)
         steps = [
             step(from_expr=expr, to_expr=sp.Eq(a * symbol + b, e * (c * symbol + d)), op="multiply by denominator", rule="clear fraction", common_errors=["sign_error"]),
             step(from_expr=sp.Eq(a * symbol + b, e * (c * symbol + d)), to_expr=None, op="expand and collect terms", rule="distributive", common_errors=["sign_error_on_transpose"]),
@@ -55,8 +58,11 @@ def _build_linear_equations(r, difficulty: str) -> Dict[str, Any]:
         c = nonzero(r, -9, 9)
         d = nonzero(r, -20, 20)
         e = nonzero(r, -9, 9)
+        while a + c + e == 0:
+            e = nonzero(r, -9, 9)
         expr = sp.Eq(a * (symbol + b) + c * symbol, d - e * symbol)
-        ans = sp.solve(expr, symbol)[0]
+        sols = sp.solve(expr, symbol)
+        ans = sols[0] if sols else sp.Rational(d - a * b, a + c + e)
         steps = [
             step(from_expr=expr, to_expr=None, op="expand brackets", rule="distributive", common_errors=["sign_error"]),
             step(from_expr=None, to_expr=None, op="collect like terms", rule="additive inverse", common_errors=["sign_error_on_transpose"]),
@@ -107,10 +113,13 @@ def _build_quadratic_restrictions(r, difficulty: str) -> Dict[str, Any]:
     c = nonzero(r, -9, 9)
     d = nonzero(r, 1, 5)
     e = nonzero(r, 1, 5)
+    while a == e * c:
+        e = nonzero(r, 1, 5)
     # (ax+b)/(cx+d) = e  with restriction cx+d != 0
     restriction = sp.solve(c * symbol + d, symbol)[0]
     expr = sp.Eq((a * symbol + b) / (c * symbol + d), e)
-    ans = sp.solve(expr, symbol)[0]
+    sols = sp.solve(expr, symbol)
+    ans = sols[0] if sols else sp.Rational(e * d - b, a - e * c)
     steps = [
         step(from_expr=expr, to_expr=sp.Eq(a * symbol + b, e * (c * symbol + d)),
              op="multiply by denominator", rule="clear fraction; restriction: denominator != 0", common_errors=["ignored_restriction"]),
@@ -135,10 +144,12 @@ def _build_simultaneous_substitution(r, difficulty: str) -> Dict[str, Any]:
     a = nonzero(r, 1, 5)
     b = nonzero(r, -5, 5)
     c = nonzero(r, -20, 20)
-    # eq1: y = a*x + b
-    # eq2: c*x + d*y = e
     d = nonzero(r, 1, 5)
     e = nonzero(r, -20, 20)
+    while c + a * d == 0:
+        c = nonzero(r, -20, 20)
+    # eq1: y = a*x + b
+    # eq2: c*x + d*y = e
     eq1 = sp.Eq(y_sym, a * x_sym + b)
     eq2 = sp.Eq(c * x_sym + d * y_sym, e)
     soln = sp.solve([eq1, eq2], [x_sym, y_sym])
@@ -171,6 +182,8 @@ def _build_simultaneous_elimination(r, difficulty: str) -> Dict[str, Any]:
     d = nonzero(r, 1, 5)
     e = nonzero(r, -20, 20)
     f = nonzero(r, -20, 20)
+    while a * e - b * d == 0:
+        e = nonzero(r, -20, 20)
     eq1 = sp.Eq(a * x_sym + b * y_sym, c)
     eq2 = sp.Eq(d * x_sym + e * y_sym, f)
     soln = sp.solve([eq1, eq2], [x_sym, y_sym])

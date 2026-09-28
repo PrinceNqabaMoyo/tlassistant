@@ -1,4 +1,5 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState, useCallback } from 'react';
+import studentStore from '../../services/studentStore';
 import { 
   ClipboardList, 
   Calculator, 
@@ -9,7 +10,9 @@ import {
   Cpu, 
   Coins, 
   Leaf,
-  Pin
+  Pin,
+  ChevronLeft,
+  ChevronRight
 } from 'lucide-react';
 
 /**
@@ -21,100 +24,8 @@ import {
  * - Mobile: Horizontally scrollable carousel (overflow-x-auto scrollbar-none) with 44px minimum touch targets and auto-scroll to active.
  * - Color Palette: 60% crisp white canvas, 30% deep navy, 10% vivid jewel-tone accents.
  */
+import { SUBJECT_TABS_CONFIG } from './subjectTabsConfig';
 
-export const SUBJECT_TABS_CONFIG = [
-  {
-    id: 'desk',
-    name: "Today's Desk",
-    shortName: 'Desk',
-    icon: ClipboardList,
-    accentColor: '#13519C',
-    badge: '2 Due',
-    badgeColor: 'bg-rose-500 text-white shadow-sm shadow-rose-500/40',
-    grades: [7, 8, 9, 10, 11, 12],
-    isDesk: true,
-  },
-  {
-    id: 'accounting',
-    name: 'Accounting',
-    shortName: 'Accounting',
-    icon: BookOpen,
-    accentColor: '#059669',
-    badge: '84%',
-    badgeColor: 'bg-emerald-600 text-white shadow-sm shadow-emerald-500/40',
-    grades: [10, 11, 12],
-  },
-  {
-    id: 'mathematics',
-    name: 'Mathematics',
-    shortName: 'Maths',
-    icon: Calculator,
-    accentColor: '#2563EB',
-    badge: '82%',
-    badgeColor: 'bg-blue-600 text-white shadow-sm shadow-blue-500/40',
-    grades: [7, 8, 9, 10, 11, 12],
-  },
-  {
-    id: 'physical_sciences',
-    name: 'Physical Sciences',
-    shortName: 'Physics',
-    icon: FlaskConical,
-    accentColor: '#0891B2',
-    badge: '68%',
-    badgeColor: 'bg-cyan-600 text-white shadow-sm shadow-cyan-500/40',
-    grades: [10, 11, 12],
-  },
-  {
-    id: 'business_studies',
-    name: 'Business Studies',
-    shortName: 'Business',
-    icon: Briefcase,
-    accentColor: '#EA580C',
-    badge: '75%',
-    badgeColor: 'bg-[#FF9100] text-white shadow-sm shadow-orange-500/40',
-    grades: [10, 11, 12],
-  },
-  {
-    id: 'life_sciences',
-    name: 'Life Sciences',
-    shortName: 'Life Sci',
-    icon: Dna,
-    accentColor: '#0D9488',
-    badge: '80%',
-    badgeColor: 'bg-teal-600 text-white shadow-sm shadow-teal-500/40',
-    grades: [10, 11, 12],
-  },
-  {
-    id: 'technical_mathematics',
-    name: 'Technical Mathematics',
-    shortName: 'Tech Maths',
-    icon: Cpu,
-    accentColor: '#7C3AED',
-    badge: '70%',
-    badgeColor: 'bg-indigo-600 text-white shadow-sm shadow-indigo-500/40',
-    grades: [10, 11, 12],
-  },
-  {
-    id: 'ems',
-    name: 'EMS',
-    shortName: 'EMS',
-    icon: Coins,
-    accentColor: '#D97706',
-    badge: '80%',
-    badgeColor: 'bg-amber-600 text-white shadow-sm shadow-amber-500/40',
-    grades: [7, 8, 9],
-  },
-  {
-    id: 'natural_sciences',
-    name: 'Natural Sciences',
-    shortName: 'Nat Sci',
-    icon: Leaf,
-    accentColor: '#059669',
-    badge: '75%',
-    badgeColor: 'bg-emerald-600 text-white shadow-sm shadow-emerald-500/40',
-    grades: [7, 8, 9],
-  }
-];
 
 export default function PhysicalFolderTabs({
   activeTab = 'desk',
@@ -123,14 +34,69 @@ export default function PhysicalFolderTabs({
   mode = 'desktop', // 'desktop' | 'mobile'
 }) {
   const activeTabRef = useRef(null);
+  const desktopShelfRef = useRef(null);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(false);
   const numericGrade = parseInt(String(currentGrade).replace(/\D/g, ''), 10) || 10;
+  const [storeState, setStoreState] = useState(() => studentStore.getState());
+
+  const checkDesktopScroll = useCallback(() => {
+    if (desktopShelfRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = desktopShelfRef.current;
+      setCanScrollLeft(scrollLeft > 6);
+      setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 6);
+    }
+  }, []);
+
+  const handleScrollLeft = () => {
+    if (desktopShelfRef.current) {
+      desktopShelfRef.current.scrollBy({ left: -220, behavior: 'smooth' });
+    }
+  };
+
+  const handleScrollRight = () => {
+    if (desktopShelfRef.current) {
+      desktopShelfRef.current.scrollBy({ left: 220, behavior: 'smooth' });
+    }
+  };
+
+  useEffect(() => {
+    const unsub = studentStore.subscribe((newState) => {
+      setStoreState({ ...newState });
+    });
+    return unsub;
+  }, []);
+
+  const getDynamicBadge = (tab) => {
+    if (tab.isDesk) {
+      const dues = storeState?.deskDues ?? 0;
+      return {
+        text: dues > 0 ? `${dues} Due` : '0 Due',
+        color: dues > 0 ? 'bg-rose-500 text-white shadow-sm shadow-rose-500/40' : 'bg-slate-200 text-slate-700'
+      };
+    }
+    const sub = studentStore.getSubject(tab.id);
+    if (!sub || sub.status === 'diagnostic_required') {
+      return {
+        text: 'Diag',
+        color: 'bg-amber-100 text-amber-900 border border-amber-300'
+      };
+    }
+    const val = sub.formativeMastery ?? 0;
+    return {
+      text: `${val}%`,
+      color: val >= 80 ? 'bg-emerald-600 text-white shadow-sm shadow-emerald-500/40' :
+             val >= 60 ? 'bg-blue-600 text-white shadow-sm shadow-blue-500/40' :
+             'bg-slate-200 text-slate-700'
+    };
+  };
 
   // Filter tabs strictly by student grade (Today's Desk is always visible)
   const visibleTabs = SUBJECT_TABS_CONFIG.filter(
     (tab) => tab.isDesk || (tab.grades && tab.grades.includes(numericGrade))
   );
 
-  // Auto-scroll the active tab into center view on mobile
+  // Auto-scroll the active tab into center view on mobile or desktop if needed
   useEffect(() => {
     if (mode === 'mobile' && activeTabRef.current) {
       activeTabRef.current.scrollIntoView({
@@ -140,6 +106,20 @@ export default function PhysicalFolderTabs({
       });
     }
   }, [activeTab, mode]);
+
+  // Monitor desktop shelf scrollability
+  useEffect(() => {
+    checkDesktopScroll();
+    const shelf = desktopShelfRef.current;
+    if (shelf) {
+      shelf.addEventListener('scroll', checkDesktopScroll, { passive: true });
+      window.addEventListener('resize', checkDesktopScroll);
+      return () => {
+        shelf.removeEventListener('scroll', checkDesktopScroll);
+        window.removeEventListener('resize', checkDesktopScroll);
+      };
+    }
+  }, [checkDesktopScroll, visibleTabs.length]);
 
   if (mode === 'mobile') {
     // ═══════════════════════════════════════════════════════════════════════════
@@ -176,11 +156,14 @@ export default function PhysicalFolderTabs({
               />
               <Icon className="w-4 h-4 shrink-0" />
               <span>{tab.shortName}</span>
-              {tab.badge && (
-                <span className={`text-[10px] px-1.5 py-0.5 rounded-full font-extrabold ${tab.badgeColor}`}>
-                  {tab.badge}
-                </span>
-              )}
+              {(() => {
+                const b = getDynamicBadge(tab);
+                return (
+                  <span className={`text-[10px] px-1.5 py-0.5 rounded-full font-extrabold ${b.color}`}>
+                    {b.text}
+                  </span>
+                );
+              })()}
             </button>
           );
         })}
@@ -192,60 +175,100 @@ export default function PhysicalFolderTabs({
   // DESKTOP PHYSICAL FOLDER TABS (Left-slanted lip & 3D forward pop)
   // ═══════════════════════════════════════════════════════════════════════════
   return (
-    <div className="tab-shelf bg-[#E6EDF5] px-2 sm:px-6 pt-3.5 border-b border-slate-300 relative z-20 select-none overflow-x-auto lg:overflow-visible scrollbar-none [&::-webkit-scrollbar]:hidden">
-      <div className="flex items-end gap-0 w-full -mb-[2px]">
-        {visibleTabs.map((tab) => {
-          const Icon = tab.icon;
-          const isActive = activeTab === tab.id;
+    <div className="tab-shelf-container relative z-20 select-none bg-[#E6EDF5] border-b border-slate-300">
+      {/* Scroll Left Button */}
+      {canScrollLeft && (
+        <button
+          type="button"
+          onClick={handleScrollLeft}
+          className="absolute left-1.5 top-1/2 -translate-y-1/2 z-40 w-7 h-7 rounded-full bg-white/95 text-slate-700 shadow-md border border-slate-300 flex items-center justify-center hover:bg-white hover:text-slate-900 transition-all cursor-pointer backdrop-blur-xs"
+          title="Scroll tabs left"
+          aria-label="Scroll tabs left"
+        >
+          <ChevronLeft className="w-4 h-4" />
+        </button>
+      )}
 
-          return (
-            <button
-              key={tab.id}
-              type="button"
-              onClick={() => onSelectTab(tab.id)}
-              title={`${tab.name} (Grade ${numericGrade})`}
-              className={`folder-tab group flex-1 min-w-[120px] max-w-[200px] px-3 py-3 flex items-center justify-center gap-2 text-xs font-bold transition-all cursor-pointer relative select-none ${
-                isActive ? 'active' : 'inactive'
-              }`}
-              style={{
-                clipPath: 'polygon(14px 0, 100% 0, 100% 100%, 0 100%, 0 14px)',
-                WebkitClipPath: 'polygon(14px 0, 100% 0, 100% 100%, 0 100%, 0 14px)',
-                zIndex: isActive ? 30 : 10,
-                transform: isActive ? 'translateY(-4px) scale(1.01)' : 'translateY(2px)',
-                backgroundColor: isActive ? '#FFFFFF' : '#E2E8F0',
-                color: isActive ? '#0F172A' : '#475569',
-                opacity: isActive ? 1 : 0.85,
-                borderBottom: isActive ? '2px solid #FFFFFF' : '1px solid #CBD5E1',
-                boxShadow: isActive 
-                  ? '0 -8px 24px -4px rgba(0, 0, 0, 0.14), -4px -2px 10px rgba(0, 0, 0, 0.06), 4px -2px 10px rgba(0, 0, 0, 0.06)' 
-                  : 'none',
-              }}
-            >
-              {/* Top Accent Stripe */}
-              <span 
-                className="absolute top-0 left-0 right-0 h-[4px] transition-all"
-                style={{ backgroundColor: tab.accentColor }}
-              />
+      {/* Scroll Right Button */}
+      {canScrollRight && (
+        <button
+          type="button"
+          onClick={handleScrollRight}
+          className="absolute right-1.5 top-1/2 -translate-y-1/2 z-40 w-7 h-7 rounded-full bg-white/95 text-slate-700 shadow-md border border-slate-300 flex items-center justify-center hover:bg-white hover:text-slate-900 transition-all cursor-pointer backdrop-blur-xs"
+          title="Scroll tabs right"
+          aria-label="Scroll tabs right"
+        >
+          <ChevronRight className="w-4 h-4" />
+        </button>
+      )}
 
-              {/* Status Color Dot */}
-              <span 
-                className="w-2.5 h-2.5 rounded-full shrink-0 shadow-2xs"
-                style={{ backgroundColor: tab.accentColor }}
-              />
+      {/* Slidable Desktop Shelf */}
+      <div 
+        ref={desktopShelfRef}
+        className="tab-shelf px-2 sm:px-6 pt-3.5 overflow-x-auto scrollbar-none scroll-smooth [&::-webkit-scrollbar]:hidden"
+      >
+        <div className="flex items-end gap-0 min-w-max -mb-[2px]">
+          {visibleTabs.map((tab) => {
+            const Icon = tab.icon;
+            const isActive = activeTab === tab.id;
 
-              {/* Icon & Label */}
-              <Icon className="w-3.5 h-3.5 shrink-0 hidden sm:inline" />
-              <span className="tracking-tight truncate">{tab.shortName}</span>
+            return (
+              <button
+                key={tab.id}
+                type="button"
+                onClick={() => onSelectTab(tab.id)}
+                title={`${tab.name} (Grade ${numericGrade})`}
+                className={`folder-tab group shrink-0 min-w-[125px] max-w-[210px] px-3.5 py-3 flex items-center justify-center gap-2 text-xs font-bold transition-all cursor-pointer relative select-none ${
+                  isActive ? 'active' : 'inactive'
+                }`}
+                style={{
+                  clipPath: 'polygon(14px 0, 100% 0, 100% 100%, 0 100%, 0 14px)',
+                  WebkitClipPath: 'polygon(14px 0, 100% 0, 100% 100%, 0 100%, 0 14px)',
+                  zIndex: isActive ? 30 : 10,
+                  transform: isActive ? 'translateY(-4px) scale(1.01)' : 'translateY(2px)',
+                  backgroundColor: isActive ? '#FFFFFF' : '#E2E8F0',
+                  color: isActive ? '#0F172A' : '#475569',
+                  opacity: isActive ? 1 : 0.85,
+                  borderBottom: isActive ? '2px solid #FFFFFF' : '1px solid #CBD5E1',
+                  boxShadow: isActive 
+                    ? '0 -8px 24px -4px rgba(0, 0, 0, 0.14), -4px -2px 10px rgba(0, 0, 0, 0.06), 4px -2px 10px rgba(0, 0, 0, 0.06)' 
+                    : 'none',
+                }}
+              >
+                {/* Continuous Slanted Color Border */}
+                <svg className="absolute inset-0 w-full h-full pointer-events-none overflow-visible" preserveAspectRatio="none">
+                  <path 
+                    d="M 0 14 L 14 0 H 1000" 
+                    stroke={tab.accentColor} 
+                    strokeWidth={isActive ? 4 : 3} 
+                    fill="none" 
+                    vectorEffect="non-scaling-stroke" 
+                  />
+                </svg>
 
-              {/* Badge */}
-              {tab.badge && (
-                <span className={`text-[10px] px-1.5 py-0.5 rounded-full font-extrabold shrink-0 ${tab.badgeColor}`}>
-                  {tab.badge}
-                </span>
-              )}
-            </button>
-          );
-        })}
+                {/* Status Color Dot */}
+                <span 
+                  className="w-2.5 h-2.5 rounded-full shrink-0 shadow-2xs"
+                  style={{ backgroundColor: tab.accentColor }}
+                />
+
+                {/* Icon & Label */}
+                <Icon className="w-3.5 h-3.5 shrink-0 hidden sm:inline" />
+                <span className="tracking-tight truncate">{tab.shortName}</span>
+
+                {/* Dynamic Badge */}
+                {(() => {
+                  const b = getDynamicBadge(tab);
+                  return (
+                    <span className={`text-[10px] px-1.5 py-0.5 rounded-full font-extrabold shrink-0 ${b.color}`}>
+                      {b.text}
+                    </span>
+                  );
+                })()}
+              </button>
+            );
+          })}
+        </div>
       </div>
     </div>
   );

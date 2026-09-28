@@ -833,6 +833,16 @@ export default function App() {
       return;
     }
 
+    if (isCAPSContext && effectiveRole === 'parent') {
+      document.title = 'Fundile | Parent Portal';
+      return;
+    }
+
+    if (isCAPSContext && (effectiveRole === 'school' || effectiveRole === 'school_admin')) {
+      document.title = 'Fundile | School Administration';
+      return;
+    }
+
     document.title = 'Fundile | Curriculum-Aligned Learning Assistant';
   }, [effectiveCurrentUser?.curriculum, effectiveRole, selectedCurriculumKey]);
 

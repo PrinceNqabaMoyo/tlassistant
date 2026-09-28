@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { query, collection, where, getDocs } from 'firebase/firestore';
-import { ChevronLeft, Loader2 } from 'lucide-react';
+import React from 'react';
+import { ChevronLeft } from 'lucide-react';
 import AssessmentGenerator from './AssessmentGenerator';
 import SubmissionsDashboard from './SubmissionsDashboard';
 import ClassManager from './ClassManager';
@@ -13,7 +12,7 @@ import FeatureGatePanel from '../ui/FeatureGatePanel';
 import { CLASS_ASSIGNMENTS_BLOCKED_MESSAGE } from '../../app/constants/access';
 
 const TeacherView = ({ view, setView, db, currentUser }) => {
-    const canAccessTeacherMode = !!(currentUser?.isOwner || currentUser?.isSuperAdmin);
+    const canAccessTeacherMode = !!(currentUser?.isOwner || currentUser?.isSuperAdmin || currentUser?.role === 'teacher' || currentUser?.isTeacher);
 
     if (!canAccessTeacherMode) {
         return (
@@ -49,6 +48,12 @@ const TeacherView = ({ view, setView, db, currentUser }) => {
                 break;
             case 'assessments':
                 setView('assessments');
+                break;
+            case 'classDiagnostics':
+                setView('classDiagnostics');
+                break;
+            case 'submissions':
+                setView('submissions');
                 break;
             case 'curriculumManagement':
             case 'reports':

@@ -1,7 +1,7 @@
 from pathlib import Path
 
 import firebase_admin
-from firebase_admin import auth, credentials, firestore
+from firebase_admin import auth, credentials, firestore, storage
 
 
 DEFAULT_SERVICE_ACCOUNT_FILE = 'caps-ai-math-assistant-app-firebase-adminsdk-fbsvc-16f0a819d2.json'
@@ -62,3 +62,7 @@ def verify_firebase_id_token(id_token):
 
 def get_firestore_client():
     return firestore.client(app=get_firebase_app())
+
+
+def get_storage_bucket(bucket_name=None):
+    return storage.bucket(name=bucket_name, app=get_firebase_app())

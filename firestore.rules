@@ -1,6 +1,8 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
+    
+    // Core Helper Functions
     function signedIn() {
       return request.auth != null;
     }
@@ -11,6 +13,7 @@ service cloud.firestore {
         && (
           request.auth.token.email == 'princenqaba@gmail.com'
           || request.auth.token.email == 'princenqabamoyo@outlook.com'
+          || request.auth.token.email == 'sithole@school.co.za'
         );
     }
 
@@ -20,6 +23,7 @@ service cloud.firestore {
         && (
           get(/databases/$(database)/documents/users/$(request.auth.uid)).data.isSuperAdmin == true
           || get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin'
+          || get(/databases/$(database)/documents/users/$(request.auth.uid)).data.isOwner == true
         );
     }
 
@@ -27,23 +31,36 @@ service cloud.firestore {
       return isOwnerEmail() || hasAdminProfile();
     }
 
+    function isTeacherUser() {
+      return signedIn()
+        && (
+          isAdminUser()
+          || (
+            exists(/databases/$(database)/documents/users/$(request.auth.uid))
+            && (
+              get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'teacher'
+              || get(/databases/$(database)/documents/users/$(request.auth.uid)).data.isTeacher == true
+            )
+          )
+        );
+    }
+
+    // 0. System Statistics
     match /systemStats/{statId} {
       allow read: if isAdminUser();
       allow write: if false;
     }
 
+    // 1. Users Collection (Profile & Account Details)
     match /users/{userId} {
-      allow read, write: if signedIn() && request.auth.uid == userId;
-      allow read, update: if isAdminUser();
+      allow read, write: if signedIn() && (request.auth.uid == userId || isAdminUser());
 
       match /assignments/{assignmentId} {
-        allow read, write: if signedIn() && request.auth.uid == userId;
-        allow read, write: if isAdminUser();
+        allow read, write: if signedIn() && (request.auth.uid == userId || isAdminUser());
       }
 
       match /savedProblems/{problemId} {
-        allow read, write: if signedIn() && request.auth.uid == userId;
-        allow read, write: if isAdminUser();
+        allow read, write: if signedIn() && (request.auth.uid == userId || isAdminUser());
       }
 
       match /notifications/{notificationId} {
@@ -65,24 +82,97 @@ service cloud.firestore {
       }
     }
 
+    // 2. Students & Learner Progression (POPIA Sec 35 Minor Protection)
+    match /students/{studentId} {
+      allow read: if signedIn() && (
+        request.auth.uid == studentId
+        || isAdminUser()
+        || (resource.data.linkedParentIds is list && request.auth.uid in resource.data.linkedParentIds)
+      );
+      allow write: if signedIn() && (request.auth.uid == studentId || isAdminUser());
+
+      match /sessions/{sessionId} {
+        allow read, write: if signedIn() && (request.auth.uid == studentId || isAdminUser());
+      }
+
+      match /session_index/{indexId} {
+        allow read: if signedIn() && (
+          request.auth.uid == studentId
+          || isAdminUser()
+          || (get(/databases/$(database)/documents/students/$(studentId)).data.linkedParentIds is list
+              && request.auth.uid in get(/databases/$(database)/documents/students/$(studentId)).data.linkedParentIds)
+        );
+        allow write: if signedIn() && (request.auth.uid == studentId || isAdminUser());
+      }
+
+      match /diagnostics/{diagnosticId} {
+        allow read, write: if signedIn() && (request.auth.uid == studentId || isAdminUser());
+      }
+    }
+
+    // 3. Classes Collection (Teacher LMS Cockpit & Learner 6-Char Join Codes)
+    match /classes/{classId} {
+      // Learners can read class metadata to join via joinCode
+      allow read: if signedIn();
+      // Teachers can create classes where they are the owner
+      allow create: if isTeacherUser() && request.resource.data.teacherId == request.auth.uid;
+      // Teachers can update or delete their own classes
+      allow update, delete: if isTeacherUser() && (resource.data.teacherId == request.auth.uid || isAdminUser());
+
+      match /roster/{studentId} {
+        allow read: if signedIn() && (
+          request.auth.uid == studentId
+          || resource.data.teacherId == request.auth.uid
+          || isAdminUser()
+        );
+        allow write: if isTeacherUser() || isAdminUser();
+      }
+    }
+
+    // 4. Assessments Collection (Formal Assessment Tasks & Memos)
     match /assessments/{assessmentId} {
       allow read: if signedIn();
-      allow create: if signedIn() && request.resource.data.teacherId == request.auth.uid;
-      allow update, delete: if signedIn() && resource.data.teacherId == request.auth.uid;
+      allow create: if isTeacherUser() && request.resource.data.teacherId == request.auth.uid;
+      allow update, delete: if isTeacherUser() && (resource.data.teacherId == request.auth.uid || isAdminUser());
     }
 
+    // 5. Submissions Collection (Learner Submissions & Teacher Marking Review)
     match /submissions/{submissionId} {
       allow create: if signedIn() && request.resource.data.studentId == request.auth.uid;
-      allow read: if signedIn() && (resource.data.studentId == request.auth.uid || isAdminUser());
-      allow update, delete: if isAdminUser();
+      allow read: if signedIn() && (
+        resource.data.studentId == request.auth.uid
+        || resource.data.teacherId == request.auth.uid
+        || isAdminUser()
+      );
+      // Teachers can adjust marks and release scores
+      allow update: if signedIn() && (
+        resource.data.teacherId == request.auth.uid
+        || isAdminUser()
+      );
+      allow delete: if isAdminUser();
     }
 
+    // 6. Parent Family Hub (Multi-Child Subscriptions & Linking)
+    match /parents/{parentId} {
+      allow read, write: if signedIn() && (request.auth.uid == parentId || isAdminUser());
+
+      match /children/{childId} {
+        allow read, write: if signedIn() && (request.auth.uid == parentId || isAdminUser());
+      }
+
+      match /links/{linkCode} {
+        allow read, write: if signedIn() && (request.auth.uid == parentId || isAdminUser());
+      }
+    }
+
+    // 7. Pending Payments (Manual EFT Proof of Payment Receipts)
     match /pending_payments/{paymentId} {
-      allow create: if signedIn() && request.resource.data.userId == request.auth.uid && request.resource.data.status == 'pending';
+      allow create: if signedIn() && request.resource.data.userId == request.auth.uid;
       allow read: if isAdminUser() || (signedIn() && resource.data.userId == request.auth.uid);
       allow update, delete: if isAdminUser();
     }
 
+    // 8. Interest Submissions (Landing Page Lead Form)
     match /interest_submissions/{submissionId} {
       allow create: if request.resource.data.name is string
         && request.resource.data.email is string
@@ -104,6 +194,7 @@ service cloud.firestore {
       allow read, update, delete: if isAdminUser();
     }
 
+    // 9. Legacy Artifacts & Chat History
     match /artifacts/{appId}/users/{userId}/chat_histories/{subjectKey} {
       allow read: if signedIn() && request.auth.uid == userId;
       allow write: if false;

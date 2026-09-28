@@ -1,11 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   Monitor, 
   Smartphone, 
   RotateCw, 
-  Maximize2, 
+  Maximize2,
+  ShieldAlert,
+  RotateCcw
 } from 'lucide-react';
 import MobileWebApkView from '../mobile/MobileWebApkView';
+import SuperAdminProgressResetModal from '../admin/SuperAdminProgressResetModal';
+import studentStore from '../../services/studentStore';
 
 /**
  * DevSandboxWrapper
@@ -30,9 +34,30 @@ export default function DevSandboxWrapper({
   schoolName = 'Westville High School',
   streakDays = 5,
   xp = 1420,
+  question = null,
+  activeTopic = '',
+  isLoadingQuestion = false,
+  isMarking = false,
+  onSelectTopic = () => {},
+  onOpenTopicScope = null,
+  onCheckAnswer = () => {},
+  onNextQuestion = () => {},
+  onOpenProfilePhoto = () => {},
 }) {
   const [sandboxMode, setSandboxMode] = useState('desktop'); // 'desktop' | 'mobile' | 'native'
   const [mobileOrientation, setMobileOrientation] = useState('portrait'); // 'portrait' | 'landscape'
+  const [showAdminResetModal, setShowAdminResetModal] = useState(false);
+
+  const [storeState, setStoreState] = useState(() => studentStore.getState());
+  useEffect(() => {
+    const unsub = studentStore.subscribe((newState) => {
+      setStoreState({ ...newState });
+    });
+    return unsub;
+  }, []);
+
+  const effectiveStreak = storeState?.streakDays ?? streakDays;
+  const effectiveXp = storeState?.totalXp ?? xp;
 
   const isLandscape = mobileOrientation === 'landscape';
 
@@ -112,6 +137,16 @@ export default function DevSandboxWrapper({
             <Maximize2 className="w-3.5 h-3.5" />
             <span className="hidden md:inline">Native Responsive</span>
           </button>
+
+          <button
+            type="button"
+            onClick={() => setShowAdminResetModal(true)}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition cursor-pointer bg-amber-500/20 text-amber-300 border border-amber-500/40 hover:bg-amber-500/30 shadow-xs"
+            title="Super Admin: Reset Student Mastery and Dues to 0%"
+          >
+            <RotateCcw className="w-3.5 h-3.5 text-amber-400" />
+            <span>Reset Mastery (0%)</span>
+          </button>
         </div>
       </header>
 
@@ -160,10 +195,10 @@ export default function DevSandboxWrapper({
               </div>
               <div className="flex items-center gap-3">
                 <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/25 border border-amber-300/40 text-amber-200 font-bold text-xs shadow-xs">
-                  <span>🔥 {streakDays}-Day Streak</span>
+                  <span>🔥 {effectiveStreak}-Day Streak</span>
                 </div>
                 <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-900/60 border border-blue-300/40 text-blue-100 font-bold text-xs shadow-xs">
-                  <span>⚡ {xp.toLocaleString()} XP</span>
+                  <span>⚡ {effectiveXp.toLocaleString()} XP</span>
                 </div>
               </div>
             </div>
@@ -269,6 +304,15 @@ export default function DevSandboxWrapper({
                   schoolName={schoolName}
                   streakDays={streakDays}
                   xp={xp}
+                  question={question}
+                  activeTopic={activeTopic}
+                  isLoadingQuestion={isLoadingQuestion}
+                  isMarking={isMarking}
+                  onSelectTopic={onSelectTopic}
+                  onOpenTopicScope={onOpenTopicScope}
+                  onCheckAnswer={onCheckAnswer}
+                  onNextQuestion={onNextQuestion}
+                  onOpenProfilePhoto={onOpenProfilePhoto}
                 />
               </div>
 
@@ -302,12 +346,27 @@ export default function DevSandboxWrapper({
                 schoolName={schoolName}
                 streakDays={streakDays}
                 xp={xp}
+                question={question}
+                activeTopic={activeTopic}
+                isLoadingQuestion={isLoadingQuestion}
+                isMarking={isMarking}
+                onSelectTopic={onSelectTopic}
+                onOpenTopicScope={onOpenTopicScope}
+                onCheckAnswer={onCheckAnswer}
+                onNextQuestion={onNextQuestion}
+                onOpenProfilePhoto={onOpenProfilePhoto}
               />
             </div>
           </div>
         )}
 
       </main>
+
+      <SuperAdminProgressResetModal
+        isOpen={showAdminResetModal}
+        onClose={() => setShowAdminResetModal(false)}
+        activeSubject={activeTab}
+      />
 
     </div>
   );

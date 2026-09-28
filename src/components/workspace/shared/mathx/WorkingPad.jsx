@@ -91,7 +91,7 @@ const WorkingPad = ({
             <button
                 type="button"
                 onClick={() => onChange([...lines, ''])}
-                className="text-xs font-medium text-indigo-600 hover:text-indigo-700"
+                className="text-xs font-semibold text-[#13519C] hover:text-blue-800 font-sans cursor-pointer"
             >
                 + Add line
             </button>

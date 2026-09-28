@@ -27,7 +27,10 @@ const insertAtCaret = (el, value, token, offset) => {
  *   busy       marking in flight
  */
 const MathAnswerArea = ({ question, topic, onCheck, result, busy = false }) => {
-    const qType = question?.question_type;
+    const qType = question?.question_type ||
+        ((question?.options || question?.options_latex) ? 'mcq' :
+        (question?.diagram_spec ? 'diagram_select' :
+        (question?.canonical_solution?.steps?.length > 1 ? 'math_steps' : 'math_short')));
     const [selected, setSelected] = React.useState(null);
     const [selectedEdge, setSelectedEdge] = React.useState(null);
     const [value, setValue] = React.useState('');

@@ -131,8 +131,8 @@
     <h1>&#9889; Fundile &#8212; Architecture Map &amp; Interactive Test Hub</h1>
     <p>Adaptive learning aligned with South African National Curriculum Standards for Grades 7–12</p>
     <div class="meta">
-      <span>v0.9.0</span>
-      <span>Last updated: 2026-09-27</span>
+      <span>v0.9.1</span>
+      <span>Last updated: 2026-09-28</span>
       <span>Source of truth for agents: fundile-architecture.json</span>
       <span>&#9888; Edit JSON only &#8212; this file is generated</span>
     </div>
@@ -183,7 +183,7 @@
         <span class="status-badge status-built">Built</span>
         <div class="layer-name">Complete App</div>
         <div class="layer-desc">Session audit files, student profile, teacher/admin mode, notification system, trial/paywall, PDF reports &amp; printable tests, profile pictures, student dashboard with clean student monogram initials and authentic academic standing indicators.</div>
-        <div class="layer-deps">Built: <span>ClassDiagnosticHeatmap.jsx, AssessmentGenerator.jsx, PrintableTestModal.jsx, pdf_memo_generator.py, session_file_writer.py, report_generator.py, trial_manager.py, class_service.py, session.py, trial.py, classes.py, ParentReportModal.jsx, WhatsAppReportShare.jsx, TrialCountdownBanner.jsx, SubscriptionModal.jsx, OfflineStatusBadge.jsx, ClassManagerModal.jsx, JoinClassModal.jsx, StudentDashboard.jsx, NotificationBell.jsx, notification_service.py, notifications.py, assignment_service.py, ParentLinkModal.jsx, InstallAppModal.jsx, MobileWebApkView.jsx, Header.jsx</span></div>
+        <div class="layer-deps">Built: <span>ClassDiagnosticHeatmap.jsx, AssessmentGenerator.jsx, PrintableTestModal.jsx, pdf_memo_generator.py, session_file_writer.py, report_generator.py, trial_manager.py, class_service.py, session.py, trial.py, classes.py, ParentReportModal.jsx, WhatsAppReportShare.jsx, TrialCountdownBanner.jsx, SubscriptionModal.jsx, OfflineStatusBadge.jsx, ClassManagerModal.jsx, JoinClassModal.jsx, StudentDashboard.jsx, NotificationBell.jsx, notification_service.py, notifications.py, assignment_service.py, ParentLinkModal.jsx, InstallAppModal.jsx, MobileWebApkView.jsx, Header.jsx, InAppPaymentModal.jsx, ComplexPlaneExplorer.jsx</span></div>
         <div class="layer-deps">Depends on: <span>A</span></div>
         <div class="layer-deps">Plan: <span>Complete-App-Implementation-Plan.md</span></div>
       </div>
@@ -230,9 +230,9 @@
             <p>Live sandbox to test every frontend component, backend service, paywall rule, offline sync queue, and deterministic engine without leaving the architecture report.</p>
           </div>
           <div class="testhub-stats">
-            <div class="testhub-stat">Built Components: <strong>64</strong></div>
+            <div class="testhub-stat">Built Components: <strong>77</strong></div>
             <div class="testhub-stat">Backend Services: <strong>32</strong></div>
-            <div class="testhub-stat">API Endpoints: <strong>24</strong></div>
+            <div class="testhub-stat">API Endpoints: <strong>25</strong></div>
             <div class="testhub-stat">PWA Offline: <strong>Active (sw.js)</strong></div>
           </div>
         </div>
@@ -876,7 +876,7 @@
         <div class="test-card-header">
           <div class="test-card-title">
             <span>📁 Complete Frontend Component Directory &amp; Quick-Launch Matrix</span>
-            <span class="test-card-tag">64 Built Production Components</span>
+            <span class="test-card-tag">77 Built Production Components</span>
           </div>
           <div style="display:flex;gap:0.4rem;align-items:center;">
             <input type="text" id="comp-filter-input" class="test-input" placeholder="Filter components by name..." style="width:220px;padding:0.3rem 0.6rem;" oninput="filterComponentTable()">
@@ -1078,6 +1078,18 @@
           <td class="mono muted" style="font-size:0.75rem">src/components/subscription/SubscriptionModal.jsx</td>
           <td class="muted" style="font-size:0.78rem">Tier comparison matrix (Trial vs Standard vs Pro vs School) with interactive state tester</td>
           <td><button class="test-btn test-btn-sm" onclick="scrollToTestModule('track1')">⚡ Test Module</button></td>
+        </tr><tr class="comp-row" data-name="inapppaymentmodal" data-layer="d">
+          <td><strong>InAppPaymentModal</strong></td>
+          <td><span class="status-badge status-built">Layer D</span></td>
+          <td class="mono muted" style="font-size:0.75rem">src/components/subscription/InAppPaymentModal.jsx</td>
+          <td class="muted" style="font-size:0.78rem">Zero-redirect in-app checkout modal supporting Bank Card, Capitec Pay, Ozow Instant EFT, Manual EFT with POP upload and instant 14-day Pro grace period, and School license vouchers</td>
+          <td><button class="test-btn test-btn-sm" onclick="scrollToTestModule('track1')">⚡ Test Module</button></td>
+        </tr><tr class="comp-row" data-name="complexplaneexplorer" data-layer="a">
+          <td><strong>ComplexPlaneExplorer</strong></td>
+          <td><span class="status-badge status-built">Layer A</span></td>
+          <td class="mono muted" style="font-size:0.75rem">src/components/math/ComplexPlaneExplorer.jsx</td>
+          <td class="muted" style="font-size:0.78rem">Interactive cognitive visual aid demonstrating the origin of imaginary numbers (parabola y = x^2 + q orthogonal root extender when Delta &lt; 0) and the geometric meaning of i as a 90-degree counterclockwise rotation on the Argand plane</td>
+          <td><button class="test-btn test-btn-sm" onclick="scrollToTestModule('track1')">⚡ Test Module</button></td>
         </tr><tr class="comp-row" data-name="offlinestatusbadge" data-layer="a">
           <td><strong>OfflineStatusBadge</strong></td>
           <td><span class="status-badge status-built">Layer A</span></td>
@@ -1130,7 +1142,7 @@
           <td><strong>TeacherDashboard</strong></td>
           <td><span class="status-badge status-built">Layer D</span></td>
           <td class="mono muted" style="font-size:0.75rem">src/components/teacher/TeacherDashboard.jsx</td>
-          <td class="muted" style="font-size:0.78rem">Comprehensive teacher LMS cockpit for class rosters, 6-character code sharing, diagnostic heatmaps, and printable test generation</td>
+          <td class="muted" style="font-size:0.78rem">Comprehensive teacher LMS cockpit redesigned in Option 1 light palette (bg-slate-50, Brand Blue #13519C, Afacad typography) featuring dynamic class management, 6-character code sharing with WhatsApp invites, 1-tap remedial micro-drill dispatcher, POPIA-compliant avatar moderation, and 3-click printable test generation.</td>
           <td><button class="test-btn test-btn-sm" onclick="scrollToTestModule('dashboard')">⚡ Test Module</button></td>
         </tr><tr class="comp-row" data-name="socratictutordrawer" data-layer="c">
           <td><strong>SocraticTutorDrawer</strong></td>
@@ -1166,7 +1178,7 @@
           <td><strong>LandingPage</strong></td>
           <td><span class="status-badge status-built">Layer D</span></td>
           <td class="mono muted" style="font-size:0.75rem">src/components/ui/LandingPage.jsx</td>
-          <td class="muted" style="font-size:0.78rem">Universal public landing page with deep royal navy hero stage, horizontal hero CTA row preserving 'See how it works' above-the-fold geometry on mobile, radiant white content canvas, dynamic auto-hiding scroll behaviors on Fixed Blue Ribbon Header, mobile audience selector auto-scroll with responsive 'Schools' label, 1-tap app install portal, and SGB procurement routing</td>
+          <td class="muted" style="font-size:0.78rem">High-conversion landing page with streamlined 3-bullet value propositions, continuous upward slot-machine ticker across all 10 subjects, right-to-left running audience highlight for mobile, single-line mobile eyebrow pill, and footer Install App CTA.</td>
           <td><button class="test-btn test-btn-sm" onclick="scrollToTestModule('track1')">⚡ Test Module</button></td>
         </tr><tr class="comp-row" data-name="perspectiveshowcase" data-layer="d">
           <td><strong>PerspectiveShowcase</strong></td>
@@ -1202,8 +1214,20 @@
           <td><strong>UniversalWorkspace</strong></td>
           <td><span class="status-badge status-built">Layer A</span></td>
           <td class="mono muted" style="font-size:0.75rem">src/components/workspace/UniversalWorkspace.jsx</td>
-          <td class="muted" style="font-size:0.78rem">Single unified question workspace for all Grades 7–12 and all subjects featuring restored 3-Tier Progression Mode Switcher (1. Scaffold, 2. Practice, 3. Exam Mode), Adaptive Progress Dial (MasteryDial) mini gauge with full BKT Formative Mastery breakdown modal, dynamic in-situ scaffolding, and brand styling</td>
+          <td class="muted" style="font-size:0.78rem">Declared cognitive workspace with 4-stage progression gating, renderFormattedPrompt with numbered transaction badges, guidelines checklist drawer, and automatic modality dispatching (ledger, math, rubric, diagram).</td>
           <td><button class="test-btn test-btn-sm" onclick="scrollToTestModule('generator')">⚡ Test Module</button></td>
+        </tr><tr class="comp-row" data-name="superadminprogressresetmodal" data-layer="d">
+          <td><strong>SuperAdminProgressResetModal</strong></td>
+          <td><span class="status-badge status-built">Layer D</span></td>
+          <td class="mono muted" style="font-size:0.75rem">src/components/admin/SuperAdminProgressResetModal.jsx</td>
+          <td class="muted" style="font-size:0.78rem">Super Admin mastery calibration and progress testing control allowing 1-click reset of any subject or all subjects to 0% (baseline diagnostic mode), dues clearing, preset testing profiles, and live XP/streak adjustments</td>
+          <td><button class="test-btn test-btn-sm" onclick="scrollToTestModule('track1')">⚡ Test Module</button></td>
+        </tr><tr class="comp-row" data-name="studentstore" data-layer="d">
+          <td><strong>studentStore</strong></td>
+          <td><span class="status-badge status-built">Layer D</span></td>
+          <td class="mono muted" style="font-size:0.75rem">src/services/studentStore.js</td>
+          <td class="muted" style="font-size:0.78rem">Reactive persistent student progression model enforcing 0% initial mastery baseline for new learners, diagnostic gating, BKT mastery updates, localStorage persistence, and Super Admin resets</td>
+          <td><button class="test-btn test-btn-sm" onclick="scrollToTestModule('track1')">⚡ Test Module</button></td>
         </tr><tr class="comp-row" data-name="mathmodalityrenderer" data-layer="a">
           <td><strong>MathModalityRenderer</strong></td>
           <td><span class="status-badge status-built">Layer A</span></td>
@@ -1214,7 +1238,7 @@
           <td><strong>LedgerModalityRenderer</strong></td>
           <td><span class="status-badge status-built">Layer A</span></td>
           <td class="mono muted" style="font-size:0.75rem">src/components/workspace/modalities/LedgerModalityRenderer.jsx</td>
-          <td class="muted" style="font-size:0.78rem">2D tabular accounting and EMS ledger renderer with double-entry rule prompts</td>
+          <td class="muted" style="font-size:0.78rem">Native 2D accounting ledger &amp; journal matrix renderer: formats title_fields, authentic headers, static given cells vs interactive editable input cells, cell coordinate binding (rX_cY), and cell-level 3-tier pedagogical hint drawer.</td>
           <td><button class="test-btn test-btn-sm" onclick="scrollToTestModule('track1')">⚡ Test Module</button></td>
         </tr><tr class="comp-row" data-name="rubricmodalityrenderer" data-layer="a">
           <td><strong>RubricModalityRenderer</strong></td>
@@ -1232,7 +1256,7 @@
           <td><strong>PhysicalFolderTabs</strong></td>
           <td><span class="status-badge status-built">Layer D</span></td>
           <td class="mono muted" style="font-size:0.75rem">src/components/navigation/PhysicalFolderTabs.jsx</td>
-          <td class="muted" style="font-size:0.78rem">Skeuo-modern physical folder tab shelf with authentic left-slanted lips, 3D forward pop (z-index 30, translateY -4px), modern jewel-tone palette, and mobile swipeable carousel with 44px touch targets</td>
+          <td class="muted" style="font-size:0.78rem">Skeuo-modern folder tab navigation mimicking physical manila folders: left-slanted chamfered lips with continuous SVG accent border, 3D forward pop, slidable desktop tab shelf with scroll chevrons, and complete Senior/FET subject coverage including Mathematical Literacy.</td>
           <td><button class="test-btn test-btn-sm" onclick="scrollToTestModule('track1')">⚡ Test Module</button></td>
         </tr><tr class="comp-row" data-name="todaysdeskview" data-layer="d">
           <td><strong>TodaysDeskView</strong></td>
@@ -1270,6 +1294,60 @@
           <td class="mono muted" style="font-size:0.75rem">src/components/ui/Header.jsx</td>
           <td class="muted" style="font-size:0.78rem">Persistent sticky royal blue (#13519C) header ribbon for logged-in web browser users featuring white FundileLogo, prominent 'Start Free Trial' action, 'Install App' modal trigger (hidden in standalone mode), notification center, superadmin role/tier switchers, and secure log out</td>
           <td><button class="test-btn test-btn-sm" onclick="scrollToTestModule('track1')">⚡ Test Module</button></td>
+        </tr><tr class="comp-row" data-name="topicscopemodal" data-layer="a">
+          <td><strong>TopicScopeModal</strong></td>
+          <td><span class="status-badge status-built">Layer A</span></td>
+          <td class="mono muted" style="font-size:0.75rem">src/components/curriculum/TopicScopeModal.jsx</td>
+          <td class="muted" style="font-size:0.78rem">Interactive CAPS Annual Teaching Plan (ATP) topic scope selector modal. Groups curriculum topics by Terms 1-4, supports instant search, displays diagnostic/practice/exam readiness badges, and allows 1-click topic switching for school test preparation.</td>
+          <td><button class="test-btn test-btn-sm" onclick="scrollToTestModule('track1')">⚡ Test Module</button></td>
+        </tr><tr class="comp-row" data-name="errorboundary" data-layer="a">
+          <td><strong>ErrorBoundary</strong></td>
+          <td><span class="status-badge status-built">Layer A</span></td>
+          <td class="mono muted" style="font-size:0.75rem">src/components/ui/ErrorBoundary.jsx</td>
+          <td class="muted" style="font-size:0.78rem">React Error Boundary component providing runtime exception containment with user-friendly recovery UI, error reporting diagnostics, and reset handlers to eliminate white-screen crashes.</td>
+          <td><button class="test-btn test-btn-sm" onclick="scrollToTestModule('track1')">⚡ Test Module</button></td>
+        </tr><tr class="comp-row" data-name="parentdashboard" data-layer="a">
+          <td><strong>ParentDashboard</strong></td>
+          <td><span class="status-badge status-built">Layer A</span></td>
+          <td class="mono muted" style="font-size:0.75rem">src/components/parent/ParentDashboard.jsx</td>
+          <td class="muted" style="font-size:0.78rem">Parent &amp; Guardian Bridge Cockpit featuring Sunday 18:00 WhatsApp coaching pulse preview, household cellular data savings meter (&lt;2 MB vs 450 MB+), linked learner selector, actionable dinner-table coaching tips, and live dual-ring MasteryDial.</td>
+          <td><button class="test-btn test-btn-sm" onclick="scrollToTestModule('dashboard')">⚡ Test Module</button></td>
+        </tr><tr class="comp-row" data-name="profilephotomodal" data-layer="a">
+          <td><strong>ProfilePhotoModal</strong></td>
+          <td><span class="status-badge status-built">Layer A</span></td>
+          <td class="mono muted" style="font-size:0.75rem">src/components/profile/ProfilePhotoModal.jsx</td>
+          <td class="muted" style="font-size:0.78rem">Universal profile picture modal supporting live webcam stream capture with 3-2-1 timer and flash effect, image file upload, circular crop preview, and persistent local/cloud storage across all subscriber profiles.</td>
+          <td><button class="test-btn test-btn-sm" onclick="scrollToTestModule('track1')">⚡ Test Module</button></td>
+        </tr><tr class="comp-row" data-name="schooladminview" data-layer="a">
+          <td><strong>SchoolAdminView</strong></td>
+          <td><span class="status-badge status-built">Layer A</span></td>
+          <td class="mono muted" style="font-size:0.75rem">src/components/admin/SchoolAdminView.jsx</td>
+          <td class="muted" style="font-size:0.78rem">School Administration Cockpit serving Principals and HODs: features live ATP Curriculum Pacing Heatmap (Grades 7–12 Terms 1–4), departmental teaching staff allocations, school-wide misconception remediation broadcasts, and SASAMS-aligned term mark collation &amp; CSV export.</td>
+          <td><button class="test-btn test-btn-sm" onclick="scrollToTestModule('track1')">⚡ Test Module</button></td>
+        </tr><tr class="comp-row" data-name="teacherrosterstab" data-layer="d">
+          <td><strong>TeacherRostersTab</strong></td>
+          <td><span class="status-badge status-built">Layer D</span></td>
+          <td class="mono muted" style="font-size:0.75rem">src/components/teacher/tabs/TeacherRostersTab.jsx</td>
+          <td class="muted" style="font-size:0.78rem">Teacher cockpit Rosters tab: class cards with 6-character join code copier, 1-click WhatsApp invites, and humanized learner mark book with real photo avatars, POPIA safety monogram reset, and targeted remedial nudges.</td>
+          <td><button class="test-btn test-btn-sm" onclick="scrollToTestModule('track1')">⚡ Test Module</button></td>
+        </tr><tr class="comp-row" data-name="teacheranalyticstab" data-layer="d">
+          <td><strong>TeacherAnalyticsTab</strong></td>
+          <td><span class="status-badge status-built">Layer D</span></td>
+          <td class="mono muted" style="font-size:0.75rem">src/components/teacher/tabs/TeacherAnalyticsTab.jsx</td>
+          <td class="muted" style="font-size:0.78rem">Teacher cockpit Analytics tab: Class Diagnostic Weakness Heatmap with 1-click remedial drill dispatcher and printable remedial test/memo, CAPS ATP subject pacing milestones, and CAPS achievement level distribution curve.</td>
+          <td><button class="test-btn test-btn-sm" onclick="scrollToTestModule('track1')">⚡ Test Module</button></td>
+        </tr><tr class="comp-row" data-name="teacherassessmentstab" data-layer="d">
+          <td><strong>TeacherAssessmentsTab</strong></td>
+          <td><span class="status-badge status-built">Layer D</span></td>
+          <td class="mono muted" style="font-size:0.75rem">src/components/teacher/tabs/TeacherAssessmentsTab.jsx</td>
+          <td class="muted" style="font-size:0.78rem">Teacher cockpit Assessments &amp; Activities tab: Author &amp; Generate mode with question-by-question inspector, question format toggles (MCQ, Stepwise, Fill-in, Diagram Labeling), interactive anatomical diagram blanking (Alimentary Canal / Digestive Tract), intelligent suggested mark allocations with teacher edit &amp; lock-in, Mark Release Policy toggle (Instant vs Teacher Review First), and full Submissions &amp; Mark Review workflow.</td>
+          <td><button class="test-btn test-btn-sm" onclick="scrollToTestModule('track1')">⚡ Test Module</button></td>
+        </tr><tr class="comp-row" data-name="sampleclassesdata" data-layer="d">
+          <td><strong>sampleClassesData</strong></td>
+          <td><span class="status-badge status-built">Layer D</span></td>
+          <td class="mono muted" style="font-size:0.75rem">src/components/teacher/sampleClassesData.js</td>
+          <td class="muted" style="font-size:0.78rem">South African CAPS high school testing dataset providing a scoped 5-class rich test suite (Accounting, Maths Alpha, Maths Extended, EMS, Physical Sciences) for the owner/tester account, with clean empty state default for general teacher accounts.</td>
+          <td><button class="test-btn test-btn-sm" onclick="scrollToTestModule('track3')">⚡ Test Module</button></td>
         </tr>
             </tbody>
           </table>
@@ -2051,6 +2129,12 @@
           <td class="mono">/api/trial/school/activate</td>
           <td><span class="status-badge status-built">Built</span></td>
           <td class="muted">Activate institutional school license code issued via procurement invoice</td>
+        </tr>
+<tr>
+          <td class="mono">POST</td>
+          <td class="mono">/api/mark</td>
+          <td><span class="status-badge status-built">Built</span></td>
+          <td class="muted">Deterministic submission grading endpoint for 2D ledgers, KaTeX math procedures, and MCQs with cell coordinate marking</td>
         </tr></tbody></table></div></section></div><div id="tab-generators" class="tab-panel"><section><h2>Question Generators</h2>
           <div class="gen-grid"><div class="gen-card">
           <div class="gen-subject">Accounting</div>
@@ -2364,6 +2448,18 @@
           <td class="muted">Tier comparison matrix (Trial vs Standard vs Pro vs School) with interactive state tester</td>
         </tr>
 <tr>
+          <td><strong>InAppPaymentModal</strong></td>
+          <td><span class="status-badge status-built">Built</span></td>
+          <td>D</td>
+          <td class="muted">Zero-redirect in-app checkout modal supporting Bank Card, Capitec Pay, Ozow Instant EFT, Manual EFT with POP upload and instant 14-day Pro grace period, and School license vouchers</td>
+        </tr>
+<tr>
+          <td><strong>ComplexPlaneExplorer</strong></td>
+          <td><span class="status-badge status-built">Built</span></td>
+          <td>A</td>
+          <td class="muted">Interactive cognitive visual aid demonstrating the origin of imaginary numbers (parabola y = x^2 + q orthogonal root extender when Delta &lt; 0) and the geometric meaning of i as a 90-degree counterclockwise rotation on the Argand plane</td>
+        </tr>
+<tr>
           <td><strong>OfflineStatusBadge</strong></td>
           <td><span class="status-badge status-built">Built</span></td>
           <td>A</td>
@@ -2415,7 +2511,7 @@
           <td><strong>TeacherDashboard</strong></td>
           <td><span class="status-badge status-built">Built</span></td>
           <td>D</td>
-          <td class="muted">Comprehensive teacher LMS cockpit for class rosters, 6-character code sharing, diagnostic heatmaps, and printable test generation</td>
+          <td class="muted">Comprehensive teacher LMS cockpit redesigned in Option 1 light palette (bg-slate-50, Brand Blue #13519C, Afacad typography) featuring dynamic class management, 6-character code sharing with WhatsApp invites, 1-tap remedial micro-drill dispatcher, POPIA-compliant avatar moderation, and 3-click printable test generation.</td>
         </tr>
 <tr>
           <td><strong>SocraticTutorDrawer</strong></td>
@@ -2451,7 +2547,7 @@
           <td><strong>LandingPage</strong></td>
           <td><span class="status-badge status-built">Built</span></td>
           <td>D</td>
-          <td class="muted">Universal public landing page with deep royal navy hero stage, horizontal hero CTA row preserving 'See how it works' above-the-fold geometry on mobile, radiant white content canvas, dynamic auto-hiding scroll behaviors on Fixed Blue Ribbon Header, mobile audience selector auto-scroll with responsive 'Schools' label, 1-tap app install portal, and SGB procurement routing</td>
+          <td class="muted">High-conversion landing page with streamlined 3-bullet value propositions, continuous upward slot-machine ticker across all 10 subjects, right-to-left running audience highlight for mobile, single-line mobile eyebrow pill, and footer Install App CTA.</td>
         </tr>
 <tr>
           <td><strong>PerspectiveShowcase</strong></td>
@@ -2487,7 +2583,19 @@
           <td><strong>UniversalWorkspace</strong></td>
           <td><span class="status-badge status-built">Built</span></td>
           <td>A</td>
-          <td class="muted">Single unified question workspace for all Grades 7–12 and all subjects featuring restored 3-Tier Progression Mode Switcher (1. Scaffold, 2. Practice, 3. Exam Mode), Adaptive Progress Dial (MasteryDial) mini gauge with full BKT Formative Mastery breakdown modal, dynamic in-situ scaffolding, and brand styling</td>
+          <td class="muted">Declared cognitive workspace with 4-stage progression gating, renderFormattedPrompt with numbered transaction badges, guidelines checklist drawer, and automatic modality dispatching (ledger, math, rubric, diagram).</td>
+        </tr>
+<tr>
+          <td><strong>SuperAdminProgressResetModal</strong></td>
+          <td><span class="status-badge status-built">Built</span></td>
+          <td>D</td>
+          <td class="muted">Super Admin mastery calibration and progress testing control allowing 1-click reset of any subject or all subjects to 0% (baseline diagnostic mode), dues clearing, preset testing profiles, and live XP/streak adjustments</td>
+        </tr>
+<tr>
+          <td><strong>studentStore</strong></td>
+          <td><span class="status-badge status-built">Built</span></td>
+          <td>D</td>
+          <td class="muted">Reactive persistent student progression model enforcing 0% initial mastery baseline for new learners, diagnostic gating, BKT mastery updates, localStorage persistence, and Super Admin resets</td>
         </tr>
 <tr>
           <td><strong>MathModalityRenderer</strong></td>
@@ -2499,7 +2607,7 @@
           <td><strong>LedgerModalityRenderer</strong></td>
           <td><span class="status-badge status-built">Built</span></td>
           <td>A</td>
-          <td class="muted">2D tabular accounting and EMS ledger renderer with double-entry rule prompts</td>
+          <td class="muted">Native 2D accounting ledger &amp; journal matrix renderer: formats title_fields, authentic headers, static given cells vs interactive editable input cells, cell coordinate binding (rX_cY), and cell-level 3-tier pedagogical hint drawer.</td>
         </tr>
 <tr>
           <td><strong>RubricModalityRenderer</strong></td>
@@ -2517,7 +2625,7 @@
           <td><strong>PhysicalFolderTabs</strong></td>
           <td><span class="status-badge status-built">Built</span></td>
           <td>D</td>
-          <td class="muted">Skeuo-modern physical folder tab shelf with authentic left-slanted lips, 3D forward pop (z-index 30, translateY -4px), modern jewel-tone palette, and mobile swipeable carousel with 44px touch targets</td>
+          <td class="muted">Skeuo-modern folder tab navigation mimicking physical manila folders: left-slanted chamfered lips with continuous SVG accent border, 3D forward pop, slidable desktop tab shelf with scroll chevrons, and complete Senior/FET subject coverage including Mathematical Literacy.</td>
         </tr>
 <tr>
           <td><strong>TodaysDeskView</strong></td>
@@ -2554,6 +2662,60 @@
           <td><span class="status-badge status-built">Built</span></td>
           <td>D</td>
           <td class="muted">Persistent sticky royal blue (#13519C) header ribbon for logged-in web browser users featuring white FundileLogo, prominent 'Start Free Trial' action, 'Install App' modal trigger (hidden in standalone mode), notification center, superadmin role/tier switchers, and secure log out</td>
+        </tr>
+<tr>
+          <td><strong>TopicScopeModal</strong></td>
+          <td><span class="status-badge status-built">Built</span></td>
+          <td>A</td>
+          <td class="muted">Interactive CAPS Annual Teaching Plan (ATP) topic scope selector modal. Groups curriculum topics by Terms 1-4, supports instant search, displays diagnostic/practice/exam readiness badges, and allows 1-click topic switching for school test preparation.</td>
+        </tr>
+<tr>
+          <td><strong>ErrorBoundary</strong></td>
+          <td><span class="status-badge status-built">Built</span></td>
+          <td>A</td>
+          <td class="muted">React Error Boundary component providing runtime exception containment with user-friendly recovery UI, error reporting diagnostics, and reset handlers to eliminate white-screen crashes.</td>
+        </tr>
+<tr>
+          <td><strong>ParentDashboard</strong></td>
+          <td><span class="status-badge status-built">Built</span></td>
+          <td>A</td>
+          <td class="muted">Parent &amp; Guardian Bridge Cockpit featuring Sunday 18:00 WhatsApp coaching pulse preview, household cellular data savings meter (&lt;2 MB vs 450 MB+), linked learner selector, actionable dinner-table coaching tips, and live dual-ring MasteryDial.</td>
+        </tr>
+<tr>
+          <td><strong>ProfilePhotoModal</strong></td>
+          <td><span class="status-badge status-built">Built</span></td>
+          <td>A</td>
+          <td class="muted">Universal profile picture modal supporting live webcam stream capture with 3-2-1 timer and flash effect, image file upload, circular crop preview, and persistent local/cloud storage across all subscriber profiles.</td>
+        </tr>
+<tr>
+          <td><strong>SchoolAdminView</strong></td>
+          <td><span class="status-badge status-built">Built</span></td>
+          <td>A</td>
+          <td class="muted">School Administration Cockpit serving Principals and HODs: features live ATP Curriculum Pacing Heatmap (Grades 7–12 Terms 1–4), departmental teaching staff allocations, school-wide misconception remediation broadcasts, and SASAMS-aligned term mark collation &amp; CSV export.</td>
+        </tr>
+<tr>
+          <td><strong>TeacherRostersTab</strong></td>
+          <td><span class="status-badge status-built">Built</span></td>
+          <td>D</td>
+          <td class="muted">Teacher cockpit Rosters tab: class cards with 6-character join code copier, 1-click WhatsApp invites, and humanized learner mark book with real photo avatars, POPIA safety monogram reset, and targeted remedial nudges.</td>
+        </tr>
+<tr>
+          <td><strong>TeacherAnalyticsTab</strong></td>
+          <td><span class="status-badge status-built">Built</span></td>
+          <td>D</td>
+          <td class="muted">Teacher cockpit Analytics tab: Class Diagnostic Weakness Heatmap with 1-click remedial drill dispatcher and printable remedial test/memo, CAPS ATP subject pacing milestones, and CAPS achievement level distribution curve.</td>
+        </tr>
+<tr>
+          <td><strong>TeacherAssessmentsTab</strong></td>
+          <td><span class="status-badge status-built">Built</span></td>
+          <td>D</td>
+          <td class="muted">Teacher cockpit Assessments &amp; Activities tab: Author &amp; Generate mode with question-by-question inspector, question format toggles (MCQ, Stepwise, Fill-in, Diagram Labeling), interactive anatomical diagram blanking (Alimentary Canal / Digestive Tract), intelligent suggested mark allocations with teacher edit &amp; lock-in, Mark Release Policy toggle (Instant vs Teacher Review First), and full Submissions &amp; Mark Review workflow.</td>
+        </tr>
+<tr>
+          <td><strong>sampleClassesData</strong></td>
+          <td><span class="status-badge status-built">Built</span></td>
+          <td>D</td>
+          <td class="muted">South African CAPS high school testing dataset providing a scoped 5-class rich test suite (Accounting, Maths Alpha, Maths Extended, EMS, Physical Sciences) for the owner/tester account, with clean empty state default for general teacher accounts.</td>
         </tr></tbody></table></div></section></div><div id="tab-firestore" class="tab-panel"><section><h2>Firestore Collections</h2><div class="table-wrap">
           <table><thead><tr><th>Collection</th><th>Status</th><th>Description</th></tr></thead>
           <tbody><tr>
@@ -2596,9 +2758,9 @@
           <td><span class="status-badge status-built">Built</span></td>
           <td class="muted">Teacher-created assignments: questions, due date, reveal toggle, class reference, student submissions</td>
         </tr></tbody></table></div></section></div><div id="tab-stack" class="tab-panel"><section><h2>Tech Stack</h2>
-          <div class="stack-grid"><div class="stack-card"><h3>Frontend</h3><dl><dt>framework</dt><dd>React 18 (Vite)</dd><dt>language</dt><dd>JSX</dd><dt>styling</dt><dd>Vanilla CSS + Tailwind CSS (legacy pages)</dd><dt>mathRendering</dt><dd>KaTeX</dd><dt>diagramRendering</dt><dd>JSXGraph</dd><dt>bundler</dt><dd>Vite</dd><dt>pwa</dt><dd>vite-plugin-pwa &amp; custom Service Worker with development isolation in index.html (unregisters stale dev SWs and purges cache on localhost/LAN 192.168.x to prevent mobile LAN cache poisoning; enables full Workbox/sw.js offline caching in production)</dd><dt>pwaAssets</dt><dd>public/manifest.json, public/sw.js, pwa-192x192.png, pwa-512x512.png, pwa-maskable-512x512.png, apple-touch-icon.png (Brand Orange #FF9100 graduation cap iconography on #13519C brand blue across all 4 PWA icons and mobile install surfaces)</dd><dt>entryPoint</dt><dd>src/main.jsx</dd><dt>mainApp</dt><dd>src/App.jsx</dd></dl></div>
+          <div class="stack-grid"><div class="stack-card"><h3>Frontend</h3><dl><dt>framework</dt><dd>React 18 (Vite)</dd><dt>language</dt><dd>JSX</dd><dt>styling</dt><dd>Tailwind CSS v4 + Option 1 Dual-Font System (Afacad display headings, system-ui font-sans for workspace/controls, font-mono for numbers/tables/timers; 60-30-10 simulation box color palette)</dd><dt>mathRendering</dt><dd>KaTeX</dd><dt>diagramRendering</dt><dd>JSXGraph</dd><dt>bundler</dt><dd>Vite</dd><dt>progressionLifecycle</dt><dd>Gated 4-stage progression state machine: 0. Diagnostic (Required at 0% baseline) -&gt; 1. Scaffold (Guided hints) -&gt; 2. Practice (Unassisted, unlocks &gt;=60%) -&gt; 3. Exam Mode (Timed assessment, unlocks &gt;=80% Level 7)</dd><dt>pwa</dt><dd>vite-plugin-pwa &amp; custom Service Worker with development isolation in index.html (unregisters stale dev SWs and purges cache on localhost/LAN 192.168.x to prevent mobile LAN cache poisoning; enables full Workbox/sw.js offline caching in production)</dd><dt>pwaAssets</dt><dd>public/manifest.json, public/sw.js, pwa-192x192.png, pwa-512x512.png, pwa-maskable-512x512.png, apple-touch-icon.png (Brand Orange #FF9100 graduation cap iconography on #13519C brand blue across all 4 PWA icons and mobile install surfaces)</dd><dt>entryPoint</dt><dd>src/main.jsx</dd><dt>mainApp</dt><dd>src/App.jsx</dd></dl></div>
 <div class="stack-card"><h3>Backend</h3><dl><dt>framework</dt><dd>FastAPI ASGI / Flask WSGI</dd><dt>language</dt><dd>Python 3.11+</dd><dt>mathLibrary</dt><dd>SymPy</dd><dt>llmAbstraction</dt><dd>caps-ai-backend/app/services/llm_provider.py</dd><dt>entryPoint</dt><dd>caps-ai-backend/run.py</dd><dt>mainApp</dt><dd>caps-ai-backend/MainApp.py</dd><dt>lanRouting</dt><dd>Auto-detected LAN IP (192.168.x / 10.x) and localhost routing to port 5001 via src/utils/apiBaseUrl.js for real-time mobile cross-device testing</dd></dl></div>
-<div class="stack-card"><h3>Database &amp; Auth</h3><dl><dt>primary</dt><dd>Firebase Firestore</dd><dt>storage</dt><dd>Firebase Storage</dd><dt>auth</dt><dd>Firebase Authentication</dd></dl></div>
+<div class="stack-card"><h3>Database &amp; Auth</h3><dl><dt>primary</dt><dd>Firebase Firestore</dd><dt>storage</dt><dd>Dual-Redundant Firebase Storage (Primary) + Supabase Storage (Fallback on quota/network error)</dd><dt>auth</dt><dd>Firebase Authentication</dd></dl></div>
 <div class="stack-card"><h3>Deployment</h3><dl><dt>frontend</dt><dd>Firebase Hosting</dd><dt>backend</dt><dd>Dockerised (Dockerfile present)</dd></dl></div></div></section></div><div id="tab-packages" class="tab-panel"><section><h2>Package Tiers</h2>
           <div class="packages"><div class="pkg">
           <div class="pkg-name">Trial</div>

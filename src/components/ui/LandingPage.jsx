@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import FundileLogo from './FundileLogo';
 import {
     ArrowRight,
@@ -28,75 +28,108 @@ import DemandCaptureForm from './DemandCaptureForm';
 import ScrollReveal from './landing/ScrollReveal';
 import PerspectiveShowcase from './landing/PerspectiveShowcase';
 import InstallAppModal from './InstallAppModal';
-import { motion } from 'framer-motion';
 
 import { LIVE_AVAILABILITY_DETAIL, LIVE_AVAILABILITY_HEADLINE, LIVE_AVAILABILITY_NOTE } from '../../app/constants/availability';
 import { HERO_COPY, HIDDEN_CURRICULUM, PRICING_COPY, HOW_IT_WORKS, INTERNAL_CONSISTENCY, TEACHERS_LINK } from '../../app/constants/landingCopy';
 
-const LandingPage = ({ db, onGetStarted, onSignIn, onViewSubscription, palette = 'dark', authService, currentUser }) => {
+const AUDIENCE_KEYS = ['learners', 'parents', 'teachers', 'schools'];
+
+const LandingPage = ({ onGetStarted, onSignIn, onViewSubscription }) => {
     // ── Install modal state ──
     const [showInstallModal, setShowInstallModal] = useState(false);
 
     // ── Perspective navigation state ──
     const [activePerspective, setActivePerspective] = useState('learners');
+    const [mobileTickerPerspective, setMobileTickerPerspective] = useState('learners');
 
-    // ── Slot-machine ticker state ──
-    const SLOT_ITEMS = [
+    // Auto-cycling highlight ticker on mobile viewports every 3.5s
+    // INVARIANT: Visual highlight auto-advances, but simulator view below ONLY swaps when a tab is clicked!
+    useEffect(() => {
+        const ticker = setInterval(() => {
+            setMobileTickerPerspective((current) => {
+                const idx = AUDIENCE_KEYS.indexOf(current);
+                const nextIdx = (idx + 1) % AUDIENCE_KEYS.length;
+                return AUDIENCE_KEYS[nextIdx];
+            });
+        }, 3500);
+        return () => clearInterval(ticker);
+    }, []);
+
+    const audienceRibbonContainerRef = useRef(null);
+
+    // Auto-scroll active audience button into center view when mobile ticker cycles
+    useEffect(() => {
+        if (!mobileTickerPerspective) return;
+        const activeTabEl = document.getElementById(`audience-tab-${mobileTickerPerspective}`);
+        if (activeTabEl) {
+            activeTabEl.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+        }
+    }, [mobileTickerPerspective]);
+
+    // ── Slot-machine upward infinite reel state ──
+    const SLOT_ITEMS_BASE = [
         'Mathematics',
         'Physical Sciences',
         'Life Sciences',
         'Natural Sciences',
         'Mathematical Literacy',
-        'EMS',
+        'Technical Mathematics',
         'Accounting',
         'Business Studies',
+        'EMS',
         'every subject.',
     ];
-    const FINAL_IDX = SLOT_ITEMS.length - 1;
+    // Append duplicate Mathematics at the end so it rolls UP seamlessly to Mathematics, quietly resets index to 0 without downward snapping, and continues upward in a continuous loop.
+    const SLOT_ITEMS = [...SLOT_ITEMS_BASE, SLOT_ITEMS_BASE[0]];
     const [slotIdx, setSlotIdx] = useState(0);
-    const [slotSettled, setSlotSettled] = useState(false);
+    const [isReelResetting, setIsReelResetting] = useState(false);
     const [showDetails, setShowDetails] = useState(false);
     const [showArrow, setShowArrow] = useState(false);
 
+    // Initial fade in for value bullets and CTAs
     useEffect(() => {
-        if (slotSettled) return;
-        const delay = 1333;
-        const t = setTimeout(() => {
-            if (slotIdx < FINAL_IDX) {
-                setSlotIdx(i => i + 1);
-            } else {
-                setSlotSettled(true);
-            }
-        }, delay);
-        return () => clearTimeout(t);
-    }, [slotIdx, slotSettled]);
-
-    useEffect(() => {
-        if (!slotSettled) return;
-        const detailsTimer = setTimeout(() => setShowDetails(true), 350);
-        const arrowTimer = setTimeout(() => setShowArrow(true), 1100);
+        const detailsTimer = setTimeout(() => setShowDetails(true), 600);
+        const arrowTimer = setTimeout(() => setShowArrow(true), 1200);
         return () => {
             clearTimeout(detailsTimer);
             clearTimeout(arrowTimer);
         };
-    }, [slotSettled]);
-
-    // Replay slot machine every 30 s
-    const replaySlot = useCallback(() => {
-        setSlotSettled(false);
-        setSlotIdx(0);
     }, []);
 
+    // Upward infinite slot roll timer: 10,000ms pause on 'every subject.' (index === SLOT_ITEMS_BASE.length - 1), 1,400ms for all other subjects
     useEffect(() => {
-        if (!slotSettled) return;
-        const id = setInterval(replaySlot, 30_000);
-        return () => clearInterval(id);
-    }, [slotSettled, replaySlot]);
+        const isEverySubject = slotIdx === SLOT_ITEMS_BASE.length - 1;
+        const delay = isEverySubject ? 10000 : 1400;
+        const reelTimer = setTimeout(() => {
+            setSlotIdx((currentIdx) => {
+                if (currentIdx >= SLOT_ITEMS.length - 1) {
+                    return 1;
+                }
+                return currentIdx + 1;
+            });
+        }, delay);
+        return () => clearTimeout(reelTimer);
+    }, [slotIdx, SLOT_ITEMS.length, SLOT_ITEMS_BASE.length]);
+
+    // When reel reaches duplicate Mathematics at the end:
+    // Wait for the upward transition to finish (350ms), then quietly reset index to 0 with transition: none
+    useEffect(() => {
+        if (slotIdx === SLOT_ITEMS.length - 1) {
+            const resetTimer = setTimeout(() => {
+                setIsReelResetting(true);
+                setSlotIdx(0);
+            }, 380);
+            return () => clearTimeout(resetTimer);
+        } else if (isReelResetting) {
+            const raf = requestAnimationFrame(() => {
+                setIsReelResetting(false);
+            });
+            return () => cancelAnimationFrame(raf);
+        }
+    }, [slotIdx, isReelResetting, SLOT_ITEMS.length]);
 
     const heroRef = useRef(null);
-    const simulatorRef = useRef(null);
     const ctaRowRef = useRef(null);
-    const [isTucked, setIsTucked] = useState(false);
     const [isRibbonVisible, setIsRibbonVisible] = useState(true);
     const lastScrollYRef = useRef(0);
 
@@ -117,12 +150,6 @@ const LandingPage = ({ db, onGetStarted, onSignIn, onViewSubscription, palette =
             }
 
             lastScrollYRef.current = currentScrollY;
-
-            if (ctaRowRef.current) {
-                const rect = ctaRowRef.current.getBoundingClientRect();
-                const tucked = rect.top <= 124;
-                setIsTucked(tucked);
-            }
         };
 
         window.addEventListener('scroll', handleScroll, { passive: true });
@@ -170,10 +197,6 @@ const LandingPage = ({ db, onGetStarted, onSignIn, onViewSubscription, palette =
         }
     };
 
-    // Shared style tokens for light canvas sections below the fold
-    const surfaceClassName = 'rounded-[28px] border border-slate-200/90 bg-white p-6 sm:p-7 shadow-xs hover:shadow-md transition duration-300 hover:border-slate-300';
-    const cardClassName = 'rounded-[28px] border border-slate-200/90 bg-white p-6 sm:p-7 shadow-xs hover:shadow-md transition duration-300';
-
     return (
         <div className="relative min-h-screen bg-slate-50 text-slate-900 font-sans selection:bg-[#13519C]/20 selection:text-[#13519C]">
             
@@ -190,12 +213,11 @@ const LandingPage = ({ db, onGetStarted, onSignIn, onViewSubscription, palette =
                             <button
                                 type="button"
                                 onClick={() => setShowInstallModal(true)}
-                                className="inline-flex items-center gap-1.5 rounded-lg border border-emerald-300/40 bg-emerald-500/20 px-2.5 py-1.5 text-xs sm:text-sm font-bold text-emerald-200 transition-all duration-300 hover:bg-emerald-500/30 cursor-pointer shadow-xs"
+                                className="hidden sm:inline-flex items-center gap-1.5 rounded-lg border border-emerald-300/40 bg-emerald-500/20 px-2.5 py-1.5 text-xs sm:text-sm font-bold text-emerald-200 transition-all duration-300 hover:bg-emerald-500/30 cursor-pointer shadow-xs"
                                 title="Install Fundile App on Mobile Phone or Computer"
                             >
                                 <span>📲</span>
                                 <span className="hidden sm:inline">Install App</span>
-                                <span className="sm:hidden">Install</span>
                             </button>
                             <button
                                 type="button"
@@ -222,6 +244,7 @@ const LandingPage = ({ db, onGetStarted, onSignIn, onViewSubscription, palette =
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 sm:py-2.5">
                     <div className="flex items-center justify-between gap-3">
                         <div 
+                            ref={audienceRibbonContainerRef}
                             className="flex items-center gap-2 sm:gap-2.5 overflow-x-auto no-scrollbar scrollbar-hide px-1 py-0.5 max-w-full [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden [&::-webkit-scrollbar]:w-0 [&::-webkit-scrollbar]:h-0 relative z-10"
                             style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
                         >
@@ -233,24 +256,35 @@ const LandingPage = ({ db, onGetStarted, onSignIn, onViewSubscription, palette =
                                 { id: 'schools', label: 'School Admins', shortLabel: 'Schools', icon: Building2, iconColor: 'text-cyan-600' },
                             ].map((tab) => {
                                 const Icon = tab.icon;
-                                const isActive = activePerspective === tab.id;
+                                const isDesktopActive = activePerspective === tab.id;
+                                const isMobileHighlighted = mobileTickerPerspective === tab.id;
+
                                 return (
                                     <button
                                         key={tab.id}
                                         id={`audience-tab-${tab.id}`}
                                         type="button"
                                         onClick={() => handlePerspectiveChange(tab.id)}
-                                        className={`relative z-10 inline-flex items-center gap-2 px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-bold transition-all duration-200 cursor-pointer shrink-0 ${
-                                            isActive
-                                                ? 'bg-white text-[#13519C] ring-2 ring-[#FF9100] shadow-md shadow-amber-500/20 scale-[1.02]'
-                                                : 'bg-white text-[#13519C] border border-slate-200/90 hover:bg-slate-50 hover:shadow-xs'
+                                        className={`relative z-10 inline-flex items-center gap-2 px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-bold transition-all duration-300 cursor-pointer shrink-0 bg-white text-[#13519C] ${
+                                            isMobileHighlighted
+                                                ? 'ring-2 ring-[#FF9100] shadow-md shadow-amber-500/20 scale-[1.02] sm:ring-0 sm:shadow-none sm:scale-100'
+                                                : 'border border-slate-200/90'
+                                        } ${
+                                            isDesktopActive
+                                                ? 'sm:ring-2 sm:ring-[#FF9100] sm:shadow-md sm:shadow-amber-500/20 sm:scale-[1.02] sm:border-transparent'
+                                                : 'sm:border sm:border-slate-200/90 sm:hover:bg-slate-50 hover:shadow-xs'
                                         }`}
                                     >
                                         <Icon className={`h-4 w-4 ${tab.iconColor} shrink-0`} />
                                         <span className="sm:hidden">{tab.shortLabel || tab.label}</span>
                                         <span className="hidden sm:inline">{tab.label}</span>
-                                        {isActive && (
-                                            <span className="w-1.5 h-1.5 rounded-full bg-[#FF9100] shrink-0" />
+                                        {/* Mobile orange dot indicator */}
+                                        {isMobileHighlighted && (
+                                            <span className="w-1.5 h-1.5 rounded-full bg-[#FF9100] shrink-0 sm:hidden" />
+                                        )}
+                                        {/* Desktop orange dot indicator */}
+                                        {isDesktopActive && (
+                                            <span className="w-1.5 h-1.5 rounded-full bg-[#FF9100] shrink-0 hidden sm:inline-block" />
                                         )}
                                     </button>
                                 );
@@ -281,9 +315,9 @@ const LandingPage = ({ db, onGetStarted, onSignIn, onViewSubscription, palette =
                         <section ref={heroRef} id="learner-screen-top" className="flex flex-col items-center justify-between text-center pb-4 pt-2 min-h-[calc(100vh-10rem)] max-w-4xl mx-auto relative z-10 box-border scroll-mt-32 sm:scroll-mt-36">
                             {/* Top & Middle Group */}
                             <div className="flex flex-col items-center justify-center flex-1 w-full gap-4">
-                                <div className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium border border-[#2B7BD8]/40 bg-[#13519C]/20 text-blue-100 shadow-xs">
-                                    <Sparkles className="h-4 w-4 text-[#FFD166]" />
-                                    {HERO_COPY.eyebrow}
+                                <div className="inline-flex items-center gap-2 rounded-full px-3.5 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-medium border border-[#2B7BD8]/40 bg-[#13519C]/20 text-blue-100 shadow-xs whitespace-nowrap">
+                                    <Sparkles className="h-4 w-4 text-[#FFD166] hidden sm:inline-block shrink-0" />
+                                    <span>{HERO_COPY.eyebrow}</span>
                                 </div>
 
                                 {/* ── Slot-machine headline ── */}
@@ -307,20 +341,23 @@ const LandingPage = ({ db, onGetStarted, onSignIn, onViewSubscription, palette =
                                             className="block"
                                             style={{
                                                  transform: `translateY(calc(${-slotIdx} * 1.1em))`,
-                                                 transition: slotSettled ? 'none' : 'transform 0.25s cubic-bezier(0.4,0,0.2,1)',
+                                                 transition: isReelResetting ? 'none' : 'transform 0.35s cubic-bezier(0.4,0,0.2,1)',
                                                  lineHeight: '1.1',
                                                  willChange: 'transform',
                                             }}
                                         >
-                                            {SLOT_ITEMS.map((item, i) => (
-                                                <span
-                                                    key={i}
-                                                    className={`block ${i === FINAL_IDX ? 'text-white' : 'text-[#FF9100]'}`}
-                                                    style={{ height: '1.1em', lineHeight: '1.1' }}
-                                                >
-                                                    {item}
-                                                </span>
-                                            ))}
+                                            {SLOT_ITEMS.map((item, i) => {
+                                                const isEverySubject = item === 'every subject.';
+                                                return (
+                                                    <span
+                                                        key={i}
+                                                        className={`block ${isEverySubject ? 'text-white' : 'text-[#FF9100]'}`}
+                                                        style={{ height: '1.1em', lineHeight: '1.1' }}
+                                                    >
+                                                        {item}
+                                                    </span>
+                                                );
+                                            })}
                                         </span>
                                     </span>
 
@@ -905,7 +942,7 @@ const LandingPage = ({ db, onGetStarted, onSignIn, onViewSubscription, palette =
                                     <div className="mt-8 pt-4">
                                         <button 
                                             type="button"
-                                            onClick={onGetStarted}
+                                            onClick={onViewSubscription || onGetStarted}
                                             className="w-full inline-flex items-center justify-center py-3.5 px-4 rounded-xl text-xs font-bold text-white bg-[#FF9100] hover:bg-[#e68200] shadow-md transition cursor-pointer"
                                         >
                                             Start 2-Week Free Trial
@@ -992,6 +1029,15 @@ const LandingPage = ({ db, onGetStarted, onSignIn, onViewSubscription, palette =
                                     <span className="inline-flex items-center px-2.5 py-1 rounded-md bg-blue-50 text-[#13519C] text-[11px] font-semibold border border-blue-200">
                                         <Check className="w-3.5 h-3.5 mr-1 text-[#FF9100]" /> 100% National Standard
                                     </span>
+                                </div>
+                                <div className="pt-2">
+                                    <button
+                                        type="button"
+                                        onClick={() => setShowInstallModal(true)}
+                                        className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#13519C] hover:bg-blue-800 text-white text-xs font-bold transition shadow-xs cursor-pointer border border-[#13519C]/30"
+                                    >
+                                        <span>📲 Install App on Mobile &amp; Desktop</span>
+                                    </button>
                                 </div>
                             </div>
 

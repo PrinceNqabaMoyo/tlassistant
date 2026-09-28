@@ -2,8 +2,8 @@
   "_meta": {
     "app": "Fundile",
     "tagline": "Adaptive learning aligned with South African National Curriculum Standards for Grades 7–12",
-    "lastUpdated": "2026-09-27",
-    "version": "0.9.0",
+    "lastUpdated": "2026-09-28",
+    "version": "0.9.1",
     "maintainedBy": "owner",
     "updateProtocol": "Update this file when a layer, service, route, data model, or external dependency is added or its build status changes. Do NOT update for internal function changes or bug fixes.",
     "agentInstruction": "Read this file at session start to understand the full system. Do not ask the owner to explain the architecture — it is here. Cross-reference planning documents for detail on planned items."
@@ -29,10 +29,11 @@
     "frontend": {
       "framework": "React 18 (Vite)",
       "language": "JSX",
-      "styling": "Vanilla CSS + Tailwind CSS (legacy pages)",
+      "styling": "Tailwind CSS v4 + Option 1 Dual-Font System (Afacad display headings, system-ui font-sans for workspace/controls, font-mono for numbers/tables/timers; 60-30-10 simulation box color palette)",
       "mathRendering": "KaTeX",
       "diagramRendering": "JSXGraph",
       "bundler": "Vite",
+      "progressionLifecycle": "Gated 4-stage progression state machine: 0. Diagnostic (Required at 0% baseline) -> 1. Scaffold (Guided hints) -> 2. Practice (Unassisted, unlocks >=60%) -> 3. Exam Mode (Timed assessment, unlocks >=80% Level 7)",
       "pwa": "vite-plugin-pwa & custom Service Worker with development isolation in index.html (unregisters stale dev SWs and purges cache on localhost/LAN 192.168.x to prevent mobile LAN cache poisoning; enables full Workbox/sw.js offline caching in production)",
       "pwaAssets": "public/manifest.json, public/sw.js, pwa-192x192.png, pwa-512x512.png, pwa-maskable-512x512.png, apple-touch-icon.png (Brand Orange #FF9100 graduation cap iconography on #13519C brand blue across all 4 PWA icons and mobile install surfaces)",
       "entryPoint": "src/main.jsx",
@@ -49,7 +50,7 @@
     },
     "database": {
       "primary": "Firebase Firestore",
-      "storage": "Firebase Storage",
+      "storage": "Dual-Redundant Firebase Storage (Primary) + Supabase Storage (Fallback on quota/network error)",
       "auth": "Firebase Authentication"
     },
     "llm": {
@@ -161,7 +162,9 @@
         "ParentLinkModal.jsx",
         "InstallAppModal.jsx",
         "MobileWebApkView.jsx",
-        "Header.jsx"
+        "Header.jsx",
+        "InAppPaymentModal.jsx",
+        "ComplexPlaneExplorer.jsx"
       ],
       "dependsOn": [
         "A"
@@ -803,6 +806,12 @@
         "route": "/api/trial/school/activate",
         "handler": "app/api/trial.py",
         "description": "Activate institutional school license code issued via procurement invoice"
+      },
+      {
+        "method": "POST",
+        "route": "/api/mark",
+        "handler": "app/__init__.py -> evaluation_service.grade_submission",
+        "description": "Deterministic submission grading endpoint for 2D ledgers, KaTeX math procedures, and MCQs with cell coordinate marking"
       }
     ],
     "planned": []
@@ -972,6 +981,18 @@
         "description": "Tier comparison matrix (Trial vs Standard vs Pro vs School) with interactive state tester"
       },
       {
+        "name": "InAppPaymentModal",
+        "path": "src/components/subscription/InAppPaymentModal.jsx",
+        "description": "Zero-redirect in-app checkout modal supporting Bank Card, Capitec Pay, Ozow Instant EFT, Manual EFT with POP upload and instant 14-day Pro grace period, and School license vouchers",
+        "layer": "D"
+      },
+      {
+        "name": "ComplexPlaneExplorer",
+        "path": "src/components/math/ComplexPlaneExplorer.jsx",
+        "description": "Interactive cognitive visual aid demonstrating the origin of imaginary numbers (parabola y = x^2 + q orthogonal root extender when Delta < 0) and the geometric meaning of i as a 90-degree counterclockwise rotation on the Argand plane",
+        "layer": "A"
+      },
+      {
         "name": "OfflineStatusBadge",
         "path": "src/components/navigation/OfflineStatusBadge.jsx",
         "description": "South African load-shedding resilience badge with queued offline session counter and auto-sync"
@@ -1019,7 +1040,7 @@
       {
         "name": "TeacherDashboard",
         "path": "src/components/teacher/TeacherDashboard.jsx",
-        "description": "Comprehensive teacher LMS cockpit for class rosters, 6-character code sharing, diagnostic heatmaps, and printable test generation",
+        "description": "Comprehensive teacher LMS cockpit redesigned in Option 1 light palette (bg-slate-50, Brand Blue #13519C, Afacad typography) featuring dynamic class management, 6-character code sharing with WhatsApp invites, 1-tap remedial micro-drill dispatcher, POPIA-compliant avatar moderation, and 3-click printable test generation.",
         "layer": "D"
       },
       {
@@ -1055,7 +1076,7 @@
       {
         "name": "LandingPage",
         "path": "src/components/ui/LandingPage.jsx",
-        "description": "Universal public landing page with deep royal navy hero stage, horizontal hero CTA row preserving 'See how it works' above-the-fold geometry on mobile, radiant white content canvas, dynamic auto-hiding scroll behaviors on Fixed Blue Ribbon Header, mobile audience selector auto-scroll with responsive 'Schools' label, 1-tap app install portal, and SGB procurement routing",
+        "description": "High-conversion landing page with streamlined 3-bullet value propositions, continuous upward slot-machine ticker across all 10 subjects, right-to-left running audience highlight for mobile, single-line mobile eyebrow pill, and footer Install App CTA.",
         "layer": "D"
       },
       {
@@ -1091,8 +1112,20 @@
       {
         "name": "UniversalWorkspace",
         "path": "src/components/workspace/UniversalWorkspace.jsx",
-        "description": "Single unified question workspace for all Grades 7–12 and all subjects featuring restored 3-Tier Progression Mode Switcher (1. Scaffold, 2. Practice, 3. Exam Mode), Adaptive Progress Dial (MasteryDial) mini gauge with full BKT Formative Mastery breakdown modal, dynamic in-situ scaffolding, and brand styling",
+        "description": "Declared cognitive workspace with 4-stage progression gating, renderFormattedPrompt with numbered transaction badges, guidelines checklist drawer, and automatic modality dispatching (ledger, math, rubric, diagram).",
         "layer": "A"
+      },
+      {
+        "name": "SuperAdminProgressResetModal",
+        "path": "src/components/admin/SuperAdminProgressResetModal.jsx",
+        "description": "Super Admin mastery calibration and progress testing control allowing 1-click reset of any subject or all subjects to 0% (baseline diagnostic mode), dues clearing, preset testing profiles, and live XP/streak adjustments",
+        "layer": "D"
+      },
+      {
+        "name": "studentStore",
+        "path": "src/services/studentStore.js",
+        "description": "Reactive persistent student progression model enforcing 0% initial mastery baseline for new learners, diagnostic gating, BKT mastery updates, localStorage persistence, and Super Admin resets",
+        "layer": "D"
       },
       {
         "name": "MathModalityRenderer",
@@ -1103,7 +1136,7 @@
       {
         "name": "LedgerModalityRenderer",
         "path": "src/components/workspace/modalities/LedgerModalityRenderer.jsx",
-        "description": "2D tabular accounting and EMS ledger renderer with double-entry rule prompts",
+        "description": "Native 2D accounting ledger & journal matrix renderer: formats title_fields, authentic headers, static given cells vs interactive editable input cells, cell coordinate binding (rX_cY), and cell-level 3-tier pedagogical hint drawer.",
         "layer": "A"
       },
       {
@@ -1121,7 +1154,7 @@
       {
         "name": "PhysicalFolderTabs",
         "path": "src/components/navigation/PhysicalFolderTabs.jsx",
-        "description": "Skeuo-modern physical folder tab shelf with authentic left-slanted lips, 3D forward pop (z-index 30, translateY -4px), modern jewel-tone palette, and mobile swipeable carousel with 44px touch targets",
+        "description": "Skeuo-modern folder tab navigation mimicking physical manila folders: left-slanted chamfered lips with continuous SVG accent border, 3D forward pop, slidable desktop tab shelf with scroll chevrons, and complete Senior/FET subject coverage including Mathematical Literacy.",
         "layer": "D"
       },
       {
@@ -1158,6 +1191,55 @@
         "name": "Header",
         "path": "src/components/ui/Header.jsx",
         "description": "Persistent sticky royal blue (#13519C) header ribbon for logged-in web browser users featuring white FundileLogo, prominent 'Start Free Trial' action, 'Install App' modal trigger (hidden in standalone mode), notification center, superadmin role/tier switchers, and secure log out",
+        "layer": "D"
+      },
+      {
+        "name": "TopicScopeModal",
+        "path": "src/components/curriculum/TopicScopeModal.jsx",
+        "description": "Interactive CAPS Annual Teaching Plan (ATP) topic scope selector modal. Groups curriculum topics by Terms 1-4, supports instant search, displays diagnostic/practice/exam readiness badges, and allows 1-click topic switching for school test preparation."
+      },
+      {
+        "name": "ErrorBoundary",
+        "path": "src/components/ui/ErrorBoundary.jsx",
+        "description": "React Error Boundary component providing runtime exception containment with user-friendly recovery UI, error reporting diagnostics, and reset handlers to eliminate white-screen crashes."
+      },
+      {
+        "name": "ParentDashboard",
+        "path": "src/components/parent/ParentDashboard.jsx",
+        "description": "Parent & Guardian Bridge Cockpit featuring Sunday 18:00 WhatsApp coaching pulse preview, household cellular data savings meter (<2 MB vs 450 MB+), linked learner selector, actionable dinner-table coaching tips, and live dual-ring MasteryDial."
+      },
+      {
+        "name": "ProfilePhotoModal",
+        "path": "src/components/profile/ProfilePhotoModal.jsx",
+        "description": "Universal profile picture modal supporting live webcam stream capture with 3-2-1 timer and flash effect, image file upload, circular crop preview, and persistent local/cloud storage across all subscriber profiles."
+      },
+      {
+        "name": "SchoolAdminView",
+        "path": "src/components/admin/SchoolAdminView.jsx",
+        "description": "School Administration Cockpit serving Principals and HODs: features live ATP Curriculum Pacing Heatmap (Grades 7–12 Terms 1–4), departmental teaching staff allocations, school-wide misconception remediation broadcasts, and SASAMS-aligned term mark collation & CSV export."
+      },
+      {
+        "name": "TeacherRostersTab",
+        "path": "src/components/teacher/tabs/TeacherRostersTab.jsx",
+        "description": "Teacher cockpit Rosters tab: class cards with 6-character join code copier, 1-click WhatsApp invites, and humanized learner mark book with real photo avatars, POPIA safety monogram reset, and targeted remedial nudges.",
+        "layer": "D"
+      },
+      {
+        "name": "TeacherAnalyticsTab",
+        "path": "src/components/teacher/tabs/TeacherAnalyticsTab.jsx",
+        "description": "Teacher cockpit Analytics tab: Class Diagnostic Weakness Heatmap with 1-click remedial drill dispatcher and printable remedial test/memo, CAPS ATP subject pacing milestones, and CAPS achievement level distribution curve.",
+        "layer": "D"
+      },
+      {
+        "name": "TeacherAssessmentsTab",
+        "path": "src/components/teacher/tabs/TeacherAssessmentsTab.jsx",
+        "description": "Teacher cockpit Assessments & Activities tab: Author & Generate mode with question-by-question inspector, question format toggles (MCQ, Stepwise, Fill-in, Diagram Labeling), interactive anatomical diagram blanking (Alimentary Canal / Digestive Tract), intelligent suggested mark allocations with teacher edit & lock-in, Mark Release Policy toggle (Instant vs Teacher Review First), and full Submissions & Mark Review workflow.",
+        "layer": "D"
+      },
+      {
+        "name": "sampleClassesData",
+        "path": "src/components/teacher/sampleClassesData.js",
+        "description": "South African CAPS high school testing dataset providing a scoped 5-class rich test suite (Accounting, Maths Alpha, Maths Extended, EMS, Physical Sciences) for the owner/tester account, with clean empty state default for general teacher accounts.",
         "layer": "D"
       }
     ],

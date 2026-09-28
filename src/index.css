@@ -18,6 +18,16 @@ body,
     font-family: 'Afacad', sans-serif;
 }
 
+.font-afacad,
+.font-display {
+    font-family: 'Afacad', sans-serif;
+}
+
+.font-system,
+.font-sans {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, Helvetica, Arial, sans-serif;
+}
+
 /* Custom styles for your app */
 .custom-scrollbar::-webkit-scrollbar {
     width: 8px;

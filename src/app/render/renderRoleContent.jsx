@@ -4,6 +4,8 @@ import { Loader2 } from 'lucide-react';
 import AuthScreen from '../../components/auth/AuthScreen';
 import { TeacherView } from '../../components/teacher';
 import { AdminView } from '../../components/admin';
+import ParentDashboard from '../../components/parent/ParentDashboard';
+import SchoolAdminView from '../../components/admin/SchoolAdminView';
 import RenderStudentContent from './renderStudentContent';
 
 export default function RenderRoleContent({ roleContentProps }) {
@@ -30,8 +32,6 @@ export default function RenderRoleContent({ roleContentProps }) {
     setAdminView,
     setTeacherView,
     teacherView,
-    schoolAdminView,
-    setSchoolAdminView,
   } = roleState;
 
   const {
@@ -58,6 +58,12 @@ export default function RenderRoleContent({ roleContentProps }) {
     if (effectiveRole === 'teacher') {
       return <TeacherView view={teacherView} setView={setTeacherView} db={dbService} currentUser={effectiveCurrentUser} />;
     }
+    if (effectiveRole === 'parent') {
+      return <ParentDashboard currentUser={effectiveCurrentUser} db={dbService} />;
+    }
+    if (effectiveRole === 'school' || effectiveRole === 'school_admin') {
+      return <SchoolAdminView currentUser={effectiveCurrentUser} />;
+    }
   }
 
   if (effectiveRole === 'admin') {
@@ -66,6 +72,14 @@ export default function RenderRoleContent({ roleContentProps }) {
 
   if (effectiveRole === 'teacher') {
     return <TeacherView view={teacherView} setView={setTeacherView} db={dbService} currentUser={effectiveCurrentUser} />;
+  }
+
+  if (effectiveRole === 'parent') {
+    return <ParentDashboard currentUser={effectiveCurrentUser} db={dbService} />;
+  }
+
+  if (effectiveRole === 'school' || effectiveRole === 'school_admin') {
+    return <SchoolAdminView currentUser={effectiveCurrentUser} />;
   }
 
   if (effectiveRole === 'student') {

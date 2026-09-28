@@ -89,16 +89,23 @@ def create_app():
     def health_check():
         return {"status": "ok", "message": "TLAssistant Backend API is running."}
 
-    @app.route('/api/generate', methods=['POST'])
+    @app.route('/api/generate', methods=['GET', 'POST'])
     def unified_generate():
         from flask import request, jsonify
         from .services.generator_registry import generate_variant, resolve_generator_key
-        data = request.get_json() or {}
+        if request.method == 'GET':
+            data = request.args.to_dict()
+        else:
+            data = request.get_json() or {}
         subject = data.get('subject', 'Mathematics')
         grade = str(data.get('grade', '10'))
         topic = data.get('topic', 'Algebraic Expressions')
         count = int(data.get('count', 1))
-        seed = data.get('seed')
+        seed_raw = data.get('seed')
+        try:
+            seed = int(seed_raw) if seed_raw is not None else None
+        except (ValueError, TypeError):
+            seed = None
         subskill = data.get('subskill', 'mixed')
         difficulty = data.get('difficulty', 'medium')
         mode = data.get('mode', 'compound')
@@ -133,5 +140,61 @@ def create_app():
             })
         except Exception as e:
             return jsonify({"success": False, "error": str(e)}), 400
+
+    @app.route('/api/mark', methods=['POST'])
+    def unified_mark():
+        import asyncio
+        from flask import request, jsonify
+        from .services.evaluation_service import grade_submission
+
+        data = request.get_json() or {}
+        user_answer = data.get('user_answer')
+        question = data.get('question') or {}
+        q_id = str(data.get('question_id') or question.get('id') or 'q_active')
+
+        # Ensure question has required fields for evaluation_service
+        q_copy = dict(question)
+        q_copy['id'] = q_id
+
+        # Normalize question_type and correct keys
+        if ('journal' in q_copy or 'table_schema' in q_copy) and not q_copy.get('question_type'):
+            q_copy['question_type'] = 'journal'
+        elif ('options' in q_copy or 'options_latex' in q_copy) and not q_copy.get('question_type'):
+            q_copy['question_type'] = 'mcq'
+
+        if 'correct_index' in q_copy and 'correct_idx' not in q_copy:
+            q_copy['correct_idx'] = q_copy['correct_index']
+
+        # If user_answer is wrapped in { cells: ... }
+        clean_answer = user_answer
+        if isinstance(user_answer, dict) and 'cells' in user_answer and isinstance(user_answer['cells'], dict):
+            clean_answer = {**user_answer.get('cells', {}), **{k: v for k, v in user_answer.items() if k != 'cells'}}
+
+        try:
+            report = asyncio.run(grade_submission([q_copy], {q_id: clean_answer}))
+            res = report.get('results', {}).get(q_id, {})
+            score = res.get('score', 0)
+            max_score = res.get('max_score', q_copy.get('marks', 1))
+            is_correct = res.get('is_correct', False)
+            pct = round((score / max_score) * 100) if max_score > 0 else 0
+            return jsonify({
+                "success": True,
+                "score": score,
+                "total": max_score,
+                "percentage": pct,
+                "is_correct": is_correct,
+                "feedback": res.get('feedback', report.get('overall_feedback', '')),
+                "cell_results": res.get('cell_results', {}),
+            })
+        except Exception as e:
+            return jsonify({
+                "success": False,
+                "error": str(e),
+                "score": 0,
+                "total": q_copy.get('marks', 5),
+                "percentage": 0,
+                "is_correct": False,
+                "feedback": f"Marking error: {e}",
+            }), 200
 
     return app

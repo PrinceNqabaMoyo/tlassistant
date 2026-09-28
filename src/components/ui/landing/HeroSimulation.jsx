@@ -24,26 +24,22 @@ import {
 } from 'lucide-react';
 
 // ═══════════════════════════════════════════════════════════════
-// AUTHENTIC SUBJECT SHELF CONFIGURATION (Matches real app)
+// AUTHENTIC SUBJECT SHELF CONFIGURATION
 // ═══════════════════════════════════════════════════════════════
 const SUBJECTS = [
-    { id: 'accounting', name: 'Accounting', icon: BookOpen, grade: 'Grade 10', mastery: 84, color: 'text-emerald-700 bg-emerald-50 border-emerald-200' },
-    { id: 'mathematics', name: 'Mathematics', icon: Calculator, grade: 'Grade 10', mastery: 82, color: 'text-blue-700 bg-blue-50 border-blue-200' },
-    { id: 'physical_sciences', name: 'Physical Sciences', icon: FlaskConical, grade: 'Grade 10', mastery: 68, color: 'text-cyan-700 bg-cyan-50 border-cyan-200' },
-    { id: 'business_studies', name: 'Business Studies', icon: Briefcase, grade: 'Grade 10', mastery: 75, color: 'text-purple-700 bg-purple-50 border-purple-200' },
-    { id: 'ems', name: 'EMS', icon: Coins, grade: 'Grade 9', mastery: 80, color: 'text-amber-700 bg-amber-50 border-amber-200' },
+    { id: 'accounting', name: 'Accounting', icon: BookOpen, grade: 'Grade 10', mastery: 84, color: 'text-emerald-700 bg-emerald-50 border-emerald-200', accentHex: '#059669' },
+    { id: 'mathematics', name: 'Mathematics', icon: Calculator, grade: 'Grade 10', mastery: 82, color: 'text-blue-700 bg-blue-50 border-blue-200', accentHex: '#2563EB' },
+    { id: 'physical_sciences', name: 'Physical Sciences', icon: FlaskConical, grade: 'Grade 10', mastery: 68, color: 'text-cyan-700 bg-cyan-50 border-cyan-200', accentHex: '#0891B2' },
+    { id: 'business_studies', name: 'Business Studies', icon: Briefcase, grade: 'Grade 10', mastery: 75, color: 'text-purple-700 bg-purple-50 border-purple-200', accentHex: '#EA580C' },
+    { id: 'ems', name: 'EMS', icon: Coins, grade: 'Grade 9', mastery: 80, color: 'text-amber-700 bg-amber-50 border-amber-200', accentHex: '#D97706' },
 ];
 
-export default function HeroSimulation({ isLightPalette = true }) {
+export default function HeroSimulation() {
     // ── SimuLearn Flow State ──
-    // Step 0: In-Subject Practice with 3-Tier Pre-baked Hints
-    // Step 1: Adaptive Progression & Circular Progress Dial update
-    // Step 2: Subject Navigation (Switching from Accounting to Mathematics)
-    // Step 3: Timed Exam Mode & Post-Exam Diagnostic Autopsy
     const [simuStep, setSimuStep] = useState(0);
     const [isAutoPlaying, setIsAutoPlaying] = useState(true);
     const [selectedSubject, setSelectedSubject] = useState(SUBJECTS[0]); // Accounting
-    const [progressionMode, setProgressionMode] = useState('scaffold'); // 'scaffold' | 'practice' | 'assessment'
+    const [progressionMode, setProgressionMode] = useState('scaffold'); // 'diagnostic' | 'scaffold' | 'practice' | 'assessment'
 
     // ── Interactive In-Subject State ──
     const [showHints, setShowHints] = useState(false);
@@ -76,22 +72,17 @@ export default function HeroSimulation({ isLightPalette = true }) {
             setProgressionMode('scaffold');
             setExamSubmitted(false);
 
-            // 1. Reveal hint after 2.5s
             timeoutId = setTimeout(() => {
                 setShowHints(true);
                 setActiveHintTier(1);
 
-                // Tier 2 rule after another 2.5s
                 setTimeout(() => {
                     setActiveHintTier(2);
 
-                    // Tier 3 worked step after another 2.5s
                     setTimeout(() => {
                         setActiveHintTier(3);
-                        // Populate correct answer
                         setAccountingFilled({ bank: '11 500', sales: '10 000', vat: '1 500' });
 
-                        // Advance to Step 1 (Progress Dial) after 3s
                         setTimeout(() => {
                             setSimuStep(1);
                         }, 3000);
@@ -104,7 +95,6 @@ export default function HeroSimulation({ isLightPalette = true }) {
             setProgressionMode('practice');
             setShowHints(false);
 
-            // Animate progress dial from 68% -> 84% (Exam Ready)
             let curr = 68;
             const interval = setInterval(() => {
                 curr += 1;
@@ -112,7 +102,6 @@ export default function HeroSimulation({ isLightPalette = true }) {
                 setEvaluativeScore(Math.min(curr + 4, 88));
                 if (curr >= 84) {
                     clearInterval(interval);
-                    // Move to Step 2 (Subject Switch) after 4s
                     timeoutId = setTimeout(() => {
                         setSimuStep(2);
                     }, 4000);
@@ -127,11 +116,9 @@ export default function HeroSimulation({ isLightPalette = true }) {
             setProgressionMode('practice');
             setMathStepSubmitted(false);
 
-            // Complete maths factorization step after 2.8s
             timeoutId = setTimeout(() => {
                 setMathStepSubmitted(true);
 
-                // Advance to Step 3 (Timed Exam Mode) after 3.5s
                 setTimeout(() => {
                     setSimuStep(3);
                 }, 3500);
@@ -143,11 +130,9 @@ export default function HeroSimulation({ isLightPalette = true }) {
             setSelectedSubject(SUBJECTS[0]); // Accounting Exam
             setSelectedExamOption('A');
 
-            // Submit exam after 3.5s to show Post-Exam Diagnostic Autopsy
             timeoutId = setTimeout(() => {
                 setExamSubmitted(true);
 
-                // Loop back to Step 0 after 9s of debrief viewing
                 setTimeout(() => {
                     setSimuStep(0);
                     setAccountingFilled({ bank: '', sales: '', vat: '' });
@@ -210,7 +195,7 @@ export default function HeroSimulation({ isLightPalette = true }) {
     };
 
     // ═══════════════════════════════════════════════════════════
-    // CIRCULAR DUAL-RING MASTERY DIAL (Matches real MasteryDial)
+    // CIRCULAR DUAL-RING MASTERY DIAL
     // ═══════════════════════════════════════════════════════════
     const renderMasteryDial = (size = 140, strokeWidth = 9) => {
         const center = size / 2;
@@ -226,10 +211,10 @@ export default function HeroSimulation({ isLightPalette = true }) {
         const isExamReady = formativeMastery >= 80;
 
         return (
-            <div className="flex flex-col items-center justify-center p-5 bg-white rounded-2xl border border-slate-200 shadow-xs">
+            <div className="flex flex-col items-center justify-center p-4 sm:p-5 bg-white rounded-2xl border border-slate-200 shadow-xs font-sans">
                 <div className="relative" style={{ width: size, height: size }}>
                     <svg width={size} height={size} className="transform -rotate-90">
-                        {/* Outer Track (Evaluative) */}
+                        {/* Outer Track (Evaluative Exam) */}
                         <circle cx={center} cy={center} r={outerRadius} fill="transparent" stroke="rgba(203, 213, 225, 0.4)" strokeWidth={strokeWidth} />
                         <circle
                             cx={center}
@@ -262,7 +247,7 @@ export default function HeroSimulation({ isLightPalette = true }) {
 
                     {/* Center Percentage Display */}
                     <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
-                        <span className="text-2xl font-bold text-slate-900 tracking-tight">
+                        <span className="text-2xl font-bold text-slate-900 tracking-tight" style={{ fontFamily: 'Afacad, sans-serif' }}>
                             {formativeMastery}%
                         </span>
                         <span className="text-[9px] uppercase font-bold text-slate-500 tracking-wider">
@@ -276,7 +261,7 @@ export default function HeroSimulation({ isLightPalette = true }) {
                     isExamReady
                         ? 'bg-emerald-50 text-emerald-800 border-emerald-300 ring-1 ring-emerald-400/20'
                         : 'bg-blue-50 text-blue-800 border-blue-300'
-                }`}>
+                }`} style={{ fontFamily: 'Afacad, sans-serif' }}>
                     <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
                     <span>{isExamReady ? 'Exam Ready (Level 7)' : 'Proficient (Level 5)'}</span>
                 </div>
@@ -286,152 +271,156 @@ export default function HeroSimulation({ isLightPalette = true }) {
 
     return (
         <div className="relative w-full select-none" style={{ minHeight: '660px' }}>
-            {/* The Actual Learner Workspace Window (Authentic Light Palette + Windows 11 Chrome) */}
-            <div className="rounded-2xl bg-white border border-slate-300 shadow-xl overflow-hidden flex flex-col text-slate-800">
+            
+            {/* ═══════════════════════════════════════════════════════════════ */}
+            {/* 1. DESKTOP VIEWPORT (Windows 11 PWA + Universal Workspace)     */}
+            {/* ═══════════════════════════════════════════════════════════════ */}
+            <div className="hidden sm:flex flex-col rounded-2xl bg-white border border-slate-300 shadow-xl overflow-hidden text-slate-800">
                 
-                {/* ── 0. WINDOWS 11 TITLE BAR (Strict Windows Controls: ─, □, ✕) ── */}
+                {/* ── Level 1: System Title Bar (Windows 11 Controls ─, □, ✕ + URL route pill) ── */}
                 <div className="px-3 sm:px-4 py-1.5 bg-slate-100 border-b border-slate-200 flex items-center justify-between gap-3 text-xs select-none">
-                    {/* Left: App Icon & Title */}
                     <div className="flex items-center gap-2">
                         <div className="w-4 h-4 rounded bg-[#13519C] text-white flex items-center justify-center font-bold text-[9px]">
                             F
                         </div>
-                        <span className="font-semibold text-slate-700 text-[11px] sm:text-xs tracking-tight">
-                            Fundile — Learner Workspace (Grade 10 Accounting)
+                        <span className="font-semibold text-slate-700 text-[11px] sm:text-xs tracking-tight" style={{ fontFamily: 'Afacad, sans-serif' }}>
+                            Fundile — Learner Workspace ({selectedSubject.grade} {selectedSubject.name})
                         </span>
-                        <div className="hidden md:flex items-center gap-1.5 px-2 py-0.5 rounded bg-white border border-slate-200 font-mono text-[10px] text-slate-500">
+                        <div className="flex items-center gap-1.5 px-2 py-0.5 rounded bg-white border border-slate-200 font-mono text-[10px] text-slate-500">
                             <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                            <span>app.fundile.co.za/learner/workspace</span>
+                            <span>app.fundile.co.za/workspace</span>
                         </div>
                     </div>
 
-                    {/* Right: Windows 11 Window Controls */}
                     <div className="flex items-center -mr-2">
-                        <button
-                            type="button"
-                            title="Minimize"
-                            className="w-10 h-7 flex items-center justify-center hover:bg-slate-200 text-slate-600 transition"
-                        >
+                        <button type="button" title="Minimize" className="w-10 h-7 flex items-center justify-center hover:bg-slate-200 text-slate-600 transition">
                             <Minus className="w-3.5 h-3.5" />
                         </button>
-                        <button
-                            type="button"
-                            title="Maximize"
-                            className="w-10 h-7 flex items-center justify-center hover:bg-slate-200 text-slate-600 transition"
-                        >
+                        <button type="button" title="Maximize" className="w-10 h-7 flex items-center justify-center hover:bg-slate-200 text-slate-600 transition">
                             <Square className="w-3 h-3" />
                         </button>
-                        <button
-                            type="button"
-                            title="Close"
-                            className="w-10 h-7 flex items-center justify-center hover:bg-rose-500 hover:text-white text-slate-600 transition"
-                        >
+                        <button type="button" title="Close" className="w-10 h-7 flex items-center justify-center hover:bg-rose-500 hover:text-white text-slate-600 transition">
                             <X className="w-3.5 h-3.5" />
                         </button>
                     </div>
                 </div>
 
-                {/* ── 1. REAL TOP APP HEADER (Fundile Brand, Learner Profile, Streak & XP) ── */}
-                <div className="px-4 py-2 bg-[#13519C] text-white flex items-center justify-between gap-3 text-xs">
-                    {/* Left: Brand & Route */}
+                {/* ── Level 2: User Ribbon (bg-[#13519C] with learner avatar, grade, streak, and XP) ── */}
+                <div className="px-4 py-2.5 bg-[#13519C] text-white flex items-center justify-between gap-3 text-xs">
                     <div className="flex items-center gap-2.5">
-                        <span className="font-bold text-sm tracking-tight text-white">FUNDILE</span>
-                        <span className="hidden sm:inline text-blue-200 text-xs font-medium">| Term 1 Learner Engine</span>
+                        <span className="font-bold text-sm tracking-tight text-white" style={{ fontFamily: 'Afacad, sans-serif' }}>FUNDILE</span>
+                        <span className="hidden md:inline text-blue-200 text-xs font-medium">| Term 1 Learner Workspace</span>
                     </div>
 
-                    {/* Center: Learner Profile & Grade */}
                     <div className="flex items-center gap-2">
-                        <div className="w-6 h-6 rounded-full bg-white text-[#13519C] flex items-center justify-center font-bold text-[11px] shadow-xs">
+                        <div className="w-7 h-7 rounded-full bg-white text-[#13519C] flex items-center justify-center font-bold text-xs shadow-xs">
                             N
                         </div>
                         <div className="text-left">
-                            <span className="font-bold text-white block text-[11px] leading-tight">Nqobile Dlamini</span>
-                            <span className="text-[10px] text-blue-100 block leading-tight">Grade 10 • CAPS</span>
+                            <span className="font-bold text-white block text-xs leading-tight" style={{ fontFamily: 'Afacad, sans-serif' }}>Nqobile Dlamini</span>
+                            <span className="text-[10px] text-blue-100 block leading-tight">Grade 10 FET • Westville High School</span>
                         </div>
                     </div>
 
-                    {/* Right: Gamified Streak & XP */}
                     <div className="flex items-center gap-2">
-                        <div className="flex items-center gap-1 px-2.5 py-1 rounded-full bg-amber-500/20 border border-amber-300/40 text-amber-200 text-[11px] font-bold">
+                        <div className="flex items-center gap-1 px-2.5 py-1 rounded-full bg-amber-500/20 border border-amber-300/40 text-amber-200 text-xs font-bold">
                             <Flame className="w-3.5 h-3.5 text-[#FF9100] fill-[#FF9100]" />
                             <span>5 Days</span>
                         </div>
-                        <div className="hidden sm:flex items-center gap-1 px-2.5 py-1 rounded-full bg-blue-800/80 border border-blue-400/40 text-blue-100 text-[11px] font-bold">
+                        <div className="flex items-center gap-1 px-2.5 py-1 rounded-full bg-blue-800/80 border border-blue-400/40 text-blue-100 text-xs font-bold">
                             <Zap className="w-3.5 h-3.5 text-blue-300" />
                             <span>1,420 XP</span>
                         </div>
                     </div>
                 </div>
 
-                {/* ── 2. REAL SUBJECT SHELF (Live Navigation Across Subjects) ── */}
-                <div className="w-full bg-white border-b border-slate-200 px-3 sm:px-4 py-2 overflow-x-auto scrollbar-none flex items-center gap-2">
-                    <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500 pr-2 border-r border-slate-200 shrink-0">
-                        Subjects
-                    </span>
-                    <div className="flex items-center gap-2 shrink-0">
-                        {SUBJECTS.map((sub) => {
-                            const Icon = sub.icon;
-                            const isSelected = selectedSubject.id === sub.id;
-                            return (
-                                <button
-                                    key={sub.id}
-                                    type="button"
-                                    onClick={() => {
-                                        setIsAutoPlaying(false);
-                                        setSelectedSubject(sub);
-                                    }}
-                                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold transition-all duration-200 shrink-0 cursor-pointer ${
-                                        isSelected
-                                            ? 'bg-[#13519C] text-white shadow-xs scale-[1.02]'
-                                            : 'bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-200'
-                                    }`}
-                                >
-                                    <Icon className="w-3.5 h-3.5 shrink-0" />
-                                    <span>{sub.name}</span>
-                                    <span className={`text-[10px] px-1.5 py-0.5 rounded font-bold ${
-                                        isSelected ? 'bg-blue-800 text-white' : 'bg-slate-200 text-slate-700'
-                                    }`}>
-                                        {sub.mastery}%
-                                    </span>
-                                </button>
-                            );
-                        })}
-                    </div>
+                {/* ── Level 3: Folder Tabs (Authentic slanted corner clip-path, seamless tab-to-folder connection) ── */}
+                <div className="w-full bg-[#E6EDF5] border-b border-slate-300 px-4 pt-3 overflow-x-auto scrollbar-none flex items-end gap-0 select-none">
+                    {SUBJECTS.map((sub) => {
+                        const Icon = sub.icon;
+                        const isSelected = selectedSubject.id === sub.id;
+
+                        return (
+                            <button
+                                key={sub.id}
+                                type="button"
+                                onClick={() => {
+                                    setIsAutoPlaying(false);
+                                    setSelectedSubject(sub);
+                                }}
+                                className={`folder-tab group shrink-0 min-w-[125px] max-w-[200px] px-3.5 py-2.5 flex items-center justify-center gap-2 text-xs font-bold transition-all cursor-pointer relative select-none ${
+                                    isSelected ? 'active' : 'inactive'
+                                }`}
+                                style={{
+                                    clipPath: 'polygon(14px 0, 100% 0, 100% 100%, 0 100%, 0 14px)',
+                                    WebkitClipPath: 'polygon(14px 0, 100% 0, 100% 100%, 0 100%, 0 14px)',
+                                    zIndex: isSelected ? 30 : 10,
+                                    transform: isSelected ? 'translateY(-3px)' : 'translateY(2px)',
+                                    backgroundColor: isSelected ? '#FFFFFF' : '#E2E8F0',
+                                    color: isSelected ? '#0F172A' : '#475569',
+                                    borderBottom: isSelected ? '2px solid #FFFFFF' : '1px solid #CBD5E1',
+                                    boxShadow: isSelected ? '0 -6px 16px -2px rgba(0, 0, 0, 0.12)' : 'none',
+                                    fontFamily: 'Afacad, sans-serif'
+                                }}
+                            >
+                                <svg className="absolute inset-0 w-full h-full pointer-events-none overflow-visible" preserveAspectRatio="none">
+                                    <path
+                                        d="M 0 14 L 14 0 H 1000"
+                                        stroke={sub.accentHex}
+                                        strokeWidth={isSelected ? 4 : 2}
+                                        fill="none"
+                                        vectorEffect="non-scaling-stroke"
+                                    />
+                                </svg>
+                                <span className="w-2 h-2 rounded-full shrink-0" style={{ backgroundColor: sub.accentHex }} />
+                                <Icon className="w-3.5 h-3.5 shrink-0" />
+                                <span className="truncate">{sub.name}</span>
+                                <span className={`text-[10px] px-1.5 py-0.2 rounded-full font-bold ${
+                                    isSelected ? 'bg-slate-100 text-slate-800' : 'bg-slate-300 text-slate-600'
+                                }`}>
+                                    {sub.mastery}%
+                                </span>
+                            </button>
+                        );
+                    })}
                 </div>
 
-                {/* ── 3. ADAPTIVE PROGRESSION MODE RIBBON ── */}
+                {/* Connecting Accent Line */}
+                <div
+                    className="h-[2px] w-full transition-colors duration-300"
+                    style={{ backgroundColor: selectedSubject.accentHex }}
+                />
+
+                {/* ── Level 4: 4-Stage Progression Ribbon & Hints Controls ── */}
                 <div className="px-4 py-2 bg-slate-50 border-b border-slate-200 flex flex-wrap items-center justify-between gap-3 text-xs">
-                    {/* Progression Stage Badges */}
                     <div className="flex items-center gap-1.5">
-                        <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500 mr-1 hidden sm:inline">
+                        <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500 mr-1" style={{ fontFamily: 'Afacad, sans-serif' }}>
                             Progression:
                         </span>
                         <div className="flex items-center gap-1 p-0.5 bg-white rounded-lg border border-slate-200 text-[11px] font-bold shadow-xs">
                             <span className={`px-2.5 py-1 rounded-md transition ${
-                                progressionMode === 'scaffold'
-                                    ? 'bg-[#13519C] text-white shadow-xs'
-                                    : 'text-slate-600'
+                                progressionMode === 'diagnostic' ? 'bg-[#13519C] text-white shadow-xs' : 'text-slate-500'
+                            }`}>
+                                0. Diagnostic
+                            </span>
+                            <span className={`px-2.5 py-1 rounded-md transition ${
+                                progressionMode === 'scaffold' ? 'bg-[#13519C] text-white shadow-xs' : 'text-slate-500'
                             }`}>
                                 1. Scaffold
                             </span>
                             <span className={`px-2.5 py-1 rounded-md transition ${
-                                progressionMode === 'practice'
-                                    ? 'bg-[#13519C] text-white shadow-xs'
-                                    : 'text-slate-600'
+                                progressionMode === 'practice' ? 'bg-[#13519C] text-white shadow-xs' : 'text-slate-500'
                             }`}>
                                 2. Practice
                             </span>
                             <span className={`px-2.5 py-1 rounded-md transition ${
-                                progressionMode === 'assessment'
-                                    ? 'bg-rose-600 text-white shadow-xs animate-pulse'
-                                    : 'text-slate-600'
+                                progressionMode === 'assessment' ? 'bg-rose-600 text-white shadow-xs animate-pulse' : 'text-slate-500'
                             }`}>
                                 3. Exam Mode
                             </span>
                         </div>
                     </div>
 
-                    {/* Mode Guidance or Exam Timer */}
                     {progressionMode === 'assessment' ? (
                         <div className="flex items-center gap-3">
                             <div className="flex items-center gap-1.5 px-3 py-1 rounded-lg bg-rose-50 border border-rose-200 text-rose-700 font-bold font-mono text-xs">
@@ -452,6 +441,7 @@ export default function HeroSimulation({ isLightPalette = true }) {
                                         ? 'bg-[#FF9100] text-white shadow-xs'
                                         : 'bg-amber-50 text-amber-900 border border-amber-300 hover:bg-amber-100'
                                 }`}
+                                style={{ fontFamily: 'Afacad, sans-serif' }}
                             >
                                 <Lightbulb className="w-3.5 h-3.5 text-amber-600" />
                                 <span>{showHints ? 'Hide 3-Tier Hints' : '💡 View 3-Tier Hints (Zero-LLM)'}</span>
@@ -460,7 +450,7 @@ export default function HeroSimulation({ isLightPalette = true }) {
                     )}
                 </div>
 
-                {/* ── 4. 3-TIER PRE-BAKED HINTS DRAWER (Scaffold Mode) ── */}
+                {/* ── 3-Tier Pre-baked Hints Drawer ── */}
                 {showHints && progressionMode !== 'assessment' && (
                     <div className="px-4 py-3 bg-amber-50/80 border-b border-amber-200 space-y-2 text-xs">
                         <div className="flex items-center justify-between">
@@ -469,7 +459,7 @@ export default function HeroSimulation({ isLightPalette = true }) {
                                     DETERMINISTIC 3-TIER HINT ENGINE
                                 </span>
                                 <span className="text-amber-800 text-[11px] hidden sm:inline">
-                                    Pre-calculated ahead of time with zero token cost
+                                    Pre-calculated ahead of time with zero token latency
                                 </span>
                             </div>
                             <div className="flex gap-1 bg-white p-0.5 rounded-lg border border-amber-200 text-[10px] font-bold shadow-xs">
@@ -510,10 +500,9 @@ export default function HeroSimulation({ isLightPalette = true }) {
                     </div>
                 )}
 
-                {/* ── 5. MAIN WORKSPACE CONTENT BODY (Native Modality per Subject & State) ── */}
-                <div className="p-4 sm:p-6 flex-1 bg-slate-50 flex flex-col justify-center">
-
-                    {/* ── SCENARIO A: ACCOUNTING SCAFFOLD (2D Ledger Table) ── */}
+                {/* ── Active Workspace Body (Desktop) ── */}
+                <div className="p-5 sm:p-6 flex-1 bg-slate-50 flex flex-col justify-center min-h-[380px]">
+                    {/* SCENARIO A: ACCOUNTING 2D LEDGER TABLE */}
                     {simuStep === 0 && selectedSubject.id === 'accounting' && (
                         <div className="space-y-4">
                             <div className="flex items-center justify-between border-b border-slate-200 pb-3">
@@ -524,7 +513,7 @@ export default function HeroSimulation({ isLightPalette = true }) {
                                         </span>
                                         <span className="text-xs text-slate-500">Authentic 2D Ledger Entry</span>
                                     </div>
-                                    <h4 className="text-sm sm:text-base font-bold text-slate-900 mt-1">
+                                    <h4 className="text-sm sm:text-base font-bold text-slate-900 mt-1" style={{ fontFamily: 'Afacad, sans-serif' }}>
                                         Record Cash Sales of Merchandise: R11,500 (inclusive of 15% VAT)
                                     </h4>
                                 </div>
@@ -534,7 +523,6 @@ export default function HeroSimulation({ isLightPalette = true }) {
                                 </div>
                             </div>
 
-                            {/* 2D Accounting Table */}
                             <div className="overflow-x-auto rounded-xl border border-slate-200 bg-white shadow-xs">
                                 <table className="w-full text-xs text-left">
                                     <thead className="bg-slate-100 text-slate-700 border-b border-slate-200 uppercase text-[10px] font-bold">
@@ -591,21 +579,22 @@ export default function HeroSimulation({ isLightPalette = true }) {
                             </div>
 
                             {accountingFilled.vat && (
-                                <div className="p-3 bg-emerald-50 border border-emerald-300 rounded-xl flex items-center justify-between text-xs text-emerald-900 shadow-xs animate-in fade-in">
+                                <div className="p-3 bg-emerald-50 border border-emerald-300 rounded-xl flex items-center justify-between text-xs text-emerald-950 font-bold shadow-xs animate-in fade-in">
                                     <div className="flex items-center gap-2">
-                                        <CheckCircle2 className="w-4 h-4 text-emerald-600" />
-                                        <span>6 / 6 Marks Awarded • Schema Verified: Net VAT extracted accurately (15/115)</span>
+                                        <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                                        <span>6 / 6 Marks Credited • Net VAT extracted accurately (15/115) • Consequential accuracy validated</span>
                                     </div>
-                                    <span className="font-bold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded">+35 XP</span>
+                                    <span className="px-2.5 py-1 rounded-full bg-emerald-600 text-white font-extrabold text-[11px] shadow-xs shrink-0">
+                                        +35 XP
+                                    </span>
                                 </div>
                             )}
                         </div>
                     )}
 
-                    {/* ── SCENARIO B: ADAPTIVE MASTERY DIAL & PROGRESSION GATES ── */}
+                    {/* SCENARIO B: ADAPTIVE MASTERY DIAL */}
                     {simuStep === 1 && (
                         <div className="grid md:grid-cols-12 gap-6 items-center">
-                            {/* Left: Real Circular Dual-Ring Progress Dial */}
                             <div className="md:col-span-5 flex flex-col items-center">
                                 {renderMasteryDial(160, 10)}
                                 <span className="text-[11px] text-slate-500 mt-2 text-center">
@@ -613,139 +602,106 @@ export default function HeroSimulation({ isLightPalette = true }) {
                                 </span>
                             </div>
 
-                            {/* Right: Progression Milestones Unlocked */}
                             <div className="md:col-span-7 space-y-3">
                                 <div>
                                     <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 text-xs font-bold">
                                         <Award className="w-3.5 h-3.5 text-emerald-600" />
-                                        <span>Adaptive Gate Unlocked</span>
+                                        <span>Mastery Threshold Achieved</span>
                                     </div>
-                                    <h4 className="text-base sm:text-lg font-bold text-slate-900 mt-1">
-                                        Mastery Threshold Exceeded: 84% BKT Index
+                                    <h4 className="text-lg font-bold text-slate-900 mt-1" style={{ fontFamily: 'Afacad, sans-serif' }}>
+                                        Adaptive Progression: Scaffold &rarr; Exam Ready Mode
                                     </h4>
-                                    <p className="text-xs text-slate-600 mt-0.5">
-                                        Because Nqobile scored &gt;80% in autonomous problem solving, the system unlocks official Examination conditions.
+                                    <p className="text-xs text-slate-600 mt-1">
+                                        Fundile continuously estimates your latent knowledge state P(L_n). Crossing 80% automatically unlocks Timed Exam Mode and reduces scaffold hints.
                                     </p>
                                 </div>
 
-                                {/* Step Breakdown */}
-                                <div className="space-y-2">
-                                    <div className="p-2.5 rounded-xl bg-white border border-emerald-200 flex items-center justify-between text-xs shadow-xs">
-                                        <div className="flex items-center gap-2">
-                                            <CheckCircle2 className="w-4 h-4 text-emerald-600" />
-                                            <span className="font-bold text-slate-800">1. Scaffold Mode (Guided 3-Tier Hints)</span>
-                                        </div>
-                                        <span className="text-emerald-700 font-bold bg-emerald-50 px-2 py-0.5 rounded">100% Passed</span>
+                                <div className="grid grid-cols-2 gap-2 text-xs">
+                                    <div className="p-3 rounded-xl bg-white border border-slate-200 shadow-xs">
+                                        <span className="text-[10px] uppercase font-bold text-slate-400 block">Formative Mastery</span>
+                                        <span className="text-xl font-bold text-emerald-600 mt-0.5 block">{formativeMastery}%</span>
+                                        <span className="text-[11px] text-slate-500">Autonomous BKT Trajectory</span>
                                     </div>
-                                    <div className="p-2.5 rounded-xl bg-white border border-emerald-200 flex items-center justify-between text-xs shadow-xs">
-                                        <div className="flex items-center gap-2">
-                                            <CheckCircle2 className="w-4 h-4 text-emerald-600" />
-                                            <span className="font-bold text-slate-800">2. Practice Mode (Mastery Verification)</span>
-                                        </div>
-                                        <span className="text-emerald-700 font-bold bg-emerald-50 px-2 py-0.5 rounded">100% Passed</span>
-                                    </div>
-                                    <div className="p-2.5 rounded-xl bg-indigo-50 border border-indigo-200 flex items-center justify-between text-xs text-indigo-900 shadow-xs">
-                                        <div className="flex items-center gap-2">
-                                            <Sparkles className="w-4 h-4 text-amber-500" />
-                                            <span className="font-bold">3. Official Timed Assessment Mode</span>
-                                        </div>
-                                        <span className="bg-[#13519C] text-white px-2 py-0.5 rounded font-bold text-[10px]">
-                                            UNLOCKED NOW
-                                        </span>
+                                    <div className="p-3 rounded-xl bg-white border border-slate-200 shadow-xs">
+                                        <span className="text-[10px] uppercase font-bold text-slate-400 block">Evaluative Homework</span>
+                                        <span className="text-xl font-bold text-amber-600 mt-0.5 block">{evaluativeScore}%</span>
+                                        <span className="text-[11px] text-slate-500">Weighted Summative Score</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     )}
 
-                    {/* ── SCENARIO C: SUBJECT SWITCH TO MATHEMATICS (KaTeX & Stepwise Derivations) ── */}
+                    {/* SCENARIO C: MATHEMATICS FACTORISATION STEP */}
                     {simuStep === 2 && selectedSubject.id === 'mathematics' && (
                         <div className="space-y-4">
                             <div className="flex items-center justify-between border-b border-slate-200 pb-3">
                                 <div>
                                     <div className="flex items-center gap-2">
                                         <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-blue-50 text-blue-800 border border-blue-200">
-                                            Term 1 • Algebraic Expressions &amp; Trinomials
+                                            Grade 10 Mathematics • Topic 2.3
                                         </span>
-                                        <span className="text-xs text-slate-500">Stepwise KaTeX Symbolic Derivation</span>
+                                        <span className="text-xs text-slate-500">Trinomial Factorisation Drill</span>
                                     </div>
-                                    <h4 className="text-sm sm:text-base font-bold text-slate-900 mt-1">
-                                        Factorise the Quadratic Trinomial: x² − 7x + 12
+                                    <h4 className="text-base font-bold text-slate-900 mt-1" style={{ fontFamily: 'Afacad, sans-serif' }}>
+                                        Factorise completely: <span className="font-mono bg-slate-100 px-2 py-0.5 rounded text-blue-900 font-bold">x² − 7x + 12</span>
                                     </h4>
                                 </div>
                                 <div className="text-right">
-                                    <span className="text-[11px] text-slate-500 block">Marks:</span>
-                                    <span className="text-sm font-bold text-blue-700">3 Marks</span>
+                                    <span className="text-[11px] text-slate-500 block">Mark Allocation:</span>
+                                    <span className="text-sm font-bold text-blue-600">3 Marks</span>
                                 </div>
                             </div>
 
-                            {/* Working Pad */}
-                            <div className="p-4 bg-white rounded-xl border border-slate-200 shadow-xs space-y-3 font-mono text-xs">
-                                <div className="flex items-center justify-between text-slate-500 text-[11px] border-b border-slate-100 pb-2">
-                                    <span>SymPy Procedure Tracker:</span>
-                                    <span className="font-sans font-semibold">Target Format: (x + a)(x + b)</span>
+                            <div className="p-4 bg-white rounded-xl border border-slate-200 shadow-xs space-y-3">
+                                <div className="flex items-center gap-3">
+                                    <span className="text-xs font-semibold text-slate-600">Your Working:</span>
+                                    <div className={`px-4 py-2 rounded-lg border font-mono text-sm font-bold flex items-center gap-2 ${
+                                        mathStepSubmitted ? 'bg-blue-50 border-blue-400 text-blue-900 shadow-xs' : 'bg-slate-50 border-slate-300 text-slate-400'
+                                    }`}>
+                                        <span>{mathStepSubmitted ? '(x − 3)(x − 4)' : '( x ... )( x ... )'}</span>
+                                        {mathStepSubmitted && <CheckCircle2 className="w-4 h-4 text-emerald-600" />}
+                                    </div>
                                 </div>
 
-                                <div className="space-y-2">
-                                    <div className="flex items-center gap-2">
-                                        <span className="w-20 text-slate-500 text-[10px]">Factor Pairs:</span>
-                                        <span className="text-slate-700 bg-slate-100 px-2 py-1 rounded border border-slate-200">
-                                            Product = +12, Sum = −7 → Pair: (−3) and (−4)
+                                {mathStepSubmitted && (
+                                    <div className="p-3 bg-emerald-50 border border-emerald-300 rounded-xl flex items-center justify-between text-xs text-emerald-950 font-bold shadow-xs animate-in fade-in">
+                                        <div className="flex items-center gap-2">
+                                            <Sparkles className="w-4 h-4 text-emerald-600 shrink-0" />
+                                            <span>SymPy Symbolic Equivalence Verified: (−3) + (−4) = −7 and (−3) × (−4) = +12.</span>
+                                        </div>
+                                        <span className="px-2.5 py-1 rounded-full bg-emerald-600 text-white font-extrabold text-[11px] shadow-xs shrink-0">
+                                            +35 XP
                                         </span>
                                     </div>
-                                    <div className="flex items-center gap-2">
-                                        <span className="w-20 text-slate-500 text-[10px]">Solution:</span>
-                                        <div className="flex items-center gap-1.5 text-slate-900 font-bold text-sm bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-300">
-                                            <span>(x − 3)(x − 4)</span>
-                                            {mathStepSubmitted && (
-                                                <CheckCircle2 className="w-4 h-4 text-emerald-600 ml-2" />
-                                            )}
-                                        </div>
-                                    </div>
-                                </div>
+                                )}
                             </div>
-
-                            {mathStepSubmitted && (
-                                <div className="p-3 bg-blue-50 border border-blue-200 rounded-xl flex items-center justify-between text-xs text-blue-900 shadow-xs animate-in fade-in">
-                                    <div className="flex items-center gap-2">
-                                        <CheckCircle2 className="w-4 h-4 text-blue-600" />
-                                        <span>Symbolic Equivalence Confirmed • Method Marks: 3/3 awarded</span>
-                                    </div>
-                                    <span className="font-bold text-blue-700 bg-blue-100 px-2 py-0.5 rounded">+40 XP</span>
-                                </div>
-                            )}
                         </div>
                     )}
 
-                    {/* ── SCENARIO D: TIMED EXAM MODE & POST-EXAM DIAGNOSTIC AUTOPSY ── */}
+                    {/* SCENARIO D: TIMED EXAM MODE & POST-EXAM DIAGNOSTIC AUTOPSY */}
                     {simuStep === 3 && (
                         <div className="space-y-4">
                             {!examSubmitted ? (
-                                <div className="space-y-3">
-                                    <div className="flex items-center justify-between border-b border-slate-200 pb-3">
-                                        <div>
-                                            <div className="flex items-center gap-2">
-                                                <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-rose-50 text-rose-800 border border-rose-200">
-                                                    Grade 10 CAPS March Examination • Timed Conditions
-                                                </span>
-                                                <span className="text-xs text-slate-500">Strict Exam Invariants Active</span>
-                                            </div>
-                                            <h4 className="text-sm sm:text-base font-bold text-slate-900 mt-1">
-                                                Question 2.1: VAT Extraction on Receipt of R2,300 (Inclusive)
-                                            </h4>
-                                        </div>
-                                        <div className="text-right">
-                                            <span className="text-xs font-bold font-mono text-rose-700 bg-rose-50 border border-rose-200 px-2.5 py-1 rounded">
-                                                ⏱️ {formatTimer(examTimer)}
+                                <div className="p-4 sm:p-5 bg-white border border-rose-200 rounded-2xl space-y-4 shadow-xs">
+                                    <div className="flex items-center justify-between border-b border-slate-100 pb-2.5">
+                                        <div className="flex items-center gap-2">
+                                            <span className="px-2 py-0.5 rounded bg-rose-100 text-rose-800 text-[10px] font-bold">
+                                                EXAM QUESTION 1 OF 15
                                             </span>
+                                            <span className="text-xs font-bold text-slate-700">Accounting Paper 1 • June Exam</span>
                                         </div>
+                                        <span className="text-xs font-bold text-slate-500">4 Marks</span>
                                     </div>
 
-                                    {/* MCQ Options in Exam */}
+                                    <p className="text-xs text-slate-800 font-medium">
+                                        A business purchased stock costing R2,300 (VAT inclusive at 15%). Calculate the Output VAT amount:
+                                    </p>
+
                                     <div className="space-y-2 text-xs">
-                                        <div className={`p-3 rounded-xl border flex items-center justify-between transition ${
+                                        <div className={`p-3 rounded-xl border flex items-center justify-between ${
                                             selectedExamOption === 'A'
-                                                ? 'bg-blue-50 border-[#13519C] text-[#13519C] font-semibold shadow-xs'
+                                                ? 'bg-blue-50/70 border-[#13519C] text-[#13519C] font-semibold'
                                                 : 'bg-white border-slate-200 text-slate-700'
                                         }`}>
                                             <span>Option A: R300.00 (Calculated via 15/115 × R2,300)</span>
@@ -768,12 +724,13 @@ export default function HeroSimulation({ isLightPalette = true }) {
                                     </div>
                                 </div>
                             ) : (
-                                /* POST-EXAM DIAGNOSTIC AUTOPSY (What the student actually gets after an exam) */
                                 <div className="p-4 sm:p-5 bg-amber-50/60 border border-amber-300 rounded-2xl space-y-3 text-xs shadow-xs animate-in zoom-in-95">
                                     <div className="flex items-center justify-between border-b border-amber-200 pb-2.5">
                                         <div className="flex items-center gap-2">
                                             <AlertTriangle className="w-4 h-4 text-amber-600" />
-                                            <span className="font-bold text-sm text-slate-900">Post-Exam Diagnostic Autopsy</span>
+                                            <span className="font-bold text-sm text-slate-900" style={{ fontFamily: 'Afacad, sans-serif' }}>
+                                                Post-Exam Diagnostic Autopsy
+                                            </span>
                                             <span className="text-[10px] bg-amber-200/70 text-amber-900 px-2 py-0.5 rounded font-bold">
                                                 Exam Report
                                             </span>
@@ -817,52 +774,249 @@ export default function HeroSimulation({ isLightPalette = true }) {
                     )}
                 </div>
 
-                {/* ── 6. SIMULEARN INTERACTIVE STEP CONTROLS (Pure user journey navigation) ── */}
-                <div className="px-4 py-2.5 bg-slate-100 border-t border-slate-200 flex flex-wrap items-center justify-between gap-2 text-xs">
-                    <div className="flex items-center gap-2">
-                        <button
-                            type="button"
-                            onClick={() => setIsAutoPlaying(!isAutoPlaying)}
-                            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 text-xs font-bold transition shadow-xs cursor-pointer"
-                        >
-                            {isAutoPlaying ? <Pause className="w-3 h-3 text-amber-600" /> : <Play className="w-3 h-3 text-emerald-600" />}
-                            <span>{isAutoPlaying ? 'Pause SimuLearn' : 'Auto Play'}</span>
-                        </button>
-                        <button
-                            type="button"
-                            onClick={() => handleStepJump(0)}
-                            className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-slate-600 hover:bg-slate-200 hover:text-slate-900 transition text-xs font-semibold cursor-pointer"
-                        >
-                            <RotateCcw className="w-3 h-3" />
-                            <span>Restart</span>
-                        </button>
+            </div>
+
+            {/* ═══════════════════════════════════════════════════════════════ */}
+            {/* 2. MOBILE VIEWPORT (Phone Chassis Matching MobileWebApkView)   */}
+            {/* ═══════════════════════════════════════════════════════════════ */}
+            <div className="block sm:hidden w-full max-w-[340px] mx-auto bg-slate-900 p-2.5 rounded-[36px] shadow-2xl border-4 border-slate-700 select-none text-slate-800">
+                {/* Phone Top Notch / Camera Pill */}
+                <div className="w-16 h-3 bg-black rounded-full mx-auto mb-1.5" />
+
+                {/* Inner Screen */}
+                <div className="rounded-[24px] overflow-hidden bg-white flex flex-col shadow-inner">
+                    {/* Android Status Bar */}
+                    <div className="px-3.5 pt-1.5 pb-1 bg-[#13519C] text-white flex items-center justify-between text-[10px] font-mono select-none">
+                        <span>14:30</span>
+                        <div className="flex items-center gap-1.5 text-[9px]">
+                            <span className="bg-blue-800/80 px-1 py-0.2 rounded border border-blue-400/30">LTE</span>
+                            <span>📶</span>
+                            <span>🔋 88%</span>
+                        </div>
                     </div>
 
-                    {/* Step Journey Pills */}
-                    <div className="flex items-center gap-1.5 overflow-x-auto scrollbar-none py-0.5">
+                    {/* Collapsible Profile Ribbon */}
+                    <div className="px-3 py-2 bg-[#13519C] text-white flex items-center justify-between border-t border-blue-800/40 text-xs">
+                        <div className="flex items-center gap-2">
+                            <div className="w-6 h-6 rounded-full bg-white text-[#13519C] flex items-center justify-center font-bold text-[10px]">
+                                N
+                            </div>
+                            <div>
+                                <span className="font-bold text-[11px] block leading-tight" style={{ fontFamily: 'Afacad, sans-serif' }}>Nqobile Dlamini</span>
+                                <span className="text-[9px] text-blue-100 block leading-tight">Grade 10 • Westville High</span>
+                            </div>
+                        </div>
+                        <div className="flex items-center gap-1.5 text-[10px] font-bold">
+                            <span className="bg-amber-400 text-slate-950 px-1.5 py-0.5 rounded-full">🔥 5d</span>
+                            <span className="bg-blue-900 text-blue-100 px-1.5 py-0.5 rounded-full border border-blue-400/40">⚡ 1.4k</span>
+                        </div>
+                    </div>
+
+                    {/* Mobile 4-Stage Progression Stepper */}
+                    <div className="px-2.5 py-1.5 bg-slate-100 border-b border-slate-200 flex items-center justify-between text-[10px] font-bold">
                         {[
-                            { idx: 0, label: '1. In-Subject & 3-Tier Hints' },
-                            { idx: 1, label: '2. Adaptive Progress Dial' },
-                            { idx: 2, label: '3. Subject Switch' },
-                            { idx: 3, label: '4. Timed Exam & Autopsy' },
-                        ].map((s) => (
-                            <button
-                                key={s.idx}
-                                type="button"
-                                onClick={() => handleStepJump(s.idx)}
-                                className={`px-2.5 py-1 rounded-full text-[11px] font-bold transition cursor-pointer shrink-0 ${
-                                    simuStep === s.idx
-                                        ? 'bg-[#13519C] text-white shadow-xs'
-                                        : 'bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 hover:text-slate-900'
-                                }`}
-                            >
-                                {s.label}
-                            </button>
-                        ))}
+                            { id: 'diag', label: '0. Diag' },
+                            { id: 'scaff', label: '1. Scaff' },
+                            { id: 'prac', label: '2. Prac' },
+                            { id: 'exam', label: '3. Exam' },
+                        ].map((stg, i) => {
+                            const isCurrent = (simuStep === 0 && i === 1) || (simuStep === 1 && i === 2) || (simuStep === 2 && i === 2) || (simuStep === 3 && i === 3);
+                            return (
+                                <span
+                                    key={stg.id}
+                                    className={`px-1.5 py-0.5 rounded-md transition ${
+                                        isCurrent ? 'bg-[#13519C] text-white shadow-xs font-bold' : 'text-slate-500'
+                                    }`}
+                                >
+                                    {stg.label}
+                                </span>
+                            );
+                        })}
+                    </div>
+
+                    {/* Mobile Problem Solving Surface */}
+                    <div className="p-3 bg-slate-50 min-h-[300px] flex flex-col justify-between">
+                        {simuStep === 0 && (
+                            <div className="space-y-2">
+                                <div className="bg-white p-2.5 rounded-xl border border-slate-200 shadow-xs space-y-2">
+                                    <div className="flex items-center justify-between text-[10px] pb-1 border-b border-slate-100">
+                                        <span className="font-bold text-emerald-800 uppercase">Cash Receipts Journal</span>
+                                        <span className="font-bold text-amber-700 bg-amber-50 px-1.5 py-0.5 rounded border border-amber-200">6 Marks</span>
+                                    </div>
+                                    <p className="text-[11px] text-slate-700 font-medium">Cash sales R11,500 (incl. 15% VAT). Cost of sales R8,000.</p>
+
+                                    {/* 2x2 Problem Solving Surface */}
+                                    <div className="grid grid-cols-2 gap-1.5 text-[10px]">
+                                        <div className="p-1.5 bg-emerald-50 rounded-lg border border-emerald-200">
+                                            <span className="text-slate-500 block">Bank (Gross 115%)</span>
+                                            <span className="font-mono font-bold text-emerald-900 text-xs">{accountingFilled.bank || '...'}</span>
+                                        </div>
+                                        <div className="p-1.5 bg-emerald-50 rounded-lg border border-emerald-200">
+                                            <span className="text-slate-500 block">Sales (Excl 100%)</span>
+                                            <span className="font-mono font-bold text-emerald-900 text-xs">{accountingFilled.sales || '...'}</span>
+                                        </div>
+                                        <div className="p-1.5 bg-emerald-50 rounded-lg border border-emerald-200">
+                                            <span className="text-slate-500 block">Output VAT (15%)</span>
+                                            <span className="font-mono font-bold text-emerald-900 text-xs">{accountingFilled.vat || '...'}</span>
+                                        </div>
+                                        <div className="p-1.5 bg-slate-50 rounded-lg border border-slate-200">
+                                            <span className="text-slate-500 block">Cost of Sales</span>
+                                            <span className="font-mono font-bold text-slate-800 text-xs">R 8 000</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* 3-Tier Hints Drawer */}
+                                {showHints && (
+                                    <div className="p-2 bg-amber-50 rounded-xl border border-amber-200 text-[10px] text-amber-900 space-y-1">
+                                        <div className="flex items-center justify-between font-bold">
+                                            <span>💡 Hint Tier {activeHintTier}</span>
+                                            <div className="flex gap-1">
+                                                {[1, 2, 3].map((t) => (
+                                                    <span key={t} className={`px-1 rounded ${activeHintTier === t ? 'bg-[#13519C] text-white' : 'bg-white text-slate-600'}`}>T{t}</span>
+                                                ))}
+                                            </div>
+                                        </div>
+                                        <p className="text-[10px]">
+                                            {activeHintTier === 1 && 'Look at Bank Gross and calculate 15/115.'}
+                                            {activeHintTier === 2 && 'Gross = 115%, Sales = 100%, VAT = 15%.'}
+                                            {activeHintTier === 3 && 'R11,500 × 15/115 = R1,500 VAT. Sales = R10,000.'}
+                                        </p>
+                                    </div>
+                                )}
+
+                                {accountingFilled.vat && (
+                                    <div className="p-2 bg-emerald-50 border border-emerald-300 rounded-xl flex items-center justify-between text-[10px] text-emerald-900 font-bold shadow-xs">
+                                        <span>✓ 6/6 Marks Credited</span>
+                                        <span className="bg-emerald-600 text-white px-2 py-0.5 rounded-full text-[9px]">+35 XP</span>
+                                    </div>
+                                )}
+                            </div>
+                        )}
+
+                        {simuStep === 1 && (
+                            <div className="space-y-3 py-2 text-center">
+                                <div className="flex justify-center">
+                                    {renderMasteryDial(130, 8)}
+                                </div>
+                                <span className="text-[11px] font-bold text-slate-700 block" style={{ fontFamily: 'Afacad, sans-serif' }}>
+                                    Formative Mastery: {formativeMastery}% • Exam Ready
+                                </span>
+                            </div>
+                        )}
+
+                        {simuStep === 2 && (
+                            <div className="bg-white p-3 rounded-xl border border-slate-200 space-y-2 text-xs">
+                                <span className="text-[10px] font-bold text-blue-800 uppercase block">Grade 10 Mathematics</span>
+                                <p className="font-bold text-slate-900">Factorise: x² − 7x + 12</p>
+                                <div className="p-2 bg-blue-50 border border-blue-300 rounded-lg font-mono font-bold text-blue-950 text-xs">
+                                    {mathStepSubmitted ? '(x − 3)(x − 4) ✓' : 'Working...'}
+                                </div>
+                                {mathStepSubmitted && (
+                                    <div className="p-1.5 bg-emerald-50 border border-emerald-300 rounded-lg flex items-center justify-between text-[10px] text-emerald-900 font-bold">
+                                        <span>SymPy Confirmed</span>
+                                        <span className="bg-emerald-600 text-white px-2 py-0.5 rounded-full text-[9px]">+35 XP</span>
+                                    </div>
+                                )}
+                            </div>
+                        )}
+
+                        {simuStep === 3 && (
+                            <div className="bg-white p-3 rounded-xl border border-slate-200 space-y-2 text-xs">
+                                <div className="flex justify-between items-center text-[10px] font-bold text-rose-700">
+                                    <span>EXAM MODE</span>
+                                    <span>⏱️ {formatTimer(examTimer)}</span>
+                                </div>
+                                <p className="text-[11px] text-slate-800 font-semibold">R2,300 stock incl. 15% VAT. Output VAT?</p>
+                                <div className="p-2 bg-blue-50 border border-blue-400 rounded-lg text-[10px] text-blue-900 font-bold">
+                                    Option A: R300 (15/115 × R2,300) ✓
+                                </div>
+                                {examSubmitted && (
+                                    <div className="p-2 bg-amber-50 border border-amber-300 rounded-lg text-[10px] text-amber-900 space-y-1">
+                                        <span className="font-bold block">Autopsy Report: Score 84%</span>
+                                        <span>Net vs. Gross VAT procedure verified.</span>
+                                    </div>
+                                )}
+                            </div>
+                        )}
+                    </div>
+
+                    {/* Pinned Bottom Horizontal Subject Carousel */}
+                    <div className="border-t border-slate-200 bg-white/95 px-2 py-1.5 flex items-center gap-1.5 overflow-x-auto scrollbar-none rounded-b-2xl">
+                        {SUBJECTS.map((sub) => {
+                            const isSelected = selectedSubject.id === sub.id;
+                            return (
+                                <button
+                                    key={sub.id}
+                                    type="button"
+                                    onClick={() => {
+                                        setIsAutoPlaying(false);
+                                        setSelectedSubject(sub);
+                                    }}
+                                    className={`flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-[10px] font-bold shrink-0 min-h-[44px] cursor-pointer ${
+                                        isSelected
+                                            ? 'bg-blue-50 text-[#13519C] border-2 border-blue-400 shadow-xs'
+                                            : 'bg-slate-50 text-slate-600 border border-slate-200'
+                                    }`}
+                                >
+                                    <span>{sub.name === 'Physical Sciences' ? 'Physics' : sub.name === 'Business Studies' ? 'Business' : sub.name}</span>
+                                    <span className={`text-[9px] px-1 py-0.2 rounded-full ${isSelected ? 'bg-blue-600 text-white' : 'bg-slate-200 text-slate-700'}`}>
+                                        {sub.mastery}%
+                                    </span>
+                                </button>
+                            );
+                        })}
                     </div>
                 </div>
-
             </div>
+
+            {/* ═══════════════════════════════════════════════════════════════ */}
+            {/* 3. SIMULEARN INTERACTIVE STEP CONTROLS (User Journey Bar)      */}
+            {/* ═══════════════════════════════════════════════════════════════ */}
+            <div className="mt-3 px-4 py-2.5 bg-slate-100 border border-slate-200 rounded-xl flex flex-wrap items-center justify-between gap-2 text-xs">
+                <div className="flex items-center gap-2">
+                    <button
+                        type="button"
+                        onClick={() => setIsAutoPlaying(!isAutoPlaying)}
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 text-xs font-bold transition shadow-xs cursor-pointer"
+                    >
+                        {isAutoPlaying ? <Pause className="w-3 h-3 text-amber-600" /> : <Play className="w-3 h-3 text-emerald-600" />}
+                        <span>{isAutoPlaying ? 'Pause SimuLearn' : 'Auto Play'}</span>
+                    </button>
+                    <button
+                        type="button"
+                        onClick={() => handleStepJump(0)}
+                        className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-slate-600 hover:bg-slate-200 hover:text-slate-900 transition text-xs font-semibold cursor-pointer"
+                    >
+                        <RotateCcw className="w-3 h-3" />
+                        <span>Restart</span>
+                    </button>
+                </div>
+
+                {/* Step Journey Pills */}
+                <div className="flex items-center gap-1.5 overflow-x-auto scrollbar-none py-0.5">
+                    {[
+                        { idx: 0, label: '1. In-Subject & 3-Tier Hints' },
+                        { idx: 1, label: '2. Adaptive Progress Dial' },
+                        { idx: 2, label: '3. Subject Switch' },
+                        { idx: 3, label: '4. Timed Exam & Autopsy' },
+                    ].map((s) => (
+                        <button
+                            key={s.idx}
+                            type="button"
+                            onClick={() => handleStepJump(s.idx)}
+                            className={`px-2.5 py-1 rounded-full text-[11px] font-bold transition cursor-pointer shrink-0 ${
+                                simuStep === s.idx
+                                    ? 'bg-[#13519C] text-white shadow-xs'
+                                    : 'bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 hover:text-slate-900'
+                            }`}
+                        >
+                            {s.label}
+                        </button>
+                    ))}
+                </div>
+            </div>
+
         </div>
     );
 }
