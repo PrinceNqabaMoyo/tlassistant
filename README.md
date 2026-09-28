@@ -59,6 +59,29 @@ The app also supports deploy-time runtime overrides through `public/runtime-conf
 
 Keep Supabase bucket secrets on the backend only. The frontend should only ever use browser-safe values such as the publishable key.
 
+### Deployment & Hosting
+
+#### Frontend Deployment (Firebase Hosting)
+To build and deploy the production bundle to Firebase Hosting:
+```bash
+npm run build
+npx firebase deploy --only hosting
+```
+
+> **Important Note (Firebase Hosting Post-Oct 15, 2026):**  
+> For the existing production project (`caps-ai-math-assistant-app` / `fundile.com`), the hosting site is already provisioned and active.  
+> However, if provisioning a **brand-new Firebase project** or fresh staging environment in the future, Firebase will require on-demand site creation before running `firebase deploy` for the first time:
+> ```bash
+> firebase hosting:sites:create <site-id> --project=<project-id>
+> ```
+> *(Or click "Get Started" under **Build > Hosting** in the Firebase Console prior to your first CLI deployment).*
+
+#### Backend Deployment (Hugging Face Space)
+The Python backend runs in a Dockerized environment on Hugging Face Spaces (`snombi/tlassistant`). Deploy updates via:
+```bash
+python caps-ai-backend/deploy_hf.py
+```
+
 Currently, two official plugins are available:
 
 - [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
