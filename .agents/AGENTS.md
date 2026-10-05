@@ -212,11 +212,22 @@ All new question generators and refactored existing generators MUST implement th
       - `curriculum_docs_auto/` takes priority for authentic exam marks, time pacing, term scheduling, and diagram annotations.
       - Use in conjunction with manually typed `curriculum_docs/` for syllabus completeness, conceptual depth, and teacher notes.
 
+26b. **Zero-Meta-Curriculum Invariant & Exam Paper Authenticity Standard**
+    - **Absolute Negative Constraint**: Students in tests and exams are tested on **subject concepts, procedures, calculations, and analytical problem-solving**—NEVER on administrative policy or curriculum bureaucracy.
+    - Questions, prompts, options, and worked solutions must NEVER contain phrases such as:
+      - `"According to the CAPS curriculum / document / guidelines..."`
+      - `"As required by CAPS / ATP / DBE..."`
+      - `"Review the foundational rules according to official requirements..."`
+      - Questions asking which term a topic is taught in or what percentage weighting is allocated to a topic.
+    - Every question must directly mimic an authentic high school test or national examination paper (DBE/IEB standard) with realistic scenarios, concrete numbers, formulas, or accounting ledgers.
+    - When extracting from curriculum documents, adversarially strip all teacher notes, pacing comments, and administrative policy text.
+
 27. **Specialized Custom Subagents & Autonomous Delegation**
-    - The repository maintains 16 persistent specialist configurations in `.agents/agents/`:
+    - The repository maintains 17 persistent specialist configurations in `.agents/agents/`:
       - Systems & Engine Specialists:
-        - `generator_architect.json`: 6-pillar deterministic Python/SymPy generators, AST purity, CC <= 12, horizontal and vertical slicing.
-        - `curriculum_specialist.json`: CAPS syllabus, pacing, diagnostic calibration (beta 0.3, 0.6, 0.85), coverage completeness audits, zero-trademark policy, cross-grade spiral maps.
+        - `generator_architect.json`: 6-pillar deterministic Python/SymPy generators, AST purity, CC <= 12, horizontal and vertical slicing, Zero-Meta-Curriculum Invariant.
+        - `curriculum_specialist.json`: CAPS syllabus, pacing, diagnostic calibration (beta 0.3, 0.6, 0.85), coverage completeness audits, zero-trademark policy, cross-grade spiral maps, zero-meta policy.
+        - `question_appropriateness_specialist.json`: Exam authenticity and question appropriateness auditor. Enforces the Zero-Meta-Curriculum Invariant across all generators, static fallback banks, and challenges.
         - `cognitive_ui_engineer.json`: React 18/Vite cognitive modalities (KaTeX, JSXGraph, 2D ledgers), mobile-first 44px touch targets, full-viewport mobile layouts, file size < 2000 lines, brand visual consistency (#13519C brand blue, #FF9100 brand orange, bg-slate-50 canvas).
         - `eval_triage_architect.json`: Memory-Decayed BKT (P(L, dt)), post-exam triage 3-step repair, PDF memos, cross-grade spiral adaptive regression.
         - `systems_security_architect.json`: Socket pooling, query projections, SymPy thread sandboxing (2.5s timeout), POPIA Sec 35, token budgets, and operational cost governance.
@@ -251,6 +262,35 @@ All new question generators and refactored existing generators MUST implement th
     - **Agent Creation & Modification Governance (Explicit Permission Required):**
       - For any task requiring the creation of a **new specialist agent** or the **modification of an existing agent** (its definition, system prompt, capabilities, or tooling in `.agents/agents/*.json`), the assistant MUST explicitly ask the user for permission first before executing the modification or creating the agent.
       - Never unilaterally alter an existing agent's architecture, tools, or configuration, nor define new agent types without prior explicit user consent.
+
+29. **Continuous Hourly Check, GitHub Sync & Dual Redeployment Protocol**
+    - The repository maintains an automated hourly cycle to inspect for codebase updates, sync changes to GitHub, and trigger production redeployments across both frontend (Firebase Hosting) and backend (Hugging Face Spaces).
+    - **Hourly Execution Pipeline:**
+      1. **Change Detection (Every 60 Minutes):**
+         - Inspect working tree for local changes (`git status --porcelain`).
+         - Check remote tracking branch (`git fetch origin`, compare `HEAD` vs `origin/main`).
+         - If zero changes are detected locally and remotely, log heartbeat and exit idle.
+      2. **Pre-Deployment Safety & Manifest Synchronization:**
+         - If architecture files changed, execute Rule 0c: `python generate_architecture_html.py`.
+         - If backend question generators were updated, verify AST purity: `python caps-ai-backend/scripts/lint_purity.py`.
+         - If frontend code was updated, verify production bundling: `npm run build`.
+      3. **GitHub Repository Synchronization:**
+         - Stage all verified updates: `git add .`
+         - Commit with an automated timestamp message: `git commit -m "chore(sync): automated hourly code check, verified build & architecture sync [YYYY-MM-DD HH:MM]"`
+         - Push updates: `git push origin main`.
+      4. **Frontend Production Redeployment (Firebase Hosting):**
+         - When changes touch `src/`, `public/`, `index.html`, `vite.config.js`, `package.json`, or `firestore.rules`:
+         - Build bundle: `npm run build`.
+         - Deploy to Firebase Hosting: `npx firebase deploy --only hosting`.
+      5. **Backend Production Redeployment (Hugging Face Spaces):**
+         - When changes touch `caps-ai-backend/`:
+         - Upload Docker container updates to Hugging Face Spaces (`snombi/tlassistant`): `python caps-ai-backend/deploy_hf.py`.
+      6. **Audit & Notification Heartbeat:**
+         - Log execution status, commit hash, and deployment URLs in session logs.
+    - **Automation Channels:**
+      - **Agent / IDE Schedule:** Use Antigravity's `schedule` tool (`CronExpression="0 * * * *"`, `IsDaemon=true`) to run recurring checks in the background.
+      - **CLI Runner / Daemon:** Run `python scripts/hourly_sync_deploy.py --daemon` (or `npm run sync:hourly` for a one-off run).
+      - **GitHub Actions CI/CD:** Scheduled cron workflow `.github/workflows/hourly_sync_deploy.yml` runs every hour (`0 * * * *`).
 
 
 

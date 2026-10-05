@@ -64,7 +64,7 @@ def deploy_to_huggingface():
             folder_path=".",
             repo_id=REPO_ID,
             repo_type="space",
-            commit_message="Pipeline Deployment: Updated backend with __init__.py fixes",
+            commit_message="Pipeline Deployment: 100/100 procedural entropy fixes, life sciences, physics, and math generators",
             ignore_patterns=IGNORE_PATTERNS,
             delete_patterns="*", # This ensures files deleted locally are also deleted on Hugging Face
         )

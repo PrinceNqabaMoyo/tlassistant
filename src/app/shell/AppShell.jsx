@@ -45,6 +45,7 @@ export default function AppShell({ shellProps }) {
     superAdminMode,
     superAdminTier,
     setSuperAdminTier,
+    onOpenPersonaSwitcher,
   } = shellProps;
 
   return (
@@ -67,6 +68,7 @@ export default function AppShell({ shellProps }) {
         setSuperAdminTier={setSuperAdminTier}
         brandPalette={brandPalette}
         setBrandPalette={setBrandPalette}
+        onOpenPersonaSwitcher={onOpenPersonaSwitcher}
       />
       <main className="max-w-7xl mx-auto">
         {children}

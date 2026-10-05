@@ -50,13 +50,9 @@ export const evaluateExpression = (expr, x) => {
         const parsedExpr = parseExpression(expr);
         if (!parsedExpr) return null;
         
-        // Create a safe evaluation environment with mathematical functions
-        const safeEval = (expression, xValue) => {
-            const func = new Function('x', 'Math', `return ${expression}`);
-            return func(xValue, Math);
-        };
-        
-        return safeEval(parsedExpr, x);
+        // Safe evaluation using MathJS AST without 'new Function'
+        const compiled = math.compile(parsedExpr);
+        return compiled.evaluate({ x, Math });
     } catch (error) {
         return null;
     }

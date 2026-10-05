@@ -223,7 +223,7 @@ export default function InAppPaymentModal({
         // Fallback below
       }
 
-      if (activated || cleanCode.startsWith('SCH-') || cleanCode.startsWith('FUNDILE-SCH-')) {
+      if (activated) {
         const days = 365;
         if (typeof window !== 'undefined') {
           localStorage.setItem('fundile_user_tier', 'school');

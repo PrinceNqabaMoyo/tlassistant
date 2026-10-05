@@ -1,5 +1,5 @@
 // Fundile PWA Service Worker
-const CACHE_NAME = 'fundile-v1';
+const CACHE_NAME = 'fundile-v2';
 
 // Development kill-switch: Never intercept or cache Vite dev server on localhost or LAN
 const isDev = self.location.hostname === 'localhost' || 
@@ -24,6 +24,7 @@ const STATIC_ASSETS = [
   '/manifest.json',
   '/pwa-192x192.png',
   '/pwa-512x512.png',
+  '/pwa-maskable-192x192.png',
   '/pwa-maskable-512x512.png',
   '/apple-touch-icon.png'
 ];

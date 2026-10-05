@@ -23,10 +23,10 @@ const PerspectiveShowcase = ({
                         className="text-3xl sm:text-4xl font-bold tracking-tight text-slate-900"
                         style={{ fontFamily: 'Afacad, sans-serif' }}
                     >
-                        Watch Fundile solve real questions
+                        See How Learners Master Exam Questions
                     </h2>
                     <p className="mt-2 text-sm sm:text-base max-w-2xl mx-auto text-slate-600">
-                        Experience how Fundile guides learners step-by-step through accounting ledgers, algebraic derivations, and exam rubrics.
+                        Experience how learners solve questions step-by-step with 3-tier pre-baked hints, consequential marking, and authentic exam-standard rubrics.
                     </p>
                 </div>
                 <div className="relative">

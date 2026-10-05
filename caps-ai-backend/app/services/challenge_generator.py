@@ -185,7 +185,7 @@ CANONICAL_CHALLENGES: Dict[str, Dict[str, Any]] = {
         "questions": [
             {
                 "id": "q1",
-                "question_text": "Define the terms 'Heterozygous' and 'Phenotype' according to CAPS curriculum.",
+                "question_text": "Define the biological terms 'Heterozygous' and 'Phenotype'.",
                 "marks": 4,
                 "solution": "Heterozygous: possessing two different alleles for a gene. Phenotype: physical observable manifestation of a genetic trait.",
                 "type": "rubric_text"

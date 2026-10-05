@@ -2,8 +2,8 @@
   "_meta": {
     "app": "Fundile",
     "tagline": "Adaptive learning aligned with South African National Curriculum Standards for Grades 7–12",
-    "lastUpdated": "2026-09-28",
-    "version": "0.9.1",
+    "lastUpdated": "2026-10-05",
+    "version": "0.9.2",
     "maintainedBy": "owner",
     "updateProtocol": "Update this file when a layer, service, route, data model, or external dependency is added or its build status changes. Do NOT update for internal function changes or bug fixes.",
     "agentInstruction": "Read this file at session start to understand the full system. Do not ask the owner to explain the architecture — it is here. Cross-reference planning documents for detail on planned items."
@@ -34,8 +34,10 @@
       "diagramRendering": "JSXGraph",
       "bundler": "Vite",
       "progressionLifecycle": "Gated 4-stage progression state machine: 0. Diagnostic (Required at 0% baseline) -> 1. Scaffold (Guided hints) -> 2. Practice (Unassisted, unlocks >=60%) -> 3. Exam Mode (Timed assessment, unlocks >=80% Level 7)",
-      "pwa": "vite-plugin-pwa & custom Service Worker with development isolation in index.html (unregisters stale dev SWs and purges cache on localhost/LAN 192.168.x to prevent mobile LAN cache poisoning; enables full Workbox/sw.js offline caching in production)",
-      "pwaAssets": "public/manifest.json, public/sw.js, pwa-192x192.png, pwa-512x512.png, pwa-maskable-512x512.png, apple-touch-icon.png (Brand Orange #FF9100 graduation cap iconography on #13519C brand blue across all 4 PWA icons and mobile install surfaces)",
+      "pwa": "vite-plugin-pwa & custom Service Worker fundile-v2 with development isolation in index.html (unregisters stale dev SWs and purges cache on localhost/LAN 192.168.x to prevent mobile LAN cache poisoning; enables full Workbox/sw.js offline caching in production)",
+      "pwaAssets": "public/manifest.json, public/sw.js, pwa-192x192.png, pwa-512x512.png, pwa-maskable-192x192.png, pwa-maskable-512x512.png, apple-touch-icon.png, favicon.svg, favicon.ico (Full-bleed adaptive maskable graduation cap iconography on #13519C brand blue background, perfectly matching Android WebAPK adaptive icon squircle standards with zero white padding box or squircle clipping)",
+      "navigation": "Centralized navigationHistoryService.js synchronizing PWA/WebAPK modal states, subject-to-desk regressions, and double-tap exit circuit breaker with window.history (popstate); permanently pinned fixed bottom navigation rail above mobile hardware controls",
+      "mockEnvironment": "Institutional scale test harness (src/data/mock/): Westville High School (300 Named Students across Grades 8-12), 100 Named Independent Homeschool Students, 60 Teachers (Principal, Deputy, 9 HODs, 49 Educators), 330 Parents with sibling linking, and 1-click PersonaSwitcherModal.jsx testing cockpit",
       "entryPoint": "src/main.jsx",
       "mainApp": "src/App.jsx"
     },
@@ -162,6 +164,7 @@
         "ParentLinkModal.jsx",
         "InstallAppModal.jsx",
         "MobileWebApkView.jsx",
+        "navigationHistoryService.js",
         "Header.jsx",
         "InAppPaymentModal.jsx",
         "ComplexPlaneExplorer.jsx"
@@ -657,6 +660,11 @@
         "name": "prerequisite_tree",
         "file": "caps-ai-backend/app/services/prerequisite_tree.py",
         "responsibility": "Cross-grade prerequisite dependency graph (Grade 12 -> Grade 7) for Mathematics, Commercial Sciences (EMS/Accounting), and Natural/Physical Sciences. Powers adaptive cross-grade regression and prerequisite diagnostic banners."
+      },
+      {
+        "name": "hourly_sync_deploy",
+        "file": "scripts/hourly_sync_deploy.py",
+        "responsibility": "Automated hourly change detection, verified production building (npm run build), architecture manifest sync (Rule 0c), GitHub synchronization (origin/main), and dual redeployment to Firebase Hosting and Hugging Face Spaces (snombi/tlassistant)."
       }
     ],
     "planned": []
@@ -703,13 +711,13 @@
         "method": "GET/POST",
         "route": "/api/admin/*",
         "handler": "admin.py, school_admin.py",
-        "description": "Admin and school admin operations"
+        "description": "Admin and school admin operations; includes authenticated batch clean-up (/api/admin/delete-expired-solved-problems) protected by Firebase Bearer tokens and admin role checks."
       },
       {
         "method": "POST",
         "route": "/api/payments/*",
-        "handler": "payments/",
-        "description": "Subscription and payment endpoints"
+        "handler": "payments/routes.py",
+        "description": "Direct Access Bank South Africa EFT payment processing with automated Gemini 1.5 Flash multimodal proof-of-payment (POP) review, 14-day Pro grace period fallback, and pending POP audit queue."
       },
       {
         "method": "POST",
@@ -1216,7 +1224,7 @@
       {
         "name": "SchoolAdminView",
         "path": "src/components/admin/SchoolAdminView.jsx",
-        "description": "School Administration Cockpit serving Principals and HODs: features live ATP Curriculum Pacing Heatmap (Grades 7–12 Terms 1–4), departmental teaching staff allocations, school-wide misconception remediation broadcasts, and SASAMS-aligned term mark collation & CSV export."
+        "description": "School Administration Cockpit serving Principals and HODs: features live ATP Curriculum Pacing Heatmap (Grades 7–12 Terms 1–4), departmental teaching staff allocations, school-wide misconception remediation broadcasts, SASAMS-aligned term mark collation & CSV export, and Module 5 Proof-of-Payment (POP) Audit & Reconciliation cockpit for managing Access Bank manual EFT activations."
       },
       {
         "name": "TeacherRostersTab",
@@ -1240,6 +1248,12 @@
         "name": "sampleClassesData",
         "path": "src/components/teacher/sampleClassesData.js",
         "description": "South African CAPS high school testing dataset providing a scoped 5-class rich test suite (Accounting, Maths Alpha, Maths Extended, EMS, Physical Sciences) for the owner/tester account, with clean empty state default for general teacher accounts.",
+        "layer": "D"
+      },
+      {
+        "name": "LinkGuardianModal",
+        "path": "src/components/family/LinkGuardianModal.jsx",
+        "description": "POPIA Section 35 on-demand temporary guardian linking modal providing an ephemeral 15-minute OTP passcode (LNK-XXXXXX), second-by-second countdown timer, 1-tap copy, confidentiality warnings, and active guardian management.",
         "layer": "D"
       }
     ],
@@ -1291,6 +1305,18 @@
       {
         "collection": "assignments/{assignmentId}",
         "description": "Teacher-created assignments: questions, due date, reveal toggle, class reference, student submissions"
+      },
+      {
+        "collection": "family_link_codes/{codeId}",
+        "description": "POPIA Section 35 on-demand temporary 15-minute one-time linking passcodes (LNK-XXXXXX). Single-use atomic burn on redemption with studentId, studentName, grade, expiresAtTimestamp, and consumed status."
+      },
+      {
+        "collection": "users/{userId}/guardians/{guardianId}",
+        "description": "Verified parent/guardian relationships for a learner with linkedAt timestamp and status."
+      },
+      {
+        "collection": "users/{userId}/linked_learners/{studentId}",
+        "description": "Verified student records linked to a parent user account with studentId, studentName, grade, and school."
       }
     ],
     "planned": []
@@ -1362,6 +1388,29 @@
         "Secondary source: caps-ai-backend/curriculum_docs/.",
         "Strict compliance with examining body branding policy (NEVER use IEB, SACAI, DBE, NSC).",
         "CAPS cognitive level weighting: Knowledge 20%, Routine 35%, Complex 30%, Problem Solving 15%."
+      ]
+    },
+    {
+      "id": "question_appropriateness_specialist",
+      "name": "Exam Authenticity & Question Appropriateness Specialist",
+      "status": "built",
+      "specialty": "Zero-Meta-Curriculum Invariant, Authentic DBE/IEB Exam Questions & Appropriateness Auditing",
+      "whenToUse": "Use when reviewing, authoring, or validating questions, diagnostic tests, or challenges to ensure learners are tested exclusively on subject matter problems (calculations, factorisations, accounting ledgers, science kinematics, business case studies) and never on curriculum administrative policy or CAPS document text.",
+      "config": ".agents/agents/question_appropriateness_specialist.json",
+      "allowedTools": [
+        "view_file",
+        "grep_search",
+        "find_by_name",
+        "list_dir",
+        "write_to_file",
+        "replace_file_content",
+        "run_command"
+      ],
+      "keyDirectives": [
+        "Enforces the Zero-Meta-Curriculum Invariant across all question generators and seed banks.",
+        "Prohibits 'according to CAPS', 'as required by CAPS/ATP', or administrative syllabus questions.",
+        "Ensures every question matches authentic DBE/IEB past exam standards.",
+        "Maintains and runs automated question authenticity audit suite (scripts/audit_question_authenticity.py)."
       ]
     },
     {

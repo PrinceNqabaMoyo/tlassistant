@@ -29,6 +29,7 @@ import VerificationScreen from './components/auth/VerificationScreen';
 import {
   useAuthentication,
   useCoreState,
+  isStandaloneApp,
   useCurriculumNavigation,
   useWorkspaceUI,
   useChatFunctionality,
@@ -51,6 +52,7 @@ import SplashScreen from './components/ui/SplashScreen';
 import LandingPage from './components/ui/LandingPage';
 import SubscriptionPage from './components/ui/SubscriptionPage';
 import LearnerAppContainer from './components/student/LearnerAppContainer';
+import Header from './components/ui/Header';
 
 // Import API utilities
 import { buildApiUrl } from './utils/apiBaseUrl';
@@ -831,6 +833,16 @@ export default function App() {
       return;
     }
 
+    if (isCAPSContext && effectiveRole === 'parent') {
+      document.title = 'Fundile | Parent Portal';
+      return;
+    }
+
+    if (isCAPSContext && (effectiveRole === 'school' || effectiveRole === 'school_admin')) {
+      document.title = 'Fundile | School Administration';
+      return;
+    }
+
     document.title = 'Fundile | Curriculum-Aligned Learning Assistant';
   }, [effectiveCurrentUser?.curriculum, effectiveRole, selectedCurriculumKey]);
 
@@ -1221,6 +1233,31 @@ export default function App() {
   }
 
   if (topLevelPage === 'sandbox' || (typeof window !== 'undefined' && (window.location.search.includes('sandbox') || window.location.pathname === '/sandbox'))) {
+    if (!isStandaloneApp() && effectiveCurrentUser) {
+      return (
+        <div className="min-h-screen flex flex-col bg-slate-900">
+          <Header
+            currentUser={effectiveCurrentUser}
+            onLogout={handleAppLogout}
+            onNavigateToSubscription={handleNavigateToSubscriptionPage}
+            onStartTrial={handleNavigateToSubscriptionPage}
+            onMarkAllNotificationsRead={shellProps.onMarkAllNotificationsRead}
+            onMarkNotificationRead={shellProps.onMarkNotificationRead}
+            pendingAssignments={pendingAssignments}
+            studentNotifications={studentNotifications}
+            superAdminMode={superAdminMode}
+            setSuperAdminMode={setSuperAdminMode}
+            superAdminTier={superAdminTier}
+            setSuperAdminTier={setSuperAdminTier}
+            brandPalette={brandPalette}
+            setBrandPalette={setBrandPalette}
+          />
+          <div className="flex-1 min-h-0">
+            <LearnerAppContainer isSandboxMode={true} currentUser={effectiveCurrentUser} />
+          </div>
+        </div>
+      );
+    }
     return <LearnerAppContainer isSandboxMode={true} currentUser={effectiveCurrentUser} />;
   }
 
@@ -1242,6 +1279,32 @@ export default function App() {
 
   // If student: render the modern unified LearnerAppContainer (desktop folder tabs on PC, mobile bottom carousel on phone)
   if (effectiveRole === 'student' || !effectiveRole) {
+    if (!isStandaloneApp()) {
+      return (
+        <div className="min-h-screen flex flex-col bg-slate-900">
+          <Header
+            currentUser={effectiveCurrentUser}
+            onLogout={handleAppLogout}
+            onNavigateToSubscription={handleNavigateToSubscriptionPage}
+            onStartTrial={handleNavigateToSubscriptionPage}
+            onMarkAllNotificationsRead={shellProps.onMarkAllNotificationsRead}
+            onMarkNotificationRead={shellProps.onMarkNotificationRead}
+            pendingAssignments={pendingAssignments}
+            studentNotifications={studentNotifications}
+            superAdminMode={superAdminMode}
+            setSuperAdminMode={setSuperAdminMode}
+            superAdminTier={superAdminTier}
+            setSuperAdminTier={setSuperAdminTier}
+            brandPalette={brandPalette}
+            setBrandPalette={setBrandPalette}
+          />
+          <div className="flex-1 min-h-0">
+            <LearnerAppContainer isSandboxMode={false} currentUser={effectiveCurrentUser} />
+          </div>
+        </div>
+      );
+    }
+
     return <LearnerAppContainer isSandboxMode={false} currentUser={effectiveCurrentUser} />;
   }
 

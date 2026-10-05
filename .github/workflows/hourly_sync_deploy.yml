@@ -1,0 +1,52 @@
+name: Hourly Code Check, GitHub Sync & Redeployment
+
+on:
+  schedule:
+    # Run every hour at minute 0
+    - cron: '0 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  hourly-sync-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install Frontend Dependencies
+        run: npm ci || npm install
+
+      - name: Run Hourly Code Check, Build & Architecture Sync
+        run: |
+          python scripts/hourly_sync_deploy.py --once --skip-push
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+
+      - name: Push any automated sync updates
+        run: |
+          git config user.name "fundile-sync-bot"
+          git config user.email "bot@fundile.co.za"
+          if [ -n "$(git status --porcelain)" ]; then
+            git add .
+            git commit -m "chore(sync): automated hourly check & architecture sync [skip ci]"
+            git push origin main
+          fi

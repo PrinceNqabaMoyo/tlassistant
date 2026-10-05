@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Bell, LogOut, X, Smartphone } from 'lucide-react';
+import { Bell, LogOut, X, Smartphone, Users } from 'lucide-react';
 import FundileLogo from './FundileLogo';
 import InstallAppModal from './InstallAppModal';
 import ProfilePhotoModal from '../profile/ProfilePhotoModal';
@@ -45,6 +45,7 @@ const Header = ({
   setSuperAdminTier,
   onStartTrial,
   onNavigateToSubscription,
+  onOpenPersonaSwitcher = null,
 }) => {
   const [showNotifications, setShowNotifications] = useState(false);
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
@@ -106,6 +107,20 @@ const Header = ({
               >
                 <Smartphone className="w-3.5 h-3.5" />
                 <span className="hidden sm:inline">Install App</span>
+              </button>
+            )}
+
+            {/* Switch Persona / Oversight Testing Cockpit Button */}
+            {onOpenPersonaSwitcher && (
+              <button
+                type="button"
+                onClick={onOpenPersonaSwitcher}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-500/20 hover:bg-amber-500/35 text-amber-200 text-xs font-bold transition border border-amber-400/40 cursor-pointer shrink-0 shadow-xs"
+                title="Switch Persona: 300 School Students, 100 Homeschoolers, 60 Teachers, 330 Parents"
+              >
+                <Users className="w-3.5 h-3.5 text-amber-300" />
+                <span className="hidden md:inline">Switch Persona (400+ Mock)</span>
+                <span className="md:hidden">Personas</span>
               </button>
             )}
 

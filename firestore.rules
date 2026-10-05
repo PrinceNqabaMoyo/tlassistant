@@ -53,7 +53,25 @@ service cloud.firestore {
 
     // 1. Users Collection (Profile & Account Details)
     match /users/{userId} {
-      allow read, write: if signedIn() && (request.auth.uid == userId || isAdminUser());
+      allow read: if signedIn() && (request.auth.uid == userId || isAdminUser());
+      allow create: if signedIn() && (
+        isAdminUser()
+        || (
+          request.auth.uid == userId
+          && (!('role' in request.resource.data) || request.resource.data.role in ['student', 'parent'])
+          && (!('isSuperAdmin' in request.resource.data) || request.resource.data.isSuperAdmin == false)
+          && (!('isOwner' in request.resource.data) || request.resource.data.isOwner == false)
+          && (!('tier' in request.resource.data) || request.resource.data.tier == 'standard')
+        )
+      );
+      allow update: if isAdminUser() || (
+        signedIn()
+        && request.auth.uid == userId
+        && !request.resource.data.diff(resource.data).affectedKeys().hasAny([
+          'role', 'isSuperAdmin', 'isOwner', 'tier', 'subscriptionStatus', 'subscriptionExpiry'
+        ])
+      );
+      allow delete: if isAdminUser();
 
       match /assignments/{assignmentId} {
         allow read, write: if signedIn() && (request.auth.uid == userId || isAdminUser());
@@ -131,7 +149,7 @@ service cloud.firestore {
 
     // 4. Assessments Collection (Formal Assessment Tasks & Memos)
     match /assessments/{assessmentId} {
-      allow read: if signedIn();
+      allow read: if signedIn() && (resource.data.teacherId == request.auth.uid || isAdminUser());
       allow create: if isTeacherUser() && request.resource.data.teacherId == request.auth.uid;
       allow update, delete: if isTeacherUser() && (resource.data.teacherId == request.auth.uid || isAdminUser());
     }
@@ -230,6 +248,27 @@ service cloud.firestore {
 
     match /chat_rooms/{chatRoomId}/messages/{messageId} {
       allow read, write: if signedIn();
+    }
+
+    // 10. Family Link Codes (Temporary 15-Minute One-Time Passcodes for POPIA Sec 35 Guardian Linking)
+    match /family_link_codes/{codeId} {
+      allow create: if signedIn() && request.resource.data.studentId == request.auth.uid;
+      allow read: if signedIn();
+      allow update: if signedIn() && (
+        resource.data.studentId == request.auth.uid
+        || request.resource.data.status == 'consumed'
+        || isAdminUser()
+      );
+      allow delete: if signedIn() && (resource.data.studentId == request.auth.uid || isAdminUser());
+    }
+
+    // 11. Family Guardians Subcollections (Parent <-> Child Links)
+    match /users/{userId}/guardians/{guardianId} {
+      allow read, write: if signedIn() && (request.auth.uid == userId || request.auth.uid == guardianId || isAdminUser());
+    }
+
+    match /users/{userId}/linked_learners/{studentId} {
+      allow read, write: if signedIn() && (request.auth.uid == userId || request.auth.uid == studentId || isAdminUser());
     }
   }
 }

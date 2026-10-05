@@ -30,7 +30,7 @@ export default function DevSandboxWrapper({
   activeTab = 'desk',
   onSelectTab = () => {},
   currentGrade = 10,
-  studentName = 'Nqobile Dlamini',
+  studentName = 'Prince Moyo',
   schoolName = 'Westville High School',
   streakDays = 5,
   xp = 1420,
@@ -43,6 +43,7 @@ export default function DevSandboxWrapper({
   onCheckAnswer = () => {},
   onNextQuestion = () => {},
   onOpenProfilePhoto = () => {},
+  onOpenLinkGuardian = () => {},
 }) {
   const [sandboxMode, setSandboxMode] = useState('desktop'); // 'desktop' | 'mobile' | 'native'
   const [mobileOrientation, setMobileOrientation] = useState('portrait'); // 'portrait' | 'landscape'
@@ -313,6 +314,7 @@ export default function DevSandboxWrapper({
                   onCheckAnswer={onCheckAnswer}
                   onNextQuestion={onNextQuestion}
                   onOpenProfilePhoto={onOpenProfilePhoto}
+                  onOpenLinkGuardian={onOpenLinkGuardian}
                 />
               </div>
 

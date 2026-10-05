@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Maximize2, TrendingUp, RotateCcw } from 'lucide-react';
 import FullScreenModal from '../ui/FullScreenModal';
 import UnitCircle from './UnitCircle';
+import { evaluateExpression } from '../../utils/mathOperations';
 
 const TrigonometricFunctionGraph = ({ initialData, onChange, isSubmitted }) => {
     const [graphData, setGraphData] = useState(initialData || {
@@ -167,26 +168,20 @@ const TrigonometricFunctionGraph = ({ initialData, onChange, isSubmitted }) => {
 
             for (const angle of testValues) {
                 try {
-                    // Replace θ with the test angle and evaluate
-                    let testExpression = input
-                        .replace(/θ/g, angle.toString())
-                        .replace(/²/g, '**2')
-                        .replace(/³/g, '**3')
-                        .replace(/sin/g, 'Math.sin')
-                        .replace(/cos/g, 'Math.cos')
-                        .replace(/tan/g, 'Math.tan')
-                        .replace(/csc/g, '1/Math.sin')
-                        .replace(/sec/g, '1/Math.cos')
-                        .replace(/cot/g, '1/Math.tan');
+                    const normExpr = input
+                        .replace(/θ/g, 'x')
+                        .replace(/²/g, '^2')
+                        .replace(/³/g, '^3')
+                        .replace(/csc/g, '1/sin')
+                        .replace(/sec/g, '1/cos')
+                        .replace(/cot/g, '1/tan');
 
-                    const result = eval(testExpression);
-                    testResults.push({ angle: (angle * 180 / Math.PI).toFixed(0) + '°', result: result.toFixed(4) });
-                    
-                    // Check if result is finite
-                    if (!isFinite(result)) {
+                    const result = evaluateExpression(normExpr, angle);
+                    if (result === null || !isFinite(result)) {
                         allValid = false;
                         break;
                     }
+                    testResults.push({ angle: (angle * 180 / Math.PI).toFixed(0) + '°', result: Number(result).toFixed(4) });
                 } catch (e) {
                     allValid = false;
                     break;

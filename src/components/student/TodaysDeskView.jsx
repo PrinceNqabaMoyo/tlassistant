@@ -26,10 +26,12 @@ export default function TodaysDeskView({
   studentName = 'Nqobile Dlamini',
   grade = 10,
   schoolName = 'Westville High School',
+  currentUser = null,
   streakDays = 5,
   xp = 1420,
   onOpenSubject = () => {},
   onStartBenchmark = () => {},
+  onOpenLinkGuardian = () => {},
 }) {
   const [storeState, setStoreState] = useState(() => studentStore.getState());
   useEffect(() => {
@@ -39,7 +41,12 @@ export default function TodaysDeskView({
     return unsub;
   }, []);
 
-  const deskDues = storeState.deskDues ?? 0;
+  const effectiveUser = currentUser || storeState.currentUser;
+  const isIndependent = Boolean(effectiveUser?.isIndependent);
+  const assignedTasks = isIndependent
+    ? []
+    : (effectiveUser?.assignedTasks || storeState?.currentUser?.assignedTasks || []);
+  const deskDues = assignedTasks.length;
   const physSub = studentStore.getSubject('physical_sciences');
   const busSub = studentStore.getSubject('business_studies');
   const lifeSub = studentStore.getSubject('life_sciences');
@@ -57,6 +64,15 @@ export default function TodaysDeskView({
           </p>
         </div>
         <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={onOpenLinkGuardian}
+            className="text-xs font-bold text-[#13519C] bg-blue-50 hover:bg-blue-100 px-3.5 py-1.5 rounded-xl border border-blue-200 flex items-center gap-1.5 transition-colors cursor-pointer shadow-xs"
+            title="Generate a temporary 15-minute passcode to link with parent or guardian"
+          >
+            <span>🔗</span>
+            <span>Link Parent/Guardian</span>
+          </button>
           <span className="text-xs font-bold text-slate-700 bg-slate-100 px-3 py-1.5 rounded-xl border border-slate-200 flex items-center gap-1.5">
             <Calendar className="w-3.5 h-3.5 text-[#13519C]" />
             <span>Term 1 Benchmark Week</span>
@@ -64,93 +80,95 @@ export default function TodaysDeskView({
         </div>
       </div>
 
-      {/* 2. Urgent Teacher Assignments Grid */}
+      {/* 2. Teacher Assignments Grid */}
       <div>
         <div className="flex items-center justify-between mb-3">
           <h3 className="text-xs font-bold uppercase tracking-wider text-slate-500 flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-rose-500 animate-ping"></span>
+            {deskDues > 0 && <span className="w-2 h-2 rounded-full bg-rose-500 animate-ping"></span>}
             <span>Teacher Assignments &amp; Classwork</span>
           </h3>
-          <span className="text-xs text-rose-600 font-bold bg-rose-50 px-2 py-0.5 rounded-md border border-rose-200">
-            Action Required
-          </span>
+          {deskDues > 0 ? (
+            <span className="text-xs text-rose-600 font-bold bg-rose-50 px-2 py-0.5 rounded-md border border-rose-200">
+              {deskDues} Action Required
+            </span>
+          ) : (
+            <span className="text-xs text-emerald-700 font-bold bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-200">
+              All Caught Up
+            </span>
+          )}
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          
-          {/* Assignment 1: Accounting */}
-          <div className="bg-white border-2 border-emerald-400 p-5 rounded-2xl shadow-xs hover:shadow-md transition-all space-y-3">
-            <div className="flex items-center justify-between text-xs font-bold">
-              <span className="bg-emerald-600 text-white px-2.5 py-1 rounded-full text-[11px] font-extrabold shadow-sm shadow-emerald-500/30 flex items-center gap-1.5">
-                <BookOpen className="w-3.5 h-3.5" />
-                <span>ACCOUNTING • DUE TODAY</span>
-              </span>
-              <span className="bg-rose-500 text-white px-2.5 py-0.5 rounded-full text-[11px] font-extrabold shadow-sm shadow-rose-500/30">
-                17:00
-              </span>
-            </div>
-
-            <div>
-              <h4 className="text-base font-bold text-slate-900 font-display">
-                General Journal: Debtors Allowance &amp; Bad Debts
-              </h4>
-              <p className="text-xs text-slate-600 mt-1">
-                Assigned by Mrs. Khumalo • 12 Marks • Record credit note #402 and insolvent debtor final dividend.
-              </p>
-            </div>
-
-            <div className="pt-2 flex items-center justify-between border-t border-slate-100">
-              <span className="text-xs font-semibold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded-md">
-                Estimated: 15 mins
-              </span>
-              <button
-                type="button"
-                onClick={() => onOpenSubject('accounting', 'General Journal')}
-                className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl shadow-sm shadow-emerald-600/30 flex items-center gap-1.5 transition cursor-pointer"
-              >
-                <span>Open in Accounting</span>
-                <ArrowRight className="w-3.5 h-3.5" />
-              </button>
-            </div>
+        {isIndependent ? (
+          <div className="bg-purple-50/90 border border-purple-200 p-6 rounded-2xl shadow-xs space-y-2 text-center">
+            <span className="text-2xl">🏡</span>
+            <h4 className="text-sm font-bold text-purple-900 font-display">
+              Independent Homeschool Path • Self-Paced CAPS Study Plan
+            </h4>
+            <p className="text-xs text-purple-700 max-w-lg mx-auto">
+              Zero school homework deadlines assigned. You have full self-paced freedom to explore and master any subject below.
+            </p>
           </div>
-
-          {/* Assignment 2: Mathematics */}
-          <div className="bg-white border-2 border-blue-400 p-5 rounded-2xl shadow-xs hover:shadow-md transition-all space-y-3">
-            <div className="flex items-center justify-between text-xs font-bold">
-              <span className="bg-blue-600 text-white px-2.5 py-1 rounded-full text-[11px] font-extrabold shadow-sm shadow-blue-500/30 flex items-center gap-1.5">
-                <Calculator className="w-3.5 h-3.5" />
-                <span>MATHEMATICS • DUE FRIDAY</span>
-              </span>
-              <span className="bg-amber-500 text-white px-2.5 py-0.5 rounded-full text-[11px] font-extrabold shadow-sm shadow-amber-500/30">
-                08:00
-              </span>
+        ) : assignedTasks.length === 0 ? (
+          <div className="bg-emerald-50/80 border border-emerald-200 p-6 rounded-2xl shadow-xs text-center space-y-2">
+            <div className="w-10 h-10 rounded-full bg-emerald-100 text-emerald-700 mx-auto flex items-center justify-center text-lg font-bold shadow-2xs">
+              ✓
             </div>
-
-            <div>
-              <h4 className="text-base font-bold text-slate-900 font-display">
-                Algebraic Trinomial Factorisation Drill
-              </h4>
-              <p className="text-xs text-slate-600 mt-1">
-                Assigned by Mr. Botha • 10 Marks • Practice quadratic factor splitting with positive and negative constant terms.
-              </p>
-            </div>
-
-            <div className="pt-2 flex items-center justify-between border-t border-slate-100">
-              <span className="text-xs font-semibold text-blue-800 bg-blue-50 px-2 py-0.5 rounded-md">
-                Estimated: 12 mins
-              </span>
-              <button
-                type="button"
-                onClick={() => onOpenSubject('mathematics', 'Algebraic Expressions')}
-                className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-xl shadow-sm shadow-blue-600/30 flex items-center gap-1.5 transition cursor-pointer"
-              >
-                <span>Open in Mathematics</span>
-                <ArrowRight className="w-3.5 h-3.5" />
-              </button>
-            </div>
+            <h4 className="text-sm font-bold text-emerald-900 font-display">
+              All Caught Up!
+            </h4>
+            <p className="text-xs text-emerald-700 max-w-md mx-auto">
+              No pending classwork or homework due right now. Select any subject below to practice autonomously and boost your Mastery Dial.
+            </p>
           </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {assignedTasks.map((task) => {
+              const isAccounting = (task.subject || '').includes('accounting');
+              const isMath = (task.subject || '').includes('math');
+              const borderClass = isAccounting ? 'border-emerald-400' : isMath ? 'border-blue-400' : 'border-indigo-400';
+              const badgeClass = isAccounting ? 'bg-emerald-600 shadow-emerald-500/30' : isMath ? 'bg-blue-600 shadow-blue-500/30' : 'bg-indigo-600 shadow-indigo-500/30';
+              const btnClass = isAccounting ? 'bg-emerald-600 hover:bg-emerald-700 shadow-emerald-600/30' : isMath ? 'bg-blue-600 hover:bg-blue-700 shadow-blue-600/30' : 'bg-indigo-600 hover:bg-indigo-700 shadow-indigo-600/30';
+              const textClass = isAccounting ? 'text-emerald-800 bg-emerald-50' : isMath ? 'text-blue-800 bg-blue-50' : 'text-indigo-800 bg-indigo-50';
 
-        </div>
+              return (
+                <div key={task.id} className={`bg-white border-2 ${borderClass} p-5 rounded-2xl shadow-xs hover:shadow-md transition-all space-y-3`}>
+                  <div className="flex items-center justify-between text-xs font-bold">
+                    <span className={`${badgeClass} text-white px-2.5 py-1 rounded-full text-[11px] font-extrabold shadow-sm flex items-center gap-1.5`}>
+                      {isAccounting ? <BookOpen className="w-3.5 h-3.5" /> : <Calculator className="w-3.5 h-3.5" />}
+                      <span>{(task.subjectName || task.subject).toUpperCase()} • {task.dueText || 'DUE SOON'}</span>
+                    </span>
+                    <span className="bg-rose-500 text-white px-2.5 py-0.5 rounded-full text-[11px] font-extrabold shadow-sm shadow-rose-500/30">
+                      {task.dueTime || '17:00'}
+                    </span>
+                  </div>
+
+                  <div>
+                    <h4 className="text-base font-bold text-slate-900 font-display">
+                      {task.title}
+                    </h4>
+                    <p className="text-xs text-slate-600 mt-1">
+                      Assigned by {task.assignedBy || task.teacherName || 'Faculty'} • {task.marks || 10} Marks • {task.notes || task.description || 'Targeted CAPS practice.'}
+                    </p>
+                  </div>
+
+                  <div className="pt-2 flex items-center justify-between border-t border-slate-100">
+                    <span className={`text-xs font-semibold ${textClass} px-2 py-0.5 rounded-md`}>
+                      Estimated: {task.estimatedMins || 15} mins
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => onOpenSubject(task.subject, task.topic || task.title)}
+                      className={`px-4 py-2 ${btnClass} text-white text-xs font-bold rounded-xl shadow-sm flex items-center gap-1.5 transition cursor-pointer`}
+                    >
+                      <span>Open in {task.subjectName || 'Subject'}</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        )}
       </div>
 
       {/* 3. Autonomous Mastery & Quick Pickups */}

@@ -7,9 +7,12 @@ import DevSandboxWrapper from '../sandbox/DevSandboxWrapper';
 import MobileWebApkView from '../mobile/MobileWebApkView';
 import ProfilePhotoModal from '../profile/ProfilePhotoModal';
 import TopicScopeModal from '../curriculum/TopicScopeModal';
+import LinkGuardianModal from '../family/LinkGuardianModal';
+import navigationHistoryService from '../../services/navigationHistoryService';
 import { buildApiUrl } from '../../utils/apiBaseUrl';
 import studentStore from '../../services/studentStore';
 import ErrorBoundary from '../ui/ErrorBoundary';
+import { getAuthenticDiagnosticQuestion } from '../../data/authenticDiagnosticBank';
 
 /**
  * LearnerAppContainer
@@ -41,6 +44,7 @@ export default function LearnerAppContainer({
   currentUser = null,
   initialTab = 'desk',
   isSandboxMode = true, // Enables the live dev sandbox viewport switcher
+  onOpenPersonaSwitcher = null,
 }) {
   const [activeTab, setActiveTab] = useState(initialTab);
   const [activeTopic, setActiveTopic] = useState(() => getDefaultTopicForSubject(initialTab));
@@ -50,6 +54,8 @@ export default function LearnerAppContainer({
   const [result, setResult] = useState(null);
   const [showProfilePhotoModal, setShowProfilePhotoModal] = useState(false);
   const [showTopicModal, setShowTopicModal] = useState(false);
+  const [showLinkGuardianModal, setShowLinkGuardianModal] = useState(false);
+  const [exitToast, setExitToast] = useState('');
 
   const [storeState, setStoreState] = useState(() => studentStore.getState());
   useEffect(() => {
@@ -59,12 +65,12 @@ export default function LearnerAppContainer({
     return unsub;
   }, []);
 
-  const studentName = currentUser?.name || currentUser?.displayName || storeState.studentName || 'Nqobile Dlamini';
+  const studentName = currentUser?.name || currentUser?.displayName || storeState.studentName || 'Prince Moyo';
   const currentGrade = parseInt(String(currentUser?.grade || storeState.grade || '10').replace(/\D/g, ''), 10) || 10;
   const schoolName = currentUser?.school || storeState.school || 'Westville High School';
 
   // Handle switching tabs (supporting both short mobile IDs and full desktop IDs)
-  const handleSelectTab = useCallback((tabId) => {
+  const handleSelectTab = useCallback((tabId, isFromPopstate = false) => {
     const normalized = 
       tabId === 'maths' ? 'mathematics' :
       tabId === 'mathslit' || tabId === 'maths_lit' ? 'mathematical_literacy' :
@@ -79,62 +85,43 @@ export default function LearnerAppContainer({
     setResult(null);
     const defTopic = getDefaultTopicForSubject(normalized);
     setActiveTopic(defTopic);
+
+    if (!isFromPopstate) {
+      navigationHistoryService.pushScreen(normalized);
+    }
   }, []);
 
+  // Initialize navigation history service for Android back-button handling
+  useEffect(() => {
+    navigationHistoryService.init(activeTab);
+    navigationHistoryService.registerHandlers({
+      onTabChange: (newTab) => {
+        handleSelectTab(newTab, true);
+      },
+      onModalClose: (modalName) => {
+        if (modalName === 'topicScope') setShowTopicModal(false);
+        else if (modalName === 'linkGuardian') setShowLinkGuardianModal(false);
+        else if (modalName === 'profilePhoto') setShowProfilePhotoModal(false);
+        else {
+          setShowTopicModal(false);
+          setShowLinkGuardianModal(false);
+          setShowProfilePhotoModal(false);
+        }
+      },
+      onShowExitToast: (msg) => {
+        setExitToast(msg);
+        setTimeout(() => setExitToast(''), 2000);
+      }
+    });
+
+    return () => {
+      navigationHistoryService.destroy();
+    };
+  }, [activeTab, handleSelectTab]);
+
   const generateLocalFallback = useCallback((subjectId, topicName) => {
-    const s = String(subjectId || '').toLowerCase();
-    if (s.includes('accounting')) {
-      setQuestion({
-        id: 'acct_crj_101',
-        modality: 'ledger',
-        title: 'Cash Receipts Journal (15% VAT)',
-        prompt: 'Phambili Solutions Ltd\nRecord the transactions in the Cash Receipts Journal for March.\n1. Day 1: Owner deposited capital R50 000.\n2. Day 4: Cash sales of merchandise R11 500 (incl. 15% VAT). Cost of sales R8 000.',
-        journal: {
-          title_fields: [{ cell_id: 'title_business', label: 'Business Name', editable: false, value: 'Phambili Solutions Ltd' }],
-          headers: ['Doc', 'Day', 'Details', 'Fol', 'Bank', 'Sales', 'Output VAT', 'Cost of Sales'],
-          rows: [
-            [
-              { cell_id: 'r0_c0', value: 'Rec 01', editable: false },
-              { cell_id: 'r0_c1', value: '1', editable: false },
-              { cell_id: 'r0_c2', value: 'Capital: S. Phambili', editable: false },
-              { cell_id: 'r0_c3', value: 'B1', editable: false },
-              { cell_id: 'r0_c4', value: '50000.00', editable: false },
-              { cell_id: 'r0_c5', value: '', editable: false },
-              { cell_id: 'r0_c6', value: '', editable: false },
-              { cell_id: 'r0_c7', value: '', editable: false }
-            ],
-            [
-              { cell_id: 'r1_c0', value: 'CRT 01', editable: false },
-              { cell_id: 'r1_c1', value: '4', editable: false },
-              { cell_id: 'r1_c2', value: 'Cash Sales', editable: false },
-              { cell_id: 'r1_c3', value: 'N1', editable: false },
-              { cell_id: 'r1_c4', value: '', editable: true },
-              { cell_id: 'r1_c5', value: '10000.00', editable: false },
-              { cell_id: 'r1_c6', value: '1500.00', editable: false },
-              { cell_id: 'r1_c7', value: '8000.00', editable: false }
-            ]
-          ]
-        },
-        correct_map: { 'r1_c4': '11500.00' },
-        marks: 6
-      });
-    } else if (s.includes('lit') || s.includes('mathslit') || s.includes('maths_lit')) {
-      setQuestion({
-        id: 'mathslit_tariffs_101',
-        question_type: 'math_short',
-        title: 'Municipal Water Tariff Calculation',
-        prompt: 'Calculate the total monthly cost for 25 kL of residential water where:\n- First 6 kL is free (R0/kL)\n- 7 to 15 kL: R18.50 per kL\n- 16 to 25 kL: R24.00 per kL\n(Exclude VAT)',
-        ideal_answer: '406.50',
-        marks: 4
-      });
-    } else {
-      setQuestion({
-        id: 'gen_practice_101',
-        title: `${topicName || 'General CAPS Practice'}`,
-        prompt: `Review the foundational rules for ${topicName || 'this subject'}. Calculate the required values according to official CAPS requirements.`,
-        marks: 5
-      });
-    }
+    const q = getAuthenticDiagnosticQuestion(subjectId);
+    setQuestion({ ...q });
   }, []);
 
   // Fetch / Generate a real question from caps-ai-backend
@@ -294,7 +281,9 @@ export default function LearnerAppContainer({
             studentName={studentName}
             grade={currentGrade}
             schoolName={schoolName}
+            currentUser={currentUser}
             onOpenSubject={handleOpenSubjectFromDesk}
+            onOpenLinkGuardian={() => setShowLinkGuardianModal(true)}
           />
         ) : (
           <div className="p-3 sm:p-6">
@@ -334,14 +323,25 @@ export default function LearnerAppContainer({
     isLoadingQuestion: isGenerating,
     isMarking: isChecking,
     onSelectTopic: handleSelectTopic,
-    onOpenTopicScope: () => setShowTopicModal(true),
+    onOpenTopicScope: () => {
+      navigationHistoryService.pushModal('topicScope');
+      setShowTopicModal(true);
+    },
     onCheckAnswer: handleCheckAnswer,
     onNextQuestion: handleNextQuestion,
-    onOpenProfilePhoto: () => setShowProfilePhotoModal(true),
+    onOpenProfilePhoto: () => {
+      navigationHistoryService.pushModal('profilePhoto');
+      setShowProfilePhotoModal(true);
+    },
+    onOpenLinkGuardian: () => {
+      navigationHistoryService.pushModal('linkGuardian');
+      setShowLinkGuardianModal(true);
+    },
+    onOpenPersonaSwitcher,
   };
 
   const mobileContent = (
-    <div className="w-full h-full min-h-[640px] bg-white">
+    <div className="w-full h-[100dvh] max-h-[100dvh] overflow-hidden bg-white">
       <MobileWebApkView {...mobileProps} />
     </div>
   );
@@ -351,7 +351,10 @@ export default function LearnerAppContainer({
       {/* Interactive CAPS Topic & Exam Scope Modal */}
       <TopicScopeModal
         isOpen={showTopicModal}
-        onClose={() => setShowTopicModal(false)}
+        onClose={() => {
+          navigationHistoryService.clearModal();
+          setShowTopicModal(false);
+        }}
         subject={activeTab === 'desk' ? 'Accounting' : activeTab}
         grade={currentGrade}
         currentTopic={activeTopic}
@@ -361,8 +364,29 @@ export default function LearnerAppContainer({
       {/* Profile Photo Modal */}
       <ProfilePhotoModal
         isOpen={showProfilePhotoModal}
-        onClose={() => setShowProfilePhotoModal(false)}
+        onClose={() => {
+          navigationHistoryService.clearModal();
+          setShowProfilePhotoModal(false);
+        }}
       />
+
+      {/* Family / Guardian Linking Modal (15-Min Ephemeral Handshake) */}
+      <LinkGuardianModal
+        isOpen={showLinkGuardianModal}
+        onClose={() => {
+          navigationHistoryService.clearModal();
+          setShowLinkGuardianModal(false);
+        }}
+        db={null}
+        currentUser={currentUser || { uid: 'current_student', name: studentName, grade: `Grade ${currentGrade}`, school: schoolName }}
+      />
+
+      {/* Android Hardware Back-Button Double-Tap Exit Toast */}
+      {exitToast && (
+        <div className="fixed bottom-20 left-1/2 -translate-x-1/2 z-50 bg-slate-900/90 text-white text-xs font-semibold px-4 py-2 rounded-full shadow-xl border border-slate-700/50 backdrop-blur-md animate-in fade-in slide-in-from-bottom-2 duration-150 pointer-events-none select-none">
+          {exitToast}
+        </div>
+      )}
     </>
   );
 
@@ -389,7 +413,7 @@ export default function LearnerAppContainer({
             {desktopContent}
           </ErrorBoundary>
         </div>
-        <div className="block md:hidden h-full">
+        <div className="block md:hidden h-[100dvh] max-h-[100dvh] overflow-hidden">
           <ErrorBoundary title="Mobile Workspace Error">
             {mobileContent}
           </ErrorBoundary>

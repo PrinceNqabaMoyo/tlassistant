@@ -37,18 +37,28 @@ SUGGESTED_DURATION = 8
 # --------------------------------------------------------------------------- #
 def _build_distance_drill(r: random.Random) -> Dict[str, Any]:
     """Calculate distance between two coordinates with integer or clean surd answers."""
-    # Common Pythagorean coordinate pairs for clean integers or clean surds
-    dx, dy = r.choice([(3, 4), (5, 12), (6, 8), (8, 15), (7, 24), (2, 3), (4, 5)])
-    x1 = r.randint(-5, 5)
-    y1 = r.randint(-5, 5)
+    label_pairs = [("A", "B"), ("P", "Q"), ("M", "N"), ("K", "L"), ("C", "D"), ("R", "S"), ("E", "F"), ("X", "Y")]
+    l1, l2 = r.choice(label_pairs)
+
+    pairs = [
+        (3, 4), (4, 3), (5, 12), (12, 5), (6, 8), (8, 6), (8, 15), (15, 8),
+        (7, 24), (24, 7), (9, 12), (12, 9), (1, 2), (2, 1), (1, 3), (3, 1), (2, 3),
+        (3, 2), (1, 4), (4, 1), (2, 4), (4, 2), (3, 5), (5, 3), (4, 5),
+        (5, 4), (2, 5), (5, 2), (1, 5), (5, 1), (3, 6), (6, 3), (4, 7),
+        (7, 4), (5, 7), (7, 5), (6, 10), (10, 6), (2, 7), (7, 2), (3, 7),
+        (7, 3), (5, 8), (8, 5), (6, 9), (9, 6), (2, 9), (9, 2), (3, 8), (8, 3)
+    ]
+    dx, dy = r.choice(pairs)
+    x1 = r.randint(-15, 15)
+    y1 = r.randint(-15, 15)
 
     sx = r.choice([-1, 1])
     sy = r.choice([-1, 1])
     x2 = x1 + sx * dx
     y2 = y1 + sy * dy
 
-    pt_a = f"A({x1}; {y1})"
-    pt_b = f"B({x2}; {y2})"
+    pt_a = f"{l1}({x1}; {y1})"
+    pt_b = f"{l2}({x2}; {y2})"
 
     dist_squared = (x2 - x1)**2 + (y2 - y1)**2
     dist_sym = sp.sqrt(dist_squared)
@@ -80,9 +90,9 @@ def _build_distance_drill(r: random.Random) -> Dict[str, Any]:
     }
 
     solution_steps = [
-        {"from": f"AB^2 = (x_2 - x_1)^2 + (y_2 - y_1)^2", "to": f"AB = \\sqrt{{({x2} - ({x1}))^2 + ({y2} - ({y1}))^2}}", "rule": "distance formula substitution", "op": "substitute"},
-        {"from": f"AB = \\sqrt{{({x2 - x1})^2 + ({y2 - y1})^2}}", "to": f"AB = \\sqrt{{{dist_squared}}}", "rule": "evaluate squares", "op": "simplify"},
-        {"from": f"AB = \\sqrt{{{dist_squared}}}", "to": f"AB = {dist_latex}", "rule": "simplify surd", "op": "evaluate"}
+        {"from": f"{l1}{l2}^2 = (x_2 - x_1)^2 + (y_2 - y_1)^2", "to": f"{l1}{l2} = \\sqrt{{({x2} - ({x1}))^2 + ({y2} - ({y1}))^2}}", "rule": "distance formula substitution", "op": "substitute"},
+        {"from": f"{l1}{l2} = \\sqrt{{({x2 - x1})^2 + ({y2 - y1})^2}}", "to": f"{l1}{l2} = \\sqrt{{{dist_squared}}}", "rule": "evaluate squares", "op": "simplify"},
+        {"from": f"{l1}{l2} = \\sqrt{{{dist_squared}}}", "to": f"{l1}{l2} = {dist_latex}", "rule": "simplify surd", "op": "evaluate"}
     ]
 
     return {
@@ -110,7 +120,7 @@ def _build_distance_drill(r: random.Random) -> Dict[str, Any]:
         ],
         "marking_schema": marking_schema,
         "solution_steps": solution_steps,
-        "points": {"A": [x1, y1], "B": [x2, y2]}
+        "points": {l1: [x1, y1], l2: [x2, y2]}
     }
 
 
@@ -432,7 +442,9 @@ def _build_compound_drill(r: random.Random) -> Dict[str, Any]:
 def generate_analytical_geometry_question(
     seed: Optional[int] = None,
     mode: str = "compound",
-    difficulty: str = "medium"
+    difficulty: str = "medium",
+    subskill: Optional[str] = None,
+    **kwargs: Any
 ) -> Dict[str, Any]:
     """
     Dispatcher generating seeded, deterministic Analytical Geometry questions.
@@ -442,12 +454,26 @@ def generate_analytical_geometry_question(
         mode: "compound" | "elementary_distance" | "elementary_midpoint" |
               "elementary_gradient" | "elementary_parallel_perpendicular"
         difficulty: "easy" | "medium" | "hard"
+        subskill: Optional subskill key mapping to elementary drill modes.
     """
     r = rng(seed)
 
-    if mode == "elementary_distance":
+    effective_mode = mode
+    if subskill:
+        if "distance" in subskill:
+            effective_mode = "elementary_distance"
+        elif "midpoint" in subskill:
+            effective_mode = "elementary_midpoint"
+        elif "gradient" in subskill:
+            effective_mode = "elementary_gradient"
+        elif "parallel" in subskill or "perpendicular" in subskill:
+            effective_mode = "elementary_parallel_perpendicular"
+        else:
+            effective_mode = subskill
+
+    if effective_mode == "elementary_distance":
         question = _build_distance_drill(r)
-    elif mode == "elementary_midpoint":
+    elif effective_mode == "elementary_midpoint":
         question = _build_midpoint_drill(r)
     elif mode == "elementary_gradient":
         question = _build_gradient_drill(r)
@@ -473,3 +499,7 @@ def generate_analytical_geometry_question(
     question["difficulty"] = difficulty
 
     return question
+
+
+# Standard 6-pillar generator contract alias
+generate = generate_analytical_geometry_question

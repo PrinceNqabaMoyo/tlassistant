@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Maximize2 } from 'lucide-react';
 import FullScreenModal from '../ui/FullScreenModal';
+import { evaluateExpression } from '../../utils/mathOperations';
 
 const CoordinatePlaneInput = ({ initialData, onChange, isSubmitted }) => {
     const [planeData, setPlaneData] = useState(initialData || {
@@ -174,18 +175,7 @@ const CoordinatePlaneInput = ({ initialData, onChange, isSubmitted }) => {
 
     const evaluateFunction = (expression, x) => {
         try {
-            // Simple function evaluation - can be extended for more complex expressions
-            const safeExpression = expression
-                .replace(/x/g, `(${x})`)
-                .replace(/sin/g, 'Math.sin')
-                .replace(/cos/g, 'Math.cos')
-                .replace(/tan/g, 'Math.tan')
-                .replace(/sqrt/g, 'Math.sqrt')
-                .replace(/pow/g, 'Math.pow')
-                .replace(/log/g, 'Math.log')
-                .replace(/exp/g, 'Math.exp');
-            
-            return eval(safeExpression);
+            return evaluateExpression(expression, x);
         } catch (error) {
             return null;
         }

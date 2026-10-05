@@ -148,6 +148,7 @@ const AuthScreen = ({ auth, db, onStudentLogin, initialMode = 'signin', onToggle
     const [loading, setLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+    const [hasParentalConsent, setHasParentalConsent] = useState(false);
     const signupPasswordSatisfiesPolicy = passwordSatisfiesPolicy(password);
 
     useEffect(() => {
@@ -206,6 +207,11 @@ const AuthScreen = ({ auth, db, onStudentLogin, initialMode = 'signin', onToggle
             return;
         }
 
+        if (!isLogin && role === 'student' && !hasParentalConsent) {
+            setError('Parental or legal guardian consent is required to register under South Africa POPIA Section 35.');
+            return;
+        }
+
         setLoading(true);
         try {
             if (isLogin) {
@@ -218,6 +224,8 @@ const AuthScreen = ({ auth, db, onStudentLogin, initialMode = 'signin', onToggle
                 if (role === 'student') {
                     userData.curriculum = selectedCurriculum;
                     userData.grade = selectedGrade;
+                    userData.popiaGuardianConsent = true;
+                    userData.popiaConsentTimestamp = new Date().toISOString();
                 }
 
                 await setDoc(doc(db, 'users', user.uid), userData);
@@ -402,6 +410,24 @@ const AuthScreen = ({ auth, db, onStudentLogin, initialMode = 'signin', onToggle
                                     Password policy: at least 6 characters with uppercase, lowercase, a number, and a special character.
                                 </p>
                             )}
+
+                            {!isLogin && role === 'student' && (
+                                <div className="flex items-start gap-2.5 p-3 rounded-lg bg-blue-50/70 border border-blue-200/80 text-left mt-3">
+                                    <input
+                                        id="popia-consent"
+                                        name="popiaConsent"
+                                        type="checkbox"
+                                        required
+                                        checked={hasParentalConsent}
+                                        onChange={(e) => setHasParentalConsent(e.target.checked)}
+                                        className="mt-0.5 h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer"
+                                    />
+                                    <label htmlFor="popia-consent" className="text-xs text-slate-700 leading-snug cursor-pointer select-none">
+                                        <span className="font-semibold text-slate-900">Parental / Guardian Consent (POPIA Sec 35):</span>{' '}
+                                        I confirm that I am 18 years or older, OR that I have obtained explicit consent from my parent or legal guardian to create this educational learning account.
+                                    </label>
+                                </div>
+                            )}
                         </div>
 
                         {statusMessage && <p className="text-sm text-emerald-700">{statusMessage}</p>}
@@ -409,7 +435,7 @@ const AuthScreen = ({ auth, db, onStudentLogin, initialMode = 'signin', onToggle
 
                         <button 
                             type="submit" 
-                            disabled={loading || (!isLogin && (password !== confirmPassword || !signupPasswordSatisfiesPolicy || (role === 'student' && (!selectedCurriculum || !selectedGrade))))} 
+                            disabled={loading || (!isLogin && (password !== confirmPassword || !signupPasswordSatisfiesPolicy || (role === 'student' && (!selectedCurriculum || !selectedGrade || !hasParentalConsent))))} 
                             className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:bg-gray-400"
                         >
                             {loading ? <Loader2 className="h-5 w-5 animate-spin" /> : (isLogin ? 'Sign in' : 'Sign up')}

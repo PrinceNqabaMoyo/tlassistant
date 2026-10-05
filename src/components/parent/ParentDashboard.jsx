@@ -32,6 +32,7 @@ import {
 } from 'lucide-react';
 import MasteryDial from '../student/MasteryDial';
 import InAppPaymentModal from '../subscription/InAppPaymentModal';
+import { redeemLinkCode } from '../../services/familyLinkService';
 
 // Initial dataset for learners
 const INITIAL_LEARNERS = {
@@ -268,6 +269,8 @@ const INITIAL_LEARNERS = {
 };
 
 export default function ParentDashboard({
+  currentUser = null,
+  db = null,
   initialLearnerId = 'nqobile',
   parentName = 'Mrs. Nomvula Dlamini',
   parentPhone = '+27 82 555 4192',
@@ -283,6 +286,7 @@ export default function ParentDashboard({
   const [pulseViewMode, setPulseViewMode] = useState('bubble'); // 'bubble' | 'table'
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
   const [paymentPlan, setPaymentPlan] = useState(null);
+  const [isSubmittingChild, setIsSubmittingChild] = useState(false);
   const [householdBilling, setHouseholdBilling] = useState({
     planName: 'Fundile Household Plan',
     cycle: 'Monthly (R149 / mo)',
@@ -367,112 +371,133 @@ export default function ParentDashboard({
   };
 
   // Handle Add Child Form Submission
-  const handleAddChildSubmit = (e) => {
+  const handleAddChildSubmit = async (e) => {
     e.preventDefault();
-    if (!addChildForm.name.trim()) {
-      setAddChildError('Please enter the learner\'s full name.');
-      return;
-    }
-    if (!addChildForm.linkCode.trim()) {
-      setAddChildError('Please enter the 6-character link code from your child\'s phone.');
-      return;
-    }
-
-    const newId = addChildForm.name.toLowerCase().replace(/\s+/g, '-').slice(0, 15);
-    const initials = addChildForm.name
-      .split(' ')
-      .map(p => p[0])
-      .join('')
-      .toUpperCase()
-      .slice(0, 2);
-
-    const newLearnerObj = {
-      id: newId,
-      name: addChildForm.name.trim(),
-      grade: addChildForm.grade,
-      school: addChildForm.school.trim() || 'Secondary School',
-      avatar: initials || 'ST',
-      linkCode: addChildForm.linkCode.toUpperCase().trim(),
-      focusTime: '1h 15m',
-      focusTimeMinutes: 75,
-      questionsCompleted: 18,
-      accuracyRate: 78,
-      streakDays: 2,
-      ungameableXP: 450,
-      dataUsedMB: 0.9,
-      videoEquivalentMB: 310,
-      savedRands: 65,
-      masteredTopics: [
-        { name: 'Foundational Baseline Assessment', subject: 'Mathematics', score: 80 },
-        { name: 'Diagnostic Readiness Check', subject: 'Sciences', score: 75 }
-      ],
-      repairedMisconceptions: [
-        {
-          topic: 'Foundations Diagnostic',
-          issue: 'Baseline topic review initiated',
-          resolution: 'Scored 80% on welcome calibration diagnostic.',
-          timestamp: 'Just now',
-          status: 'Active'
-        }
-      ],
-      coachingTips: [
-        {
-          id: `tip-${newId}-1`,
-          icon: '💡',
-          category: 'Welcome Starter',
-          badgeColor: 'bg-emerald-50 text-emerald-700 border-emerald-200',
-          prompt: `Ask ${addChildForm.name} what interesting concept they explored during their calibration assessment today!`,
-          rationale: 'Shows supportive enthusiasm without any pressure.'
-        },
-        {
-          id: `tip-${newId}-2`,
-          icon: '🎯',
-          category: 'Target',
-          badgeColor: 'bg-blue-50 text-blue-700 border-blue-200',
-          prompt: 'Encourage a quick 10-minute setup drill to discover their daily target.',
-          rationale: 'Small beginnings create solid lifelong study habits.'
-        }
-      ],
-      subjects: [
-        {
-          id: `${newId}-math`,
-          name: 'Mathematics',
-          code: 'MTH00',
-          formativeMastery: 78,
-          evaluativeScore: 72,
-          level: 'Level 5',
-          rating: 'Substantial Achievement',
-          recentTopics: ['Diagnostic Baseline', 'Review & Practice'],
-          streak: '2-day active',
-          needsRefresh: false
-        },
-        {
-          id: `${newId}-sci`,
-          name: 'Natural / Physical Sciences',
-          code: 'SCI00',
-          formativeMastery: 74,
-          evaluativeScore: 70,
-          level: 'Level 5',
-          rating: 'Substantial Achievement',
-          recentTopics: ['Diagnostic Baseline', 'Fundamental Laws'],
-          streak: '2-day active',
-          needsRefresh: false
-        }
-      ]
-    };
-
-    setLearners(prev => ({
-      ...prev,
-      [newId]: newLearnerObj
-    }));
-
-    setSelectedLearnerId(newId);
-    setAddChildForm({ name: '', grade: 'Grade 10 FET', school: '', linkCode: '' });
     setAddChildError('');
-    setIsAddChildModalOpen(false);
 
-    setPulseToastMessage(`🎉 ${newLearnerObj.name} successfully linked to your Guardian Portal!`);
-    setTimeout(() => setPulseToastMessage(''), 4500);
+    const rawInputCode = addChildForm.linkCode.trim();
+    if (!rawInputCode) {
+      setAddChildError('Please enter the temporary 6-character link passcode from your child\'s phone.');
+      return;
+    }
+
+    setIsSubmittingChild(true);
+
+    try {
+      // 1. Redeem link code via ephemeral 15-minute handshake service
+      const parentUser = currentUser || {
+        uid: 'parent_user_demo',
+        name: parentName,
+        email: 'parent@fundile.co.za'
+      };
+
+      const result = await redeemLinkCode(db, rawInputCode, parentUser);
+      const studentData = result?.student;
+
+      const finalName = (studentData?.name || addChildForm.name || 'New Learner').trim();
+      const finalGrade = studentData?.grade || addChildForm.grade;
+      const finalSchool = studentData?.school || (addChildForm.school.trim() || 'Secondary School');
+      const newId = studentData?.id || finalName.toLowerCase().replace(/\s+/g, '-').slice(0, 15);
+
+      const initials = finalName
+        .split(' ')
+        .map(p => p[0])
+        .join('')
+        .toUpperCase()
+        .slice(0, 2) || 'ST';
+
+      const newLearnerObj = {
+        id: newId,
+        name: finalName,
+        grade: finalGrade,
+        school: finalSchool,
+        avatar: initials,
+        linkCode: rawInputCode.toUpperCase(),
+        focusTime: '1h 15m',
+        focusTimeMinutes: 75,
+        questionsCompleted: 18,
+        accuracyRate: 78,
+        streakDays: 2,
+        ungameableXP: 450,
+        dataUsedMB: 0.9,
+        videoEquivalentMB: 310,
+        savedRands: 65,
+        masteredTopics: [
+          { name: 'Foundational Baseline Assessment', subject: 'Mathematics', score: 80 },
+          { name: 'Diagnostic Readiness Check', subject: 'Sciences', score: 75 }
+        ],
+        repairedMisconceptions: [
+          {
+            topic: 'Foundations Diagnostic',
+            issue: 'Baseline topic review initiated',
+            resolution: 'Scored 80% on welcome calibration diagnostic.',
+            timestamp: 'Just now',
+            status: 'Active'
+          }
+        ],
+        coachingTips: [
+          {
+            id: `tip-${newId}-1`,
+            icon: '💡',
+            category: 'Welcome Starter',
+            badgeColor: 'bg-emerald-50 text-emerald-700 border-emerald-200',
+            prompt: `Ask ${finalName} what interesting concept they explored during their calibration assessment today!`,
+            rationale: 'Shows supportive enthusiasm without any pressure.'
+          },
+          {
+            id: `tip-${newId}-2`,
+            icon: '🎯',
+            category: 'Target',
+            badgeColor: 'bg-blue-50 text-blue-700 border-blue-200',
+            prompt: 'Encourage a quick 10-minute setup drill to discover their daily target.',
+            rationale: 'Small beginnings create solid lifelong study habits.'
+          }
+        ],
+        subjects: [
+          {
+            id: `${newId}-math`,
+            name: 'Mathematics',
+            code: 'MTH00',
+            formativeMastery: 78,
+            evaluativeScore: 72,
+            level: 'Level 5',
+            rating: 'Substantial Achievement',
+            recentTopics: ['Diagnostic Baseline', 'Review & Practice'],
+            streak: '2-day active',
+            needsRefresh: false
+          },
+          {
+            id: `${newId}-sci`,
+            name: 'Natural / Physical Sciences',
+            code: 'SCI00',
+            formativeMastery: 74,
+            evaluativeScore: 70,
+            level: 'Level 5',
+            rating: 'Substantial Achievement',
+            recentTopics: ['Diagnostic Baseline', 'Fundamental Laws'],
+            streak: '2-day active',
+            needsRefresh: false
+          }
+        ]
+      };
+
+      setLearners(prev => ({
+        ...prev,
+        [newId]: newLearnerObj
+      }));
+
+      setSelectedLearnerId(newId);
+      setAddChildForm({ name: '', grade: 'Grade 10 FET', school: '', linkCode: '' });
+      setAddChildError('');
+      setIsAddChildModalOpen(false);
+
+      setPulseToastMessage(`🎉 ${finalName} successfully linked to your Guardian Portal via temporary OTP!`);
+      setTimeout(() => setPulseToastMessage(''), 4500);
+    } catch (err) {
+      setAddChildError(err.message || 'Failed to link learner. Please verify the code is active and try again.');
+    } finally {
+      setIsSubmittingChild(false);
+    }
   };
 
   return (
@@ -1289,15 +1314,49 @@ export default function ParentDashboard({
 
             {/* Modal Body Form */}
             <form onSubmit={handleAddChildSubmit} className="p-5 space-y-4 text-xs">
+              {/* POPIA Section 35 Ephemeral Security Banner */}
+              <div className="bg-amber-50 border border-amber-300/80 rounded-xl p-3 flex items-start gap-2.5 text-xs text-amber-900">
+                <AlertTriangle className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
+                <div>
+                  <p className="font-bold">Confidential One-Time Linking Handshake</p>
+                  <p className="text-[11px] text-amber-800 mt-0.5 leading-snug">
+                    Link passcodes expire after <strong>15 minutes</strong> and can only be used once. Keep this code confidential to safeguard your child's academic privacy (POPIA Sec 35).
+                  </p>
+                </div>
+              </div>
+
               {addChildError && (
-                <div className="p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-xs">
-                  {addChildError}
+                <div className="p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-xs flex items-center gap-2">
+                  <AlertTriangle className="w-4 h-4 shrink-0 text-rose-600" />
+                  <span>{addChildError}</span>
                 </div>
               )}
 
               <div>
                 <label className="block font-semibold text-slate-700 mb-1">
-                  Learner Full Name
+                  6-Character Learner Link Code <span className="text-rose-500">*</span>
+                </label>
+                <input
+                  type="text"
+                  placeholder="e.g. LNK-PAR8M4"
+                  maxLength={10}
+                  value={addChildForm.linkCode}
+                  onChange={(e) => setAddChildForm(prev => ({ ...prev, linkCode: e.target.value.toUpperCase() }))}
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:border-[#13519C] font-mono text-base font-bold tracking-widest uppercase text-slate-900 bg-slate-50/50"
+                  required
+                  autoFocus
+                />
+                <p className="text-[11px] text-slate-600 mt-1.5 flex items-start gap-1">
+                  <Info className="w-3.5 h-3.5 text-[#13519C] shrink-0 mt-0.5" />
+                  <span>
+                    Your child generates this on their phone under <strong>Profile &gt; Link Parent/Guardian</strong> or on Today's Desk.
+                  </span>
+                </p>
+              </div>
+
+              <div>
+                <label className="block font-semibold text-slate-700 mb-1">
+                  Learner Full Name <span className="text-slate-400 font-normal">(Optional if code contains profile)</span>
                 </label>
                 <input
                   type="text"
@@ -1305,59 +1364,39 @@ export default function ParentDashboard({
                   value={addChildForm.name}
                   onChange={(e) => setAddChildForm(prev => ({ ...prev, name: e.target.value }))}
                   className="w-full px-3 py-2 rounded-xl border border-slate-300 focus:outline-none focus:border-[#13519C] text-sm"
-                  required
                 />
               </div>
 
-              <div>
-                <label className="block font-semibold text-slate-700 mb-1">
-                  Grade / Phase
-                </label>
-                <select
-                  value={addChildForm.grade}
-                  onChange={(e) => setAddChildForm(prev => ({ ...prev, grade: e.target.value }))}
-                  className="w-full px-3 py-2 rounded-xl border border-slate-300 focus:outline-none focus:border-[#13519C] text-sm bg-white"
-                >
-                  <option value="Grade 8 Senior Phase">Grade 8 Senior Phase</option>
-                  <option value="Grade 9 Senior Phase">Grade 9 Senior Phase</option>
-                  <option value="Grade 10 FET">Grade 10 FET</option>
-                  <option value="Grade 11 FET">Grade 11 FET</option>
-                  <option value="Grade 12 Matric FET">Grade 12 Matric FET</option>
-                </select>
-              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label className="block font-semibold text-slate-700 mb-1">
+                    Grade / Phase
+                  </label>
+                  <select
+                    value={addChildForm.grade}
+                    onChange={(e) => setAddChildForm(prev => ({ ...prev, grade: e.target.value }))}
+                    className="w-full px-3 py-2 rounded-xl border border-slate-300 focus:outline-none focus:border-[#13519C] text-sm bg-white"
+                  >
+                    <option value="Grade 8 Senior Phase">Grade 8 Senior Phase</option>
+                    <option value="Grade 9 Senior Phase">Grade 9 Senior Phase</option>
+                    <option value="Grade 10 FET">Grade 10 FET</option>
+                    <option value="Grade 11 FET">Grade 11 FET</option>
+                    <option value="Grade 12 Matric FET">Grade 12 Matric FET</option>
+                  </select>
+                </div>
 
-              <div>
-                <label className="block font-semibold text-slate-700 mb-1">
-                  School Name (Optional)
-                </label>
-                <input
-                  type="text"
-                  placeholder="e.g. Phakamani Secondary School"
-                  value={addChildForm.school}
-                  onChange={(e) => setAddChildForm(prev => ({ ...prev, school: e.target.value }))}
-                  className="w-full px-3 py-2 rounded-xl border border-slate-300 focus:outline-none focus:border-[#13519C] text-sm"
-                />
-              </div>
-
-              <div>
-                <label className="block font-semibold text-slate-700 mb-1">
-                  6-Character Learner Link Code
-                </label>
-                <input
-                  type="text"
-                  placeholder="e.g. PAR8M4"
-                  maxLength={8}
-                  value={addChildForm.linkCode}
-                  onChange={(e) => setAddChildForm(prev => ({ ...prev, linkCode: e.target.value.toUpperCase() }))}
-                  className="w-full px-3 py-2 rounded-xl border border-slate-300 focus:outline-none focus:border-[#13519C] font-mono text-base font-bold tracking-widest uppercase text-slate-900"
-                  required
-                />
-                <p className="text-[11px] text-slate-600 mt-1.5 flex items-start gap-1">
-                  <Info className="w-3.5 h-3.5 text-[#13519C] shrink-0 mt-0.5" />
-                  <span>
-                    Your child can find their link code inside their Fundile mobile app under: <strong>Profile &gt; Link Parent/Guardian</strong>.
-                  </span>
-                </p>
+                <div>
+                  <label className="block font-semibold text-slate-700 mb-1">
+                    School Name (Optional)
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="e.g. Phakamani Secondary"
+                    value={addChildForm.school}
+                    onChange={(e) => setAddChildForm(prev => ({ ...prev, school: e.target.value }))}
+                    className="w-full px-3 py-2 rounded-xl border border-slate-300 focus:outline-none focus:border-[#13519C] text-sm"
+                  />
+                </div>
               </div>
 
               <div className="pt-2 flex items-center justify-end gap-2 border-t border-slate-100">
@@ -1365,14 +1404,23 @@ export default function ParentDashboard({
                   type="button"
                   onClick={() => setIsAddChildModalOpen(false)}
                   className="px-4 py-2 rounded-xl border border-slate-300 text-slate-600 hover:bg-slate-50 font-semibold cursor-pointer"
+                  disabled={isSubmittingChild}
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2 rounded-xl bg-[#13519C] hover:bg-[#0f3e77] text-white font-semibold shadow-xs cursor-pointer"
+                  disabled={isSubmittingChild}
+                  className="px-5 py-2 rounded-xl bg-[#13519C] hover:bg-[#0f3e77] disabled:opacity-50 text-white font-semibold shadow-xs cursor-pointer flex items-center gap-1.5"
                 >
-                  Connect Learner
+                  {isSubmittingChild ? (
+                    <>
+                      <RefreshCw className="w-3.5 h-3.5 animate-spin" />
+                      <span>Verifying...</span>
+                    </>
+                  ) : (
+                    <span>Connect Learner</span>
+                  )}
                 </button>
               </div>
             </form>

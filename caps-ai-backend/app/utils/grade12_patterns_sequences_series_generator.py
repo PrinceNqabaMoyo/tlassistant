@@ -76,15 +76,18 @@ def _validate_question(q: Dict[str, Any]) -> None:
 def _make_unique_options(rng: random.Random, correct: str, candidates: List[str], target: int = 4) -> List[str]:
     opts: List[str] = [str(correct)]
     for c in candidates:
-        if len(opts) >= target:
-            break
         c = str(c)
         if c not in opts:
             opts.append(c)
+        if len(opts) >= target:
+            break
 
-    while len(opts) < target:
-        opts.append(str(correct))
-        opts = list(dict.fromkeys(opts))
+    counter = 1
+    while len(opts) < target and counter <= 10:
+        cand = f"{correct} (alt {counter})"
+        if cand not in opts:
+            opts.append(cand)
+        counter += 1
 
     opts = opts[:target]
     rng.shuffle(opts)

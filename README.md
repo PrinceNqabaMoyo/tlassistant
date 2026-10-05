@@ -82,6 +82,34 @@ The Python backend runs in a Dockerized environment on Hugging Face Spaces (`sno
 python caps-ai-backend/deploy_hf.py
 ```
 
+#### Automated Hourly Check, GitHub Sync & Dual Redeployment
+Fundile maintains an automated pipeline that checks for codebase updates every hour, pushes verified changes to GitHub, and triggers production redeployments across both frontend (Firebase Hosting) and backend (Hugging Face Spaces):
+
+- **Single Check & Deploy Run:**
+  ```bash
+  python scripts/hourly_sync_deploy.py --once
+  # or via npm:
+  npm run sync:hourly
+  ```
+
+- **Continuous Local Background Daemon (Runs Every Hour):**
+  ```bash
+  python scripts/hourly_sync_deploy.py --daemon --interval 3600
+  # or via npm:
+  npm run sync:daemon
+  ```
+
+- **Dry-Run Inspection (Simulate Without Deploying):**
+  ```bash
+  python scripts/hourly_sync_deploy.py --dry-run
+  ```
+
+- **Automated CI/CD via GitHub Actions:**
+  A scheduled cron workflow is configured at `.github/workflows/hourly_sync_deploy.yml` which executes automatically every hour on GitHub (`0 * * * *`).
+
+- **AI Agent Background Automation:**
+  In Antigravity, the agent maintains the schedule using the `schedule` tool (`CronExpression="0 * * * *"`, `IsDaemon=true`).
+
 Currently, two official plugins are available:
 
 - [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh

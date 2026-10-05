@@ -1,16 +1,52 @@
 import os
 import datetime
-from flask import Blueprint, jsonify
-from app.utils.firebase_admin_client import get_firestore_client
+from flask import Blueprint, jsonify, request
+from app.utils.firebase_admin_client import get_firestore_client, verify_firebase_id_token
 
 admin_bp = Blueprint('admin', __name__)
+
+def _get_bearer_token():
+    authorization = request.headers.get('Authorization', '')
+    if not authorization.startswith('Bearer '):
+        raise PermissionError('Missing Firebase bearer token.')
+    token = authorization.split(' ', 1)[1].strip()
+    if not token:
+        raise PermissionError('Missing Firebase bearer token.')
+    return token
+
+def _verify_request_user():
+    return verify_firebase_id_token(_get_bearer_token())
+
+def _is_admin_user(user_id, email=None):
+    if email in ['princenqaba@gmail.com', 'princenqabamoyo@outlook.com']:
+        return True
+    try:
+        firestore_client = get_firestore_client()
+        user_snapshot = firestore_client.collection('users').document(user_id).get()
+        if not user_snapshot.exists:
+            return False
+        user_data = user_snapshot.to_dict() or {}
+        return bool(user_data.get('isOwner') or user_data.get('isSuperAdmin') or user_data.get('role') == 'admin')
+    except Exception:
+        return False
 
 @admin_bp.route('/delete-expired-solved-problems', methods=['POST'])
 def delete_expired_solved_problems():
     """
     Deletes solved_freeform_problems documents where retentionDate has passed.
-    This endpoint is intended to be called by a scheduled job, not directly by the frontend.
+    Protected endpoint: Requires valid Firebase Bearer token and Admin privileges.
     """
+    try:
+        user_info = _verify_request_user()
+        user_id = user_info.get('uid')
+        email = user_info.get('email')
+        if not _is_admin_user(user_id, email):
+            return jsonify({'error': 'Unauthorized: Administrator privileges required.'}), 403
+    except PermissionError as pe:
+        return jsonify({'error': str(pe)}), 401
+    except Exception as e:
+        return jsonify({'error': f'Authentication failed: {str(e)}'}), 401
+
     print("Starting deletion of expired solved problems...")
     
     now = datetime.datetime.now(datetime.timezone.utc)

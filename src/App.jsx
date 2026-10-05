@@ -53,6 +53,8 @@ import LandingPage from './components/ui/LandingPage';
 import SubscriptionPage from './components/ui/SubscriptionPage';
 import LearnerAppContainer from './components/student/LearnerAppContainer';
 import Header from './components/ui/Header';
+import PersonaSwitcherModal from './components/dev/PersonaSwitcherModal';
+import studentStore from './services/studentStore';
 
 // Import API utilities
 import { buildApiUrl } from './utils/apiBaseUrl';
@@ -608,6 +610,8 @@ export default function App() {
 
   const [superAdminMode, setSuperAdminMode] = useState('student');
   const [superAdminTier, setSuperAdminTier] = useState('standard');
+  const [activePersona, setActivePersona] = useState(null);
+  const [showPersonaSwitcher, setShowPersonaSwitcher] = useState(false);
   const [authStatusMessage, setAuthStatusMessage] = useState('');
   const [brandPalette, setBrandPalette] = useState(() => {
     if (typeof window === 'undefined') return 'light';
@@ -616,11 +620,39 @@ export default function App() {
   const [studentNotifications, setStudentNotifications] = useState([]);
   const processedEmailActionRef = useRef('');
 
-  const effectiveRole = currentUser?.isSuperAdmin ? superAdminMode : currentUser?.role;
+  const handleSwitchPersona = useCallback((persona) => {
+    setActivePersona(persona);
+    if (persona.role === 'student') {
+      setSuperAdminMode('student');
+      studentStore.setStudentProfile(persona.name, persona.grade, persona.school);
+      studentStore.setState({ deskDues: persona.assignedTasks?.length || 0, currentUser: persona });
+    } else if (persona.role === 'teacher') {
+      setSuperAdminMode('teacher');
+    } else if (persona.role === 'parent') {
+      setSuperAdminMode('parent');
+    } else if (persona.role === 'school' || persona.role === 'school_admin') {
+      setSuperAdminMode('school');
+    } else if (persona.role === 'admin') {
+      setSuperAdminMode('admin');
+    }
+  }, []);
+
+  const effectiveRole = activePersona ? activePersona.role : (currentUser?.isSuperAdmin ? superAdminMode : currentUser?.role);
   const effectiveTier = currentUser?.isSuperAdmin || currentUser?.isOwner ? superAdminTier : currentUser?.tier;
   const effectiveCurrentUser = useMemo(
-    () => (currentUser ? { ...currentUser, role: effectiveRole, tier: effectiveTier } : null),
-    [currentUser, effectiveRole, effectiveTier]
+    () => {
+      if (activePersona) {
+        return {
+          ...currentUser,
+          ...activePersona,
+          role: activePersona.role,
+          tier: effectiveTier,
+          isSuperAdmin: true,
+        };
+      }
+      return currentUser ? { ...currentUser, role: effectiveRole, tier: effectiveTier } : null;
+    },
+    [currentUser, activePersona, effectiveRole, effectiveTier]
   );
   const hasVerifiedAccess = Boolean(effectiveCurrentUser?.isOwner || effectiveCurrentUser?.isSuperAdmin || effectiveCurrentUser?.emailVerified);
   const {
@@ -1235,30 +1267,57 @@ export default function App() {
   if (topLevelPage === 'sandbox' || (typeof window !== 'undefined' && (window.location.search.includes('sandbox') || window.location.pathname === '/sandbox'))) {
     if (!isStandaloneApp() && effectiveCurrentUser) {
       return (
-        <div className="min-h-screen flex flex-col bg-slate-900">
-          <Header
-            currentUser={effectiveCurrentUser}
-            onLogout={handleAppLogout}
-            onNavigateToSubscription={handleNavigateToSubscriptionPage}
-            onStartTrial={handleNavigateToSubscriptionPage}
-            onMarkAllNotificationsRead={shellProps.onMarkAllNotificationsRead}
-            onMarkNotificationRead={shellProps.onMarkNotificationRead}
-            pendingAssignments={pendingAssignments}
-            studentNotifications={studentNotifications}
-            superAdminMode={superAdminMode}
-            setSuperAdminMode={setSuperAdminMode}
-            superAdminTier={superAdminTier}
-            setSuperAdminTier={setSuperAdminTier}
-            brandPalette={brandPalette}
-            setBrandPalette={setBrandPalette}
-          />
-          <div className="flex-1 min-h-0">
-            <LearnerAppContainer isSandboxMode={true} currentUser={effectiveCurrentUser} />
+        <div className="h-[100dvh] md:min-h-screen flex flex-col bg-slate-900 overflow-hidden md:overflow-visible">
+          <div className="hidden md:block">
+            <Header
+              currentUser={effectiveCurrentUser}
+              onLogout={handleAppLogout}
+              onNavigateToSubscription={handleNavigateToSubscriptionPage}
+              onStartTrial={handleNavigateToSubscriptionPage}
+              onMarkAllNotificationsRead={shellProps.onMarkAllNotificationsRead}
+              onMarkNotificationRead={shellProps.onMarkNotificationRead}
+              pendingAssignments={pendingAssignments}
+              studentNotifications={studentNotifications}
+              superAdminMode={superAdminMode}
+              setSuperAdminMode={setSuperAdminMode}
+              superAdminTier={superAdminTier}
+              setSuperAdminTier={setSuperAdminTier}
+              brandPalette={brandPalette}
+              setBrandPalette={setBrandPalette}
+              onOpenPersonaSwitcher={() => setShowPersonaSwitcher(true)}
+            />
           </div>
+          <div className="flex-1 min-h-0">
+            <LearnerAppContainer 
+              isSandboxMode={true} 
+              currentUser={effectiveCurrentUser} 
+              onOpenPersonaSwitcher={() => setShowPersonaSwitcher(true)}
+            />
+          </div>
+          <PersonaSwitcherModal
+            isOpen={showPersonaSwitcher}
+            onClose={() => setShowPersonaSwitcher(false)}
+            currentUser={effectiveCurrentUser}
+            onSwitchPersona={handleSwitchPersona}
+          />
         </div>
       );
     }
-    return <LearnerAppContainer isSandboxMode={true} currentUser={effectiveCurrentUser} />;
+    return (
+      <>
+        <LearnerAppContainer 
+          isSandboxMode={true} 
+          currentUser={effectiveCurrentUser} 
+          onOpenPersonaSwitcher={() => setShowPersonaSwitcher(true)}
+        />
+        <PersonaSwitcherModal
+          isOpen={showPersonaSwitcher}
+          onClose={() => setShowPersonaSwitcher(false)}
+          currentUser={effectiveCurrentUser}
+          onSwitchPersona={handleSwitchPersona}
+        />
+      </>
+    );
   }
 
   if (topLevelPage === 'subscribe') {
@@ -1281,34 +1340,75 @@ export default function App() {
   if (effectiveRole === 'student' || !effectiveRole) {
     if (!isStandaloneApp()) {
       return (
-        <div className="min-h-screen flex flex-col bg-slate-900">
-          <Header
-            currentUser={effectiveCurrentUser}
-            onLogout={handleAppLogout}
-            onNavigateToSubscription={handleNavigateToSubscriptionPage}
-            onStartTrial={handleNavigateToSubscriptionPage}
-            onMarkAllNotificationsRead={shellProps.onMarkAllNotificationsRead}
-            onMarkNotificationRead={shellProps.onMarkNotificationRead}
-            pendingAssignments={pendingAssignments}
-            studentNotifications={studentNotifications}
-            superAdminMode={superAdminMode}
-            setSuperAdminMode={setSuperAdminMode}
-            superAdminTier={superAdminTier}
-            setSuperAdminTier={setSuperAdminTier}
-            brandPalette={brandPalette}
-            setBrandPalette={setBrandPalette}
-          />
-          <div className="flex-1 min-h-0">
-            <LearnerAppContainer isSandboxMode={false} currentUser={effectiveCurrentUser} />
+        <div className="h-[100dvh] md:min-h-screen flex flex-col bg-slate-900 overflow-hidden md:overflow-visible">
+          <div className="hidden md:block">
+            <Header
+              currentUser={effectiveCurrentUser}
+              onLogout={handleAppLogout}
+              onNavigateToSubscription={handleNavigateToSubscriptionPage}
+              onStartTrial={handleNavigateToSubscriptionPage}
+              onMarkAllNotificationsRead={shellProps.onMarkAllNotificationsRead}
+              onMarkNotificationRead={shellProps.onMarkNotificationRead}
+              pendingAssignments={pendingAssignments}
+              studentNotifications={studentNotifications}
+              superAdminMode={superAdminMode}
+              setSuperAdminMode={setSuperAdminMode}
+              superAdminTier={superAdminTier}
+              setSuperAdminTier={setSuperAdminTier}
+              brandPalette={brandPalette}
+              setBrandPalette={setBrandPalette}
+              onOpenPersonaSwitcher={() => setShowPersonaSwitcher(true)}
+            />
           </div>
+          <div className="flex-1 min-h-0">
+            <LearnerAppContainer 
+              isSandboxMode={false} 
+              currentUser={effectiveCurrentUser} 
+              onOpenPersonaSwitcher={() => setShowPersonaSwitcher(true)}
+            />
+          </div>
+          <PersonaSwitcherModal
+            isOpen={showPersonaSwitcher}
+            onClose={() => setShowPersonaSwitcher(false)}
+            currentUser={effectiveCurrentUser}
+            onSwitchPersona={handleSwitchPersona}
+          />
         </div>
       );
     }
 
-    return <LearnerAppContainer isSandboxMode={false} currentUser={effectiveCurrentUser} />;
+    return (
+      <>
+        <LearnerAppContainer 
+          isSandboxMode={false} 
+          currentUser={effectiveCurrentUser} 
+          onOpenPersonaSwitcher={() => setShowPersonaSwitcher(true)}
+        />
+        <PersonaSwitcherModal
+          isOpen={showPersonaSwitcher}
+          onClose={() => setShowPersonaSwitcher(false)}
+          currentUser={effectiveCurrentUser}
+          onSwitchPersona={handleSwitchPersona}
+        />
+      </>
+    );
   }
 
   return (
-    <AppShell shellProps={{ ...shellProps, children: <RenderRoleContent roleContentProps={roleContentProps} /> }} />
+    <>
+      <AppShell 
+        shellProps={{ 
+          ...shellProps, 
+          onOpenPersonaSwitcher: () => setShowPersonaSwitcher(true),
+          children: <RenderRoleContent roleContentProps={roleContentProps} /> 
+        }} 
+      />
+      <PersonaSwitcherModal
+        isOpen={showPersonaSwitcher}
+        onClose={() => setShowPersonaSwitcher(false)}
+        currentUser={effectiveCurrentUser}
+        onSwitchPersona={handleSwitchPersona}
+      />
+    </>
   );
 }

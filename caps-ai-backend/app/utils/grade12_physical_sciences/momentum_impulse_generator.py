@@ -272,19 +272,14 @@ def _build_compound_impulse(r: random.Random) -> Dict[str, Any]:
     variant = r.choice(["vehicle_barrier_crash", "cricket_batsman_strike"])
     
     if variant == "vehicle_barrier_crash":
-        vehicles = [
-            {"type": "passenger car", "mass": r.choice([1000, 1100, 1200, 1250]), "vi": r.choice([20.0, 25.0, 30.0]), "vf_rebound": r.choice([2.0, 3.0, 4.0])},
-            {"type": "minibus taxi", "mass": r.choice([1800, 2000, 2200]), "vi": r.choice([18.0, 20.0, 22.0]), "vf_rebound": r.choice([2.0, 2.5, 3.0])},
-            {"type": "delivery bakkie", "mass": r.choice([1400, 1500, 1600]), "vi": r.choice([22.0, 24.0, 26.0]), "vf_rebound": r.choice([3.0, 4.0])},
-        ]
-        veh = r.choice(vehicles)
-        mass = veh["mass"]
-        vi = veh["vi"]
-        vf_rebound = veh["vf_rebound"]
-        dt = r.choice([0.15, 0.20, 0.25])
+        veh_types = ["passenger car", "minibus taxi", "delivery bakkie", "patrol vehicle", "SUV", "courier van", "family station wagon"]
+        veh_type = r.choice(veh_types)
+        mass = r.randint(18, 44) * 50
+        vi = float(r.randint(16, 32))
+        vf_rebound = round(r.choice([1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5]), 1)
+        dt = round(r.choice([0.12, 0.14, 0.15, 0.16, 0.18, 0.20, 0.22, 0.25]), 2)
         
-        pos_dir = "east"
-        neg_dir = "west"
+        pos_dir, neg_dir = r.choice([("east", "west"), ("to the right", "to the left"), ("north", "south")])
 
         # vi is east (+), vf is rebound west (-)
         # F_net * dt = m*(vf - vi)
@@ -292,16 +287,24 @@ def _build_compound_impulse(r: random.Random) -> Dict[str, Any]:
         f_net = round(delta_p / dt, 1)
         f_net_mag = abs(f_net)
         
-        # Fatality threshold (typically ~85 000 N to 120 000 N in biomechanical research)
-        f_threshold = r.choice([80000, 85000, 90000, 100000])
+        # Fatality threshold (typically ~75 000 N to 110 000 N in biomechanical research)
+        f_threshold = r.choice([75000, 80000, 85000, 90000, 95000, 100000, 110000])
         is_fatal = f_net_mag > f_threshold
 
+        roads = [
+            "on the N1 highway near Midrand", "on the N2 coastal freeway near Durban",
+            "on the N3 highway near Pietermaritzburg", "on the M1 motorway near Johannesburg",
+            "on the R21 arterial road", "on the N4 highway near Nelspruit",
+            "on a straight level rural bypass", "along an automotive testing facility"
+        ]
+        road = r.choice(roads)
+
         prompt = (
-            f"A {veh['type']} of mass {_fmt_sa(mass)} kg is travelling {pos_dir} on a straight horizontal road at "
+            f"A {veh_type} of mass {_fmt_sa(mass)} kg is travelling {pos_dir} {road} at "
             f"{_fmt_sa(vi)} m·s⁻¹. It collides head-on with a solid concrete barrier and rebounds at "
             f"{_fmt_sa(vf_rebound)} m·s⁻¹ {neg_dir}. The collision lasts for a contact duration of {_fmt_sa(dt)} s.\n\n"
             f"1. Taking {pos_dir} as positive, calculate the magnitude and direction of the average net force (F_net) "
-            f"exerted on the {veh['type']} during the collision. (4 marks)\n\n"
+            f"exerted on the {veh_type} during the collision. (4 marks)\n\n"
             f"2. Biomechanical research indicates that collision forces exceeding {_fmt_sa(f_threshold)} N can result in "
             f"fatal injuries to vehicle occupants. Determine, by comparing your answer to Question 1 with this threshold, "
             f"whether this collision could be fatal. (1 mark)"
@@ -447,40 +450,23 @@ def _build_compound_collision(r: random.Random) -> Dict[str, Any]:
 
     if collision_type == "inelastic_coalescing":
         # Two vehicles collide and stick together
-        scenarios = [
-            {
-                "obj1": "minibus taxi", "m1": 2000, "v1i": 25.0,
-                "obj2": "passenger car", "m2": 1000, "v2i": -20.0,
-                "dir_pos": "east", "dir_neg": "west"
-            },
-            {
-                "obj1": "delivery truck", "m1": 4500, "v1i": 20.0,
-                "obj2": "sedan", "m2": 1500, "v2i": -10.0,
-                "dir_pos": "east", "dir_neg": "west"
-            },
-            {
-                "obj1": "heavy bakkie", "m1": 1800, "v1i": 30.0,
-                "obj2": "hatchback", "m2": 1200, "v2i": -15.0,
-                "dir_pos": "east", "dir_neg": "west"
-            },
-            {
-                "obj1": "freight truck A", "m1": 5000, "v1i": 18.0,
-                "obj2": "freight truck B", "m2": 3000, "v2i": -10.0,
-                "dir_pos": "right", "dir_neg": "left"
-            },
-            {
-                "obj1": "patrol vehicle", "m1": 1600, "v1i": 28.0,
-                "obj2": "suspect vehicle", "m2": 1400, "v2i": -14.0,
-                "dir_pos": "east", "dir_neg": "west"
-            },
+        vehicle_pairs = [
+            ("minibus taxi", "passenger car"),
+            ("delivery truck", "sedan"),
+            ("heavy bakkie", "hatchback"),
+            ("freight truck", "courier van"),
+            ("patrol vehicle", "station wagon"),
+            ("SUV", "compact hatchback"),
+            ("heavy truck", "light delivery vehicle (LDV)"),
+            ("intercity bus", "saloon car")
         ]
-        scen = r.choice(scenarios)
-        m1 = scen["m1"]
-        v1i = scen["v1i"]
-        m2 = scen["m2"]
-        v2i = scen["v2i"] # negative in positive frame
-        pos_dir = scen["dir_pos"]
-        neg_dir = scen["dir_neg"]
+        veh1, veh2 = r.choice(vehicle_pairs)
+        m1 = r.randint(14, 45) * 100
+        m2 = r.randint(8, 22) * 100
+        v1i = float(r.randint(18, 32))
+        v2i_mag = float(r.randint(10, 25))
+        v2i = -v2i_mag
+        pos_dir, neg_dir = r.choice([("east", "west"), ("to the right", "to the left"), ("north", "south")])
 
         # Total initial momentum: p_total_i = m1*v1i + m2*v2i
         p_total_i = round(m1 * v1i + m2 * v2i, 1)
@@ -499,9 +485,16 @@ def _build_compound_collision(r: random.Random) -> Dict[str, Any]:
         ek_total_f = round(0.5 * m_total * (vf ** 2), 2)
         delta_ek = round(ek_total_f - ek_total_i, 2)
 
+        roads = [
+            "on the N1 highway", "on the N2 coastal freeway", "on the M4 freeway",
+            "on the R102 arterial road", "on a straight level rural road", "along an industrial test track",
+            "on the N3 freeway", "on the M1 bypass", "on a single-lane regional road"
+        ]
+        road = r.choice(roads)
+
         prompt = (
-            f"A {scen['obj1']} of mass {_fmt_sa(m1)} kg is travelling {pos_dir} at a constant velocity of "
-            f"{_fmt_sa(v1i)} m·s⁻¹. It collides head-on on a straight horizontal road with a {scen['obj2']} of mass "
+            f"A {veh1} of mass {_fmt_sa(m1)} kg is travelling {pos_dir} {road} at a constant velocity of "
+            f"{_fmt_sa(v1i)} m·s⁻¹. It collides head-on on a straight horizontal road with a {veh2} of mass "
             f"{_fmt_sa(m2)} kg travelling {neg_dir} at a velocity of {_fmt_sa(abs(v2i))} m·s⁻¹.\n\n"
             f"During the collision, the two vehicles lock together and move off as a single combined unit.\n\n"
             f"1. Taking motion to the {pos_dir} as positive, calculate the velocity of the combined vehicle wreckage "
@@ -555,44 +548,63 @@ def _build_compound_collision(r: random.Random) -> Dict[str, Any]:
 
     else:
         # collision_type == "elastic_billiard"
-        # Two laboratory trolleys or steel spheres collide elastically
-        scenarios = [
-            {"obj1": "Trolley A", "m1": 2.0, "v1i": 5.0, "obj2": "Trolley B", "m2": 3.0, "v2i": 0.0, "v1f": -1.0, "v2f": 4.0},
-            {"obj1": "Steel Sphere A", "m1": 0.5, "v1i": 6.0, "obj2": "Steel Sphere B", "m2": 1.0, "v2i": 0.0, "v1f": -2.0, "v2f": 4.0},
-            {"obj1": "Billiard Ball 1", "m1": 0.3, "v1i": 4.0, "obj2": "Billiard Ball 2", "m2": 0.3, "v2i": -2.0, "v1f": -2.0, "v2f": 4.0},
-            {"obj1": "Dynamic Cart 1", "m1": 1.0, "v1i": 3.0, "obj2": "Dynamic Cart 2", "m2": 2.0, "v2i": 0.0, "v1f": -1.0, "v2f": 2.0},
+        # Two laboratory trolleys, gliders, or spheres collide elastically
+        lab_pairs = [
+            ("Trolley A", "Trolley B"),
+            ("Dynamic Cart 1", "Dynamic Cart 2"),
+            ("Steel Sphere A", "Steel Sphere B"),
+            ("Air Track Glider X", "Air Track Glider Y"),
+            ("Billiard Ball 1", "Billiard Ball 2")
         ]
-        scen = r.choice(scenarios)
-        m1 = scen["m1"]
-        v1i = scen["v1i"]
-        m2 = scen["m2"]
-        v2i = scen["v2i"]
-        v1f = scen["v1f"]
-        v2f = scen["v2f"]
-        
-        pos_dir = "right"
-        neg_dir = "left"
+        obj1, obj2 = r.choice(lab_pairs)
+        pos_dir, neg_dir = r.choice([("to the right", "to the left"), ("east", "west"), ("north", "south")])
 
+        # Exact elastic families yielding clean numbers:
+        family = r.choice(["equal_mass", "mass_ratio_2", "mass_ratio_3"])
+        if family == "equal_mass":
+            m1 = round(r.choice([0.2, 0.4, 0.5, 0.8, 1.0, 1.2, 1.5, 2.0]), 2)
+            m2 = m1
+            v1i = float(r.randint(3, 8))
+            v2i = float(r.choice([0.0, -2.0, -3.0, -4.0]))
+            v1f = v2i
+            v2f = v1i
+        elif family == "mass_ratio_2":
+            m1 = round(r.choice([0.5, 1.0, 1.5, 2.0]), 2)
+            m2 = round(2.0 * m1, 2)
+            v1i = float(r.choice([3.0, 6.0, 9.0, 12.0]))
+            v2i = 0.0
+            v1f = -round(v1i / 3.0, 2)
+            v2f = round(2.0 * v1i / 3.0, 2)
+        else: # mass_ratio_3
+            m1 = round(r.choice([0.4, 0.5, 1.0]), 2)
+            m2 = round(3.0 * m1, 2)
+            v1i = float(r.choice([4.0, 6.0, 8.0, 10.0, 12.0]))
+            v2i = 0.0
+            v1f = -round(0.5 * v1i, 2)
+            v2f = round(0.5 * v1i, 2)
+        
         v1f_dir = pos_dir if v1f >= 0 else neg_dir
         v2f_dir = pos_dir if v2f >= 0 else neg_dir
         
         ek_total_i = round(0.5 * m1 * (v1i ** 2) + 0.5 * m2 * (v2i ** 2), 2)
         ek_total_f = round(0.5 * m1 * (v1f ** 2) + 0.5 * m2 * (v2f ** 2), 2)
 
+        track_id = f"Air Track #{r.randint(10, 99)}"
+
         prompt = (
-            f"In a physics laboratory experiment on a frictionless horizontal air track, {scen['obj1']} of mass "
-            f"{_fmt_sa(m1)} kg travels to the {pos_dir} at {_fmt_sa(v1i)} m·s⁻¹. It collides head-on with "
-            f"{scen['obj2']} of mass {_fmt_sa(m2)} kg "
+            f"In a physics laboratory experiment on frictionless {track_id}, {obj1} of mass "
+            f"{_fmt_sa(m1)} kg travels {pos_dir} at {_fmt_sa(v1i)} m·s⁻¹. It collides head-on with "
+            f"{obj2} of mass {_fmt_sa(m2)} kg "
             f"{f'which is initially at rest' if v2i == 0.0 else f'travelling to the {neg_dir} at {_fmt_sa(abs(v2i))} m·s⁻¹'}.\n\n"
-            f"After the collision, {scen['obj1']} rebounds to the {v1f_dir} at {_fmt_sa(abs(v1f))} m·s⁻¹.\n\n"
-            f"1. Taking motion to the {pos_dir} as positive, calculate the velocity of {scen['obj2']} immediately "
+            f"After the collision, {obj1} rebounds to the {v1f_dir} at {_fmt_sa(abs(v1f))} m·s⁻¹.\n\n"
+            f"1. Taking motion to the {pos_dir} as positive, calculate the velocity of {obj2} immediately "
             f"after the collision. (4 marks)\n\n"
             f"2. Determine, by calculating the total kinetic energy of the system before and after the collision, "
             f"whether this collision is ELASTIC or INELASTIC. (2 marks)"
         )
 
         sample_answer = (
-            rf"\textbf{{1. Velocity of {scen['obj2']} after collision:}}\\"
+            rf"\textbf{{1. Velocity of {obj2} after collision:}}\\"
             rf"\text{{Taking {pos_dir} as positive:}}\\"
             rf"\sum p_i = \sum p_f\\"
             rf"m_1 v_{{1i}} + m_2 v_{{2i}} = m_1 v_{{1f}} + m_2 v_{{2f}}\\"
@@ -627,7 +639,7 @@ def _build_compound_collision(r: random.Random) -> Dict[str, Any]:
         }
 
         hints = {
-            "tier_1": f"Apply the Principle of Conservation of Linear Momentum: $\\sum p_i = \\sum p_f$. Note that {scen['obj1']} rebounds to the {v1f_dir}, so its final velocity is negative.",
+            "tier_1": f"Apply the Principle of Conservation of Linear Momentum: $\\sum p_i = \\sum p_f$. Note that {obj1} rebounds to the {v1f_dir}, so its final velocity is negative.",
             "tier_2": f"Taking {pos_dir} as positive: $m_1 v_{{1i}} + m_2 v_{{2i}} = m_1 v_{{1f}} + m_2 v_{{2f}}$. Substitute $v_{{1f}} = {_fmt_sa(v1f)}$ m·s⁻¹ and solve for $v_{{2f}}$. For Question 2, calculate total kinetic energy before and after.",
             "tier_3": f"Initial momentum = $({_fmt_sa(m1)})({_fmt_sa(v1i)}) + ({_fmt_sa(m2)})({_fmt_sa(v2i)}) = {_fmt_sa(round(m1 * v1i + m2 * v2i, 2))}$ kg·m·s⁻¹. Final momentum = $({_fmt_sa(m1)})({_fmt_sa(v1f)}) + ({_fmt_sa(m2)})v_{{2f}}$. $v_{{2f}} = {_fmt_sa(v2f)}$ m·s⁻¹ to the {v2f_dir}. Total $E_{{ki}} = {_fmt_sa(ek_total_i)}$ J, $E_{{kf}} = {_fmt_sa(ek_total_f)}$ J. Since $E_{{ki}} = E_{{kf}}$, the collision is ELASTIC."
         }

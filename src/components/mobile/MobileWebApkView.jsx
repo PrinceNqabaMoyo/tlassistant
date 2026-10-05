@@ -1,23 +1,38 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Lightbulb, CheckCircle2, ArrowRight, Loader2, Sparkles } from 'lucide-react';
+import { 
+  Lightbulb, 
+  CheckCircle2, 
+  ArrowRight, 
+  Loader2, 
+  Sparkles,
+  GraduationCap,
+  Bell,
+  Clock,
+  Compass,
+  WifiOff
+} from 'lucide-react';
 import studentStore from '../../services/studentStore';
-import MasteryDial from '../student/MasteryDial';
 
 /**
  * MobileWebApkView
  * Authentic Android WebAPK Mobile Experience with Bidirectional Parity.
- * - Mobile Portrait Mode:
- *   - Android Status bar (14:30, LTE, 📶, 88% battery).
- *   - User Profile Ribbon with avatar photo tap (ProfilePhotoModal) & 1-tap collapse.
- *   - Dual-Ring MasteryDial in profile summary.
- *   - Interactive Topic Pill: Term 1 • {activeTopic} ▾ (TopicScopeModal).
- *   - Compact 4-stage progression stepper: [ 0. Diag ] [ 1. Scaff ] [ 2. Prac ] [ 3. Exam ].
- *   - Today's Desk & Dedicated Subject Views with live question inputs, 3-tier hints drawer, and mark button.
- * - Mobile Landscape / Fullscreen Mode:
- *   - Ribbon hidden to maximize vertical space.
- *   - Fullscreen 6-column 2D ledger table & math working area.
- * - Mobile Bottom Navigation Bar:
- *   - 10-subject horizontal carousel with 44px touch targets.
+ * 
+ * Architectural Invariants:
+ * 1. Subtle Wave Header Ribbon:
+ *    - Deep brand blue gradient (#13519C to #0f4280) with gold graduation cap badge.
+ *    - Afacad typography: "Fundile", subtitle "Learn • Practice • Progress".
+ *    - Notification bell with red dot and student avatar calling onOpenProfilePhoto.
+ *    - Organic subtle SVG wave path (h-5 text-slate-50) smoothly blending into the canvas.
+ * 2. Student Greeting & Compact Metrics:
+ *    - Eliminates redundant 4-metric summary bar to save ~110px vertical height.
+ *    - Compact greeting card with student name (defaulting to Prince), grade, streak, XP, and Link Parent.
+ * 3. Today's Desk: Two Sticky Non-Scrolling Sections with Tucking Boundary:
+ *    - Section 1: Upcoming Tasks (sticky header, Accounting & Mathematics cards tucking under).
+ *    - Section 2: Self-Paced Mastery (sticky header, 4 BKT calibrated autonomous cards tucking under).
+ *    - Offline WebAPK Cache Status Badge.
+ * 4. Pinned Bottom Subject Navigation:
+ *    - Permanently anchored 10-subject carousel (#mob-bottom-nav) with 44px min touch targets.
+ *    - Content container flex-1 overflow-y-auto overscroll-contain; bottom nav is NEVER displaced.
  */
 
 const MOBILE_SUBJECTS = [
@@ -146,7 +161,7 @@ export default function MobileWebApkView({
   activeTab = 'desk',
   onSelectTab = () => {},
   orientation = 'portrait', // 'portrait' | 'landscape'
-  studentName = 'Nqobile Dlamini',
+  studentName = 'Prince Moyo',
   grade = 10,
   schoolName = 'Westville High School',
   streakDays = 5,
@@ -161,9 +176,9 @@ export default function MobileWebApkView({
   onCheckAnswer = () => {},
   onNextQuestion = () => {},
   onOpenProfilePhoto = () => {},
+  onOpenLinkGuardian = () => {},
+  onOpenPersonaSwitcher = null,
 }) {
-  const [isRibbonCollapsed, setIsRibbonCollapsed] = useState(false);
-  const [showProfileSummary, setShowProfileSummary] = useState(false);
   const [showHints, setShowHints] = useState(false);
   const [activeHintTier, setActiveHintTier] = useState(1);
   const [hasMarkedCurrent, setHasMarkedCurrent] = useState(false);
@@ -181,7 +196,6 @@ export default function MobileWebApkView({
   const bottomNavRef = useRef(null);
   const activeBtnRef = useRef(null);
   const contentScrollRef = useRef(null);
-  const lastScrollTopRef = useRef(0);
 
   const [storeState, setStoreState] = useState(() => studentStore.getState());
   useEffect(() => {
@@ -197,14 +211,21 @@ export default function MobileWebApkView({
 
   const currentTab = normalizeTabId(activeTab);
   const isLandscape = orientation === 'landscape';
-  const firstName = studentName ? studentName.split(' ')[0] : 'Nqobile';
+
+  const resolvedStudentName = studentName || storeState?.studentName || 'Prince Moyo';
+  const rawFirst = resolvedStudentName ? resolvedStudentName.split(' ')[0] : 'Prince';
+  const firstName = (rawFirst && rawFirst.toLowerCase() !== 'nqobile') ? rawFirst : 'Prince';
   const formattedSchool = schoolName ? schoolName.replace(/School/i, '').trim() : 'Westville High';
 
-  const currentSubData = studentStore.getSubject(currentTab);
+  const currentSubData = studentStore.getSubject(currentTab) || {
+    formativeMastery: 84,
+    evaluativeScore: 78,
+    status: 'practice'
+  };
 
   const getDynamicBadge = (subId) => {
     if (subId === 'desk') {
-      const dues = storeState?.deskDues ?? 0;
+      const dues = storeState?.deskDues ?? 2;
       return {
         text: dues > 0 ? `${dues} Due` : '0 Due',
         bg: dues > 0 ? 'bg-rose-500 text-white shadow-sm shadow-rose-500/40' : 'bg-slate-200 text-slate-700'
@@ -234,28 +255,10 @@ export default function MobileWebApkView({
     setMathAnswer('');
   }, [question?.id, currentTab]);
 
-  // Dynamic automatic hiding on scroll in content container
-  const handleContentScroll = (e) => {
-    const currentScrollTop = e.currentTarget.scrollTop;
-    const diff = currentScrollTop - lastScrollTopRef.current;
-
-    if (currentScrollTop <= 15) {
-      setIsRibbonCollapsed(false);
-    } else if (diff > 6 && currentScrollTop > 30) {
-      setIsRibbonCollapsed(true);
-    } else if (diff < -8) {
-      setIsRibbonCollapsed(false);
-    }
-
-    lastScrollTopRef.current = currentScrollTop;
-  };
-
-  // Reset scroll and restore ribbon when switching tabs
+  // Reset scroll when switching tabs
   useEffect(() => {
     if (contentScrollRef.current) {
       contentScrollRef.current.scrollTop = 0;
-      lastScrollTopRef.current = 0;
-      setIsRibbonCollapsed(false);
     }
   }, [currentTab]);
 
@@ -280,139 +283,80 @@ export default function MobileWebApkView({
   };
 
   return (
-    <div className="flex flex-col h-full bg-white text-slate-800 font-sans select-none relative overflow-hidden">
+    <div className="h-[100dvh] max-h-[100dvh] flex flex-col overflow-hidden bg-white text-slate-800 font-sans select-none relative">
       
       {/* ───────────────────────────────────────────────────────────── */}
-      {/* 1. ANDROID SYSTEM STATUS BAR                                  */}
+      {/* 1. SUBTLE WAVE HEADER RIBBON                                   */}
       {/* ───────────────────────────────────────────────────────────── */}
-      <div className={`px-5 ${isLandscape ? 'pt-1.5 pb-1' : 'pt-2.5 pb-1.5'} bg-[#13519C] text-white flex items-center justify-between text-[11px] font-mono select-none shrink-0`}>
-        <span id="mob-clock">14:30</span>
-        <div className="flex items-center gap-2">
-          {isLandscape && (
-            <span className="text-[10px] text-emerald-300 font-sans font-bold hidden sm:inline">
-              🔄 Fullscreen Workspace Active
-            </span>
-          )}
-          <span className="text-[10px] bg-blue-800/80 px-1.5 py-0.5 rounded border border-blue-400/30">LTE</span>
-          <span>📶</span>
-          <span>🔋 88%</span>
-        </div>
-      </div>
-
-      {/* ───────────────────────────────────────────────────────────── */}
-      {/* 2. USER PROFILE RIBBON (Collapsible in Portrait, Hidden in Land) */}
-      {/* ───────────────────────────────────────────────────────────── */}
-      {!isLandscape && !isRibbonCollapsed && (
-        <div 
-          id="mob-user-ribbon" 
-          className="px-4 py-2 bg-[#13519C] text-white flex items-center justify-between border-t border-blue-800/40 transition-all duration-300 ease-in-out shrink-0"
+      {!isLandscape && (
+        <header 
+          id="mob-wave-header-ribbon"
+          className="bg-gradient-to-b from-[#13519C] to-[#0f4280] text-white pt-[calc(0.75rem+env(safe-area-inset-top))] pb-5 px-4 shrink-0 overflow-hidden relative"
         >
-          <div className="flex items-center gap-2.5">
-            {/* User Profile Avatar with Click Handler for ProfilePhotoModal */}
-            <button
-              type="button"
-              onClick={() => onOpenProfilePhoto && onOpenProfilePhoto()}
-              className="relative group w-8 h-8 rounded-full overflow-hidden ring-2 ring-white/50 hover:ring-[#FF9100] transition flex items-center justify-center bg-white text-[#13519C] font-extrabold text-xs shadow-xs cursor-pointer shrink-0"
-              title="Update Profile Photo"
-            >
-              {userPhoto ? (
-                <img src={userPhoto} alt={studentName} className="h-full w-full object-cover" />
-              ) : (
-                <span>{studentName ? studentName.charAt(0) : 'N'}</span>
-              )}
-              <span className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center text-[10px] transition-opacity">
-                📸
-              </span>
-            </button>
+          <div className="flex items-center justify-between relative z-10">
+            {/* Left: Fundile Brand Mark */}
+            <div className="flex items-center gap-2.5">
+              <div className="w-8 h-8 rounded-xl bg-white/10 border border-white/20 flex items-center justify-center shadow-xs shrink-0">
+                <GraduationCap className="w-5 h-5 text-[#FF9100]" />
+              </div>
+              <div className="flex flex-col">
+                <span 
+                  className="font-extrabold text-lg leading-tight tracking-tight text-white" 
+                  style={{ fontFamily: 'Afacad, sans-serif' }}
+                >
+                  Fundile
+                </span>
+                <span className="text-[10px] text-blue-200/90 font-medium leading-none">
+                  Learn • Practice • Progress
+                </span>
+              </div>
+            </div>
 
-            <div>
-              <span className="font-bold text-xs block leading-tight" style={{ fontFamily: 'Afacad, sans-serif' }}>
-                {studentName}
-              </span>
-              <span className="text-[10px] text-blue-100/90 leading-tight">
-                Grade {grade} FET • {formattedSchool}
-              </span>
+            {/* Right: Actions (Notification Bell & Profile Avatar) */}
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                className="relative p-1.5 rounded-full hover:bg-white/10 active:bg-white/20 text-white transition cursor-pointer flex items-center justify-center min-w-[36px] min-h-[36px]"
+                title="Notifications"
+                aria-label="Notifications"
+              >
+                <Bell className="w-4 h-4 text-blue-100" />
+                <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-rose-500 ring-2 ring-[#13519C]" />
+              </button>
+
+              <button
+                type="button"
+                onClick={() => onOpenProfilePhoto && onOpenProfilePhoto()}
+                className="relative group w-8 h-8 rounded-full overflow-hidden ring-2 ring-white/60 hover:ring-[#FF9100] transition flex items-center justify-center bg-white text-[#13519C] font-extrabold text-xs shadow-xs cursor-pointer shrink-0"
+                title="Update Profile Photo"
+                aria-label="Profile Photo"
+              >
+                {userPhoto ? (
+                  <img src={userPhoto} alt={studentName} className="h-full w-full object-cover" />
+                ) : (
+                  <span>{firstName ? firstName.charAt(0) : 'P'}</span>
+                )}
+                <span className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center text-[10px] transition-opacity text-white">
+                  📸
+                </span>
+              </button>
             </div>
           </div>
 
-          <div className="flex items-center gap-1.5">
-            <span className="text-[10px] bg-amber-400 text-slate-950 font-extrabold px-2 py-0.5 rounded-full shadow-xs">
-              🔥 {effectiveStreak}d
-            </span>
-            <span className="text-[10px] bg-blue-900/80 text-blue-100 font-extrabold px-2 py-0.5 rounded-full border border-blue-400/40 shadow-xs">
-              ⚡ {effectiveXp > 999 ? `${(effectiveXp / 1000).toFixed(1)}k` : effectiveXp}
-            </span>
-            <button
-              type="button"
-              onClick={() => setShowProfileSummary(!showProfileSummary)}
-              className="px-1.5 py-0.5 rounded-md bg-white/20 hover:bg-white/30 text-white font-bold text-[10px] transition cursor-pointer"
-              title="Mastery Dial Summary"
+          {/* Organic Subtle SVG Wave Path smoothly transitioning into bg-slate-50 */}
+          <div className="absolute bottom-0 left-0 right-0 w-full overflow-hidden leading-none pointer-events-none">
+            <svg 
+              className="h-5 w-full text-slate-50 preserve-3d block" 
+              viewBox="0 0 1200 120" 
+              preserveAspectRatio="none"
             >
-              {showProfileSummary ? '▲ Dial' : '▼ Dial'}
-            </button>
-            <button
-              type="button"
-              id="btn-toggle-ribbon"
-              onClick={() => setIsRibbonCollapsed(true)}
-              className="px-1.5 py-0.5 rounded-md bg-white/20 hover:bg-white/30 text-white font-bold text-[10px] transition cursor-pointer"
-              title="Collapse Ribbon"
-            >
-              ▲ Hide
-            </button>
+              <path 
+                d="M0,0 C180,45 420,55 600,32 C820,8 1020,42 1200,22 L1200,120 L0,120 Z" 
+                fill="currentColor"
+              />
+            </svg>
           </div>
-        </div>
-      )}
-
-      {/* Profile Mastery Summary Drawer in Portrait */}
-      {!isLandscape && !isRibbonCollapsed && showProfileSummary && (
-        <div className="px-4 py-3 bg-blue-950 text-white flex items-center justify-between border-t border-blue-800/60 animate-in fade-in shrink-0">
-          <div className="flex items-center gap-3">
-            <MasteryDial
-              size={56}
-              strokeWidth={5}
-              formativeMastery={currentSubData.formativeMastery}
-              evaluativeScore={currentSubData.evaluativeScore}
-            />
-            <div>
-              <span className="text-[10px] font-bold uppercase text-blue-200 block tracking-wider">
-                BKT Formative Mastery
-              </span>
-              <span className="text-sm font-bold text-white block leading-tight" style={{ fontFamily: 'Afacad, sans-serif' }}>
-                {currentSubData.formativeMastery}% Mastery
-              </span>
-              <span className="text-[10px] text-blue-300">
-                Evaluative: {currentSubData.evaluativeScore}%
-              </span>
-            </div>
-          </div>
-          <button
-            type="button"
-            onClick={() => onOpenTopicScope ? onOpenTopicScope() : onSelectTopic(activeTopic)}
-            className="px-2.5 py-1.5 rounded-xl bg-white/15 hover:bg-white/25 text-white text-[11px] font-bold border border-white/20 transition cursor-pointer"
-          >
-            Scope Scope ▾
-          </button>
-        </div>
-      )}
-
-      {/* 1-Line Collapsed Ribbon Indicator (Portrait Mode) */}
-      {!isLandscape && isRibbonCollapsed && (
-        <div 
-          id="mob-ribbon-collapsed-bar" 
-          className="px-4 py-1.5 bg-[#13519C] text-white text-[10px] font-bold flex items-center justify-between border-t border-blue-800/40 select-none shrink-0 transition-all duration-300 ease-in-out"
-        >
-          <span className="text-blue-100 flex items-center gap-1.5">
-            <span className="w-2 h-2 rounded-full bg-emerald-400"></span>
-            <span>Workspace Maximized ({firstName} • Gr {grade})</span>
-          </span>
-          <button 
-            type="button" 
-            onClick={() => setIsRibbonCollapsed(false)} 
-            className="text-amber-300 hover:text-white underline text-[10px] cursor-pointer"
-          >
-            ▼ Show Profile
-          </button>
-        </div>
+        </header>
       )}
 
       {/* ───────────────────────────────────────────────────────────── */}
@@ -430,7 +374,7 @@ export default function MobileWebApkView({
                 onSelectTopic(activeTopic || getDefaultTopicForSubject(currentTab));
               }
             }}
-            className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#13519C] hover:bg-[#0e3c73] text-white text-[11px] font-bold transition shadow-xs cursor-pointer"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#13519C] hover:bg-[#0e3c73] text-white text-[11px] font-bold transition shadow-xs cursor-pointer min-h-[36px]"
             title="Choose Topic & Exam Scope"
             style={{ fontFamily: 'Afacad, sans-serif' }}
           >
@@ -473,68 +417,313 @@ export default function MobileWebApkView({
       {/* ───────────────────────────────────────────────────────────── */}
       <div 
         ref={contentScrollRef}
-        onScroll={handleContentScroll}
-        className="flex-1 bg-slate-50 overflow-y-auto"
+        className="flex-1 bg-slate-50 overflow-y-auto overscroll-contain pb-28"
       >
         
         {/* ==================== VIEW 1: TODAY'S DESK ==================== */}
         {currentTab === 'desk' && (
-          <div id="mob-content-desk" className="p-4 space-y-3">
-            {/* Assignment 1: Accounting */}
-            <div className="bg-white border-2 border-emerald-400 p-3.5 rounded-2xl shadow-sm">
-              <div className="flex justify-between items-center text-[10px] font-extrabold mb-1">
-                <span className="bg-emerald-600 text-white px-2 py-0.5 rounded-full">ACCOUNTING • DUE TODAY</span>
-                <span className="bg-rose-500 text-white px-2 py-0.5 rounded-full font-extrabold text-[9px] shadow-xs">17:00</span>
+          <div id="mob-content-desk" className="p-4 space-y-4">
+            
+            {/* Student Greeting Card (Eliminates redundant 4-metric bar to recover ~110px) */}
+            <div className="bg-white p-3.5 rounded-2xl border border-slate-200/80 shadow-xs flex items-center justify-between gap-3">
+              <div className="flex items-center gap-2.5 min-w-0">
+                <div className="w-10 h-10 rounded-full bg-blue-100/90 text-[#13519C] flex items-center justify-center shrink-0 shadow-2xs">
+                  <GraduationCap className="w-5 h-5 text-[#13519C]" />
+                </div>
+                <div className="min-w-0">
+                  <span className="text-[11px] font-medium text-slate-500 block leading-tight">
+                    Good morning,
+                  </span>
+                  <h2 
+                    className="text-base font-extrabold text-slate-900 leading-tight truncate" 
+                    style={{ fontFamily: 'Afacad, sans-serif' }}
+                  >
+                    {firstName}
+                  </h2>
+                  <span className="text-[10px] text-slate-500 font-medium block leading-tight truncate">
+                    Grade {grade} • FET • {formattedSchool}
+                  </span>
+                </div>
               </div>
-              <h5 className="text-xs font-bold text-slate-900 mt-1" style={{ fontFamily: 'Afacad, sans-serif' }}>General Journal: Debtors &amp; Bad Debts</h5>
-              <p className="text-[11px] text-slate-600 mt-0.5">Mrs. Khumalo assigned 12 marks practice (J. Dlamini dividend).</p>
-              <button
-                type="button"
-                onClick={() => onSelectTab('accounting')}
-                className="mt-2.5 w-full py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl shadow-sm shadow-emerald-600/30 transition cursor-pointer"
-              >
-                Open in Accounting &rarr;
-              </button>
+
+              <div className="flex flex-col items-end gap-1.5 shrink-0">
+                <div className="flex items-center gap-1.5">
+                  <span className="text-[10px] bg-amber-100 text-amber-900 border border-amber-300 font-extrabold px-2 py-0.5 rounded-full shadow-2xs flex items-center gap-1">
+                    <span>🔥</span>
+                    <span>{effectiveStreak}d</span>
+                  </span>
+                  <span className="text-[10px] bg-blue-50 text-[#13519C] border border-blue-200 font-extrabold px-2 py-0.5 rounded-full shadow-2xs flex items-center gap-1">
+                    <span>⚡</span>
+                    <span>{effectiveXp > 999 ? `${(effectiveXp / 1000).toFixed(1)}k` : effectiveXp} XP</span>
+                  </span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <button
+                    type="button"
+                    onClick={() => onOpenLinkGuardian && onOpenLinkGuardian()}
+                    className="px-2 py-1 rounded-lg bg-blue-50 hover:bg-blue-100 active:bg-blue-200 text-[#13519C] text-[10px] font-extrabold border border-blue-200 flex items-center gap-1 transition cursor-pointer shadow-2xs min-h-[30px]"
+                    title="Family & Guardian Link"
+                  >
+                    <span>🔗</span>
+                    <span>Link Parent</span>
+                  </button>
+                  {onOpenPersonaSwitcher && (
+                    <button
+                      type="button"
+                      onClick={() => onOpenPersonaSwitcher()}
+                      className="px-2 py-1 rounded-lg bg-amber-50 hover:bg-amber-100 active:bg-amber-200 text-amber-900 text-[10px] font-extrabold border border-amber-200 flex items-center gap-1 transition cursor-pointer shadow-2xs min-h-[30px]"
+                      title="Switch Persona (Test Students, Teachers, Parents)"
+                    >
+                      <span>👥</span>
+                      <span>Personas</span>
+                    </button>
+                  )}
+                </div>
+              </div>
             </div>
 
-            {/* Assignment 2: Mathematics */}
-            <div className="bg-white border-2 border-blue-400 p-3.5 rounded-2xl shadow-sm">
-              <div className="flex justify-between items-center text-[10px] font-extrabold mb-1">
-                <span className="bg-blue-600 text-white px-2 py-0.5 rounded-full">MATHEMATICS • DUE FRIDAY</span>
-                <span className="text-white bg-amber-500 px-2 py-0.5 rounded-full text-[9px] font-bold shadow-xs">08:00</span>
+            {/* Section 1: Upcoming Tasks (Sticky Non-Scrolling Header & Tucking Cards) */}
+            <section id="mob-upcoming-tasks-section" className="space-y-3 relative">
+              {/* Sticky Header */}
+              <div className="sticky top-0 z-20 bg-slate-50/95 backdrop-blur-md py-2.5 px-1 flex items-center justify-between border-b border-slate-200/60 shadow-xs">
+                <div className="flex items-center gap-2">
+                  <span className="text-sm">📅</span>
+                  <h3 
+                    className="text-xs font-extrabold uppercase tracking-wider text-slate-800" 
+                    style={{ fontFamily: 'Afacad, sans-serif' }}
+                  >
+                    Upcoming Tasks
+                  </h3>
+                  <span className="px-2 py-0.5 rounded-full bg-blue-100 text-[#13519C] text-[11px] font-extrabold border border-blue-200/80">
+                    {Boolean(storeState?.currentUser?.isIndependent) ? 0 : (storeState?.currentUser?.assignedTasks?.length ?? 2)}
+                  </span>
+                </div>
+                {((storeState?.currentUser?.assignedTasks?.length ?? 2) > 0 && !storeState?.currentUser?.isIndependent) && (
+                  <button
+                    type="button"
+                    onClick={() => onSelectTab(storeState?.currentUser?.assignedTasks?.[0]?.subject || 'accounting')}
+                    className="text-[11px] font-bold text-[#13519C] hover:text-blue-800 flex items-center gap-0.5 transition cursor-pointer"
+                  >
+                    <span>View all</span>
+                    <span>→</span>
+                  </button>
+                )}
               </div>
-              <h5 className="text-xs font-bold text-slate-900 mt-1" style={{ fontFamily: 'Afacad, sans-serif' }}>Trinomial Factorisation Drill</h5>
-              <p className="text-[11px] text-slate-600 mt-0.5">Mr. Botha • 10 Marks • Friday test prep.</p>
-              <button
-                type="button"
-                onClick={() => onSelectTab('maths')}
-                className="mt-2.5 w-full py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-xl shadow-sm shadow-blue-600/30 transition cursor-pointer"
-              >
-                Open in Mathematics &rarr;
-              </button>
-            </div>
 
-            {/* Self-Paced Autonomous Drill */}
-            <div className="bg-white p-3.5 rounded-2xl border border-slate-200 shadow-xs">
-              <div className="flex items-center justify-between text-[10px] font-bold mb-1">
-                <span className="text-slate-500 uppercase">Self-Paced Mastery</span>
-                <span className="text-white bg-emerald-600 px-2 py-0.5 rounded-full font-extrabold text-[9px]">84% BKT</span>
+              {/* Dynamic Task Rendering */}
+              {Boolean(storeState?.currentUser?.isIndependent) ? (
+                <div className="bg-purple-50/80 border border-purple-200 p-4 rounded-2xl shadow-xs text-center space-y-1.5">
+                  <span className="text-xl">🏡</span>
+                  <h4 className="text-xs font-bold text-purple-900" style={{ fontFamily: 'Afacad, sans-serif' }}>
+                    Independent Homeschool Path Active
+                  </h4>
+                  <p className="text-[11px] text-purple-700 leading-snug">
+                    Zero school homework deadlines assigned. You have full self-paced freedom to master topics autonomously below.
+                  </p>
+                </div>
+              ) : (storeState?.currentUser?.assignedTasks && storeState.currentUser.assignedTasks.length === 0) ? (
+                <div className="bg-emerald-50/80 border border-emerald-200 p-4 rounded-2xl shadow-xs text-center space-y-1">
+                  <span className="text-xl">🎉</span>
+                  <h4 className="text-xs font-bold text-emerald-900" style={{ fontFamily: 'Afacad, sans-serif' }}>
+                    All Caught Up!
+                  </h4>
+                  <p className="text-[11px] text-emerald-700 leading-snug">
+                    No school homework due right now. Select any subject below to practice autonomously and boost your Mastery Dial.
+                  </p>
+                </div>
+              ) : (
+                (storeState?.currentUser?.assignedTasks || [
+                  {
+                    id: 'def-task-1',
+                    subject: 'accounting',
+                    subjectName: 'Accounting',
+                    title: 'General Journal: Debtors & Bad Debts',
+                    assignedBy: 'Mr. N. Sithole',
+                    dueText: 'DUE TODAY',
+                    dueTime: '17:00',
+                    marks: 12,
+                    estimatedMins: 15
+                  },
+                  {
+                    id: 'def-task-2',
+                    subject: 'maths',
+                    subjectName: 'Mathematics',
+                    title: 'Trinomial Factorisation Drill',
+                    assignedBy: 'Mrs. S. Pillay',
+                    dueText: 'DUE FRIDAY',
+                    dueTime: '08:00',
+                    marks: 10,
+                    estimatedMins: 12
+                  }
+                ]).map((task) => (
+                  <div key={task.id} className="bg-white border border-slate-200/80 border-l-4 border-l-[#13519C] p-3.5 rounded-2xl shadow-xs space-y-2">
+                    <div className="flex justify-between items-center text-[10px] font-extrabold">
+                      <span className="bg-[#13519C] text-white px-2.5 py-0.5 rounded-full text-[10px] font-extrabold shadow-xs">
+                        {(task.subjectName || task.subject).toUpperCase()} • {task.dueText}
+                      </span>
+                      <span className="bg-rose-500 text-white px-2 py-0.5 rounded-full font-extrabold text-[9px] shadow-xs flex items-center gap-1">
+                        <Clock className="w-3 h-3 inline" />
+                        <span>{task.dueTime}</span>
+                      </span>
+                    </div>
+                    <h4 
+                      className="text-xs font-bold text-slate-900 mt-1" 
+                      style={{ fontFamily: 'Afacad, sans-serif' }}
+                    >
+                      {task.title}
+                    </h4>
+                    <p className="text-[11px] text-slate-600 leading-snug">
+                      Assigned by {task.assignedBy} • {task.marks} Marks • {task.estimatedMins || 15} mins.
+                    </p>
+                    <button
+                      type="button"
+                      onClick={() => onSelectTab(task.subject)}
+                      className="mt-2 w-full py-2.5 bg-[#13519C] hover:bg-[#0e3e78] active:bg-blue-900 text-white text-xs font-bold rounded-xl shadow-xs shadow-blue-600/20 transition cursor-pointer min-h-[44px] flex items-center justify-center gap-1.5"
+                    >
+                      <span>Open in {task.subjectName || 'Subject'} →</span>
+                    </button>
+                  </div>
+                ))
+              )}
+            </section>
+
+            {/* Section 2: Self-Paced Mastery (Sticky Non-Scrolling Header & 4 Tucking Cards) */}
+            <section id="mob-self-paced-mastery-section" className="space-y-3 relative pt-1">
+              {/* Sticky Header */}
+              <div className="sticky top-0 z-20 bg-slate-50/95 backdrop-blur-md py-2.5 px-1 flex items-center justify-between border-b border-slate-200/60 shadow-xs">
+                <div className="flex items-center gap-2">
+                  <Compass className="w-4 h-4 text-emerald-700" />
+                  <h3 
+                    className="text-xs font-extrabold uppercase tracking-wider text-slate-800" 
+                    style={{ fontFamily: 'Afacad, sans-serif' }}
+                  >
+                    Self-Paced Mastery
+                  </h3>
+                  <span className="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[11px] font-extrabold border border-emerald-200/80">
+                    4
+                  </span>
+                </div>
+                <span className="text-[10px] font-extrabold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
+                  BKT Calibrated
+                </span>
               </div>
-              <p className="text-xs font-semibold text-slate-800">Cash Receipts Journal (VAT 15%)</p>
-              <button
-                type="button"
-                onClick={() => onSelectTab('accounting')}
-                className="mt-2 w-full py-1.5 bg-[#13519C] hover:bg-blue-800 text-white text-[11px] font-bold rounded-xl transition cursor-pointer shadow-xs"
-              >
-                Resume Autonomous Drill &rarr;
-              </button>
-            </div>
+
+              {/* 4 Autonomous Practice Cards */}
+              <div className="space-y-2.5">
+                {/* 1. Accounting */}
+                <div className="bg-white p-3.5 rounded-2xl border border-slate-200/80 shadow-xs hover:shadow-sm transition">
+                  <div className="flex items-center justify-between text-[10px] font-bold mb-1">
+                    <span className="text-slate-500 font-semibold flex items-center gap-1">
+                      <span>📗</span>
+                      <span>Grade 10 Accounting</span>
+                    </span>
+                    <span className="text-white bg-emerald-600 px-2 py-0.5 rounded-full font-extrabold text-[9px] shadow-2xs">
+                      84% BKT
+                    </span>
+                  </div>
+                  <p className="text-xs font-bold text-slate-800" style={{ fontFamily: 'Afacad, sans-serif' }}>
+                    Cash Receipts Journal (VAT 15%)
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => onSelectTab('accounting')}
+                    className="mt-2.5 w-full py-2.5 bg-[#13519C] hover:bg-blue-800 active:bg-blue-900 text-white text-xs font-bold rounded-xl transition cursor-pointer shadow-xs min-h-[44px] flex items-center justify-center gap-1.5"
+                  >
+                    <span>Resume Autonomous Drill →</span>
+                  </button>
+                </div>
+
+                {/* 2. Mathematics */}
+                <div className="bg-white p-3.5 rounded-2xl border border-slate-200/80 shadow-xs hover:shadow-sm transition">
+                  <div className="flex items-center justify-between text-[10px] font-bold mb-1">
+                    <span className="text-slate-500 font-semibold flex items-center gap-1">
+                      <span>📘</span>
+                      <span>Grade 10 Mathematics</span>
+                    </span>
+                    <span className="text-white bg-blue-600 px-2 py-0.5 rounded-full font-extrabold text-[9px] shadow-2xs">
+                      82% BKT
+                    </span>
+                  </div>
+                  <p className="text-xs font-bold text-slate-800" style={{ fontFamily: 'Afacad, sans-serif' }}>
+                    Algebraic Expressions &amp; Factorisation
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => onSelectTab('maths')}
+                    className="mt-2.5 w-full py-2.5 bg-[#13519C] hover:bg-blue-800 active:bg-blue-900 text-white text-xs font-bold rounded-xl transition cursor-pointer shadow-xs min-h-[44px] flex items-center justify-center gap-1.5"
+                  >
+                    <span>Resume Autonomous Drill →</span>
+                  </button>
+                </div>
+
+                {/* 3. Physical Sciences */}
+                <div className="bg-white p-3.5 rounded-2xl border border-slate-200/80 shadow-xs hover:shadow-sm transition">
+                  <div className="flex items-center justify-between text-[10px] font-bold mb-1">
+                    <span className="text-slate-500 font-semibold flex items-center gap-1">
+                      <span>📙</span>
+                      <span>Physical Sciences</span>
+                    </span>
+                    <span className="text-white bg-cyan-600 px-2 py-0.5 rounded-full font-extrabold text-[9px] shadow-2xs">
+                      78% BKT
+                    </span>
+                  </div>
+                  <p className="text-xs font-bold text-slate-800" style={{ fontFamily: 'Afacad, sans-serif' }}>
+                    Newton's Laws of Motion &amp; Vectors
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => onSelectTab('physics')}
+                    className="mt-2.5 w-full py-2.5 bg-[#13519C] hover:bg-blue-800 active:bg-blue-900 text-white text-xs font-bold rounded-xl transition cursor-pointer shadow-xs min-h-[44px] flex items-center justify-center gap-1.5"
+                  >
+                    <span>Resume Autonomous Drill →</span>
+                  </button>
+                </div>
+
+                {/* 4. Business Studies */}
+                <div className="bg-white p-3.5 rounded-2xl border border-slate-200/80 shadow-xs hover:shadow-sm transition">
+                  <div className="flex items-center justify-between text-[10px] font-bold mb-1">
+                    <span className="text-slate-500 font-semibold flex items-center gap-1">
+                      <span>📕</span>
+                      <span>Business Studies</span>
+                    </span>
+                    <span className="text-white bg-[#FF9100] px-2 py-0.5 rounded-full font-extrabold text-[9px] shadow-2xs">
+                      75% BKT
+                    </span>
+                  </div>
+                  <p className="text-xs font-bold text-slate-800" style={{ fontFamily: 'Afacad, sans-serif' }}>
+                    Micro, Market &amp; Macro Environments
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => onSelectTab('business')}
+                    className="mt-2.5 w-full py-2.5 bg-[#13519C] hover:bg-blue-800 active:bg-blue-900 text-white text-xs font-bold rounded-xl transition cursor-pointer shadow-xs min-h-[44px] flex items-center justify-center gap-1.5"
+                  >
+                    <span>Resume Autonomous Drill →</span>
+                  </button>
+                </div>
+              </div>
+            </section>
 
             {/* Offline WebAPK Data Badge */}
-            <div className="bg-white p-3 rounded-2xl border border-slate-200 text-center">
-              <span className="text-[10px] font-bold uppercase text-slate-400">Offline WebAPK Cache</span>
-              <p className="text-[11px] font-semibold text-slate-600 mt-0.5">1.4 MB Total Data • Zero Video Buffering</p>
+            <div className="bg-white p-3 rounded-2xl border border-slate-200 shadow-2xs flex items-center justify-between">
+              <div className="flex items-center gap-2.5">
+                <div className="w-8 h-8 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center shrink-0">
+                  <WifiOff className="w-4 h-4 text-purple-700" />
+                </div>
+                <div>
+                  <span className="text-[10px] font-extrabold uppercase text-purple-700 block tracking-wider">
+                    Offline WebAPK Cache
+                  </span>
+                  <p className="text-[11px] font-semibold text-slate-700 leading-tight">
+                    1.4 MB Total Data • Zero Video Buffering
+                  </p>
+                </div>
+              </div>
+              <span className="text-[10px] font-extrabold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200 shadow-2xs">
+                Ready ✓
+              </span>
             </div>
+
           </div>
         )}
 
@@ -607,7 +796,7 @@ export default function MobileWebApkView({
                   <button
                     type="button"
                     onClick={() => setShowHints(!showHints)}
-                    className="w-full py-1.5 px-3 rounded-xl bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-200 text-xs font-bold flex items-center justify-between transition cursor-pointer"
+                    className="w-full py-1.5 px-3 rounded-xl bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-200 text-xs font-bold flex items-center justify-between transition cursor-pointer min-h-[44px]"
                   >
                     <div className="flex items-center gap-1.5">
                       <Lightbulb className="w-3.5 h-3.5 text-amber-600" />
@@ -649,7 +838,7 @@ export default function MobileWebApkView({
                     type="button"
                     onClick={handleTriggerMark}
                     disabled={isMarking || isLoadingQuestion}
-                    className="w-full py-2.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-md shadow-emerald-700/20 flex items-center justify-center gap-2 transition cursor-pointer disabled:opacity-50"
+                    className="w-full py-2.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-md shadow-emerald-700/20 flex items-center justify-center gap-2 transition cursor-pointer disabled:opacity-50 min-h-[44px]"
                   >
                     {isMarking ? <Loader2 className="w-4 h-4 animate-spin" /> : <CheckCircle2 className="w-4 h-4" />}
                     <span>{isMarking ? 'Marking Entry...' : 'Check & Verify Entry'}</span>
@@ -674,7 +863,7 @@ export default function MobileWebApkView({
                         setHasMarkedCurrent(false);
                         onNextQuestion();
                       }}
-                      className="w-full py-2 px-4 rounded-xl bg-slate-800 hover:bg-slate-900 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition cursor-pointer"
+                      className="w-full py-2.5 px-4 rounded-xl bg-slate-800 hover:bg-slate-900 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition cursor-pointer min-h-[44px]"
                     >
                       <span>Next Exercise</span>
                       <ArrowRight className="w-3.5 h-3.5" />
@@ -775,14 +964,14 @@ export default function MobileWebApkView({
                   value={mathAnswer}
                   onChange={(e) => setMathAnswer(e.target.value)}
                   placeholder="e.g. (x - 3)(x - 4)"
-                  className="w-full px-3 py-2 rounded-xl border border-blue-300 font-mono text-xs font-bold text-blue-950 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 rounded-xl border border-blue-300 font-mono text-xs font-bold text-blue-950 focus:outline-none focus:ring-2 focus:ring-blue-500 min-h-[44px]"
                 />
 
                 <button
                   type="button"
                   onClick={handleTriggerMark}
                   disabled={isMarking}
-                  className="w-full py-2 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs rounded-xl transition flex items-center justify-center gap-1.5 cursor-pointer shadow-xs"
+                  className="w-full py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs rounded-xl transition flex items-center justify-center gap-1.5 cursor-pointer shadow-xs min-h-[44px]"
                 >
                   {isMarking ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <CheckCircle2 className="w-3.5 h-3.5" />}
                   <span>Verify Answer</span>
@@ -971,7 +1160,7 @@ export default function MobileWebApkView({
       <nav 
         id="mob-bottom-nav"
         ref={bottomNavRef}
-        className="border-t border-slate-200 bg-white/95 backdrop-blur-md px-4 py-2 flex items-center gap-3 overflow-x-auto scrollbar-none [&::-webkit-scrollbar]:hidden select-none shadow-lg shrink-0"
+        className="fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-slate-200 px-3 py-2 select-none pb-[calc(0.5rem+env(safe-area-inset-bottom))] shadow-lg flex items-center gap-2.5 overflow-x-auto scrollbar-none [&::-webkit-scrollbar]:hidden"
       >
         {MOBILE_SUBJECTS.map((sub) => {
           const isActive = currentTab === sub.id;
