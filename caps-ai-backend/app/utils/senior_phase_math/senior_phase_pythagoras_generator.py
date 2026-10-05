@@ -5,7 +5,7 @@ from typing import Dict, Any, List
 class SeniorPhasePythagorasGenerator:
     """Generator for Grade 8 and 9 Theorem of Pythagoras."""
     
-    def generate(self, grade: int, mode: str, seed: int = None) -> Dict[str, Any]:
+    def generate(self, grade: int = 8, mode: str = "pythagoras", seed: int = None) -> Dict[str, Any]:
         rng = random.Random(seed)
         
         # Subskills: hypotenuse, shorter_leg, converse

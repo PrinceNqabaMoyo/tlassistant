@@ -16,6 +16,7 @@ from __future__ import annotations
 from typing import Any, Dict, List, Optional, Tuple
 
 import sympy as sp
+from sympy.core.relational import Relational
 from sympy.parsing.sympy_parser import (
     implicit_multiplication_application,
     parse_expr,
@@ -181,7 +182,7 @@ def _final_equation_match(last: Any, final_ref: Any, var: str) -> bool:
     try:
         x = sp.Symbol(var)
         # Handle inequalities: compare solution sets
-        if isinstance(final_ref, sp.Relational) and not isinstance(final_ref, sp.Equality):
+        if isinstance(final_ref, Relational) and not isinstance(final_ref, sp.Equality):
             return _inequality_match(last, final_ref, x)
         # Handle value pairs / sets
         if isinstance(final_ref, (sp.Tuple, sp.FiniteSet)):
@@ -202,10 +203,10 @@ def _final_equation_match(last: Any, final_ref: Any, var: str) -> bool:
         return False
 
 
-def _inequality_match(last: Any, final_ref: sp.Relational, var: sp.Symbol) -> bool:
+def _inequality_match(last: Any, final_ref: Relational, var: sp.Symbol) -> bool:
     """Compare two inequalities by checking their solution sets are equivalent."""
     try:
-        if not isinstance(last, sp.Relational):
+        if not isinstance(last, Relational):
             return False
         # Compare solution sets using solveset
         ref_set = sp.solveset(final_ref, var, domain=sp.S.Reals)

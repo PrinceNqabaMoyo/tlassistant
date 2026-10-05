@@ -4,7 +4,7 @@ from typing import Dict, Any, List
 class SeniorPhaseGeometryGenerator:
     """Generator for Grade 7, 8, and 9 Straight lines & 2D/3D properties."""
     
-    def generate(self, grade: int, mode: str, seed: int = None) -> Dict[str, Any]:
+    def generate(self, grade: int = 7, mode: str = "straight_lines", seed: int = None) -> Dict[str, Any]:
         rng = random.Random(seed)
         
         # Subskills: angles_on_line, vertically_opposite, alternate_angles

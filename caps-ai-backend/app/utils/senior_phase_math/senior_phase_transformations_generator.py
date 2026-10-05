@@ -4,7 +4,7 @@ from typing import Dict, Any, List
 class SeniorPhaseTransformationsGenerator:
     """Generator for Grade 7, 8, and 9 Transformations."""
     
-    def generate(self, grade: int, mode: str, seed: int = None) -> Dict[str, Any]:
+    def generate(self, grade: int = 7, mode: str = "transformations", seed: int = None) -> Dict[str, Any]:
         rng = random.Random(seed)
         
         # Subskills: translation, reflection_x, reflection_y

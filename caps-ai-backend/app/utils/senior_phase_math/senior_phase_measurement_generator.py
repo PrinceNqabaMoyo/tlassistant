@@ -5,7 +5,7 @@ from typing import Dict, Any, List
 class SeniorPhaseMeasurementGenerator:
     """Generator for Grade 7, 8, and 9 Perimeter, Area, Surface Area & Volume."""
     
-    def generate(self, grade: int, mode: str, seed: int = None) -> Dict[str, Any]:
+    def generate(self, grade: int = 7, mode: str = "measurement", seed: int = None) -> Dict[str, Any]:
         rng = random.Random(seed)
         
         # Determine 2D vs 3D based on mode and grade, simplify by randomly choosing subskill

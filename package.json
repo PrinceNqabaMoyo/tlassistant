@@ -10,6 +10,7 @@
     "preview": "vite preview",
     "sync:hourly": "python scripts/hourly_sync_deploy.py --once",
     "sync:daemon": "python scripts/hourly_sync_deploy.py --daemon",
+    "audit:full": "python scripts/run_system_certification.py",
     "deploy:hosting": "npm run build && npx firebase deploy --only hosting",
     "deploy:backend": "python caps-ai-backend/deploy_hf.py"
   },

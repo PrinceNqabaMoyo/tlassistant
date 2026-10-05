@@ -163,23 +163,34 @@ def make_mcq(
     *,
     prefix: str,
     prompt: str,
-    options: List[str],
-    correct_index: int,
+    options: Optional[List[str]] = None,
+    choices: Optional[List[str]] = None,
+    correct_index: Optional[int] = None,
+    answer: Optional[str] = None,
     explanation: str,
     marks: int = 1,
     prompt_latex: Optional[str] = None,
     options_latex: Optional[List[str]] = None,
     hint: Optional[str] = None,
 ) -> Dict[str, Any]:
+    opts = list(options if options is not None else (choices or []))
+    if correct_index is None and answer is not None:
+        try:
+            resolved_index = opts.index(answer)
+        except (ValueError, TypeError):
+            resolved_index = 0
+    else:
+        resolved_index = int(correct_index) if correct_index is not None else 0
+
     hint_text = hint or explanation
     return {
         "id": make_id(f"{prefix}_mcq"),
         "question_type": "mcq",
         "prompt": prompt,
         "prompt_latex": prompt_latex or "",
-        "options": list(options),
+        "options": opts,
         "options_latex": list(options_latex) if options_latex else [],
-        "correct_index": str(int(correct_index)),
+        "correct_index": str(resolved_index),
         "explanation": explanation,
         "marks": int(marks),
         "hint_trigger": hint_text,

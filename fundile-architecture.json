@@ -48,7 +48,8 @@
       "llmAbstraction": "caps-ai-backend/app/services/llm_provider.py",
       "entryPoint": "caps-ai-backend/run.py",
       "mainApp": "caps-ai-backend/MainApp.py",
-      "lanRouting": "Auto-detected LAN IP (192.168.x / 10.x) and localhost routing to port 5001 via src/utils/apiBaseUrl.js for real-time mobile cross-device testing"
+      "lanRouting": "Auto-detected LAN IP (192.168.x / 10.x) and localhost routing to port 5001 via src/utils/apiBaseUrl.js for real-time mobile cross-device testing",
+      "automatedTesting": "Unified 4-Pillar Certification Suite (npm run audit:full / scripts/run_system_certification.py): 1. Procedure Tracker SymPy step checker, 2. Monte Carlo 100-generator quality auditor (0% meta-curriculum jargon), 3. 4-persona BKT adaptive progression simulator with circuit breakers, 4. 141-button interactive UI crawler. Generates fundile-system-audit-report.html"
     },
     "database": {
       "primary": "Firebase Firestore",

@@ -6,7 +6,7 @@ import statistics
 class SeniorPhaseDataHandlingGenerator:
     """Generator for Grade 7, 8, and 9 Statistics (mean, median, mode, range)."""
     
-    def generate(self, grade: int, mode: str, seed: int = None) -> Dict[str, Any]:
+    def generate(self, grade: int = 7, mode: str = "data_handling", seed: int = None) -> Dict[str, Any]:
         rng = random.Random(seed)
         
         # Subskills: mean, median, mode, range
