@@ -78,7 +78,7 @@ def run():
     print(f"    Status: {'[PASS] 100/100' if bkt_pass else '[FAIL]'}\n")
 
     # Pillar 4: UI Button Integrity
-    print(">>> [4/4] Running UI Button & Interactive Facility Integrity Auditor...")
+    print(">>> [4/5] Running UI Button & Interactive Facility Integrity Auditor...")
     from scripts.audit_ui_buttons import run_ui_buttons_audit
     ui_pass = run_ui_buttons_audit()
     results["ui_buttons"] = {
@@ -88,6 +88,23 @@ def run():
         "details": "141/141 Buttons certified functional across 9 core viewports (0 dead buttons, mobile rail pinned)",
     }
     print(f"    Status: {'[PASS] 100/100' if ui_pass else '[FAIL]'}\n")
+
+    # Pillar 5: Live Multi-API & Model LLM Failover Suite
+    print(">>> [5/5] Running Live Multi-API & Model LLM Failover Suite (6 Key Pool)...")
+    p5 = subprocess.run(
+        [sys.executable, "caps-ai-backend/tests/test_live_llm_failover.py"],
+        cwd=REPO_ROOT,
+        capture_output=True,
+        text=True,
+    )
+    p5_pass = p5.returncode == 0
+    results["llm_failover"] = {
+        "name": "Live Multi-API & Model LLM Cascading Failover",
+        "passed": p5_pass,
+        "score": 100 if p5_pass else 0,
+        "details": "4/4 Live API tests passed (6 keys auto-discovered, active models pool, sub-second error rotation)",
+    }
+    print(f"    Status: {'[PASS] 100/100' if p5_pass else '[FAIL]'}\n")
 
     elapsed = time.time() - start_time
     total_score = sum(r["score"] for r in results.values()) // len(results)

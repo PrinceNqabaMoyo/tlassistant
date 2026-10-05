@@ -7,6 +7,20 @@ try:
 except Exception:  # pragma: no cover
     InferenceClient = None  # type: ignore
 
+try:
+    from dotenv import load_dotenv
+    from pathlib import Path
+    _env_paths = [
+        Path(__file__).resolve().parent.parent.parent / ".env",
+        Path(__file__).resolve().parent.parent.parent.parent / ".env",
+        Path(__file__).resolve().parent.parent.parent.parent / ".env.local",
+    ]
+    for _p in _env_paths:
+        if _p.exists():
+            load_dotenv(str(_p), override=False)
+except Exception:
+    pass
+
 
 class BaseLLMProvider(ABC):
     """Provider-agnostic interface for text + tool-style LLM calls."""
@@ -63,11 +77,13 @@ class GoogleGeminiProvider(BaseLLMProvider):
     """
 
     DEFAULT_MODELS_POOL = [
-        "gemini-2.5-flash",
-        "gemini-1.5-flash",
-        "gemini-2.0-flash",
-        "gemini-2.5-flash-lite",
-        "gemini-1.5-pro",
+        "models/gemini-flash-latest",
+        "models/gemini-flash-lite-latest",
+        "models/gemini-3.8-flash",
+        "models/gemini-3.6-flash",
+        "models/gemini-3.5-flash-lite",
+        "models/gemini-3.1-flash-lite",
+        "models/gemma-4-31b-it",
     ]
 
     def __init__(self, model: Optional[str] = None, api_key: Optional[str] = None, keys: Optional[List[str]] = None):
@@ -75,14 +91,14 @@ class GoogleGeminiProvider(BaseLLMProvider):
         found_keys: List[str] = []
         if api_key:
             found_keys.append(api_key)
-        for env_var in ["GEMINI_API_KEY", "GOOGLE_API_KEY", "GEMINI_KEY_1", "GEMINI_KEY_2", "GEMINI_KEY_3"]:
-            val = os.getenv(env_var)
-            if val and val not in found_keys:
-                found_keys.append(val)
+        for env_k, env_v in os.environ.items():
+            if any(env_k.startswith(pfx) for pfx in ["GEMINI_API_KEY", "GEMINI_KEY", "GOOGLE_API_KEY"]):
+                if env_v and env_v.strip() and env_v.strip() not in found_keys:
+                    found_keys.append(env_v.strip())
         if keys:
             for k in keys:
-                if k and k not in found_keys:
-                    found_keys.append(k)
+                if k and k.strip() not in found_keys:
+                    found_keys.append(k.strip())
 
         self.keys = found_keys
         self.active_key_idx = 0
@@ -124,47 +140,82 @@ class GoogleGeminiProvider(BaseLLMProvider):
         temperature: float = 0.2,
         max_tokens: int = 1024,
     ) -> str:
-        max_attempts = min(10, max(1, len(self.keys)) * len(self.models_pool))
+        import json
+        try:
+            import requests
+        except ImportError:
+            requests = None
+
+        max_attempts = min(15, max(1, len(self.keys)) * len(self.models_pool))
         attempts = 0
+
+        # Format system instructions and conversation contents
+        system_instructions = []
+        contents = []
+        for msg in messages:
+            role = msg.get("role", "user")
+            content = msg.get("content", "")
+            if role == "system":
+                system_instructions.append({"text": content})
+            elif role == "assistant":
+                contents.append({"role": "model", "parts": [{"text": content}]})
+            else:
+                contents.append({"role": "user", "parts": [{"text": content}]})
+
+        body: Dict[str, Any] = {
+            "contents": contents,
+            "generationConfig": {
+                "temperature": temperature,
+                "maxOutputTokens": max_tokens,
+            }
+        }
+        if system_instructions:
+            body["systemInstruction"] = {"parts": system_instructions}
 
         while attempts < max_attempts:
             attempts += 1
             current_k = self.current_key
             current_m = self.current_model
+            model_slug = current_m if current_m.startswith("models/") else f"models/{current_m}"
+            url = f"https://generativelanguage.googleapis.com/v1beta/{model_slug}:generateContent?key={current_k}"
+
             try:
-                from langchain_google_genai import ChatGoogleGenerativeAI
-                from langchain_core.messages import HumanMessage, SystemMessage, AIMessage
+                if requests:
+                    res = requests.post(url, json=body, timeout=12)
+                    status_code = res.status_code
+                    resp_data = res.json() if res.content else {}
+                else:
+                    import urllib.request
+                    req = urllib.request.Request(
+                        url,
+                        data=json.dumps(body).encode("utf-8"),
+                        headers={"Content-Type": "application/json"},
+                        method="POST"
+                    )
+                    with urllib.request.urlopen(req, timeout=12) as response:
+                        status_code = response.status
+                        resp_data = json.loads(response.read().decode("utf-8"))
 
-                llm = ChatGoogleGenerativeAI(
-                    model=current_m,
-                    temperature=temperature,
-                    convert_system_message_to_human=True,
-                    google_api_key=current_k,
-                )
+                if status_code == 200:
+                    candidates = resp_data.get("candidates", [])
+                    if candidates:
+                        parts = candidates[0].get("content", {}).get("parts", [])
+                        if parts:
+                            return parts[0].get("text", "")
+                    return ""
 
-                lc_messages = []
-                for msg in messages:
-                    role = msg.get("role", "user")
-                    content = msg.get("content", "")
-                    if role == "system":
-                        lc_messages.append(SystemMessage(content=content))
-                    elif role == "assistant":
-                        lc_messages.append(AIMessage(content=content))
-                    else:
-                        lc_messages.append(HumanMessage(content=content))
-
-                response = llm.invoke(lc_messages)
-                return response.content if hasattr(response, "content") else str(response)
+                # Non-200 status (e.g. 429 quota, 404 deprecated, 503 overloaded)
+                err_msg = str(resp_data.get("error", {}).get("message", f"HTTP {status_code}"))
+                print(f"[LLM WARNING] Gemini API returned {status_code} on {current_m}: {err_msg}")
+                if self._rotate_target(reason=f"Status {status_code}: {err_msg}"):
+                    continue
+                break
 
             except Exception as e:
-                err_str = str(e).lower()
-                is_quota = any(x in err_str for x in ["429", "quota", "resourceexhausted", "rate limit", "exhausted"])
-                if is_quota and self._rotate_target(reason=str(e)):
-                    continue  # Try next key or model
-                print(f"[LLM WARNING] Gemini invoke error on {current_m}: {e}")
-                if self._rotate_target(reason="General failure"):
+                print(f"[LLM WARNING] Gemini network/request error on {current_m}: {e}")
+                if self._rotate_target(reason=str(e)):
                     continue
-                break  # Circuit breaker: stop retrying
+                break
 
         return ""
 
