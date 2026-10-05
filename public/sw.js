@@ -1,5 +1,5 @@
 // Fundile PWA Service Worker
-const CACHE_NAME = 'fundile-v2';
+const CACHE_NAME = 'fundile-v3';
 
 // Development kill-switch: Never intercept or cache Vite dev server on localhost or LAN
 const isDev = self.location.hostname === 'localhost' || 
