@@ -78,10 +78,10 @@ def _typed_question(rng, item, mode="scaffold"):
         'title': item.get('title', 'Written response'),
         'question_type': 'typed',
         'prompt': item['prompt'],
-        'marks': item['marks'],
-        'marking_points': item['marking_points'],
-        'sample_answer': item['sample_answer'],
-        'ideal_answer': item.get('ideal_answer', item['sample_answer']),
+        'marks': item.get('marks', 2),
+        'marking_points': item.get('marking_points') or [item.get('sample_answer', 'Accurate answer')],
+        'sample_answer': item.get('sample_answer', 'Refer to marking points.'),
+        'ideal_answer': item.get('ideal_answer', item.get('sample_answer', 'Refer to marking points.')),
         **{k: v for k, v in item.items() if k not in ['prompt', 'marks', 'marking_points', 'sample_answer', 'ideal_answer', 'hint_sections', 'guidelines', 'teaching_note', 'title']}
     }
     
@@ -265,7 +265,7 @@ def generate(seed=None, difficulty=None, mode='scaffold', **kwargs):
             
     raw_item = rng.choice(selected_pool)
     
-    if raw_item['question_type'] == 'mcq':
+    if raw_item.get('question_type') == 'mcq':
         return _mcq_question(rng, raw_item, mode)
     else:
         return _typed_question(rng, raw_item, mode)

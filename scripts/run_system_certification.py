@@ -54,11 +54,11 @@ def run():
     print(f"    Status: {'[PASS] 100/100' if p1_pass else '[FAIL]'}\n")
 
     # Pillar 2: Curriculum Quality & Monte Carlo Generators
-    print(">>> [2/4] Running Curriculum Quality & Generator Monte Carlo Auditor (100 Generators)...")
+    print(">>> [2/5] Running Curriculum Quality & Generator Monte Carlo Auditor (All 259 Generators across Grades 7-12)...")
     from scripts.audit_curriculum_coverage import run_curriculum_audit
-    c_res = run_curriculum_audit(max_generators=100, seeds_per_gen=2)
+    c_res = run_curriculum_audit(max_generators=300, seeds_per_gen=2)
     results["curriculum_coverage"] = {
-        "name": "Curriculum Quality & Exam Ground-Truth Alignment",
+        "name": "Curriculum Quality & Exam Ground-Truth Alignment (Grades 7–12)",
         "passed": c_res["pass_rate"] >= 90.0,
         "score": int(c_res["pass_rate"]),
         "details": f"{c_res['passed']}/{c_res['tested']} generators passed (0 meta-curriculum violations, 100% official data sheet compliance)",
@@ -66,7 +66,7 @@ def run():
     print(f"    Status: [PASS] {int(c_res['pass_rate'])}/100\n")
 
     # Pillar 3: BKT Progression Simulations
-    print(">>> [3/4] Running Synthetic Learner BKT Progression Simulations (4 Personas)...")
+    print(">>> [3/5] Running Synthetic Learner BKT Progression Simulations (4 Personas)...")
     from scripts.simulate_learner_journey import run_all_simulations
     bkt_pass = run_all_simulations()
     results["bkt_progression"] = {

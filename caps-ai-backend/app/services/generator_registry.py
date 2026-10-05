@@ -6,6 +6,7 @@ Includes the 4D Combinatorial Engine for near-infinite semantic breadth.
 from __future__ import annotations
 
 import random
+import re
 from typing import Any, Callable, Dict, List, Optional
 
 # Combinatorial Engine for infinite semantic breadth
@@ -299,19 +300,31 @@ def _adapt_multi_item_generator(gen_func: Callable) -> Callable:
         count = int(kw.get("count", 1))
         seed_val = kw.get("seed")
         diff = kw.get("difficulty", "medium")
-        sub = kw.get("subskill", "mixed")
-        qtype = kw.get("question_type", "mixed")
-        try:
-            return gen_func(count=count, seed=seed_val, difficulty=diff, subskill=sub, question_type=qtype)
-        except TypeError:
+        sub = kw.get("subskill")
+        if sub in ["mixed", "concepts", "all", ""]:
+            sub = None
+        qtype = kw.get("question_type", "typed")
+
+        attempts = [
+            lambda: gen_func(count=count, seed=seed_val, difficulty=diff, subskill=sub, question_type=qtype),
+            lambda: gen_func(count=count, seed=seed_val, difficulty=diff, subskill=None, question_type=qtype),
+            lambda: gen_func(count=count, seed=seed_val, difficulty=diff),
+            lambda: gen_func(count=count, seed=seed_val),
+            lambda: gen_func(r=random.Random(seed_val) if seed_val is not None else random.Random(), n=count),
+            lambda: gen_func(**kw),
+        ]
+
+        last_err = None
+        for attempt in attempts:
             try:
-                return gen_func(count=count, seed=seed_val)
-            except TypeError:
-                try:
-                    r = random.Random(seed_val) if seed_val is not None else random.Random()
-                    return gen_func(r=r, n=count)
-                except TypeError:
-                    return gen_func(**kw)
+                res = attempt()
+                if isinstance(res, dict) and res.get("ok") is False:
+                    continue
+                return res
+            except (TypeError, ValueError, KeyError) as e:
+                last_err = e
+                continue
+        raise last_err or ValueError("Failed in multi-item generator adapter")
     return adapter
 
 
@@ -1351,9 +1364,11 @@ def _normalize_generator_result(result: Any, default_term: int = 1) -> List[Dict
     """Ensures the generator returns a normalized list of 6-pillar question dicts."""
     raw_list: List[Dict[str, Any]] = []
     if isinstance(result, list):
+        if result and isinstance(result[0], dict) and (result[0].get("ok") is False or result[0].get("success") is False):
+            raise ValueError(result[0].get("error") or "Generation failed")
         raw_list = result
     elif isinstance(result, dict):
-        if result.get("success") is False:
+        if result.get("success") is False or result.get("ok") is False:
             raise ValueError(result.get("error") or "Generation failed")
         questions = result.get("questions")
         if isinstance(questions, list):
@@ -1395,21 +1410,40 @@ def generate_variant(
         config["seed"] = seed
         random.seed(seed)
 
-    try:
-        result = generator(subskill=subskill, difficulty=difficulty, count=count, **config)
-    except TypeError:
-        try:
-            result = generator(difficulty=difficulty, count=count, **config)
-        except TypeError:
-            try:
-                result = generator(difficulty=difficulty, **config)
-            except TypeError:
-                try:
-                    result = generator(**config)
-                except TypeError:
-                    result = generator()
     term_val = int(config.get("term", 1))
-    return _normalize_generator_result(result, default_term=term_val)
+
+    candidates = [
+        lambda: generator(subskill=subskill, difficulty=difficulty, count=count, **config),
+        lambda: generator(difficulty=difficulty, count=count, **config),
+        lambda: generator(difficulty=difficulty, **config),
+        lambda: generator(**config),
+        lambda: generator(),
+    ]
+
+    last_err = None
+    for cand in candidates:
+        try:
+            res = cand()
+            return _normalize_generator_result(res, default_term=term_val)
+        except (TypeError, ValueError, KeyError) as e:
+            last_err = e
+            # If the error provides available_subskills, try the first valid subskill!
+            err_str = str(e)
+            if "Available:" in err_str:
+                import ast
+                match = re.search(r"Available:\s*(\[.*?\])", err_str)
+                if match:
+                    try:
+                        avail = ast.literal_eval(match.group(1))
+                        if avail and isinstance(avail, list):
+                            first_sub = avail[0]
+                            res = generator(subskill=first_sub, difficulty=difficulty, count=count, **config)
+                            return _normalize_generator_result(res, default_term=term_val)
+                    except Exception:
+                        pass
+            continue
+
+    raise last_err or ValueError(f"Failed to generate variant for {topic}")
 
 
 def get_generator_for_topic(topic: str, grade: str = "12", subject: str = "Mathematics") -> Optional[Callable]:
