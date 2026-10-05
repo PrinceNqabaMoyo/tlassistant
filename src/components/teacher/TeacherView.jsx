@@ -67,9 +67,35 @@ const TeacherView = ({ view, setView, db, currentUser }) => {
         switch(view) { 
             case 'lesson_planner': 
                 return (
-                    <div className="p-8">
-                        <h2 className="text-2xl font-bold">Lesson Planner</h2>
-                        <p>Here, teachers can generate lesson plans.</p>
+                    <div className="p-4 sm:p-6 lg:p-8 max-w-4xl mx-auto space-y-4">
+                        <button
+                            onClick={() => setView('dashboard')}
+                            className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-600 hover:text-[#13519C] transition-colors cursor-pointer"
+                        >
+                            <ChevronLeft className="w-4 h-4" /> Back to Teacher Dashboard
+                        </button>
+                        <div className="bg-white rounded-2xl border border-slate-200/90 p-8 shadow-xs text-center space-y-3">
+                            <h2 style={{ fontFamily: "'Afacad', sans-serif" }} className="text-2xl font-bold text-slate-900">
+                                CAPS Lesson Planner &amp; ATP Schedules
+                            </h2>
+                            <p className="text-sm text-slate-500 max-w-lg mx-auto">
+                                Generate and synchronize term-by-term lesson plans, curriculum pacing guides, and homework sequences directly aligned with the official South African CAPS Annual Teaching Plans.
+                            </p>
+                            <div className="pt-4 flex justify-center gap-3">
+                                <button
+                                    onClick={() => setView('assessments')}
+                                    className="px-4 py-2.5 rounded-xl bg-[#13519C] hover:bg-[#0f3e77] text-white text-xs font-bold transition shadow-xs cursor-pointer"
+                                >
+                                    Open Assessment Generator
+                                </button>
+                                <button
+                                    onClick={() => setView('dashboard')}
+                                    className="px-4 py-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-700 text-xs font-semibold transition cursor-pointer"
+                                >
+                                    Return to Cockpit
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 ); 
             case 'assessment_generator': 
@@ -91,7 +117,7 @@ const TeacherView = ({ view, setView, db, currentUser }) => {
                     <div className="p-4 sm:p-6 max-w-5xl mx-auto space-y-4">
                         <button
                             onClick={() => setView('dashboard')}
-                            className="flex items-center gap-2 text-sm text-slate-400 hover:text-white transition-colors"
+                            className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-600 hover:text-[#13519C] transition-colors cursor-pointer"
                         >
                             <ChevronLeft className="w-4 h-4" /> Back to Teacher Dashboard
                         </button>

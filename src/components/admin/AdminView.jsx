@@ -1,6 +1,13 @@
 import React, { useEffect } from 'react';
 import { AdminDashboard, PendingPayments, UserManagement, InterestSubmissions } from '../forms/AdminForms';
 import SchoolAdminView from './SchoolAdminView';
+import {
+    SystemAnalyticsView,
+    ContentManagementView,
+    CompetitionSetupView,
+    SystemSettingsView,
+    SecurityAccessView
+} from './SuperAdminPanels';
 
 const AdminView = ({ view, setView, db, currentUser }) => { 
     const canManageSubscribers = !!(currentUser?.isOwner || currentUser?.isSuperAdmin);
@@ -30,12 +37,18 @@ const AdminView = ({ view, setView, db, currentUser }) => {
                 }
                 return <UserManagement currentUser={currentUser} db={db} onBack={handleNavigateDashboard} mode="subscriber" />;
             case 'class_management': 
-                return (
-                    <div className="p-8">
-                        <h2 className="text-2xl font-bold">Class Management</h2>
-                        <p>Here, admins can create classes and assign teachers.</p>
-                    </div>
-                ); 
+            case 'classManagement':
+                return <SchoolAdminView currentUser={currentUser} onBack={handleNavigateDashboard} />;
+            case 'systemAnalytics':
+                return <SystemAnalyticsView onBack={handleNavigateDashboard} />;
+            case 'contentManagement':
+                return <ContentManagementView onBack={handleNavigateDashboard} />;
+            case 'competitionSetup':
+                return <CompetitionSetupView onBack={handleNavigateDashboard} />;
+            case 'systemSettings':
+                return <SystemSettingsView onBack={handleNavigateDashboard} />;
+            case 'securityAccess':
+                return <SecurityAccessView onBack={handleNavigateDashboard} />;
             case 'eftApprovals':
                 if (!canManageSubscribers) {
                     return <AdminDashboard setView={setView} onSelect={handleSelectView} currentUser={currentUser} db={db} />;
@@ -44,7 +57,7 @@ const AdminView = ({ view, setView, db, currentUser }) => {
             case 'interestSubmissions':
                 return <InterestSubmissions db={db} onBack={handleNavigateDashboard} />;
             case 'schoolAdmin':
-                return <SchoolAdminView currentUser={currentUser} />;
+                return <SchoolAdminView currentUser={currentUser} onBack={handleNavigateDashboard} />;
             case 'dashboard': 
             default: 
                 return <AdminDashboard setView={setView} onSelect={handleSelectView} currentUser={currentUser} db={db} />; 

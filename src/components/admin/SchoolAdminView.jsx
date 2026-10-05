@@ -923,6 +923,8 @@ const SchoolAdminView = ({ currentUser, onBack }) => {
     currentUser?.isSchoolAdmin ||
     currentUser?.role === 'admin' ||
     currentUser?.role === 'principal' ||
+    currentUser?.role === 'school' ||
+    currentUser?.role === 'school_admin' ||
     currentUser?.role === 'schoolAdmin'
   );
 

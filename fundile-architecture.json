@@ -1256,6 +1256,11 @@
         "path": "src/components/family/LinkGuardianModal.jsx",
         "description": "POPIA Section 35 on-demand temporary guardian linking modal providing an ephemeral 15-minute OTP passcode (LNK-XXXXXX), second-by-second countdown timer, 1-tap copy, confidentiality warnings, and active guardian management.",
         "layer": "D"
+      },
+      {
+        "name": "SuperAdminPanels.jsx",
+        "path": "src/components/admin/SuperAdminPanels.jsx",
+        "note": "Dedicated administrative cockpit detail views for Super Admin: System Analytics (latency, uptime, engine health), Content Management (CAPS generator registry, AST purity), Competitions (academic Olympiads, school leagues), System Settings (global terms, timeouts, provider abstraction), and Security Access (POPIA Sec 35, encryption audits)."
       }
     ],
     "planned": []

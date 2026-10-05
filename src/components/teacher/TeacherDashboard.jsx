@@ -337,13 +337,15 @@ export default function TeacherDashboard({
             </button>
 
             {classes.length > 0 ? (
-              <button
-                onClick={handleClearAllClasses}
-                title="Clear classes to test empty state"
-                className="p-2.5 rounded-xl border border-slate-200/90 hover:bg-slate-100 text-slate-400 hover:text-rose-600 transition-colors cursor-pointer"
-              >
-                <Trash2 className="w-4 h-4" />
-              </button>
+              currentUser?.isSuperAdmin && (
+                <button
+                  onClick={handleClearAllClasses}
+                  title="Super Admin Test Tool: Clear classes to test empty state"
+                  className="p-2.5 rounded-xl border border-slate-200/90 hover:bg-slate-100 text-slate-400 hover:text-rose-600 transition-colors cursor-pointer"
+                >
+                  <Trash2 className="w-4 h-4" />
+                </button>
+              )
             ) : (
               <button
                 onClick={handleLoadSampleRoster}
