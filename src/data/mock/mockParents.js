@@ -5,8 +5,8 @@
  * Sibling linking, WhatsApp notification numbers, focus times, and data savings.
  */
 
-import { MOCK_SCHOOL_STUDENTS } from './mockSchoolStudents';
-import { MOCK_INDEPENDENT_STUDENTS } from './mockIndependentStudents';
+import { MOCK_SCHOOL_STUDENTS } from './mockSchoolStudents.js';
+import { MOCK_INDEPENDENT_STUDENTS } from './mockIndependentStudents.js';
 
 const PARENT_TITLES = ['Mr.', 'Mrs.', 'Dr.', 'Ms.', 'Prof.'];
 

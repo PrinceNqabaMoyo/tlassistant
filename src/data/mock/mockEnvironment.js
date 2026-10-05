@@ -4,11 +4,11 @@
  * and Independent Homeschool (100 learners, 80 parents).
  */
 
-import { MOCK_SCHOOL } from './mockSchool';
-import { MOCK_FACULTY } from './mockFaculty';
-import { MOCK_SCHOOL_STUDENTS } from './mockSchoolStudents';
-import { MOCK_INDEPENDENT_STUDENTS } from './mockIndependentStudents';
-import { MOCK_SCHOOL_PARENTS, MOCK_INDEPENDENT_PARENTS, MOCK_ALL_PARENTS } from './mockParents';
+import { MOCK_SCHOOL } from './mockSchool.js';
+import { MOCK_FACULTY } from './mockFaculty.js';
+import { MOCK_SCHOOL_STUDENTS } from './mockSchoolStudents.js';
+import { MOCK_INDEPENDENT_STUDENTS } from './mockIndependentStudents.js';
+import { MOCK_SCHOOL_PARENTS, MOCK_INDEPENDENT_PARENTS, MOCK_ALL_PARENTS } from './mockParents.js';
 
 export {
   MOCK_SCHOOL,
