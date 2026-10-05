@@ -171,10 +171,8 @@ export default function DevSandboxWrapper({
             
             {/* Windows 11 Title Bar & Address Bar */}
             <div className="bg-[#081326] px-4 py-2 border-b border-slate-700/80 flex items-center justify-between select-none">
-              <div className="flex items-center gap-2.5 min-w-0">
-                <div className="w-5 h-5 rounded-md bg-[#13519C] border border-blue-400/30 flex items-center justify-center shadow-xs shrink-0" title="Fundile Desktop App">
-                  <GraduationCap className="w-3.5 h-3.5 text-[#FF9100]" />
-                </div>
+              <div className="flex items-center gap-2 min-w-0">
+                <GraduationCap className="w-4 h-4 text-[#FF9100] shrink-0" title="Fundile Desktop App" />
                 <span className="font-semibold text-slate-200 text-xs tracking-tight truncate" style={{ fontFamily: 'Afacad, sans-serif' }}>
                   Fundile — Learner Workspace ({studentName} • Grade {currentGrade} FET)
                 </span>

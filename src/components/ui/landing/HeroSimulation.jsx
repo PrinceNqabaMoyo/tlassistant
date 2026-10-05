@@ -281,9 +281,7 @@ export default function HeroSimulation() {
                 {/* ── Level 1: System Title Bar (Windows 11 Controls ─, □, ✕ + URL route pill) ── */}
                 <div className="px-3 sm:px-4 py-1.5 bg-slate-100 border-b border-slate-200 flex items-center justify-between gap-3 text-xs select-none">
                     <div className="flex items-center gap-2">
-                        <div className="w-5 h-5 rounded-md bg-[#13519C] border border-blue-400/30 flex items-center justify-center shadow-xs shrink-0" title="Fundile Desktop App">
-                            <GraduationCap className="w-3.5 h-3.5 text-[#FF9100]" />
-                        </div>
+                        <GraduationCap className="w-4 h-4 text-[#FF9100] shrink-0" title="Fundile Desktop App" />
                         <span className="font-semibold text-slate-700 text-[11px] sm:text-xs tracking-tight" style={{ fontFamily: 'Afacad, sans-serif' }}>
                             Fundile — Learner Workspace ({selectedSubject.grade} {selectedSubject.name})
                         </span>

@@ -11,9 +11,14 @@ CAP_GRAPHIC = '''    <g transform="translate(150, 101.77) scale(0.75)">
     <path fill="#ff9100" opacity="1.0" stroke="none" d=" M530.902283,583.963318 C579.000061,555.740784 626.738159,527.630981 675.098083,499.154999 C675.098083,501.254150 675.080383,502.833069 675.100769,504.411560 C675.431519,530.050720 676.440857,555.704041 675.899902,581.324646 C675.419739,604.060913 666.363403,623.657898 648.652710,638.331360 C640.255859,645.288208 630.888550,651.135437 621.655457,657.004822 C611.017029,663.767578 600.027039,669.975891 589.215393,676.467773 C573.771118,685.741272 558.458008,695.238708 542.890686,704.299988 C525.288452,714.545654 506.851746,716.305420 488.165741,707.565125 C473.860107,700.873718 459.910980,693.423096 445.759888,686.397583 C421.355072,674.281494 396.832611,662.399475 372.516479,650.108765 C349.411194,638.429932 333.341370,620.744141 327.668762,594.873291 C326.400208,589.087646 325.419006,583.097412 325.412933,577.200256 C325.381042,546.214417 325.703827,515.228271 325.917938,484.242279 C325.919891,483.960632 326.119965,483.680389 326.393372,482.966705 C337.198914,489.207153 347.928986,495.411743 358.666290,501.603729 C406.111877,528.964600 453.515015,556.399719 501.075989,583.558533 C505.773682,586.241089 511.401672,588.452820 516.671387,588.624268 C521.240967,588.773010 525.914856,585.716187 530.902283,583.963318 z"/>
     <path fill="#ff9100" opacity="1.0" stroke="none" d="M727.104553,542.000000 C727.104492,554.662109 727.255981,566.827271 727.010742,578.984436 C726.939697,582.507202 727.955078,584.633972 730.756042,586.836365 C745.057800,598.081787 747.519531,617.167419 735.435364,629.111267 C730.770569,633.721924 731.136902,637.142212 732.927734,642.274536 C738.051880,656.959961 742.820801,671.769775 747.685852,686.545044 C751.600159,698.432983 748.005920,705.663330 735.837463,709.084167 C723.171570,712.644958 710.215027,711.725037 697.413269,709.852844 C692.003113,709.061584 687.834473,705.635925 684.933289,700.724121 C682.407043,696.447144 682.672607,692.277222 684.186523,687.836975 C689.837402,671.263672 695.343201,654.640625 701.083069,638.098511 C702.138062,635.057983 701.908508,633.276367 699.294861,630.955688 C686.045898,619.191650 687.093201,598.850830 701.525269,587.564697 C704.625305,585.140381 705.654602,582.683167 705.627808,578.857422 C705.446960,553.035034 705.451660,527.210693 705.563782,501.387695 C705.577026,498.349792 706.090027,495.091919 707.283569,492.330231 C709.385864,487.465454 715.054260,484.735840 719.237549,485.864258 C724.024475,487.155518 727.051208,491.551239 727.070496,497.516357 C727.117920,512.177490 727.097900,526.838745 727.104553,542.000000 z"/>'''
 
-def make_svg(scale=1.45, is_maskable=False):
-    # For standard icons: squircle rx=220
-    # For maskable icons: full bleed rx=0 (Android cuts the squircle)
+def make_svg(scale=1.45, is_maskable=False, no_background=False):
+    if no_background:
+        # 100% transparent background for desktop icons (like VS Code, Chrome, etc.)
+        return f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <g transform="translate(512, 512) scale({scale}) translate(-510, -420)">
+{CAP_GRAPHIC}
+  </g>
+</svg>'''
     rx = 0 if is_maskable else 220
     return f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
   <rect width="1024" height="1024" rx="{rx}" fill="#13519C"/>
@@ -24,66 +29,60 @@ def make_svg(scale=1.45, is_maskable=False):
 
 def render_image(svg_string, target_size):
     doc = pymupdf.open(stream=svg_string.encode('utf-8'), filetype='svg')
-    pix = doc[0].get_pixmap()
-    img = Image.frombytes("RGB", [pix.width, pix.height], pix.samples)
+    pix = doc[0].get_pixmap(alpha=True)
+    img = Image.frombytes("RGBA", [pix.width, pix.height], pix.samples)
     if (pix.width, pix.height) != (target_size, target_size):
         img = img.resize((target_size, target_size), Image.Resampling.LANCZOS)
     return img
 
-# 1. Update public/favicon.svg (Standard squircle, 1.45x scale)
-standard_svg = make_svg(scale=1.45, is_maskable=False)
+# 1. Update public/favicon.svg (No background, 100% transparent vector for desktop PWA)
+transparent_desktop_svg = make_svg(scale=1.45, no_background=True)
 with open("public/favicon.svg", "w", encoding="utf-8") as f:
-    f.write(standard_svg)
-print("Updated public/favicon.svg")
+    f.write(transparent_desktop_svg)
+print("Updated public/favicon.svg (Transparent desktop icon)")
 
 # 2. Render PNG icons
-maskable_svg = make_svg(scale=1.25, is_maskable=True)
+maskable_svg = make_svg(scale=1.25, is_maskable=True, no_background=False)
 
-# pwa-maskable-512x512.png
+# pwa-maskable-512x512.png (Android adaptive background)
 img_maskable_512 = render_image(maskable_svg, 512)
 img_maskable_512.save("public/pwa-maskable-512x512.png", "PNG")
 print("Updated public/pwa-maskable-512x512.png (512x512 maskable)")
 
-# pwa-maskable-192x192.png
+# pwa-maskable-192x192.png (Android adaptive background)
 img_maskable_192 = render_image(maskable_svg, 192)
 img_maskable_192.save("public/pwa-maskable-192x192.png", "PNG")
 print("Updated public/pwa-maskable-192x192.png (192x192 maskable)")
 
-# pwa-512x512.png
-img_std_512 = render_image(standard_svg, 512)
-img_std_512.save("public/pwa-512x512.png", "PNG")
-print("Updated public/pwa-512x512.png (512x512)")
+# Standard desktop icons (Transparent RGBA - NO background, like VS Code)
+img_desktop_512 = render_image(transparent_desktop_svg, 512)
+img_desktop_512.save("public/pwa-512x512.png", "PNG")
+print("Updated public/pwa-512x512.png (512x512 transparent)")
 
-# logo512.png
-img_std_512.save("public/logo512.png", "PNG")
-print("Updated public/logo512.png (512x512)")
+img_desktop_512.save("public/logo512.png", "PNG")
+print("Updated public/logo512.png (512x512 transparent)")
 
-# pwa-256x256.png (Windows desktop high-DPI standard)
-img_std_256 = render_image(standard_svg, 256)
-img_std_256.save("public/pwa-256x256.png", "PNG")
-print("Updated public/pwa-256x256.png (256x256)")
+img_desktop_256 = render_image(transparent_desktop_svg, 256)
+img_desktop_256.save("public/pwa-256x256.png", "PNG")
+print("Updated public/pwa-256x256.png (256x256 transparent)")
 
-# pwa-192x192.png
-img_std_192 = render_image(standard_svg, 192)
-img_std_192.save("public/pwa-192x192.png", "PNG")
-print("Updated public/pwa-192x192.png (192x192)")
+img_desktop_192 = render_image(transparent_desktop_svg, 192)
+img_desktop_192.save("public/pwa-192x192.png", "PNG")
+print("Updated public/pwa-192x192.png (192x192 transparent)")
 
-# logo192.png
-img_std_192.save("public/logo192.png", "PNG")
-print("Updated public/logo192.png (192x192)")
+img_desktop_192.save("public/logo192.png", "PNG")
+print("Updated public/logo192.png (192x192 transparent)")
 
-# apple-touch-icon.png (180x180)
-img_apple_180 = render_image(standard_svg, 180)
-img_apple_180.save("public/apple-touch-icon.png", "PNG")
-print("Updated public/apple-touch-icon.png (180x180)")
+img_desktop_180 = render_image(transparent_desktop_svg, 180)
+img_desktop_180.save("public/apple-touch-icon.png", "PNG")
+print("Updated public/apple-touch-icon.png (180x180 transparent)")
 
-# favicon.ico (256, 128, 64, 48, 32, 24, 16 for Windows Desktop & Taskbar)
-img_ico_256 = render_image(standard_svg, 256)
-img_ico_256.save(
+# Multi-resolution Windows ICO (Transparent RGBA - NO background)
+img_desktop_256.save(
     "public/favicon.ico", 
     format="ICO", 
     sizes=[(16, 16), (24, 24), (32, 32), (48, 48), (64, 64), (128, 128), (256, 256)]
 )
-print("Updated public/favicon.ico (Multi-resolution Windows ICO)")
+print("Updated public/favicon.ico (Multi-resolution transparent Windows ICO)")
 
-print("All icons generated and updated successfully!")
+print("All desktop icons updated with NO background (VS Code style) successfully!")

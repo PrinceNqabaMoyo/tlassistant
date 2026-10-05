@@ -263,8 +263,8 @@ export default function InstallAppModal({ isOpen, onClose }) {
           {activeTab === 'desktop' && (
             <div className="space-y-4">
               <div className="flex items-start gap-3 p-3.5 rounded-2xl bg-blue-50/70 border border-blue-200/70">
-                <div className="w-10 h-10 rounded-xl bg-[#13519C] border border-blue-400/30 flex items-center justify-center shrink-0 shadow-xs" title="Fundile Desktop App">
-                  <GraduationCap className="w-6 h-6 text-[#FF9100]" />
+                <div className="w-10 h-10 flex items-center justify-center shrink-0" title="Fundile Desktop App">
+                  <GraduationCap className="w-8 h-8 text-[#FF9100]" />
                 </div>
                 <div>
                   <h4 className="text-sm font-bold text-blue-950">Standalone Desktop Application</h4>
