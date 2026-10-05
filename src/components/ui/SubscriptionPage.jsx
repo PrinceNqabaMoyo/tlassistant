@@ -60,26 +60,29 @@ const SubscriptionPage = ({
                         </div>
 
                         <div className="rounded-[28px] border border-sky-100 bg-white p-6 shadow-lg shadow-sky-100/40">
-                            <p className="text-sm font-semibold uppercase tracking-[0.25em] text-[#2B7BD8]">Standard package</p>
-                            <h2 className="mt-4 text-2xl font-semibold text-slate-950">R150 monthly or R1600 for 12 months</h2>
+                            <p className="text-sm font-semibold uppercase tracking-[0.25em] text-[#2B7BD8]">Monthly Access</p>
+                            <h2 className="mt-4 text-2xl font-semibold text-slate-950">R149 / month</h2>
                             <p className="mt-3 leading-7 text-slate-600">
-                                Save R200 on the annual option. Standard gives access to the currently available Grade 10 and Grade 11 Accounting experience.
+                                Complete self-paced access across all 259 topics in Grades 7–12. Cancel anytime.
                             </p>
                             <div className="mt-5 flex flex-wrap gap-3 text-sm font-semibold">
                                 <span className="rounded-full bg-[#13519C]/10 px-3 py-1 text-[#13519C]">Available now</span>
-                                <span className="rounded-full bg-emerald-100 px-3 py-1 text-emerald-700">Save R200 yearly</span>
+                                <span className="rounded-full bg-slate-100 px-3 py-1 text-slate-700">Cancel anytime</span>
                             </div>
                         </div>
 
-                        <div className="rounded-[28px] border border-violet-100 bg-white p-6 shadow-lg shadow-violet-100/40">
-                            <p className="text-sm font-semibold uppercase tracking-[0.25em] text-violet-600">Pro package</p>
-                            <h2 className="mt-4 text-2xl font-semibold text-slate-950">R299 monthly or R3100 for 12 months</h2>
+                        <div className="rounded-[28px] border-2 border-[#13519C] bg-white p-6 shadow-lg shadow-blue-900/10">
+                            <div className="flex items-center justify-between">
+                                <p className="text-sm font-semibold uppercase tracking-[0.25em] text-[#FF9100]">Term &amp; Annual Passes</p>
+                                <span className="rounded-full bg-amber-100 px-2.5 py-0.5 text-xs font-bold text-[#FF9100]">Best Value</span>
+                            </div>
+                            <h2 className="mt-4 text-2xl font-semibold text-slate-950">R349 / Term or R999 / Year</h2>
                             <p className="mt-3 leading-7 text-slate-600">
-                                Save R488 on the annual option. Pro connects to an LLM to provide running comments on student questions, answers, and procedures.
+                                R349 per 3-month school term (save R98) or R999 for full 12-month academic year (save R789, ~R83/mo).
                             </p>
                             <div className="mt-5 flex flex-wrap gap-3 text-sm font-semibold">
-                                <span className="rounded-full bg-violet-100 px-3 py-1 text-violet-700">Coming soon</span>
-                                <span className="rounded-full bg-amber-100 px-3 py-1 text-amber-700">Not yet available in South Africa</span>
+                                <span className="rounded-full bg-amber-100 px-3 py-1 text-amber-800">Term Pass: ~R116/mo</span>
+                                <span className="rounded-full bg-emerald-100 px-3 py-1 text-emerald-800">Annual Pass: ~R83/mo</span>
                             </div>
                         </div>
                     </section>

@@ -858,39 +858,39 @@ const LandingPage = ({ onGetStarted, onSignIn, onViewSubscription }) => {
                                 </p>
                             </div>
 
-                            {/* Pricing Islands Grid (3 Distinct Audiences) */}
+                            {/* Pricing Islands Grid (Unified Full-Curriculum Access with Term & Annual Anchors) */}
                             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto items-stretch">
-                                {/* Island 1: Standard Individual Learner */}
+                                {/* Island 1: Monthly Pass */}
                                 <div className="rounded-[28px] border border-slate-200/90 bg-white p-7 shadow-xs flex flex-col justify-between hover:shadow-md transition duration-300">
                                     <div>
                                         <div className="flex justify-between items-center mb-2">
-                                            <span className="text-xs font-bold uppercase tracking-wider text-[#13519C]">Individual Learner</span>
-                                            <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-blue-50 text-[#13519C] border border-blue-200">Live Now</span>
+                                            <span className="text-xs font-bold uppercase tracking-wider text-[#13519C]">Monthly Pass</span>
+                                            <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-blue-50 text-[#13519C] border border-blue-200">Flexible</span>
                                         </div>
-                                        <h3 className="text-2xl font-bold text-slate-900 mt-2">Standard Pass</h3>
-                                        <p className="text-xs text-slate-500 mt-1 mb-4">Complete self-paced revision for Grades 7–12.</p>
+                                        <h3 className="text-2xl font-bold text-slate-900 mt-2">Monthly</h3>
+                                        <p className="text-xs text-slate-500 mt-1 mb-4">Complete self-paced revision. Cancel anytime.</p>
                                         
                                         <div className="mt-4">
-                                            <span className="text-4xl font-extrabold text-slate-900">R150</span>
-                                            <span className="text-xs font-medium text-slate-500"> / learner / month</span>
+                                            <span className="text-4xl font-extrabold text-slate-900">R149</span>
+                                            <span className="text-xs font-medium text-slate-500"> / month</span>
                                         </div>
 
                                         <ul className="mt-6 space-y-3 text-xs text-slate-600 border-t border-slate-100 pt-6">
                                             <li className="flex items-center gap-2">
                                                 <Check className="w-4 h-4 text-emerald-600 shrink-0" />
-                                                <span>Full access to all 476+ national curriculum topics</span>
+                                                <span>Full access to all 259 topics across Grades 7–12</span>
                                             </li>
                                             <li className="flex items-center gap-2">
                                                 <Check className="w-4 h-4 text-emerald-600 shrink-0" />
-                                                <span>Unlimited deterministic question generator</span>
+                                                <span>Step-by-step procedure tracker with method marks [M]</span>
                                             </li>
                                             <li className="flex items-center gap-2">
                                                 <Check className="w-4 h-4 text-emerald-600 shrink-0" />
-                                                <span>Step-by-step Fair Step Marking (consequential accuracy)</span>
+                                                <span>Pre-baked 3-Tier hints & worked solution memos</span>
                                             </li>
                                             <li className="flex items-center gap-2">
                                                 <Check className="w-4 h-4 text-emerald-600 shrink-0" />
-                                                <span>Offline PWA installation (1.4 MB total data)</span>
+                                                <span>Ultra-low bandwidth offline PWA (&lt; 2 MB data)</span>
                                             </li>
                                         </ul>
                                     </div>
@@ -901,51 +901,51 @@ const LandingPage = ({ onGetStarted, onSignIn, onViewSubscription }) => {
                                             onClick={onGetStarted}
                                             className="w-full inline-flex items-center justify-center py-3.5 px-4 rounded-xl text-xs font-bold text-[#13519C] bg-blue-50 hover:bg-blue-100 border border-blue-200 transition cursor-pointer"
                                         >
-                                            Start Free Trial
+                                            Start 2-Week Free Trial
                                         </button>
                                     </div>
                                 </div>
 
-                                {/* Island 2: Pro Cognitive Package (Featured) */}
+                                {/* Island 2: Term Pass (Featured - Most Popular) */}
                                 <div className="rounded-[28px] border-2 border-[#13519C] bg-white p-7 shadow-lg shadow-blue-900/10 flex flex-col justify-between relative">
-                                    <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full text-xs font-extrabold bg-[#13519C] text-white shadow-sm flex items-center gap-1">
+                                    <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full text-xs font-extrabold bg-[#13519C] text-white shadow-sm flex items-center gap-1 whitespace-nowrap">
                                         <Star className="w-3 h-3 text-[#FF9100] fill-[#FF9100]" />
-                                        <span>RECOMMENDED • 2-WEEK FREE TRIAL</span>
+                                        <span>MOST POPULAR • TERM EXAM PREP</span>
                                     </div>
 
                                     <div>
                                         <div className="flex justify-between items-center mb-2 mt-2">
-                                            <span className="text-xs font-bold uppercase tracking-wider text-purple-700">Pro Intelligence</span>
-                                            <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-purple-50 text-purple-700 border border-purple-200">Full Suite</span>
+                                            <span className="text-xs font-bold uppercase tracking-wider text-[#FF9100]">School Term Pass</span>
+                                            <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-50 text-[#FF9100] border border-amber-200">Save R98</span>
                                         </div>
-                                        <h3 className="text-2xl font-bold text-slate-900 mt-2">Pro Package</h3>
-                                        <p className="text-xs text-slate-500 mt-1 mb-4">Everything in Standard, plus our full Socratic cognitive tutor & SimuLearn.</p>
+                                        <h3 className="text-2xl font-bold text-slate-900 mt-2">Term Pass (3 Months)</h3>
+                                        <p className="text-xs text-slate-500 mt-1 mb-4">Aligned with South African school term exam deadlines.</p>
                                         
                                         <div className="mt-4">
-                                            <span className="text-4xl font-extrabold text-slate-900">R299</span>
-                                            <span className="text-xs font-medium text-slate-500"> / learner / month</span>
+                                            <span className="text-4xl font-extrabold text-slate-900">R349</span>
+                                            <span className="text-xs font-medium text-slate-500"> / term <span className="text-emerald-600 font-bold">(~R116/mo)</span></span>
                                         </div>
 
                                         <ul className="mt-6 space-y-3 text-xs text-slate-700 border-t border-slate-100 pt-6">
                                             <li className="flex items-center gap-2">
                                                 <Check className="w-4 h-4 text-[#FF9100] shrink-0" />
-                                                <span><strong>Everything in Standard</strong></span>
+                                                <span><strong>Everything in Monthly Pass</strong></span>
                                             </li>
                                             <li className="flex items-center gap-2">
                                                 <Check className="w-4 h-4 text-[#FF9100] shrink-0" />
-                                                <span>Fundile Socratic™ Tutor with on-rails suggestion chips</span>
+                                                <span>Post-exam triage autopsies & 5-minute targeted repairs</span>
                                             </li>
                                             <li className="flex items-center gap-2">
                                                 <Check className="w-4 h-4 text-[#FF9100] shrink-0" />
-                                                <span>SimuLearn visual animations (saves 95% data over video)</span>
+                                                <span>SimuLearn visual animations (&lt; 2 MB data)</span>
                                             </li>
                                             <li className="flex items-center gap-2">
                                                 <Check className="w-4 h-4 text-[#FF9100] shrink-0" />
-                                                <span>Diagnostic error autopsies & 5-minute focus fixes</span>
+                                                <span>Weekly Sunday 18:00 Parent WhatsApp Academic Pulse</span>
                                             </li>
                                             <li className="flex items-center gap-2">
                                                 <Check className="w-4 h-4 text-[#FF9100] shrink-0" />
-                                                <span>Sunday WhatsApp Parent Coaching Pulse</span>
+                                                <span>Guaranteed coverage of all Term 1–4 exam scopes</span>
                                             </li>
                                         </ul>
                                     </div>
@@ -961,54 +961,70 @@ const LandingPage = ({ onGetStarted, onSignIn, onViewSubscription }) => {
                                     </div>
                                 </div>
 
-                                {/* Island 3: Whole School SGB & Institutional */}
+                                {/* Island 3: Annual / Matric Distinction Pass */}
                                 <div className="rounded-[28px] border border-slate-200/90 bg-white p-7 shadow-xs flex flex-col justify-between hover:shadow-md transition duration-300">
                                     <div>
                                         <div className="flex justify-between items-center mb-2">
-                                            <span className="text-xs font-bold uppercase tracking-wider text-cyan-800">Schools &amp; Leadership</span>
-                                            <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-cyan-50 text-cyan-800 border border-cyan-200">Volume Tier</span>
+                                            <span className="text-xs font-bold uppercase tracking-wider text-emerald-700">Full Academic Year</span>
+                                            <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">Save R789</span>
                                         </div>
-                                        <h3 className="text-2xl font-bold text-slate-900 mt-2">Institutional License</h3>
-                                        <p className="text-xs text-slate-500 mt-1 mb-4">Complete infrastructure for classrooms, school administrators, and school governing bodies.</p>
+                                        <h3 className="text-2xl font-bold text-slate-900 mt-2">Annual Distinction Pass</h3>
+                                        <p className="text-xs text-slate-500 mt-1 mb-4">Complete 12-month academic insurance for Grades 7–12.</p>
                                         
                                         <div className="mt-4">
-                                            <span className="text-3xl font-extrabold text-slate-900">From R65</span>
-                                            <span className="text-xs font-medium text-slate-500"> / learner / month</span>
+                                            <span className="text-4xl font-extrabold text-slate-900">R999</span>
+                                            <span className="text-xs font-medium text-slate-500"> / year <span className="text-emerald-600 font-bold">(~R83/mo)</span></span>
                                         </div>
 
                                         <ul className="mt-6 space-y-3 text-xs text-slate-600 border-t border-slate-100 pt-6">
                                             <li className="flex items-center gap-2">
-                                                <Check className="w-4 h-4 text-cyan-600 shrink-0" />
-                                                <span>Teacher & Admin LMS Cockpits with real student photos</span>
+                                                <Check className="w-4 h-4 text-emerald-600 shrink-0" />
+                                                <span><strong>All features across all 4 school terms</strong></span>
                                             </li>
                                             <li className="flex items-center gap-2">
-                                                <Check className="w-4 h-4 text-cyan-600 shrink-0" />
-                                                <span>Unlimited 3-click printable A4 test papers & memos</span>
+                                                <Check className="w-4 h-4 text-emerald-600 shrink-0" />
+                                                <span>Matric & Grade 11 Final Examination Countdown Packs</span>
                                             </li>
                                             <li className="flex items-center gap-2">
-                                                <Check className="w-4 h-4 text-cyan-600 shrink-0" />
-                                                <span>1-Click official SASAMS Excel mark sheet export</span>
+                                                <Check className="w-4 h-4 text-emerald-600 shrink-0" />
+                                                <span>Printable PDF past-exam papers and worked marking memos</span>
                                             </li>
                                             <li className="flex items-center gap-2">
-                                                <Check className="w-4 h-4 text-cyan-600 shrink-0" />
-                                                <span>Curriculum pacing variance radar (ATP vs reality)</span>
-                                            </li>
-                                            <li className="flex items-center gap-2">
-                                                <Check className="w-4 h-4 text-cyan-600 shrink-0" />
-                                                <span>SGB formal quotation & invoice procurement support</span>
+                                                <Check className="w-4 h-4 text-emerald-600 shrink-0" />
+                                                <span>Priority holiday booster clinics & revision drills</span>
                                             </li>
                                         </ul>
                                     </div>
 
                                     <div className="mt-8 pt-4">
-                                        <a 
-                                            href="mailto:info@fundile.com?subject=School%20Volume%20Pricing%20%26%20Institutional%20Inquiry" 
-                                            className="w-full inline-flex items-center justify-center py-3.5 px-4 rounded-xl text-xs font-bold text-white bg-cyan-700 hover:bg-cyan-800 transition cursor-pointer"
+                                        <button 
+                                            type="button"
+                                            onClick={onViewSubscription || onGetStarted}
+                                            className="w-full inline-flex items-center justify-center py-3.5 px-4 rounded-xl text-xs font-bold text-[#13519C] bg-blue-50 hover:bg-blue-100 border border-blue-200 transition cursor-pointer"
                                         >
-                                            Contact info@fundile.com
-                                        </a>
+                                            Start 2-Week Free Trial
+                                        </button>
                                     </div>
                                 </div>
+                            </div>
+
+                            {/* Schools and SGB Institutional Banner */}
+                            <div className="mt-10 max-w-4xl mx-auto rounded-2xl border border-sky-100 bg-gradient-to-r from-blue-50/80 via-white to-sky-50/80 p-5 sm:p-6 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-xs">
+                                <div>
+                                    <div className="flex items-center gap-2 mb-1">
+                                        <span className="px-2 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider bg-[#13519C] text-white">Schools &amp; SGB</span>
+                                        <span className="text-xs font-bold text-slate-900">Institutional Volume Licensing</span>
+                                    </div>
+                                    <p className="text-xs text-slate-600 leading-relaxed">
+                                        Empower entire grades with Teacher Cockpits, class heatmaps, 1-click SASAMS CSV exports, and offline practice from <strong className="text-slate-900">R45 / learner / term</strong>.
+                                    </p>
+                                </div>
+                                <a 
+                                    href="mailto:info@fundile.com?subject=School%20Volume%20Pricing%20%26%20Institutional%20Inquiry" 
+                                    className="shrink-0 inline-flex items-center justify-center py-2.5 px-5 rounded-xl text-xs font-bold text-white bg-[#13519C] hover:bg-[#0e3d77] transition cursor-pointer whitespace-nowrap shadow-sm"
+                                >
+                                    Inquire for Schools →
+                                </a>
                             </div>
                         </section>
                     </ScrollReveal>

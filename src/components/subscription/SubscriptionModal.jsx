@@ -184,129 +184,145 @@ export default function SubscriptionModal({
 
           {/* Pricing Grid */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-            {/* Standard Tier */}
+            {/* Monthly Pass */}
             <div
               className={`p-5 rounded-xl border flex flex-col justify-between transition ${
-                currentStatus.tier === 'standard'
-                  ? 'bg-slate-800/90 border-emerald-500/80 shadow-lg shadow-emerald-500/10'
+                currentStatus.tier === 'standard' || currentStatus.tier === 'monthly'
+                  ? 'bg-slate-800/90 border-blue-500/80 shadow-lg shadow-blue-500/10'
                   : 'bg-slate-800/40 border-slate-700 hover:border-slate-600'
               }`}
             >
               <div>
                 <div className="flex items-center justify-between">
-                  <h3 className="text-lg font-bold text-white">Fundile Standard</h3>
-                  <Zap className="w-5 h-5 text-emerald-400" />
+                  <h3 className="text-lg font-bold text-white">Monthly Pass</h3>
+                  <Zap className="w-5 h-5 text-blue-400" />
                 </div>
-                <p className="text-xs text-slate-400 mt-1">100% Zero-LLM Deterministic Practice</p>
+                <p className="text-xs text-slate-400 mt-1">Flexible Self-Paced Revision · Cancel Anytime</p>
                 <div className="mt-4">
-                  <span className="text-3xl font-extrabold text-white">
-                    {billingCycle === 'monthly' ? 'R79' : 'R59'}
-                  </span>
+                  <span className="text-3xl font-extrabold text-white">R149</span>
                   <span className="text-xs text-slate-400 ml-1">/ month</span>
-                  {billingCycle === 'annual' && (
-                    <div className="text-[11px] text-emerald-400 mt-0.5">Billed as R708/year</div>
-                  )}
                 </div>
 
                 <ul className="mt-5 space-y-2.5 text-xs text-slate-300">
                   <li className="flex items-center gap-2">
                     <Check className="w-4 h-4 text-emerald-400 flex-shrink-0" />
-                    <span>Unlimited Scaffold & Practice problem sets</span>
+                    <span>All 259 topics across Grades 7–12</span>
                   </li>
                   <li className="flex items-center gap-2">
                     <Check className="w-4 h-4 text-emerald-400 flex-shrink-0" />
-                    <span>Timed Assessment Mode & Mock Exams</span>
+                    <span>Stepwise procedure tracker &amp; NSC method marks</span>
                   </li>
                   <li className="flex items-center gap-2">
                     <Check className="w-4 h-4 text-emerald-400 flex-shrink-0" />
-                    <span>Pre-baked 3-Tier hints (location, rule, step)</span>
+                    <span>Deterministic 3-Tier hints &amp; worked memos</span>
                   </li>
                   <li className="flex items-center gap-2">
                     <Check className="w-4 h-4 text-emerald-400 flex-shrink-0" />
-                    <span>Interactive visual ProgressMap skill tree</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <Check className="w-4 h-4 text-emerald-400 flex-shrink-0" />
-                    <span>Parent Diagnostic A4 PDF progress reports</span>
+                    <span>Ultra-low bandwidth offline PWA (&lt; 2 MB data)</span>
                   </li>
                 </ul>
               </div>
 
               <button
-                onClick={() => handleOpenPayment('standard')}
-                disabled={isUpdating || currentStatus.tier === 'standard'}
-                className={`mt-6 w-full py-2.5 rounded-lg text-xs font-bold transition flex items-center justify-center gap-2 cursor-pointer ${
-                  currentStatus.tier === 'standard'
-                    ? 'bg-emerald-900/60 text-emerald-300 border border-emerald-600/50 cursor-default'
-                    : 'bg-emerald-600 hover:bg-emerald-500 text-white shadow-md'
-                }`}
+                onClick={() => handleOpenPayment('monthly')}
+                disabled={isUpdating}
+                className="mt-6 w-full py-2.5 rounded-lg text-xs font-bold transition flex items-center justify-center gap-2 cursor-pointer bg-blue-600 hover:bg-blue-500 text-white shadow-md"
               >
-                {currentStatus.tier === 'standard' ? 'Active Plan' : 'Subscribe Standard'}
+                Start 2-Week Free Trial
               </button>
             </div>
 
-            {/* Pro Tier (Featured) */}
+            {/* School Term Pass (Featured - Most Popular) */}
             <div
               className={`relative p-5 rounded-xl border-2 flex flex-col justify-between transition ${
-                currentStatus.tier === 'pro'
-                  ? 'bg-purple-950/30 border-purple-500 shadow-xl shadow-purple-500/20'
-                  : 'bg-slate-800/60 border-purple-500/70 shadow-lg'
+                currentStatus.tier === 'pro' || currentStatus.tier === 'term'
+                  ? 'bg-amber-950/20 border-amber-500 shadow-xl shadow-amber-500/20'
+                  : 'bg-slate-800/60 border-amber-500/80 shadow-lg'
               }`}
             >
-              <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-0.5 rounded-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white text-[10px] font-extrabold uppercase tracking-wider shadow">
-                Most Popular
+              <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-0.5 rounded-full bg-gradient-to-r from-amber-500 to-[#FF9100] text-slate-950 text-[10px] font-extrabold uppercase tracking-wider shadow">
+                Most Popular · Save R98
               </div>
 
               <div>
                 <div className="flex items-center justify-between">
-                  <h3 className="text-lg font-bold text-white">Fundile Pro</h3>
-                  <Sparkles className="w-5 h-5 text-purple-400 animate-pulse" />
+                  <h3 className="text-lg font-bold text-white">Term Pass (3 Months)</h3>
+                  <Sparkles className="w-5 h-5 text-amber-400 animate-pulse" />
                 </div>
-                <p className="text-xs text-slate-400 mt-1">Live Socratic AI Tutor & Deep Diagnostic</p>
+                <p className="text-xs text-slate-400 mt-1">Aligned with School Term Exam Deadlines</p>
                 <div className="mt-4">
-                  <span className="text-3xl font-extrabold text-white">
-                    {billingCycle === 'monthly' ? 'R149' : 'R119'}
-                  </span>
-                  <span className="text-xs text-slate-400 ml-1">/ month</span>
-                  {billingCycle === 'annual' && (
-                    <div className="text-[11px] text-purple-400 mt-0.5">Billed as R1,428/year</div>
-                  )}
+                  <span className="text-3xl font-extrabold text-white">R349</span>
+                  <span className="text-xs text-slate-400 ml-1">/ term <span className="text-amber-400 font-bold">(~R116/mo)</span></span>
                 </div>
 
                 <ul className="mt-5 space-y-2.5 text-xs text-slate-300">
-                  <li className="flex items-center gap-2 font-medium text-purple-200">
-                    <Check className="w-4 h-4 text-purple-400 flex-shrink-0" />
-                    <span>Everything in Standard plan</span>
+                  <li className="flex items-center gap-2 font-medium text-amber-200">
+                    <Check className="w-4 h-4 text-amber-400 flex-shrink-0" />
+                    <span>Everything in Monthly Pass</span>
                   </li>
                   <li className="flex items-center gap-2">
-                    <Check className="w-4 h-4 text-purple-400 flex-shrink-0" />
-                    <span>On-rails Socratic AI Tutor with Dynamic Suggestion Chips</span>
+                    <Check className="w-4 h-4 text-amber-400 flex-shrink-0" />
+                    <span>Post-exam triage autopsies &amp; 5-minute fixes</span>
                   </li>
                   <li className="flex items-center gap-2">
-                    <Check className="w-4 h-4 text-purple-400 flex-shrink-0" />
-                    <span>SimuLearn visual animation worked solutions</span>
+                    <Check className="w-4 h-4 text-amber-400 flex-shrink-0" />
+                    <span>Weekly Sunday 18:00 Parent WhatsApp Pulse</span>
                   </li>
                   <li className="flex items-center gap-2">
-                    <Check className="w-4 h-4 text-purple-400 flex-shrink-0" />
-                    <span>Targeted micro-lessons on failed subskills</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <Check className="w-4 h-4 text-purple-400 flex-shrink-0" />
-                    <span>Priority WhatsApp diagnostic report sharing</span>
+                    <Check className="w-4 h-4 text-amber-400 flex-shrink-0" />
+                    <span>SimuLearn visual animations worked solutions</span>
                   </li>
                 </ul>
               </div>
 
               <button
-                onClick={() => handleOpenPayment('pro')}
-                disabled={isUpdating || currentStatus.tier === 'pro'}
-                className={`mt-6 w-full py-2.5 rounded-lg text-xs font-bold transition flex items-center justify-center gap-2 cursor-pointer ${
-                  currentStatus.tier === 'pro'
-                    ? 'bg-purple-900/60 text-purple-300 border border-purple-600/50 cursor-default'
-                    : 'bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white shadow-lg'
-                }`}
+                onClick={() => handleOpenPayment('term')}
+                disabled={isUpdating}
+                className="mt-6 w-full py-2.5 rounded-lg text-xs font-bold transition flex items-center justify-center gap-2 cursor-pointer bg-gradient-to-r from-[#FF9100] to-amber-500 hover:from-[#e68200] hover:to-amber-600 text-slate-950 font-extrabold shadow-lg"
               >
-                {currentStatus.tier === 'pro' ? 'Active Plan' : 'Upgrade to Pro'}
+                Start 2-Week Free Trial
+              </button>
+            </div>
+
+            {/* Annual Pass */}
+            <div className="p-5 rounded-xl border border-slate-700 bg-slate-800/40 flex flex-col justify-between">
+              <div>
+                <div className="flex items-center justify-between">
+                  <h3 className="text-lg font-bold text-white">Annual Distinction Pass</h3>
+                  <Zap className="w-5 h-5 text-emerald-400" />
+                </div>
+                <p className="text-xs text-slate-400 mt-1">Full 12-Month Academic Insurance</p>
+                <div className="mt-4">
+                  <span className="text-3xl font-extrabold text-white">R999</span>
+                  <span className="text-xs text-slate-400 ml-1">/ year <span className="text-emerald-400 font-bold">(~R83/mo · Save R789)</span></span>
+                </div>
+
+                <ul className="mt-5 space-y-2.5 text-xs text-slate-300">
+                  <li className="flex items-center gap-2">
+                    <Check className="w-4 h-4 text-emerald-400 flex-shrink-0" />
+                    <span>All features across all 4 school terms</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <Check className="w-4 h-4 text-emerald-400 flex-shrink-0" />
+                    <span>Matric &amp; Grade 11 Final Exam Countdown Packs</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <Check className="w-4 h-4 text-emerald-400 flex-shrink-0" />
+                    <span>Printable PDF past-exam papers and memos</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <Check className="w-4 h-4 text-emerald-400 flex-shrink-0" />
+                    <span>Priority holiday booster clinics &amp; revision drills</span>
+                  </li>
+                </ul>
+              </div>
+
+              <button
+                onClick={() => handleOpenPayment('annual')}
+                disabled={isUpdating}
+                className="mt-6 w-full py-2.5 rounded-lg text-xs font-bold transition flex items-center justify-center gap-2 cursor-pointer bg-emerald-600 hover:bg-emerald-500 text-white shadow-md"
+              >
+                Start 2-Week Free Trial
               </button>
             </div>
 
