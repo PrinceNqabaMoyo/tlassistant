@@ -23,16 +23,17 @@ import {
     X,
     GraduationCap,
 } from 'lucide-react';
+import { getSubjectTheme } from '../../../theme/subjectPalette';
 
 // ═══════════════════════════════════════════════════════════════
 // AUTHENTIC SUBJECT SHELF CONFIGURATION
 // ═══════════════════════════════════════════════════════════════
 const SUBJECTS = [
-    { id: 'accounting', name: 'Accounting', icon: BookOpen, grade: 'Grade 10', mastery: 84, color: 'text-emerald-700 bg-emerald-50 border-emerald-200', accentHex: '#059669' },
-    { id: 'mathematics', name: 'Mathematics', icon: Calculator, grade: 'Grade 10', mastery: 82, color: 'text-blue-700 bg-blue-50 border-blue-200', accentHex: '#2563EB' },
-    { id: 'physical_sciences', name: 'Physical Sciences', icon: FlaskConical, grade: 'Grade 10', mastery: 68, color: 'text-cyan-700 bg-cyan-50 border-cyan-200', accentHex: '#0891B2' },
-    { id: 'business_studies', name: 'Business Studies', icon: Briefcase, grade: 'Grade 10', mastery: 75, color: 'text-purple-700 bg-purple-50 border-purple-200', accentHex: '#EA580C' },
-    { id: 'ems', name: 'EMS', icon: Coins, grade: 'Grade 9', mastery: 80, color: 'text-amber-700 bg-amber-50 border-amber-200', accentHex: '#D97706' },
+    { id: 'accounting', name: 'Accounting', icon: BookOpen, grade: 'Grade 10', mastery: 84, theme: getSubjectTheme('accounting'), accentHex: getSubjectTheme('accounting').base },
+    { id: 'mathematics', name: 'Mathematics', icon: Calculator, grade: 'Grade 10', mastery: 82, theme: getSubjectTheme('mathematics'), accentHex: getSubjectTheme('mathematics').base },
+    { id: 'physical_sciences', name: 'Physical Sciences', icon: FlaskConical, grade: 'Grade 10', mastery: 68, theme: getSubjectTheme('physical_sciences'), accentHex: getSubjectTheme('physical_sciences').base },
+    { id: 'business_studies', name: 'Business Studies', icon: Briefcase, grade: 'Grade 10', mastery: 75, theme: getSubjectTheme('business_studies'), accentHex: getSubjectTheme('business_studies').base },
+    { id: 'ems', name: 'EMS', icon: Coins, grade: 'Grade 9', mastery: 80, theme: getSubjectTheme('ems'), accentHex: getSubjectTheme('ems').base },
 ];
 
 export default function HeroSimulation() {
@@ -360,8 +361,8 @@ export default function HeroSimulation() {
                                     WebkitClipPath: 'polygon(14px 0, 100% 0, 100% 100%, 0 100%, 0 14px)',
                                     zIndex: isSelected ? 30 : 10,
                                     transform: isSelected ? 'translateY(-3px)' : 'translateY(2px)',
-                                    backgroundColor: isSelected ? '#FFFFFF' : '#E2E8F0',
-                                    color: isSelected ? '#0F172A' : '#475569',
+                                    backgroundColor: isSelected ? '#FFFFFF' : (sub.theme?.soft || '#F1F5F9'),
+                                    color: isSelected ? (sub.theme?.text || '#0F172A') : '#334155',
                                     borderBottom: isSelected ? '2px solid #FFFFFF' : '1px solid #CBD5E1',
                                     boxShadow: isSelected ? '0 -6px 16px -2px rgba(0, 0, 0, 0.12)' : 'none',
                                     fontFamily: 'Afacad, sans-serif'
@@ -377,11 +378,15 @@ export default function HeroSimulation() {
                                     />
                                 </svg>
                                 <span className="w-2 h-2 rounded-full shrink-0" style={{ backgroundColor: sub.accentHex }} />
-                                <Icon className="w-3.5 h-3.5 shrink-0" />
+                                <Icon className="w-3.5 h-3.5 shrink-0" style={{ color: sub.accentHex }} />
                                 <span className="truncate">{sub.name}</span>
-                                <span className={`text-[10px] px-1.5 py-0.2 rounded-full font-bold ${
-                                    isSelected ? 'bg-slate-100 text-slate-800' : 'bg-slate-300 text-slate-600'
-                                }`}>
+                                <span 
+                                    className="text-[10px] px-1.5 py-0.2 rounded-full font-bold"
+                                    style={{
+                                        backgroundColor: isSelected ? sub.theme?.base : sub.theme?.soft,
+                                        color: isSelected ? '#FFFFFF' : sub.theme?.text,
+                                    }}
+                                >
                                     {sub.mastery}%
                                 </span>
                             </button>
@@ -391,7 +396,7 @@ export default function HeroSimulation() {
 
                 {/* Connecting Accent Line */}
                 <div
-                    className="h-[2px] w-full transition-colors duration-300"
+                    className="h-[3px] w-full transition-colors duration-300"
                     style={{ backgroundColor: selectedSubject.accentHex }}
                 />
 

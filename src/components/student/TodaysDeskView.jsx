@@ -14,6 +14,7 @@ import {
   TrendingUp,
   AlertCircle
 } from 'lucide-react';
+import { getSubjectTheme } from '../../theme/subjectPalette';
 
 /**
  * TodaysDeskView
@@ -123,17 +124,20 @@ export default function TodaysDeskView({
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {assignedTasks.map((task) => {
+              const theme = getSubjectTheme(task.subject);
               const isAccounting = (task.subject || '').includes('accounting');
-              const isMath = (task.subject || '').includes('math');
-              const borderClass = isAccounting ? 'border-emerald-400' : isMath ? 'border-blue-400' : 'border-indigo-400';
-              const badgeClass = isAccounting ? 'bg-emerald-600 shadow-emerald-500/30' : isMath ? 'bg-blue-600 shadow-blue-500/30' : 'bg-indigo-600 shadow-indigo-500/30';
-              const btnClass = isAccounting ? 'bg-emerald-600 hover:bg-emerald-700 shadow-emerald-600/30' : isMath ? 'bg-blue-600 hover:bg-blue-700 shadow-blue-600/30' : 'bg-indigo-600 hover:bg-indigo-700 shadow-indigo-600/30';
-              const textClass = isAccounting ? 'text-emerald-800 bg-emerald-50' : isMath ? 'text-blue-800 bg-blue-50' : 'text-indigo-800 bg-indigo-50';
 
               return (
-                <div key={task.id} className={`bg-white border-2 ${borderClass} p-5 rounded-2xl shadow-xs hover:shadow-md transition-all space-y-3`}>
+                <div 
+                  key={task.id} 
+                  className="bg-white border border-slate-200 p-5 rounded-2xl shadow-xs hover:shadow-md transition-all space-y-3"
+                  style={{ borderLeftWidth: '5px', borderLeftColor: theme.base }}
+                >
                   <div className="flex items-center justify-between text-xs font-bold">
-                    <span className={`${badgeClass} text-white px-2.5 py-1 rounded-full text-[11px] font-extrabold shadow-sm flex items-center gap-1.5`}>
+                    <span 
+                      className="px-2.5 py-1 rounded-full text-[11px] font-extrabold shadow-sm flex items-center gap-1.5 text-white"
+                      style={{ backgroundColor: theme.base }}
+                    >
                       {isAccounting ? <BookOpen className="w-3.5 h-3.5" /> : <Calculator className="w-3.5 h-3.5" />}
                       <span>{(task.subjectName || task.subject).toUpperCase()} • {task.dueText || 'DUE SOON'}</span>
                     </span>
@@ -152,13 +156,17 @@ export default function TodaysDeskView({
                   </div>
 
                   <div className="pt-2 flex items-center justify-between border-t border-slate-100">
-                    <span className={`text-xs font-semibold ${textClass} px-2 py-0.5 rounded-md`}>
+                    <span 
+                      className="text-xs font-semibold px-2 py-0.5 rounded-md"
+                      style={{ backgroundColor: theme.soft, color: theme.text }}
+                    >
                       Estimated: {task.estimatedMins || 15} mins
                     </span>
                     <button
                       type="button"
                       onClick={() => onOpenSubject(task.subject, task.topic || task.title)}
-                      className={`px-4 py-2 ${btnClass} text-white text-xs font-bold rounded-xl shadow-sm flex items-center gap-1.5 transition cursor-pointer`}
+                      className="px-4 py-2 text-white text-xs font-bold rounded-xl shadow-sm flex items-center gap-1.5 transition cursor-pointer hover:opacity-95 active:scale-98"
+                      style={{ backgroundColor: theme.base }}
                     >
                       <span>Open in {task.subjectName || 'Subject'}</span>
                       <ArrowRight className="w-3.5 h-3.5" />
@@ -179,57 +187,107 @@ export default function TodaysDeskView({
         </h3>
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-          
-          <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-2xs space-y-2">
-            <div className="flex items-center justify-between text-xs">
-              <span className="font-bold text-slate-800">Physical Sciences</span>
-              <span className="text-cyan-700 bg-cyan-50 font-bold px-1.5 py-0.5 rounded text-[11px]">
-                {physSub.status === 'diagnostic_required' ? 'Diagnostic Due' : `${physSub.formativeMastery}% BKT`}
-              </span>
-            </div>
-            <p className="text-xs text-slate-600">Motion in 1D: Constant acceleration calculations.</p>
-            <button
-              type="button"
-              onClick={() => onOpenSubject('physical_sciences', 'Motion in 1D')}
-              className="w-full mt-2 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-lg transition cursor-pointer"
-            >
-              Resume Drill &rarr;
-            </button>
-          </div>
+          {(() => {
+            const physTheme = getSubjectTheme('physical_sciences');
+            const isPhysDiag = physSub.status === 'diagnostic_required';
+            return (
+              <div 
+                className="bg-white p-4 rounded-xl border border-slate-200 shadow-2xs space-y-2 hover:shadow-xs transition"
+                style={{ borderLeftWidth: '4px', borderLeftColor: physTheme.base }}
+              >
+                <div className="flex items-center justify-between text-xs">
+                  <span className="font-bold text-slate-800">Physical Sciences</span>
+                  <span 
+                    className="font-bold px-2 py-0.5 rounded-full text-[11px]"
+                    style={{
+                      backgroundColor: isPhysDiag ? physTheme.soft : physTheme.base,
+                      color: isPhysDiag ? physTheme.text : '#FFFFFF',
+                      border: isPhysDiag ? `1px solid ${physTheme.border}` : 'none'
+                    }}
+                  >
+                    {isPhysDiag ? 'Diagnostic Due' : `${physSub.formativeMastery}% BKT`}
+                  </span>
+                </div>
+                <p className="text-xs text-slate-600">Motion in 1D: Constant acceleration calculations.</p>
+                <button
+                  type="button"
+                  onClick={() => onOpenSubject('physical_sciences', 'Motion in 1D')}
+                  className="w-full mt-2 py-2 text-white text-xs font-bold rounded-xl transition cursor-pointer hover:opacity-95 active:scale-98 shadow-2xs"
+                  style={{ backgroundColor: physTheme.base }}
+                >
+                  Resume Drill &rarr;
+                </button>
+              </div>
+            );
+          })()}
 
-          <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-2xs space-y-2">
-            <div className="flex items-center justify-between text-xs">
-              <span className="font-bold text-slate-800">Business Studies</span>
-              <span className="text-amber-700 bg-amber-50 font-bold px-1.5 py-0.5 rounded text-[11px]">
-                {busSub.status === 'diagnostic_required' ? 'Diagnostic Due' : `${busSub.formativeMastery}% BKT`}
-              </span>
-            </div>
-            <p className="text-xs text-slate-600">Micro vs Market vs Macro Environments.</p>
-            <button
-              type="button"
-              onClick={() => onOpenSubject('business_studies', 'Business Environments')}
-              className="w-full mt-2 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-lg transition cursor-pointer"
-            >
-              Resume Drill &rarr;
-            </button>
-          </div>
+          {(() => {
+            const busTheme = getSubjectTheme('business_studies');
+            const isBusDiag = busSub.status === 'diagnostic_required';
+            return (
+              <div 
+                className="bg-white p-4 rounded-xl border border-slate-200 shadow-2xs space-y-2 hover:shadow-xs transition"
+                style={{ borderLeftWidth: '4px', borderLeftColor: busTheme.base }}
+              >
+                <div className="flex items-center justify-between text-xs">
+                  <span className="font-bold text-slate-800">Business Studies</span>
+                  <span 
+                    className="font-bold px-2 py-0.5 rounded-full text-[11px]"
+                    style={{
+                      backgroundColor: isBusDiag ? busTheme.soft : busTheme.base,
+                      color: isBusDiag ? busTheme.text : '#FFFFFF',
+                      border: isBusDiag ? `1px solid ${busTheme.border}` : 'none'
+                    }}
+                  >
+                    {isBusDiag ? 'Diagnostic Due' : `${busSub.formativeMastery}% BKT`}
+                  </span>
+                </div>
+                <p className="text-xs text-slate-600">Micro vs Market vs Macro Environments.</p>
+                <button
+                  type="button"
+                  onClick={() => onOpenSubject('business_studies', 'Business Environments')}
+                  className="w-full mt-2 py-2 text-white text-xs font-bold rounded-xl transition cursor-pointer hover:opacity-95 active:scale-98 shadow-2xs"
+                  style={{ backgroundColor: busTheme.base }}
+                >
+                  Resume Drill &rarr;
+                </button>
+              </div>
+            );
+          })()}
 
-          <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-2xs space-y-2">
-            <div className="flex items-center justify-between text-xs">
-              <span className="font-bold text-slate-800">Life Sciences</span>
-              <span className="text-teal-700 bg-teal-50 font-bold px-1.5 py-0.5 rounded text-[11px]">
-                {lifeSub.status === 'diagnostic_required' ? 'Diagnostic Due' : `${lifeSub.formativeMastery}% BKT`}
-              </span>
-            </div>
-            <p className="text-xs text-slate-600">Mitosis: Identifying cell division stages from diagrams.</p>
-            <button
-              type="button"
-              onClick={() => onOpenSubject('life_sciences', 'Cell Division & Mitosis')}
-              className="w-full mt-2 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-lg transition cursor-pointer"
-            >
-              Resume Drill &rarr;
-            </button>
-          </div>
+          {(() => {
+            const lifeTheme = getSubjectTheme('life_sciences');
+            const isLifeDiag = lifeSub.status === 'diagnostic_required';
+            return (
+              <div 
+                className="bg-white p-4 rounded-xl border border-slate-200 shadow-2xs space-y-2 hover:shadow-xs transition"
+                style={{ borderLeftWidth: '4px', borderLeftColor: lifeTheme.base }}
+              >
+                <div className="flex items-center justify-between text-xs">
+                  <span className="font-bold text-slate-800">Life Sciences</span>
+                  <span 
+                    className="font-bold px-2 py-0.5 rounded-full text-[11px]"
+                    style={{
+                      backgroundColor: isLifeDiag ? lifeTheme.soft : lifeTheme.base,
+                      color: isLifeDiag ? lifeTheme.text : '#FFFFFF',
+                      border: isLifeDiag ? `1px solid ${lifeTheme.border}` : 'none'
+                    }}
+                  >
+                    {isLifeDiag ? 'Diagnostic Due' : `${lifeSub.formativeMastery}% BKT`}
+                  </span>
+                </div>
+                <p className="text-xs text-slate-600">Mitosis: Identifying cell division stages from diagrams.</p>
+                <button
+                  type="button"
+                  onClick={() => onOpenSubject('life_sciences', 'Cell Division & Mitosis')}
+                  className="w-full mt-2 py-2 text-white text-xs font-bold rounded-xl transition cursor-pointer hover:opacity-95 active:scale-98 shadow-2xs"
+                  style={{ backgroundColor: lifeTheme.base }}
+                >
+                  Resume Drill &rarr;
+                </button>
+              </div>
+            );
+          })()}
 
         </div>
       </div>

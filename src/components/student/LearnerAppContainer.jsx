@@ -270,7 +270,7 @@ export default function LearnerAppContainer({
 
       {/* Dynamic Interior Accent Line connecting active tab to folder body */}
       <div 
-        className="h-[2px] w-full transition-colors duration-300"
+        className="h-[3px] w-full transition-colors duration-300"
         style={{ backgroundColor: currentTabConfig.accentColor }}
       />
 

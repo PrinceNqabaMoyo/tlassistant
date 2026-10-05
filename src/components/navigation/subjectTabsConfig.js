@@ -9,6 +9,7 @@ import {
   Coins, 
   Leaf
 } from 'lucide-react';
+import { getSubjectTheme } from '../../theme/subjectPalette';
 
 export const SUBJECT_TABS_CONFIG = [
   {
@@ -16,7 +17,8 @@ export const SUBJECT_TABS_CONFIG = [
     name: "Today's Desk",
     shortName: 'Desk',
     icon: ClipboardList,
-    accentColor: '#13519C',
+    accentColor: getSubjectTheme('desk').base,
+    theme: getSubjectTheme('desk'),
     badge: '2 Due',
     badgeColor: 'bg-rose-500 text-white shadow-sm shadow-rose-500/40',
     grades: [7, 8, 9, 10, 11, 12],
@@ -27,7 +29,8 @@ export const SUBJECT_TABS_CONFIG = [
     name: 'Accounting',
     shortName: 'Accounting',
     icon: BookOpen,
-    accentColor: '#059669',
+    accentColor: getSubjectTheme('accounting').base,
+    theme: getSubjectTheme('accounting'),
     badge: '84%',
     badgeColor: 'bg-emerald-600 text-white shadow-sm shadow-emerald-500/40',
     grades: [10, 11, 12],
@@ -37,9 +40,10 @@ export const SUBJECT_TABS_CONFIG = [
     name: 'Mathematics',
     shortName: 'Maths',
     icon: Calculator,
-    accentColor: '#2563EB',
+    accentColor: getSubjectTheme('mathematics').base,
+    theme: getSubjectTheme('mathematics'),
     badge: '82%',
-    badgeColor: 'bg-blue-600 text-white shadow-sm shadow-blue-500/40',
+    badgeColor: 'bg-purple-600 text-white shadow-sm shadow-purple-500/40',
     grades: [7, 8, 9, 10, 11, 12],
   },
   {
@@ -47,9 +51,10 @@ export const SUBJECT_TABS_CONFIG = [
     name: 'Physical Sciences',
     shortName: 'Physics',
     icon: FlaskConical,
-    accentColor: '#0891B2',
+    accentColor: getSubjectTheme('physical_sciences').base,
+    theme: getSubjectTheme('physical_sciences'),
     badge: '68%',
-    badgeColor: 'bg-cyan-600 text-white shadow-sm shadow-cyan-500/40',
+    badgeColor: 'bg-teal-600 text-white shadow-sm shadow-teal-500/40',
     grades: [10, 11, 12],
   },
   {
@@ -57,9 +62,10 @@ export const SUBJECT_TABS_CONFIG = [
     name: 'Business Studies',
     shortName: 'Business',
     icon: Briefcase,
-    accentColor: '#EA580C',
+    accentColor: getSubjectTheme('business_studies').base,
+    theme: getSubjectTheme('business_studies'),
     badge: '75%',
-    badgeColor: 'bg-[#FF9100] text-white shadow-sm shadow-orange-500/40',
+    badgeColor: 'bg-rose-600 text-white shadow-sm shadow-rose-500/40',
     grades: [10, 11, 12],
   },
   {
@@ -67,9 +73,10 @@ export const SUBJECT_TABS_CONFIG = [
     name: 'Life Sciences',
     shortName: 'Life Sci',
     icon: Dna,
-    accentColor: '#0D9488',
+    accentColor: getSubjectTheme('life_sciences').base,
+    theme: getSubjectTheme('life_sciences'),
     badge: '80%',
-    badgeColor: 'bg-teal-600 text-white shadow-sm shadow-teal-500/40',
+    badgeColor: 'bg-lime-700 text-white shadow-sm shadow-lime-700/40',
     grades: [10, 11, 12],
   },
   {
@@ -77,9 +84,10 @@ export const SUBJECT_TABS_CONFIG = [
     name: 'Technical Mathematics',
     shortName: 'Tech Maths',
     icon: Cpu,
-    accentColor: '#7C3AED',
+    accentColor: getSubjectTheme('technical_mathematics').base,
+    theme: getSubjectTheme('technical_mathematics'),
     badge: '70%',
-    badgeColor: 'bg-indigo-600 text-white shadow-sm shadow-indigo-500/40',
+    badgeColor: 'bg-slate-600 text-white shadow-sm shadow-slate-600/40',
     grades: [10, 11, 12],
   },
   {
@@ -87,9 +95,10 @@ export const SUBJECT_TABS_CONFIG = [
     name: 'Mathematical Literacy',
     shortName: 'Maths Lit',
     icon: Calculator,
-    accentColor: '#8B5CF6',
+    accentColor: getSubjectTheme('mathematical_literacy').base,
+    theme: getSubjectTheme('mathematical_literacy'),
     badge: '78%',
-    badgeColor: 'bg-purple-600 text-white shadow-sm shadow-purple-500/40',
+    badgeColor: 'bg-fuchsia-600 text-white shadow-sm shadow-fuchsia-500/40',
     grades: [10, 11, 12],
   },
   {
@@ -97,9 +106,10 @@ export const SUBJECT_TABS_CONFIG = [
     name: 'EMS',
     shortName: 'EMS',
     icon: Coins,
-    accentColor: '#D97706',
+    accentColor: getSubjectTheme('ems').base,
+    theme: getSubjectTheme('ems'),
     badge: '80%',
-    badgeColor: 'bg-amber-600 text-white shadow-sm shadow-amber-500/40',
+    badgeColor: 'bg-orange-700 text-white shadow-sm shadow-orange-700/40',
     grades: [7, 8, 9],
   },
   {
@@ -107,9 +117,10 @@ export const SUBJECT_TABS_CONFIG = [
     name: 'Natural Sciences',
     shortName: 'Nat Sci',
     icon: Leaf,
-    accentColor: '#059669',
+    accentColor: getSubjectTheme('natural_sciences').base,
+    theme: getSubjectTheme('natural_sciences'),
     badge: '75%',
-    badgeColor: 'bg-emerald-600 text-white shadow-sm shadow-emerald-500/40',
+    badgeColor: 'bg-cyan-700 text-white shadow-sm shadow-cyan-700/40',
     grades: [7, 8, 9],
   }
 ];

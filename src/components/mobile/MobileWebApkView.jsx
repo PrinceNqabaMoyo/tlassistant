@@ -12,6 +12,7 @@ import {
   WifiOff
 } from 'lucide-react';
 import studentStore from '../../services/studentStore';
+import { getSubjectTheme, BRAND } from '../../theme/subjectPalette';
 
 /**
  * MobileWebApkView
@@ -36,96 +37,16 @@ import studentStore from '../../services/studentStore';
  */
 
 const MOBILE_SUBJECTS = [
-  { 
-    id: 'desk', 
-    label: 'Desk', 
-    icon: '📋', 
-    accent: '#13519C', 
-    badge: '2 Due', 
-    badgeBg: 'bg-rose-500 text-white shadow-sm shadow-rose-500/40',
-    activeClass: 'bg-blue-50 text-[#13519C] border-2 border-blue-400 font-bold shadow-sm'
-  },
-  { 
-    id: 'accounting', 
-    label: 'Accounting', 
-    icon: '📗', 
-    accent: '#059669', 
-    badge: '84%', 
-    badgeBg: 'bg-emerald-600 text-white shadow-sm shadow-emerald-500/40',
-    activeClass: 'bg-emerald-50 text-emerald-800 border-2 border-emerald-400 font-bold shadow-sm'
-  },
-  { 
-    id: 'maths', 
-    label: 'Maths', 
-    icon: '📘', 
-    accent: '#2563EB', 
-    badge: '82%', 
-    badgeBg: 'bg-blue-600 text-white shadow-sm shadow-blue-500/40',
-    activeClass: 'bg-blue-50 text-blue-800 border-2 border-blue-400 font-bold shadow-sm'
-  },
-  { 
-    id: 'mathslit', 
-    label: 'Maths Lit', 
-    icon: '📊', 
-    accent: '#8B5CF6', 
-    badge: '76%', 
-    badgeBg: 'bg-purple-600 text-white shadow-sm shadow-purple-500/40',
-    activeClass: 'bg-purple-50 text-purple-900 border-2 border-purple-400 font-bold shadow-sm'
-  },
-  { 
-    id: 'physics', 
-    label: 'Physics', 
-    icon: '📙', 
-    accent: '#0891B2', 
-    badge: '68%', 
-    badgeBg: 'bg-cyan-600 text-white shadow-sm shadow-cyan-500/40',
-    activeClass: 'bg-cyan-50 text-cyan-800 border-2 border-cyan-400 font-bold shadow-sm'
-  },
-  { 
-    id: 'business', 
-    label: 'Business', 
-    icon: '📕', 
-    accent: '#EA580C', 
-    badge: '75%', 
-    badgeBg: 'bg-[#FF9100] text-white shadow-sm shadow-orange-500/40',
-    activeClass: 'bg-amber-50 text-amber-900 border-2 border-amber-400 font-bold shadow-sm'
-  },
-  { 
-    id: 'lifesci', 
-    label: 'Life Sciences', 
-    icon: '🔬', 
-    accent: '#0D9488', 
-    badge: '78%', 
-    badgeBg: 'bg-teal-600 text-white shadow-sm shadow-teal-500/40',
-    activeClass: 'bg-teal-50 text-teal-900 border-2 border-teal-400 font-bold shadow-sm'
-  },
-  { 
-    id: 'techmaths', 
-    label: 'Tech Maths', 
-    icon: '📐', 
-    accent: '#7C3AED', 
-    badge: '72%', 
-    badgeBg: 'bg-indigo-600 text-white shadow-sm shadow-indigo-500/40',
-    activeClass: 'bg-indigo-50 text-indigo-900 border-2 border-indigo-400 font-bold shadow-sm'
-  },
-  { 
-    id: 'ems', 
-    label: 'EMS', 
-    icon: '🪙', 
-    accent: '#D97706', 
-    badge: '80%', 
-    badgeBg: 'bg-amber-600 text-white shadow-sm shadow-amber-500/40',
-    activeClass: 'bg-amber-50 text-amber-900 border-2 border-amber-400 font-bold shadow-sm'
-  },
-  { 
-    id: 'natsci', 
-    label: 'Natural Sciences', 
-    icon: '🌱', 
-    accent: '#059669', 
-    badge: '74%', 
-    badgeBg: 'bg-emerald-600 text-white shadow-sm shadow-emerald-500/40',
-    activeClass: 'bg-emerald-50 text-emerald-900 border-2 border-emerald-400 font-bold shadow-sm'
-  },
+  { id: 'desk', label: 'Desk', icon: '📋' },
+  { id: 'accounting', label: 'Accounting', icon: '📗' },
+  { id: 'maths', label: 'Maths', icon: '📘' },
+  { id: 'mathslit', label: 'Maths Lit', icon: '📊' },
+  { id: 'physics', label: 'Physics', icon: '📙' },
+  { id: 'business', label: 'Business', icon: '📕' },
+  { id: 'lifesci', label: 'Life Sciences', icon: '🔬' },
+  { id: 'techmaths', label: 'Tech Maths', icon: '📐' },
+  { id: 'ems', label: 'EMS', icon: '🪙' },
+  { id: 'natsci', label: 'Natural Sciences', icon: '🌱' },
 ];
 
 const normalizeTabId = (id) => {
@@ -224,26 +145,34 @@ export default function MobileWebApkView({
   };
 
   const getDynamicBadge = (subId) => {
+    const theme = getSubjectTheme(subId);
     if (subId === 'desk') {
       const dues = storeState?.deskDues ?? 2;
       return {
         text: dues > 0 ? `${dues} Due` : '0 Due',
-        bg: dues > 0 ? 'bg-rose-500 text-white shadow-sm shadow-rose-500/40' : 'bg-slate-200 text-slate-700'
+        className: dues > 0 ? 'bg-rose-500 text-white shadow-sm shadow-rose-500/40' : 'bg-slate-200 text-slate-700',
+        style: {}
       };
     }
     const sub = studentStore.getSubject(subId);
     if (!sub || sub.status === 'diagnostic_required') {
       return {
         text: 'Diag',
-        bg: 'bg-amber-100 text-amber-900 border border-amber-300'
+        className: 'border font-extrabold',
+        style: {
+          backgroundColor: theme.soft,
+          color: theme.text,
+          borderColor: theme.border,
+        }
       };
     }
     const val = sub.formativeMastery ?? 0;
     return {
       text: `${val}%`,
-      bg: val >= 80 ? 'bg-emerald-600 text-white shadow-sm shadow-emerald-500/40' :
-          val >= 60 ? 'bg-blue-600 text-white shadow-sm shadow-blue-500/40' :
-          'bg-slate-200 text-slate-700'
+      className: 'text-white font-extrabold shadow-2xs',
+      style: {
+        backgroundColor: theme.base,
+      }
     };
   };
 
@@ -555,35 +484,46 @@ export default function MobileWebApkView({
                     marks: 10,
                     estimatedMins: 12
                   }
-                ]).map((task) => (
-                  <div key={task.id} className="bg-white border border-slate-200/80 border-l-4 border-l-[#13519C] p-3.5 rounded-2xl shadow-xs space-y-2">
-                    <div className="flex justify-between items-center text-[10px] font-extrabold">
-                      <span className="bg-[#13519C] text-white px-2.5 py-0.5 rounded-full text-[10px] font-extrabold shadow-xs">
-                        {(task.subjectName || task.subject).toUpperCase()} • {task.dueText}
-                      </span>
-                      <span className="bg-rose-500 text-white px-2 py-0.5 rounded-full font-extrabold text-[9px] shadow-xs flex items-center gap-1">
-                        <Clock className="w-3 h-3 inline" />
-                        <span>{task.dueTime}</span>
-                      </span>
+                ]).map((task) => {
+                  const tTheme = getSubjectTheme(task.subject);
+                  return (
+                    <div 
+                      key={task.id} 
+                      className="bg-white border border-slate-200/80 p-3.5 rounded-2xl shadow-xs space-y-2"
+                      style={{ borderLeftWidth: '4px', borderLeftColor: tTheme.base }}
+                    >
+                      <div className="flex justify-between items-center text-[10px] font-extrabold">
+                        <span 
+                          className="text-white px-2.5 py-0.5 rounded-full text-[10px] font-extrabold shadow-xs"
+                          style={{ backgroundColor: tTheme.base }}
+                        >
+                          {(task.subjectName || task.subject).toUpperCase()} • {task.dueText}
+                        </span>
+                        <span className="bg-rose-500 text-white px-2 py-0.5 rounded-full font-extrabold text-[9px] shadow-xs flex items-center gap-1">
+                          <Clock className="w-3 h-3 inline" />
+                          <span>{task.dueTime}</span>
+                        </span>
+                      </div>
+                      <h4 
+                        className="text-xs font-bold text-slate-900 mt-1" 
+                        style={{ fontFamily: 'Afacad, sans-serif' }}
+                      >
+                        {task.title}
+                      </h4>
+                      <p className="text-[11px] text-slate-600 leading-snug">
+                        Assigned by {task.assignedBy} • {task.marks} Marks • {task.estimatedMins || 15} mins.
+                      </p>
+                      <button
+                        type="button"
+                        onClick={() => onSelectTab(task.subject)}
+                        className="mt-2 w-full py-2.5 text-white text-xs font-bold rounded-xl shadow-xs transition cursor-pointer min-h-[44px] flex items-center justify-center gap-1.5 hover:opacity-95 active:scale-98"
+                        style={{ backgroundColor: tTheme.base }}
+                      >
+                        <span>Open in {task.subjectName || 'Subject'} →</span>
+                      </button>
                     </div>
-                    <h4 
-                      className="text-xs font-bold text-slate-900 mt-1" 
-                      style={{ fontFamily: 'Afacad, sans-serif' }}
-                    >
-                      {task.title}
-                    </h4>
-                    <p className="text-[11px] text-slate-600 leading-snug">
-                      Assigned by {task.assignedBy} • {task.marks} Marks • {task.estimatedMins || 15} mins.
-                    </p>
-                    <button
-                      type="button"
-                      onClick={() => onSelectTab(task.subject)}
-                      className="mt-2 w-full py-2.5 bg-[#13519C] hover:bg-[#0e3e78] active:bg-blue-900 text-white text-xs font-bold rounded-xl shadow-xs shadow-blue-600/20 transition cursor-pointer min-h-[44px] flex items-center justify-center gap-1.5"
-                    >
-                      <span>Open in {task.subjectName || 'Subject'} →</span>
-                    </button>
-                  </div>
-                ))
+                  );
+                })
               )}
             </section>
 
@@ -611,96 +551,144 @@ export default function MobileWebApkView({
               {/* 4 Autonomous Practice Cards */}
               <div className="space-y-2.5">
                 {/* 1. Accounting */}
-                <div className="bg-white p-3.5 rounded-2xl border border-slate-200/80 shadow-xs hover:shadow-sm transition">
-                  <div className="flex items-center justify-between text-[10px] font-bold mb-1">
-                    <span className="text-slate-500 font-semibold flex items-center gap-1">
-                      <span>📗</span>
-                      <span>Grade 10 Accounting</span>
-                    </span>
-                    <span className="text-white bg-emerald-600 px-2 py-0.5 rounded-full font-extrabold text-[9px] shadow-2xs">
-                      84% BKT
-                    </span>
-                  </div>
-                  <p className="text-xs font-bold text-slate-800" style={{ fontFamily: 'Afacad, sans-serif' }}>
-                    Cash Receipts Journal (VAT 15%)
-                  </p>
-                  <button
-                    type="button"
-                    onClick={() => onSelectTab('accounting')}
-                    className="mt-2.5 w-full py-2.5 bg-[#13519C] hover:bg-blue-800 active:bg-blue-900 text-white text-xs font-bold rounded-xl transition cursor-pointer shadow-xs min-h-[44px] flex items-center justify-center gap-1.5"
-                  >
-                    <span>Resume Autonomous Drill →</span>
-                  </button>
-                </div>
+                {(() => {
+                  const theme = getSubjectTheme('accounting');
+                  return (
+                    <div 
+                      className="bg-white p-3.5 rounded-2xl border border-slate-200/80 shadow-xs hover:shadow-sm transition"
+                      style={{ borderLeftWidth: '4px', borderLeftColor: theme.base }}
+                    >
+                      <div className="flex items-center justify-between text-[10px] font-bold mb-1">
+                        <span className="text-slate-500 font-semibold flex items-center gap-1">
+                          <span>📗</span>
+                          <span>Grade 10 Accounting</span>
+                        </span>
+                        <span 
+                          className="text-white px-2 py-0.5 rounded-full font-extrabold text-[9px] shadow-2xs"
+                          style={{ backgroundColor: theme.base }}
+                        >
+                          84% BKT
+                        </span>
+                      </div>
+                      <p className="text-xs font-bold text-slate-800" style={{ fontFamily: 'Afacad, sans-serif' }}>
+                        Cash Receipts Journal (VAT 15%)
+                      </p>
+                      <button
+                        type="button"
+                        onClick={() => onSelectTab('accounting')}
+                        className="mt-2.5 w-full py-2.5 text-white text-xs font-bold rounded-xl transition cursor-pointer shadow-xs min-h-[44px] flex items-center justify-center gap-1.5 hover:opacity-95 active:scale-98"
+                        style={{ backgroundColor: theme.base }}
+                      >
+                        <span>Resume Autonomous Drill →</span>
+                      </button>
+                    </div>
+                  );
+                })()}
 
                 {/* 2. Mathematics */}
-                <div className="bg-white p-3.5 rounded-2xl border border-slate-200/80 shadow-xs hover:shadow-sm transition">
-                  <div className="flex items-center justify-between text-[10px] font-bold mb-1">
-                    <span className="text-slate-500 font-semibold flex items-center gap-1">
-                      <span>📘</span>
-                      <span>Grade 10 Mathematics</span>
-                    </span>
-                    <span className="text-white bg-blue-600 px-2 py-0.5 rounded-full font-extrabold text-[9px] shadow-2xs">
-                      82% BKT
-                    </span>
-                  </div>
-                  <p className="text-xs font-bold text-slate-800" style={{ fontFamily: 'Afacad, sans-serif' }}>
-                    Algebraic Expressions &amp; Factorisation
-                  </p>
-                  <button
-                    type="button"
-                    onClick={() => onSelectTab('maths')}
-                    className="mt-2.5 w-full py-2.5 bg-[#13519C] hover:bg-blue-800 active:bg-blue-900 text-white text-xs font-bold rounded-xl transition cursor-pointer shadow-xs min-h-[44px] flex items-center justify-center gap-1.5"
-                  >
-                    <span>Resume Autonomous Drill →</span>
-                  </button>
-                </div>
+                {(() => {
+                  const theme = getSubjectTheme('mathematics');
+                  return (
+                    <div 
+                      className="bg-white p-3.5 rounded-2xl border border-slate-200/80 shadow-xs hover:shadow-sm transition"
+                      style={{ borderLeftWidth: '4px', borderLeftColor: theme.base }}
+                    >
+                      <div className="flex items-center justify-between text-[10px] font-bold mb-1">
+                        <span className="text-slate-500 font-semibold flex items-center gap-1">
+                          <span>📘</span>
+                          <span>Grade 10 Mathematics</span>
+                        </span>
+                        <span 
+                          className="text-white px-2 py-0.5 rounded-full font-extrabold text-[9px] shadow-2xs"
+                          style={{ backgroundColor: theme.base }}
+                        >
+                          82% BKT
+                        </span>
+                      </div>
+                      <p className="text-xs font-bold text-slate-800" style={{ fontFamily: 'Afacad, sans-serif' }}>
+                        Algebraic Expressions &amp; Factorisation
+                      </p>
+                      <button
+                        type="button"
+                        onClick={() => onSelectTab('maths')}
+                        className="mt-2.5 w-full py-2.5 text-white text-xs font-bold rounded-xl transition cursor-pointer shadow-xs min-h-[44px] flex items-center justify-center gap-1.5 hover:opacity-95 active:scale-98"
+                        style={{ backgroundColor: theme.base }}
+                      >
+                        <span>Resume Autonomous Drill →</span>
+                      </button>
+                    </div>
+                  );
+                })()}
 
                 {/* 3. Physical Sciences */}
-                <div className="bg-white p-3.5 rounded-2xl border border-slate-200/80 shadow-xs hover:shadow-sm transition">
-                  <div className="flex items-center justify-between text-[10px] font-bold mb-1">
-                    <span className="text-slate-500 font-semibold flex items-center gap-1">
-                      <span>📙</span>
-                      <span>Physical Sciences</span>
-                    </span>
-                    <span className="text-white bg-cyan-600 px-2 py-0.5 rounded-full font-extrabold text-[9px] shadow-2xs">
-                      78% BKT
-                    </span>
-                  </div>
-                  <p className="text-xs font-bold text-slate-800" style={{ fontFamily: 'Afacad, sans-serif' }}>
-                    Newton's Laws of Motion &amp; Vectors
-                  </p>
-                  <button
-                    type="button"
-                    onClick={() => onSelectTab('physics')}
-                    className="mt-2.5 w-full py-2.5 bg-[#13519C] hover:bg-blue-800 active:bg-blue-900 text-white text-xs font-bold rounded-xl transition cursor-pointer shadow-xs min-h-[44px] flex items-center justify-center gap-1.5"
-                  >
-                    <span>Resume Autonomous Drill →</span>
-                  </button>
-                </div>
+                {(() => {
+                  const theme = getSubjectTheme('physical_sciences');
+                  return (
+                    <div 
+                      className="bg-white p-3.5 rounded-2xl border border-slate-200/80 shadow-xs hover:shadow-sm transition"
+                      style={{ borderLeftWidth: '4px', borderLeftColor: theme.base }}
+                    >
+                      <div className="flex items-center justify-between text-[10px] font-bold mb-1">
+                        <span className="text-slate-500 font-semibold flex items-center gap-1">
+                          <span>📙</span>
+                          <span>Physical Sciences</span>
+                        </span>
+                        <span 
+                          className="text-white px-2 py-0.5 rounded-full font-extrabold text-[9px] shadow-2xs"
+                          style={{ backgroundColor: theme.base }}
+                        >
+                          78% BKT
+                        </span>
+                      </div>
+                      <p className="text-xs font-bold text-slate-800" style={{ fontFamily: 'Afacad, sans-serif' }}>
+                        Newton's Laws of Motion &amp; Vectors
+                      </p>
+                      <button
+                        type="button"
+                        onClick={() => onSelectTab('physics')}
+                        className="mt-2.5 w-full py-2.5 text-white text-xs font-bold rounded-xl transition cursor-pointer shadow-xs min-h-[44px] flex items-center justify-center gap-1.5 hover:opacity-95 active:scale-98"
+                        style={{ backgroundColor: theme.base }}
+                      >
+                        <span>Resume Autonomous Drill →</span>
+                      </button>
+                    </div>
+                  );
+                })()}
 
                 {/* 4. Business Studies */}
-                <div className="bg-white p-3.5 rounded-2xl border border-slate-200/80 shadow-xs hover:shadow-sm transition">
-                  <div className="flex items-center justify-between text-[10px] font-bold mb-1">
-                    <span className="text-slate-500 font-semibold flex items-center gap-1">
-                      <span>📕</span>
-                      <span>Business Studies</span>
-                    </span>
-                    <span className="text-white bg-[#FF9100] px-2 py-0.5 rounded-full font-extrabold text-[9px] shadow-2xs">
-                      75% BKT
-                    </span>
-                  </div>
-                  <p className="text-xs font-bold text-slate-800" style={{ fontFamily: 'Afacad, sans-serif' }}>
-                    Micro, Market &amp; Macro Environments
-                  </p>
-                  <button
-                    type="button"
-                    onClick={() => onSelectTab('business')}
-                    className="mt-2.5 w-full py-2.5 bg-[#13519C] hover:bg-blue-800 active:bg-blue-900 text-white text-xs font-bold rounded-xl transition cursor-pointer shadow-xs min-h-[44px] flex items-center justify-center gap-1.5"
-                  >
-                    <span>Resume Autonomous Drill →</span>
-                  </button>
-                </div>
+                {(() => {
+                  const theme = getSubjectTheme('business_studies');
+                  return (
+                    <div 
+                      className="bg-white p-3.5 rounded-2xl border border-slate-200/80 shadow-xs hover:shadow-sm transition"
+                      style={{ borderLeftWidth: '4px', borderLeftColor: theme.base }}
+                    >
+                      <div className="flex items-center justify-between text-[10px] font-bold mb-1">
+                        <span className="text-slate-500 font-semibold flex items-center gap-1">
+                          <span>📕</span>
+                          <span>Business Studies</span>
+                        </span>
+                        <span 
+                          className="text-white px-2 py-0.5 rounded-full font-extrabold text-[9px] shadow-2xs"
+                          style={{ backgroundColor: theme.base }}
+                        >
+                          75% BKT
+                        </span>
+                      </div>
+                      <p className="text-xs font-bold text-slate-800" style={{ fontFamily: 'Afacad, sans-serif' }}>
+                        Micro, Market &amp; Macro Environments
+                      </p>
+                      <button
+                        type="button"
+                        onClick={() => onSelectTab('business')}
+                        className="mt-2.5 w-full py-2.5 text-white text-xs font-bold rounded-xl transition cursor-pointer shadow-xs min-h-[44px] flex items-center justify-center gap-1.5 hover:opacity-95 active:scale-98"
+                        style={{ backgroundColor: theme.base }}
+                      >
+                        <span>Resume Autonomous Drill →</span>
+                      </button>
+                    </div>
+                  );
+                })()}
               </div>
             </section>
 
@@ -1040,20 +1028,23 @@ export default function MobileWebApkView({
         {/* ==================== VIEW 6: BUSINESS STUDIES ==================== */}
         {currentTab === 'business' && (
           <div id="mob-content-business" className="p-4 space-y-3">
-            <div className="bg-[#FF9100] text-white p-3.5 rounded-2xl shadow-sm flex items-center justify-between">
+            <div 
+              className="text-white p-3.5 rounded-2xl shadow-sm flex items-center justify-between"
+              style={{ backgroundColor: getSubjectTheme('business_studies').base }}
+            >
               <div>
-                <span className="text-[10px] font-extrabold uppercase tracking-wider text-amber-100 block">Business Studies</span>
+                <span className="text-[10px] font-extrabold uppercase tracking-wider text-rose-100 block">Business Studies</span>
                 <h5 className="text-xs font-extrabold text-white mt-0.5" style={{ fontFamily: 'Afacad, sans-serif' }}>
                   {activeTopic || 'Business Environments'}
                 </h5>
               </div>
-              <span className="bg-white text-amber-950 font-extrabold px-2.5 py-1 rounded-lg text-[10px] shadow-xs">
+              <span className="bg-white text-rose-950 font-extrabold px-2.5 py-1 rounded-lg text-[10px] shadow-xs">
                 Mastery: {currentSubData.formativeMastery}%
               </span>
             </div>
             <div className="bg-white p-3.5 rounded-2xl border border-slate-200 shadow-sm space-y-2">
               <p className="text-xs text-slate-700">{question?.prompt || 'Fuel price increase decree by Minister of Mineral Resources.'}</p>
-              <div className="p-3 bg-amber-50 border border-amber-200 rounded-xl text-amber-950 font-bold text-xs">
+              <div className="p-3 bg-rose-50 border border-rose-200 rounded-xl text-rose-950 font-bold text-xs">
                 Macro Environment (Economic &amp; Political) • Outside Management Control ✓
               </div>
             </div>
@@ -1063,9 +1054,12 @@ export default function MobileWebApkView({
         {/* ==================== VIEW 7: LIFE SCIENCES ==================== */}
         {currentTab === 'lifesci' && (
           <div id="mob-content-lifesci" className="p-4 space-y-3">
-            <div className="bg-teal-600 text-white p-3.5 rounded-2xl shadow-sm flex items-center justify-between">
+            <div 
+              className="text-white p-3.5 rounded-2xl shadow-sm flex items-center justify-between"
+              style={{ backgroundColor: getSubjectTheme('life_sciences').base }}
+            >
               <div>
-                <span className="text-[10px] font-extrabold uppercase tracking-wider text-teal-100 block">Life Sciences</span>
+                <span className="text-[10px] font-extrabold uppercase tracking-wider text-lime-100 block">Life Sciences</span>
                 <h5 className="text-xs font-extrabold text-white mt-0.5" style={{ fontFamily: 'Afacad, sans-serif' }}>
                   {activeTopic || 'Cell Division & Mitosis'}
                 </h5>
@@ -1164,6 +1158,8 @@ export default function MobileWebApkView({
       >
         {MOBILE_SUBJECTS.map((sub) => {
           const isActive = currentTab === sub.id;
+          const theme = getSubjectTheme(sub.id);
+          const b = getDynamicBadge(sub.id);
 
           return (
             <button
@@ -1172,22 +1168,25 @@ export default function MobileWebApkView({
               ref={isActive ? activeBtnRef : null}
               type="button"
               onClick={() => onSelectTab(sub.id)}
-              className={`mob-nav-btn flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs transition shrink-0 whitespace-nowrap min-h-[44px] cursor-pointer ${
+              className={`mob-nav-btn flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs transition shrink-0 whitespace-nowrap min-h-[44px] cursor-pointer font-bold ${
                 isActive
-                  ? sub.activeClass
+                  ? 'border-2 shadow-sm'
                   : 'bg-slate-50 text-slate-600 border border-slate-200 hover:text-slate-900 font-medium'
               }`}
+              style={{
+                backgroundColor: isActive ? theme.soft : undefined,
+                borderColor: isActive ? theme.base : undefined,
+                color: isActive ? theme.text : undefined,
+              }}
             >
               <span className="text-base leading-none">{sub.icon}</span>
               <span className="leading-none">{sub.label}</span>
-              {(() => {
-                const b = getDynamicBadge(sub.id);
-                return (
-                  <span className={`px-1.5 py-0.5 rounded-full ${b.bg} text-[9px] font-extrabold`}>
-                    {b.text}
-                  </span>
-                );
-              })()}
+              <span 
+                className={`px-1.5 py-0.5 rounded-full text-[9px] ${b.className}`}
+                style={b.style}
+              >
+                {b.text}
+              </span>
             </button>
           );
         })}

@@ -37,6 +37,7 @@
       "pwa": "vite-plugin-pwa & custom Service Worker fundile-v2 with development isolation in index.html (unregisters stale dev SWs and purges cache on localhost/LAN 192.168.x to prevent mobile LAN cache poisoning; enables full Workbox/sw.js offline caching in production)",
       "pwaAssets": "public/manifest.json, public/sw.js, pwa-192x192.png, pwa-256x256.png, pwa-512x512.png, pwa-maskable-192x192.png, pwa-maskable-512x512.png, apple-touch-icon.png, favicon.svg, fundile-favicon.svg, favicon.ico (VS Code style 100% transparent floating gold graduation cap with zero background box for desktop shortcuts, taskbar pins, title bars, and browser tabs; maskable icons reserved for Android adaptive system cropping)",
       "navigation": "Centralized navigationHistoryService.js synchronizing PWA/WebAPK modal states, subject-to-desk regressions, and double-tap exit circuit breaker with window.history (popstate); permanently pinned fixed bottom navigation rail above mobile hardware controls; floating action install button appearing after scrolling past hero section",
+      "subjectPalette": "Shopify-inspired centralized theme tokens (src/theme/subjectPalette.js) calibrated for high visual vibrancy, WCAG AA compliance (>=4.5:1 on white and soft tints), harmonious with brand anchors #13519C blue and #FF9100 orange",
       "mockEnvironment": "Institutional scale test harness (src/data/mock/): Westville High School (300 Named Students across Grades 8-12), 100 Named Independent Homeschool Students, 60 Teachers (Principal, Deputy, 9 HODs, 49 Educators), 330 Parents with sibling linking, and 1-click PersonaSwitcherModal.jsx testing cockpit",
       "entryPoint": "src/main.jsx",
       "mainApp": "src/App.jsx"
@@ -168,7 +169,9 @@
         "navigationHistoryService.js",
         "Header.jsx",
         "InAppPaymentModal.jsx",
-        "ComplexPlaneExplorer.jsx"
+        "ComplexPlaneExplorer.jsx",
+        "subjectPalette.js",
+        "check_subject_palette.py"
       ],
       "dependsOn": [
         "A"
