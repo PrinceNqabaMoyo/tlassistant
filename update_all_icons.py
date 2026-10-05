@@ -58,6 +58,11 @@ print("Updated public/pwa-512x512.png (512x512)")
 img_std_512.save("public/logo512.png", "PNG")
 print("Updated public/logo512.png (512x512)")
 
+# pwa-256x256.png (Windows desktop high-DPI standard)
+img_std_256 = render_image(standard_svg, 256)
+img_std_256.save("public/pwa-256x256.png", "PNG")
+print("Updated public/pwa-256x256.png (256x256)")
+
 # pwa-192x192.png
 img_std_192 = render_image(standard_svg, 192)
 img_std_192.save("public/pwa-192x192.png", "PNG")
@@ -72,9 +77,13 @@ img_apple_180 = render_image(standard_svg, 180)
 img_apple_180.save("public/apple-touch-icon.png", "PNG")
 print("Updated public/apple-touch-icon.png (180x180)")
 
-# favicon.ico (64x64, 32x32, 16x16)
-img_ico_64 = render_image(standard_svg, 64)
-img_ico_64.save("public/favicon.ico", format="ICO", sizes=[(16, 16), (32, 32), (64, 64)])
-print("Updated public/favicon.ico")
+# favicon.ico (256, 128, 64, 48, 32, 24, 16 for Windows Desktop & Taskbar)
+img_ico_256 = render_image(standard_svg, 256)
+img_ico_256.save(
+    "public/favicon.ico", 
+    format="ICO", 
+    sizes=[(16, 16), (24, 24), (32, 32), (48, 48), (64, 64), (128, 128), (256, 256)]
+)
+print("Updated public/favicon.ico (Multi-resolution Windows ICO)")
 
 print("All icons generated and updated successfully!")

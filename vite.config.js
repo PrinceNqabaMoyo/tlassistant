@@ -13,7 +13,7 @@ export default defineConfig({
     tailwindcss(),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['favicon.ico', 'robots.txt', 'pwa-192x192.png', 'pwa-512x512.png', 'pwa-maskable-192x192.png', 'pwa-maskable-512x512.png', 'apple-touch-icon.png'],
+      includeAssets: ['favicon.ico', 'favicon.svg', 'fundile-favicon.svg', 'robots.txt', 'pwa-192x192.png', 'pwa-256x256.png', 'pwa-512x512.png', 'pwa-maskable-192x192.png', 'pwa-maskable-512x512.png', 'apple-touch-icon.png'],
       manifest: {
         name: 'Fundile Curriculum-Aligned Learning Assistant',
         short_name: 'Fundile',
@@ -21,13 +21,25 @@ export default defineConfig({
         theme_color: '#13519C',
         background_color: '#13519C',
         display: 'standalone',
-        orientation: 'portrait',
+        orientation: 'any',
         start_url: '/',
         scope: '/',
         icons: [
           {
+            src: '/favicon.svg',
+            sizes: 'any',
+            type: 'image/svg+xml',
+            purpose: 'any'
+          },
+          {
             src: '/pwa-192x192.png',
             sizes: '192x192',
+            type: 'image/png',
+            purpose: 'any'
+          },
+          {
+            src: '/pwa-256x256.png',
+            sizes: '256x256',
             type: 'image/png',
             purpose: 'any'
           },
