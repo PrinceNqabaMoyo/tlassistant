@@ -21,6 +21,7 @@ import {
     Minus,
     Square,
     X,
+    GraduationCap,
 } from 'lucide-react';
 
 // ═══════════════════════════════════════════════════════════════
@@ -280,13 +281,13 @@ export default function HeroSimulation() {
                 {/* ── Level 1: System Title Bar (Windows 11 Controls ─, □, ✕ + URL route pill) ── */}
                 <div className="px-3 sm:px-4 py-1.5 bg-slate-100 border-b border-slate-200 flex items-center justify-between gap-3 text-xs select-none">
                     <div className="flex items-center gap-2">
-                        <div className="w-4 h-4 rounded bg-[#13519C] text-white flex items-center justify-center font-bold text-[9px]">
-                            F
+                        <div className="w-5 h-5 rounded-md bg-[#13519C] border border-blue-400/30 flex items-center justify-center shadow-xs shrink-0" title="Fundile Desktop App">
+                            <GraduationCap className="w-3.5 h-3.5 text-[#FF9100]" />
                         </div>
                         <span className="font-semibold text-slate-700 text-[11px] sm:text-xs tracking-tight" style={{ fontFamily: 'Afacad, sans-serif' }}>
                             Fundile — Learner Workspace ({selectedSubject.grade} {selectedSubject.name})
                         </span>
-                        <div className="flex items-center gap-1.5 px-2 py-0.5 rounded bg-white border border-slate-200 font-mono text-[10px] text-slate-500">
+                        <div className="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-white border border-slate-200 font-mono text-[10px] text-slate-500 shadow-2xs">
                             <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
                             <span>app.fundile.co.za/workspace</span>
                         </div>
@@ -308,8 +309,13 @@ export default function HeroSimulation() {
                 {/* ── Level 2: User Ribbon (bg-[#13519C] with learner avatar, grade, streak, and XP) ── */}
                 <div className="px-4 py-2.5 bg-[#13519C] text-white flex items-center justify-between gap-3 text-xs">
                     <div className="flex items-center gap-2.5">
-                        <span className="font-bold text-sm tracking-tight text-white" style={{ fontFamily: 'Afacad, sans-serif' }}>FUNDILE</span>
-                        <span className="hidden md:inline text-blue-200 text-xs font-medium">| Term 1 Learner Workspace</span>
+                        <div className="w-6 h-6 rounded-lg bg-white/15 border border-white/25 flex items-center justify-center shrink-0 shadow-xs">
+                            <GraduationCap className="w-4 h-4 text-[#FF9100]" />
+                        </div>
+                        <div>
+                            <span className="font-bold text-sm tracking-tight text-white block leading-tight" style={{ fontFamily: 'Afacad, sans-serif' }}>FUNDILE</span>
+                            <span className="hidden md:block text-blue-200 text-[10px] leading-tight font-medium">Learn • Practice • Progress</span>
+                        </div>
                     </div>
 
                     <div className="flex items-center gap-2">

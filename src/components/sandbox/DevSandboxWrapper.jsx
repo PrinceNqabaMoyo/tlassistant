@@ -5,7 +5,10 @@ import {
   RotateCw, 
   Maximize2,
   ShieldAlert,
-  RotateCcw
+  RotateCcw,
+  GraduationCap,
+  Flame,
+  Zap
 } from 'lucide-react';
 import MobileWebApkView from '../mobile/MobileWebApkView';
 import SuperAdminProgressResetModal from '../admin/SuperAdminProgressResetModal';
@@ -168,38 +171,61 @@ export default function DevSandboxWrapper({
             
             {/* Windows 11 Title Bar & Address Bar */}
             <div className="bg-[#081326] px-4 py-2 border-b border-slate-700/80 flex items-center justify-between select-none">
-              <div className="flex items-center gap-3">
-                <div className="flex items-center gap-2 px-3 py-1 rounded-lg bg-slate-900/90 border border-slate-700/60 text-xs text-slate-300 font-mono">
-                  <span className="text-emerald-400 font-bold">🔒 https://</span>
+              <div className="flex items-center gap-2.5 min-w-0">
+                <div className="w-5 h-5 rounded-md bg-[#13519C] border border-blue-400/30 flex items-center justify-center shadow-xs shrink-0" title="Fundile Desktop App">
+                  <GraduationCap className="w-3.5 h-3.5 text-[#FF9100]" />
+                </div>
+                <span className="font-semibold text-slate-200 text-xs tracking-tight truncate" style={{ fontFamily: 'Afacad, sans-serif' }}>
+                  Fundile — Learner Workspace ({studentName} • Grade {currentGrade} FET)
+                </span>
+                <div className="hidden sm:flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-slate-900/90 border border-slate-700/60 text-[11px] text-slate-300 font-mono shadow-xs shrink-0">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
                   <span>app.fundile.co.za/learner</span>
                 </div>
               </div>
 
               {/* Windows 11 Window Controls */}
-              <div className="flex items-center gap-4 text-slate-400 text-xs font-mono select-none">
-                <span className="hover:text-white cursor-pointer">─</span>
-                <span className="hover:text-white cursor-pointer">□</span>
-                <span className="hover:text-rose-400 cursor-pointer">✕</span>
+              <div className="flex items-center gap-4 text-slate-400 text-xs font-mono select-none shrink-0">
+                <span className="hover:text-white cursor-pointer" title="Minimize">─</span>
+                <span className="hover:text-white cursor-pointer" title="Maximize">□</span>
+                <span className="hover:text-rose-400 cursor-pointer" title="Close">✕</span>
               </div>
             </div>
 
             {/* Level 2: User Profile Ribbon */}
-            <div className="px-6 py-3 bg-[#13519C] text-white flex flex-wrap items-center justify-between gap-3 shadow-inner">
-              <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-full bg-white text-[#13519C] flex items-center justify-center font-extrabold text-sm shadow-xs">
-                  {studentName ? studentName.charAt(0) : 'N'}
+            <div className="px-6 py-2.5 bg-[#13519C] text-white flex flex-wrap items-center justify-between gap-3 shadow-inner">
+              <div className="flex items-center gap-4">
+                <div className="flex items-center gap-2.5">
+                  <div className="w-6 h-6 rounded-lg bg-white/15 border border-white/25 flex items-center justify-center shrink-0 shadow-xs">
+                    <GraduationCap className="w-4 h-4 text-[#FF9100]" />
+                  </div>
+                  <div>
+                    <span className="font-bold text-sm tracking-tight text-white block leading-tight" style={{ fontFamily: 'Afacad, sans-serif' }}>FUNDILE</span>
+                    <span className="hidden md:block text-blue-200 text-[10px] leading-tight font-medium">Learn • Practice • Progress</span>
+                  </div>
                 </div>
-                <div>
-                  <span className="font-bold text-white text-sm block leading-tight">{studentName}</span>
-                  <span className="text-xs text-blue-100/90 leading-tight">Grade {currentGrade} FET • {schoolName}</span>
+
+                <div className="h-6 w-px bg-white/20 hidden sm:block" />
+
+                <div className="flex items-center gap-2.5">
+                  <div className="w-7 h-7 rounded-full bg-white text-[#13519C] flex items-center justify-center font-extrabold text-xs shadow-xs">
+                    {studentName ? studentName.charAt(0) : 'N'}
+                  </div>
+                  <div>
+                    <span className="font-bold text-white text-xs block leading-tight" style={{ fontFamily: 'Afacad, sans-serif' }}>{studentName}</span>
+                    <span className="text-[11px] text-blue-100/90 leading-tight">Grade {currentGrade} FET • {schoolName}</span>
+                  </div>
                 </div>
               </div>
-              <div className="flex items-center gap-3">
+
+              <div className="flex items-center gap-2.5">
                 <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/25 border border-amber-300/40 text-amber-200 font-bold text-xs shadow-xs">
-                  <span>🔥 {effectiveStreak}-Day Streak</span>
+                  <Flame className="w-3.5 h-3.5 text-[#FF9100] fill-[#FF9100]" />
+                  <span>{effectiveStreak}-Day Streak</span>
                 </div>
                 <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-900/60 border border-blue-300/40 text-blue-100 font-bold text-xs shadow-xs">
-                  <span>⚡ {effectiveXp.toLocaleString()} XP</span>
+                  <Zap className="w-3.5 h-3.5 text-blue-300" />
+                  <span>{effectiveXp.toLocaleString()} XP</span>
                 </div>
               </div>
             </div>
