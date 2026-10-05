@@ -14,6 +14,7 @@ export default defineConfig({
     VitePWA({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.ico', 'favicon.svg', 'fundile-favicon.svg', 'robots.txt', 'pwa-192x192.png', 'pwa-256x256.png', 'pwa-512x512.png', 'pwa-maskable-192x192.png', 'pwa-maskable-512x512.png', 'apple-touch-icon.png'],
+      manifestFilename: 'manifest.json',
       manifest: {
         name: 'Fundile Curriculum-Aligned Learning Assistant',
         short_name: 'Fundile',
@@ -26,9 +27,15 @@ export default defineConfig({
         scope: '/',
         icons: [
           {
-            src: '/favicon.svg',
-            sizes: 'any',
-            type: 'image/svg+xml',
+            src: '/pwa-256x256.png',
+            sizes: '256x256',
+            type: 'image/png',
+            purpose: 'any'
+          },
+          {
+            src: '/pwa-512x512.png',
+            sizes: '512x512',
+            type: 'image/png',
             purpose: 'any'
           },
           {
@@ -38,28 +45,16 @@ export default defineConfig({
             purpose: 'any'
           },
           {
-            src: '/pwa-256x256.png',
-            sizes: '256x256',
+            src: '/pwa-maskable-512x512.png',
+            sizes: '512x512',
             type: 'image/png',
-            purpose: 'any'
+            purpose: 'maskable'
           },
           {
             src: '/pwa-maskable-192x192.png',
             sizes: '192x192',
             type: 'image/png',
-            purpose: 'maskable any'
-          },
-          {
-            src: '/pwa-512x512.png',
-            sizes: '512x512',
-            type: 'image/png',
-            purpose: 'any'
-          },
-          {
-            src: '/pwa-maskable-512x512.png',
-            sizes: '512x512',
-            type: 'image/png',
-            purpose: 'maskable any'
+            purpose: 'maskable'
           }
         ]
       },
