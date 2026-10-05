@@ -83,17 +83,16 @@ const Header = ({
           </div>
 
           <div className="flex items-center space-x-2 sm:space-x-3">
-            {/* Start Free Trial Button (if not already subscribed / active trial) */}
+            {/* Start 2-week Free Trial Button (if not already subscribed / active trial) */}
             {!hasActiveSubscription && (
               <button
                 type="button"
                 onClick={handleTrialClick}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#FF9100] hover:bg-[#e07f00] text-white text-xs font-bold shadow-md shadow-orange-950/20 transition hover:scale-105 cursor-pointer shrink-0"
-                title="Start 14-day Free Trial"
+                className="inline-flex flex-col items-center justify-center px-3 py-1 rounded-xl bg-[#FF9100] hover:bg-[#e07f00] text-white text-xs font-bold shadow-md shadow-orange-950/20 transition hover:scale-105 cursor-pointer shrink-0 text-center leading-tight border border-orange-400/30"
+                title="Start 2-week Free Trial"
               >
-                <span>🚀</span>
-                <span className="hidden sm:inline">Start Free Trial</span>
-                <span className="sm:hidden">Trial</span>
+                <span className="text-[10px] font-semibold text-amber-100 leading-tight">Start 2-week</span>
+                <span className="text-xs font-extrabold leading-tight">free trial</span>
               </button>
             )}
 

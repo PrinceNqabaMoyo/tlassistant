@@ -131,12 +131,16 @@ const LandingPage = ({ onGetStarted, onSignIn, onViewSubscription }) => {
     const heroRef = useRef(null);
     const ctaRowRef = useRef(null);
     const [isRibbonVisible, setIsRibbonVisible] = useState(true);
+    const [showFloatingInstall, setShowFloatingInstall] = useState(false);
     const lastScrollYRef = useRef(0);
 
     useEffect(() => {
         const handleScroll = () => {
             const currentScrollY = window.scrollY || window.pageYOffset || 0;
             const diff = currentScrollY - lastScrollYRef.current;
+
+            // Show floating install button once user scrolls past the first section view (~380px)
+            setShowFloatingInstall(currentScrollY > 380);
 
             if (currentScrollY < 60) {
                 // Near top of page: smoothly slide back into view
@@ -227,10 +231,17 @@ const LandingPage = ({ onGetStarted, onSignIn, onViewSubscription }) => {
                                 Sign in
                             </button>
                             <button 
+                                type="button"
                                 onClick={onGetStarted}
-                                className="bg-[#FF9100] text-white px-3 py-1.5 text-sm sm:px-6 sm:py-2 sm:text-base rounded-lg hover:bg-[#f58200] shadow-[0_4px_14px_rgba(255,145,0,0.39)] transition-all duration-300 font-medium cursor-pointer"
+                                className="bg-[#FF9100] hover:bg-[#f58200] text-white px-3 py-1 sm:px-4 sm:py-1.5 rounded-xl shadow-[0_4px_14px_rgba(255,145,0,0.39)] transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer text-center leading-tight flex flex-col items-center justify-center shrink-0 border border-orange-400/30"
+                                title="Start 2-week Free Trial"
                             >
-                                Start free trial
+                                <span className="text-[11px] sm:text-xs font-semibold text-amber-100 tracking-tight leading-tight">
+                                    Start 2-week
+                                </span>
+                                <span className="text-xs sm:text-sm font-extrabold tracking-tight leading-tight">
+                                    free trial
+                                </span>
                             </button>
                         </div>
                     </div>
@@ -1091,6 +1102,32 @@ const LandingPage = ({ onGetStarted, onSignIn, onViewSubscription }) => {
                     </footer>
 
                 </div>
+            </div>
+
+            {/* FLOATING ACTION BUTTON: INSTALL FREE APP (Appears once user scrolls past hero section) */}
+            <div 
+                className={`fixed bottom-5 right-4 sm:bottom-6 sm:right-6 z-40 transition-all duration-300 ease-out transform ${
+                    showFloatingInstall 
+                        ? 'translate-y-0 opacity-100 scale-100' 
+                        : 'translate-y-12 opacity-0 scale-90 pointer-events-none'
+                }`}
+            >
+                <button
+                    type="button"
+                    onClick={() => setShowInstallModal(true)}
+                    className="group relative flex items-center gap-2.5 px-3.5 py-2.5 sm:px-4.5 sm:py-3 rounded-full bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-700 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-xs sm:text-sm shadow-[0_10px_25px_-5px_rgba(5,150,105,0.45)] border border-emerald-300/40 backdrop-blur-md transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer"
+                    title="Install Free Fundile App on Phone, Tablet or Computer"
+                >
+                    <span className="relative flex h-2 w-2">
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-300 opacity-75"></span>
+                        <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-200"></span>
+                    </span>
+                    <span className="text-base sm:text-lg -ml-0.5">📲</span>
+                    <span className="flex flex-col text-left leading-tight">
+                        <span className="font-extrabold tracking-tight">Install Free App</span>
+                        <span className="text-[10px] text-emerald-200 font-medium hidden sm:inline">Offline &amp; Low Data</span>
+                    </span>
+                </button>
             </div>
 
             {/* Direct Device Install Modal (PWA & WebAPK) */}
