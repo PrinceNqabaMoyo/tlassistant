@@ -109,17 +109,17 @@ const Header = ({
               </button>
             )}
 
-            {/* Switch Persona / Oversight Testing Cockpit Button */}
-            {onOpenPersonaSwitcher && (
+            {/* Super Admin Mock School Tester (Oversight Testing Only) */}
+            {currentUser?.isSuperAdmin && onOpenPersonaSwitcher && (
               <button
                 type="button"
                 onClick={onOpenPersonaSwitcher}
                 className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-500/20 hover:bg-amber-500/35 text-amber-200 text-xs font-bold transition border border-amber-400/40 cursor-pointer shrink-0 shadow-xs"
-                title="Switch Persona: 300 School Students, 100 Homeschoolers, 60 Teachers, 330 Parents"
+                title="Super Admin Mock School Testing: Switch between mock students, teachers, and parents"
               >
                 <Users className="w-3.5 h-3.5 text-amber-300" />
-                <span className="hidden md:inline">Switch Persona (400+ Mock)</span>
-                <span className="md:hidden">Personas</span>
+                <span className="hidden md:inline">Mock School Tester</span>
+                <span className="md:hidden">Mock</span>
               </button>
             )}
 

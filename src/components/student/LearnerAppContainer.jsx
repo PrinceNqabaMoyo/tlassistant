@@ -337,7 +337,7 @@ export default function LearnerAppContainer({
       navigationHistoryService.pushModal('linkGuardian');
       setShowLinkGuardianModal(true);
     },
-    onOpenPersonaSwitcher,
+    onOpenPersonaSwitcher: (currentUser?.isSuperAdmin || isSandboxMode) ? onOpenPersonaSwitcher : null,
   };
 
   const mobileContent = (
