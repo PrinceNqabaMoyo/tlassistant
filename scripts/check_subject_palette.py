@@ -22,15 +22,15 @@ def contrast_ratio(hex1, hex2):
 
 PALETTE = {
     'desk': ('#13519C', '#EAF1FA', '#13519C'),
-    'mathematics': ('#6D28D9', '#F1EBFD', '#5B21B6'),
-    'mathematical_literacy': ('#A21CAF', '#F9E9FB', '#86198F'),
-    'technical_mathematics': ('#475569', '#EEF1F5', '#334155'),
-    'accounting': ('#15803D', '#E9F7EE', '#166534'),
-    'business_studies': ('#BE123C', '#FCE9EE', '#9F1239'),
-    'physical_sciences': ('#0F766E', '#E6F5F3', '#115E59'),
-    'life_sciences': ('#4D7C0F', '#F0F6E7', '#3F6212'),
-    'ems': ('#C2410C', '#FDEEE6', '#9A3412'),
-    'natural_sciences': ('#0E7490', '#E6F3F7', '#155E75'),
+    'mathematics': ('#2563EB', '#EFF6FF', '#1E40AF'),
+    'mathematical_literacy': ('#C026D3', '#FDF4FF', '#86198F'),
+    'technical_mathematics': ('#4F46E5', '#EEF2FF', '#3730A3'),
+    'accounting': ('#047857', '#ECFDF5', '#065F46'),
+    'business_studies': ('#E11D48', '#FFF1F2', '#9F1239'),
+    'physical_sciences': ('#0E7490', '#ECFEFF', '#155E75'),
+    'life_sciences': ('#4D7C0F', '#F7FEE7', '#3F6212'),
+    'ems': ('#C2410C', '#FFF7ED', '#9A3412'),
+    'natural_sciences': ('#0369A1', '#F0F9FF', '#075985'),
 }
 
 def main():

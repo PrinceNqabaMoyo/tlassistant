@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import PhysicalFolderTabs from '../navigation/PhysicalFolderTabs';
+import DesktopCommandRail from '../navigation/DesktopCommandRail';
+import SubjectManagerModal from '../curriculum/SubjectManagerModal';
 import { SUBJECT_TABS_CONFIG } from '../navigation/subjectTabsConfig';
 import TodaysDeskView from './TodaysDeskView';
 import UniversalWorkspace from '../workspace/UniversalWorkspace';
@@ -57,6 +58,17 @@ export default function LearnerAppContainer({
   const [isGenerating, setIsGenerating] = useState(false);
   const [isChecking, setIsChecking] = useState(false);
   const [result, setResult] = useState(null);
+  const [isRailCollapsed, setIsRailCollapsed] = useState(false);
+  const [deskMode, setDeskMode] = useState('self_paced'); // 'self_paced' | 'classwork'
+  const [activeReelSubjectId, setActiveReelSubjectId] = useState('accounting');
+  const [enabledSubjects, setEnabledSubjects] = useState(() => {
+    try {
+      const saved = localStorage.getItem('fundile_enabled_subjects');
+      if (saved) return JSON.parse(saved);
+    } catch {}
+    return ['accounting', 'mathematics', 'technical_mathematics', 'mathematical_literacy', 'physical_sciences', 'life_sciences', 'business_studies'];
+  });
+  const [showSubjectManagerModal, setShowSubjectManagerModal] = useState(false);
   const [showProfilePhotoModal, setShowProfilePhotoModal] = useState(false);
   const [showTopicModal, setShowTopicModal] = useState(false);
   const [showLinkGuardianModal, setShowLinkGuardianModal] = useState(false);
@@ -261,37 +273,72 @@ export default function LearnerAppContainer({
   const activeSubData = studentStore.getSubject(activeTab);
 
   // ═══════════════════════════════════════════════════════════════════════════
-  // 1. DESKTOP INNER FOLDER BODY & WORKSPACE (Used in Desktop & Sandbox)
+  // 1. DESKTOP OPTION A COMMAND RAIL & WORKSPACE
   // ═══════════════════════════════════════════════════════════════════════════
   const desktopContent = (
-    <div className="flex flex-col h-full bg-white relative">
-      {/* Desktop Physical Folder Tabs Shelf */}
-      <PhysicalFolderTabs
+    <div className="flex h-full w-full bg-slate-50 relative overflow-hidden select-none font-sans">
+      {/* Option A: Left Command Rail */}
+      <DesktopCommandRail
         activeTab={activeTab}
-        onSelectTab={handleSelectTab}
+        activeReelSubjectId={activeReelSubjectId}
+        onSelectSubject={(subjId) => {
+          if (subjId === 'desk') {
+            handleSelectTab('desk');
+          } else {
+            handleOpenSubjectFromDesk(subjId);
+          }
+        }}
+        activeDeskMode={deskMode}
+        onSelectDeskMode={(mode) => {
+          setDeskMode(mode);
+          if (activeTab !== 'desk') {
+            handleSelectTab('desk');
+          }
+        }}
         currentGrade={currentGrade}
-        mode="desktop"
+        schoolName={schoolName}
+        studentName={studentName}
+        streakDays={storeState.streak || 5}
+        xp={storeState.xp || 1420}
+        enabledSubjects={enabledSubjects}
+        onOpenManageSubjects={() => setShowSubjectManagerModal(true)}
+        isCollapsed={isRailCollapsed}
+        onToggleCollapse={() => setIsRailCollapsed(!isRailCollapsed)}
       />
 
-      {/* Dynamic Interior Accent Line connecting active tab to folder body */}
-      <div 
-        className="h-[3px] w-full transition-colors duration-300"
-        style={{ backgroundColor: currentTabConfig.accentColor }}
-      />
-
-      {/* Main Folder Interior Canvas */}
-      <div className="flex-1 bg-slate-50 relative min-h-[500px]">
+      {/* Right Main Stage: Expands smoothly to 100% when rail collapses */}
+      <div className="flex-1 h-full overflow-y-auto bg-slate-50 relative flex flex-col">
         {activeTab === 'desk' ? (
           <TodaysDeskView
-            studentName={studentName}
             grade={currentGrade}
             schoolName={schoolName}
             currentUser={currentUser}
+            activeMode={deskMode}
+            onChangeActiveMode={setDeskMode}
+            activeReelSubjectId={activeReelSubjectId}
+            onSelectReelSubject={setActiveReelSubjectId}
+            enabledSubjects={enabledSubjects}
             onOpenSubject={handleOpenSubjectFromDesk}
-            onOpenLinkGuardian={() => setShowLinkGuardianModal(true)}
           />
         ) : (
-          <div className="p-3 sm:p-6">
+          <div className="p-3 sm:p-6 space-y-3">
+            {/* Top Breadcrumb Navigation Bar back to Studio */}
+            <div className="flex items-center justify-between bg-white px-4 py-2.5 rounded-xl border border-slate-200/90 shadow-2xs text-xs">
+              <button
+                type="button"
+                onClick={() => handleSelectTab('desk')}
+                className="font-bold text-[#13519C] hover:text-[#0F4280] flex items-center gap-1.5 cursor-pointer hover:underline"
+              >
+                <span>&larr; Return to Self-Paced Studio</span>
+              </button>
+              <div className="flex items-center gap-2 text-slate-500 font-medium">
+                <span>Phase Subject:</span>
+                <span className="font-bold" style={{ color: currentTabConfig.accentColor }}>
+                  {currentTabConfig.name}
+                </span>
+              </div>
+            </div>
+
             <UniversalWorkspace
               grade={currentGrade}
               subject={activeTab}
@@ -391,6 +438,20 @@ export default function LearnerAppContainer({
         }}
         db={null}
         currentUser={currentUser || { uid: 'current_student', name: studentName, grade: `Grade ${currentGrade}`, school: schoolName }}
+      />
+
+      {/* Manage Phase Subjects Modal */}
+      <SubjectManagerModal
+        isOpen={showSubjectManagerModal}
+        onClose={() => setShowSubjectManagerModal(false)}
+        enabledSubjects={enabledSubjects}
+        onSaveSubjects={(newSubjects) => {
+          setEnabledSubjects(newSubjects);
+          try {
+            localStorage.setItem('fundile_enabled_subjects', JSON.stringify(newSubjects));
+          } catch {}
+        }}
+        currentGrade={currentGrade}
       />
 
       {/* Android Hardware Back-Button Double-Tap Exit Toast */}
