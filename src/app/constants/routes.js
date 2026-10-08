@@ -1,5 +1,6 @@
 export const routePathMap = {
   landing: '/',
+  privacy: '/privacy',
   signin: '/signin',
   signup: '/signup',
   verifyEmail: '/verify-email',
@@ -13,6 +14,7 @@ export const getRequestedRouteFromPath = (pathname = '/') => {
   const normalizedPath = pathname.replace(/\/+$/, '') || '/';
 
   if (normalizedPath === '/sandbox') return 'sandbox';
+  if (normalizedPath === '/privacy') return 'privacy';
   if (normalizedPath === '/signin') return 'signin';
   if (normalizedPath === '/signup') return 'signup';
   if (normalizedPath === '/verify-email') return 'verifyEmail';
@@ -26,6 +28,10 @@ export const getRequestedRouteFromPath = (pathname = '/') => {
 export const resolveRoutePage = (requestedPage, isAuthenticated, hasVerifiedAccess = false, isAnonymous = false) => {
   if (requestedPage === 'sandbox') {
     return 'sandbox';
+  }
+
+  if (requestedPage === 'privacy') {
+    return 'privacy';
   }
 
   if (isAnonymous) {

@@ -11,10 +11,10 @@ export const MOCK_SCHOOL = {
   province: 'KwaZulu-Natal',
   district: 'Pinetown District',
   type: 'Public Secondary School (Section 21)',
-  grades: [8, 9, 10, 11, 12],
+  grades: [7, 8, 9, 10, 11, 12],
   term: 2,
   academicYear: 2026,
-  totalLearners: 300,
+  totalLearners: 360,
   totalFaculty: 60,
   headmasterId: 'fac-01', // Dr. V. Naidoo
   deputyHeadId: 'fac-02', // Mrs. S. Pillay
@@ -39,6 +39,11 @@ export const MOCK_SCHOOL = {
     }
   ],
   classes: [
+    // Grade 7 (Senior Phase Entry)
+    { id: 'cls-7a', name: 'Grade 7A', grade: 7, room: 'Block J-01', educatorId: 'fac-53', learnerCount: 15 },
+    { id: 'cls-7b', name: 'Grade 7B', grade: 7, room: 'Block J-02', educatorId: 'fac-48', learnerCount: 15 },
+    { id: 'cls-7c', name: 'Grade 7C', grade: 7, room: 'Block J-03', educatorId: 'fac-21', learnerCount: 15 },
+    { id: 'cls-7d', name: 'Grade 7D', grade: 7, room: 'Block J-04', educatorId: 'fac-55', learnerCount: 15 },
     // Grade 8
     { id: 'cls-8a', name: 'Grade 8A', grade: 8, room: 'Block A-01', educatorId: 'fac-10', learnerCount: 15 },
     { id: 'cls-8b', name: 'Grade 8B', grade: 8, room: 'Block A-02', educatorId: 'fac-11', learnerCount: 15 },

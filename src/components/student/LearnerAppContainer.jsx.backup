@@ -5,7 +5,7 @@ import TodaysDeskView from './TodaysDeskView';
 import UniversalWorkspace from '../workspace/UniversalWorkspace';
 import DevSandboxWrapper from '../sandbox/DevSandboxWrapper';
 import MobileWebApkView from '../mobile/MobileWebApkView';
-import UserProfileModal from '../profile/UserProfileModal';
+import ProfilePhotoModal from '../profile/ProfilePhotoModal';
 import TopicScopeModal from '../curriculum/TopicScopeModal';
 import LinkGuardianModal from '../family/LinkGuardianModal';
 import navigationHistoryService from '../../services/navigationHistoryService';
@@ -45,11 +45,6 @@ export default function LearnerAppContainer({
   initialTab = 'desk',
   isSandboxMode = true, // Enables the live dev sandbox viewport switcher
   onOpenPersonaSwitcher = null,
-  onLogout = null,
-  superAdminMode = 'student',
-  setSuperAdminMode = null,
-  superAdminTier = 'standard',
-  setSuperAdminTier = null,
 }) {
   const [activeTab, setActiveTab] = useState(initialTab);
   const [activeTopic, setActiveTopic] = useState(() => getDefaultTopicForSubject(initialTab));
@@ -366,20 +361,13 @@ export default function LearnerAppContainer({
         onSelectTopic={handleSelectTopic}
       />
 
-      {/* Profile & Settings Modal */}
-      <UserProfileModal
+      {/* Profile Photo Modal */}
+      <ProfilePhotoModal
         isOpen={showProfilePhotoModal}
         onClose={() => {
           navigationHistoryService.clearModal();
           setShowProfilePhotoModal(false);
         }}
-        currentUser={currentUser}
-        onLogout={onLogout}
-        superAdminMode={superAdminMode}
-        setSuperAdminMode={setSuperAdminMode}
-        superAdminTier={superAdminTier}
-        setSuperAdminTier={setSuperAdminTier}
-        onOpenPersonaSwitcher={onOpenPersonaSwitcher}
       />
 
       {/* Family / Guardian Linking Modal (15-Min Ephemeral Handshake) */}

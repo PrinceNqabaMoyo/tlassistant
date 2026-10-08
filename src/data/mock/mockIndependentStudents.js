@@ -34,7 +34,7 @@ for (let i = 1; i <= 100; i++) {
   const lnIndex = (i * 13 + 5) % SA_LAST_NAMES.length;
   const firstName = SA_FIRST_NAMES[fnIndex];
   const lastName = SA_LAST_NAMES[lnIndex];
-  const grade = 8 + (i % 5); // Grades 8, 9, 10, 11, 12
+  const grade = 7 + (i % 6); // Grades 7, 8, 9, 10, 11, 12
 
   // 80 independent parents for 100 students (20 sibling links)
   const parentIndex = ((i - 1) % 80) + 1;

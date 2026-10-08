@@ -58,6 +58,7 @@ export default function AppShell({ shellProps }) {
       <Header
         currentUser={currentUser}
         onLogout={onLogout}
+        onNavigateHome={shellProps.onNavigateHome}
         onMarkAllNotificationsRead={onMarkAllNotificationsRead}
         onMarkNotificationRead={onMarkNotificationRead}
         pendingAssignments={pendingAssignments}

@@ -131,8 +131,8 @@
     <h1>&#9889; Fundile &#8212; Architecture Map &amp; Interactive Test Hub</h1>
     <p>Adaptive learning aligned with South African National Curriculum Standards for Grades 7–12</p>
     <div class="meta">
-      <span>v0.9.2</span>
-      <span>Last updated: 2026-10-05</span>
+      <span>v0.9.3</span>
+      <span>Last updated: 2026-10-08</span>
       <span>Source of truth for agents: fundile-architecture.json</span>
       <span>&#9888; Edit JSON only &#8212; this file is generated</span>
     </div>
@@ -230,7 +230,7 @@
             <p>Live sandbox to test every frontend component, backend service, paywall rule, offline sync queue, and deterministic engine without leaving the architecture report.</p>
           </div>
           <div class="testhub-stats">
-            <div class="testhub-stat">Built Components: <strong>79</strong></div>
+            <div class="testhub-stat">Built Components: <strong>82</strong></div>
             <div class="testhub-stat">Backend Services: <strong>33</strong></div>
             <div class="testhub-stat">API Endpoints: <strong>25</strong></div>
             <div class="testhub-stat">PWA Offline: <strong>Active (sw.js)</strong></div>
@@ -876,7 +876,7 @@
         <div class="test-card-header">
           <div class="test-card-title">
             <span>📁 Complete Frontend Component Directory &amp; Quick-Launch Matrix</span>
-            <span class="test-card-tag">79 Built Production Components</span>
+            <span class="test-card-tag">82 Built Production Components</span>
           </div>
           <div style="display:flex;gap:0.4rem;align-items:center;">
             <input type="text" id="comp-filter-input" class="test-input" placeholder="Filter components by name..." style="width:220px;padding:0.3rem 0.6rem;" oninput="filterComponentTable()">
@@ -1359,6 +1359,24 @@
           <td><span class="status-badge status-built">Layer A</span></td>
           <td class="mono muted" style="font-size:0.75rem">src/components/admin/SuperAdminPanels.jsx</td>
           <td class="muted" style="font-size:0.78rem">Dedicated administrative cockpit detail views for Super Admin: System Analytics (latency, uptime, engine health), Content Management (CAPS generator registry, AST purity), Competitions (academic Olympiads, school leagues), System Settings (global terms, timeouts, provider abstraction), and Security Access (POPIA Sec 35, encryption audits).</td>
+          <td><button class="test-btn test-btn-sm" onclick="scrollToTestModule('track1')">⚡ Test Module</button></td>
+        </tr><tr class="comp-row" data-name="userprofilemodal.jsx" data-layer="a">
+          <td><strong>UserProfileModal.jsx</strong></td>
+          <td><span class="status-badge status-built">Layer A</span></td>
+          <td class="mono muted" style="font-size:0.75rem">src/components/profile/UserProfileModal.jsx</td>
+          <td class="muted" style="font-size:0.78rem">Comprehensive subscriber profile management modal with live camera selfie capture (3-2-1 flash) + file upload, grade, phase, school/homeschool toggle, educator links, up to 2 parental links, log out facility, and hidden Super Admin 5-role switcher / Tier toggle.</td>
+          <td><button class="test-btn test-btn-sm" onclick="scrollToTestModule('track1')">⚡ Test Module</button></td>
+        </tr><tr class="comp-row" data-name="messageboardmodal.jsx" data-layer="a">
+          <td><strong>MessageBoardModal.jsx</strong></td>
+          <td><span class="status-badge status-built">Layer A</span></td>
+          <td class="mono muted" style="font-size:0.75rem">src/components/notifications/MessageBoardModal.jsx</td>
+          <td class="muted" style="font-size:0.78rem">Centralized communication board modal for student task notices, educator announcements, and school/admin broadcasts with 3-day post-deadline auto-deletion.</td>
+          <td><button class="test-btn test-btn-sm" onclick="scrollToTestModule('track1')">⚡ Test Module</button></td>
+        </tr><tr class="comp-row" data-name="privacystatementview.jsx" data-layer="a">
+          <td><strong>PrivacyStatementView.jsx</strong></td>
+          <td><span class="status-badge status-built">Layer A</span></td>
+          <td class="mono muted" style="font-size:0.75rem">src/components/ui/PrivacyStatementView.jsx</td>
+          <td class="muted" style="font-size:0.78rem">Dedicated /privacy route view with POPIA Section 35 compliance text, brand blue #13519C header, and smooth in-app navigation back to landing page.</td>
           <td><button class="test-btn test-btn-sm" onclick="scrollToTestModule('track1')">⚡ Test Module</button></td>
         </tr>
             </tbody>
@@ -2767,6 +2785,24 @@
           <td><span class="status-badge status-built">Built</span></td>
           <td>A</td>
           <td class="muted">Dedicated administrative cockpit detail views for Super Admin: System Analytics (latency, uptime, engine health), Content Management (CAPS generator registry, AST purity), Competitions (academic Olympiads, school leagues), System Settings (global terms, timeouts, provider abstraction), and Security Access (POPIA Sec 35, encryption audits).</td>
+        </tr>
+<tr>
+          <td><strong>UserProfileModal.jsx</strong></td>
+          <td><span class="status-badge status-built">Built</span></td>
+          <td>A</td>
+          <td class="muted">Comprehensive subscriber profile management modal with live camera selfie capture (3-2-1 flash) + file upload, grade, phase, school/homeschool toggle, educator links, up to 2 parental links, log out facility, and hidden Super Admin 5-role switcher / Tier toggle.</td>
+        </tr>
+<tr>
+          <td><strong>MessageBoardModal.jsx</strong></td>
+          <td><span class="status-badge status-built">Built</span></td>
+          <td>A</td>
+          <td class="muted">Centralized communication board modal for student task notices, educator announcements, and school/admin broadcasts with 3-day post-deadline auto-deletion.</td>
+        </tr>
+<tr>
+          <td><strong>PrivacyStatementView.jsx</strong></td>
+          <td><span class="status-badge status-built">Built</span></td>
+          <td>A</td>
+          <td class="muted">Dedicated /privacy route view with POPIA Section 35 compliance text, brand blue #13519C header, and smooth in-app navigation back to landing page.</td>
         </tr></tbody></table></div></section></div><div id="tab-firestore" class="tab-panel"><section><h2>Firestore Collections</h2><div class="table-wrap">
           <table><thead><tr><th>Collection</th><th>Status</th><th>Description</th></tr></thead>
           <tbody><tr>
@@ -2824,7 +2860,7 @@
           <td><span class="status-badge status-built">Built</span></td>
           <td class="muted">Verified student records linked to a parent user account with studentId, studentName, grade, and school.</td>
         </tr></tbody></table></div></section></div><div id="tab-stack" class="tab-panel"><section><h2>Tech Stack</h2>
-          <div class="stack-grid"><div class="stack-card"><h3>Frontend</h3><dl><dt>framework</dt><dd>React 18 (Vite)</dd><dt>language</dt><dd>JSX</dd><dt>styling</dt><dd>Tailwind CSS v4 + Option 1 Dual-Font System (Afacad display headings, system-ui font-sans for workspace/controls, font-mono for numbers/tables/timers; 60-30-10 simulation box color palette)</dd><dt>mathRendering</dt><dd>KaTeX</dd><dt>diagramRendering</dt><dd>JSXGraph</dd><dt>bundler</dt><dd>Vite</dd><dt>progressionLifecycle</dt><dd>Gated 4-stage progression state machine: 0. Diagnostic (Required at 0% baseline) -&gt; 1. Scaffold (Guided hints) -&gt; 2. Practice (Unassisted, unlocks &gt;=60%) -&gt; 3. Exam Mode (Timed assessment, unlocks &gt;=80% Level 7)</dd><dt>pwa</dt><dd>vite-plugin-pwa &amp; custom Service Worker fundile-v2 with development isolation in index.html (unregisters stale dev SWs and purges cache on localhost/LAN 192.168.x to prevent mobile LAN cache poisoning; enables full Workbox/sw.js offline caching in production)</dd><dt>pwaAssets</dt><dd>public/manifest.json, public/sw.js, pwa-192x192.png, pwa-256x256.png, pwa-512x512.png, pwa-maskable-192x192.png, pwa-maskable-512x512.png, apple-touch-icon.png, favicon.svg, fundile-favicon.svg, favicon.ico (VS Code style 100% transparent floating gold graduation cap with zero background box for desktop shortcuts, taskbar pins, title bars, and browser tabs; maskable icons reserved for Android adaptive system cropping)</dd><dt>navigation</dt><dd>Centralized navigationHistoryService.js synchronizing PWA/WebAPK modal states, subject-to-desk regressions, and double-tap exit circuit breaker with window.history (popstate); permanently pinned fixed bottom navigation rail above mobile hardware controls; floating action install button appearing after scrolling past hero section</dd><dt>subjectPalette</dt><dd>Shopify-inspired centralized theme tokens (src/theme/subjectPalette.js) calibrated for high visual vibrancy, WCAG AA compliance (&gt;=4.5:1 on white and soft tints), harmonious with brand anchors #13519C blue and #FF9100 orange</dd><dt>mockEnvironment</dt><dd>Institutional scale test harness (src/data/mock/): Westville High School (300 Named Students across Grades 8-12), 100 Named Independent Homeschool Students, 60 Teachers (Principal, Deputy, 9 HODs, 49 Educators), 330 Parents with sibling linking, and 1-click PersonaSwitcherModal.jsx testing cockpit</dd><dt>entryPoint</dt><dd>src/main.jsx</dd><dt>mainApp</dt><dd>src/App.jsx</dd></dl></div>
+          <div class="stack-grid"><div class="stack-card"><h3>Frontend</h3><dl><dt>framework</dt><dd>React 18 (Vite)</dd><dt>language</dt><dd>JSX</dd><dt>styling</dt><dd>Tailwind CSS v4 + Option 1 Dual-Font System (Afacad display headings, system-ui font-sans for workspace/controls, font-mono for numbers/tables/timers; 60-30-10 simulation box color palette)</dd><dt>mathRendering</dt><dd>KaTeX</dd><dt>diagramRendering</dt><dd>JSXGraph</dd><dt>bundler</dt><dd>Vite</dd><dt>progressionLifecycle</dt><dd>Gated 4-stage progression state machine: 0. Diagnostic (Required at 0% baseline) -&gt; 1. Scaffold (Guided hints) -&gt; 2. Practice (Unassisted, unlocks &gt;=60%) -&gt; 3. Exam Mode (Timed assessment, unlocks &gt;=80% Level 7)</dd><dt>pwa</dt><dd>vite-plugin-pwa &amp; custom Service Worker fundile-v2 with development isolation in index.html (unregisters stale dev SWs and purges cache on localhost/LAN 192.168.x to prevent mobile LAN cache poisoning; enables full Workbox/sw.js offline caching in production)</dd><dt>pwaAssets</dt><dd>public/manifest.json, public/sw.js, pwa-192x192.png, pwa-256x256.png, pwa-512x512.png, pwa-maskable-192x192.png, pwa-maskable-512x512.png, apple-touch-icon.png, favicon.svg, fundile-favicon.svg, favicon.ico (VS Code style 100% transparent floating gold graduation cap with zero background box for desktop shortcuts, taskbar pins, title bars, and browser tabs; maskable icons reserved for Android adaptive system cropping)</dd><dt>navigation</dt><dd>Centralized navigationHistoryService.js synchronizing PWA/WebAPK modal states, subject-to-desk regressions, and double-tap exit circuit breaker with window.history (popstate); permanently pinned fixed bottom navigation rail above mobile hardware controls; floating action install button appearing after scrolling past hero section</dd><dt>subjectPalette</dt><dd>Shopify-inspired centralized theme tokens (src/theme/subjectPalette.js) calibrated for high visual vibrancy, WCAG AA compliance (&gt;=4.5:1 on white and soft tints), harmonious with brand anchors #13519C blue and #FF9100 orange</dd><dt>mockEnvironment</dt><dd>Institutional scale test harness (src/data/mock/): Westville High School (360 Named Students across Grades 7–12 across 24 class sections), 100 Named Independent Homeschool Students across Grades 7–12, 60 Faculty Members (Principal, Deputy, 9 HODs, 49 Educators), 330 Parents with cross-grade sibling linking, and 1-click PersonaSwitcherModal.jsx testing cockpit</dd><dt>entryPoint</dt><dd>src/main.jsx</dd><dt>mainApp</dt><dd>src/App.jsx</dd></dl></div>
 <div class="stack-card"><h3>Backend</h3><dl><dt>framework</dt><dd>FastAPI ASGI / Flask WSGI</dd><dt>language</dt><dd>Python 3.11+</dd><dt>mathLibrary</dt><dd>SymPy</dd><dt>llmAbstraction</dt><dd>caps-ai-backend/app/services/llm_provider.py</dd><dt>entryPoint</dt><dd>caps-ai-backend/run.py</dd><dt>mainApp</dt><dd>caps-ai-backend/MainApp.py</dd><dt>lanRouting</dt><dd>Auto-detected LAN IP (192.168.x / 10.x) and localhost routing to port 5001 via src/utils/apiBaseUrl.js for real-time mobile cross-device testing</dd><dt>automatedTesting</dt><dd>Unified 4-Pillar Certification Suite (npm run audit:full / scripts/run_system_certification.py): 1. Procedure Tracker SymPy step checker, 2. Monte Carlo 100-generator quality auditor (0% meta-curriculum jargon), 3. 4-persona BKT adaptive progression simulator with circuit breakers, 4. 141-button interactive UI crawler. Generates fundile-system-audit-report.html</dd></dl></div>
 <div class="stack-card"><h3>Database &amp; Auth</h3><dl><dt>primary</dt><dd>Firebase Firestore</dd><dt>storage</dt><dd>Dual-Redundant Firebase Storage (Primary) + Supabase Storage (Fallback on quota/network error)</dd><dt>auth</dt><dd>Firebase Authentication</dd></dl></div>
 <div class="stack-card"><h3>Deployment</h3><dl><dt>frontend</dt><dd>Firebase Hosting</dd><dt>backend</dt><dd>Dockerised (Dockerfile present)</dd></dl></div></div></section></div><div id="tab-packages" class="tab-panel"><section><h2>Package Tiers</h2>

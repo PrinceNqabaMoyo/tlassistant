@@ -4,17 +4,12 @@ import { doc, setDoc } from 'firebase/firestore';
 import { Loader2, Eye, EyeOff } from 'lucide-react';
 import { canBypassSignupGradeRestriction, LIVE_SIGNUP_GRADES } from '../../app/constants/access';
 
-// Curriculum shell structure for the signup form
+// Curriculum shell structure for the signup form (South African National Curriculum only)
 const curriculumShell = {
     'CAPS': {
-        name: 'South African National Curriculum',
+        name: 'South African National Curriculum (CAPS)',
         description: 'The official national curriculum for South Africa.',
         grades: [7, 8, 9, 10, 11, 12]
-    },
-    'Cambridge': { 
-        name: 'Cambridge Curriculum', 
-        description: 'International curriculum offered in over 160 countries.', 
-        grades: [10, 11, 12] 
     }
 };
 
@@ -162,16 +157,7 @@ const AuthScreen = ({ auth, db, onStudentLogin, initialMode = 'signin', onToggle
         : LIVE_SIGNUP_GRADES;
 
     const handleCurriculumChange = (event) => {
-        const nextCurriculum = event.target.value;
-
-        if (nextCurriculum === 'Cambridge') {
-            window.alert('Not available in your region');
-            setSelectedCurriculum('CAPS');
-            setSelectedGrade('');
-            return;
-        }
-
-        setSelectedCurriculum(nextCurriculum);
+        setSelectedCurriculum(event.target.value || 'CAPS');
         setSelectedGrade('');
     };
 
@@ -197,12 +183,7 @@ const AuthScreen = ({ auth, db, onStudentLogin, initialMode = 'signin', onToggle
             return;
         }
 
-        if (!isLogin && role === 'student' && selectedCurriculum === 'Cambridge') {
-            setError('Not available in your region');
-            return;
-        }
-
-        if (!isLogin && role === 'student' && selectedCurriculum === 'CAPS' && !canUseRestrictedSignupGrades && !LIVE_SIGNUP_GRADES.includes(Number(selectedGrade))) {
+        if (!isLogin && role === 'student' && !canUseRestrictedSignupGrades && !LIVE_SIGNUP_GRADES.includes(Number(selectedGrade))) {
             setError('Fundile sign-up is currently limited to Grades 10 and 11.');
             return;
         }
@@ -295,26 +276,20 @@ const AuthScreen = ({ auth, db, onStudentLogin, initialMode = 'signin', onToggle
                                     name="role" 
                                     value={role} 
                                     onChange={e => setRole(e.target.value)} 
-                                    className="block w-full py-3 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                                    className="block w-full py-3 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm font-medium text-slate-800"
                                 >
-                                    <option value="student">Student</option>
-                                    <option value="teacher">Teacher</option>
+                                    <option value="student">Student / Learner</option>
+                                    <option value="parent">Parent / Guardian</option>
+                                    <option value="teacher">Teacher / Educator</option>
+                                    <option value="school_admin">School Administrator</option>
                                 </select>
 
                                 {role === 'student' && (
                                     <>
-                                        <select 
-                                            id="curriculum" 
-                                            name="curriculum" 
-                                            value={selectedCurriculum}
-                                            onChange={handleCurriculumChange} 
-                                            className="block w-full py-3 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                                        >
-                                            <option value="">Select Curriculum</option>
-                                            {Object.keys(curriculumShell).map(key => (
-                                                <option key={key} value={key}>{curriculumShell[key].name}</option>
-                                            ))}
-                                        </select>
+                                        <div className="bg-blue-50/80 border border-blue-200/90 p-2.5 rounded-md text-xs text-[#13519C] font-semibold flex items-center justify-between">
+                                            <span>Curriculum: South African National Curriculum (CAPS)</span>
+                                            <span className="text-[10px] bg-white px-2 py-0.5 rounded-full border border-blue-200 font-bold">100% CAPS</span>
+                                        </div>
 
                                         <select 
                                             id="grade" 
@@ -324,11 +299,11 @@ const AuthScreen = ({ auth, db, onStudentLogin, initialMode = 'signin', onToggle
                                             className="block w-full py-3 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                                         >
                                             <option value="">Select Grade</option>
-                                            {selectedCurriculum && visibleGrades.map(grade => (
+                                            {visibleGrades.map(grade => (
                                                 <option key={grade} value={grade}>Grade {grade}</option>
                                             ))}
                                         </select>
-                                        {!canUseRestrictedSignupGrades && selectedCurriculum === 'CAPS' && (
+                                        {!canUseRestrictedSignupGrades && (
                                             <p className="text-xs text-slate-500">
                                                 Public sign-up is currently open for Grade 10 and Grade 11 only.
                                             </p>

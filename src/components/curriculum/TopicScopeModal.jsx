@@ -258,17 +258,49 @@ export default function TopicScopeModal({
           </button>
         </div>
 
-        {/* Search Bar */}
-        <div className="p-4 bg-slate-50 border-b border-slate-200">
+        {/* Selection & Search Bar */}
+        <div className="p-4 bg-slate-50 border-b border-slate-200 space-y-3">
+          {/* Consecutive Ordered Dropdown Selector */}
+          <div>
+            <label className="text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1 flex items-center justify-between">
+              <span>Consecutive Syllabus Topics:</span>
+              <span className="text-[10px] text-[#13519C] font-semibold">Term 1 → Term 4</span>
+            </label>
+            <select
+              value={allTopics.some(t => t.name.toLowerCase() === (currentTopic || '').toLowerCase()) ? currentTopic : ''}
+              onChange={(e) => {
+                if (e.target.value) {
+                  onSelectTopic(e.target.value);
+                  onClose();
+                }
+              }}
+              className="w-full px-3 py-2 rounded-xl bg-white border border-slate-300 text-slate-800 text-xs sm:text-sm font-semibold focus:outline-hidden focus:border-[#13519C] focus:ring-2 focus:ring-[#13519C]/15 transition font-sans cursor-pointer shadow-2xs"
+            >
+              <option value="" disabled>-- Select a topic from consecutive syllabus --</option>
+              {[1, 2, 3, 4].map((termNum) => {
+                const termTopics = allTopics.filter(t => t.term === termNum);
+                if (termTopics.length === 0) return null;
+                return (
+                  <optgroup key={termNum} label={`Term ${termNum}`}>
+                    {termTopics.map((t, idx) => (
+                      <option key={`${t.name}-${idx}`} value={t.name}>
+                        {`T${t.term}: ${t.name}`}
+                      </option>
+                    ))}
+                  </optgroup>
+                );
+              })}
+            </select>
+          </div>
+
           <div className="relative">
             <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder='Search CAPS topics (e.g. "Trig", "VAT", "Newton", "Algebra")...'
+              placeholder='Or search topics by name (e.g. "Trig", "VAT", "Newton")...'
               className="w-full pl-9 pr-9 py-2 rounded-xl bg-white border border-slate-200 text-slate-800 placeholder:text-slate-400 text-xs sm:text-sm focus:outline-hidden focus:border-[#13519C] focus:ring-2 focus:ring-[#13519C]/15 transition font-sans"
-              autoFocus
             />
             {searchQuery && (
               <button
@@ -393,7 +425,7 @@ export default function TopicScopeModal({
         <div className="bg-slate-50 px-5 py-3 border-t border-slate-200 flex items-center justify-between text-xs text-slate-500">
           <div className="flex items-center gap-1.5">
             <GraduationCap className="w-4 h-4 text-[#13519C]" />
-            <span>Official DBE / IEB CAPS Examination Syllabus</span>
+            <span>100% Aligned with South African Curriculum Standards (CAPS)</span>
           </div>
           <button
             type="button"

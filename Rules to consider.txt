@@ -5,4 +5,4 @@ For essay questions, the marks allocated to the answers in the curriculum doc .m
 
 >Pay attention particularly in physical science and natural science. A lot of anologies are used. But experience has taught me that some analogies cause more misconception among students. Please critically analyse analogies based on current best practices in science education, and use the best you know wherever you can. 
 
->In science subjects, activities, experiments and diagrams should be simulated. Some diagrams are static in textbooks but for the medium we use can be dynamic simulations. consider this.
+>In science subjects, activities, experiments and diagrams should be simulated. Some diagrams are static in textbooks but for the medium we use can be dynamic simulations. consider this. You can include GIFs if they would add value to a note section, and cant be produced by simulation.

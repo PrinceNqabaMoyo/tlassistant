@@ -3,7 +3,7 @@ import {
   Users, Search, X, Check, School, GraduationCap, 
   Briefcase, Heart, Shield, Sparkles, ArrowRight 
 } from 'lucide-react';
-import { searchPersonas } from '../../data/mock/mockEnvironment';
+import { searchPersonas, MOCK_SCHOOL_STUDENTS } from '../../data/mock/mockEnvironment';
 
 export default function PersonaSwitcherModal({
   isOpen,
@@ -29,7 +29,7 @@ export default function PersonaSwitcherModal({
 
   const tabs = [
     { id: 'all', label: 'All Personas' },
-    { id: 'school_students', label: 'School Students (300)' },
+    { id: 'school_students', label: `School Students (${MOCK_SCHOOL_STUDENTS.length})` },
     { id: 'independent_students', label: 'Independent (100)' },
     { id: 'teachers', label: 'Faculty & HODs (60)' },
     { id: 'parents', label: 'Parents (330)' },

@@ -45,13 +45,81 @@ const createInitialState = () => {
     studentName: 'Nqobile Dlamini',
     grade: 10,
     school: 'Westville High School',
+    isIndependent: false,
+    phase: 'FET Phase (Gr 10–12)',
     photoURL: storedPhoto || null,
-    streakDays: 0,
-    totalXp: 0,
-    deskDues: 0,
+    streakDays: 5,
+    totalXp: 1420,
+    deskDues: 2,
+    unviewedTaskIds: ['task_acc_1', 'task_math_1'],
+    parentLinks: [
+      {
+        id: 'parent_1',
+        name: 'Sipho Dlamini',
+        contact: '+27 82 456 7890',
+        relationship: 'Father',
+        status: 'Linked',
+        verified: true,
+      }
+    ],
+    teacherLinks: [
+      {
+        id: 'teacher_1',
+        name: 'Mrs. P. Khumalo',
+        subject: 'Accounting',
+        code: 'ACC10A',
+        school: 'Westville High School'
+      },
+      {
+        id: 'teacher_2',
+        name: 'Mr. J. Botha',
+        subject: 'Mathematics',
+        code: 'MAT10B',
+        school: 'Westville High School'
+      }
+    ],
+    messages: [
+      {
+        id: 'msg_1',
+        sender: 'Mrs. P. Khumalo',
+        senderRole: 'Teacher',
+        subject: 'Accounting',
+        text: 'Class task sent from Mrs. P. Khumalo / Accounting: Debtors Journal & Bad Debts, deadline Friday 17:00.',
+        date: new Date().toLocaleDateString('en-ZA', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }),
+        deadline: new Date(Date.now() + 86400000 * 2).toISOString(),
+        isRead: false
+      },
+      {
+        id: 'msg_2',
+        sender: 'Fundile Learning Team',
+        senderRole: 'Fundile',
+        subject: 'Platform',
+        text: 'Welcome to Term 1 Benchmark Week! Remember to complete your diagnostic benchmark in your registered subjects.',
+        date: new Date().toLocaleDateString('en-ZA', { month: 'short', day: 'numeric' }),
+        deadline: null,
+        isRead: true
+      }
+    ],
     subjects,
     lastUpdated: new Date().toISOString()
   };
+};
+
+/**
+ * Returns dynamic greeting based on exact South African time:
+ * - 00:00 – 11:59: "Good morning"
+ * - 12:00 – 17:30: "Good afternoon"
+ * - 17:31 – 23:59: "Good evening"
+ */
+export const getTimeGreeting = (date = new Date()) => {
+  const totalMinutes = date.getHours() * 60 + date.getMinutes();
+  if (totalMinutes < 720) {
+    return 'Good morning';
+  } else if (totalMinutes <= 1050) {
+    return 'Good afternoon';
+  } else {
+    return 'Good evening';
+  }
 };
 
 class StudentStore {
@@ -120,6 +188,142 @@ class StudentStore {
     this.saveState({
       ...this.state,
       photoURL
+    });
+  }
+
+  // Update student profile details
+  updateProfileDetails({ studentName, grade, school, isIndependent }) {
+    const updatedGrade = grade !== undefined ? Number(grade) : this.state.grade;
+    const phase = updatedGrade >= 10 ? 'FET Phase (Gr 10–12)' : 'Senior Phase (Gr 7–9)';
+    this.saveState({
+      ...this.state,
+      studentName: studentName || this.state.studentName,
+      grade: updatedGrade,
+      phase,
+      school: school !== undefined ? school : this.state.school,
+      isIndependent: isIndependent !== undefined ? Boolean(isIndependent) : Boolean(this.state.isIndependent),
+    });
+  }
+
+  // Mark task as opened/viewed (stops red shading and blinking count circle immediately)
+  markTaskViewed(taskId) {
+    if (!taskId) return;
+    const unviewed = this.state.unviewedTaskIds || [];
+    if (!unviewed.includes(taskId)) return;
+    const nextUnviewed = unviewed.filter(id => id !== taskId);
+    this.saveState({
+      ...this.state,
+      unviewedTaskIds: nextUnviewed
+    });
+  }
+
+  isTaskUnviewed(taskId) {
+    if (!taskId) return false;
+    const unviewed = this.state.unviewedTaskIds || [];
+    return unviewed.includes(taskId);
+  }
+
+  // Manage up to 2 parent links
+  addParentLink(parentData) {
+    const current = this.state.parentLinks || [];
+    if (current.length >= 2) {
+      throw new Error('Maximum of 2 parental links allowed.');
+    }
+    const newParent = {
+      id: `parent_${Date.now()}`,
+      name: parentData.name || 'Parent / Guardian',
+      contact: parentData.contact || '',
+      relationship: parentData.relationship || 'Guardian',
+      status: 'Linked',
+      verified: true,
+      ...parentData
+    };
+    this.saveState({
+      ...this.state,
+      parentLinks: [...current, newParent]
+    });
+    return newParent;
+  }
+
+  removeParentLink(parentId) {
+    const current = this.state.parentLinks || [];
+    this.saveState({
+      ...this.state,
+      parentLinks: current.filter(p => p.id !== parentId)
+    });
+  }
+
+  // Manage teacher links
+  joinTeacherClass(code) {
+    const normalizedCode = String(code || '').trim().toUpperCase();
+    if (!normalizedCode) return false;
+    const current = this.state.teacherLinks || [];
+    const exists = current.some(t => t.code === normalizedCode);
+    if (exists) return true;
+
+    // Detect subject from join code prefix
+    let subject = 'Curriculum Practice';
+    if (normalizedCode.startsWith('ACC')) subject = 'Accounting';
+    else if (normalizedCode.startsWith('MAT')) subject = 'Mathematics';
+    else if (normalizedCode.startsWith('PHY')) subject = 'Physical Sciences';
+    else if (normalizedCode.startsWith('BUS')) subject = 'Business Studies';
+    else if (normalizedCode.startsWith('EMS')) subject = 'EMS';
+
+    const newTeacher = {
+      id: `teacher_${Date.now()}`,
+      name: `Educator (${normalizedCode})`,
+      subject,
+      code: normalizedCode,
+      school: this.state.school || 'Westville High School'
+    };
+
+    this.saveState({
+      ...this.state,
+      teacherLinks: [...current, newTeacher]
+    });
+    return true;
+  }
+
+  // Message Board: auto-deletes 3 days after deadline
+  addMessage(msg) {
+    const current = this.state.messages || [];
+    const newMsg = {
+      id: `msg_${Date.now()}`,
+      sender: msg.sender || 'Teacher',
+      senderRole: msg.senderRole || 'Teacher',
+      subject: msg.subject || 'Class Notice',
+      text: msg.text || '',
+      date: new Date().toLocaleDateString('en-ZA', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }),
+      deadline: msg.deadline || null,
+      isRead: false,
+      ...msg
+    };
+    this.saveState({
+      ...this.state,
+      messages: [newMsg, ...current]
+    });
+    return newMsg;
+  }
+
+  getValidMessages() {
+    const now = Date.now();
+    const threeDaysMs = 3 * 24 * 60 * 60 * 1000;
+    const current = this.state.messages || [];
+    // Filter out messages that had a deadline and are more than 3 days past the deadline
+    return current.filter(msg => {
+      if (!msg.deadline) return true;
+      const deadlineTime = new Date(msg.deadline).getTime();
+      if (isNaN(deadlineTime)) return true;
+      return now <= (deadlineTime + threeDaysMs);
+    });
+  }
+
+  markMessageRead(msgId) {
+    const current = this.state.messages || [];
+    const updated = current.map(m => m.id === msgId ? { ...m, isRead: true } : m);
+    this.saveState({
+      ...this.state,
+      messages: updated
     });
   }
 

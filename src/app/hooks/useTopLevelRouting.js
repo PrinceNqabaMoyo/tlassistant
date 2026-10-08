@@ -94,6 +94,10 @@ export const useTopLevelRouting = ({
     navigateToRoutePage('dashboard');
   }, [navigateToRoutePage]);
 
+  const handleNavigatePrivacy = useCallback(() => {
+    navigateToRoutePage('privacy');
+  }, [navigateToRoutePage]);
+
   useEffect(() => {
     if (showSplash || typeof window === 'undefined') {
       return;
@@ -160,6 +164,7 @@ export const useTopLevelRouting = ({
     handleNavigateHome,
     handleNavigateSignIn,
     handleNavigateSignUp,
+    handleNavigatePrivacy,
     handleNavigateToDashboard,
     handleNavigateToApp,
     handleNavigateToSubscriptionPage,

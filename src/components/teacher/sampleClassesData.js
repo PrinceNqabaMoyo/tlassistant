@@ -336,6 +336,47 @@ export const FIVE_TEST_CLASSES = [
         lastActive: 'Yesterday',
       },
     ]
+  },
+  {
+    classId: 'cls_gr7_ems',
+    name: 'Grade 7 EMS (Senior Phase)',
+    subject: 'EMS',
+    grade: '7',
+    term: 1,
+    joinCode: 'EMS7P1',
+    studentCount: 30,
+    avgMastery: 81,
+    homeworkDue: 6,
+    topMisconception: 'budget_deficit_surplus_confusion',
+    misconceptionLabel: 'Confusing Personal Budget Deficits vs Surplus Calculation',
+    recentSubmissionCount: 28,
+    students: [
+      {
+        id: 's21',
+        name: 'Mpho Sithole',
+        email: 'mpho.s@school.co.za',
+        score: 90,
+        status: 'Mastered',
+        photoURL: null,
+        topic: 'Personal Budgets & Savings',
+        olympiadBadge: '🥇 Top Junior Saver',
+        misconception: null,
+        lastActive: '15 mins ago',
+      },
+      {
+        id: 's22',
+        name: 'Nandi Khumalo',
+        email: 'nandi.k@school.co.za',
+        score: 62,
+        status: 'Remedial',
+        photoURL: null,
+        topic: 'Needs vs Wants Classification',
+        olympiadBadge: null,
+        misconception: 'budget_deficit_surplus_confusion',
+        misconceptionDesc: 'Calculating fixed vs variable expenses',
+        lastActive: '1 hour ago',
+      }
+    ]
   }
 ];
 

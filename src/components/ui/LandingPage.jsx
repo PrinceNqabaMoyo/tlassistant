@@ -34,7 +34,7 @@ import { HERO_COPY, HIDDEN_CURRICULUM, PRICING_COPY, HOW_IT_WORKS, INTERNAL_CONS
 
 const AUDIENCE_KEYS = ['learners', 'parents', 'teachers', 'schools'];
 
-const LandingPage = ({ onGetStarted, onSignIn, onViewSubscription }) => {
+const LandingPage = ({ onGetStarted, onSignIn, onViewSubscription, onNavigatePrivacy }) => {
     // ── Install modal state ──
     const [showInstallModal, setShowInstallModal] = useState(false);
 
@@ -472,9 +472,9 @@ const LandingPage = ({ onGetStarted, onSignIn, onViewSubscription }) => {
                                     </span>
                                 </h2>
 
-                                {/* Lead Narrative Paragraph introducing AI without sounding like a generic wrapper */}
+                                {/* Lead Narrative Paragraph */}
                                 <p className="text-base sm:text-lg lg:text-xl text-slate-600 font-normal leading-relaxed max-w-3xl mx-auto mb-10">
-                                    Fundile pairs an on-rails Socratic AI tutor with a 100% deterministic calculation engine. While generic chatbots guess answers and hallucinate formulas, Fundile computes verified mathematical steps with SymPy and 2D ledger graphs — using artificial intelligence strictly where human teaching matters most: diagnosing misconceptions and nudging learners to discover the answer themselves.
+                                    Fundile uses sophisticated computing to guide learners towards personal mastery of concepts. Built specifically for the South African education system in all its variations, learners from public and independent schools will be better off for getting on this platform.
                                 </p>
 
                                 {/* Focused CTA Button */}
@@ -491,47 +491,47 @@ const LandingPage = ({ onGetStarted, onSignIn, onViewSubscription }) => {
 
                                 {/* 4 Quick Badges Strip */}
                                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-left max-w-4xl mx-auto">
-                                    {/* Badge 1: Socratic AI */}
+                                    {/* Badge 1: Socratic Guidance */}
                                     <div className="bg-white p-4 rounded-2xl border border-slate-200/90 shadow-xs flex items-start gap-3 hover:shadow-md transition duration-200">
                                         <div className="w-8 h-8 rounded-xl bg-blue-50 text-[#13519C] flex items-center justify-center shrink-0 border border-blue-100">
                                             <Sparkles className="w-4 h-4 text-[#FF9100]" />
                                         </div>
                                         <div>
-                                            <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider">On-Rails Socratic AI</h4>
-                                            <p className="text-[12px] text-slate-500 leading-snug mt-0.5">Never solves homework for you. Nudges your thinking step-by-step.</p>
+                                            <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider">Socratic Guidance</h4>
+                                            <p className="text-[12px] text-slate-500 leading-snug mt-0.5">Never gives the answer away. Nudges the learner to discover the solution step-by-step.</p>
                                         </div>
                                     </div>
 
-                                    {/* Badge 2: Zero-Hallucination */}
+                                    {/* Badge 2: Verified Calculation Accuracy */}
                                     <div className="bg-white p-4 rounded-2xl border border-slate-200/90 shadow-xs flex items-start gap-3 hover:shadow-md transition duration-200">
                                         <div className="w-8 h-8 rounded-xl bg-orange-50 text-[#FF9100] flex items-center justify-center shrink-0 border border-orange-100">
                                             <Cpu className="w-4 h-4 text-[#13519C]" />
                                         </div>
                                         <div>
-                                            <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider">Zero-Hallucination</h4>
-                                            <p className="text-[12px] text-slate-500 leading-snug mt-0.5">Pure deterministic SymPy & 2D ledger graphs. Zero wrong memos.</p>
+                                            <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider">Verified Accuracy</h4>
+                                            <p className="text-[12px] text-slate-500 leading-snug mt-0.5">Mathematical calculations and accounting ledgers verified with zero guessing.</p>
                                         </div>
                                     </div>
 
-                                    {/* Badge 3: 1.4 MB Data */}
+                                    {/* Badge 3: Lean Data Usage */}
                                     <div className="bg-white p-4 rounded-2xl border border-slate-200/90 shadow-xs flex items-start gap-3 hover:shadow-md transition duration-200">
                                         <div className="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0 border border-emerald-100">
                                             <WifiOff className="w-4 h-4" />
                                         </div>
                                         <div>
-                                            <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider">1.4 MB Cellular Data</h4>
-                                            <p className="text-[12px] text-slate-500 leading-snug mt-0.5">Ultra-lean offline PWA architecture. No high-cost chatbot streaming.</p>
+                                            <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider">Ultra-Lean Data</h4>
+                                            <p className="text-[12px] text-slate-500 leading-snug mt-0.5">Our lean architecture ensures extremely small use of data (&lt; 2 MB). No video buffering.</p>
                                         </div>
                                     </div>
 
-                                    {/* Badge 4: Unlimited 3-Click Exams */}
+                                    {/* Badge 4: Automated Tests & Memos */}
                                     <div className="bg-white p-4 rounded-2xl border border-slate-200/90 shadow-xs flex items-start gap-3 hover:shadow-md transition duration-200">
                                         <div className="w-8 h-8 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center shrink-0 border border-purple-100">
                                             <FileCheck2 className="w-4 h-4" />
                                         </div>
                                         <div>
-                                            <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider">3-Click Exams</h4>
-                                            <p className="text-[12px] text-slate-500 leading-snug mt-0.5">Instant classroom-ready exam papers and official marking memos.</p>
+                                            <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider">Automated Tests &amp; Memos</h4>
+                                            <p className="text-[12px] text-slate-500 leading-snug mt-0.5">Fundile automates the setting of tests and exams with memos for teachers and schools.</p>
                                         </div>
                                     </div>
                                 </div>
@@ -722,7 +722,7 @@ const LandingPage = ({ onGetStarted, onSignIn, onViewSubscription }) => {
                                     Fundile is not an AI chatbot.
                                 </h2>
                                 <p className="mt-4 text-base sm:text-lg leading-relaxed text-slate-600">
-                                    Generic chatbots answer questions for you, encouraging passive copy-pasting and hallucinating non-existent formulas. Fundile asks you the question, enforces authentic exam-standard method working, and intervenes with precision when your logic breaks down.
+                                    Generic chatbots answer questions for you, encouraging passive copy-pasting and hallucinating non-existent formulas. Fundile asks you the question, enforces authentic exam-standard method working, and intervenes with precision when the learner struggles.
                                 </p>
                             </div>
 
@@ -772,7 +772,7 @@ const LandingPage = ({ onGetStarted, onSignIn, onViewSubscription }) => {
                                         </li>
                                         <li className="flex items-start gap-2.5">
                                             <span className="text-emerald-600 font-bold shrink-0">✓</span>
-                                            <span><strong>Zero-LLM mathematical ground truth:</strong> Seeded SymPy symbolic math and accounting ledger graph engines guarantee 100% internal consistency.</span>
+                                            <span><strong>Mathematical and financial ground truth:</strong> Rigorous deterministic computation and authentic double-entry systems guarantee 100% precision.</span>
                                         </li>
                                         <li className="flex items-start gap-2.5">
                                             <span className="text-emerald-600 font-bold shrink-0">✓</span>
@@ -890,7 +890,7 @@ const LandingPage = ({ onGetStarted, onSignIn, onViewSubscription }) => {
                                             </li>
                                             <li className="flex items-center gap-2">
                                                 <Check className="w-4 h-4 text-emerald-600 shrink-0" />
-                                                <span>Ultra-low bandwidth offline PWA (&lt; 2 MB data)</span>
+                                                <span>Lean architecture ensures extremely small use of data (&lt; 2 MB)</span>
                                             </li>
                                         </ul>
                                     </div>
@@ -1095,9 +1095,19 @@ const LandingPage = ({ onGetStarted, onSignIn, onViewSubscription }) => {
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="/privacy-statement.html" className="hover:text-[#13519C] transition flex items-center gap-1.5">
+                                        <button 
+                                            type="button" 
+                                            onClick={() => {
+                                                if (typeof onNavigatePrivacy === 'function') {
+                                                    onNavigatePrivacy();
+                                                } else {
+                                                    window.location.href = '/privacy';
+                                                }
+                                            }} 
+                                            className="hover:text-[#13519C] transition flex items-center gap-1.5 cursor-pointer text-left"
+                                        >
                                             <ShieldCheck className="w-3.5 h-3.5 text-slate-400" /> Privacy Policy (POPIA)
-                                        </a>
+                                        </button>
                                     </li>
                                     <li>
                                         <button type="button" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="hover:text-[#13519C] transition cursor-pointer">Back to Top</button>

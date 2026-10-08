@@ -120,14 +120,14 @@ const TeacherSimulation = ({ isLightPalette = true, onGetStarted, onSelectPerspe
                     className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-slate-900"
                     style={{ fontFamily: 'Afacad, sans-serif' }}
                 >
-                    Exam-standard test papers in 3 clicks. Zero weekend marking.
+                    Fundile automates the setting of tests and exams with memos.
                 </h3>
                 <p className="mt-2 text-sm sm:text-base text-slate-600">
-                    Experience how teachers generate printable A4 exam papers, verified teacher memoranda with consequential marking rules, and instant class heatmaps in seconds.
+                    Built for teachers and schools to generate exam-standard printable A4 test papers, verified teacher memoranda with consequential marking rules, and instant class heatmaps in seconds.
                 </p>
             </div>
 
-            {/* 3-Click Simulator Controller Bar */}
+            {/* Assessment Generator Controller Bar */}
             <div className="bg-slate-50 border border-slate-200 p-4 sm:p-5 rounded-2xl mb-6 max-w-4xl mx-auto shadow-xs text-left">
                 <span className="text-xs font-bold text-slate-500 uppercase tracking-wider block mb-3">
                     Interactive Generator Controls:
@@ -320,7 +320,7 @@ const TeacherSimulation = ({ isLightPalette = true, onGetStarted, onSelectPerspe
                         <div className="p-4 bg-emerald-50 border border-emerald-200 rounded-2xl text-xs text-emerald-900 space-y-1">
                             <span className="font-bold block">✨ Automated Stepwise Procedure Marking in Pro Tier:</span>
                             <p>
-                                When learners submit this test online, Fundile awards method marks automatically using SymPy symbolic evaluation and ledger coordinate validation—saving teachers 100% of weekend grading time.
+                                When learners submit this test online, Fundile awards method marks automatically using rigorous step evaluation and automated coordinate marking—saving teachers 100% of weekend grading time.
                             </p>
                         </div>
                     </div>

@@ -25,7 +25,14 @@ const SA_LAST_NAMES = [
   'Williams', 'Cupido', 'Abrahams', 'Smith'
 ];
 
+// Westville High School — Enrolled Learners (360 Named Students)
+// Grades 7 to 12 (60 learners per grade across 4 class sections A, B, C, D).
 const CLASSES = [
+  // Grade 7 (Senior Phase Entry)
+  { id: 'cls-7a', grade: 7, name: 'Grade 7A', educator: 'Mr. T. Mokoena', sub: 'natural_sciences' },
+  { id: 'cls-7b', grade: 7, name: 'Grade 7B', educator: 'Mrs. G. Pretorius', sub: 'ems' },
+  { id: 'cls-7c', grade: 7, name: 'Grade 7C', educator: 'Mr. M. Ntombela', sub: 'maths' },
+  { id: 'cls-7d', grade: 7, name: 'Grade 7D', educator: 'Mr. E. Sithole', sub: 'ems' },
   // Grade 8
   { id: 'cls-8a', grade: 8, name: 'Grade 8A', educator: 'Mr. P. Dlamini', sub: 'natural_sciences' },
   { id: 'cls-8b', grade: 8, name: 'Grade 8B', educator: 'Mrs. H. Moonsamy', sub: 'ems' },
@@ -135,23 +142,27 @@ CLASSES.forEach((cls, clsIndex) => {
         });
       }
     } else {
-      // Junior Phase (Grades 8-9)
+      // Senior Phase (Grades 7–9)
+      const isEMS = cls.sub === 'ems';
+      const isMath = cls.sub === 'maths';
       assignedTasks.push({
         id: `task-${studentCounter}-1`,
-        subject: cls.sub === 'ems' ? 'ems' : 'natural_sciences',
-        subjectName: cls.sub === 'ems' ? 'EMS' : 'Natural Sciences',
-        title: cls.sub === 'ems' ? 'The Accounting Equation (A = O + L)' : 'Photosynthesis & Respiration',
+        subject: isEMS ? 'ems' : (isMath ? 'maths' : 'natural_sciences'),
+        subjectName: isEMS ? 'EMS' : (isMath ? 'Mathematics' : 'Natural Sciences'),
+        title: isEMS
+          ? (cls.grade === 7 ? 'Financial Literacy: Personal Budgets & Savings' : 'The Accounting Equation (A = O + L)')
+          : (isMath ? 'Common Fractions & Integers Stepwise Drill' : 'Photosynthesis & The Biosphere'),
         assignedBy: cls.educator,
         dueText: 'DUE TODAY',
         dueTime: '16:30',
         marks: 10,
         estimatedMins: 15,
-        topic: cls.sub === 'ems' ? 'Accounting Equation' : 'Photosynthesis'
+        topic: isEMS ? (cls.grade === 7 ? 'Personal Budgets' : 'Accounting Equation') : (isMath ? 'Common Fractions' : 'Biosphere')
       });
     }
 
-    // Assign parent ID (with some shared parents for sibling links)
-    // Parent index wraps so 250 parents cover 300 students (50 sibling pairs)
+    // Assign parent ID (with shared parents for sibling links)
+    // Parent index wraps so 250 parents cover 360 students (110 sibling links)
     const parentIndex = ((studentCounter - 1) % 250) + 1;
     const parentId = `sch-par-${String(parentIndex).padStart(3, '0')}`;
 

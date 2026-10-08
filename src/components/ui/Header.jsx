@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Bell, LogOut, X, Smartphone, Users } from 'lucide-react';
 import FundileLogo from './FundileLogo';
 import InstallAppModal from './InstallAppModal';
-import ProfilePhotoModal from '../profile/ProfilePhotoModal';
+import UserProfileModal from '../profile/UserProfileModal';
+import MessageBoardModal from '../notifications/MessageBoardModal';
+import studentStore from '../../services/studentStore';
 import { isStandaloneApp } from '../../hooks/useCoreState';
 
 const formatNotificationDate = (value) => {
@@ -45,16 +47,25 @@ const Header = ({
   setSuperAdminTier,
   onStartTrial,
   onNavigateToSubscription,
+  onNavigateHome,
   onOpenPersonaSwitcher = null,
 }) => {
   const [showNotifications, setShowNotifications] = useState(false);
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
   const [showInstallModal, setShowInstallModal] = useState(false);
-  const [showProfilePhotoModal, setShowProfilePhotoModal] = useState(false);
+  const [showProfileModal, setShowProfileModal] = useState(false);
+  const [showMessageBoard, setShowMessageBoard] = useState(false);
 
+  const unreadMessageCount = useMemo(() => {
+    try {
+      return (studentStore.getValidMessages() || []).filter(m => !m.isRead).length;
+    } catch {
+      return 0;
+    }
+  }, [showMessageBoard]);
   const unreadNotificationCount = studentNotifications.filter((notification) => !notification.isRead).length;
   const systemNoticeCount = pendingAssignments.length > 0 ? 1 : 0;
-  const unreadCount = unreadNotificationCount + systemNoticeCount;
+  const unreadCount = unreadNotificationCount + systemNoticeCount + unreadMessageCount;
 
   const isStandalone = isStandaloneApp();
   const hasActiveSubscription = Boolean(
@@ -79,7 +90,18 @@ const Header = ({
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center space-x-3 shrink-0">
-            <FundileLogo className="h-28 w-28 sm:h-48 sm:w-48 text-white" wordmarkColor="white" />
+            {!isStandalone && typeof onNavigateHome === 'function' ? (
+              <button
+                type="button"
+                onClick={onNavigateHome}
+                className="cursor-pointer focus:outline-hidden transition hover:opacity-90 active:scale-98 text-left"
+                title="Fundile Home - Back to Landing Page"
+              >
+                <FundileLogo className="h-28 w-28 sm:h-48 sm:w-48 text-white" wordmarkColor="white" />
+              </button>
+            ) : (
+              <FundileLogo className="h-28 w-28 sm:h-48 sm:w-48 text-white" wordmarkColor="white" />
+            )}
           </div>
 
           <div className="flex items-center space-x-2 sm:space-x-3">
@@ -139,9 +161,9 @@ const Header = ({
                   return (
                     <button
                       type="button"
-                      onClick={() => setShowProfilePhotoModal(true)}
+                      onClick={() => setShowProfileModal(true)}
                       className="group relative h-9 w-9 sm:h-10 sm:w-10 rounded-full ring-2 ring-white/40 hover:ring-[#FF9100] transition-all overflow-hidden flex items-center justify-center bg-white/20 text-white font-bold text-xs sm:text-sm shrink-0 cursor-pointer shadow-inner"
-                      title="Update Profile Picture"
+                      title="View & Edit Profile"
                     >
                       {userPhoto ? (
                         <img src={userPhoto} alt={currentUser.name || 'User'} className="h-full w-full object-cover" />
@@ -149,141 +171,36 @@ const Header = ({
                         <span>{userInitials}</span>
                       )}
                       <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity text-xs">
-                        📸
+                        ⚙️
                       </div>
                     </button>
                   );
                 })()}
 
-                <span className="text-white font-medium hidden md:inline text-xs sm:text-sm" style={{ fontFamily: 'Afacad, sans-serif' }}>
+                <button
+                  type="button"
+                  onClick={() => setShowProfileModal(true)}
+                  className="text-white hover:text-blue-100 font-medium hidden md:inline text-xs sm:text-sm cursor-pointer transition"
+                  style={{ fontFamily: 'Afacad, sans-serif' }}
+                >
                   Welcome, {currentUser.name} ({currentUser.role})
-                </span>
+                </button>
 
-                {currentUser.isSuperAdmin && (
-                  <div className="flex flex-col sm:flex-row items-end sm:items-center gap-1 sm:gap-2 lg:gap-3 justify-end flex-1 min-w-0">
-                    {/* 5-Role Super Admin Switcher */}
-                    <div className="flex flex-wrap items-center gap-1 sm:space-x-1.5 bg-white/10 rounded-full p-1 justify-end">
-                      {[
-                        { role: 'student', label: 'Student' },
-                        { role: 'parent', label: 'Parent' },
-                        { role: 'teacher', label: 'Teacher' },
-                        { role: 'school', label: 'School' },
-                        { role: 'admin', label: 'Super Admin' },
-                      ].map((item) => (
-                        <button
-                          key={item.role}
-                          type="button"
-                          onClick={() => setSuperAdminMode && setSuperAdminMode(item.role)}
-                          className={`px-2 sm:px-2.5 py-1 rounded-full text-[10px] sm:text-xs transition-colors cursor-pointer ${
-                            superAdminMode === item.role
-                              ? 'bg-white/30 text-white font-bold shadow-xs'
-                              : 'text-white/80 hover:bg-white/20'
-                          }`}
-                        >
-                          {item.label}
-                        </button>
-                      ))}
-                    </div>
-
-                    {/* Tier Switcher */}
-                    <div className="flex flex-wrap items-center gap-0.5 sm:space-x-1.5 bg-purple-500/30 rounded-full p-1 justify-end">
-                      <span className="hidden sm:inline px-2 text-[10px] font-medium uppercase tracking-[0.1em] text-white/70">Tier:</span>
-                      <button
-                        type="button"
-                        onClick={() => setSuperAdminTier && setSuperAdminTier('standard')}
-                        className={`px-2 sm:px-3 py-1 rounded-full text-[10px] sm:text-xs transition-colors cursor-pointer ${
-                          superAdminTier === 'standard'
-                            ? 'bg-purple-500 text-white font-bold shadow-xs'
-                            : 'text-white/80 hover:bg-purple-500/50'
-                        }`}
-                      >
-                        <span className="sm:hidden">Std</span>
-                        <span className="hidden sm:inline">Standard</span>
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => setSuperAdminTier && setSuperAdminTier('pro')}
-                        className={`px-2 sm:px-3 py-1 rounded-full text-[10px] sm:text-xs transition-colors cursor-pointer ${
-                          superAdminTier === 'pro'
-                            ? 'bg-purple-500 text-white font-bold shadow-xs'
-                            : 'text-white/80 hover:bg-purple-500/50'
-                        }`}
-                      >
-                        Pro
-                      </button>
-                    </div>
-                  </div>
-                )}
-
-                {currentUser.role === 'student' && (
-                  <div className="relative">
-                    <button onClick={() => setShowNotifications(!showNotifications)} className="p-2 rounded-full hover:bg-white/20 text-white relative" title="Notifications">
-                      <Bell className="h-5 w-5" />
-                      {unreadCount > 0 && (
-                        <span className="absolute -top-1 -right-1 flex min-h-5 min-w-5 items-center justify-center rounded-full bg-red-500 px-1 text-[10px] font-bold text-white ring-2 ring-[#13519C]">
-                          {unreadCount > 9 ? '9+' : unreadCount}
-                        </span>
-                      )}
-                    </button>
-                    {showNotifications && (
-                      <div className="absolute top-full right-0 mt-2 w-96 max-w-[calc(100vw-2rem)] rounded-2xl border border-gray-200 bg-white p-4 shadow-lg z-50">
-                        <div className="mb-3 flex items-center justify-between gap-3">
-                          <h3 className="font-medium text-gray-900">Notifications</h3>
-                          <div className="flex items-center gap-2">
-                            {unreadNotificationCount > 0 && (
-                              <button
-                                type="button"
-                                onClick={() => onMarkAllNotificationsRead && onMarkAllNotificationsRead()}
-                                className="rounded-full border border-slate-200 px-3 py-1 text-xs font-semibold text-slate-600 transition hover:border-slate-300 hover:bg-slate-50"
-                              >
-                                Mark all read
-                              </button>
-                            )}
-                            <button
-                              onClick={() => setShowNotifications(false)}
-                              className="text-gray-400 hover:text-gray-600"
-                            >
-                              <X className="h-4 w-4" />
-                            </button>
-                          </div>
-                        </div>
-
-                        {studentNotifications.length === 0 && pendingAssignments.length === 0 ? (
-                          <p className="text-gray-500 text-center py-4">No new notifications</p>
-                        ) : (
-                          <div className="space-y-3">
-                            {studentNotifications.map((notification) => (
-                              <button
-                                key={notification.id}
-                                type="button"
-                                onClick={() => onMarkNotificationRead && onMarkNotificationRead(notification.id)}
-                                className={`block w-full rounded-2xl border px-4 py-3 text-left transition ${notification.isRead ? 'border-slate-200 bg-slate-50' : 'border-blue-200 bg-blue-50/80'}`}
-                              >
-                                <div className="flex items-start justify-between gap-3">
-                                  <div>
-                                    <p className="text-sm font-semibold text-slate-900">{notification.title || 'Notification'}</p>
-                                    <p className="mt-1 text-sm leading-6 text-slate-600">{notification.message}</p>
-                                  </div>
-                                  {!notification.isRead && <span className="mt-1 h-2.5 w-2.5 shrink-0 rounded-full bg-blue-500" />}
-                                </div>
-                                <div className="mt-2 flex items-center justify-between text-xs text-slate-500">
-                                  <span className="uppercase tracking-[0.2em]">{notification.type || 'notice'}</span>
-                                  <span>{formatNotificationDate(notification.createdAt)}</span>
-                                </div>
-                              </button>
-                            ))}
-
-                            {pendingAssignments.length > 0 && (
-                              <div className="rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">
-                                Class assignments are not yet available in South Africa.
-                              </div>
-                            )}
-                          </div>
-                        )}
-                      </div>
+                <div className="relative">
+                  <button
+                    type="button"
+                    onClick={() => setShowMessageBoard(true)}
+                    className="p-2 rounded-full hover:bg-white/20 text-white relative cursor-pointer"
+                    title="Message Board & Communications"
+                  >
+                    <Bell className="h-5 w-5" />
+                    {unreadCount > 0 && (
+                      <span className="absolute -top-1 -right-1 flex min-h-5 min-w-5 items-center justify-center rounded-full bg-red-500 px-1 text-[10px] font-bold text-white ring-2 ring-[#13519C]">
+                        {unreadCount > 9 ? '9+' : unreadCount}
+                      </span>
                     )}
-                  </div>
-                )}
+                  </button>
+                </div>
 
                 <button onClick={() => setShowLogoutConfirm(true)} className="flex items-center space-x-2 bg-white/20 hover:bg-white/30 text-white rounded-full p-2" title="Logout">
                   <LogOut className="h-5 w-5" />
@@ -327,11 +244,26 @@ const Header = ({
         onClose={() => setShowInstallModal(false)}
       />
 
-      {/* Mount ProfilePhotoModal for taking/uploading profile photo */}
-      <ProfilePhotoModal
-        isOpen={showProfilePhotoModal}
-        onClose={() => setShowProfilePhotoModal(false)}
+      {/* Mount UserProfileModal for profile editing, parent links, and clean super admin switcher */}
+      <UserProfileModal
+        isOpen={showProfileModal}
+        onClose={() => setShowProfileModal(false)}
+        currentUser={currentUser}
+        onLogout={onLogout}
+        superAdminMode={superAdminMode}
+        setSuperAdminMode={setSuperAdminMode}
+        superAdminTier={superAdminTier}
+        setSuperAdminTier={setSuperAdminTier}
+        onOpenPersonaSwitcher={onOpenPersonaSwitcher}
       />
+
+      {/* Mount MessageBoardModal */}
+      {showMessageBoard && (
+        <MessageBoardModal
+          currentUser={currentUser}
+          onClose={() => setShowMessageBoard(false)}
+        />
+      )}
     </header>
   );
 };

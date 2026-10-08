@@ -51,6 +51,7 @@ import AppShell from './app/shell/AppShell';
 import SplashScreen from './components/ui/SplashScreen';
 import LandingPage from './components/ui/LandingPage';
 import SubscriptionPage from './components/ui/SubscriptionPage';
+import PrivacyStatementView from './components/ui/PrivacyStatementView';
 import LearnerAppContainer from './components/student/LearnerAppContainer';
 import Header from './components/ui/Header';
 import PersonaSwitcherModal from './components/dev/PersonaSwitcherModal';
@@ -660,6 +661,7 @@ export default function App() {
     handleNavigateHome,
     handleNavigateSignIn,
     handleNavigateSignUp,
+    handleNavigatePrivacy,
     handleNavigateToDashboard,
     handleNavigateToSubscriptionPage,
     handleSplashComplete,
@@ -1168,6 +1170,7 @@ export default function App() {
       }
     },
     onLogout: handleAppLogout,
+    onNavigateHome: handleNavigateHome,
     onMarkNotificationRead: async (notificationId) => {
       if (!dbService || !effectiveCurrentUser?.uid || !notificationId) {
         return;
@@ -1309,6 +1312,11 @@ export default function App() {
           isSandboxMode={true} 
           currentUser={effectiveCurrentUser} 
           onOpenPersonaSwitcher={() => setShowPersonaSwitcher(true)}
+          onLogout={handleAppLogout}
+          superAdminMode={superAdminMode}
+          setSuperAdminMode={setSuperAdminMode}
+          superAdminTier={superAdminTier}
+          setSuperAdminTier={setSuperAdminTier}
         />
         <PersonaSwitcherModal
           isOpen={showPersonaSwitcher}
@@ -1324,8 +1332,12 @@ export default function App() {
     return <SubscriptionPage currentUser={effectiveCurrentUser} storage={storage} db={db} targetGrade={selectedGrade || effectiveCurrentUser?.grade} onNavigateHome={effectiveCurrentUser ? handleNavigateToDashboard : handleNavigateHome} onNavigateSignIn={handleNavigateSignIn} onNavigateSignUp={handleNavigateSignUp} onNavigateApp={handleNavigateToDashboard} />;
   }
 
+  if (topLevelPage === 'privacy') {
+    return <PrivacyStatementView onBackToLanding={handleNavigateHome} />;
+  }
+
   if (shouldRenderStandaloneLandingPage) {
-    return <LandingPage db={db} onGetStarted={handleNavigateSignUp} onSignIn={handleNavigateSignIn} onViewSubscription={handleNavigateToSubscriptionPage} palette={brandPalette} authService={authHook.authService} currentUser={effectiveCurrentUser} />;
+    return <LandingPage db={db} onGetStarted={handleNavigateSignUp} onSignIn={handleNavigateSignIn} onViewSubscription={handleNavigateToSubscriptionPage} onNavigatePrivacy={handleNavigatePrivacy} palette={brandPalette} authService={authHook.authService} currentUser={effectiveCurrentUser} />;
   }
 
   if (!effectiveCurrentUser) {
@@ -1345,6 +1357,7 @@ export default function App() {
             <Header
               currentUser={effectiveCurrentUser}
               onLogout={handleAppLogout}
+              onNavigateHome={handleNavigateHome}
               onNavigateToSubscription={handleNavigateToSubscriptionPage}
               onStartTrial={handleNavigateToSubscriptionPage}
               onMarkAllNotificationsRead={shellProps.onMarkAllNotificationsRead}
@@ -1365,6 +1378,11 @@ export default function App() {
               isSandboxMode={false} 
               currentUser={effectiveCurrentUser} 
               onOpenPersonaSwitcher={() => setShowPersonaSwitcher(true)}
+              onLogout={handleAppLogout}
+              superAdminMode={superAdminMode}
+              setSuperAdminMode={setSuperAdminMode}
+              superAdminTier={superAdminTier}
+              setSuperAdminTier={setSuperAdminTier}
             />
           </div>
           <PersonaSwitcherModal
@@ -1383,6 +1401,11 @@ export default function App() {
           isSandboxMode={false} 
           currentUser={effectiveCurrentUser} 
           onOpenPersonaSwitcher={() => setShowPersonaSwitcher(true)}
+          onLogout={handleAppLogout}
+          superAdminMode={superAdminMode}
+          setSuperAdminMode={setSuperAdminMode}
+          superAdminTier={superAdminTier}
+          setSuperAdminTier={setSuperAdminTier}
         />
         <PersonaSwitcherModal
           isOpen={showPersonaSwitcher}

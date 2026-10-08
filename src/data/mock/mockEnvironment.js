@@ -1,6 +1,6 @@
 /**
  * Central Mock Environment Orchestrator
- * Integrates Westville High School (300 learners, 60 faculty, 250 parents)
+ * Integrates Westville High School (360 learners across Grades 7–12, 60 faculty, 250 parents)
  * and Independent Homeschool (100 learners, 80 parents).
  */
 

@@ -15,6 +15,7 @@ import TeacherAnalyticsTab from './tabs/TeacherAnalyticsTab';
 import TeacherAssessmentsTab from './tabs/TeacherAssessmentsTab';
 import ClassManagerModal from './ClassManagerModal';
 import PrintableTestModal from './PrintableTestModal';
+import studentStore from '../../services/studentStore';
 
 /**
  * TeacherDashboard Component (Educator LMS Cockpit — Clean 3-Tab Architecture)
@@ -159,6 +160,17 @@ export default function TeacherDashboard({
   const handleDispatchDrill = (misconceptionTag, className, learnerCount) => {
     const count = learnerCount || 18;
     setDispatchedAlert(`Assigned 5-minute targeted drill to ${count} learners (${misconceptionTag || 'Core Diagnostic barrier'}) in ${className}`);
+    try {
+      studentStore.addMessage({
+        sender: currentUser?.name || 'Subject Educator',
+        senderRole: 'Teacher',
+        subject: className || 'Class Task',
+        text: `Class task sent from ${currentUser?.name || 'Educator'}: 5-minute remedial drill on ${misconceptionTag || 'prerequisite concept'}, deadline in 3 days.`,
+        deadline: new Date(Date.now() + 86400000 * 3).toISOString()
+      });
+    } catch (e) {
+      console.warn('Could not post drill message to studentStore:', e);
+    }
     setTimeout(() => setDispatchedAlert(null), 4500);
   };
 

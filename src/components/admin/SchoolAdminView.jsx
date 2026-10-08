@@ -38,6 +38,7 @@ import {
 } from 'lucide-react';
 import FeatureGatePanel from '../ui/FeatureGatePanel';
 import { CLASS_ASSIGNMENTS_BLOCKED_MESSAGE } from '../../app/constants/access';
+import studentStore from '../../services/studentStore';
 
 // ==========================================
 // STATIC DATA: ATP CURRICULUM PACING MATRIX
@@ -447,6 +448,35 @@ const ATP_PACING_DATA = [
       { week: 8, topic: 'Decimal Fractions: Place Value & Operations', status: 'scheduled', mastery: null },
       { week: 9, topic: 'Numeric & Geometric Patterns', status: 'scheduled', mastery: null },
       { week: 10, topic: 'Term 1 Controlled Assessment', status: 'scheduled', mastery: null }
+    ]
+  },
+  {
+    id: 'atp-ems-7',
+    subject: 'EMS',
+    grade: '7',
+    department: 'Commercial Sciences',
+    hod: 'Ms. Z. Ndlovu',
+    totalWeeks: 10,
+    currentWeek: 8,
+    status: 'on_track',
+    statusLabel: 'Week 8 of 10 completed',
+    curriculumCovered: 80,
+    masteryDepth: 72,
+    benchmarkMastery: 65,
+    enrolledLearners: 180,
+    currentTopic: 'Financial Literacy: Personal Budgets & Savings',
+    nextMilestone: 'Entrepreneurship: Characteristics of an Entrepreneur',
+    weeklyTopics: [
+      { week: 1, topic: 'The Economy: History of Money & Barter Trade', status: 'completed', mastery: 78 },
+      { week: 2, topic: 'Role of Money & South African Currency Units', status: 'completed', mastery: 74 },
+      { week: 3, topic: 'Needs and Wants: Basic Needs vs Secondary Wants', status: 'completed', mastery: 80 },
+      { week: 4, topic: 'Goods and Services: Consumer vs Capital Goods', status: 'completed', mastery: 76 },
+      { week: 5, topic: 'Businesses: Formal vs Informal Economic Sectors', status: 'completed', mastery: 71 },
+      { week: 6, topic: 'Financial Literacy: Savings, Banks & Investments', status: 'completed', mastery: 69 },
+      { week: 7, topic: 'Personal Budgets: Fixed vs Variable Income & Expenses', status: 'completed', mastery: 67 },
+      { week: 8, topic: 'Preparation & Analysis of a Personal Budget', status: 'in_progress', mastery: 68 },
+      { week: 9, topic: 'Entrepreneurship: Skills & Business Opportunities', status: 'scheduled', mastery: null },
+      { week: 10, topic: 'Term 1 Formal Controlled Test', status: 'scheduled', mastery: null }
     ]
   }
 ];
@@ -1129,6 +1159,17 @@ const SchoolAdminView = ({ currentUser, onBack }) => {
         classes: misc.affectedClasses.join(', ')
       }
     }));
+    try {
+      studentStore.addMessage({
+        sender: 'School Academic Head',
+        senderRole: 'School Admin',
+        subject: misc.subject || 'Academic Broadcast',
+        text: `School-wide Remedial Drill: ${misc.label || misc.misconception} broadcasted to Grade ${misc.grade} (${misc.affectedClasses.join(', ')}). Deadline in 3 days.`,
+        deadline: new Date(Date.now() + 86400000 * 3).toISOString()
+      });
+    } catch (e) {
+      console.warn('Could not post school broadcast to studentStore:', e);
+    }
     showToast(
       `Remedial micro-drill dispatched to ${misc.affectedCount} Grade ${misc.grade} learners across ${misc.affectedClasses.join(', ')}!`,
       'success'

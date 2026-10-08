@@ -677,7 +677,7 @@ export default function HeroSimulation() {
                                     <div className="p-3 bg-emerald-50 border border-emerald-300 rounded-xl flex items-center justify-between text-xs text-emerald-950 font-bold shadow-xs animate-in fade-in">
                                         <div className="flex items-center gap-2">
                                             <Sparkles className="w-4 h-4 text-emerald-600 shrink-0" />
-                                            <span>SymPy Symbolic Equivalence Verified: (−3) + (−4) = −7 and (−3) × (−4) = +12.</span>
+                                            <span>Step Equivalence Verified: (−3) + (−4) = −7 and (−3) × (−4) = +12.</span>
                                         </div>
                                         <span className="px-2.5 py-1 rounded-full bg-emerald-600 text-white font-extrabold text-[11px] shadow-xs shrink-0">
                                             +35 XP
@@ -923,7 +923,7 @@ export default function HeroSimulation() {
                                 </div>
                                 {mathStepSubmitted && (
                                     <div className="p-1.5 bg-emerald-50 border border-emerald-300 rounded-lg flex items-center justify-between text-[10px] text-emerald-900 font-bold">
-                                        <span>SymPy Confirmed</span>
+                                        <span>Step Verified</span>
                                         <span className="bg-emerald-600 text-white px-2 py-0.5 rounded-full text-[9px]">+35 XP</span>
                                     </div>
                                 )}

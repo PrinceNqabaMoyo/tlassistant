@@ -19,9 +19,9 @@ export const HERO_COPY = {
     ],
     tagline: 'Use Fundile, become a top student.',
     bullets: [
-        '100% CAPS-aligned authentic exam questions with official marking schemas and worked memos.',
-        'Adaptive learning: Unassisted Diagnostic baseline, guided Scaffolding, autonomous Practice, and timed Exam simulation.',
-        'Instant diagnostic autopsies with 5-minute targeted micro-drills and SimuLearn visual replays (<2 MB data).',
+        'Unlimited practice, multiple subjects, one fee.',
+        'Adaptive learning: diagnostic test, personalized progression, and unlimited, newly-created, unique exam sets for each subject.',
+        'Fundile tells you where you went wrong and focuses on closing your knowledge gaps.',
     ],
     imageAlt: 'South African learners studying with Fundile',
     imageCaption: 'For every South African learner — whatever school, whatever exam.',
