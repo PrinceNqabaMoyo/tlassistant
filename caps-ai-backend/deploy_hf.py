@@ -74,7 +74,7 @@ def deploy_to_huggingface():
             folder_path=str(BACKEND_DIR),
             repo_id=REPO_ID,
             repo_type="space",
-            commit_message="Pipeline Deployment: 100/100 procedural entropy fixes, life sciences, physics, and math generators",
+            commit_message="Pipeline Deployment: Grades 7-12 Senior & FET Phase updates, curriculum sync",
             ignore_patterns=IGNORE_PATTERNS,
             delete_patterns="*", # This ensures files deleted locally are also deleted on Hugging Face
         )
