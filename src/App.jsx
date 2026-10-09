@@ -1356,13 +1356,6 @@ export default function App() {
         onNavigateHome={handleNavigateHome} 
         onToggleMode={() => navigateToRoutePage(authMode === 'signin' ? 'signup' : 'signin')} 
         onNavigateToSubscription={handleNavigateToSubscriptionPage} 
-        onStudentLogin={() => handleSwitchPersona({
-          role: 'student',
-          name: 'Nqobile Dlamini',
-          grade: 10,
-          school: 'Westville High School',
-          emailVerified: true
-        })}
         statusMessage={authStatusMessage} 
       />
     );

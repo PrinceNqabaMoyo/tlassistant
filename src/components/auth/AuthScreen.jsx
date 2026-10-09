@@ -128,8 +128,7 @@ const AuthBackground = () => {
     );
 };
 
-const AuthScreen = ({ auth, db, onStudentLogin, initialMode = 'signin', onToggleMode, onNavigateHome, onNavigateToSubscription, statusMessage = '' }) => {
-    console.log('🔐 AuthScreen received props:', { auth, db, onStudentLogin });
+const AuthScreen = ({ auth, db, initialMode = 'signin', onToggleMode, onNavigateHome, onNavigateToSubscription, statusMessage = '' }) => {
     
     const [isLogin, setIsLogin] = useState(true);
     const [email, setEmail] = useState('');
@@ -451,19 +450,6 @@ const AuthScreen = ({ auth, db, onStudentLogin, initialMode = 'signin', onToggle
                             View Fundile subscription and EFT details
                         </button>
                     </div>
-
-                    {onStudentLogin && (
-                        <div className="pt-3 border-t border-slate-200">
-                            <button
-                                type="button"
-                                data-testid="btn-demo-student-login"
-                                onClick={onStudentLogin}
-                                className="w-full py-2.5 px-4 rounded-lg bg-emerald-50 border border-emerald-300 text-emerald-800 text-xs font-bold hover:bg-emerald-100 transition flex items-center justify-center gap-2 cursor-pointer shadow-2xs"
-                            >
-                                <span>🚀 Explore as Student (Instant Demo Preview)</span>
-                            </button>
-                        </div>
-                    )}
                 </div>
             </div>
         </div>
