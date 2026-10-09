@@ -105,6 +105,7 @@ export default function RubricModalityRenderer({
             <div className="flex justify-end">
                 <button
                     type="button"
+                    data-testid="btn-check-answer"
                     onClick={handleCheckSubmission}
                     disabled={isChecking}
                     className="px-5 py-2 rounded-xl text-xs font-bold bg-[#13519C] hover:bg-blue-800 text-white transition shadow-xs cursor-pointer disabled:opacity-50 active:scale-98 font-sans"

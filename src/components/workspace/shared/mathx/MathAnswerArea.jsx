@@ -31,10 +31,34 @@ const MathAnswerArea = ({ question, topic, onCheck, result, busy = false }) => {
         ((question?.options || question?.options_latex) ? 'mcq' :
         (question?.diagram_spec ? 'diagram_select' :
         (question?.canonical_solution?.steps?.length > 1 ? 'math_steps' : 'math_short')));
+    const mathStorageKey = question?.id ? `fundile_draft_math_${question.id}` : null;
+
     const [selected, setSelected] = React.useState(null);
     const [selectedEdge, setSelectedEdge] = React.useState(null);
-    const [value, setValue] = React.useState('');
-    const [lines, setLines] = React.useState(['']);
+    const [value, setValue] = React.useState(() => {
+        if (typeof window !== 'undefined' && mathStorageKey) {
+            try {
+                const saved = sessionStorage.getItem(mathStorageKey);
+                if (saved) {
+                    const parsed = JSON.parse(saved);
+                    return parsed.value || '';
+                }
+            } catch (e) {}
+        }
+        return '';
+    });
+    const [lines, setLines] = React.useState(() => {
+        if (typeof window !== 'undefined' && mathStorageKey) {
+            try {
+                const saved = sessionStorage.getItem(mathStorageKey);
+                if (saved) {
+                    const parsed = JSON.parse(saved);
+                    if (Array.isArray(parsed.lines) && parsed.lines.length > 0) return parsed.lines;
+                }
+            } catch (e) {}
+        }
+        return [''];
+    });
     const [showSolution, setShowSolution] = React.useState(false);
     const inputs = React.useRef({});
     const activeField = React.useRef(qType === 'math_short' ? 'single' : 'line-0');
@@ -42,11 +66,44 @@ const MathAnswerArea = ({ question, topic, onCheck, result, busy = false }) => {
     React.useEffect(() => {
         setSelected(null);
         setSelectedEdge(null);
+        if (mathStorageKey) {
+            try {
+                const saved = sessionStorage.getItem(mathStorageKey);
+                if (saved) {
+                    const parsed = JSON.parse(saved);
+                    setValue(parsed.value || '');
+                    setLines(parsed.lines || ['']);
+                    setShowSolution(false);
+                    activeField.current = qType === 'math_short' ? 'single' : 'line-0';
+                    return;
+                }
+            } catch (e) {}
+        }
         setValue('');
         setLines(['']);
         setShowSolution(false);
         activeField.current = qType === 'math_short' ? 'single' : 'line-0';
-    }, [question?.id, qType]);
+    }, [question?.id, qType, mathStorageKey]);
+
+    // Persist draft in sessionStorage as learner inputs math
+    React.useEffect(() => {
+        if (typeof window !== 'undefined' && mathStorageKey) {
+            if (value || (lines.length > 1 || lines[0])) {
+                try {
+                    sessionStorage.setItem(mathStorageKey, JSON.stringify({ value, lines }));
+                } catch (e) {}
+            }
+        }
+    }, [value, lines, mathStorageKey]);
+
+    // Clear draft once marked
+    React.useEffect(() => {
+        if (result && mathStorageKey) {
+            try {
+                sessionStorage.removeItem(mathStorageKey);
+            } catch (e) {}
+        }
+    }, [result, mathStorageKey]);
 
     const registerInput = (id, el) => { if (el) inputs.current[id] = el; };
     const onFocusField = (id) => {
@@ -170,6 +227,7 @@ const MathAnswerArea = ({ question, topic, onCheck, result, busy = false }) => {
             <div className="flex flex-wrap gap-3">
                 <button
                     type="button"
+                    data-testid="btn-check-answer"
                     onClick={handleCheck}
                     disabled={checkDisabled}
                     className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold bg-brand-blue text-white hover:bg-brand-cobalt disabled:opacity-50 shadow-sm active:scale-95 cursor-pointer"

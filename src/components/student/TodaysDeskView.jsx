@@ -84,6 +84,7 @@ export default function TodaysDeskView({
   onSelectReelSubject = () => {},
   enabledSubjects = ['accounting', 'mathematics', 'technical_mathematics', 'mathematical_literacy', 'physical_sciences', 'life_sciences', 'business_studies'],
   onOpenSubject = () => {},
+  onOpenJoinClassModal = () => {},
 }) {
   const [storeState, setStoreState] = useState(() => studentStore.getState());
   const [animatingCard, setAnimatingCard] = useState(false);
@@ -103,15 +104,22 @@ export default function TodaysDeskView({
   // Determine current active subject for the reel
   const currentSubjItem = enrolledList.find(s => s.id === activeReelSubjectId) || enrolledList[0] || fullPhaseList[0];
   const currentTheme = getSubjectTheme(currentSubjItem.id);
-  const currentDetails = SUBJECT_DETAILS[currentSubjItem.id] || {
-    topic: 'Foundational CAPS Drill',
-    stage: 'Stage 2: Practice',
-    desc: 'Core procedural calculations and conceptual practice.'
+  const sessionTopic = (storeState?.activeSession?.subjectId === currentSubjItem.id && storeState?.activeSession?.topic) 
+    ? storeState.activeSession.topic 
+    : null;
+  const currentDetails = {
+    ...(SUBJECT_DETAILS[currentSubjItem.id] || {
+      topic: 'Foundational CAPS Drill',
+      stage: 'Stage 2: Practice',
+      desc: 'Core procedural calculations and conceptual practice.'
+    }),
+    ...(sessionTopic ? { topic: sessionTopic } : {})
   };
 
   const currentSubData = studentStore.getSubject(currentSubjItem.id);
   const masteryScore = currentSubData?.formativeMastery || 0;
-  const isDiagnostic = currentSubData?.status === 'diagnostic_required' || masteryScore === 0;
+  const hasHistory = (currentSubData?.questionsAttempted || 0) > 0 || Boolean(sessionTopic);
+  const isDiagnostic = (currentSubData?.status === 'diagnostic_required' || masteryScore === 0) && !hasHistory;
 
   // Authentic human button copy
   const ctaButtonText = isDiagnostic ? 'Start Session' : 'Continue Session';
@@ -181,21 +189,68 @@ export default function TodaysDeskView({
             </p>
           </div>
 
-          {/* Contextual School Assignment Notice Chip */}
-          {!isIndependent && assignedTasks.length > 0 && (
-            <div className="flex items-center gap-2 bg-amber-50 border border-amber-200 px-3 py-1.5 rounded-xl text-xs text-amber-900 font-semibold shadow-2xs">
-              <span className="w-2 h-2 rounded-full bg-rose-500 animate-pulse" />
-              <span>{assignedTasks.length} School Assignments Due</span>
-              <button
-                type="button"
-                onClick={() => onChangeActiveMode('classwork')}
-                className="ml-1 text-[11px] font-bold text-[#13519C] hover:text-blue-800 underline cursor-pointer"
-              >
-                Switch to Classwork &rarr;
-              </button>
-            </div>
-          )}
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              data-testid="btn-open-join-class-modal"
+              onClick={onOpenJoinClassModal}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-emerald-300 bg-emerald-50 hover:bg-emerald-100 text-xs font-semibold text-emerald-800 transition cursor-pointer shadow-2xs"
+              title="Join a Teacher's Class Code"
+            >
+              <span>🏫</span>
+              <span>Join Class</span>
+            </button>
+            {!isIndependent && assignedTasks.length > 0 && (
+              <div className="flex items-center gap-2 bg-amber-50 border border-amber-200 px-3 py-1.5 rounded-xl text-xs text-amber-900 font-semibold shadow-2xs">
+                <span className="w-2 h-2 rounded-full bg-rose-500 animate-pulse" />
+                <span>{assignedTasks.length} School Assignments Due</span>
+                <button
+                  type="button"
+                  onClick={() => onChangeActiveMode('classwork')}
+                  className="ml-1 text-[11px] font-bold text-[#13519C] hover:text-blue-800 underline cursor-pointer"
+                >
+                  Switch to Classwork &rarr;
+                </button>
+              </div>
+            )}
+          </div>
         </div>
+
+        {/* Pick Up Where You Left Off (Session Resumption Banner) */}
+        {storeState?.activeSession?.topic && (
+          <div className="bg-gradient-to-r from-blue-50/90 via-slate-50 to-emerald-50/70 p-3.5 rounded-xl border border-blue-200/80 shadow-2xs flex flex-wrap items-center justify-between gap-3 animate-fadeIn">
+            <div className="flex items-center gap-3">
+              <span 
+                className="w-3 h-3 rounded-full shrink-0 shadow-xs" 
+                style={{ 
+                  backgroundColor: getSubjectTheme(storeState.activeSession.subjectId || 'accounting').base,
+                  boxShadow: getSubjectTheme(storeState.activeSession.subjectId || 'accounting').glowSm
+                }} 
+              />
+              <div>
+                <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block">
+                  Pick Up Where You Left Off
+                </span>
+                <span className="text-xs sm:text-sm font-bold text-slate-900">
+                  {fullPhaseList.find(s => s.id === storeState.activeSession.subjectId)?.name || 'Accounting'}: {storeState.activeSession.topic}
+                </span>
+              </div>
+            </div>
+
+            <button
+              type="button"
+              onClick={() => onOpenSubject(storeState.activeSession.subjectId, storeState.activeSession.topic)}
+              className="px-3.5 py-1.5 rounded-xl text-white text-xs font-bold shadow-xs hover:opacity-95 active:scale-95 transition cursor-pointer flex items-center gap-1.5 shrink-0"
+              style={{ 
+                background: getSubjectTheme(storeState.activeSession.subjectId || 'accounting').gradient,
+                boxShadow: getSubjectTheme(storeState.activeSession.subjectId || 'accounting').glow 
+              }}
+            >
+              <span>Resume Session</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </button>
+          </div>
+        )}
 
         {/* ═══════════════════════════════════════════════════════════════════════ */}
         {/* THE ROTATION REEL CAROUSEL STAGE (SEAMLESS CLEAN STAGE — NO INNER BOXES) */}
@@ -450,6 +505,7 @@ export default function TodaysDeskView({
             return (
               <div
                 key={task.id}
+                data-testid="card-task-upcoming"
                 className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs hover:shadow-md transition-all space-y-3"
                 style={{ 
                   borderLeftWidth: '5px', 
@@ -498,6 +554,7 @@ export default function TodaysDeskView({
 
                   <button
                     type="button"
+                    data-testid="btn-open-task-subject"
                     onClick={() => onOpenSubject(task.subject, task.title)}
                     className="px-5 py-2 text-white text-xs font-bold rounded-xl shadow-xs transition hover:opacity-95 active:scale-98 cursor-pointer flex items-center gap-1.5"
                     style={{ 

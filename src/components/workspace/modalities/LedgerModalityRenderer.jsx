@@ -12,14 +12,33 @@ export default function LedgerModalityRenderer({
 }) {
     if (!question) return null;
 
-    const [cellValues, setCellValues] = useState({});
+    const questionStorageKey = question?.id ? `fundile_draft_cells_${question.id}` : null;
+
+    const [cellValues, setCellValues] = useState(() => {
+        if (typeof window !== 'undefined' && questionStorageKey) {
+            try {
+                const saved = sessionStorage.getItem(questionStorageKey);
+                if (saved) return JSON.parse(saved);
+            } catch (e) {}
+        }
+        return {};
+    });
     const [activeCellId, setActiveCellId] = useState(null);
 
-    // Reset entered values whenever the question changes
+    // Reset entered values or rehydrate draft whenever question changes
     useEffect(() => {
+        if (questionStorageKey) {
+            try {
+                const saved = sessionStorage.getItem(questionStorageKey);
+                if (saved) {
+                    setCellValues(JSON.parse(saved));
+                    return;
+                }
+            } catch (e) {}
+        }
         setCellValues({});
         setActiveCellId(null);
-    }, [question?.id, question?.question_id, question?.prompt]);
+    }, [question?.id, question?.question_id, question?.prompt, questionStorageKey]);
 
     const journal = question.journal || {};
     const titleFields = journal.title_fields || question.title_fields || [];
@@ -123,11 +142,28 @@ export default function LedgerModalityRenderer({
     };
 
     const handleCellChange = (cellId, val) => {
-        setCellValues((prev) => ({
-            ...prev,
-            [cellId]: val,
-        }));
+        setCellValues((prev) => {
+            const next = {
+                ...prev,
+                [cellId]: val,
+            };
+            if (typeof window !== 'undefined' && questionStorageKey) {
+                try {
+                    sessionStorage.setItem(questionStorageKey, JSON.stringify(next));
+                } catch (e) {}
+            }
+            return next;
+        });
     };
+
+    // Clean up draft once checking result is verified
+    useEffect(() => {
+        if (result && questionStorageKey) {
+            try {
+                sessionStorage.removeItem(questionStorageKey);
+            } catch (e) {}
+        }
+    }, [result, questionStorageKey]);
 
     const handleCheckSubmission = () => {
         if (onCheck) {
@@ -431,6 +467,7 @@ export default function LedgerModalityRenderer({
                 </div>
                 <button
                     type="button"
+                    data-testid="btn-check-answer"
                     onClick={handleCheckSubmission}
                     disabled={isChecking}
                     className="px-5 py-2 rounded-xl text-xs font-bold bg-[#13519C] hover:bg-blue-800 text-white transition shadow-xs cursor-pointer disabled:opacity-50 active:scale-98 font-sans flex items-center gap-1.5"

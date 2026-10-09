@@ -2,8 +2,8 @@
   "_meta": {
     "app": "Fundile",
     "tagline": "Adaptive learning aligned with South African National Curriculum Standards for Grades 7–12",
-    "lastUpdated": "2026-10-08",
-    "version": "0.9.3",
+    "lastUpdated": "2026-10-09",
+    "version": "0.9.5",
     "maintainedBy": "owner",
     "updateProtocol": "Update this file when a layer, service, route, data model, or external dependency is added or its build status changes. Do NOT update for internal function changes or bug fixes.",
     "agentInstruction": "Read this file at session start to understand the full system. Do not ask the owner to explain the architecture — it is here. Cross-reference planning documents for detail on planned items."
@@ -31,12 +31,13 @@
       "language": "JSX",
       "styling": "Tailwind CSS v4 + Option 1 Dual-Font System (Afacad display headings, system-ui font-sans for workspace/controls, font-mono for numbers/tables/timers; 60-30-10 simulation box color palette)",
       "mathRendering": "KaTeX",
-      "diagramRendering": "JSXGraph",
+      "diagramRendering": "JSXGraph + Dynamic Circle Geometry Gliders",
+      "sotaModalities": "AI Blackboard-inspired interactive 3D and dynamic visualizers: GeometricNets3DViewer.jsx (2D-to-3D folding net slider + rotatable polyhedra + Euler counter F+V-E=2), ElectrodynamicsMotorViewer.jsx (rotatable armature + Fleming's rule + live 60fps HTML5 oscilloscope), OrganicChemistry3DViewer.jsx (3D ball-and-stick CPK isomer explorer + IMF), and DiagramRenderer.jsx circle gliders (dynamic theorem proofs)",
       "bundler": "Vite",
       "progressionLifecycle": "Gated 4-stage progression state machine: 0. Diagnostic (Required at 0% baseline) -> 1. Scaffold (Guided hints) -> 2. Practice (Unassisted, unlocks >=60%) -> 3. Exam Mode (Timed assessment, unlocks >=80% Level 7)",
       "pwa": "vite-plugin-pwa & custom Service Worker fundile-v2 with development isolation in index.html (unregisters stale dev SWs and purges cache on localhost/LAN 192.168.x to prevent mobile LAN cache poisoning; enables full Workbox/sw.js offline caching in production)",
       "pwaAssets": "public/manifest.json, public/sw.js, pwa-192x192.png, pwa-256x256.png, pwa-512x512.png, pwa-maskable-192x192.png, pwa-maskable-512x512.png, apple-touch-icon.png, favicon.svg, fundile-favicon.svg, favicon.ico (VS Code style 100% transparent floating gold graduation cap with zero background box for desktop shortcuts, taskbar pins, title bars, and browser tabs; maskable icons reserved for Android adaptive system cropping)",
-      "navigation": "Option A Desktop Command Rail (DesktopCommandRail.jsx) with smooth complete collapse to w-0, hierarchical mutually-exclusive accordions for Self-Paced Learning and School Classwork, central rotation reel with luminous jewel tone pills and springy genie bloom animation; Centralized navigationHistoryService.js synchronizing PWA/WebAPK modal states; permanently pinned fixed bottom navigation rail on mobile; SubjectManagerModal for Phase subject enrollment management.",
+      "navigation": "Option A Desktop Command Rail (DesktopCommandRail.jsx) with smooth complete collapse to w-0, hierarchical mutually-exclusive accordions for Self-Paced Learning and School Classwork, central rotation reel with luminous jewel tone pills and springy genie bloom animation; Centralized navigationHistoryService.js synchronizing PWA/WebAPK modal states; permanently pinned fixed bottom navigation rail on mobile; SubjectManagerModal for Phase subject enrollment management; Session rehydration & resumption engine (studentStore activeSession + sessionStorage in-progress drafts for 2D ledgers and KaTeX math inputs) restoring exact subject, topic, and entered steps across desktop PWA, mobile WebAPK, and browser.",
       "subjectPalette": "Shopify-inspired centralized theme tokens (src/theme/subjectPalette.js) calibrated for high visual vibrancy, WCAG AA compliance (>=4.5:1 on white and soft tints), harmonious with brand anchors #13519C blue and #FF9100 orange",
       "mockEnvironment": "Institutional scale test harness (src/data/mock/): Westville High School (360 Named Students across Grades 7–12 across 24 class sections), 100 Named Independent Homeschool Students across Grades 7–12, 60 Faculty Members (Principal, Deputy, 9 HODs, 49 Educators), 330 Parents with cross-grade sibling linking, and 1-click PersonaSwitcherModal.jsx testing cockpit",
       "entryPoint": "src/main.jsx",
@@ -50,7 +51,7 @@
       "entryPoint": "caps-ai-backend/run.py",
       "mainApp": "caps-ai-backend/MainApp.py",
       "lanRouting": "Auto-detected LAN IP (192.168.x / 10.x) and localhost routing to port 5001 via src/utils/apiBaseUrl.js for real-time mobile cross-device testing",
-      "automatedTesting": "Unified 4-Pillar Certification Suite (npm run audit:full / scripts/run_system_certification.py): 1. Procedure Tracker SymPy step checker, 2. Monte Carlo 100-generator quality auditor (0% meta-curriculum jargon), 3. 4-persona BKT adaptive progression simulator with circuit breakers, 4. 141-button interactive UI crawler. Generates fundile-system-audit-report.html"
+      "automatedTesting": "Unified 4-Pillar Certification Suite (npm run audit:full / scripts/run_system_certification.py): 1. Procedure Tracker SymPy step checker, 2. Monte Carlo 100-generator quality auditor (0% meta-curriculum jargon), 3. 4-persona BKT adaptive progression simulator with circuit breakers, 4. 141-button interactive UI crawler. Generates fundile-system-audit-report.html; Autonomous Mock User Autopilot Engine v2.0 (autonomous_agent_test_plan.md / e2e/): Pipeline A (Lesedi Khumalo registration, R349 Term Pass EFT, Semi-Automated Super Admin Human Approval with automatic fallback, and zero-fallback Grade 10/11 Euclidean Geometry solving) and Pipeline B (Ayanda Ndlovu Pixel 7 mobile login, class code MTH701 enrollment, Grade 7 patterns, arithmetic grid long division with subtraction_borrowing_inversion error recovery, and Mr. Ndlovu Sunday Academic Pulse in-app feed verification) built, verified, and passing cleanly via Playwright headed runner with injected gliding virtual cursor and glassmorphic HUD narration overlay."
     },
     "database": {
       "primary": "Firebase Firestore",
@@ -174,7 +175,13 @@
         "check_subject_palette.py",
         "DesktopCommandRail.jsx",
         "SubjectManagerModal.jsx",
-        "TodaysDeskView.jsx"
+        "TodaysDeskView.jsx",
+        "caps_term_curriculum_registry.py",
+        "exam_engine.py",
+        "GeometricNets3DViewer.jsx",
+        "ElectrodynamicsMotorViewer.jsx",
+        "OrganicChemistry3DViewer.jsx",
+        "audit_terms_against_atp.py"
       ],
       "dependsOn": [
         "A"
@@ -217,7 +224,7 @@
     }
   ],
   "capsWiki": {
-    "description": "Authoritative editorial spine. Constrains generators, guardrails, and reports. Read verbatim into agent prompts — no RAG, no embedding search. Synthesized into 476 topics across 9 subjects in curriculum_docs_auto/ with authentic exam marks, time pacing, and diagram vision annotations.",
+    "description": "Authoritative editorial spine. Constrains generators, guardrails, and reports. Read verbatim into agent prompts — no RAG, no embedding search. Synthesized into 476 topics across 10 subjects in curriculum_docs_auto/ with authentic exam marks, time pacing, diagram vision annotations, and 100% authentic Annual Teaching Plan (ATP) Terms (Terms 1–4) verified with 0% mismatch in scripts/audit_terms_against_atp.py.",
     "path": "caps-ai-backend/curriculum_docs_auto/",
     "status": "built",
     "totalTopics": 476,
@@ -262,7 +269,9 @@
         "files": [
           "caps-ai-backend/app/utils/grade11_accounting/",
           "caps-ai-backend/app/utils/grade11_accounting/partnerships_financial_statements_generator.py",
-          "caps-ai-backend/app/utils/grade11_accounting/inventory_valuation_generator.py"
+          "caps-ai-backend/app/utils/grade11_accounting/inventory_valuation_generator.py",
+          "caps-ai-backend/app/utils/grade11_accounting/vat_generator.py",
+          "caps-ai-backend/app/utils/grade11_accounting/term2/analysis_interpretation_generator.py"
         ]
       },
       {
@@ -322,7 +331,10 @@
           "caps-ai-backend/app/utils/grade10_mathematics/term_2/analytical_geometry_generator.py",
           "caps-ai-backend/app/utils/grade10_mathematics/_diagram.py",
           "caps-ai-backend/app/utils/grade10_mathematics/term_4/measurements_generator.py",
-          "caps-ai-backend/app/utils/grade10_mathematics/"
+          "caps-ai-backend/app/utils/grade10_mathematics/",
+          "caps-ai-backend/app/utils/grade10_mathematics/term_3/finance_growth_generator.py",
+          "caps-ai-backend/app/utils/grade10_mathematics/term_3/statistics_generator.py",
+          "caps-ai-backend/app/utils/grade10_mathematics/term_4/probability_generator.py"
         ]
       },
       {
@@ -338,7 +350,8 @@
           "caps-ai-backend/app/utils/grade11_mathematics/finance_growth_decay_generator.py",
           "caps-ai-backend/app/utils/grade11_mathematics/probability_contingency_generator.py",
           "caps-ai-backend/app/utils/grade11_mathematics/statistics_summary_ogive_generator.py",
-          "caps-ai-backend/app/utils/grade11_mathematics/linear_programming_generator.py"
+          "caps-ai-backend/app/utils/grade11_mathematics/linear_programming_generator.py",
+          "caps-ai-backend/app/utils/grade11_mathematics/functions_graphs_generator.py"
         ]
       },
       {
@@ -353,6 +366,25 @@
           "caps-ai-backend/app/utils/grade12_mathematics/analytical_geometry_circles_generator.py",
           "caps-ai-backend/app/utils/grade12_mathematics/counting_principles_probability_generator.py",
           "caps-ai-backend/app/utils/grade12_mathematics/bivariate_statistics_generator.py"
+        ]
+      },
+      {
+        "subject": "Mathematics",
+        "grade": "7",
+        "files": [
+          "caps-ai-backend/app/utils/grade7_mathematics/whole_numbers_generator.py",
+          "caps-ai-backend/app/utils/grade7_mathematics/patterns_generator.py",
+          "caps-ai-backend/app/utils/grade7_mathematics/algebraic_expressions_generator.py",
+          "caps-ai-backend/app/utils/grade7_mathematics/geometric_nets_3d_generator.py",
+          "caps-ai-backend/app/utils/grade7_mathematics/decimals_generator.py",
+          "caps-ai-backend/app/utils/grade7_mathematics/fractions_generator.py",
+          "caps-ai-backend/app/utils/grade7_mathematics/integers_generator.py",
+          "caps-ai-backend/app/utils/grade7_mathematics/geometry_2d_generator.py",
+          "caps-ai-backend/app/utils/grade7_mathematics/graphs_relationships_generator.py",
+          "caps-ai-backend/app/utils/grade7_mathematics/data_probability_generator.py",
+          "caps-ai-backend/app/utils/grade7_mathematics/exponents_generator.py",
+          "caps-ai-backend/app/utils/grade7_mathematics/measurement_generator.py",
+          "caps-ai-backend/app/utils/grade7_mathematics/transformation_geometry_generator.py"
         ]
       },
       {
@@ -395,7 +427,9 @@
         "subject": "EMS",
         "grade": "7",
         "files": [
-          "caps-ai-backend/app/utils/grade7_ems/"
+          "caps-ai-backend/app/utils/grade7_ems/",
+          "caps-ai-backend/app/utils/grade7_ems/term3_production_process.py",
+          "caps-ai-backend/app/utils/grade7_ems/term4_savings.py"
         ]
       },
       {
@@ -406,6 +440,7 @@
           "caps-ai-backend/app/utils/grade8_ems/term1_general_ledger.py",
           "caps-ai-backend/app/utils/grade8_ems/term1_source_documents.py",
           "caps-ai-backend/app/utils/grade8_ems/term2_accounting_cycle.py",
+          "caps-ai-backend/app/utils/grade8_ems/term3_management.py",
           "caps-ai-backend/app/utils/grade8_ems/senior_phase_ems_gap_generator.py"
         ]
       },
@@ -433,7 +468,18 @@
           "caps-ai-backend/app/utils/physical_sciences/geometrical_optics_generator.py",
           "caps-ai-backend/app/utils/physical_sciences/ideal_gases_thermal_generator.py",
           "caps-ai-backend/app/utils/physical_sciences/work_energy_power_generator.py",
-          "caps-ai-backend/app/utils/physical_sciences/electrochemistry_generator.py"
+          "caps-ai-backend/app/utils/physical_sciences/electrochemistry_generator.py",
+          "caps-ai-backend/app/utils/grade11_physical_sciences/chemical_bonding_intermolecular_generator.py",
+          "caps-ai-backend/app/utils/grade12_physical_sciences/organic_chemistry_generator.py",
+          "caps-ai-backend/app/utils/grade12_physical_sciences/acids_bases_generator.py",
+          "caps-ai-backend/app/utils/grade12_physical_sciences/electrodynamics_circuits_generator.py",
+          "caps-ai-backend/app/utils/grade12_physical_sciences/optical_phenomena_photoelectric_generator.py",
+          "caps-ai-backend/app/utils/grade11_physical_sciences/electric_circuits_energy_generator.py",
+          "caps-ai-backend/app/utils/grade11_physical_sciences/energy_chemical_change_generator.py",
+          "caps-ai-backend/app/utils/grade11_physical_sciences/stoichiometry_limiting_generator.py",
+          "caps-ai-backend/app/utils/grade10_physical_sciences/electric_circuits_magnetism_generator.py",
+          "caps-ai-backend/app/utils/grade10_physical_sciences/chemical_change_stoichiometry_generator.py",
+          "caps-ai-backend/app/utils/grade10_physical_sciences/motion_energy_generator.py"
         ]
       },
       {
@@ -456,7 +502,11 @@
           "caps-ai-backend/app/utils/natural_sciences/",
           "caps-ai-backend/app/utils/natural_sciences/electric_circuits_generator.py",
           "caps-ai-backend/app/utils/natural_sciences/chemical_reactions_generator.py",
-          "caps-ai-backend/app/utils/natural_sciences/senior_phase_astronomy_generator.py"
+          "caps-ai-backend/app/utils/natural_sciences/senior_phase_astronomy_generator.py",
+          "caps-ai-backend/app/utils/natural_sciences/term1_life_and_living_generator.py",
+          "caps-ai-backend/app/utils/natural_sciences/term2_matter_materials_generator.py",
+          "caps-ai-backend/app/utils/natural_sciences/term3_energy_change_forces_generator.py",
+          "caps-ai-backend/app/utils/natural_sciences/term4_planet_earth_beyond_generator.py"
         ]
       },
       {
@@ -466,7 +516,9 @@
           "caps-ai-backend/app/utils/mathematical_literacy/",
           "caps-ai-backend/app/utils/mathematical_literacy/finance_tax_generator.py",
           "caps-ai-backend/app/utils/mathematical_literacy/maps_scales_generator.py",
-          "caps-ai-backend/app/utils/mathematical_literacy/tariffs_tax_brackets_generator.py"
+          "caps-ai-backend/app/utils/mathematical_literacy/tariffs_tax_brackets_generator.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/data_handling_generator.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/measurement_probability_generator.py"
         ]
       },
       {
@@ -475,7 +527,8 @@
         "files": [
           "caps-ai-backend/app/utils/technical_mathematics/",
           "caps-ai-backend/app/utils/technical_mathematics/complex_numbers_generator.py",
-          "caps-ai-backend/app/utils/technical_mathematics/mensuration_calculus_generator.py"
+          "caps-ai-backend/app/utils/technical_mathematics/mensuration_calculus_generator.py",
+          "caps-ai-backend/app/utils/technical_mathematics/circles_angular_movement_generator.py"
         ]
       },
       {
@@ -1221,7 +1274,7 @@
       {
         "name": "ParentDashboard",
         "path": "src/components/parent/ParentDashboard.jsx",
-        "description": "Parent & Guardian Bridge Cockpit featuring Sunday 18:00 WhatsApp coaching pulse preview, household cellular data savings meter (<2 MB vs 450 MB+), linked learner selector, actionable dinner-table coaching tips, and live dual-ring MasteryDial."
+        "description": "Parent & Guardian Bridge Cockpit featuring Sunday 18:00 In-App Guardian Feed Academic Pulse, household cellular data savings meter (<2 MB vs 450 MB+), linked learner selector, actionable dinner-table coaching tips, and live dual-ring MasteryDial."
       },
       {
         "name": "ProfilePhotoModal",
@@ -1582,8 +1635,8 @@
       "id": "parent_bridge_marketer",
       "name": "Parent & Guardian Bridge Marketer",
       "status": "built",
-      "specialty": "Parental Trust, Anxiety Relief, Sunday WhatsApp Pulse & Actionable Coaching",
-      "whenToUse": "Use when crafting parent-facing communications, Sunday 18:00 WhatsApp pulse summaries, actionable coaching recommendations, and cellular data savings comparisons (< 2MB vs 450MB).",
+      "specialty": "Parental Trust, Anxiety Relief, Sunday In-App Guardian Academic Pulse & Actionable Coaching",
+      "whenToUse": "Use when crafting parent-facing communications, Sunday 18:00 In-App Guardian feed pulse summaries, actionable coaching recommendations, and cellular data savings comparisons (< 2MB vs 450MB).",
       "config": ".agents/agents/parent_bridge_marketer.json",
       "allowedTools": [
         "view_file",

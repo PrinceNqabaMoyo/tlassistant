@@ -2,8 +2,11 @@ import os
 import re
 import json
 import difflib
-import pymupdf
 from pathlib import Path
+try:
+    import pymupdf
+except ImportError:
+    pymupdf = None
 from collections import defaultdict
 
 # Static CAPS Term Allocations Fallback Table with Ordered Main Topics

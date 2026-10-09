@@ -51,3 +51,8 @@ upload.js
 # Scratch / temp files
 testsonconsole.txt
 scratch/
+test-results/
+playwright-report/
+*.trace
+screencast/
+*.backup

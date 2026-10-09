@@ -7,7 +7,8 @@ from . import (
     term2_accounting_cycle,
     term2_crj,
     term3_cpj_and_crj,
-    term3_ownership
+    term3_ownership,
+    term3_management,
 )
 from .assessment_generator import generate_assessment
 
@@ -21,7 +22,8 @@ def generate_topic_questions(subtopic, subskill="concepts", difficulty="medium",
         'term2_accounting_cycle': term2_accounting_cycle.generate,
         'term2_crj': term2_crj.generate,
         'term3_cpj_and_crj': term3_cpj_and_crj.generate,
-        'term3_ownership': term3_ownership.generate
+        'term3_ownership': term3_ownership.generate,
+        'term3_management': term3_management.generate,
     }
     
     if subtopic not in generators:

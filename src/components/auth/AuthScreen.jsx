@@ -265,6 +265,7 @@ const AuthScreen = ({ auth, db, onStudentLogin, initialMode = 'signin', onToggle
                                     name="name" 
                                     type="text" 
                                     required 
+                                    data-testid="input-signup-name"
                                     className="appearance-none relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm" 
                                     placeholder="Full Name" 
                                     value={name} 
@@ -275,6 +276,7 @@ const AuthScreen = ({ auth, db, onStudentLogin, initialMode = 'signin', onToggle
                                     id="role" 
                                     name="role" 
                                     value={role} 
+                                    data-testid="select-signup-role"
                                     onChange={e => setRole(e.target.value)} 
                                     className="block w-full py-3 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm font-medium text-slate-800"
                                 >
@@ -295,6 +297,7 @@ const AuthScreen = ({ auth, db, onStudentLogin, initialMode = 'signin', onToggle
                                             id="grade" 
                                             name="grade" 
                                             value={selectedGrade}
+                                            data-testid="select-signup-grade"
                                             onChange={e => setSelectedGrade(e.target.value)} 
                                             className="block w-full py-3 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                                         >
@@ -321,6 +324,7 @@ const AuthScreen = ({ auth, db, onStudentLogin, initialMode = 'signin', onToggle
                                 type="email" 
                                 autoComplete="email" 
                                 required 
+                                data-testid={isLogin ? 'input-signin-email' : 'input-signup-email'}
                                 className="appearance-none relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm" 
                                 placeholder="Email address" 
                                 value={email} 
@@ -334,6 +338,7 @@ const AuthScreen = ({ auth, db, onStudentLogin, initialMode = 'signin', onToggle
                                     type={showPassword ? "text" : "password"}
                                     autoComplete={isLogin ? "current-password" : "new-password"} 
                                     required 
+                                    data-testid={isLogin ? 'input-signin-password' : 'input-signup-password'}
                                     className="appearance-none relative block w-full px-3 py-3 pr-10 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm" 
                                     placeholder="Password" 
                                     value={password} 
@@ -361,6 +366,7 @@ const AuthScreen = ({ auth, db, onStudentLogin, initialMode = 'signin', onToggle
                                         type={showConfirmPassword ? "text" : "password"}
                                         autoComplete="new-password" 
                                         required 
+                                        data-testid="input-signup-confirm-password"
                                         className="appearance-none relative block w-full px-3 py-3 pr-10 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm" 
                                         placeholder="Confirm Password" 
                                         value={confirmPassword} 
@@ -393,6 +399,7 @@ const AuthScreen = ({ auth, db, onStudentLogin, initialMode = 'signin', onToggle
                                         name="popiaConsent"
                                         type="checkbox"
                                         required
+                                        data-testid="checkbox-popia-consent"
                                         checked={hasParentalConsent}
                                         onChange={(e) => setHasParentalConsent(e.target.checked)}
                                         className="mt-0.5 h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer"
@@ -410,6 +417,7 @@ const AuthScreen = ({ auth, db, onStudentLogin, initialMode = 'signin', onToggle
 
                         <button 
                             type="submit" 
+                            data-testid="btn-auth-submit"
                             disabled={loading || (!isLogin && (password !== confirmPassword || !signupPasswordSatisfiesPolicy || (role === 'student' && (!selectedCurriculum || !selectedGrade || !hasParentalConsent))))} 
                             className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:bg-gray-400"
                         >
@@ -419,6 +427,7 @@ const AuthScreen = ({ auth, db, onStudentLogin, initialMode = 'signin', onToggle
 
                     <div className="text-sm text-center">
                         <button 
+                            data-testid="btn-toggle-auth-mode"
                             onClick={() => {
                                 if (onToggleMode) {
                                     onToggleMode();
@@ -442,6 +451,19 @@ const AuthScreen = ({ auth, db, onStudentLogin, initialMode = 'signin', onToggle
                             View Fundile subscription and EFT details
                         </button>
                     </div>
+
+                    {onStudentLogin && (
+                        <div className="pt-3 border-t border-slate-200">
+                            <button
+                                type="button"
+                                data-testid="btn-demo-student-login"
+                                onClick={onStudentLogin}
+                                className="w-full py-2.5 px-4 rounded-lg bg-emerald-50 border border-emerald-300 text-emerald-800 text-xs font-bold hover:bg-emerald-100 transition flex items-center justify-center gap-2 cursor-pointer shadow-2xs"
+                            >
+                                <span>🚀 Explore as Student (Instant Demo Preview)</span>
+                            </button>
+                        </div>
+                    )}
                 </div>
             </div>
         </div>

@@ -330,7 +330,7 @@ export const redeemLinkCode = async (db, inputCode, parentUser) => {
     }
   }
 
-  // 3. Demo / Mock Learner Codes (e.g. PAR8M4 or LNK-PAR8M4)
+  // 3. Demo / Mock Learner Codes (e.g. PAR8M4 or PAR-7892)
   if (cleanCode === 'LNK-PAR8M4' || cleanCode === 'PAR8M4') {
     return {
       success: true,
@@ -339,6 +339,18 @@ export const redeemLinkCode = async (db, inputCode, parentUser) => {
         name: 'Nqobile Dlamini',
         grade: 'Grade 10 FET',
         school: 'Phakamani Secondary School',
+      },
+    };
+  }
+
+  if (cleanCode === 'LNK-PAR7892' || cleanCode === 'PAR-7892' || cleanCode === 'PAR7892') {
+    return {
+      success: true,
+      student: {
+        id: 'ayanda',
+        name: 'Ayanda Ndlovu',
+        grade: 'Grade 7 Senior Phase',
+        school: 'Westville High School',
       },
     };
   }

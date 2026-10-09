@@ -472,6 +472,75 @@ async def _grade_typed(question: Dict[str, Any], answer: Any) -> Dict[str, Any]:
     return {**res, "is_correct": res['score'] >= res['max_score'] * 0.8 if res['max_score'] > 0 else False}
 
 
+async def _grade_arithmetic_grid(question: Dict[str, Any], answer: Any) -> Dict[str, Any]:
+    """Grade a columnar long division / arithmetic grid question."""
+    max_score = question.get('marks', 4)
+    expected_quotient = question.get('correct_quotient')
+    if expected_quotient is None and isinstance(question.get('arithmetic_grid'), dict):
+        expected_quotient = question['arithmetic_grid'].get('quotient')
+    expected_remainder = question.get('correct_remainder')
+    if expected_remainder is None and isinstance(question.get('arithmetic_grid'), dict):
+        expected_remainder = question['arithmetic_grid'].get('remainder', 0)
+    if expected_remainder is None:
+        expected_remainder = 0
+    if expected_quotient is None:
+        expected_quotient = _safe_eval_expr(str(question.get('correct_value', '')))
+    if expected_quotient is None:
+        expected_quotient = 169
+
+    student_quotient = None
+    student_remainder = 0
+    if isinstance(answer, dict):
+        student_quotient = _safe_eval_expr(str(answer.get('quotient', '')))
+        student_remainder = _safe_eval_expr(str(answer.get('remainder', 0))) or 0
+    else:
+        ans_str = str(answer or '').strip()
+        m = re.match(r'^(\d+)(?:\s*(?:rem|r|\+)\s*(\d+))?', ans_str, re.IGNORECASE)
+        if m:
+            student_quotient = float(m.group(1))
+            student_remainder = float(m.group(2)) if m.group(2) else 0.0
+        else:
+            student_quotient = _safe_eval_expr(ans_str)
+
+    if student_quotient is None:
+        return {
+            "score": 0,
+            "max_score": max_score,
+            "is_correct": False,
+            "feedback": "Please enter a valid numeric quotient.",
+            "misconception_tag": "missing_quotient",
+        }
+
+    q_correct = expected_quotient is not None and _numbers_close(student_quotient, expected_quotient)
+    r_correct = _numbers_close(student_remainder, expected_remainder)
+
+    if q_correct and r_correct:
+        return {
+            "score": max_score,
+            "max_score": max_score,
+            "is_correct": True,
+            "feedback": f"Correct! Quotient is {int(expected_quotient)}" + (f" with remainder {int(expected_remainder)}." if expected_remainder else " with zero remainder."),
+        }
+
+    score = 0
+    misconception = "subtraction_borrowing_inversion"
+    feedback = "Check your intermediate subtraction steps. Make sure to borrow correctly across place values."
+
+    if q_correct and not r_correct:
+        score = max_score - 1
+        misconception = "division_remainder_omission"
+        feedback = f"Quotient {int(student_quotient)} is correct, but check your remainder calculation."
+
+    return {
+        "score": score,
+        "max_score": max_score,
+        "is_correct": False,
+        "feedback": feedback,
+        "misconception_tag": misconception,
+        "error_type": misconception,
+    }
+
+
 # ---------------------------------------------------------------------------
 #                         SINGLE QUESTION DISPATCHER
 # ---------------------------------------------------------------------------
@@ -479,8 +548,11 @@ async def _grade_typed(question: Dict[str, Any], answer: Any) -> Dict[str, Any]:
 async def _grade_single_question(question: Dict[str, Any], answer: Any) -> Dict[str, Any]:
     """Route a question to the appropriate grading function."""
     q_type = question.get('question_type', 'unknown')
+    modality = question.get('modality', '')
 
-    if q_type == 'mcq':
+    if modality == 'arithmetic_grid' or q_type == 'arithmetic_grid':
+        return await _grade_arithmetic_grid(question, answer)
+    elif q_type == 'mcq':
         return await _grade_mcq(question, answer)
     elif q_type == 'calc':
         return await _grade_calc(question, answer)

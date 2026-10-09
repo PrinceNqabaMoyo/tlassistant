@@ -24,6 +24,10 @@ import MathModalityRenderer from './modalities/MathModalityRenderer';
 import LedgerModalityRenderer from './modalities/LedgerModalityRenderer';
 import RubricModalityRenderer from './modalities/RubricModalityRenderer';
 import DiagramModalityRenderer from './modalities/DiagramModalityRenderer';
+import ArithmeticGridModalityRenderer from './modalities/ArithmeticGridModalityRenderer';
+import GeometricNets3DViewer from './modalities/GeometricNets3DViewer';
+import ElectrodynamicsMotorViewer from './modalities/ElectrodynamicsMotorViewer';
+import OrganicChemistry3DViewer from './modalities/OrganicChemistry3DViewer';
 import MasteryDial from '../student/MasteryDial';
 import SuperAdminProgressResetModal from '../admin/SuperAdminProgressResetModal';
 import TopicScopeModal from '../curriculum/TopicScopeModal';
@@ -296,10 +300,45 @@ export default function UniversalWorkspace({
 
     // Determine cognitive modality from question payload or subject domain
     const modality = (() => {
+        const topLower = String(topic || '').toLowerCase();
+        const subLower = String(subjectTitle || '').toLowerCase();
+
+        // 1. SOTA Visual Modalities (AI Blackboard showcase)
+        if (
+            question?.modality === 'geometric_nets' ||
+            topLower.includes('geometry of 3d') ||
+            topLower.includes('geometric net') ||
+            topLower.includes('3d object') ||
+            topLower.includes('platonic solid')
+        ) return 'geometric_nets';
+
+        if (
+            question?.modality === 'electrodynamics' ||
+            topLower.includes('electrodynamics') ||
+            topLower.includes('ac generator') ||
+            topLower.includes('dc motor') ||
+            topLower.includes('armature')
+        ) return 'electrodynamics';
+
+        if (
+            question?.modality === 'organic_chemistry' ||
+            topLower.includes('organic chemistry') ||
+            topLower.includes('isomer') ||
+            topLower.includes('homologous series')
+        ) return 'organic_chemistry';
+
+        // 2. Fundamental & Standard Modalities
+        if (
+            question?.modality === 'arithmetic_grid' || 
+            question?.arithmetic_grid || 
+            question?.subskill === 'long_division' ||
+            topLower.includes('whole numbers') ||
+            topLower.includes('long division')
+        ) return 'arithmetic_grid';
         if (question?.journal || question?.table_schema) return 'ledger';
         if (question?.options || question?.options_latex || question?.question_type === 'mcq') return 'math';
         if (question?.diagram_spec || question?.diagram) return 'diagram';
-        if (String(subjectTitle).toLowerCase().includes('business')) return 'rubric';
+        if (subLower.includes('business')) return 'rubric';
         if (question?.modality) return question.modality;
         return 'math';
     })();
@@ -480,6 +519,7 @@ export default function UniversalWorkspace({
                     <div className="flex items-center gap-2">
                         <button
                             type="button"
+                            data-testid="btn-toggle-hints"
                             onClick={() => setShowHints(!showHints)}
                             className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-bold transition cursor-pointer ${
                                 showHints
@@ -528,6 +568,7 @@ export default function UniversalWorkspace({
                                 <button
                                     key={tier}
                                     type="button"
+                                    data-testid={`btn-hint-tier-${tier}`}
                                     onClick={() => setActiveHintTier(tier)}
                                     className={`px-2.5 py-0.5 rounded transition cursor-pointer ${
                                         activeHintTier === tier
@@ -594,7 +635,11 @@ export default function UniversalWorkspace({
                 
                 {/* Left: Problem-Solving Surface (8 cols on lg) */}
                 <div className="lg:col-span-8 space-y-4">
-                    <div className="rounded-2xl border border-slate-200 bg-white p-4 sm:p-6 space-y-5 shadow-xs font-sans">
+                    <div 
+                        data-testid="question-surface"
+                        data-source={question?.source || (question ? 'deterministic_generator' : 'none')}
+                        className="rounded-2xl border border-slate-200 bg-white p-4 sm:p-6 space-y-5 shadow-xs font-sans"
+                    >
                         
                         {/* Split Question Header matching HeroSimulation.jsx */}
                         <div className="flex items-center justify-between border-b border-slate-200 pb-3">
@@ -722,6 +767,59 @@ export default function UniversalWorkspace({
                                         onToggleScaffold={() => setShowHints((prev) => !prev)}
                                     />
                                 )}
+                                {modality === 'arithmetic_grid' && (
+                                    <ArithmeticGridModalityRenderer
+                                        question={question}
+                                        topic={topic}
+                                        onCheck={handleCheckWrapper}
+                                        result={result}
+                                        isChecking={isChecking}
+                                        showDynamicScaffold={showHints}
+                                        onToggleScaffold={() => setShowHints((prev) => !prev)}
+                                    />
+                                )}
+                                {modality === 'geometric_nets' && (
+                                    <div className="space-y-4">
+                                        <GeometricNets3DViewer />
+                                        <MathModalityRenderer
+                                            question={question}
+                                            topic={topic}
+                                            onCheck={handleCheckWrapper}
+                                            result={result}
+                                            isChecking={isChecking}
+                                            showDynamicScaffold={showHints}
+                                            onToggleScaffold={() => setShowHints((prev) => !prev)}
+                                        />
+                                    </div>
+                                )}
+                                {modality === 'electrodynamics' && (
+                                    <div className="space-y-4">
+                                        <ElectrodynamicsMotorViewer />
+                                        <MathModalityRenderer
+                                            question={question}
+                                            topic={topic}
+                                            onCheck={handleCheckWrapper}
+                                            result={result}
+                                            isChecking={isChecking}
+                                            showDynamicScaffold={showHints}
+                                            onToggleScaffold={() => setShowHints((prev) => !prev)}
+                                        />
+                                    </div>
+                                )}
+                                {modality === 'organic_chemistry' && (
+                                    <div className="space-y-4">
+                                        <OrganicChemistry3DViewer />
+                                        <MathModalityRenderer
+                                            question={question}
+                                            topic={topic}
+                                            onCheck={handleCheckWrapper}
+                                            result={result}
+                                            isChecking={isChecking}
+                                            showDynamicScaffold={showHints}
+                                            onToggleScaffold={() => setShowHints((prev) => !prev)}
+                                        />
+                                    </div>
+                                )}
                                 {modality === 'math' && (
                                     <MathModalityRenderer
                                         question={question}
@@ -771,6 +869,7 @@ export default function UniversalWorkspace({
                                     {onNext && (
                                         <button
                                             type="button"
+                                            data-testid="btn-next-question"
                                             onClick={onNext}
                                             className="ml-auto flex items-center gap-2 px-5 py-2 rounded-xl text-xs font-bold bg-[#FF9100] text-white hover:bg-amber-600 transition shadow-xs cursor-pointer active:scale-98"
                                         >

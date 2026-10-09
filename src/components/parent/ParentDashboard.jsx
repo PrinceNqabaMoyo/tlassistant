@@ -265,6 +265,61 @@ const INITIAL_LEARNERS = {
         needsRefresh: true
       }
     ]
+  },
+  ayanda: {
+    id: 'ayanda',
+    name: 'Ayanda Ndlovu',
+    grade: 'Grade 7 Senior Phase',
+    school: 'Westville High School',
+    avatar: 'AN',
+    linkCode: 'PAR-7892',
+    focusTime: '2h 15m',
+    focusTimeMinutes: 135,
+    questionsCompleted: 34,
+    accuracyRate: 74,
+    streakDays: 4,
+    ungameableXP: 980,
+    dataUsedMB: 1.4,
+    videoEquivalentMB: 450,
+    savedRands: 85,
+    masteredTopics: [
+      { name: 'Grade 7 Number Patterns (Tn = 4n - 1)', subject: 'Mathematics', score: 85 },
+      { name: 'Whole Numbers: Long Division Algorithm', subject: 'Mathematics', score: 100 },
+      { name: 'Financial Literacy: Needs and Wants', subject: 'EMS', score: 88 }
+    ],
+    repairedMisconceptions: [
+      {
+        topic: 'Whole Numbers: Long Division Algorithm',
+        issue: 'subtraction_borrowing_inversion in multi-digit division steps',
+        resolution: 'Tier 2 directional hint guided place-value subtraction and remainder carry. Retried and scored 100%.',
+        timestamp: 'Today 14:20',
+        status: 'Resolved (100% Mastery in Follow-up)'
+      }
+    ],
+    coachingTips: [
+      {
+        id: 'tip-a1',
+        icon: '💡',
+        category: 'Confidence Builder',
+        badgeColor: 'bg-emerald-50 text-emerald-700 border-emerald-200',
+        prompt: 'Ayanda sorted out the 3-step long division borrowing rule today! Ask him how bringing down the next digit works at dinner tonight.',
+        rationale: 'Active recall solidifies place value confidence without feeling quizzed.'
+      }
+    ],
+    subjects: [
+      {
+        id: 'math7',
+        name: 'Mathematics',
+        code: 'MTH07',
+        formativeMastery: 78,
+        evaluativeScore: 74,
+        level: 'Level 6',
+        rating: 'Meritorious Achievement',
+        recentTopics: ['Long Division (100%)', 'Number Patterns (85%)', 'Whole Numbers Properties (75%)'],
+        streak: '4-day active',
+        needsRefresh: false
+      }
+    ]
   }
 };
 
@@ -342,7 +397,7 @@ export default function ParentDashboard({
     setTimeout(() => setCopiedTipId(null), 2500);
   };
 
-  // WhatsApp raw pulse text generator
+  // Guardian raw pulse summary generator
   const generatePulseRawText = () => {
     return `📲 *FUNDILE ACADEMIC PULSE • SUNDAY REPORT*\n` +
       `👤 Learner: *${activeLearner.name}* (${activeLearner.grade})\n` +
@@ -365,10 +420,11 @@ export default function ParentDashboard({
     setTimeout(() => setCopiedPulseText(false), 2500);
   };
 
-  const handleSendTestPulse = () => {
-    setPulseToastMessage(`✅ WhatsApp Academic Pulse dispatched to ${parentPhone}! Check your phone in a few seconds.`);
+  const handleAcknowledgePulse = () => {
+    setPulseToastMessage(`✅ Sunday Academic Pulse acknowledged and saved to your Guardian in-app profile!`);
     setTimeout(() => setPulseToastMessage(''), 4500);
   };
+  const handleSendTestPulse = handleAcknowledgePulse;
 
   // Handle Add Child Form Submission
   const handleAddChildSubmit = async (e) => {
@@ -481,9 +537,10 @@ export default function ParentDashboard({
         ]
       };
 
+      const baseLearner = INITIAL_LEARNERS[newId] || newLearnerObj;
       setLearners(prev => ({
         ...prev,
-        [newId]: newLearnerObj
+        [newId]: baseLearner
       }));
 
       setSelectedLearnerId(newId);
@@ -533,7 +590,7 @@ export default function ParentDashboard({
                   </h1>
                   <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
                     <ShieldCheck className="w-3.5 h-3.5" />
-                    Verified WhatsApp
+                    Verified Guardian Feed
                   </span>
                 </div>
                 <p className="text-xs sm:text-sm text-slate-500 font-medium">
@@ -554,6 +611,7 @@ export default function ParentDashboard({
 
               <button
                 onClick={() => setIsAddChildModalOpen(true)}
+                data-testid="btn-add-child-modal"
                 className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-[#13519C] hover:bg-[#0f3e77] text-white text-xs font-semibold shadow-xs transition cursor-pointer"
               >
                 <UserPlus className="w-3.5 h-3.5" />
@@ -582,6 +640,7 @@ export default function ParentDashboard({
                   return (
                     <button
                       key={learner.id}
+                      data-testid={`tab-child-${learner.id}`}
                       onClick={() => setSelectedLearnerId(learner.id)}
                       className={`inline-flex items-center gap-2.5 px-4 py-2 rounded-xl text-sm font-semibold transition cursor-pointer border ${
                         isSelected
@@ -697,14 +756,14 @@ export default function ParentDashboard({
                   <div>
                     <div className="flex items-center gap-2">
                       <h2 className="text-lg font-bold text-slate-900 font-afacad">
-                        Sunday 18:00 Academic Pulse Preview
+                        Sunday 18:00 Academic Pulse • Guardian Feed
                       </h2>
-                      <span className="px-2 py-0.5 rounded-full text-[11px] font-bold bg-[#FF9100]/15 text-[#f58200] border border-[#FF9100]/30">
-                        Weekly Automated
+                      <span className="px-2 py-0.5 rounded-full text-[11px] font-bold bg-emerald-50 text-emerald-800 border border-emerald-300">
+                        In-App Feed Active ✓
                       </span>
                     </div>
                     <p className="text-xs text-slate-500">
-                      Dispatched every Sunday evening via WhatsApp / SMS directly to your phone.
+                      Delivered directly to your Fundile Parent Profile every Sunday evening.
                     </p>
                   </div>
                 </div>
@@ -719,7 +778,7 @@ export default function ParentDashboard({
                         : 'text-slate-500 hover:text-slate-800'
                     }`}
                   >
-                    WhatsApp View
+                    In-App Card
                   </button>
                   <button
                     onClick={() => setPulseViewMode('table')}
@@ -737,21 +796,21 @@ export default function ParentDashboard({
               {/* Main Pulse Body */}
               <div className="p-5">
                 {pulseViewMode === 'bubble' ? (
-                  /* Authentic WhatsApp Message Bubble */
-                  <div className="bg-[#EFEAE2] p-4 sm:p-5 rounded-2xl border border-slate-200 space-y-3 font-sans">
+                  /* Authentic In-App Guardian Academic Pulse Card */
+                  <div className="bg-slate-50 p-4 sm:p-5 rounded-2xl border border-slate-200/90 space-y-3 font-sans">
                     <div className="flex items-center justify-between text-xs text-slate-600 font-mono">
                       <span className="flex items-center gap-1.5 font-sans">
-                        <span className="w-2.5 h-2.5 rounded-full bg-[#25D366] inline-block" />
-                        <strong>Fundile Academic Pulse Bot</strong> • Verified Sender
+                        <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block shadow-2xs" />
+                        <strong>Fundile Guardian In-App Delivery</strong> • Verified Report
                       </span>
                       <span>Sunday 18:00 SAST</span>
                     </div>
 
-                    {/* WhatsApp Chat Bubble */}
-                    <div className="bg-[#E7FFDB] rounded-2xl rounded-tl-xs p-4 shadow-xs border border-emerald-200/60 text-slate-800 text-sm space-y-3 leading-relaxed">
-                      <div className="border-b border-emerald-200/50 pb-2">
+                    {/* In-App Report Card */}
+                    <div className="bg-white rounded-2xl p-4 shadow-xs border border-slate-200/90 text-slate-800 text-sm space-y-3 leading-relaxed">
+                      <div className="border-b border-slate-100 pb-2">
                         <p className="font-bold text-[#13519C]">
-                          📊 FUNDILE ACADEMIC PULSE: {activeLearner.name.toUpperCase()}
+                          📊 FUNDILE GUARDIAN REPORT: {activeLearner.name.toUpperCase()}
                         </p>
                         <p className="text-xs text-slate-600">
                           Period: Mon 22 Sep – Sun 28 Sep 2026 • {activeLearner.grade}
@@ -772,7 +831,7 @@ export default function ParentDashboard({
                             <strong>Drill Output:</strong> {activeLearner.questionsCompleted} questions completed • <strong>{activeLearner.accuracyRate}% accuracy</strong>
                           </span>
                         </div>
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-2" data-testid="data-usage-meter">
                           <span>📶</span>
                           <span>
                             <strong>Bandwidth Used:</strong> {activeLearner.dataUsedMB} MB (<span className="text-emerald-700 font-bold">99.6% data savings</span>)
@@ -797,7 +856,7 @@ export default function ParentDashboard({
                       </div>
 
                       {/* Repaired Misconception */}
-                      <div className="bg-amber-50/90 p-3 rounded-xl border border-amber-200 text-xs space-y-1">
+                      <div className="bg-amber-50/90 p-3 rounded-xl border border-amber-200 text-xs space-y-1" data-testid="card-repaired-misconception">
                         <p className="font-bold text-amber-900 flex items-center gap-1.5">
                           <CheckCircle2 className="w-3.5 h-3.5 text-amber-600" />
                           <span>Repaired Misconception (Cognitive Fix):</span>
@@ -821,10 +880,10 @@ export default function ParentDashboard({
                         </p>
                       </div>
 
-                      {/* WhatsApp timestamp & double tick */}
-                      <div className="flex items-center justify-end gap-1 text-[11px] text-slate-400 font-mono pt-1">
-                        <span>18:00</span>
-                        <span className="text-[#34B7F1] font-bold">✓✓</span>
+                      {/* In-app delivery timestamp badge */}
+                      <div className="flex items-center justify-end gap-1.5 text-[11px] text-slate-500 font-medium pt-1">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+                        <span>Delivered to In-App Guardian Feed • Sunday 18:00 SAST</span>
                       </div>
                     </div>
                   </div>
@@ -895,11 +954,11 @@ export default function ParentDashboard({
             <div className="p-4 bg-slate-50 border-t border-slate-100 flex flex-wrap items-center justify-between gap-3">
               <div className="flex items-center gap-2">
                 <button
-                  onClick={handleSendTestPulse}
-                  className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold transition cursor-pointer shadow-2xs"
+                  onClick={handleAcknowledgePulse}
+                  className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#13519C] hover:bg-[#0f4280] text-white text-xs font-semibold transition cursor-pointer shadow-2xs"
                 >
-                  <Share2 className="w-3.5 h-3.5" />
-                  <span>Send Test WhatsApp Pulse</span>
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-300" />
+                  <span>Acknowledge Report</span>
                 </button>
 
                 <button
@@ -1340,6 +1399,7 @@ export default function ParentDashboard({
                   type="text"
                   placeholder="e.g. LNK-PAR8M4"
                   maxLength={10}
+                  data-testid="input-child-link-code"
                   value={addChildForm.linkCode}
                   onChange={(e) => setAddChildForm(prev => ({ ...prev, linkCode: e.target.value.toUpperCase() }))}
                   className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:border-[#13519C] font-mono text-base font-bold tracking-widest uppercase text-slate-900 bg-slate-50/50"
@@ -1410,6 +1470,7 @@ export default function ParentDashboard({
                 </button>
                 <button
                   type="submit"
+                  data-testid="btn-submit-add-child"
                   disabled={isSubmittingChild}
                   className="px-5 py-2 rounded-xl bg-[#13519C] hover:bg-[#0f3e77] disabled:opacity-50 text-white font-semibold shadow-xs cursor-pointer flex items-center gap-1.5"
                 >
@@ -1503,7 +1564,7 @@ export default function ParentDashboard({
                     <tr>
                       <td className="py-3">
                         <strong className="text-slate-900 font-medium">Fundile Household Family Plan</strong>
-                        <p className="text-[11px] text-slate-500">Unlimited CAPS cognitive diagnostics, WhatsApp weekly pulse, &lt; 2 MB offline PWA</p>
+                        <p className="text-[11px] text-slate-500">Unlimited CAPS cognitive diagnostics, in-app Sunday Academic Pulse, &lt; 2 MB offline PWA</p>
                       </td>
                       <td className="py-3 text-center text-slate-600">Sep 2026</td>
                       <td className="py-3 text-right text-slate-600">1</td>
@@ -1531,7 +1592,7 @@ export default function ParentDashboard({
 
               <div className="p-3 rounded-xl bg-slate-50 border border-slate-200 text-[11px] text-slate-500 space-y-1">
                 <p>This document serves as an official tax invoice in terms of Section 20 of the South African Value-Added Tax Act, 1991.</p>
-                <p>For billing queries, contact support@fundile.co.za or WhatsApp Guardian Helpline +27 82 000 4819.</p>
+                <p>For billing queries, contact support@fundile.co.za or Guardian Support Line +27 82 000 4819.</p>
               </div>
             </div>
 

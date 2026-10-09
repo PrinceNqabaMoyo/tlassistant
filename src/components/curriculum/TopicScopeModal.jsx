@@ -154,8 +154,19 @@ export default function TopicScopeModal({
 
   // Load and enrich CAPS topics for this subject & grade
   const allTopics = useMemo(() => {
-    const rawList = curriculumData[normalizedSubject]?.[String(numericGrade)]?.topics;
+    const gradeData = curriculumData[normalizedSubject]?.[String(numericGrade)];
     
+    // 1. Authoritative CAPS ATP term distribution from canonical registry
+    if (Array.isArray(gradeData?.topics_with_terms) && gradeData.topics_with_terms.length > 0) {
+      return gradeData.topics_with_terms.map((t) => ({
+        name: t.name,
+        term: t.term,
+        weight: t.weight,
+        duration: t.duration,
+      }));
+    }
+
+    const rawList = gradeData?.topics;
     if (Array.isArray(rawList) && rawList.length > 0) {
       return rawList.map((topicName, idx) => {
         const term = getTermForTopic(normalizedSubject, topicName, idx, rawList.length);

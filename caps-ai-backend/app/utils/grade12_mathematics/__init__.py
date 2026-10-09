@@ -5,6 +5,8 @@ from app.utils.grade12_mathematics import (
     differential_calculus_generator,
     counting_principles_probability_generator,
     bivariate_statistics_generator,
+    sequences_series_generator,
+    trigonometry_compound_angles_generator,
 )
 
 __all__ = [
@@ -12,4 +14,6 @@ __all__ = [
     "differential_calculus_generator",
     "counting_principles_probability_generator",
     "bivariate_statistics_generator",
+    "sequences_series_generator",
+    "trigonometry_compound_angles_generator",
 ]

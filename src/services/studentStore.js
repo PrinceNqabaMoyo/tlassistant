@@ -100,6 +100,13 @@ const createInitialState = () => {
         isRead: true
       }
     ],
+    activeSession: {
+      subjectId: 'accounting',
+      topic: 'Cash Receipts Journal (VAT 15%)',
+      progressionMode: 'diagnostic',
+      lastActiveTab: 'desk',
+      lastUpdated: new Date().toISOString()
+    },
     subjects,
     lastUpdated: new Date().toISOString()
   };
@@ -137,6 +144,7 @@ class StudentStore {
         const initial = createInitialState();
         parsed.subjects = { ...initial.subjects, ...(parsed.subjects || {}) };
         parsed.photoURL = parsed.photoURL || (typeof window !== 'undefined' ? localStorage.getItem('fundile_user_photoURL') : null);
+        parsed.activeSession = parsed.activeSession || initial.activeSession;
         return parsed;
       }
     } catch (e) {
@@ -155,6 +163,33 @@ class StudentStore {
       console.warn('Failed to save student state to localStorage', e);
     }
     this.notify();
+  }
+
+  // Active Session Persistence (Resume where learner left off)
+  setActiveSession({ subjectId, topic, progressionMode, lastActiveTab }) {
+    const prev = this.state.activeSession || {};
+    const updated = {
+      subjectId: subjectId || prev.subjectId || 'accounting',
+      topic: topic !== undefined ? topic : (prev.topic || null),
+      progressionMode: progressionMode || prev.progressionMode || 'diagnostic',
+      lastActiveTab: lastActiveTab !== undefined ? lastActiveTab : (prev.lastActiveTab || 'desk'),
+      lastUpdated: new Date().toISOString()
+    };
+    this.saveState({
+      ...this.state,
+      activeSession: updated
+    });
+    return updated;
+  }
+
+  getActiveSession() {
+    return this.state.activeSession || {
+      subjectId: 'accounting',
+      topic: 'Cash Receipts Journal (VAT 15%)',
+      progressionMode: 'diagnostic',
+      lastActiveTab: 'desk',
+      lastUpdated: new Date().toISOString()
+    };
   }
 
   subscribe(listener) {
@@ -263,23 +298,74 @@ class StudentStore {
 
     // Detect subject from join code prefix
     let subject = 'Curriculum Practice';
-    if (normalizedCode.startsWith('ACC')) subject = 'Accounting';
-    else if (normalizedCode.startsWith('MAT')) subject = 'Mathematics';
+    let teacherName = `Educator (${normalizedCode})`;
+    if (normalizedCode === 'MTH701') {
+      subject = 'Mathematics';
+      teacherName = 'Mrs. Patience Khumalo';
+    } else if (normalizedCode.startsWith('ACC')) subject = 'Accounting';
+    else if (normalizedCode.startsWith('MAT') || normalizedCode.startsWith('MTH')) subject = 'Mathematics';
     else if (normalizedCode.startsWith('PHY')) subject = 'Physical Sciences';
     else if (normalizedCode.startsWith('BUS')) subject = 'Business Studies';
     else if (normalizedCode.startsWith('EMS')) subject = 'EMS';
 
     const newTeacher = {
       id: `teacher_${Date.now()}`,
-      name: `Educator (${normalizedCode})`,
+      name: teacherName,
       subject,
       code: normalizedCode,
       school: this.state.school || 'Westville High School'
     };
 
+    let updatedTasks = this.state.currentUser?.assignedTasks || [];
+    let updatedGrade = this.state.grade;
+    let updatedPhase = this.state.phase;
+    let unviewed = this.state.unviewedTaskIds || [];
+
+    if (normalizedCode === 'MTH701') {
+      updatedGrade = 7;
+      updatedPhase = 'Senior Phase (Gr 7–9)';
+      updatedTasks = [
+        {
+          id: 'task_g7_pat',
+          subject: 'mathematics',
+          subjectName: 'Mathematics',
+          title: 'Grade 7 Number Patterns (Tn = 4n - 1)',
+          topic: 'Numeric and Geometric Patterns',
+          assignedBy: 'Mrs. Patience Khumalo',
+          dueText: 'DUE TODAY',
+          dueTime: '16:00',
+          marks: 5,
+          notes: 'Mrs. Khumalo assigned 5 marks patterns practice.',
+          estimatedMins: 10
+        },
+        {
+          id: 'task_g7_div',
+          subject: 'mathematics',
+          subjectName: 'Mathematics',
+          title: 'Whole Numbers: Long Division Algorithm',
+          topic: 'Working with Whole Numbers',
+          subskill: 'long_division',
+          assignedBy: 'Mrs. Patience Khumalo',
+          dueText: 'DUE TOMORROW',
+          dueTime: '08:30',
+          marks: 4,
+          notes: 'Mrs. Khumalo • 4 Marks • Column division procedure practice.',
+          estimatedMins: 8
+        }
+      ];
+      unviewed = ['task_g7_pat', 'task_g7_div'];
+    }
+
     this.saveState({
       ...this.state,
-      teacherLinks: [...current, newTeacher]
+      grade: updatedGrade,
+      phase: updatedPhase,
+      teacherLinks: [...current, newTeacher],
+      currentUser: {
+        ...(this.state.currentUser || {}),
+        assignedTasks: updatedTasks,
+      },
+      unviewedTaskIds: unviewed,
     });
     return true;
   }
@@ -394,12 +480,19 @@ class StudentStore {
 
     const earnedXp = this.state.totalXp + xp;
     const newStreak = this.state.streakDays === 0 ? 1 : this.state.streakDays;
+    const nextActiveSession = {
+      ...(this.state.activeSession || {}),
+      subjectId: normalized,
+      progressionMode: mode,
+      lastUpdated: new Date().toISOString()
+    };
 
     this.saveState({
       ...this.state,
       subjects: newSubjects,
       totalXp: earnedXp,
-      streakDays: newStreak
+      streakDays: newStreak,
+      activeSession: nextActiveSession
     });
   }
 

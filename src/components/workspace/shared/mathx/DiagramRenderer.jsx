@@ -731,34 +731,60 @@ function renderCircleGeometry(spec, { id, interactive, selectedEdge, graded, cor
         zoom: { enabled: false },
     });
 
-    // 1. Create Points
+    // 1. Create Center Point & Circle first so gliders can bind to it
     const P = {};
-    Object.entries(pts).forEach(([name, [x, y]]) => {
-        const isCenter = name === centerKey;
-        const displayName = spec.vertex_labels?.[name] !== undefined ? spec.vertex_labels[name] : name;
-        P[name] = board.create('point', [x, y], {
-            name: displayName,
-            size: isCenter ? 2 : 2.5,
-            fixed: true,
-            showInfobox: false,
-            label: { offset: [6, 6], fontSize: 13, strokeColor: COLORS.label },
-            fillColor: isCenter ? COLORS.hint : COLORS.line,
-            strokeColor: COLORS.line,
-            visible: displayName !== '',
-        });
+    const centerDisplay = spec.vertex_labels?.[centerKey] !== undefined ? spec.vertex_labels[centerKey] : centerKey;
+    P[centerKey] = board.create('point', centerCoord, {
+        name: centerDisplay,
+        size: 2,
+        fixed: true,
+        showInfobox: false,
+        label: { offset: [6, 6], fontSize: 13, strokeColor: COLORS.label },
+        fillColor: COLORS.hint,
+        strokeColor: COLORS.line,
+        visible: centerDisplay !== '',
     });
 
-    // 2. Draw Circle around center
-    if (P[centerKey]) {
-        board.create('circle', [P[centerKey], radius], {
-            strokeColor: COLORS.line,
-            strokeWidth: 2,
-            fillColor: COLORS.fill,
-            fillOpacity: 0.04,
-            fixed: true,
-            highlight: false,
-        });
-    }
+    const mainCircle = board.create('circle', [P[centerKey], radius], {
+        strokeColor: COLORS.line,
+        strokeWidth: 2,
+        fillColor: COLORS.fill,
+        fillOpacity: 0.04,
+        fixed: true,
+        highlight: false,
+    });
+
+    // 2. Create Remaining Points (with dynamic circle glider support)
+    const draggableList = spec.draggable_points || [];
+    Object.entries(pts).forEach(([name, [x, y]]) => {
+        if (name === centerKey) return;
+        const displayName = spec.vertex_labels?.[name] !== undefined ? spec.vertex_labels[name] : name;
+        const isDraggable = draggableList.includes(name);
+
+        if (isDraggable && mainCircle) {
+            P[name] = board.create('glider', [x, y, mainCircle], {
+                name: displayName,
+                size: 3.5,
+                showInfobox: false,
+                label: { offset: [6, 6], fontSize: 14, strokeColor: '#2563eb', fontStyle: 'bold' },
+                fillColor: '#2563eb',
+                strokeColor: '#1d4ed8',
+                visible: displayName !== '',
+            });
+        } else {
+            P[name] = board.create('point', [x, y], {
+                name: displayName,
+                size: 2.5,
+                fixed: true,
+                showInfobox: false,
+                label: { offset: [6, 6], fontSize: 13, strokeColor: COLORS.label },
+                fillColor: COLORS.line,
+                strokeColor: COLORS.line,
+                visible: displayName !== '',
+            });
+        }
+    });
+
 
     // 3. Draw Lines / Chords / Tangents
     const edgeColor = (edge) => {

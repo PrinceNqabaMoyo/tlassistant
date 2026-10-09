@@ -64,7 +64,7 @@ const mapUploadErrorMessage = (error, timedOut = false) => {
 
 export const EftUploadModal = ({ isOpen, onClose, currentUser, db, targetGrade, embedded = false, compact = false, fileInputRef = null, revealed = false }) => {
     const [file, setFile] = useState(null);
-    const [selectedPlan, setSelectedPlan] = useState('monthly'); // 'monthly' | 'yearly'
+    const [selectedPlan, setSelectedPlan] = useState('term'); // 'monthly' | 'term' | 'yearly'
     const [status, setStatus] = useState('idle'); // 'idle' | 'uploading' | 'uploaded' | 'submitting' | 'success' | 'upload_error' | 'submit_error'
     const [errorMessage, setErrorMessage] = useState('');
     const [showProComingSoon, setShowProComingSoon] = useState(false);
@@ -86,14 +86,24 @@ export const EftUploadModal = ({ isOpen, onClose, currentUser, db, targetGrade, 
     const selectedPlanDetails = useMemo(() => {
         if (selectedPlan === 'yearly') {
             return {
-                label: 'Standard - 12 Months (R1600)',
-                amount: 1600,
+                label: 'Annual Distinction Pass - 12 Months (R999)',
+                amount: 999,
+                durationDays: 365,
+            };
+        }
+
+        if (selectedPlan === 'term') {
+            return {
+                label: 'School Term Pass - 3 Months (R349)',
+                amount: 349,
+                durationDays: 90,
             };
         }
 
         return {
-            label: 'Standard - 1 Month (R150)',
-            amount: 150,
+            label: 'Monthly Pass - 1 Month (R149)',
+            amount: 149,
+            durationDays: 30,
         };
     }, [selectedPlan]);
     const selectedPlanLabel = selectedPlanDetails.label;
@@ -106,9 +116,9 @@ export const EftUploadModal = ({ isOpen, onClose, currentUser, db, targetGrade, 
     const canSubmitUploadedPop = Boolean(file && uploadedPop) && (status === 'uploaded' || status === 'submit_error');
     const isPlanLocked = isBusy || canSubmitUploadedPop || status === 'success' || isPendingReview;
     const resolvedFileInputRef = fileInputRef || internalFileInputRef;
-    const effectivePlanLabel = compact ? 'Standard EFT POP' : selectedPlanLabel;
-    const effectivePlanKey = compact ? 'standard' : selectedPlan;
-    const effectivePlanAmount = compact ? null : selectedPlanAmount;
+    const effectivePlanLabel = selectedPlanLabel;
+    const effectivePlanKey = selectedPlan;
+    const effectivePlanAmount = selectedPlanAmount;
     const shouldShowCompactPanel = revealed || Boolean(file) || status !== 'idle' || isPendingReview;
     const visibleUploadProgress = status === 'uploaded' || status === 'submitting' || status === 'submit_error' || status === 'success' ? 100 : uploadProgress;
 
@@ -707,7 +717,7 @@ export const EftUploadModal = ({ isOpen, onClose, currentUser, db, targetGrade, 
                                                 <p className="text-xs font-semibold uppercase tracking-[0.2em] text-gray-500">Reference to use</p>
                                                 <p className="mt-2 break-all font-mono text-sm font-semibold text-gray-900">{referenceId}</p>
                                             </div>
-                                            <button type="button" onClick={() => handleCopy(referenceId, 'Reference')} className="rounded-full border border-gray-200 p-2 text-gray-500 transition hover:border-indigo-300 hover:text-indigo-600">
+                                            <button type="button" data-testid="btn-copy-bank-ref" onClick={() => handleCopy(referenceId, 'Reference')} className="rounded-full border border-gray-200 p-2 text-gray-500 transition hover:border-indigo-300 hover:text-indigo-600">
                                                 <Copy className="h-4 w-4" />
                                             </button>
                                         </div>
@@ -732,8 +742,9 @@ export const EftUploadModal = ({ isOpen, onClose, currentUser, db, targetGrade, 
                                             Access all available subjects in the selected grade, with automatic rollover into the next grade when the active subscription overlaps the new year.
                                         </p>
                                         <div className="mt-4 flex flex-wrap gap-2 text-xs font-semibold text-indigo-700">
-                                            <span className="rounded-full bg-white px-3 py-1">R150 monthly</span>
-                                            <span className="rounded-full bg-white px-3 py-1">R1600 yearly</span>
+                                            <span className="rounded-full bg-white px-3 py-1">R149 monthly</span>
+                                            <span className="rounded-full bg-white px-3 py-1">R349 term</span>
+                                            <span className="rounded-full bg-white px-3 py-1">R999 yearly</span>
                                         </div>
                                     </div>
                                     <button
@@ -762,28 +773,46 @@ export const EftUploadModal = ({ isOpen, onClose, currentUser, db, targetGrade, 
                             <div>
                                 <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">Select Your Standard Billing Plan</h3>
                                 <p className="mb-3 text-sm text-gray-600">Choose the Standard package duration for EFT payment.</p>
-                                <div className="grid grid-cols-2 gap-3">
+                                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                                     <button 
+                                        type="button"
+                                        data-testid="plan-monthly-149"
                                         onClick={() => setSelectedPlan('monthly')}
                                         disabled={isPlanLocked}
                                         className={`border-2 rounded-xl p-3 text-center transition-all ${
                                             selectedPlan === 'monthly' ? 'border-indigo-600 bg-indigo-50 ring-2 ring-indigo-200' : 'border-gray-200 hover:border-indigo-300 bg-gray-50'
                                         }`}
                                     >
-                                        <div className={`font-bold text-lg ${selectedPlan === 'monthly' ? 'text-indigo-700' : 'text-gray-700'}`}>R150</div>
+                                        <div className={`font-bold text-lg ${selectedPlan === 'monthly' ? 'text-indigo-700' : 'text-gray-700'}`}>R149</div>
                                         <div className="text-xs font-medium text-gray-500">1 Month</div>
                                     </button>
                                     
                                     <button 
+                                        type="button"
+                                        data-testid="plan-term-pass-349"
+                                        onClick={() => setSelectedPlan('term')}
+                                        disabled={isPlanLocked}
+                                        className={`border-2 rounded-xl p-3 text-center transition-all relative ${
+                                            selectedPlan === 'term' ? 'border-[#FF9100] bg-amber-50 ring-2 ring-amber-200' : 'border-gray-200 hover:border-amber-300 bg-gray-50'
+                                        }`}
+                                    >
+                                        <span className="absolute -top-2.5 -right-2 bg-[#FF9100] text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-sm">Most Popular</span>
+                                        <div className={`font-bold text-lg ${selectedPlan === 'term' ? 'text-amber-800' : 'text-gray-700'}`}>R349</div>
+                                        <div className="text-xs font-medium text-gray-500">3 Months (Term)</div>
+                                    </button>
+
+                                    <button 
+                                        type="button"
+                                        data-testid="plan-yearly-999"
                                         onClick={() => setSelectedPlan('yearly')}
                                         disabled={isPlanLocked}
                                         className={`border-2 rounded-xl p-3 text-center transition-all relative ${
                                             selectedPlan === 'yearly' ? 'border-indigo-600 bg-indigo-50 ring-2 ring-indigo-200' : 'border-gray-200 hover:border-indigo-300 bg-gray-50'
                                         }`}
                                     >
-                                        <span className="absolute -top-2.5 -right-2 bg-emerald-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-sm">Save R200!</span>
-                                        <div className={`font-bold text-lg ${selectedPlan === 'yearly' ? 'text-indigo-700' : 'text-gray-700'}`}>R1,600</div>
-                                        <div className="text-xs font-medium text-gray-500">12 Months</div>
+                                        <span className="absolute -top-2.5 -right-2 bg-emerald-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-sm">Save R789!</span>
+                                        <div className={`font-bold text-lg ${selectedPlan === 'yearly' ? 'text-indigo-700' : 'text-gray-700'}`}>R999</div>
+                                        <div className="text-xs font-medium text-gray-500">12 Months (Annual)</div>
                                     </button>
                                 </div>
                                 <div className="mt-3 rounded-xl border border-indigo-100 bg-indigo-50/70 px-4 py-3 text-sm text-indigo-900">
@@ -809,7 +838,7 @@ export const EftUploadModal = ({ isOpen, onClose, currentUser, db, targetGrade, 
                                         </p>
                                         <p className="mt-2 text-xs text-gray-500">{file ? `${formatFileSize(file.size)} · ${file.type || 'Unknown type'}` : POP_FILE_REQUIREMENTS_LABEL}</p>
                                     </div>
-                                    <input type="file" className="hidden" accept=".pdf,image/png,image/jpeg" onChange={handleFileChange} disabled={isBusy} />
+                                    <input data-testid="input-file-pop" ref={resolvedFileInputRef} type="file" className="hidden" accept=".pdf,image/png,image/jpeg" onChange={handleFileChange} disabled={isBusy} />
                                 </label>
                                 {file && (
                                     <div className="mt-3 rounded-2xl border border-gray-200 bg-white px-4 py-3 text-sm text-gray-700 shadow-sm">
@@ -889,6 +918,8 @@ export const EftUploadModal = ({ isOpen, onClose, currentUser, db, targetGrade, 
                             </button>
                         ) : null}
                         <button
+                            type="button"
+                            data-testid="btn-submit-pop"
                             onClick={handleUpload}
                             disabled={!canSubmitUploadedPop || isBusy}
                             className={`flex items-center gap-2 px-6 py-2 rounded-full font-semibold text-white shadow-md transition-all ${

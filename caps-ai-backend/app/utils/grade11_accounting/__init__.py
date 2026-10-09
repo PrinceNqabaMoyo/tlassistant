@@ -9,6 +9,11 @@ from . import (
     partnership_ledger_generator,
     partnerships_financial_statements_generator,
     reconciliation_generator,
+    vat_generator,
+)
+from .term2 import (
+    analysis_interpretation_generator,
+    clubs_nonprofit_generator,
 )
 
 __all__ = [
@@ -21,4 +26,7 @@ __all__ = [
     "partnership_ledger_generator",
     "partnerships_financial_statements_generator",
     "reconciliation_generator",
+    "vat_generator",
+    "analysis_interpretation_generator",
+    "clubs_nonprofit_generator",
 ]

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { initializeApp } from 'firebase/app';
 import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, signInAnonymously } from 'firebase/auth';
-import { getFirestore, doc, setDoc, getDoc, updateDoc } from 'firebase/firestore';
+import { getFirestore, doc, setDoc, getDoc, updateDoc, onSnapshot } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
 import { firebaseConfig } from '../constants/sourceDocuments';
 import { OWNER_EMAILS } from '../app/constants/access';
@@ -103,153 +103,133 @@ export const useAuthentication = () => {
             setDb(dbInstance);
             setStorage(storageInstance);
 
-            // Set up the authentication state change listener
+            let unsubUserDoc = null;
+
+            // Set up the authentication state change listener with reactive onSnapshot user doc subscription
             const unsubscribe = onAuthStateChanged(authInstance, async (user) => {
+                if (unsubUserDoc) {
+                    unsubUserDoc();
+                    unsubUserDoc = null;
+                }
+
                 if (user) {
                     try {
                         await user.reload();
+                    } catch (reloadErr) {
+                        console.warn('User auth reload skipped:', reloadErr);
+                    }
 
-                        const isOwner = OWNER_EMAILS.includes(user.email) && user.emailVerified === true;
+                    const isOwner = OWNER_EMAILS.includes(user.email) && user.emailVerified === true;
 
-                        // Get user document from Firestore
-                        const userDoc = await getDoc(doc(dbInstance, 'users', user.uid));
-                        if (userDoc.exists()) {
-                            const userData = userDoc.data();
-                            
-                            // Immediately log out blocked or deleted users
-                            if (userData.accountStatus === 'blocked' || userData.isDeleted) {
-                                await signOut(authInstance);
-                                setCurrentUser(null);
-                                setUserRole(null);
-                                setAuthLoading(false);
-                                return;
-                            }
-
-                            const subscriptionFields = buildSubscriptionFields(isOwner, userData);
-                            const resolvedPaymentReference = userData.paymentReference || buildPaymentReference(user.uid);
-                            // Determine effective tier
-                            const effectiveTier = isOwner ? 'owner' : (userData.tier || 'standard');
-
-                            // Check subscription expiry
-                            const expired = checkSubscriptionExpiry(userData.subscriptionExpiry, isOwner);
-                            setSubscriptionExpired(expired);
-
-                            const userPatch = {};
-                            Object.entries(subscriptionFields).forEach(([key, value]) => {
-                                if (userData[key] !== value) {
-                                    userPatch[key] = value;
+                    // Real-time onSnapshot listener for user profile & subscription updates
+                    unsubUserDoc = onSnapshot(doc(dbInstance, 'users', user.uid), async (userDoc) => {
+                        try {
+                            if (userDoc.exists()) {
+                                const userData = userDoc.data();
+                                
+                                // Immediately log out blocked or deleted users
+                                if (userData.accountStatus === 'blocked' || userData.isDeleted) {
+                                    await signOut(authInstance);
+                                    setCurrentUser(null);
+                                    setUserRole(null);
+                                    setAuthLoading(false);
+                                    return;
                                 }
-                            });
 
-                            if (userData.paymentReference !== resolvedPaymentReference) {
-                                userPatch.paymentReference = resolvedPaymentReference;
-                            }
+                                const subscriptionFields = buildSubscriptionFields(isOwner, userData);
+                                const resolvedPaymentReference = userData.paymentReference || buildPaymentReference(user.uid);
+                                const effectiveTier = isOwner ? 'owner' : (userData.tier || 'standard');
+                                const expired = checkSubscriptionExpiry(userData.subscriptionExpiry, isOwner);
+                                setSubscriptionExpired(expired);
 
-                            if (Object.keys(userPatch).length > 0) {
-                                try {
-                                    await updateDoc(doc(dbInstance, 'users', user.uid), userPatch);
-                                } catch (e) {
-                                    console.warn('Could not normalize subscriber fields:', e);
+                                const userPatch = {};
+                                Object.entries(subscriptionFields).forEach(([key, value]) => {
+                                    if (userData[key] !== value) {
+                                        userPatch[key] = value;
+                                    }
+                                });
+
+                                if (userData.paymentReference !== resolvedPaymentReference) {
+                                    userPatch.paymentReference = resolvedPaymentReference;
                                 }
-                            }
 
-                            // Auto-upgrade grades on Dec 1+
-                            let effectiveGrades = isOwner ? [7,8,9,10,11,12] : (userData.subscribedGrades || []);
-                            if (!isOwner && !expired) {
-                                const upgraded = getAutoUpgradedGrades(effectiveGrades);
-                                if (upgraded) {
-                                    effectiveGrades = upgraded;
-                                    // Persist the upgrade to Firestore
+                                if (Object.keys(userPatch).length > 0) {
                                     try {
-                                        await updateDoc(doc(dbInstance, 'users', user.uid), { subscribedGrades: upgraded });
+                                        await updateDoc(doc(dbInstance, 'users', user.uid), userPatch);
                                     } catch (e) {
-                                        console.warn('Could not auto-upgrade grades:', e);
+                                        console.warn('Could not normalize subscriber fields:', e);
                                     }
                                 }
-                            }
 
-                            setCurrentUser({
-                                ...userData,
-                                uid: user.uid,
-                                email: user.email || `anon_${user.uid}@explore.fundile.com`,
-                                emailVerified: user.emailVerified,
-                                isAnonymous: user.isAnonymous,
-                                isOwner,
-                                isSuperAdmin: isOwner, // backward compat
-                                tier: effectiveTier,
-                                subscriptionExpired: expired,
-                                subscribedGrades: effectiveGrades,
-                                subscribedSubjects: isOwner ? ['all'] : (userData.subscribedSubjects || []),
-                                paymentReference: resolvedPaymentReference,
-                                ...subscriptionFields,
-                                paymentStatus: subscriptionFields.paymentStatus,
-                                subscriptionStatus: subscriptionFields.subscriptionStatus,
-                                subscribedGrades: effectiveGrades,
-                                subscribedSubjects: isOwner ? ['all'] : (userData.subscribedSubjects || [])
-                            });
-                            setUserRole(userData.role || 'student');
-                        } else {
-                            // Create new user document if it doesn't exist
-                            const newUserData = {
-                                email: user.email,
-                                role: 'student',
-                                createdAt: new Date(),
-                                curriculum: null,
-                                grade: null,
-                                tier: isOwner ? 'owner' : 'standard',
-                                subscribedGrades: isOwner ? [7,8,9,10,11,12] : [],
-                                subscribedSubjects: isOwner ? ['all'] : [],
-                                paymentReference: buildPaymentReference(user.uid),
-                                subscriptionExpiry: null,
-                                isOwner: isOwner,
-                                ...buildSubscriptionFields(isOwner)
-                            };
-                            await setDoc(doc(dbInstance, 'users', user.uid), newUserData);
-                            setCurrentUser({
-                                uid: user.uid,
-                                email: user.email || `anon_${user.uid}@explore.fundile.com`,
-                                emailVerified: user.emailVerified,
-                                isAnonymous: user.isAnonymous,
-                                isOwner,
-                                isSuperAdmin: isOwner, // backward compat
-                                tier: isOwner ? 'owner' : 'standard',
-                                subscribedGrades: isOwner ? [7,8,9,10,11,12] : [],
-                                subscribedSubjects: isOwner ? ['all'] : [],
-                                subscriptionExpired: false,
-                                ...newUserData
-                            });
-                            setUserRole('student');
+                                let effectiveGrades = isOwner ? [7,8,9,10,11,12] : (userData.subscribedGrades || []);
+                                if (!isOwner && !expired) {
+                                    const upgraded = getAutoUpgradedGrades(effectiveGrades);
+                                    if (upgraded) {
+                                        effectiveGrades = upgraded;
+                                        try {
+                                            await updateDoc(doc(dbInstance, 'users', user.uid), { subscribedGrades: upgraded });
+                                        } catch (e) {
+                                            console.warn('Could not auto-upgrade grades:', e);
+                                        }
+                                    }
+                                }
+
+                                setCurrentUser({
+                                    ...userData,
+                                    uid: user.uid,
+                                    email: user.email || `anon_${user.uid}@explore.fundile.com`,
+                                    emailVerified: user.emailVerified,
+                                    isAnonymous: user.isAnonymous,
+                                    isOwner,
+                                    isSuperAdmin: isOwner,
+                                    tier: effectiveTier,
+                                    subscriptionExpired: expired,
+                                    paymentReference: resolvedPaymentReference,
+                                    ...subscriptionFields,
+                                    paymentStatus: subscriptionFields.paymentStatus,
+                                    subscriptionStatus: subscriptionFields.subscriptionStatus,
+                                    subscribedGrades: effectiveGrades,
+                                    subscribedSubjects: isOwner ? ['all'] : (userData.subscribedSubjects || [])
+                                });
+                                setUserRole(userData.role || 'student');
+                                setAuthLoading(false);
+                            } else {
+                                // Create new user document if it doesn't exist
+                                const newUserData = {
+                                    email: user.email,
+                                    role: 'student',
+                                    createdAt: new Date(),
+                                    curriculum: null,
+                                    grade: null,
+                                    tier: isOwner ? 'owner' : 'standard',
+                                    subscribedGrades: isOwner ? [7,8,9,10,11,12] : [],
+                                    subscribedSubjects: isOwner ? ['all'] : [],
+                                    paymentReference: buildPaymentReference(user.uid),
+                                    subscriptionExpiry: null,
+                                    isOwner: isOwner,
+                                    ...buildSubscriptionFields(isOwner)
+                                };
+                                await setDoc(doc(dbInstance, 'users', user.uid), newUserData);
+                            }
+                        } catch (docErr) {
+                            console.error('Error in user onSnapshot listener:', docErr);
+                            setAuthLoading(false);
                         }
-                    } catch (error) {
-                        console.error('Error fetching user data:', error);
-                        try {
-                            await user.reload();
-                        } catch (reloadError) {
-                            console.error('Error reloading auth user:', reloadError);
-                        }
-                        const isOwner = OWNER_EMAILS.includes(user.email) && user.emailVerified === true;
-                        setCurrentUser({
-                            uid: user.uid,
-                            email: user.email,
-                            emailVerified: user.emailVerified,
-                            isOwner,
-                            isSuperAdmin: isOwner, // backward compat
-                            paymentReference: buildPaymentReference(user.uid),
-                            tier: isOwner ? 'owner' : 'standard',
-                            paymentStatus: isOwner ? 'approved' : 'not_submitted',
-                            subscriptionStatus: isOwner ? 'active' : 'inactive',
-                            role: 'student'
-                        });
-                        setUserRole('student');
-                    }
+                    }, (snapErr) => {
+                        console.error('User document snapshot error:', snapErr);
+                        setAuthLoading(false);
+                    });
                 } else {
                     setCurrentUser(null);
                     setUserRole(null);
+                    setAuthLoading(false);
                 }
-                setAuthLoading(false);
             });
 
-            return () => unsubscribe();
+            return () => {
+                if (unsubUserDoc) unsubUserDoc();
+                unsubscribe();
+            };
         } catch (error) {
             console.error('Firebase initialization error:', error);
             setAuthLoading(false);

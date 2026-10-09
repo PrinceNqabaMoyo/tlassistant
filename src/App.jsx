@@ -638,6 +638,13 @@ export default function App() {
     }
   }, []);
 
+  const handleSetSuperAdminMode = useCallback((mode) => {
+    setSuperAdminMode(mode);
+    if (activePersona) {
+      setActivePersona((prev) => prev ? { ...prev, role: mode } : null);
+    }
+  }, [activePersona]);
+
   const effectiveRole = activePersona ? activePersona.role : (currentUser?.isSuperAdmin ? superAdminMode : currentUser?.role);
   const effectiveTier = currentUser?.isSuperAdmin || currentUser?.isOwner ? superAdminTier : currentUser?.tier;
   const effectiveCurrentUser = useMemo(
@@ -1192,7 +1199,7 @@ export default function App() {
     setBrandPalette,
     setCurrentView: setView,
     setIsKeypadVisible,
-    setSuperAdminMode,
+    setSuperAdminMode: handleSetSuperAdminMode,
     superAdminMode,
     setSuperAdminTier,
     superAdminTier,
@@ -1341,7 +1348,24 @@ export default function App() {
   }
 
   if (!effectiveCurrentUser) {
-    return <AuthScreen auth={auth} db={db} initialMode={authMode} onNavigateHome={handleNavigateHome} onToggleMode={() => navigateToRoutePage(authMode === 'signin' ? 'signup' : 'signin')} onNavigateToSubscription={handleNavigateToSubscriptionPage} statusMessage={authStatusMessage} />;
+    return (
+      <AuthScreen 
+        auth={auth} 
+        db={db} 
+        initialMode={authMode} 
+        onNavigateHome={handleNavigateHome} 
+        onToggleMode={() => navigateToRoutePage(authMode === 'signin' ? 'signup' : 'signin')} 
+        onNavigateToSubscription={handleNavigateToSubscriptionPage} 
+        onStudentLogin={() => handleSwitchPersona({
+          role: 'student',
+          name: 'Nqobile Dlamini',
+          grade: 10,
+          school: 'Westville High School',
+          emailVerified: true
+        })}
+        statusMessage={authStatusMessage} 
+      />
+    );
   }
 
   if (!hasVerifiedAccess) {
@@ -1365,7 +1389,7 @@ export default function App() {
               pendingAssignments={pendingAssignments}
               studentNotifications={studentNotifications}
               superAdminMode={superAdminMode}
-              setSuperAdminMode={setSuperAdminMode}
+              setSuperAdminMode={handleSetSuperAdminMode}
               superAdminTier={superAdminTier}
               setSuperAdminTier={setSuperAdminTier}
               brandPalette={brandPalette}
@@ -1380,7 +1404,7 @@ export default function App() {
               onOpenPersonaSwitcher={() => setShowPersonaSwitcher(true)}
               onLogout={handleAppLogout}
               superAdminMode={superAdminMode}
-              setSuperAdminMode={setSuperAdminMode}
+              setSuperAdminMode={handleSetSuperAdminMode}
               superAdminTier={superAdminTier}
               setSuperAdminTier={setSuperAdminTier}
             />
@@ -1403,7 +1427,7 @@ export default function App() {
           onOpenPersonaSwitcher={() => setShowPersonaSwitcher(true)}
           onLogout={handleAppLogout}
           superAdminMode={superAdminMode}
-          setSuperAdminMode={setSuperAdminMode}
+          setSuperAdminMode={handleSetSuperAdminMode}
           superAdminTier={superAdminTier}
           setSuperAdminTier={setSuperAdminTier}
         />

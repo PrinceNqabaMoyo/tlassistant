@@ -42,6 +42,47 @@ def get_topics_by_subject_grade(subject, grade):
             'error': str(e)
         }), 500
 
+@curriculum_bp.route('/terms', methods=['GET'])
+def get_curriculum_terms():
+    """Get canonical CAPS ATP curriculum registry with authentic Terms 1-4 for all 30 suites"""
+    try:
+        from ...services.caps_term_curriculum_registry import get_frontend_curriculum_data
+        data = get_frontend_curriculum_data()
+        return jsonify({
+            'success': True,
+            'curriculum': data,
+            'lastUpdated': datetime.now().isoformat(),
+            'version': '3.0'
+        })
+    except Exception as e:
+        return jsonify({
+            'success': False,
+            'error': str(e)
+        }), 500
+
+@curriculum_bp.route('/terms/<subject>/<grade>', methods=['GET'])
+def get_terms_by_subject_grade(subject, grade):
+    """Get topics grouped strictly by authentic CAPS term for specific subject and grade"""
+    try:
+        from ...services.caps_term_curriculum_registry import get_all_topics_for_subject_grade
+        topics = get_all_topics_for_subject_grade(grade=grade, subject=subject)
+        terms_grouped = {1: [], 2: [], 3: [], 4: []}
+        for t in topics:
+            terms_grouped[t['term']].append(t)
+        return jsonify({
+            'success': True,
+            'subject': subject,
+            'grade': grade,
+            'terms': terms_grouped,
+            'topics': topics
+        })
+    except Exception as e:
+        return jsonify({
+            'success': False,
+            'error': str(e)
+        }), 500
+
+
 @curriculum_bp.route('/search', methods=['POST'])
 def search_curriculum():
     """Search curriculum content"""

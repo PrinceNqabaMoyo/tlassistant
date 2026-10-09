@@ -161,6 +161,8 @@ def create_app():
             q_copy['question_type'] = 'journal'
         elif ('options' in q_copy or 'options_latex' in q_copy) and not q_copy.get('question_type'):
             q_copy['question_type'] = 'mcq'
+        elif ('arithmetic_grid' in q_copy or q_copy.get('subskill') == 'long_division' or (isinstance(clean_answer, dict) and 'quotient' in clean_answer)) and not q_copy.get('modality'):
+            q_copy['modality'] = 'arithmetic_grid'
 
         if 'correct_index' in q_copy and 'correct_idx' not in q_copy:
             q_copy['correct_idx'] = q_copy['correct_index']
@@ -185,6 +187,7 @@ def create_app():
                 "is_correct": is_correct,
                 "feedback": res.get('feedback', report.get('overall_feedback', '')),
                 "cell_results": res.get('cell_results', {}),
+                "misconception_tag": res.get('misconception_tag'),
             })
         except Exception as e:
             return jsonify({

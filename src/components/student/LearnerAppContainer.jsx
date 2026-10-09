@@ -9,6 +9,7 @@ import MobileWebApkView from '../mobile/MobileWebApkView';
 import UserProfileModal from '../profile/UserProfileModal';
 import TopicScopeModal from '../curriculum/TopicScopeModal';
 import LinkGuardianModal from '../family/LinkGuardianModal';
+import JoinClassModal from './JoinClassModal';
 import navigationHistoryService from '../../services/navigationHistoryService';
 import { buildApiUrl } from '../../utils/apiBaseUrl';
 import studentStore from '../../services/studentStore';
@@ -52,15 +53,16 @@ export default function LearnerAppContainer({
   superAdminTier = 'standard',
   setSuperAdminTier = null,
 }) {
+  const savedSession = studentStore.getActiveSession();
   const [activeTab, setActiveTab] = useState(initialTab);
-  const [activeTopic, setActiveTopic] = useState(() => getDefaultTopicForSubject(initialTab));
+  const [activeTopic, setActiveTopic] = useState(() => savedSession?.topic || getDefaultTopicForSubject(initialTab));
   const [question, setQuestion] = useState(null);
   const [isGenerating, setIsGenerating] = useState(false);
   const [isChecking, setIsChecking] = useState(false);
   const [result, setResult] = useState(null);
   const [isRailCollapsed, setIsRailCollapsed] = useState(false);
   const [deskMode, setDeskMode] = useState('self_paced'); // 'self_paced' | 'classwork'
-  const [activeReelSubjectId, setActiveReelSubjectId] = useState('accounting');
+  const [activeReelSubjectId, setActiveReelSubjectId] = useState(() => savedSession?.subjectId || 'accounting');
   const [enabledSubjects, setEnabledSubjects] = useState(() => {
     try {
       const saved = localStorage.getItem('fundile_enabled_subjects');
@@ -72,6 +74,7 @@ export default function LearnerAppContainer({
   const [showProfilePhotoModal, setShowProfilePhotoModal] = useState(false);
   const [showTopicModal, setShowTopicModal] = useState(false);
   const [showLinkGuardianModal, setShowLinkGuardianModal] = useState(false);
+  const [showJoinClassModal, setShowJoinClassModal] = useState(false);
   const [exitToast, setExitToast] = useState('');
 
   const [storeState, setStoreState] = useState(() => studentStore.getState());
@@ -87,7 +90,7 @@ export default function LearnerAppContainer({
   const schoolName = currentUser?.school || storeState.school || 'Westville High School';
 
   // Handle switching tabs (supporting both short mobile IDs and full desktop IDs)
-  const handleSelectTab = useCallback((tabId, isFromPopstate = false) => {
+  const handleSelectTab = useCallback((tabId, isFromPopstate = false, topicOverride = null) => {
     const normalized = 
       tabId === 'maths' ? 'mathematics' :
       tabId === 'mathslit' || tabId === 'maths_lit' ? 'mathematical_literacy' :
@@ -100,8 +103,23 @@ export default function LearnerAppContainer({
 
     setActiveTab(normalized);
     setResult(null);
-    const defTopic = getDefaultTopicForSubject(normalized);
-    setActiveTopic(defTopic);
+    const session = studentStore.getActiveSession();
+    const chosenTopic = topicOverride || 
+      (session?.topic && session?.subjectId === normalized ? session.topic : getDefaultTopicForSubject(normalized));
+    setActiveTopic(chosenTopic);
+
+    if (normalized !== 'desk') {
+      setActiveReelSubjectId(normalized);
+      studentStore.setActiveSession({
+        subjectId: normalized,
+        topic: chosenTopic,
+        lastActiveTab: normalized
+      });
+    } else {
+      studentStore.setActiveSession({
+        lastActiveTab: 'desk'
+      });
+    }
 
     if (!isFromPopstate) {
       navigationHistoryService.pushScreen(normalized);
@@ -170,8 +188,13 @@ export default function LearnerAppContainer({
     if (!newTopic) return;
     setActiveTopic(newTopic);
     setResult(null);
+    studentStore.setActiveSession({
+      subjectId: activeTab !== 'desk' ? activeTab : activeReelSubjectId,
+      topic: newTopic,
+      lastActiveTab: activeTab
+    });
     fetchQuestion(activeTab, newTopic);
-  }, [activeTab, fetchQuestion]);
+  }, [activeTab, activeReelSubjectId, fetchQuestion]);
 
   const handleNextQuestion = useCallback(() => {
     fetchQuestion(activeTab, activeTopic);
@@ -190,9 +213,15 @@ export default function LearnerAppContainer({
       subjectId;
 
     setActiveTab(normalized);
+    setActiveReelSubjectId(normalized);
     const chosenTopic = topicName || getDefaultTopicForSubject(normalized);
     setActiveTopic(chosenTopic);
     setResult(null);
+    studentStore.setActiveSession({
+      subjectId: normalized,
+      topic: chosenTopic,
+      lastActiveTab: normalized
+    });
     fetchQuestion(normalized, chosenTopic);
   }, [fetchQuestion]);
 
@@ -319,6 +348,7 @@ export default function LearnerAppContainer({
             onSelectReelSubject={setActiveReelSubjectId}
             enabledSubjects={enabledSubjects}
             onOpenSubject={handleOpenSubjectFromDesk}
+            onOpenJoinClassModal={() => setShowJoinClassModal(true)}
           />
         ) : (
           <div className="p-3 sm:p-6 space-y-3">
@@ -381,6 +411,7 @@ export default function LearnerAppContainer({
     },
     onCheckAnswer: handleCheckAnswer,
     onNextQuestion: handleNextQuestion,
+    result,
     onOpenProfilePhoto: () => {
       navigationHistoryService.pushModal('profilePhoto');
       setShowProfilePhotoModal(true);
@@ -388,6 +419,10 @@ export default function LearnerAppContainer({
     onOpenLinkGuardian: () => {
       navigationHistoryService.pushModal('linkGuardian');
       setShowLinkGuardianModal(true);
+    },
+    onOpenJoinClassModal: () => {
+      navigationHistoryService.pushModal('joinClass');
+      setShowJoinClassModal(true);
     },
     onOpenPersonaSwitcher: (currentUser?.isSuperAdmin || isSandboxMode) ? onOpenPersonaSwitcher : null,
   };
@@ -411,6 +446,16 @@ export default function LearnerAppContainer({
         grade={currentGrade}
         currentTopic={activeTopic}
         onSelectTopic={handleSelectTopic}
+      />
+
+      {/* Teacher Class Join Modal */}
+      <JoinClassModal
+        isOpen={showJoinClassModal}
+        onClose={() => {
+          navigationHistoryService.clearModal();
+          setShowJoinClassModal(false);
+        }}
+        studentName={studentName}
       />
 
       {/* Profile & Settings Modal */}

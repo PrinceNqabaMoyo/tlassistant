@@ -1,0 +1,3334 @@
+[
+  {
+    "subject": "Accounting",
+    "grade": "10",
+    "term": 1,
+    "name": "Accounting principles",
+    "generator_key": "grade10_accounting_gaap"
+  },
+  {
+    "subject": "Accounting",
+    "grade": "10",
+    "term": 1,
+    "name": "Financial Information and GAAP",
+    "generator_key": "grade10_accounting_gaap"
+  },
+  {
+    "subject": "Accounting",
+    "grade": "10",
+    "term": 1,
+    "name": "Financial accounting of a sole trader",
+    "generator_key": "grade10_accounting_sole_trader"
+  },
+  {
+    "subject": "Accounting",
+    "grade": "10",
+    "term": 1,
+    "name": "Managing Resources",
+    "generator_key": "grade10_accounting_internal_control"
+  },
+  {
+    "subject": "Accounting",
+    "grade": "10",
+    "term": 2,
+    "name": "Ethics",
+    "generator_key": "grade10_accounting_ethics"
+  },
+  {
+    "subject": "Accounting",
+    "grade": "10",
+    "term": 2,
+    "name": "Internal control",
+    "generator_key": "grade10_accounting_internal_control"
+  },
+  {
+    "subject": "Accounting",
+    "grade": "10",
+    "term": 2,
+    "name": "Salaries and wages journal",
+    "generator_key": "grade10_accounting_sole_trader"
+  },
+  {
+    "subject": "Accounting",
+    "grade": "10",
+    "term": 2,
+    "name": "Valued Added Tax",
+    "generator_key": "grade10_accounting_vat"
+  },
+  {
+    "subject": "Accounting",
+    "grade": "10",
+    "term": 3,
+    "name": "Analysis and Interpretation of financial statements of a sole trader",
+    "generator_key": "grade10_accounting_sole_trader"
+  },
+  {
+    "subject": "Accounting",
+    "grade": "10",
+    "term": 3,
+    "name": "Cost accounting",
+    "generator_key": "grade10_accounting_inventory"
+  },
+  {
+    "subject": "Accounting",
+    "grade": "10",
+    "term": 3,
+    "name": "Financial accounts and year end adjustments of a sole trader",
+    "generator_key": "grade10_accounting_sole_trader"
+  },
+  {
+    "subject": "Accounting",
+    "grade": "10",
+    "term": 3,
+    "name": "Financial statements of a sole trader",
+    "generator_key": "grade10_accounting_sole_trader"
+  },
+  {
+    "subject": "Accounting",
+    "grade": "10",
+    "term": 4,
+    "name": "Budgeting",
+    "generator_key": "grade10_accounting_budgets"
+  },
+  {
+    "subject": "Accounting",
+    "grade": "10",
+    "term": 4,
+    "name": "Difference between financial and managerial accounting",
+    "generator_key": "grade10_accounting_sole_trader"
+  },
+  {
+    "subject": "Accounting",
+    "grade": "10",
+    "term": 4,
+    "name": "Informal or indigenous bookkeeping systems",
+    "generator_key": "grade10_accounting_sole_trader"
+  },
+  {
+    "subject": "Accounting",
+    "grade": "11",
+    "term": 1,
+    "name": "Bank reconciliation",
+    "generator_key": "grade11_accounting_reconciliation"
+  },
+  {
+    "subject": "Accounting",
+    "grade": "11",
+    "term": 1,
+    "name": "Calculations involving percentages",
+    "generator_key": "grade11_accounting_analysis_interpretation"
+  },
+  {
+    "subject": "Accounting",
+    "grade": "11",
+    "term": 1,
+    "name": "Control accounts",
+    "generator_key": "grade11_accounting_partnership_ledger"
+  },
+  {
+    "subject": "Accounting",
+    "grade": "11",
+    "term": 1,
+    "name": "Debtors age analysis",
+    "generator_key": "grade11_accounting_analysis_interpretation"
+  },
+  {
+    "subject": "Accounting",
+    "grade": "11",
+    "term": 1,
+    "name": "Disposal of tangible assets",
+    "generator_key": "grade11_accounting_fixed_assets"
+  },
+  {
+    "subject": "Accounting",
+    "grade": "11",
+    "term": 1,
+    "name": "Fixed Tangible Assets",
+    "generator_key": "grade11_accounting_fixed_assets"
+  },
+  {
+    "subject": "Accounting",
+    "grade": "11",
+    "term": 1,
+    "name": "Introduction to accounting",
+    "generator_key": "grade11_accounting_fixed_assets"
+  },
+  {
+    "subject": "Accounting",
+    "grade": "11",
+    "term": 1,
+    "name": "The accounting equation",
+    "generator_key": "grade11_accounting_equation"
+  },
+  {
+    "subject": "Accounting",
+    "grade": "11",
+    "term": 1,
+    "name": "Value added tax",
+    "generator_key": "grade11_accounting_vat"
+  },
+  {
+    "subject": "Accounting",
+    "grade": "11",
+    "term": 2,
+    "name": "Analysis and Intepretation of financial statements",
+    "generator_key": "grade11_accounting_analysis_interpretation"
+  },
+  {
+    "subject": "Accounting",
+    "grade": "11",
+    "term": 2,
+    "name": "Cash flow statement",
+    "generator_key": "grade11_accounting_income_statement"
+  },
+  {
+    "subject": "Accounting",
+    "grade": "11",
+    "term": 2,
+    "name": "Ethics",
+    "generator_key": "grade11_accounting_concepts"
+  },
+  {
+    "subject": "Accounting",
+    "grade": "11",
+    "term": 2,
+    "name": "Internal Control",
+    "generator_key": "grade11_accounting_concepts"
+  },
+  {
+    "subject": "Accounting",
+    "grade": "11",
+    "term": 2,
+    "name": "Partnerships Analysis of financial statements",
+    "generator_key": "grade11_accounting_partnerships"
+  },
+  {
+    "subject": "Accounting",
+    "grade": "11",
+    "term": 2,
+    "name": "Partnerships",
+    "generator_key": "grade11_accounting_partnerships"
+  },
+  {
+    "subject": "Accounting",
+    "grade": "11",
+    "term": 3,
+    "name": "Budgeting",
+    "generator_key": "grade11_accounting_budgets"
+  },
+  {
+    "subject": "Accounting",
+    "grade": "11",
+    "term": 3,
+    "name": "Cash Budget Variance Analysis",
+    "generator_key": "grade11_accounting_analysis_interpretation"
+  },
+  {
+    "subject": "Accounting",
+    "grade": "11",
+    "term": 3,
+    "name": "Cost accounting Manufacturing",
+    "generator_key": "grade11_accounting_cost_accounting"
+  },
+  {
+    "subject": "Accounting",
+    "grade": "11",
+    "term": 4,
+    "name": "Inventory systems",
+    "generator_key": "grade11_accounting_inventory_valuation"
+  },
+  {
+    "subject": "Accounting",
+    "grade": "11",
+    "term": 4,
+    "name": "Non profit Organisations or Clubs",
+    "generator_key": "grade11_accounting_concepts"
+  },
+  {
+    "subject": "Accounting",
+    "grade": "12",
+    "term": 1,
+    "name": "Basic concepts of accounting",
+    "generator_key": "grade12_accounting_concepts"
+  },
+  {
+    "subject": "Accounting",
+    "grade": "12",
+    "term": 1,
+    "name": "Calculations involving percentages",
+    "generator_key": "grade12_accounting_financial_indicators"
+  },
+  {
+    "subject": "Accounting",
+    "grade": "12",
+    "term": 1,
+    "name": "Companies",
+    "generator_key": "grade12_accounting_companies"
+  },
+  {
+    "subject": "Accounting",
+    "grade": "12",
+    "term": 1,
+    "name": "Preliminary information",
+    "generator_key": "grade12_accounting_concepts"
+  },
+  {
+    "subject": "Accounting",
+    "grade": "12",
+    "term": 1,
+    "name": "The accounting equation",
+    "generator_key": "grade12_accounting_equation"
+  },
+  {
+    "subject": "Accounting",
+    "grade": "12",
+    "term": 2,
+    "name": "Analysis and Intepretation of financial statements",
+    "generator_key": "grade12_accounting_analysis_interpretation"
+  },
+  {
+    "subject": "Accounting",
+    "grade": "12",
+    "term": 2,
+    "name": "Bank reconciliation",
+    "generator_key": "grade12_accounting_reconciliations"
+  },
+  {
+    "subject": "Accounting",
+    "grade": "12",
+    "term": 2,
+    "name": "Cash flow statement",
+    "generator_key": "grade12_accounting_cash_flow_statement"
+  },
+  {
+    "subject": "Accounting",
+    "grade": "12",
+    "term": 2,
+    "name": "Control accounts",
+    "generator_key": "grade12_accounting_control_accounts"
+  },
+  {
+    "subject": "Accounting",
+    "grade": "12",
+    "term": 2,
+    "name": "Debtors age analysis",
+    "generator_key": "grade12_accounting_analysis_interpretation"
+  },
+  {
+    "subject": "Accounting",
+    "grade": "12",
+    "term": 2,
+    "name": "Reconciliations",
+    "generator_key": "grade12_accounting_reconciliations"
+  },
+  {
+    "subject": "Accounting",
+    "grade": "12",
+    "term": 3,
+    "name": "Budgets",
+    "generator_key": "grade12_accounting_budgets"
+  },
+  {
+    "subject": "Accounting",
+    "grade": "12",
+    "term": 3,
+    "name": "Cash Budget Variance Analysis",
+    "generator_key": "grade12_accounting_analysis_interpretation"
+  },
+  {
+    "subject": "Accounting",
+    "grade": "12",
+    "term": 3,
+    "name": "Inventories",
+    "generator_key": "grade12_accounting_inventories"
+  },
+  {
+    "subject": "Accounting",
+    "grade": "12",
+    "term": 3,
+    "name": "Manufacturing",
+    "generator_key": "grade12_accounting_cost_accounting"
+  },
+  {
+    "subject": "Accounting",
+    "grade": "12",
+    "term": 3,
+    "name": "Value added tax",
+    "generator_key": "grade12_accounting_vat"
+  },
+  {
+    "subject": "Accounting",
+    "grade": "12",
+    "term": 4,
+    "name": "Disposal of tangible assets",
+    "generator_key": "grade12_accounting_disposal_of_tangible_assets"
+  },
+  {
+    "subject": "Accounting",
+    "grade": "12",
+    "term": 4,
+    "name": "Fixed Assets",
+    "generator_key": "grade12_accounting_disposal_of_tangible_assets"
+  },
+  {
+    "subject": "Business Studies",
+    "grade": "10",
+    "term": 1,
+    "name": "Micro environment",
+    "generator_key": "grade10_bs_micro_environment"
+  },
+  {
+    "subject": "Business Studies",
+    "grade": "10",
+    "term": 1,
+    "name": "The market environment",
+    "generator_key": "grade10_bs_micro_environment"
+  },
+  {
+    "subject": "Business Studies",
+    "grade": "10",
+    "term": 1,
+    "name": "The macro environment",
+    "generator_key": "grade10_bs_micro_environment"
+  },
+  {
+    "subject": "Business Studies",
+    "grade": "10",
+    "term": 1,
+    "name": "The interrelationship of the micro market & macro environments",
+    "generator_key": "grade10_bs_micro_environment"
+  },
+  {
+    "subject": "Business Studies",
+    "grade": "10",
+    "term": 1,
+    "name": "Business sectors",
+    "generator_key": "grade10_bs_business_functions"
+  },
+  {
+    "subject": "Business Studies",
+    "grade": "10",
+    "term": 2,
+    "name": "Contemporary socio economic issues",
+    "generator_key": "grade10_bs_socio_economic_issues"
+  },
+  {
+    "subject": "Business Studies",
+    "grade": "10",
+    "term": 2,
+    "name": "Social responsibility",
+    "generator_key": "grade10_bs_social_responsibility"
+  },
+  {
+    "subject": "Business Studies",
+    "grade": "10",
+    "term": 2,
+    "name": "Forms of ownership",
+    "generator_key": "grade10_bs_forms_of_ownership"
+  },
+  {
+    "subject": "Business Studies",
+    "grade": "10",
+    "term": 2,
+    "name": "Business opportunities & related factors",
+    "generator_key": "grade10_bs_business_functions"
+  },
+  {
+    "subject": "Business Studies",
+    "grade": "10",
+    "term": 2,
+    "name": "Business location decisions",
+    "generator_key": "grade10_bs_business_functions"
+  },
+  {
+    "subject": "Business Studies",
+    "grade": "10",
+    "term": 3,
+    "name": "Creative thinking and problem solving",
+    "generator_key": "grade10_bs_creative_thinking"
+  },
+  {
+    "subject": "Business Studies",
+    "grade": "10",
+    "term": 3,
+    "name": "Business functions & the activities of business",
+    "generator_key": "grade10_bs_business_functions"
+  },
+  {
+    "subject": "Business Studies",
+    "grade": "10",
+    "term": 3,
+    "name": "The concept of quality",
+    "generator_key": "grade10_bs_concept_of_quality"
+  },
+  {
+    "subject": "Business Studies",
+    "grade": "10",
+    "term": 4,
+    "name": "Presentation of business information",
+    "generator_key": "grade10_bs_business_functions"
+  },
+  {
+    "subject": "Business Studies",
+    "grade": "10",
+    "term": 4,
+    "name": "Understanding business plans & implications",
+    "generator_key": "grade10_bs_business_functions"
+  },
+  {
+    "subject": "Business Studies",
+    "grade": "10",
+    "term": 4,
+    "name": "Self management",
+    "generator_key": "grade10_bs_entrepreneurial_qualities"
+  },
+  {
+    "subject": "Business Studies",
+    "grade": "10",
+    "term": 4,
+    "name": "Relationships & team performance",
+    "generator_key": "grade10_bs_entrepreneurial_qualities"
+  },
+  {
+    "subject": "Business Studies",
+    "grade": "10",
+    "term": 4,
+    "name": "Contracts",
+    "generator_key": "grade10_bs_contracts"
+  },
+  {
+    "subject": "Business Studies",
+    "grade": "10",
+    "term": 4,
+    "name": "Entrepreneurial qualities",
+    "generator_key": "grade10_bs_entrepreneurial_qualities"
+  },
+  {
+    "subject": "Business Studies",
+    "grade": "11",
+    "term": 1,
+    "name": "Influencies on business environments",
+    "generator_key": "grade11_bs_avenues_of_acquiring_businesses"
+  },
+  {
+    "subject": "Business Studies",
+    "grade": "11",
+    "term": 1,
+    "name": "The challenges of the business environments",
+    "generator_key": "grade11_bs_adapting_to_challenges"
+  },
+  {
+    "subject": "Business Studies",
+    "grade": "11",
+    "term": 1,
+    "name": "Adapting to challenges in the business environment",
+    "generator_key": "grade11_bs_adapting_to_challenges"
+  },
+  {
+    "subject": "Business Studies",
+    "grade": "11",
+    "term": 1,
+    "name": "Contemporary socio economic factors & businesses",
+    "generator_key": "grade11_bs_avenues_of_acquiring_businesses"
+  },
+  {
+    "subject": "Business Studies",
+    "grade": "11",
+    "term": 1,
+    "name": "Business sectors",
+    "generator_key": "grade11_bs_avenues_of_acquiring_businesses"
+  },
+  {
+    "subject": "Business Studies",
+    "grade": "11",
+    "term": 2,
+    "name": "Benefits of a company over other forms of ownership",
+    "generator_key": "grade11_bs_benefits_of_a_company"
+  },
+  {
+    "subject": "Business Studies",
+    "grade": "11",
+    "term": 2,
+    "name": "Avenues of acquiring businesses",
+    "generator_key": "grade11_bs_avenues_of_acquiring_businesses"
+  },
+  {
+    "subject": "Business Studies",
+    "grade": "11",
+    "term": 2,
+    "name": "Creative thinking & problem solving",
+    "generator_key": "grade11_bs_creative_thinking"
+  },
+  {
+    "subject": "Business Studies",
+    "grade": "11",
+    "term": 2,
+    "name": "Stress crisis & change management",
+    "generator_key": "grade11_bs_stress_crisis_change"
+  },
+  {
+    "subject": "Business Studies",
+    "grade": "11",
+    "term": 2,
+    "name": "Ethics and professionalism",
+    "generator_key": "grade11_bs_professionalism_and_ethics"
+  },
+  {
+    "subject": "Business Studies",
+    "grade": "11",
+    "term": 3,
+    "name": "Transformation of a business plan into an action plan",
+    "generator_key": "grade11_bs_avenues_of_acquiring_businesses"
+  },
+  {
+    "subject": "Business Studies",
+    "grade": "11",
+    "term": 3,
+    "name": "A business venture based on a business plan",
+    "generator_key": "natural_sciences_chemical_reactions"
+  },
+  {
+    "subject": "Business Studies",
+    "grade": "11",
+    "term": 3,
+    "name": "Presentation of business information",
+    "generator_key": "grade11_bs_avenues_of_acquiring_businesses"
+  },
+  {
+    "subject": "Business Studies",
+    "grade": "11",
+    "term": 3,
+    "name": "Introduction to the human resources function",
+    "generator_key": "grade11_bs_marketing_function"
+  },
+  {
+    "subject": "Business Studies",
+    "grade": "11",
+    "term": 3,
+    "name": "The marketing function",
+    "generator_key": "grade11_bs_marketing_production"
+  },
+  {
+    "subject": "Business Studies",
+    "grade": "11",
+    "term": 3,
+    "name": "The production function",
+    "generator_key": "grade11_bs_marketing_production"
+  },
+  {
+    "subject": "Business Studies",
+    "grade": "11",
+    "term": 4,
+    "name": "Team dynamics & conflict management",
+    "generator_key": "grade11_bs_stress_crisis_change"
+  },
+  {
+    "subject": "Business Studies",
+    "grade": "11",
+    "term": 4,
+    "name": "Citizenship & responsibilities",
+    "generator_key": "grade11_bs_citizenship_responsibilities"
+  },
+  {
+    "subject": "Business Studies",
+    "grade": "11",
+    "term": 4,
+    "name": "Assessment of enterpreneural qualities in business",
+    "generator_key": "grade11_bs_avenues_of_acquiring_businesses"
+  },
+  {
+    "subject": "Business Studies",
+    "grade": "12",
+    "term": 1,
+    "name": "Impact of recent legislation on businesses",
+    "generator_key": "grade12_bs_human_resources_function"
+  },
+  {
+    "subject": "Business Studies",
+    "grade": "12",
+    "term": 1,
+    "name": "Social responsibility & corporate citizenship CSR & CSI",
+    "generator_key": "grade12_bs_social_responsibility_csr_csi"
+  },
+  {
+    "subject": "Business Studies",
+    "grade": "12",
+    "term": 1,
+    "name": "Human rights inclusivity & environmental issues",
+    "generator_key": "grade12_bs_business_sectors_environments"
+  },
+  {
+    "subject": "Business Studies",
+    "grade": "12",
+    "term": 1,
+    "name": "Macro environment Business strategies",
+    "generator_key": "grade12_bs_macro_environment_strategies"
+  },
+  {
+    "subject": "Business Studies",
+    "grade": "12",
+    "term": 1,
+    "name": "Business sectors & their environments",
+    "generator_key": "grade12_bs_business_sectors_environments"
+  },
+  {
+    "subject": "Business Studies",
+    "grade": "12",
+    "term": 2,
+    "name": "Creative thinking & problem solving",
+    "generator_key": "grade12_bs_creative_thinking_problem_solving"
+  },
+  {
+    "subject": "Business Studies",
+    "grade": "12",
+    "term": 2,
+    "name": "Ethics and professionalism",
+    "generator_key": "grade12_bs_ethics_and_professionalism"
+  },
+  {
+    "subject": "Business Studies",
+    "grade": "12",
+    "term": 2,
+    "name": "Management & leadership",
+    "generator_key": "grade12_bs_investments_management"
+  },
+  {
+    "subject": "Business Studies",
+    "grade": "12",
+    "term": 2,
+    "name": "Forms of ownership Success & failure in business",
+    "generator_key": "grade12_bs_forms_of_ownership_success"
+  },
+  {
+    "subject": "Business Studies",
+    "grade": "12",
+    "term": 2,
+    "name": "Quality of performance",
+    "generator_key": "grade12_bs_investments_management"
+  },
+  {
+    "subject": "Business Studies",
+    "grade": "12",
+    "term": 3,
+    "name": "Investments Insurance",
+    "generator_key": "grade12_bs_investments_management"
+  },
+  {
+    "subject": "Business Studies",
+    "grade": "12",
+    "term": 3,
+    "name": "Investement Securities",
+    "generator_key": "grade12_bs_investments_management"
+  },
+  {
+    "subject": "Business Studies",
+    "grade": "12",
+    "term": 3,
+    "name": "Presentations & data responses",
+    "generator_key": "grade12_bs_presentation_data_responses"
+  },
+  {
+    "subject": "Business Studies",
+    "grade": "12",
+    "term": 3,
+    "name": "The human resources function",
+    "generator_key": "grade12_bs_human_resources_function"
+  },
+  {
+    "subject": "Business Studies",
+    "grade": "12",
+    "term": 4,
+    "name": "Team perfomance assessment and conflict management",
+    "generator_key": "grade12_bs_team_performance_conflict"
+  },
+  {
+    "subject": "Economic and Management Sciences",
+    "grade": "7",
+    "term": 1,
+    "name": "History of money",
+    "generator_key": "grade7_ems_money_and_needs"
+  },
+  {
+    "subject": "Economic and Management Sciences",
+    "grade": "7",
+    "term": 1,
+    "name": "Needs and Wants",
+    "generator_key": "grade7_ems_money_and_needs"
+  },
+  {
+    "subject": "Economic and Management Sciences",
+    "grade": "7",
+    "term": 1,
+    "name": "Goods and Service",
+    "generator_key": "grade7_ems_goods_and_services"
+  },
+  {
+    "subject": "Economic and Management Sciences",
+    "grade": "7",
+    "term": 2,
+    "name": "Accounting concepts",
+    "generator_key": "grade7_ems_accounting_concepts"
+  },
+  {
+    "subject": "Economic and Management Sciences",
+    "grade": "7",
+    "term": 2,
+    "name": "Income and Expenses",
+    "generator_key": "grade7_ems_income_and_expenses"
+  },
+  {
+    "subject": "Economic and Management Sciences",
+    "grade": "7",
+    "term": 2,
+    "name": "Budgets",
+    "generator_key": "grade7_ems_budgets"
+  },
+  {
+    "subject": "Economic and Management Sciences",
+    "grade": "7",
+    "term": 3,
+    "name": "Entrepreneur's Day",
+    "generator_key": "grade7_ems_entrepreneurs_day"
+  },
+  {
+    "subject": "Economic and Management Sciences",
+    "grade": "7",
+    "term": 3,
+    "name": "The entrepreneur",
+    "generator_key": "grade7_ems_entrepreneurship"
+  },
+  {
+    "subject": "Economic and Management Sciences",
+    "grade": "7",
+    "term": 3,
+    "name": "Businesses",
+    "generator_key": "grade7_ems_businesses"
+  },
+  {
+    "subject": "Economic and Management Sciences",
+    "grade": "7",
+    "term": 3,
+    "name": "Starting a business",
+    "generator_key": "grade7_ems_businesses"
+  },
+  {
+    "subject": "Economic and Management Sciences",
+    "grade": "7",
+    "term": 3,
+    "name": "The production process",
+    "generator_key": "grade7_ems_production_process"
+  },
+  {
+    "subject": "Economic and Management Sciences",
+    "grade": "7",
+    "term": 4,
+    "name": "Savings",
+    "generator_key": "grade7_ems_savings"
+  },
+  {
+    "subject": "Economic and Management Sciences",
+    "grade": "7",
+    "term": 4,
+    "name": "Inequality and poverty",
+    "generator_key": "grade7_ems_inequality_and_poverty"
+  },
+  {
+    "subject": "Economic and Management Sciences",
+    "grade": "8",
+    "term": 1,
+    "name": "General ledger and Trial balance of a service business",
+    "generator_key": "grade8_ems_accounting_cycle"
+  },
+  {
+    "subject": "Economic and Management Sciences",
+    "grade": "8",
+    "term": 1,
+    "name": "Government",
+    "generator_key": "grade8_ems_government"
+  },
+  {
+    "subject": "Economic and Management Sciences",
+    "grade": "8",
+    "term": 1,
+    "name": "The National Budget",
+    "generator_key": "grade8_ems_national_budget"
+  },
+  {
+    "subject": "Economic and Management Sciences",
+    "grade": "8",
+    "term": 2,
+    "name": "Accounting concepts",
+    "generator_key": "grade8_ems_accounting_basics"
+  },
+  {
+    "subject": "Economic and Management Sciences",
+    "grade": "8",
+    "term": 2,
+    "name": "the accounting cycle",
+    "generator_key": "grade8_ems_accounting_basics"
+  },
+  {
+    "subject": "Economic and Management Sciences",
+    "grade": "8",
+    "term": 2,
+    "name": "Source documents",
+    "generator_key": "grade8_ems_source_documents"
+  },
+  {
+    "subject": "Economic and Management Sciences",
+    "grade": "8",
+    "term": 2,
+    "name": "Cash receipts journal for a services business 1",
+    "generator_key": "grade8_ems_cash_receipts_journal"
+  },
+  {
+    "subject": "Economic and Management Sciences",
+    "grade": "8",
+    "term": 2,
+    "name": "Cash receipts journal for a services business 2",
+    "generator_key": "grade8_ems_cash_receipts_journal"
+  },
+  {
+    "subject": "Economic and Management Sciences",
+    "grade": "8",
+    "term": 2,
+    "name": "Cash payments journal for a services business",
+    "generator_key": "grade8_ems_cash_payments_journal"
+  },
+  {
+    "subject": "Economic and Management Sciences",
+    "grade": "8",
+    "term": 3,
+    "name": "Forms of ownership",
+    "generator_key": "grade8_ems_ownership"
+  },
+  {
+    "subject": "Economic and Management Sciences",
+    "grade": "8",
+    "term": 3,
+    "name": "Levels and functions of management",
+    "generator_key": "grade8_ems_gap"
+  },
+  {
+    "subject": "Economic and Management Sciences",
+    "grade": "8",
+    "term": 4,
+    "name": "The markets",
+    "generator_key": "grade8_ems_markets_and_production"
+  },
+  {
+    "subject": "Economic and Management Sciences",
+    "grade": "8",
+    "term": 4,
+    "name": "Factors of production",
+    "generator_key": "grade8_ems_markets_and_production"
+  },
+  {
+    "subject": "Economic and Management Sciences",
+    "grade": "9",
+    "term": 1,
+    "name": "Economic systems",
+    "generator_key": "grade9_ems_economic_systems"
+  },
+  {
+    "subject": "Economic and Management Sciences",
+    "grade": "9",
+    "term": 1,
+    "name": "Trade Unions",
+    "generator_key": "grade9_ems_trade_unions"
+  },
+  {
+    "subject": "Economic and Management Sciences",
+    "grade": "9",
+    "term": 1,
+    "name": "The circular flow",
+    "generator_key": "grade9_ems_circular_flow"
+  },
+  {
+    "subject": "Economic and Management Sciences",
+    "grade": "9",
+    "term": 1,
+    "name": "The Price Theory",
+    "generator_key": "grade9_ems_price_theory"
+  },
+  {
+    "subject": "Economic and Management Sciences",
+    "grade": "9",
+    "term": 2,
+    "name": "Sectors of the economy",
+    "generator_key": "grade9_ems_sectors_of_economy"
+  },
+  {
+    "subject": "Economic and Management Sciences",
+    "grade": "9",
+    "term": 2,
+    "name": "Cash receipts journal and Cash payments journal (sole trader)",
+    "generator_key": "grade9_ems_crj_cpj"
+  },
+  {
+    "subject": "Economic and Management Sciences",
+    "grade": "9",
+    "term": 2,
+    "name": "General ledger and Trial balance (sole trader)",
+    "generator_key": "grade9_ems_general_ledger"
+  },
+  {
+    "subject": "Economic and Management Sciences",
+    "grade": "9",
+    "term": 3,
+    "name": "Credit transactions (Creditors 1)",
+    "generator_key": "grade9_ems_creditors_journal"
+  },
+  {
+    "subject": "Economic and Management Sciences",
+    "grade": "9",
+    "term": 3,
+    "name": "Credit transactions (Creditors 2)",
+    "generator_key": "grade9_ems_creditors_journal"
+  },
+  {
+    "subject": "Economic and Management Sciences",
+    "grade": "9",
+    "term": 3,
+    "name": "Credit transactions (Debtors 1)",
+    "generator_key": "grade9_ems_debtors_journal"
+  },
+  {
+    "subject": "Economic and Management Sciences",
+    "grade": "9",
+    "term": 3,
+    "name": "Credit transactions (Debtors 2)",
+    "generator_key": "grade9_ems_debtors_journal"
+  },
+  {
+    "subject": "Economic and Management Sciences",
+    "grade": "9",
+    "term": 4,
+    "name": "Business Plan",
+    "generator_key": "grade9_ems_business_functions"
+  },
+  {
+    "subject": "Economic and Management Sciences",
+    "grade": "9",
+    "term": 4,
+    "name": "Functions of a business",
+    "generator_key": "grade9_ems_business_functions"
+  },
+  {
+    "subject": "Economic and Management Sciences",
+    "grade": "9",
+    "term": 4,
+    "name": "Transactions (Cash and Credit)",
+    "generator_key": "grade9_ems_crj_cpj"
+  },
+  {
+    "subject": "Life Sciences",
+    "grade": "10",
+    "term": 1,
+    "name": "Cells the basic units of life",
+    "generator_key": "life_sciences_genetics"
+  },
+  {
+    "subject": "Life Sciences",
+    "grade": "10",
+    "term": 1,
+    "name": "History of life on earth",
+    "generator_key": "life_sciences_environmental_population"
+  },
+  {
+    "subject": "Life Sciences",
+    "grade": "10",
+    "term": 1,
+    "name": "Introduction to life sciences",
+    "generator_key": "life_sciences_genetics"
+  },
+  {
+    "subject": "Life Sciences",
+    "grade": "10",
+    "term": 1,
+    "name": "The chemistry of life",
+    "generator_key": "life_sciences_genetics"
+  },
+  {
+    "subject": "Life Sciences",
+    "grade": "10",
+    "term": 1,
+    "name": "Cell division",
+    "generator_key": "life_sciences_meiosis_human_reproduction"
+  },
+  {
+    "subject": "Life Sciences",
+    "grade": "10",
+    "term": 2,
+    "name": "Plant and animal tissues",
+    "generator_key": "life_sciences_human_organ_systems"
+  },
+  {
+    "subject": "Life Sciences",
+    "grade": "10",
+    "term": 2,
+    "name": "Support and transport systems in plants",
+    "generator_key": "life_sciences_photosynthesis_respiration"
+  },
+  {
+    "subject": "Life Sciences",
+    "grade": "10",
+    "term": 2,
+    "name": "Transport systems in animals",
+    "generator_key": "life_sciences_human_organ_systems"
+  },
+  {
+    "subject": "Life Sciences",
+    "grade": "10",
+    "term": 2,
+    "name": "support systems in animals",
+    "generator_key": "life_sciences_human_organ_systems"
+  },
+  {
+    "subject": "Life Sciences",
+    "grade": "10",
+    "term": 3,
+    "name": "Biospheres to ecosystems",
+    "generator_key": "life_sciences_environmental_population"
+  },
+  {
+    "subject": "Life Sciences",
+    "grade": "10",
+    "term": 3,
+    "name": "Biodiversity and classification",
+    "generator_key": "life_sciences_environmental_population"
+  },
+  {
+    "subject": "Life Sciences",
+    "grade": "11",
+    "term": 1,
+    "name": "Biodiversity and classification of microorganisms",
+    "generator_key": "life_sciences_environmental_population"
+  },
+  {
+    "subject": "Life Sciences",
+    "grade": "11",
+    "term": 1,
+    "name": "Biodiversity of plants",
+    "generator_key": "life_sciences_environmental_population"
+  },
+  {
+    "subject": "Life Sciences",
+    "grade": "11",
+    "term": 1,
+    "name": "Biodiversity of animals",
+    "generator_key": "life_sciences_environmental_population"
+  },
+  {
+    "subject": "Life Sciences",
+    "grade": "11",
+    "term": 2,
+    "name": "Photosynthesis",
+    "generator_key": "life_sciences_photosynthesis_respiration"
+  },
+  {
+    "subject": "Life Sciences",
+    "grade": "11",
+    "term": 2,
+    "name": "Animal Nutrition",
+    "generator_key": "life_sciences_human_organ_systems"
+  },
+  {
+    "subject": "Life Sciences",
+    "grade": "11",
+    "term": 2,
+    "name": "Cellular respiration",
+    "generator_key": "life_sciences_photosynthesis_respiration"
+  },
+  {
+    "subject": "Life Sciences",
+    "grade": "11",
+    "term": 3,
+    "name": "Gaseous exchange",
+    "generator_key": "life_sciences_human_organ_systems"
+  },
+  {
+    "subject": "Life Sciences",
+    "grade": "11",
+    "term": 3,
+    "name": "Excretion in humans",
+    "generator_key": "life_sciences_human_organ_systems"
+  },
+  {
+    "subject": "Life Sciences",
+    "grade": "11",
+    "term": 3,
+    "name": "Population ecology",
+    "generator_key": "life_sciences_environmental_population"
+  },
+  {
+    "subject": "Life Sciences",
+    "grade": "11",
+    "term": 4,
+    "name": "Human impact on the environment",
+    "generator_key": "life_sciences_environmental_population"
+  },
+  {
+    "subject": "Life Sciences",
+    "grade": "12",
+    "term": 1,
+    "name": "DNA The code of life",
+    "generator_key": "life_sciences_genetics"
+  },
+  {
+    "subject": "Life Sciences",
+    "grade": "12",
+    "term": 1,
+    "name": "Meiosis",
+    "generator_key": "life_sciences_genetics"
+  },
+  {
+    "subject": "Life Sciences",
+    "grade": "12",
+    "term": 1,
+    "name": "Genetics and inheritance",
+    "generator_key": "life_sciences_genetics"
+  },
+  {
+    "subject": "Life Sciences",
+    "grade": "12",
+    "term": 2,
+    "name": "Human Reproduction",
+    "generator_key": "life_sciences_meiosis_human_reproduction"
+  },
+  {
+    "subject": "Life Sciences",
+    "grade": "12",
+    "term": 2,
+    "name": "Human responses to the environment",
+    "generator_key": "life_sciences_human_organ_systems"
+  },
+  {
+    "subject": "Life Sciences",
+    "grade": "12",
+    "term": 2,
+    "name": "Reproductive strategies in vertebrates",
+    "generator_key": "life_sciences_meiosis_human_reproduction"
+  },
+  {
+    "subject": "Life Sciences",
+    "grade": "12",
+    "term": 2,
+    "name": "Plant responses to the environment",
+    "generator_key": "life_sciences_photosynthesis_respiration"
+  },
+  {
+    "subject": "Life Sciences",
+    "grade": "12",
+    "term": 2,
+    "name": "The human endocrine system and homeostasis",
+    "generator_key": "life_sciences_human_organ_systems"
+  },
+  {
+    "subject": "Life Sciences",
+    "grade": "12",
+    "term": 3,
+    "name": "Evolution by natural selection",
+    "generator_key": "life_sciences_genetics"
+  },
+  {
+    "subject": "Life Sciences",
+    "grade": "12",
+    "term": 3,
+    "name": "Human evolution",
+    "generator_key": "life_sciences_genetics"
+  },
+  {
+    "subject": "Mathematical Literacy",
+    "grade": "10",
+    "term": 1,
+    "name": "Conversions and time",
+    "generator_key": "mathematical_literacy_finance_tax"
+  },
+  {
+    "subject": "Mathematical Literacy",
+    "grade": "10",
+    "term": 1,
+    "name": "Measuring length weight volume and temperature",
+    "generator_key": "mathematical_literacy_measurement"
+  },
+  {
+    "subject": "Mathematical Literacy",
+    "grade": "10",
+    "term": 1,
+    "name": "Personal income expenditure and budgets",
+    "generator_key": "mathematical_literacy_finance_tax"
+  },
+  {
+    "subject": "Mathematical Literacy",
+    "grade": "10",
+    "term": 1,
+    "name": "Banking interest and taxation",
+    "generator_key": "mathematical_literacy_finance_tax"
+  },
+  {
+    "subject": "Mathematical Literacy",
+    "grade": "10",
+    "term": 1,
+    "name": "Financial documents and tariff ystems",
+    "generator_key": "mathematical_literacy_tariffs_tax_brackets"
+  },
+  {
+    "subject": "Mathematical Literacy",
+    "grade": "10",
+    "term": 1,
+    "name": "Numbers and calculations with numbers",
+    "generator_key": "mathematical_literacy_finance_tax"
+  },
+  {
+    "subject": "Mathematical Literacy",
+    "grade": "10",
+    "term": 2,
+    "name": "Data handling",
+    "generator_key": "mathematical_literacy_data_handling"
+  },
+  {
+    "subject": "Mathematical Literacy",
+    "grade": "10",
+    "term": 2,
+    "name": "Scale maps and plans",
+    "generator_key": "mathematical_literacy_maps_scales"
+  },
+  {
+    "subject": "Mathematical Literacy",
+    "grade": "10",
+    "term": 2,
+    "name": "Assembly diagrams floor plans and packaging",
+    "generator_key": "mathematical_literacy_maps_scales"
+  },
+  {
+    "subject": "Mathematical Literacy",
+    "grade": "10",
+    "term": 3,
+    "name": "Measurement of perimeter and area",
+    "generator_key": "mathematical_literacy_measurement"
+  },
+  {
+    "subject": "Mathematical Literacy",
+    "grade": "10",
+    "term": 3,
+    "name": "Patterns relationships and representations",
+    "generator_key": "mathematical_literacy_finance_tax"
+  },
+  {
+    "subject": "Mathematical Literacy",
+    "grade": "10",
+    "term": 4,
+    "name": "Probability",
+    "generator_key": "mathematical_literacy_probability"
+  },
+  {
+    "subject": "Mathematical Literacy",
+    "grade": "11",
+    "term": 1,
+    "name": "CONVERSIONS AND TIME",
+    "generator_key": "mathematical_literacy_finance_tax"
+  },
+  {
+    "subject": "Mathematical Literacy",
+    "grade": "11",
+    "term": 1,
+    "name": "EXCHANGE RATES",
+    "generator_key": "mathematical_literacy_finance_tax"
+  },
+  {
+    "subject": "Mathematical Literacy",
+    "grade": "11",
+    "term": 1,
+    "name": "Interest banking and inflation",
+    "generator_key": "mathematical_literacy_finance_tax"
+  },
+  {
+    "subject": "Mathematical Literacy",
+    "grade": "11",
+    "term": 1,
+    "name": "PATTERNS RELATIONSHIPS AND REPRESENTATIONS",
+    "generator_key": "mathematical_literacy_finance_tax"
+  },
+  {
+    "subject": "Mathematical Literacy",
+    "grade": "11",
+    "term": 1,
+    "name": "PLANS AND OTHER REPRESENTATIONS",
+    "generator_key": "mathematical_literacy_maps_scales"
+  },
+  {
+    "subject": "Mathematical Literacy",
+    "grade": "11",
+    "term": 1,
+    "name": "FINANCE (TAXATION AND UIF)",
+    "generator_key": "mathematical_literacy_finance_tax"
+  },
+  {
+    "subject": "Mathematical Literacy",
+    "grade": "11",
+    "term": 2,
+    "name": "Area and Volume",
+    "generator_key": "mathematical_literacy_measurement"
+  },
+  {
+    "subject": "Mathematical Literacy",
+    "grade": "11",
+    "term": 2,
+    "name": "DATA HANDLING",
+    "generator_key": "mathematical_literacy_data_handling"
+  },
+  {
+    "subject": "Mathematical Literacy",
+    "grade": "11",
+    "term": 2,
+    "name": "MAPS",
+    "generator_key": "mathematical_literacy_maps_scales"
+  },
+  {
+    "subject": "Mathematical Literacy",
+    "grade": "11",
+    "term": 3,
+    "name": "Financial documents and tariff systems",
+    "generator_key": "mathematical_literacy_tariffs_tax_brackets"
+  },
+  {
+    "subject": "Mathematical Literacy",
+    "grade": "11",
+    "term": 3,
+    "name": "Weight and Temperatute",
+    "generator_key": "mathematical_literacy_measurement"
+  },
+  {
+    "subject": "Mathematical Literacy",
+    "grade": "11",
+    "term": 4,
+    "name": "Probability",
+    "generator_key": "mathematical_literacy_probability"
+  },
+  {
+    "subject": "Mathematical Literacy",
+    "grade": "12",
+    "term": 1,
+    "name": "Financial documents and tariff systems",
+    "generator_key": "mathematical_literacy_tariffs_tax_brackets"
+  },
+  {
+    "subject": "Mathematical Literacy",
+    "grade": "12",
+    "term": 1,
+    "name": "Income tax",
+    "generator_key": "mathematical_literacy_finance_tax"
+  },
+  {
+    "subject": "Mathematical Literacy",
+    "grade": "12",
+    "term": 1,
+    "name": "exchange rates",
+    "generator_key": "mathematical_literacy_finance_tax"
+  },
+  {
+    "subject": "Mathematical Literacy",
+    "grade": "12",
+    "term": 1,
+    "name": "lengths perimeter area and volume",
+    "generator_key": "mathematical_literacy_measurement"
+  },
+  {
+    "subject": "Mathematical Literacy",
+    "grade": "12",
+    "term": 1,
+    "name": "scale and map work",
+    "generator_key": "mathematical_literacy_maps_scales"
+  },
+  {
+    "subject": "Mathematical Literacy",
+    "grade": "12",
+    "term": 1,
+    "name": "Measuring weight BMI medicine dosages",
+    "generator_key": "mathematical_literacy_measurement"
+  },
+  {
+    "subject": "Mathematical Literacy",
+    "grade": "12",
+    "term": 2,
+    "name": "Maps and plans (models)",
+    "generator_key": "mathematical_literacy_maps_scales"
+  },
+  {
+    "subject": "Mathematical Literacy",
+    "grade": "12",
+    "term": 2,
+    "name": "plans and scale",
+    "generator_key": "mathematical_literacy_maps_scales"
+  },
+  {
+    "subject": "Mathematical Literacy",
+    "grade": "12",
+    "term": 2,
+    "name": "Data handling",
+    "generator_key": "mathematical_literacy_data_handling"
+  },
+  {
+    "subject": "Mathematical Literacy",
+    "grade": "12",
+    "term": 3,
+    "name": "interest banking inflation",
+    "generator_key": "mathematical_literacy_finance_tax"
+  },
+  {
+    "subject": "Mathematical Literacy",
+    "grade": "12",
+    "term": 3,
+    "name": "Probability",
+    "generator_key": "mathematical_literacy_probability"
+  },
+  {
+    "subject": "Mathematical Literacy",
+    "grade": "12",
+    "term": 4,
+    "name": "conversions & time",
+    "generator_key": "mathematical_literacy_finance_tax"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "10",
+    "term": 1,
+    "name": "Algebraic expressions",
+    "generator_key": "grade10_math_algebraic_expressions"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "10",
+    "term": 1,
+    "name": "Exponents",
+    "generator_key": "grade10_math_exponents"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "10",
+    "term": 1,
+    "name": "Number patterns",
+    "generator_key": "grade10_math_patterns_sequences"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "10",
+    "term": 1,
+    "name": "Equations and inequalities",
+    "generator_key": "grade10_math_equations_inequalities"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "10",
+    "term": 1,
+    "name": "Trigonometry 1",
+    "generator_key": "grade10_math_trigonometry"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "10",
+    "term": 1,
+    "name": "Trigonometry 2",
+    "generator_key": "grade10_math_trigonometry"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "10",
+    "term": 2,
+    "name": "Functions",
+    "generator_key": "grade10_math_functions"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "10",
+    "term": 2,
+    "name": "Analytical geometry",
+    "generator_key": "grade10_math_analytical_geometry"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "10",
+    "term": 3,
+    "name": "Finance and growth",
+    "generator_key": "grade10_math_finance"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "10",
+    "term": 3,
+    "name": "Statistics",
+    "generator_key": "grade10_math_statistics"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "10",
+    "term": 3,
+    "name": "Euclidean geometry 1",
+    "generator_key": "grade10_math_euclidean_geometry"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "10",
+    "term": 3,
+    "name": "Euclidean geometry 2",
+    "generator_key": "grade10_math_euclidean_geometry"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "10",
+    "term": 4,
+    "name": "Measurements",
+    "generator_key": "grade10_math_measurements"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "10",
+    "term": 4,
+    "name": "Probability",
+    "generator_key": "grade10_math_probability"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "11",
+    "term": 1,
+    "name": "Exponents and surds",
+    "generator_key": "grade11_math_exponents_surds"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "11",
+    "term": 1,
+    "name": "Linear programming",
+    "generator_key": "grade11_math_linear_programming"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "11",
+    "term": 1,
+    "name": "Equations and inequalities",
+    "generator_key": "grade11_math_equations_inequalities"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "11",
+    "term": 1,
+    "name": "investigation and projects",
+    "generator_key": "grade11_math_investigation_and_projects"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "11",
+    "term": 1,
+    "name": "Number patterns",
+    "generator_key": "grade11_math_patterns_sequences"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "11",
+    "term": 1,
+    "name": "Trigonometry",
+    "generator_key": "grade11_math_trigonometry"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "11",
+    "term": 2,
+    "name": "Functions",
+    "generator_key": "grade11_math_functions"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "11",
+    "term": 2,
+    "name": "Analytical geometry",
+    "generator_key": "grade11_math_analytical_geometry"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "11",
+    "term": 3,
+    "name": "Finance growth and decay",
+    "generator_key": "grade11_math_finance"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "11",
+    "term": 3,
+    "name": "Probability",
+    "generator_key": "grade11_math_probability"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "11",
+    "term": 3,
+    "name": "Euclidean geometry",
+    "generator_key": "grade11_math_circle_geometry"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "11",
+    "term": 4,
+    "name": "Statistics",
+    "generator_key": "grade11_math_statistics"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "11",
+    "term": 4,
+    "name": "Measurement",
+    "generator_key": "grade11_math_measurement"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "12",
+    "term": 1,
+    "name": "Sequences and series",
+    "generator_key": "grade12_math_sequences_series"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "12",
+    "term": 1,
+    "name": "Functions",
+    "generator_key": "grade12_math_functions"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "12",
+    "term": 1,
+    "name": "Polynomials",
+    "generator_key": "grade12_math_functions"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "12",
+    "term": 1,
+    "name": "Differential calculus",
+    "generator_key": "grade12_math_differential_calculus"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "12",
+    "term": 1,
+    "name": "Trigonometry",
+    "generator_key": "grade12_math_trigonometry"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "12",
+    "term": 2,
+    "name": "Finance",
+    "generator_key": "grade12_math_finance"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "12",
+    "term": 2,
+    "name": "Analytical geometry",
+    "generator_key": "grade12_math_analytical_geometry_circles"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "12",
+    "term": 2,
+    "name": "Euclidean geometry",
+    "generator_key": "grade12_math_analytical_geometry"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "12",
+    "term": 3,
+    "name": "Statistics",
+    "generator_key": "grade12_math_bivariate_statistics"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "12",
+    "term": 3,
+    "name": "Probability",
+    "generator_key": "grade12_math_counting_probability"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "7",
+    "term": 1,
+    "name": "Integers",
+    "generator_key": "grade7_math_integers"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "7",
+    "term": 1,
+    "name": "Working with whole numbers",
+    "generator_key": "grade7_math_whole_numbers"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "7",
+    "term": 1,
+    "name": "Exponents",
+    "generator_key": "grade7_math_exponents"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "7",
+    "term": 1,
+    "name": "Represent data",
+    "generator_key": "grade7_math_data_handling"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "7",
+    "term": 1,
+    "name": "Construction of geometric figures",
+    "generator_key": "grade7_math_construction_of_geometric_figures"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "7",
+    "term": 1,
+    "name": "Numeric and geometric patterns",
+    "generator_key": "grade7_math_patterns"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "7",
+    "term": 1,
+    "name": "Geometry of 2D shapes",
+    "generator_key": "grade7_math_geometry_of_2d_shapes"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "7",
+    "term": 1,
+    "name": "Geometry of straight lines",
+    "generator_key": "grade7_math_geometry_of_2d_shapes"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "7",
+    "term": 1,
+    "name": "Graphs",
+    "generator_key": "grade7_math_functions"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "7",
+    "term": 1,
+    "name": "graph paper types",
+    "generator_key": "grade7_math_functions"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "7",
+    "term": 2,
+    "name": "Fractions",
+    "generator_key": "grade7_math_fractions"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "7",
+    "term": 2,
+    "name": "The decimal notation for fractions",
+    "generator_key": "grade7_math_decimal_notation"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "7",
+    "term": 2,
+    "name": "Collect organise and summarise data",
+    "generator_key": "grade7_math_data_handling"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "7",
+    "term": 2,
+    "name": "Functions and relationships 1",
+    "generator_key": "grade7_math_functions"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "7",
+    "term": 2,
+    "name": "Functions and relationships 2",
+    "generator_key": "grade7_math_functions"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "7",
+    "term": 2,
+    "name": "Functions and relationships 3",
+    "generator_key": "grade7_math_functions"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "7",
+    "term": 2,
+    "name": "Relationships between variables",
+    "generator_key": "grade7_math_functions"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "7",
+    "term": 2,
+    "name": "Algebraic expressions 1",
+    "generator_key": "grade7_math_algebraic_expressions"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "7",
+    "term": 2,
+    "name": "Algebraic expressions 2",
+    "generator_key": "grade7_math_algebraic_expressions"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "7",
+    "term": 2,
+    "name": "Algebraic equations 1",
+    "generator_key": "grade7_math_algebraic_expressions"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "7",
+    "term": 2,
+    "name": "Algebraic equations 2",
+    "generator_key": "grade7_math_algebraic_expressions"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "7",
+    "term": 2,
+    "name": "Numeric patterns",
+    "generator_key": "grade7_math_patterns"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "7",
+    "term": 3,
+    "name": "Surface area and volume of 3D objects",
+    "generator_key": "grade7_math_geometric_nets_3d"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "7",
+    "term": 3,
+    "name": "Geometry of 3D objects",
+    "generator_key": "grade7_math_geometric_nets_3d"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "7",
+    "term": 3,
+    "name": "Transformation geometry",
+    "generator_key": "grade7_math_transformation_geometry"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "7",
+    "term": 4,
+    "name": "Interpret analyse and report on data",
+    "generator_key": "grade7_math_data_handling"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "7",
+    "term": 4,
+    "name": "Perimeter and area of 2D shapes",
+    "generator_key": "grade7_math_geometry_of_2d_shapes"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "7",
+    "term": 4,
+    "name": "Probability",
+    "generator_key": "grade7_math_probability"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "8",
+    "term": 1,
+    "name": "Interpret analyse and report on data",
+    "generator_key": "grade8_math_data_handling"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "8",
+    "term": 1,
+    "name": "Whole numbers",
+    "generator_key": "grade8_math_whole_numbers"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "8",
+    "term": 1,
+    "name": "Graphs",
+    "generator_key": "grade8_math_functions"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "8",
+    "term": 1,
+    "name": "Integers",
+    "generator_key": "grade8_math_integers"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "8",
+    "term": 1,
+    "name": "Exponents",
+    "generator_key": "grade8_math_exponents"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "8",
+    "term": 1,
+    "name": "Represent data",
+    "generator_key": "grade8_math_data_handling"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "8",
+    "term": 1,
+    "name": "Numeric and geometric patterns",
+    "generator_key": "grade8_math_patterns"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "8",
+    "term": 1,
+    "name": "Collect organise and summarise data",
+    "generator_key": "grade8_math_data_handling"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "8",
+    "term": 1,
+    "name": "Fractions in decimal notation",
+    "generator_key": "grade8_math_fractions"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "8",
+    "term": 1,
+    "name": "Functions and relationships 1",
+    "generator_key": "grade8_math_functions"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "8",
+    "term": 1,
+    "name": "Functions and relationships 2",
+    "generator_key": "grade8_math_functions"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "8",
+    "term": 2,
+    "name": "Algebraic expressions 1",
+    "generator_key": "grade8_math_algebraic_expressions"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "8",
+    "term": 2,
+    "name": "Algebraic expressions 2",
+    "generator_key": "grade8_math_algebraic_expressions"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "8",
+    "term": 2,
+    "name": "Algebraic equations 1",
+    "generator_key": "grade8_math_algebraic_expressions"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "8",
+    "term": 2,
+    "name": "Algebraic equations 2",
+    "generator_key": "grade8_math_algebraic_expressions"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "8",
+    "term": 2,
+    "name": "Algebraic equations 3",
+    "generator_key": "grade8_math_algebraic_expressions"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "8",
+    "term": 2,
+    "name": "Common fractions",
+    "generator_key": "grade8_math_fractions"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "8",
+    "term": 2,
+    "name": "Geometry of straight lines",
+    "generator_key": "grade8_math_geometry_of_straight_lines"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "8",
+    "term": 2,
+    "name": "Geometry of 2D shapes",
+    "generator_key": "grade8_math_geometry_of_2d_shapes"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "8",
+    "term": 2,
+    "name": "Perimeter and area of 2D shapes",
+    "generator_key": "grade8_math_geometry_of_2d_shapes"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "8",
+    "term": 3,
+    "name": "Construction of geometric figures",
+    "generator_key": "grade8_math_construction_of_geometric_figures"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "8",
+    "term": 3,
+    "name": "Transformation geometry",
+    "generator_key": "grade8_math_transformation_geometry"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "8",
+    "term": 3,
+    "name": "Geometry of 3D objects",
+    "generator_key": "grade8_math_geometry_of_3d_objects"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "8",
+    "term": 3,
+    "name": "The theorem of Pythagoras",
+    "generator_key": "grade8_math_pythagoras"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "8",
+    "term": 3,
+    "name": "graph paper types",
+    "generator_key": "grade8_math_graph_paper_types"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "8",
+    "term": 4,
+    "name": "Surface area and volume of 3D objects",
+    "generator_key": "grade8_math_geometry_of_3d_objects"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "8",
+    "term": 4,
+    "name": "Probability",
+    "generator_key": "grade8_math_probability"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "9",
+    "term": 1,
+    "name": "Interpret analyse and report on data",
+    "generator_key": "grade9_math_data_handling"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "9",
+    "term": 1,
+    "name": "The decimal notation for fractions",
+    "generator_key": "grade9_math_algebraic_equations_fractions"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "9",
+    "term": 1,
+    "name": "Whole numbers",
+    "generator_key": "grade9_math_whole_numbers"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "9",
+    "term": 1,
+    "name": "Integers",
+    "generator_key": "grade9_math_integers"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "9",
+    "term": 1,
+    "name": "Exponents",
+    "generator_key": "grade9_math_exponents"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "9",
+    "term": 1,
+    "name": "Representing data",
+    "generator_key": "grade9_math_data_handling"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "9",
+    "term": 1,
+    "name": "Patterns",
+    "generator_key": "grade9_math_patterns"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "9",
+    "term": 1,
+    "name": "Collect organise and summarise data",
+    "generator_key": "grade9_math_data_handling"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "9",
+    "term": 1,
+    "name": "Functions and relationships",
+    "generator_key": "grade9_math_functions"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "9",
+    "term": 1,
+    "name": "Functions",
+    "generator_key": "grade9_math_functions"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "9",
+    "term": 1,
+    "name": "Algebraic expressions 1",
+    "generator_key": "grade9_math_algebraic_expressions"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "9",
+    "term": 1,
+    "name": "Algebraic expressions 2",
+    "generator_key": "grade9_math_algebraic_expressions"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "9",
+    "term": 2,
+    "name": "Equations 1",
+    "generator_key": "grade9_math_algebraic_equations_fractions"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "9",
+    "term": 2,
+    "name": "Equations 2",
+    "generator_key": "grade9_math_algebraic_equations_fractions"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "9",
+    "term": 2,
+    "name": "Fractions",
+    "generator_key": "grade9_math_algebraic_equations_fractions"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "9",
+    "term": 2,
+    "name": "Graphs",
+    "generator_key": "grade9_math_graphs"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "9",
+    "term": 2,
+    "name": "Geometry of straight lines",
+    "generator_key": "grade9_math_geometry_of_straight_lines"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "9",
+    "term": 2,
+    "name": "Geometry of 2D shapes",
+    "generator_key": "grade9_math_geometry"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "9",
+    "term": 3,
+    "name": "Construction of geometric figures",
+    "generator_key": "grade9_math_geometric_nets_3d"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "9",
+    "term": 3,
+    "name": "Transformation geometry",
+    "generator_key": "grade9_math_geometry"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "9",
+    "term": 3,
+    "name": "Pythagoras Theorem",
+    "generator_key": "grade9_math_theorem_of_pythagoras"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "9",
+    "term": 3,
+    "name": "Area and perimeter of 2D shapes",
+    "generator_key": "grade9_math_geometry_of_2d_shapes"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "9",
+    "term": 4,
+    "name": "Geometry of 3D objects",
+    "generator_key": "grade9_math_geometric_nets_3d"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "9",
+    "term": 4,
+    "name": "Surface area volume and capacity of 3D objects",
+    "generator_key": "grade9_math_surface_area_and_volume_of_3d_objects"
+  },
+  {
+    "subject": "Mathematics",
+    "grade": "9",
+    "term": 4,
+    "name": "Probability",
+    "generator_key": "grade9_math_probability"
+  },
+  {
+    "subject": "Natural Sciences",
+    "grade": "7",
+    "term": 1,
+    "name": "Glossary1",
+    "generator_key": "natural_sciences_life_and_living"
+  },
+  {
+    "subject": "Natural Sciences",
+    "grade": "7",
+    "term": 1,
+    "name": "Glossary3",
+    "generator_key": "natural_sciences_life_and_living"
+  },
+  {
+    "subject": "Natural Sciences",
+    "grade": "7",
+    "term": 1,
+    "name": "Glossary4",
+    "generator_key": "natural_sciences_life_and_living"
+  },
+  {
+    "subject": "Natural Sciences",
+    "grade": "7",
+    "term": 1,
+    "name": "The Biosphere",
+    "generator_key": "natural_sciences_life_and_living"
+  },
+  {
+    "subject": "Natural Sciences",
+    "grade": "7",
+    "term": 1,
+    "name": "Biodiversity",
+    "generator_key": "natural_sciences_life_and_living"
+  },
+  {
+    "subject": "Natural Sciences",
+    "grade": "7",
+    "term": 1,
+    "name": "Sexual reproduction",
+    "generator_key": "natural_sciences_life_and_living"
+  },
+  {
+    "subject": "Natural Sciences",
+    "grade": "7",
+    "term": 1,
+    "name": "Variation",
+    "generator_key": "natural_sciences_life_and_living"
+  },
+  {
+    "subject": "Natural Sciences",
+    "grade": "7",
+    "term": 2,
+    "name": "Properties of materials",
+    "generator_key": "natural_sciences_life_and_living"
+  },
+  {
+    "subject": "Natural Sciences",
+    "grade": "7",
+    "term": 2,
+    "name": "Separating mixtures",
+    "generator_key": "natural_sciences_matter_and_materials"
+  },
+  {
+    "subject": "Natural Sciences",
+    "grade": "7",
+    "term": 2,
+    "name": "Acids bases and neutral substances",
+    "generator_key": "natural_sciences_matter_and_materials"
+  },
+  {
+    "subject": "Natural Sciences",
+    "grade": "7",
+    "term": 2,
+    "name": "The Periodic Table of Elements",
+    "generator_key": "natural_sciences_matter_and_materials"
+  },
+  {
+    "subject": "Natural Sciences",
+    "grade": "7",
+    "term": 3,
+    "name": "Sources of energy",
+    "generator_key": "natural_sciences_life_and_living"
+  },
+  {
+    "subject": "Natural Sciences",
+    "grade": "7",
+    "term": 3,
+    "name": "Potential and kinetic energy",
+    "generator_key": "natural_sciences_life_and_living"
+  },
+  {
+    "subject": "Natural Sciences",
+    "grade": "7",
+    "term": 3,
+    "name": "Energy transfer to surroundings",
+    "generator_key": "natural_sciences_life_and_living"
+  },
+  {
+    "subject": "Natural Sciences",
+    "grade": "7",
+    "term": 3,
+    "name": "Heat Energy transfer",
+    "generator_key": "natural_sciences_energy_and_change"
+  },
+  {
+    "subject": "Natural Sciences",
+    "grade": "7",
+    "term": 3,
+    "name": "Heat insulation and energy saving",
+    "generator_key": "natural_sciences_energy_and_change"
+  },
+  {
+    "subject": "Natural Sciences",
+    "grade": "7",
+    "term": 4,
+    "name": "Relationship of the moon to the earth",
+    "generator_key": "natural_sciences_planet_earth_and_beyond"
+  },
+  {
+    "subject": "Natural Sciences",
+    "grade": "7",
+    "term": 4,
+    "name": "Relationship of the sun to the Earth",
+    "generator_key": "natural_sciences_planet_earth_and_beyond"
+  },
+  {
+    "subject": "Natural Sciences",
+    "grade": "7",
+    "term": 4,
+    "name": "Historical development of astronomy",
+    "generator_key": "natural_sciences_life_and_living"
+  },
+  {
+    "subject": "Natural Sciences",
+    "grade": "8",
+    "term": 1,
+    "name": "Glossary1",
+    "generator_key": "natural_sciences_life_and_living"
+  },
+  {
+    "subject": "Natural Sciences",
+    "grade": "8",
+    "term": 1,
+    "name": "Glossary2",
+    "generator_key": "natural_sciences_life_and_living"
+  },
+  {
+    "subject": "Natural Sciences",
+    "grade": "8",
+    "term": 1,
+    "name": "Glossary3",
+    "generator_key": "natural_sciences_life_and_living"
+  },
+  {
+    "subject": "Natural Sciences",
+    "grade": "8",
+    "term": 1,
+    "name": "Glossary4",
+    "generator_key": "natural_sciences_life_and_living"
+  },
+  {
+    "subject": "Natural Sciences",
+    "grade": "8",
+    "term": 1,
+    "name": "Photosynthesis and respiration",
+    "generator_key": "natural_sciences_life_and_living"
+  },
+  {
+    "subject": "Natural Sciences",
+    "grade": "8",
+    "term": 1,
+    "name": "Interactions and interdependence within the environment",
+    "generator_key": "natural_sciences_life_and_living"
+  },
+  {
+    "subject": "Natural Sciences",
+    "grade": "8",
+    "term": 2,
+    "name": "Atoms",
+    "generator_key": "natural_sciences_matter_and_materials"
+  },
+  {
+    "subject": "Natural Sciences",
+    "grade": "8",
+    "term": 2,
+    "name": "Particle model of matter",
+    "generator_key": "natural_sciences_matter_and_materials"
+  },
+  {
+    "subject": "Natural Sciences",
+    "grade": "8",
+    "term": 2,
+    "name": "Chemical reactions",
+    "generator_key": "natural_sciences_chemical_reactions"
+  },
+  {
+    "subject": "Natural Sciences",
+    "grade": "8",
+    "term": 2,
+    "name": "Microorganisms",
+    "generator_key": "natural_sciences_life_and_living"
+  },
+  {
+    "subject": "Natural Sciences",
+    "grade": "8",
+    "term": 3,
+    "name": "Energy transfer in electrical systems",
+    "generator_key": "natural_sciences_life_and_living"
+  },
+  {
+    "subject": "Natural Sciences",
+    "grade": "8",
+    "term": 3,
+    "name": "Static electricity",
+    "generator_key": "natural_sciences_energy_and_change"
+  },
+  {
+    "subject": "Natural Sciences",
+    "grade": "8",
+    "term": 3,
+    "name": "Series and parallel circuits",
+    "generator_key": "natural_sciences_electric_circuits"
+  },
+  {
+    "subject": "Natural Sciences",
+    "grade": "8",
+    "term": 3,
+    "name": "Visible light",
+    "generator_key": "natural_sciences_life_and_living"
+  },
+  {
+    "subject": "Natural Sciences",
+    "grade": "8",
+    "term": 4,
+    "name": "Beyond the solar system",
+    "generator_key": "natural_sciences_life_and_living"
+  },
+  {
+    "subject": "Natural Sciences",
+    "grade": "8",
+    "term": 4,
+    "name": "The Solar System",
+    "generator_key": "natural_sciences_life_and_living"
+  },
+  {
+    "subject": "Natural Sciences",
+    "grade": "8",
+    "term": 4,
+    "name": "Looking into space",
+    "generator_key": "natural_sciences_life_and_living"
+  },
+  {
+    "subject": "Natural Sciences",
+    "grade": "9",
+    "term": 1,
+    "name": "Cells as the basic units of life",
+    "generator_key": "natural_sciences_life_and_living"
+  },
+  {
+    "subject": "Natural Sciences",
+    "grade": "9",
+    "term": 1,
+    "name": "Systems in the human body",
+    "generator_key": "natural_sciences_life_and_living"
+  },
+  {
+    "subject": "Natural Sciences",
+    "grade": "9",
+    "term": 1,
+    "name": "Human reproduction",
+    "generator_key": "natural_sciences_life_and_living"
+  },
+  {
+    "subject": "Natural Sciences",
+    "grade": "9",
+    "term": 1,
+    "name": "Circulatory and respiratory systems",
+    "generator_key": "natural_sciences_life_and_living"
+  },
+  {
+    "subject": "Natural Sciences",
+    "grade": "9",
+    "term": 2,
+    "name": "Chemical reactions",
+    "generator_key": "natural_sciences_chemical_reactions"
+  },
+  {
+    "subject": "Natural Sciences",
+    "grade": "9",
+    "term": 2,
+    "name": "Compounds",
+    "generator_key": "natural_sciences_matter_and_materials"
+  },
+  {
+    "subject": "Natural Sciences",
+    "grade": "9",
+    "term": 2,
+    "name": "Reactions of metals with oxygen",
+    "generator_key": "natural_sciences_chemical_reactions"
+  },
+  {
+    "subject": "Natural Sciences",
+    "grade": "9",
+    "term": 2,
+    "name": "Reactions of non metals with oxygen",
+    "generator_key": "natural_sciences_chemical_reactions"
+  },
+  {
+    "subject": "Natural Sciences",
+    "grade": "9",
+    "term": 2,
+    "name": "Acids bases and the pH value",
+    "generator_key": "natural_sciences_matter_and_materials"
+  },
+  {
+    "subject": "Natural Sciences",
+    "grade": "9",
+    "term": 2,
+    "name": "Reactions of Acids and bases",
+    "generator_key": "natural_sciences_matter_and_materials"
+  },
+  {
+    "subject": "Natural Sciences",
+    "grade": "9",
+    "term": 2,
+    "name": "Reactions of acids with a metal",
+    "generator_key": "natural_sciences_matter_and_materials"
+  },
+  {
+    "subject": "Natural Sciences",
+    "grade": "9",
+    "term": 2,
+    "name": "Resistance",
+    "generator_key": "natural_sciences_life_and_living"
+  },
+  {
+    "subject": "Natural Sciences",
+    "grade": "9",
+    "term": 3,
+    "name": "Forces",
+    "generator_key": "natural_sciences_energy_and_change"
+  },
+  {
+    "subject": "Natural Sciences",
+    "grade": "9",
+    "term": 3,
+    "name": "Series and parallel circuits",
+    "generator_key": "natural_sciences_electric_circuits"
+  },
+  {
+    "subject": "Natural Sciences",
+    "grade": "9",
+    "term": 3,
+    "name": "Cost of electrical energy",
+    "generator_key": "natural_sciences_energy_and_change"
+  },
+  {
+    "subject": "Natural Sciences",
+    "grade": "9",
+    "term": 3,
+    "name": "Safety with electricity",
+    "generator_key": "natural_sciences_energy_and_change"
+  },
+  {
+    "subject": "Natural Sciences",
+    "grade": "9",
+    "term": 3,
+    "name": "Birth life and the death of a star",
+    "generator_key": "natural_sciences_life_and_living"
+  },
+  {
+    "subject": "Natural Sciences",
+    "grade": "9",
+    "term": 3,
+    "name": "Energy and the national electricity grid",
+    "generator_key": "natural_sciences_energy_and_change"
+  },
+  {
+    "subject": "Natural Sciences",
+    "grade": "9",
+    "term": 4,
+    "name": "Digestive system",
+    "generator_key": "natural_sciences_life_and_living"
+  },
+  {
+    "subject": "Natural Sciences",
+    "grade": "9",
+    "term": 4,
+    "name": "Electric cells as energy systems",
+    "generator_key": "natural_sciences_life_and_living"
+  },
+  {
+    "subject": "Natural Sciences",
+    "grade": "9",
+    "term": 4,
+    "name": "The earth as a system",
+    "generator_key": "natural_sciences_life_and_living"
+  },
+  {
+    "subject": "Natural Sciences",
+    "grade": "9",
+    "term": 4,
+    "name": "Glossary1",
+    "generator_key": "natural_sciences_life_and_living"
+  },
+  {
+    "subject": "Natural Sciences",
+    "grade": "9",
+    "term": 4,
+    "name": "Glossary2",
+    "generator_key": "natural_sciences_life_and_living"
+  },
+  {
+    "subject": "Natural Sciences",
+    "grade": "9",
+    "term": 4,
+    "name": "Glossary3",
+    "generator_key": "natural_sciences_life_and_living"
+  },
+  {
+    "subject": "Natural Sciences",
+    "grade": "9",
+    "term": 4,
+    "name": "Glossary4",
+    "generator_key": "natural_sciences_life_and_living"
+  },
+  {
+    "subject": "Natural Sciences",
+    "grade": "9",
+    "term": 4,
+    "name": "The lithosphere",
+    "generator_key": "natural_sciences_planet_earth_and_beyond"
+  },
+  {
+    "subject": "Natural Sciences",
+    "grade": "9",
+    "term": 4,
+    "name": "Mining of mineral resources",
+    "generator_key": "natural_sciences_planet_earth_and_beyond"
+  },
+  {
+    "subject": "Natural Sciences",
+    "grade": "9",
+    "term": 4,
+    "name": "The atmosphere",
+    "generator_key": "natural_sciences_life_and_living"
+  },
+  {
+    "subject": "Physical Sciences",
+    "grade": "10",
+    "term": 1,
+    "name": "Skills for science",
+    "generator_key": "grade10_physical_sciences_matter_materials"
+  },
+  {
+    "subject": "Physical Sciences",
+    "grade": "10",
+    "term": 1,
+    "name": "Classification of matter",
+    "generator_key": "grade10_physical_sciences_matter_materials"
+  },
+  {
+    "subject": "Physical Sciences",
+    "grade": "10",
+    "term": 1,
+    "name": "States of matter and the kinetic theory molecular theory",
+    "generator_key": "grade10_physical_sciences_chemical_change"
+  },
+  {
+    "subject": "Physical Sciences",
+    "grade": "10",
+    "term": 1,
+    "name": "The atom",
+    "generator_key": "grade10_physical_sciences_matter_materials"
+  },
+  {
+    "subject": "Physical Sciences",
+    "grade": "10",
+    "term": 1,
+    "name": "The periodic table",
+    "generator_key": "grade10_physical_sciences_matter_materials"
+  },
+  {
+    "subject": "Physical Sciences",
+    "grade": "10",
+    "term": 1,
+    "name": "Chemical bonding",
+    "generator_key": "grade10_physical_sciences_matter_materials"
+  },
+  {
+    "subject": "Physical Sciences",
+    "grade": "10",
+    "term": 1,
+    "name": "Transverse pulses",
+    "generator_key": "grade10_physical_sciences_waves_sound_light"
+  },
+  {
+    "subject": "Physical Sciences",
+    "grade": "10",
+    "term": 1,
+    "name": "Transverse waves",
+    "generator_key": "grade10_physical_sciences_waves_sound_light"
+  },
+  {
+    "subject": "Physical Sciences",
+    "grade": "10",
+    "term": 1,
+    "name": "Longitudinal waves",
+    "generator_key": "grade10_physical_sciences_waves_sound_light"
+  },
+  {
+    "subject": "Physical Sciences",
+    "grade": "10",
+    "term": 1,
+    "name": "Sound",
+    "generator_key": "grade10_physical_sciences_waves_sound_light"
+  },
+  {
+    "subject": "Physical Sciences",
+    "grade": "10",
+    "term": 1,
+    "name": "Electromagnetic radiation",
+    "generator_key": "grade10_physical_sciences_electric_circuits"
+  },
+  {
+    "subject": "Physical Sciences",
+    "grade": "10",
+    "term": 2,
+    "name": "The particles that substances are made of",
+    "generator_key": "grade10_physical_sciences_matter_materials"
+  },
+  {
+    "subject": "Physical Sciences",
+    "grade": "10",
+    "term": 2,
+    "name": "Physical and Chemical Changes",
+    "generator_key": "grade10_physical_sciences_chemical_change"
+  },
+  {
+    "subject": "Physical Sciences",
+    "grade": "10",
+    "term": 2,
+    "name": "Representing chemical change",
+    "generator_key": "grade10_physical_sciences_chemical_change"
+  },
+  {
+    "subject": "Physical Sciences",
+    "grade": "10",
+    "term": 2,
+    "name": "Magnetism",
+    "generator_key": "grade10_physical_sciences_electric_circuits"
+  },
+  {
+    "subject": "Physical Sciences",
+    "grade": "10",
+    "term": 2,
+    "name": "Electrostatics",
+    "generator_key": "physical_sciences_electrostatics"
+  },
+  {
+    "subject": "Physical Sciences",
+    "grade": "10",
+    "term": 2,
+    "name": "Electric circuits",
+    "generator_key": "grade10_physical_sciences_electric_circuits"
+  },
+  {
+    "subject": "Physical Sciences",
+    "grade": "10",
+    "term": 3,
+    "name": "Reaction in aqeuous solution",
+    "generator_key": "natural_sciences_chemical_reactions"
+  },
+  {
+    "subject": "Physical Sciences",
+    "grade": "10",
+    "term": 3,
+    "name": "Quantitative aspects of chemical change",
+    "generator_key": "grade10_physical_sciences_chemical_change"
+  },
+  {
+    "subject": "Physical Sciences",
+    "grade": "10",
+    "term": 3,
+    "name": "Vectors and scalars",
+    "generator_key": "physical_sciences_mechanics"
+  },
+  {
+    "subject": "Physical Sciences",
+    "grade": "10",
+    "term": 3,
+    "name": "Motion in one dimension",
+    "generator_key": "grade10_physical_sciences_motion_energy"
+  },
+  {
+    "subject": "Physical Sciences",
+    "grade": "10",
+    "term": 3,
+    "name": "Mechanical energy",
+    "generator_key": "grade10_physical_sciences_motion_energy"
+  },
+  {
+    "subject": "Physical Sciences",
+    "grade": "10",
+    "term": 4,
+    "name": "The hydrosphere",
+    "generator_key": "grade10_physical_sciences_matter_materials"
+  },
+  {
+    "subject": "Physical Sciences",
+    "grade": "10",
+    "term": 4,
+    "name": "Units of measurement applied",
+    "generator_key": "grade10_physical_sciences_matter_materials"
+  },
+  {
+    "subject": "Physical Sciences",
+    "grade": "11",
+    "term": 1,
+    "name": "Vectors in two dimensions",
+    "generator_key": "grade11_physical_sciences_vectors_newton"
+  },
+  {
+    "subject": "Physical Sciences",
+    "grade": "11",
+    "term": 1,
+    "name": "Atomic combinations",
+    "generator_key": "grade11_physical_sciences_chemistry"
+  },
+  {
+    "subject": "Physical Sciences",
+    "grade": "11",
+    "term": 1,
+    "name": "Intermolecular forces",
+    "generator_key": "grade11_physical_sciences_chemistry"
+  },
+  {
+    "subject": "Physical Sciences",
+    "grade": "11",
+    "term": 1,
+    "name": "Ideal gases",
+    "generator_key": "physical_sciences_ideal_gases_thermal"
+  },
+  {
+    "subject": "Physical Sciences",
+    "grade": "11",
+    "term": 2,
+    "name": "Newton's laws",
+    "generator_key": "grade11_physical_sciences_vectors_newton"
+  },
+  {
+    "subject": "Physical Sciences",
+    "grade": "11",
+    "term": 2,
+    "name": "Geometrical optics",
+    "generator_key": "physical_sciences_geometrical_optics"
+  },
+  {
+    "subject": "Physical Sciences",
+    "grade": "11",
+    "term": 2,
+    "name": "2D and 3D wavefronts",
+    "generator_key": "physical_sciences_geometrical_optics"
+  },
+  {
+    "subject": "Physical Sciences",
+    "grade": "11",
+    "term": 2,
+    "name": "Electrostatics",
+    "generator_key": "physical_sciences_electrostatics"
+  },
+  {
+    "subject": "Physical Sciences",
+    "grade": "11",
+    "term": 2,
+    "name": "Electromagnetism",
+    "generator_key": "physical_sciences_electromagnetism"
+  },
+  {
+    "subject": "Physical Sciences",
+    "grade": "11",
+    "term": 3,
+    "name": "Electric circuits",
+    "generator_key": "grade11_physical_sciences_electric_circuits"
+  },
+  {
+    "subject": "Physical Sciences",
+    "grade": "11",
+    "term": 3,
+    "name": "Energy and chemical change",
+    "generator_key": "physical_sciences_electrochemistry"
+  },
+  {
+    "subject": "Physical Sciences",
+    "grade": "11",
+    "term": 3,
+    "name": "Types of reaction",
+    "generator_key": "natural_sciences_chemical_reactions"
+  },
+  {
+    "subject": "Physical Sciences",
+    "grade": "11",
+    "term": 3,
+    "name": "Quantitative aspects of chemical change",
+    "generator_key": "physical_sciences_chemistry_equilibrium"
+  },
+  {
+    "subject": "Physical Sciences",
+    "grade": "11",
+    "term": 4,
+    "name": "The lithosphere",
+    "generator_key": "grade11_physical_sciences_chemistry"
+  },
+  {
+    "subject": "Physical Sciences",
+    "grade": "11",
+    "term": 4,
+    "name": "Units applied",
+    "generator_key": "grade11_physical_sciences_vectors_newton"
+  },
+  {
+    "subject": "Physical Sciences",
+    "grade": "12",
+    "term": 1,
+    "name": "Momentum and Impulse",
+    "generator_key": "grade12_physical_sciences_momentum"
+  },
+  {
+    "subject": "Physical Sciences",
+    "grade": "12",
+    "term": 1,
+    "name": "Vertical projectile motion in one dimension",
+    "generator_key": "grade12_physical_sciences_vertical_projectile"
+  },
+  {
+    "subject": "Physical Sciences",
+    "grade": "12",
+    "term": 1,
+    "name": "Work energy and power",
+    "generator_key": "physical_sciences_work_energy_power"
+  },
+  {
+    "subject": "Physical Sciences",
+    "grade": "12",
+    "term": 1,
+    "name": "Organic molecules",
+    "generator_key": "grade12_physical_sciences_organic_chemistry"
+  },
+  {
+    "subject": "Physical Sciences",
+    "grade": "12",
+    "term": 2,
+    "name": "Rate and Extent of Reaction",
+    "generator_key": "physical_sciences_chemistry_equilibrium"
+  },
+  {
+    "subject": "Physical Sciences",
+    "grade": "12",
+    "term": 2,
+    "name": "Chemical equilibrium",
+    "generator_key": "physical_sciences_chemistry_equilibrium"
+  },
+  {
+    "subject": "Physical Sciences",
+    "grade": "12",
+    "term": 2,
+    "name": "Acids and bases",
+    "generator_key": "grade12_physical_sciences_acids_bases"
+  },
+  {
+    "subject": "Physical Sciences",
+    "grade": "12",
+    "term": 2,
+    "name": "The Doppler effect",
+    "generator_key": "grade12_physical_sciences_doppler_effect"
+  },
+  {
+    "subject": "Physical Sciences",
+    "grade": "12",
+    "term": 3,
+    "name": "Electrodynamics",
+    "generator_key": "grade12_physical_sciences_electrodynamics"
+  },
+  {
+    "subject": "Physical Sciences",
+    "grade": "12",
+    "term": 3,
+    "name": "Electric circuits",
+    "generator_key": "grade12_physical_sciences_electrodynamics"
+  },
+  {
+    "subject": "Physical Sciences",
+    "grade": "12",
+    "term": 3,
+    "name": "Optical phenomena and properties of matter",
+    "generator_key": "grade12_physical_sciences_acids_bases"
+  },
+  {
+    "subject": "Physical Sciences",
+    "grade": "12",
+    "term": 3,
+    "name": "Electrochemical reactions",
+    "generator_key": "physical_sciences_electrochemistry"
+  },
+  {
+    "subject": "Physical Sciences",
+    "grade": "12",
+    "term": 3,
+    "name": "The chemical industry",
+    "generator_key": "physical_sciences_chemistry_equilibrium"
+  },
+  {
+    "subject": "Physical Sciences",
+    "grade": "12",
+    "term": 4,
+    "name": "Skills for science",
+    "generator_key": "grade12_physical_sciences_vertical_projectile"
+  },
+  {
+    "subject": "Technical Mathematics",
+    "grade": "10",
+    "term": 1,
+    "name": "Introduction",
+    "generator_key": "technical_mathematics_complex_numbers"
+  },
+  {
+    "subject": "Technical Mathematics",
+    "grade": "10",
+    "term": 1,
+    "name": "Number Systems",
+    "generator_key": "technical_mathematics_complex_numbers"
+  },
+  {
+    "subject": "Technical Mathematics",
+    "grade": "10",
+    "term": 1,
+    "name": "Algebraic expressions",
+    "generator_key": "technical_mathematics_complex_numbers"
+  },
+  {
+    "subject": "Technical Mathematics",
+    "grade": "10",
+    "term": 1,
+    "name": "Exponents",
+    "generator_key": "technical_mathematics_complex_numbers"
+  },
+  {
+    "subject": "Technical Mathematics",
+    "grade": "10",
+    "term": 1,
+    "name": "Equalities and inequalities",
+    "generator_key": "technical_mathematics_complex_numbers"
+  },
+  {
+    "subject": "Technical Mathematics",
+    "grade": "10",
+    "term": 1,
+    "name": "Trigonometry",
+    "generator_key": "grade10_math_trigonometry"
+  },
+  {
+    "subject": "Technical Mathematics",
+    "grade": "10",
+    "term": 2,
+    "name": "Functions and graphs",
+    "generator_key": "grade10_math_functions"
+  },
+  {
+    "subject": "Technical Mathematics",
+    "grade": "10",
+    "term": 2,
+    "name": "Analytical Geometry",
+    "generator_key": "technical_mathematics_analytical_geometry"
+  },
+  {
+    "subject": "Technical Mathematics",
+    "grade": "10",
+    "term": 2,
+    "name": "Geometry",
+    "generator_key": "technical_mathematics_euclidean_geometry"
+  },
+  {
+    "subject": "Technical Mathematics",
+    "grade": "10",
+    "term": 3,
+    "name": "Circles  angles and angular Movement",
+    "generator_key": "technical_mathematics_mensuration"
+  },
+  {
+    "subject": "Technical Mathematics",
+    "grade": "10",
+    "term": 3,
+    "name": "Finance and Growth",
+    "generator_key": "technical_mathematics_complex_numbers"
+  },
+  {
+    "subject": "Technical Mathematics",
+    "grade": "11",
+    "term": 1,
+    "name": "Exponents and surds",
+    "generator_key": "technical_mathematics_complex_numbers"
+  },
+  {
+    "subject": "Technical Mathematics",
+    "grade": "11",
+    "term": 1,
+    "name": "Logarithms",
+    "generator_key": "technical_mathematics_complex_numbers"
+  },
+  {
+    "subject": "Technical Mathematics",
+    "grade": "11",
+    "term": 1,
+    "name": "Equations",
+    "generator_key": "technical_mathematics_complex_numbers"
+  },
+  {
+    "subject": "Technical Mathematics",
+    "grade": "11",
+    "term": 1,
+    "name": "Trigonometry",
+    "generator_key": "grade11_math_trigonometry"
+  },
+  {
+    "subject": "Technical Mathematics",
+    "grade": "11",
+    "term": 2,
+    "name": "Functions and graphs",
+    "generator_key": "grade11_math_functions"
+  },
+  {
+    "subject": "Technical Mathematics",
+    "grade": "11",
+    "term": 2,
+    "name": "Analytical geometry",
+    "generator_key": "technical_mathematics_analytical_geometry"
+  },
+  {
+    "subject": "Technical Mathematics",
+    "grade": "11",
+    "term": 3,
+    "name": "Circles angles and angular movement",
+    "generator_key": "technical_mathematics_mensuration"
+  },
+  {
+    "subject": "Technical Mathematics",
+    "grade": "11",
+    "term": 3,
+    "name": "Finance growth and decays",
+    "generator_key": "technical_mathematics_complex_numbers"
+  },
+  {
+    "subject": "Technical Mathematics",
+    "grade": "11",
+    "term": 3,
+    "name": "Euclidean geometry",
+    "generator_key": "technical_mathematics_euclidean_geometry"
+  },
+  {
+    "subject": "Technical Mathematics",
+    "grade": "11",
+    "term": 4,
+    "name": "Mensuration",
+    "generator_key": "technical_mathematics_mensuration"
+  },
+  {
+    "subject": "Technical Mathematics",
+    "grade": "12",
+    "term": 1,
+    "name": "Complex numbers",
+    "generator_key": "technical_mathematics_complex_numbers"
+  },
+  {
+    "subject": "Technical Mathematics",
+    "grade": "12",
+    "term": 1,
+    "name": "Polynomials",
+    "generator_key": "technical_mathematics_complex_numbers"
+  },
+  {
+    "subject": "Technical Mathematics",
+    "grade": "12",
+    "term": 1,
+    "name": "Differentiation",
+    "generator_key": "technical_mathematics_complex_numbers"
+  },
+  {
+    "subject": "Technical Mathematics",
+    "grade": "12",
+    "term": 1,
+    "name": "Integration",
+    "generator_key": "technical_mathematics_mensuration"
+  },
+  {
+    "subject": "Technical Mathematics",
+    "grade": "12",
+    "term": 1,
+    "name": "Trigonometry",
+    "generator_key": "grade12_math_trigonometry"
+  },
+  {
+    "subject": "Technical Mathematics",
+    "grade": "12",
+    "term": 2,
+    "name": "Financial mathematics",
+    "generator_key": "technical_mathematics_complex_numbers"
+  },
+  {
+    "subject": "Technical Mathematics",
+    "grade": "12",
+    "term": 2,
+    "name": "Analytical geometry",
+    "generator_key": "technical_mathematics_analytical_geometry"
+  },
+  {
+    "subject": "Technical Mathematics",
+    "grade": "12",
+    "term": 2,
+    "name": "Euclidean Geometry Proportionality and similarity",
+    "generator_key": "technical_mathematics_euclidean_geometry"
+  }
+]

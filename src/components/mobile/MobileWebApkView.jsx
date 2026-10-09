@@ -16,6 +16,7 @@ import {
 import studentStore, { getTimeGreeting } from '../../services/studentStore';
 import MessageBoardModal from '../notifications/MessageBoardModal';
 import { getSubjectTheme, BRAND } from '../../theme/subjectPalette';
+import UniversalWorkspace from '../workspace/UniversalWorkspace';
 
 /**
  * MobileWebApkView
@@ -99,8 +100,10 @@ export default function MobileWebApkView({
   onOpenTopicScope = null,
   onCheckAnswer = () => {},
   onNextQuestion = () => {},
+  result = null,
   onOpenProfilePhoto = () => {},
   onOpenLinkGuardian = () => {},
+  onOpenJoinClassModal = () => {},
   onOpenPersonaSwitcher = null,
 }) {
   const [showHints, setShowHints] = useState(false);
@@ -302,6 +305,7 @@ export default function MobileWebApkView({
 
               <button
                 type="button"
+                data-testid="btn-open-user-profile"
                 onClick={() => onOpenProfilePhoto && onOpenProfilePhoto()}
                 className="relative group w-8 h-8 rounded-full overflow-hidden ring-2 ring-white/60 hover:ring-[#FF9100] transition flex items-center justify-center bg-white text-[#13519C] font-extrabold text-xs shadow-xs cursor-pointer shrink-0"
                 title="Update Profile Photo"
@@ -442,6 +446,17 @@ export default function MobileWebApkView({
                 <div className="flex items-center gap-1.5">
                   <button
                     type="button"
+                    data-testid="btn-open-join-class-modal"
+                    onClick={() => onOpenJoinClassModal && onOpenJoinClassModal()}
+                    className="px-2 py-1 rounded-lg bg-emerald-50 hover:bg-emerald-100 active:bg-emerald-200 text-emerald-800 text-[10px] font-extrabold border border-emerald-200 flex items-center gap-1 transition cursor-pointer shadow-2xs min-h-[30px]"
+                    title="Join Teacher's Class"
+                  >
+                    <span>🏫</span>
+                    <span>Join Class</span>
+                  </button>
+                  <button
+                    type="button"
+                    data-testid="btn-open-link-guardian-modal"
                     onClick={() => onOpenLinkGuardian && onOpenLinkGuardian()}
                     className="px-2 py-1 rounded-lg bg-blue-50 hover:bg-blue-100 active:bg-blue-200 text-[#13519C] text-[10px] font-extrabold border border-blue-200 flex items-center gap-1 transition cursor-pointer shadow-2xs min-h-[30px]"
                     title="Family & Guardian Link"
@@ -475,7 +490,7 @@ export default function MobileWebApkView({
                     : 'text-slate-600 hover:text-slate-900'
                 }`}
               >
-                <span>🎒 School Work</span>
+                <span>🎒 School Classwork</span>
                 {assignedTasks.length > 0 && (
                   <span className={`px-1.5 py-0.5 rounded-full text-[10px] font-extrabold ${
                     hasUnviewedTasks
@@ -496,14 +511,14 @@ export default function MobileWebApkView({
                     : 'text-slate-600 hover:text-slate-900'
                 }`}
               >
-                <span>📖 Self-Study</span>
+                <span>📖 Self-Paced Learning</span>
                 <span className="px-1.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-extrabold">
                   4 Active
                 </span>
               </button>
             </div>
 
-            {/* Section 1: School Work */}
+            {/* Section 1: School Classwork */}
             {activeMobileDeskSection === 'school_work' && (
               <section id="mob-upcoming-tasks-section" className="space-y-3 relative">
                 {/* Sticky Header */}
@@ -521,7 +536,7 @@ export default function MobileWebApkView({
                       className="text-xs font-extrabold uppercase tracking-wider text-slate-800" 
                       style={{ fontFamily: 'Afacad, sans-serif' }}
                     >
-                      School Work
+                      School Classwork
                     </h3>
                     <span className={`px-2 py-0.5 rounded-full text-[11px] font-extrabold border ${
                       hasUnviewedTasks 
@@ -578,6 +593,7 @@ export default function MobileWebApkView({
                     return (
                       <div 
                         key={task.id} 
+                        data-testid="card-task-upcoming"
                         className={`p-3.5 rounded-2xl shadow-xs space-y-2 transition-all ${
                           isUnviewed
                             ? 'bg-rose-50/70 border-2 border-rose-300 ring-2 ring-rose-200/70'
@@ -615,9 +631,17 @@ export default function MobileWebApkView({
                         </p>
                         <button
                           type="button"
+                          data-testid="btn-open-task-subject"
                           onClick={() => {
                             studentStore.markTaskViewed(task.id);
-                            onSelectTab(task.subject);
+                            if (task.topic) {
+                              studentStore.setActiveSession({
+                                subjectId: normalizeTabId(task.subject),
+                                topic: task.topic,
+                                lastActiveTab: normalizeTabId(task.subject),
+                              });
+                            }
+                            onSelectTab(task.subject, false, task.topic);
                           }}
                           className="mt-2 w-full py-2.5 text-white text-xs font-bold rounded-xl shadow-xs transition cursor-pointer min-h-[44px] flex items-center justify-center gap-1.5 hover:opacity-95 active:scale-98"
                           style={{ backgroundColor: tTheme.base }}
@@ -631,7 +655,7 @@ export default function MobileWebApkView({
               </section>
             )}
 
-            {/* Section 2: Self-Study */}
+            {/* Section 2: Self-Paced Learning */}
             {activeMobileDeskSection === 'self_study' && (
               <section id="mob-self-paced-mastery-section" className="space-y-3 relative pt-1">
                 {/* Sticky Header */}
@@ -642,7 +666,7 @@ export default function MobileWebApkView({
                       className="text-xs font-extrabold uppercase tracking-wider text-slate-800" 
                       style={{ fontFamily: 'Afacad, sans-serif' }}
                     >
-                      Self-Study
+                      Self-Paced Learning
                     </h3>
                     <span className="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[11px] font-extrabold border border-emerald-200/80">
                       4
@@ -652,6 +676,37 @@ export default function MobileWebApkView({
                     BKT Calibrated
                   </span>
                 </div>
+
+                {/* Mobile Pick Up Where You Left Off Card */}
+                {storeState?.activeSession?.topic && (
+                  <div className="bg-gradient-to-r from-blue-50/90 to-emerald-50/80 p-3.5 rounded-2xl border border-blue-200/90 shadow-2xs space-y-2 animate-fadeIn">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <span 
+                          className="w-2.5 h-2.5 rounded-full" 
+                          style={{ backgroundColor: getSubjectTheme(storeState.activeSession.subjectId || 'accounting').base }} 
+                        />
+                        <span className="text-[10px] font-extrabold text-[#13519C] uppercase tracking-wider">
+                          Pick Up Where You Left Off
+                        </span>
+                      </div>
+                      <span className="text-[10px] font-bold text-slate-500 font-mono">
+                        Active Session
+                      </span>
+                    </div>
+                    <p className="text-xs font-bold text-slate-900">
+                      {storeState.activeSession.topic}
+                    </p>
+                    <button
+                      type="button"
+                      onClick={() => onSelectTab(storeState.activeSession.subjectId)}
+                      className="w-full py-2.5 text-white text-xs font-bold rounded-xl shadow-xs transition flex items-center justify-center gap-1.5 hover:opacity-95 active:scale-98 cursor-pointer"
+                      style={{ background: getSubjectTheme(storeState.activeSession.subjectId || 'accounting').gradient }}
+                    >
+                      <span>Resume Active Session →</span>
+                    </button>
+                  </div>
+                )}
 
               {/* 4 Autonomous Practice Cards */}
               <div className="space-y-2.5">
@@ -821,437 +876,26 @@ export default function MobileWebApkView({
           </div>
         )}
 
-        {/* ==================== VIEW 2: ACCOUNTING (Dual-Mode) ==================== */}
-        {currentTab === 'accounting' && (
-          <div id="mob-content-accounting" className="p-4 space-y-3">
-            {/* Subject Header */}
-            <div className="bg-emerald-600 text-white p-3.5 rounded-2xl shadow-sm flex items-center justify-between">
-              <div>
-                <span className="text-[10px] font-extrabold uppercase tracking-wider text-emerald-100 block">Grade 10 Accounting</span>
-                <h5 className="text-xs font-extrabold text-white mt-0.5" style={{ fontFamily: 'Afacad, sans-serif' }}>
-                  {activeTopic || 'CRJ & 15% VAT'}
-                </h5>
-              </div>
-              <span className="bg-white text-emerald-800 font-extrabold px-2.5 py-1 rounded-lg text-[10px] shadow-xs">
-                Mastery: {currentSubData.formativeMastery}%
-              </span>
-            </div>
-
-            {/* (A) PORTRAIT VIEW: Compact 2x2 Card Grid */}
-            {!isLandscape ? (
-              <div id="mob-accounting-portrait-cards" className="bg-white p-3.5 rounded-2xl border border-slate-200 shadow-sm space-y-3">
-                <div className="flex items-center justify-between text-xs pb-1 border-b border-slate-100">
-                  <span className="text-[10px] font-bold uppercase text-slate-500">2D Ledger Inputs</span>
-                  <span className="text-[10px] font-bold text-amber-600 bg-amber-50 px-2 py-0.5 rounded border border-amber-200">6 Marks</span>
-                </div>
-
-                {question?.prompt && (
-                  <p className="text-xs text-slate-700 leading-relaxed font-medium">
-                    {question.prompt}
-                  </p>
-                )}
-
-                <div className="grid grid-cols-2 gap-2 text-xs">
-                  <div className="p-2.5 bg-emerald-50 rounded-xl border border-emerald-200">
-                    <span className="text-[10px] text-slate-600 block font-semibold">Bank (Gross 115%)</span>
-                    <input
-                      type="text"
-                      value={ledgerInputs.bank}
-                      onChange={(e) => setLedgerInputs({ ...ledgerInputs, bank: e.target.value })}
-                      className="font-mono font-bold text-emerald-800 text-sm bg-transparent w-full focus:outline-none border-b border-emerald-400"
-                    />
-                  </div>
-                  <div className="p-2.5 bg-emerald-50 rounded-xl border border-emerald-200">
-                    <span className="text-[10px] text-slate-600 block font-semibold">Sales (Excl 100%)</span>
-                    <input
-                      type="text"
-                      value={ledgerInputs.sales}
-                      onChange={(e) => setLedgerInputs({ ...ledgerInputs, sales: e.target.value })}
-                      className="font-mono font-bold text-emerald-800 text-sm bg-transparent w-full focus:outline-none border-b border-emerald-400"
-                    />
-                  </div>
-                  <div className="p-2.5 bg-emerald-50 rounded-xl border border-emerald-200">
-                    <span className="text-[10px] text-slate-600 block font-semibold">Output VAT (15%)</span>
-                    <input
-                      type="text"
-                      value={ledgerInputs.vat}
-                      onChange={(e) => setLedgerInputs({ ...ledgerInputs, vat: e.target.value })}
-                      className="font-mono font-bold text-emerald-800 text-sm bg-transparent w-full focus:outline-none border-b border-emerald-400"
-                    />
-                  </div>
-                  <div className="p-2.5 bg-slate-50 rounded-xl border border-slate-200">
-                    <span className="text-[10px] text-slate-600 block font-semibold">Cost of Sales</span>
-                    <span className="font-mono font-bold text-slate-700 text-sm">R 8 000</span>
-                  </div>
-                </div>
-
-                {/* 3-Tier Pre-baked Hints Drawer */}
-                <div className="space-y-1.5 pt-1">
-                  <button
-                    type="button"
-                    onClick={() => setShowHints(!showHints)}
-                    className="w-full py-1.5 px-3 rounded-xl bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-200 text-xs font-bold flex items-center justify-between transition cursor-pointer min-h-[44px]"
-                  >
-                    <div className="flex items-center gap-1.5">
-                      <Lightbulb className="w-3.5 h-3.5 text-amber-600" />
-                      <span>{showHints ? 'Hide Hints' : '💡 View 3-Tier Pre-baked Hints'}</span>
-                    </div>
-                    <span className="text-[10px] text-amber-700">Tier {activeHintTier} of 3</span>
-                  </button>
-
-                  {showHints && (
-                    <div className="p-3 bg-amber-50/90 rounded-xl border border-amber-300 text-[11px] text-amber-950 space-y-2 animate-in fade-in">
-                      <div className="flex items-center gap-1">
-                        {[1, 2, 3].map((tier) => (
-                          <button
-                            key={tier}
-                            type="button"
-                            onClick={() => setActiveHintTier(tier)}
-                            className={`px-2 py-0.5 rounded text-[10px] font-bold cursor-pointer ${
-                              activeHintTier === tier
-                                ? 'bg-[#13519C] text-white shadow-xs'
-                                : 'bg-white text-slate-600 hover:bg-slate-100'
-                            }`}
-                          >
-                            Tier {tier}
-                          </button>
-                        ))}
-                      </div>
-                      <p>
-                        {activeHintTier === 1 && 'Look at Bank Gross and calculate the 15/115 fraction.'}
-                        {activeHintTier === 2 && 'When inclusive, Gross represents 115% and Sales represents 100%.'}
-                        {activeHintTier === 3 && 'VAT = R11,500 × 15/115 = R1,500. Sales = R11,500 − R1,500 = R10,000.'}
-                      </p>
-                    </div>
-                  )}
-                </div>
-
-                {/* Mark Answer Button & Verified Banner */}
-                <div className="pt-2 flex flex-col gap-2">
-                  <button
-                    type="button"
-                    onClick={handleTriggerMark}
-                    disabled={isMarking || isLoadingQuestion}
-                    className="w-full py-2.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-md shadow-emerald-700/20 flex items-center justify-center gap-2 transition cursor-pointer disabled:opacity-50 min-h-[44px]"
-                  >
-                    {isMarking ? <Loader2 className="w-4 h-4 animate-spin" /> : <CheckCircle2 className="w-4 h-4" />}
-                    <span>{isMarking ? 'Marking Entry...' : 'Check & Verify Entry'}</span>
-                  </button>
-
-                  {hasMarkedCurrent && (
-                    <div className="p-3 bg-emerald-50 border border-emerald-300 rounded-xl flex items-center justify-between text-xs text-emerald-950 font-bold shadow-xs animate-in zoom-in-95">
-                      <div className="flex items-center gap-1.5">
-                        <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-                        <span>6 / 6 Marks Credited • Balanced</span>
-                      </div>
-                      <span className="px-2 py-0.5 rounded-full bg-emerald-600 text-white text-[10px] font-extrabold shadow-xs">
-                        +35 XP
-                      </span>
-                    </div>
-                  )}
-
-                  {hasMarkedCurrent && (
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setHasMarkedCurrent(false);
-                        onNextQuestion();
-                      }}
-                      className="w-full py-2.5 px-4 rounded-xl bg-slate-800 hover:bg-slate-900 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition cursor-pointer min-h-[44px]"
-                    >
-                      <span>Next Exercise</span>
-                      <ArrowRight className="w-3.5 h-3.5" />
-                    </button>
-                  )}
-                </div>
-              </div>
-            ) : (
-              /* (B) LANDSCAPE VIEW: Fullscreen 6-Column 2D Ledger Table */
-              <div id="mob-accounting-landscape-ledger" className="bg-white p-3.5 rounded-2xl border border-slate-200 shadow-sm space-y-3">
-                <div className="flex items-center justify-between pb-2 border-b border-slate-100">
-                  <div className="flex items-center gap-2">
-                    <span className="text-[10px] font-extrabold uppercase bg-emerald-600 text-white px-2 py-0.5 rounded shadow-xs shadow-emerald-500/30">
-                      CAPS CRJ 2D Ledger • Fullscreen Real Estate
-                    </span>
-                    <span className="text-xs font-bold text-slate-800 truncate">Cash Sales R11,500 (15% VAT)</span>
-                  </div>
-                  <span className="text-xs font-extrabold text-amber-600 bg-amber-50 px-2 py-0.5 rounded border border-amber-200">6 Marks</span>
-                </div>
-                <div className="overflow-x-auto rounded-xl border border-slate-200 shadow-2xs">
-                  <table className="w-full text-xs text-left">
-                    <thead className="bg-slate-100 text-slate-700 border-b border-slate-200 uppercase text-[10px] font-bold">
-                      <tr>
-                        <th className="p-2">Day</th>
-                        <th className="p-2">Details</th>
-                        <th className="p-2">Bank (Gross 115%)</th>
-                        <th className="p-2">Sales (Excl 100%)</th>
-                        <th className="p-2">Output VAT (15%)</th>
-                        <th className="p-2">Cost of Sales</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-slate-100 font-mono text-xs">
-                      <tr>
-                        <td className="p-2 text-slate-600">12</td>
-                        <td className="p-2 text-slate-800 font-sans font-medium">Cash / CRT</td>
-                        <td className="p-1.5">
-                          <input 
-                            type="text" 
-                            value={ledgerInputs.bank}
-                            onChange={(e) => setLedgerInputs({ ...ledgerInputs, bank: e.target.value })}
-                            className="w-24 px-2 py-1 rounded border-2 border-emerald-500 bg-emerald-50 text-emerald-800 font-bold focus:outline-none"
-                          />
-                        </td>
-                        <td className="p-1.5">
-                          <input 
-                            type="text" 
-                            value={ledgerInputs.sales}
-                            onChange={(e) => setLedgerInputs({ ...ledgerInputs, sales: e.target.value })}
-                            className="w-24 px-2 py-1 rounded border-2 border-emerald-500 bg-emerald-50 text-emerald-800 font-bold focus:outline-none"
-                          />
-                        </td>
-                        <td className="p-1.5">
-                          <input 
-                            type="text" 
-                            value={ledgerInputs.vat}
-                            onChange={(e) => setLedgerInputs({ ...ledgerInputs, vat: e.target.value })}
-                            className="w-20 px-2 py-1 rounded border-2 border-emerald-500 bg-emerald-50 text-emerald-800 font-bold focus:outline-none"
-                          />
-                        </td>
-                        <td className="p-2 text-slate-600">8 000</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-                <div className="p-2 bg-amber-50 border border-amber-200 rounded-xl text-[11px] text-amber-900 flex items-center justify-between">
-                  <div className="flex items-center gap-1.5">
-                    <span className="font-bold text-amber-800">Tier 3 Hint:</span>
-                    <span>When VAT inclusive, R11,500 × 15/115 = R1,500 VAT.</span>
-                  </div>
-                  <span className="font-extrabold text-white bg-emerald-600 px-2.5 py-0.5 rounded text-[10px]">+35 XP Credited</span>
-                </div>
-              </div>
-            )}
+        {/* ==================== NON-DESK VIEWS: UNIVERSAL WORKSPACE ==================== */}
+        {currentTab !== 'desk' && (
+          <div className="p-3 sm:p-4 space-y-3 pb-24">
+            <UniversalWorkspace
+              grade={grade}
+              subject={currentTab}
+              topic={activeTopic}
+              question={question}
+              isGenerating={isLoadingQuestion}
+              isChecking={isMarking}
+              onCheck={onCheckAnswer}
+              onNext={onNextQuestion}
+              onSelectTopic={onSelectTopic}
+              result={result}
+              isEmbedded={true}
+              formativeMastery={currentSubData?.formativeMastery || 0}
+              evaluativeScore={currentSubData?.evaluativeScore || 0}
+            />
           </div>
         )}
-
-        {/* ==================== VIEW 3: MATHEMATICS ==================== */}
-        {currentTab === 'maths' && (
-          <div id="mob-content-maths" className="p-4 space-y-3">
-            <div className="bg-blue-600 text-white p-3.5 rounded-2xl shadow-sm flex items-center justify-between">
-              <div>
-                <span className="text-[10px] font-extrabold uppercase tracking-wider text-blue-100 block">Grade 10 Mathematics</span>
-                <h5 className="text-xs font-extrabold text-white mt-0.5" style={{ fontFamily: 'Afacad, sans-serif' }}>
-                  {activeTopic || 'Trinomial Factorisation'}
-                </h5>
-              </div>
-              <span className="bg-white text-blue-900 font-extrabold px-2.5 py-1 rounded-lg text-[10px] shadow-xs">
-                Mastery: {currentSubData.formativeMastery}%
-              </span>
-            </div>
-            <div className="bg-white p-3.5 rounded-2xl border border-slate-200 shadow-sm space-y-3">
-              <span className="text-[10px] font-bold uppercase text-slate-400">Step-by-Step KaTeX Keypad</span>
-              <p className="text-xs font-bold text-slate-800">{question?.prompt || 'Factorise completely: x² − 7x + 12'}</p>
-              
-              <div className="space-y-2">
-                <input
-                  type="text"
-                  value={mathAnswer}
-                  onChange={(e) => setMathAnswer(e.target.value)}
-                  placeholder="e.g. (x - 3)(x - 4)"
-                  className="w-full px-3 py-2 rounded-xl border border-blue-300 font-mono text-xs font-bold text-blue-950 focus:outline-none focus:ring-2 focus:ring-blue-500 min-h-[44px]"
-                />
-
-                <button
-                  type="button"
-                  onClick={handleTriggerMark}
-                  disabled={isMarking}
-                  className="w-full py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs rounded-xl transition flex items-center justify-center gap-1.5 cursor-pointer shadow-xs min-h-[44px]"
-                >
-                  {isMarking ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <CheckCircle2 className="w-3.5 h-3.5" />}
-                  <span>Verify Answer</span>
-                </button>
-
-                {hasMarkedCurrent && (
-                  <div className="p-2.5 bg-emerald-50 border border-emerald-300 rounded-xl text-emerald-950 font-bold text-xs flex items-center justify-between animate-in fade-in">
-                    <div className="flex items-center gap-1.5">
-                      <Sparkles className="w-4 h-4 text-emerald-600" />
-                      <span>Step Verified: (−3) + (−4) = −7</span>
-                    </div>
-                    <span className="bg-emerald-600 text-white px-2 py-0.5 rounded-full text-[10px]">+35 XP</span>
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* ==================== VIEW 4: MATHEMATICAL LITERACY ==================== */}
-        {currentTab === 'mathslit' && (
-          <div id="mob-content-mathslit" className="p-4 space-y-3">
-            <div className="bg-purple-600 text-white p-3.5 rounded-2xl shadow-sm flex items-center justify-between">
-              <div>
-                <span className="text-[10px] font-extrabold uppercase tracking-wider text-purple-100 block">Maths Literacy</span>
-                <h5 className="text-xs font-extrabold text-white mt-0.5" style={{ fontFamily: 'Afacad, sans-serif' }}>
-                  {activeTopic || 'Municipal Tariffs & Budgets'}
-                </h5>
-              </div>
-              <span className="bg-white text-purple-950 font-extrabold px-2.5 py-1 rounded-lg text-[10px] shadow-xs">
-                Mastery: {currentSubData.formativeMastery}%
-              </span>
-            </div>
-            <div className="bg-white p-3.5 rounded-2xl border border-slate-200 shadow-sm space-y-2 text-xs">
-              <p className="text-slate-700">{question?.prompt || 'Calculate 25 kL water tariff: First 6 kL free, 7-15 kL @ R18.50, 16-25 kL @ R24.00.'}</p>
-              <div className="p-3 bg-purple-50 border border-purple-200 rounded-xl text-purple-950 font-mono font-bold">
-                Total = (0) + (9 × 18.50) + (10 × 24.00) = R406.50 ✓
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* ==================== VIEW 5: PHYSICAL SCIENCES ==================== */}
-        {currentTab === 'physics' && (
-          <div id="mob-content-physics" className="p-4 space-y-3">
-            <div className="bg-cyan-600 text-white p-3.5 rounded-2xl shadow-sm flex items-center justify-between">
-              <div>
-                <span className="text-[10px] font-extrabold uppercase tracking-wider text-cyan-100 block">Physical Sciences</span>
-                <h5 className="text-xs font-extrabold text-white mt-0.5" style={{ fontFamily: 'Afacad, sans-serif' }}>
-                  {activeTopic || '1D Constant Acceleration'}
-                </h5>
-              </div>
-              <span className="bg-white text-cyan-900 font-extrabold px-2.5 py-1 rounded-lg text-[10px] shadow-xs">
-                Mastery: {currentSubData.formativeMastery}%
-              </span>
-            </div>
-            <div className="bg-white p-3.5 rounded-2xl border border-slate-200 shadow-sm space-y-2">
-              <p className="text-xs text-slate-700">{question?.prompt || 'Trolley accelerates from rest at 2,5 m/s² for 4 s.'}</p>
-              <div className="p-3 bg-cyan-50 border border-cyan-200 rounded-xl text-cyan-950 font-mono font-bold text-xs">
-                vf = 0 + (2,5)(4) = 10,0 m/s ✓
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* ==================== VIEW 6: BUSINESS STUDIES ==================== */}
-        {currentTab === 'business' && (
-          <div id="mob-content-business" className="p-4 space-y-3">
-            <div 
-              className="text-white p-3.5 rounded-2xl shadow-sm flex items-center justify-between"
-              style={{ backgroundColor: getSubjectTheme('business_studies').base }}
-            >
-              <div>
-                <span className="text-[10px] font-extrabold uppercase tracking-wider text-rose-100 block">Business Studies</span>
-                <h5 className="text-xs font-extrabold text-white mt-0.5" style={{ fontFamily: 'Afacad, sans-serif' }}>
-                  {activeTopic || 'Business Environments'}
-                </h5>
-              </div>
-              <span className="bg-white text-rose-950 font-extrabold px-2.5 py-1 rounded-lg text-[10px] shadow-xs">
-                Mastery: {currentSubData.formativeMastery}%
-              </span>
-            </div>
-            <div className="bg-white p-3.5 rounded-2xl border border-slate-200 shadow-sm space-y-2">
-              <p className="text-xs text-slate-700">{question?.prompt || 'Fuel price increase decree by Minister of Mineral Resources.'}</p>
-              <div className="p-3 bg-rose-50 border border-rose-200 rounded-xl text-rose-950 font-bold text-xs">
-                Macro Environment (Economic &amp; Political) • Outside Management Control ✓
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* ==================== VIEW 7: LIFE SCIENCES ==================== */}
-        {currentTab === 'lifesci' && (
-          <div id="mob-content-lifesci" className="p-4 space-y-3">
-            <div 
-              className="text-white p-3.5 rounded-2xl shadow-sm flex items-center justify-between"
-              style={{ backgroundColor: getSubjectTheme('life_sciences').base }}
-            >
-              <div>
-                <span className="text-[10px] font-extrabold uppercase tracking-wider text-lime-100 block">Life Sciences</span>
-                <h5 className="text-xs font-extrabold text-white mt-0.5" style={{ fontFamily: 'Afacad, sans-serif' }}>
-                  {activeTopic || 'Cell Division & Mitosis'}
-                </h5>
-              </div>
-              <span className="bg-white text-teal-950 font-extrabold px-2.5 py-1 rounded-lg text-[10px] shadow-xs">
-                Mastery: {currentSubData.formativeMastery}%
-              </span>
-            </div>
-            <div className="bg-white p-3.5 rounded-2xl border border-slate-200 shadow-sm space-y-2">
-              <p className="text-xs text-slate-700">{question?.prompt || 'Sister chromatids separating towards opposite poles.'}</p>
-              <div className="p-3 bg-teal-50 border border-teal-200 rounded-xl text-teal-950 font-bold text-xs">
-                Anaphase (Spindle Fiber Contraction) ✓
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* ==================== VIEW 8: TECH MATHS ==================== */}
-        {currentTab === 'techmaths' && (
-          <div id="mob-content-techmaths" className="p-4 space-y-3">
-            <div className="bg-indigo-600 text-white p-3.5 rounded-2xl shadow-sm flex items-center justify-between">
-              <div>
-                <span className="text-[10px] font-extrabold uppercase tracking-wider text-indigo-100 block">Tech Maths</span>
-                <h5 className="text-xs font-extrabold text-white mt-0.5" style={{ fontFamily: 'Afacad, sans-serif' }}>
-                  {activeTopic || 'Mensuration & Trig'}
-                </h5>
-              </div>
-              <span className="bg-white text-indigo-950 font-extrabold px-2.5 py-1 rounded-lg text-[10px] shadow-xs">
-                Mastery: {currentSubData.formativeMastery}%
-              </span>
-            </div>
-            <div className="bg-white p-3.5 rounded-2xl border border-slate-200 shadow-sm space-y-2 font-mono text-xs">
-              <p className="text-slate-700 font-sans">{question?.prompt || 'Sides 6 cm and 8 cm right-angled triangle.'}</p>
-              <div className="p-3 bg-indigo-50 border border-indigo-200 rounded-xl text-indigo-950 font-bold">
-                r = √(6² + 8²) = 10 cm &bull; sin(θ) = 0.6 ✓
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* ==================== VIEW 9: EMS ==================== */}
-        {currentTab === 'ems' && (
-          <div id="mob-content-ems" className="p-4 space-y-3">
-            <div className="bg-amber-600 text-white p-3.5 rounded-2xl shadow-sm flex items-center justify-between">
-              <div>
-                <span className="text-[10px] font-extrabold uppercase tracking-wider text-amber-100 block">Grade 9 EMS</span>
-                <h5 className="text-xs font-extrabold text-white mt-0.5" style={{ fontFamily: 'Afacad, sans-serif' }}>
-                  {activeTopic || 'The Economy & Financial Literacy'}
-                </h5>
-              </div>
-              <span className="bg-white text-amber-950 font-extrabold px-2.5 py-1 rounded-lg text-[10px] shadow-xs">
-                Mastery: {currentSubData.formativeMastery}%
-              </span>
-            </div>
-            <div className="bg-white p-3.5 rounded-2xl border border-slate-200 shadow-sm space-y-2 text-xs">
-              <p className="text-slate-700">{question?.prompt || 'Factors of production: Land, Labour, Capital, Entrepreneurship.'}</p>
-              <div className="p-3 bg-amber-50 border border-amber-200 rounded-xl text-amber-950 font-bold">
-                Remuneration: Rent, Wages/Salaries, Interest, Profit ✓
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* ==================== VIEW 10: NATURAL SCIENCES ==================== */}
-        {currentTab === 'natsci' && (
-          <div id="mob-content-natsci" className="p-4 space-y-3">
-            <div className="bg-emerald-600 text-white p-3.5 rounded-2xl shadow-sm flex items-center justify-between">
-              <div>
-                <span className="text-[10px] font-extrabold uppercase tracking-wider text-emerald-100 block">Natural Sciences</span>
-                <h5 className="text-xs font-extrabold text-white mt-0.5" style={{ fontFamily: 'Afacad, sans-serif' }}>
-                  {activeTopic || 'Matter and Materials'}
-                </h5>
-              </div>
-              <span className="bg-white text-emerald-950 font-extrabold px-2.5 py-1 rounded-lg text-[10px] shadow-xs">
-                Mastery: {currentSubData.formativeMastery}%
-              </span>
-            </div>
-            <div className="bg-white p-3.5 rounded-2xl border border-slate-200 shadow-sm space-y-2 text-xs">
-              <p className="text-slate-700">{question?.prompt || 'Periodic table arrangement and atomic structure.'}</p>
-              <div className="p-3 bg-emerald-50 border border-emerald-200 rounded-xl text-emerald-950 font-bold">
-                Atomic Number = Protons = Electrons in neutral atom ✓
-              </div>
-            </div>
-          </div>
-        )}
-
       </div>
 
       {/* ───────────────────────────────────────────────────────────── */}

@@ -271,6 +271,8 @@ export const AdminDashboard = ({ currentUser, db, onSelect }) => {
                         </div>
                         <p className="text-gray-600 mb-4">Review and approve student payment uploads</p>
                         <button
+                            type="button"
+                            data-testid="tab-admin-payments"
                             onClick={() => onSelect('eftApprovals')}
                             className="w-full bg-amber-600 text-white py-2 px-4 rounded-lg hover:bg-amber-700 transition-colors"
                         >
@@ -1125,6 +1127,8 @@ export const PendingPayments = ({ currentUser, db, onBack }) => {
                                     {payment.status === 'pending' && (
                                         <>
                                             <button
+                                                type="button"
+                                                data-testid="btn-approve-payment-30d"
                                                 onClick={() => handleApprove(payment, 31)}
                                                 disabled={actionLoading === payment.id}
                                                 className="flex items-center gap-1 px-3 py-2 bg-emerald-600 text-white rounded-lg text-sm font-semibold hover:bg-emerald-700 transition disabled:opacity-50"
@@ -1132,6 +1136,17 @@ export const PendingPayments = ({ currentUser, db, onBack }) => {
                                                 <CheckCircle className="w-4 h-4" /> 1 Mo
                                             </button>
                                             <button
+                                                type="button"
+                                                data-testid="btn-approve-payment-90d"
+                                                onClick={() => handleApprove(payment, 90)}
+                                                disabled={actionLoading === payment.id}
+                                                className="flex items-center gap-1 px-3 py-2 bg-[#FF9100] text-white rounded-lg text-sm font-semibold hover:bg-amber-600 transition disabled:opacity-50"
+                                            >
+                                                <CheckCircle className="w-4 h-4" /> 3 Mo (Term)
+                                            </button>
+                                            <button
+                                                type="button"
+                                                data-testid="btn-approve-payment-365d"
                                                 onClick={() => handleApprove(payment, 365)}
                                                 disabled={actionLoading === payment.id}
                                                 className="flex items-center gap-1 px-3 py-2 bg-indigo-600 text-white rounded-lg text-sm font-semibold hover:bg-indigo-700 transition disabled:opacity-50"
@@ -1139,6 +1154,8 @@ export const PendingPayments = ({ currentUser, db, onBack }) => {
                                                 <CheckCircle className="w-4 h-4" /> 12 Mo
                                             </button>
                                             <button
+                                                type="button"
+                                                data-testid="btn-reject-payment"
                                                 onClick={() => handleReject(payment)}
                                                 disabled={actionLoading === payment.id}
                                                 className="flex items-center gap-1 px-3 py-2 bg-red-50 text-red-700 rounded-lg text-sm font-semibold hover:bg-red-100 transition disabled:opacity-50"

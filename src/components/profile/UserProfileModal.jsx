@@ -684,7 +684,11 @@ export default function UserProfileModal({
                       <button
                         key={item.role}
                         type="button"
-                        onClick={() => setSuperAdminMode(item.role)}
+                        data-testid={`btn-admin-role-${item.role}`}
+                        onClick={() => {
+                          setSuperAdminMode(item.role);
+                          if (onClose) onClose();
+                        }}
                         className={`px-2 py-1.5 rounded-xl text-xs font-bold transition cursor-pointer text-center ${
                           superAdminMode === item.role
                             ? 'bg-[#13519C] text-white shadow-xs'

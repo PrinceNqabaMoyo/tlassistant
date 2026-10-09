@@ -45,6 +45,21 @@ from app.utils.grade11_business_studies.term_1 import (
     business_sectors_generator as g11_bs_sectors,
     influences_on_business_environments_generator as g11_bs_influences,
     socio_economic_issues_generator as g11_bs_socio,
+    the_challenges_of_the_business_environments_generator as g11_bs_challenges,
+)
+from app.utils.grade11_business_studies.term_2 import (
+    creative_thinking_generator as g11_bs_creative,
+    marketing_function_generator as g11_bs_mkt,
+    production_function_generator as g11_bs_prod,
+    professionalism_and_ethics_generator as g11_bs_ethics,
+    stress_crisis_change_generator as g11_bs_stress,
+)
+from app.utils.grade11_business_studies.term_3 import (
+    business_plan_transformation_generator as g11_bs_plan,
+    citizenship_responsibilities_generator as g11_bs_citizenship,
+    entrepreneurial_assessment_generator as g11_bs_entrepreneur,
+    presentation_of_information_generator as g11_bs_pres,
+    start_business_venture_generator as g11_bs_venture,
 )
 
 # Grade 7 EMS
@@ -57,6 +72,8 @@ from app.utils.grade7_ems import (
     term2_budgets as g7_budgets,
     term3_entrepreneurship as g7_entrepreneurship,
     term3_inequality_and_poverty as g7_inequality,
+    term3_production_process as g7_prod,
+    term4_savings as g7_savings,
 )
 
 # Grade 8 EMS
@@ -69,6 +86,7 @@ from app.utils.grade8_ems import (
     term2_accounting_cycle as g8_acct_cycle,
     term3_cpj_and_crj as g8_cpj_crj,
     term3_ownership as g8_ownership,
+    term3_management as g8_mgmt,
 )
 
 # Grade 9 EMS
@@ -112,6 +130,10 @@ from app.utils import (
 from app.utils.grade9_mathematics import (
     factorisation_generator as g9_math_fact,
     congruence_similarity_generator as g9_math_geom,
+    pythagoras_generator as g9_math_pyth,
+    geometry_straight_lines_triangles_generator as g9_math_lines,
+    measurement_3d_generator as g9_math_meas3d,
+    algebraic_equations_fractions_generator as g9_math_eq_frac,
 )
 
 # Senior Phase Mathematics (Grades 7, 8, 9)
@@ -127,6 +149,37 @@ g_sp_data_handling = SeniorPhaseDataHandlingGenerator().generate
 g_sp_geometry = SeniorPhaseGeometryGenerator().generate
 g_sp_transformations = SeniorPhaseTransformationsGenerator().generate
 
+# Grade 7 Mathematics (Dedicated 6-Pillar Generators)
+from app.utils.grade7_mathematics import (
+    whole_numbers_generator as g7_math_whole,
+    patterns_generator as g7_math_pat,
+    algebraic_expressions_generator as g7_math_alg,
+    geometric_nets_3d_generator as g7_math_nets,
+    decimals_generator as g7_math_dec,
+    fractions_generator as g7_math_frac,
+    integers_generator as g7_math_int,
+    geometry_2d_generator as g7_math_geom2d,
+    graphs_relationships_generator as g7_math_graph,
+    data_probability_generator as g7_math_data,
+    exponents_generator as g7_math_exp,
+    measurement_generator as g7_math_meas,
+    transformation_geometry_generator as g7_math_trans,
+)
+from app.utils.senior_phase_math.senior_phase_probability_generator import SeniorPhaseProbabilityGenerator
+g_sp_probability = SeniorPhaseProbabilityGenerator().generate
+
+# Grade 8 Mathematics (Dedicated 6-Pillar Generators)
+from app.utils.grade8_mathematics import (
+    pythagoras_generator as g8_math_pyth,
+    integers_generator as g8_math_int,
+    algebraic_expressions_equations_generator as g8_math_alg,
+    geometry_straight_lines_generator as g8_math_lines,
+    measurement_3d_generator as g8_math_meas3d,
+    fractions_decimals_generator as g8_math_frac_dec,
+    geometry_2d_shapes_generator as g8_math_geom2d,
+    geometry_3d_objects_generator as g8_math_3d_obj,
+)
+
 # Grade 10 Mathematics
 from app.utils.grade10_mathematics.term_1 import (
     algebraic_expressions_generator as g10_math_alg,
@@ -139,6 +192,14 @@ from app.utils.grade10_mathematics.term_2 import (
     functions_generator as g10_math_func,
     euclidean_geometry_generator as g10_math_geom,
     analytical_geometry_generator as g10_math_analgeo,
+)
+from app.utils.grade10_mathematics.term_3 import (
+    finance_growth_generator as g10_math_fin,
+    statistics_generator as g10_math_stat,
+)
+from app.utils.grade10_mathematics.term_4 import (
+    measurements_generator as g10_math_meas,
+    probability_generator as g10_math_prob,
 )
 
 # Grade 11 Mathematics
@@ -158,9 +219,7 @@ from app.utils.grade11_mathematics import (
     probability_contingency_generator as g11_math_prob,
     statistics_summary_ogive_generator as g11_math_stat,
     linear_programming_generator as g11_math_lp,
-)
-from app.utils.grade10_mathematics.term_4 import (
-    measurements_generator as g10_math_meas,
+    functions_graphs_generator as g11_math_func,
 )
 
 # Grade 12 Mathematics
@@ -177,6 +236,8 @@ from app.utils.grade10_accounting import (
     gaap_generator as g10_acct_gaap,
     ethics_generator as g10_acct_ethics,
     internal_control_generator as g10_acct_ctrl,
+    fixed_assets_depreciation_generator as g10_acct_fixed,
+    inventory_cost_of_sales_generator as g10_acct_inv,
 )
 from app.utils.grade10_accounting.term2 import (
     vat_generator as g10_acct_vat,
@@ -195,6 +256,8 @@ from app.utils.grade11_accounting import (
     concepts_generator as g11_acct_concepts,
     partnerships_financial_statements_generator as g11_acct_part_stmt,
     inventory_valuation_generator as g11_acct_inv,
+    vat_generator as g11_acct_vat,
+    analysis_interpretation_generator as g11_acct_analysis,
 )
 
 # Grade 12 Accounting
@@ -220,15 +283,44 @@ from app.utils.grade12_mathematics import (
     analytical_geometry_circles_generator as g12_math_circles,
     counting_principles_probability_generator as g12_math_prob,
     bivariate_statistics_generator as g12_math_stat,
+    sequences_series_generator as g12_math_seq,
+    trigonometry_compound_angles_generator as g12_math_trig_comp,
 )
 
 # Grade 12 Physical Sciences & Chemistry
 from app.utils.grade12_physical_sciences import (
     stoichiometry_equilibrium_generator as phys_chem_eq,
     momentum_impulse_generator as phys_momentum,
+    vertical_projectile_generator as phys12_proj,
+    doppler_effect_generator as phys12_doppler,
+    organic_chemistry_generator as phys12_organic,
+    acids_bases_generator as phys12_acids_bases,
+    electrodynamics_circuits_generator as phys12_electrodyn,
+    optical_phenomena_photoelectric_generator as phys12_photoelectric,
 )
 
-# Grade 12 Business Studies (40-Mark Essay)
+# Grade 12 Business Studies
+from app.utils.grade12_business_studies.term_1 import (
+    creative_thinking_problem_solving_generator as g12_bs_creative,
+    ethics_and_professionalism_generator as g12_bs_ethics,
+    human_resources_function_generator as g12_bs_hr,
+    impact_of_legislation_generator as g12_bs_legislation,
+    macro_environment_strategies_generator as g12_bs_macro_strat,
+)
+from app.utils.grade12_business_studies.term_2 import (
+    business_sectors_environments_generator as g12_bs_sectors_env,
+    investment_insurance_generator as g12_bs_insurance,
+    investment_securities_generator as g12_bs_securities,
+    management_and_leadership_generator as g12_bs_leadership,
+    quality_of_performance_generator as g12_bs_quality,
+    team_performance_conflict_generator as g12_bs_team_conflict,
+)
+from app.utils.grade12_business_studies.term_3 import (
+    forms_of_ownership_success_generator as g12_bs_ownership,
+    human_rights_inclusivity_generator as g12_bs_human_rights,
+    presentation_data_responses_generator as g12_bs_presentation,
+    social_responsibility_csr_csi_generator as g12_bs_csr,
+)
 from app.utils.grade12_business_studies import (
     business_studies_essay_generator as g12_bs_essay,
     legislation_hr_generator as g12_bs_leg_hr,
@@ -243,6 +335,13 @@ from app.utils.grade8_ems import (
 
 # Science & Technical Subjects
 from app.utils.physical_sciences import mechanics_generator as phys_mech
+from app.utils.grade11_physical_sciences import (
+    vectors_newton_generator as phys11_vec,
+    chemical_bonding_intermolecular_generator as phys11_chem,
+    electric_circuits_energy_generator as phys11_circuits,
+    energy_chemical_change_generator as phys11_energy,
+    stoichiometry_limiting_generator as phys11_stoich,
+)
 from app.utils.life_sciences import (
     genetics_generator as life_gen,
     dihybrid_pedigree_generator as life_dihybrid,
@@ -250,14 +349,23 @@ from app.utils.life_sciences import (
 from app.utils.natural_sciences import (
     electric_circuits_generator as ns_circuits,
     chemical_reactions_generator as ns_reactions,
+    senior_phase_astronomy_generator as ns_astronomy,
+    term1_life_and_living_generator as ns_life_living,
+    term2_matter_materials_generator as ns_matter_materials,
+    term3_energy_change_forces_generator as ns_energy_forces,
+    term4_planet_earth_beyond_generator as ns_planet_earth,
 )
 from app.utils.mathematical_literacy import (
     finance_tax_generator as mathlit_fin,
     maps_scales_generator as mathlit_maps,
+    tariffs_tax_brackets_generator as mathlit_tariffs,
+    data_handling_generator as mathlit_data,
+    measurement_probability_generator as mathlit_meas_prob,
 )
 from app.utils.technical_mathematics import (
     complex_numbers_generator as tech_cplx,
     mensuration_calculus_generator as tech_mens,
+    circles_angular_movement_generator as tech_circles,
 )
 
 # Foundational Mathematics (Tang & Stokke Pedagogy)
@@ -333,41 +441,69 @@ def _adapt_multi_item_generator(gen_func: Callable) -> Callable:
 # ============================================================================
 
 GRADE7_MATH_GENERATORS = {
-    "grade7_math_geometry_of_2d_shapes": g_sp_geometry,
-    "grade7_math_geometry_of_straight_lines": g_sp_geometry,
-    "grade7_math_area_and_perimeter_of_2d_shapes": g_sp_measurement,
-    "grade7_math_surface_area_and_volume_of_3d_objects": g_sp_measurement,
-    "grade7_math_data_handling": g_sp_data_handling,
-    "grade7_math_transformation_geometry": g_sp_transformations,
+    "grade7_math_geometry_of_2d_shapes": g7_math_geom2d.generate,
+    "grade7_math_2d_shapes": g7_math_geom2d.generate,
+    "grade7_math_geometry_of_straight_lines": g7_math_geom2d.generate,
+    "grade7_math_area_and_perimeter_of_2d_shapes": g7_math_meas.generate,
+    "grade7_math_perimeter_and_area": g7_math_meas.generate,
+    "grade7_math_measurement": g7_math_meas.generate,
+    "grade7_math_surface_area_and_volume_of_3d_objects": g7_math_meas.generate,
+    "grade7_math_data_handling": g7_math_data.generate_data_handling,
+    "grade7_math_statistics": g7_math_data.generate_data_handling,
+    "grade7_math_transformation_geometry": g7_math_trans.generate,
     "grade7_math_construction_of_geometric_figures": g_sp_geometry,
-    "grade7_math_whole_numbers": _adapt_single_item_generator(g8_math_whole.generate_grade8_whole_numbers_question),
-    "grade7_math_integers": _adapt_single_item_generator(g8_math_int.generate_grade8_integers_question),
-    "grade7_math_patterns": _adapt_single_item_generator(g8_math_pat.generate_grade8_patterns_question),
-    "grade7_math_functions": _adapt_single_item_generator(g8_math_func.generate_grade8_functions_question),
-    "grade7_math_exponents": _adapt_single_item_generator(g8_math_exp.generate_grade8_exponents_question),
-    "grade7_math_fractions": _adapt_single_item_generator(g9_math_frac.generate_grade9_fractions_question),
-    "grade7_math_decimal_notation": _adapt_single_item_generator(g9_math_dec.generate_grade9_decimal_notation_question),
+    "grade7_math_whole_numbers": g7_math_whole.generate,
+    "grade7_math_working_with_whole_numbers": g7_math_whole.generate,
+    "grade7_math_integers": g7_math_int.generate,
+    "grade7_math_patterns": g7_math_pat.generate,
+    "grade7_math_numeric_and_geometric_patterns": g7_math_pat.generate,
+    "grade7_math_numeric_patterns": g7_math_pat.generate,
+    "grade7_math_algebraic_expressions": g7_math_alg.generate,
+    "grade7_math_algebraic_equations": g7_math_alg.generate,
+    "grade7_math_probability": g7_math_data.generate_probability,
+    "grade7_math_functions": g7_math_graph.generate,
+    "grade7_math_functions_and_relationships": g7_math_graph.generate,
+    "grade7_math_graphs": g7_math_graph.generate,
+    "grade7_math_exponents": g7_math_exp.generate,
+    "grade7_math_fractions": g7_math_frac.generate,
+    "grade7_math_common_fractions": g7_math_frac.generate,
+    "grade7_math_decimal_notation": g7_math_dec.generate,
+    "grade7_math_decimals": g7_math_dec.generate,
+    "grade7_math_decimal_fractions": g7_math_dec.generate,
     "grade7_math_graph_paper_types": g_sp_measurement,
+    "grade7_math_geometric_nets_3d": g7_math_nets.generate,
+    "grade7_math_geometry_of_3d_objects": g7_math_nets.generate,
+    "grade7_math_3d_shapes_and_nets": g7_math_nets.generate,
+    "grade7_math_nets_of_3d_shapes": g7_math_nets.generate,
 }
 
 GRADE8_MATH_GENERATORS = {
-    "grade8_math_algebraic_expressions": _adapt_single_item_generator(g8_math_expr.generate_grade8_algebraic_expressions_question),
-    "grade8_math_algebraic_equations": _adapt_single_item_generator(g8_math_eq.generate_grade8_algebraic_equations_question),
+    "grade8_math_algebraic_expressions": g8_math_alg.generate,
+    "grade8_math_algebraic_equations": g8_math_alg.generate,
     "grade8_math_exponents": _adapt_single_item_generator(g8_math_exp.generate_grade8_exponents_question),
     "grade8_math_functions": _adapt_single_item_generator(g8_math_func.generate_grade8_functions_question),
-    "grade8_math_integers": _adapt_single_item_generator(g8_math_int.generate_grade8_integers_question),
+    "grade8_math_integers": g8_math_int.generate,
     "grade8_math_patterns": _adapt_single_item_generator(g8_math_pat.generate_grade8_patterns_question),
     "grade8_math_whole_numbers": _adapt_single_item_generator(g8_math_whole.generate_grade8_whole_numbers_question),
-    "grade8_math_fractions": _adapt_single_item_generator(g9_math_frac.generate_grade9_fractions_question),
-    "grade8_math_decimal_notation": _adapt_single_item_generator(g9_math_dec.generate_grade9_decimal_notation_question),
-    "grade8_math_theorem_of_pythagoras": g_sp_pythagoras,
-    "grade8_math_geometry_of_2d_shapes": g_sp_geometry,
-    "grade8_math_geometry_of_straight_lines": g_sp_geometry,
+    "grade8_math_fractions": g8_math_frac_dec.generate,
+    "grade8_math_decimal_notation": g8_math_frac_dec.generate,
+    "grade8_math_percentages": g8_math_frac_dec.generate,
+    "grade8_math_theorem_of_pythagoras": g8_math_pyth.generate,
+    "grade8_math_pythagoras": g8_math_pyth.generate,
+    "grade8_math_geometry_of_2d_shapes": g8_math_geom2d.generate,
+    "grade8_math_triangles": g8_math_geom2d.generate,
+    "grade8_math_geometry_of_straight_lines": g8_math_lines.generate,
+    "grade8_math_straight_lines": g8_math_lines.generate,
+    "grade8_math_geometry_of_3d_objects": g8_math_3d_obj.generate,
+    "grade8_math_3d_objects": g8_math_3d_obj.generate,
+    "grade8_math_geometric_nets_3d": g7_math_nets.generate,
     "grade8_math_area_and_perimeter_of_2d_shapes": g_sp_measurement,
-    "grade8_math_surface_area_and_volume_of_3d_objects": g_sp_measurement,
+    "grade8_math_surface_area_and_volume_of_3d_objects": g8_math_meas3d.generate,
+    "grade8_math_measurement_3d": g8_math_meas3d.generate,
     "grade8_math_data_handling": g_sp_data_handling,
     "grade8_math_transformation_geometry": g_sp_transformations,
     "grade8_math_construction_of_geometric_figures": g_sp_geometry,
+    "grade8_math_probability": g_sp_probability,
     "grade8_math_graph_paper_types": g_sp_measurement,
 }
 
@@ -382,18 +518,25 @@ GRADE9_MATH_GENERATORS = {
     "grade9_math_patterns": _adapt_single_item_generator(g9_math_pat.generate_grade9_patterns_question),
     "grade9_math_whole_numbers": _adapt_single_item_generator(g9_math_whole.generate_grade9_whole_numbers_question),
     "grade9_math_factorisation": g9_math_fact.generate,
-    "grade9_math_algebraic_fractions": g9_math_fact.generate,
+    "grade9_math_algebraic_fractions": g9_math_eq_frac.generate,
     "grade9_math_congruence_similarity": g9_math_geom.generate,
     "grade9_math_geometry": g9_math_geom.generate,
-    "grade9_math_theorem_of_pythagoras": g_sp_pythagoras,
-    "grade9_math_geometry_of_2d_shapes": g_sp_geometry,
-    "grade9_math_geometry_of_straight_lines": g_sp_geometry,
+    "grade9_math_theorem_of_pythagoras": g9_math_pyth.generate,
+    "grade9_math_pythagoras": g9_math_pyth.generate,
+    "grade9_math_geometry_of_2d_shapes": g9_math_lines.generate,
+    "grade9_math_geometry_of_straight_lines": g9_math_lines.generate,
+    "grade9_math_geometry_of_3d_objects": g9_math_meas3d.generate,
+    "grade9_math_geometric_nets_3d": g7_math_nets.generate,
     "grade9_math_area_and_perimeter_of_2d_shapes": g_sp_measurement,
-    "grade9_math_surface_area_and_volume_of_3d_objects": g_sp_measurement,
+    "grade9_math_surface_area_and_volume_of_3d_objects": g9_math_meas3d.generate,
+    "grade9_math_measurement_3d": g9_math_meas3d.generate,
     "grade9_math_data_handling": g_sp_data_handling,
     "grade9_math_transformation_geometry": g_sp_transformations,
     "grade9_math_construction_of_geometric_figures": g_sp_geometry,
+    "grade9_math_probability": g_sp_probability,
     "grade9_math_graph_paper_types": g_sp_measurement,
+    "grade9_math_graphs": _adapt_single_item_generator(g9_math_func.generate_grade9_functions_relationships_question),
+    "grade9_math_algebraic_equations_fractions": g9_math_eq_frac.generate,
 }
 
 GRADE10_MATH_GENERATORS = {
@@ -406,6 +549,12 @@ GRADE10_MATH_GENERATORS = {
     "grade10_math_euclidean_geometry": g10_math_geom.generate,
     "grade10_math_analytical_geometry": _adapt_single_item_generator(g10_math_analgeo.generate_analytical_geometry_question),
     "grade10_math_measurements": g10_math_meas.generate,
+    "grade10_math_finance": g10_math_fin.generate,
+    "grade10_math_finance_growth": g10_math_fin.generate,
+    "grade10_math_finance_and_growth": g10_math_fin.generate,
+    "grade10_math_statistics": g10_math_stat.generate,
+    "grade10_math_probability": g10_math_prob.generate,
+    "grade10_math_probability_studio": g10_math_prob.generate,
 }
 
 GRADE11_MATH_GENERATORS = {
@@ -430,15 +579,21 @@ GRADE11_MATH_GENERATORS = {
     "grade11_math_linear_programming": g11_math_lp.generate,
     "grade11_math_measurement": g10_math_meas.generate,
     "grade11_math_investigation_and_projects": g11_math_lp.generate,
+    "grade11_math_functions": g11_math_func.generate,
+    "grade11_math_functions_graphs": g11_math_func.generate,
+    "grade11_math_functions_and_graphs": g11_math_func.generate,
 }
 
 GRADE12_MATH_GENERATORS = {
     "grade12_math_finance": _adapt_multi_item_generator(g12_math_fin.generate_questions),
     "grade12_math_functions": _adapt_multi_item_generator(g12_math_func.generate_questions),
-    "grade12_math_patterns_sequences_series": _adapt_multi_item_generator(g12_math_pat.generate_questions),
-    "grade12_math_trigonometry": _adapt_multi_item_generator(g12_math_trig.generate_questions),
+    "grade12_math_patterns_sequences_series": g12_math_seq.generate,
+    "grade12_math_sequences_series": g12_math_seq.generate,
+    "grade12_math_trigonometry": g12_math_trig_comp.generate,
+    "grade12_math_trigonometry_compound": g12_math_trig_comp.generate,
     "grade12_math_differential_calculus": g12_math_calc.generate,
     "grade12_math_calculus": g12_math_calc.generate,
+    "grade12_math_analytical_geometry": g12_math_circles.generate,
     "grade12_math_analytical_geometry_circles": g12_math_circles.generate,
     "grade12_math_circles": g12_math_circles.generate,
     "grade12_math_counting_probability": g12_math_prob.generate,
@@ -484,15 +639,48 @@ GRADE11_BS_GENERATORS = {
     "grade11_bs_business_sectors": g11_bs_sectors.generate,
     "grade11_bs_influences_on_business_environments": g11_bs_influences.generate,
     "grade11_bs_socio_economic_issues": g11_bs_socio.generate,
+    "grade11_bs_challenges_of_business_environments": g11_bs_challenges.generate,
+    "grade11_bs_creative_thinking": g11_bs_creative.generate,
+    "grade11_bs_marketing_function": g11_bs_mkt.generate,
+    "grade11_bs_production_function": g11_bs_prod.generate,
     "grade11_bs_marketing_production": g11_bs_mkt_prod.generate,
+    "grade11_bs_professionalism_and_ethics": g11_bs_ethics.generate,
+    "grade11_bs_stress_crisis_change": g11_bs_stress.generate,
+    "grade11_bs_business_plan_transformation": g11_bs_plan.generate,
+    "grade11_bs_citizenship_responsibilities": g11_bs_citizenship.generate,
+    "grade11_bs_entrepreneurial_assessment": g11_bs_entrepreneur.generate,
+    "grade11_bs_presentation_of_information": g11_bs_pres.generate,
+    "grade11_bs_start_business_venture": g11_bs_venture.generate,
 }
 
 GRADE12_BS_GENERATORS = {
+    "grade12_bs_creative_thinking_problem_solving": g12_bs_creative.generate,
+    "grade12_bs_creative_thinking": g12_bs_creative.generate,
+    "grade12_bs_ethics_and_professionalism": g12_bs_ethics.generate,
+    "grade12_bs_human_resources_function": g12_bs_hr.generate,
+    "grade12_bs_human_resources": g12_bs_hr.generate,
+    "grade12_bs_impact_of_legislation": g12_bs_legislation.generate,
+    "grade12_bs_macro_environment_strategies": g12_bs_macro_strat.generate,
+    "grade12_bs_legislation_hr": g12_bs_leg_hr.generate,
+    "grade12_bs_business_sectors_environments": g12_bs_sectors_env.generate,
+    "grade12_bs_business_sectors": g12_bs_sectors_env.generate,
+    "grade12_bs_investment_insurance": g12_bs_insurance.generate,
+    "grade12_bs_investment_securities": g12_bs_securities.generate,
+    "grade12_bs_investments_management": g12_bs_inv_man.generate,
+    "grade12_bs_management_and_leadership": g12_bs_leadership.generate,
+    "grade12_bs_quality_of_performance": g12_bs_quality.generate,
+    "grade12_bs_team_performance_conflict": g12_bs_team_conflict.generate,
+    "grade12_bs_team_dynamics": g12_bs_team_conflict.generate,
+    "grade12_bs_forms_of_ownership_success": g12_bs_ownership.generate,
+    "grade12_bs_forms_of_ownership": g12_bs_ownership.generate,
+    "grade12_bs_human_rights_inclusivity": g12_bs_human_rights.generate,
+    "grade12_bs_presentation_data_responses": g12_bs_presentation.generate,
+    "grade12_bs_presentation": g12_bs_presentation.generate,
+    "grade12_bs_social_responsibility_csr_csi": g12_bs_csr.generate,
+    "grade12_bs_social_responsibility": g12_bs_csr.generate,
     "grade12_bs_essay": g12_bs_essay.generate,
     "grade12_bs_section_c": g12_bs_essay.generate,
     "grade12_bs_40_marks": g12_bs_essay.generate,
-    "grade12_bs_legislation_hr": g12_bs_leg_hr.generate,
-    "grade12_bs_investments_management": g12_bs_inv_man.generate,
 }
 
 GRADE7_EMS_GENERATORS = {
@@ -508,6 +696,9 @@ GRADE7_EMS_GENERATORS = {
     "grade7_ems_starting_a_business": g7_entrepreneurship.generate,
     "grade7_ems_entrepreneurs_day": g7_entrepreneurship.generate,
     "grade7_ems_inequality_and_poverty": g7_inequality.generate,
+    "grade7_ems_savings": g7_savings.generate,
+    "grade7_ems_production_process": g7_prod.generate,
+    "grade7_ems_the_production_process": g7_prod.generate,
 }
 
 GRADE8_EMS_GENERATORS = {
@@ -521,10 +712,16 @@ GRADE8_EMS_GENERATORS = {
     "grade8_ems_markets": g8_markets.generate,
     "grade8_ems_factors_of_production": g8_markets.generate,
     "grade8_ems_crj": g8_crj.generate,
+    "grade8_ems_cash_receipts_journal": g8_crj.generate,
+    "grade8_ems_cash_payments_journal": g8_cpj_crj.generate,
     "grade8_ems_accounting_cycle": g8_acct_cycle.generate,
     "grade8_ems_cpj_and_crj": g8_cpj_crj.generate,
     "grade8_ems_ownership": g8_ownership.generate,
     "grade8_ems_forms_of_ownership": g8_ownership.generate,
+    "grade8_ems_management": g8_mgmt.generate,
+    "grade8_ems_levels_and_functions_of_management": g8_mgmt.generate,
+    "grade8_ems_levels_of_management": g8_mgmt.generate,
+    "grade8_ems_functions_of_management": g8_mgmt.generate,
     "grade8_ems_gap": g8_ems_gap.generate,
 }
 
@@ -557,6 +754,10 @@ GRADE10_ACCOUNTING_GENERATORS = {
     "grade10_accounting_budgets": g12_acct_budgets.generate,
     "grade10_accounting_vat_analysis": g12_acct_vat.generate,
     "grade10_accounting_equation": g12_acct_eq.generate,
+    "grade10_accounting_fixed_assets": g10_acct_fixed.generate,
+    "grade10_accounting_depreciation": g10_acct_fixed.generate,
+    "grade10_accounting_inventory": g10_acct_inv.generate,
+    "grade10_accounting_cost_of_sales": g10_acct_inv.generate,
 }
 
 GRADE11_ACCOUNTING_GENERATORS = {
@@ -573,11 +774,13 @@ GRADE11_ACCOUNTING_GENERATORS = {
     "grade11_accounting_budgets": g12_acct_budgets.generate,
     "grade11_accounting_cash_budget_variance": g12_acct_budgets.generate,
     "grade11_accounting_debtors_age_analysis": g12_acct_debtors.generate,
-    "grade11_accounting_vat": g12_acct_vat.generate,
+    "grade11_accounting_vat": g11_acct_vat.generate,
     "grade11_accounting_equation": g12_acct_eq.generate,
     "grade11_accounting_cost_accounting": g12_acct_cost.generate,
     "grade11_accounting_disposal_of_tangible_assets": _adapt_multi_item_generator(g11_acct_fixed.generate_questions),
     "grade11_accounting_fixed_tangible_assets": _adapt_multi_item_generator(g11_acct_fixed.generate_questions),
+    "grade11_accounting_analysis_interpretation": _adapt_multi_item_generator(g11_acct_analysis.generate_questions),
+    "grade11_accounting_calculations_involving_percentages": _adapt_multi_item_generator(g11_acct_analysis.generate_questions),
 }
 
 GRADE12_ACCOUNTING_GENERATORS = {
@@ -617,8 +820,20 @@ SCIENCES_AND_TECH_GENERATORS = {
     "life_sciences_pedigree": life_dihybrid.generate,
     "mathematical_literacy_finance_tax": mathlit_fin.generate,
     "mathematical_literacy_maps_scales": mathlit_maps.generate,
+    "mathematical_literacy_tariffs_tax_brackets": mathlit_tariffs.generate,
+    "mathematical_literacy_data_handling": mathlit_data.generate,
+    "mathematical_literacy_measurement": mathlit_meas_prob.generate,
+    "mathematical_literacy_probability": mathlit_meas_prob.generate,
     "technical_mathematics_complex_numbers": tech_cplx.generate,
     "technical_mathematics_mensuration": tech_mens.generate,
+    "technical_mathematics_euclidean_geometry": g11_math_circ_theorems.generate,
+    "technical_mathematics_geometry": g11_math_circ_theorems.generate,
+    "technical_mathematics_analytical_geometry": g12_math_circles.generate,
+    "technical_mathematics_circles_angles": tech_circles.generate,
+    "technical_mathematics_angular_movement": tech_circles.generate,
+    "grade11_physical_sciences_chemistry": phys11_chem.generate,
+    "grade11_physical_sciences_atomic_combinations": phys11_chem.generate,
+    "grade11_physical_sciences_intermolecular_forces": phys11_chem.generate,
 }
 
 NATURAL_SCIENCES_GENERATORS = {
@@ -626,6 +841,24 @@ NATURAL_SCIENCES_GENERATORS = {
     "natural_sciences_circuits": ns_circuits.generate,
     "natural_sciences_chemical_reactions": ns_reactions.generate,
     "natural_sciences_reactions": ns_reactions.generate,
+    "natural_sciences_senior_phase_astronomy": ns_astronomy.generate,
+    "natural_sciences_life_and_living": ns_life_living.generate,
+    "natural_sciences_photosynthesis": ns_life_living.generate,
+    "natural_sciences_cell_cytology": ns_life_living.generate,
+    "natural_sciences_human_systems": ns_life_living.generate,
+    "natural_sciences_angiosperm_reproduction": ns_life_living.generate,
+    "natural_sciences_matter_and_materials": ns_matter_materials.generate,
+    "natural_sciences_separating_mixtures": ns_matter_materials.generate,
+    "natural_sciences_atomic_structure": ns_matter_materials.generate,
+    "natural_sciences_acid_base_reactions": ns_matter_materials.generate,
+    "natural_sciences_energy_and_change": ns_energy_forces.generate,
+    "natural_sciences_forces_and_weight": ns_energy_forces.generate,
+    "natural_sciences_heat_energy_transfer": ns_energy_forces.generate,
+    "natural_sciences_cost_of_electricity": ns_energy_forces.generate,
+    "natural_sciences_planet_earth_and_beyond": ns_planet_earth.generate,
+    "natural_sciences_seasons_and_tides": ns_planet_earth.generate,
+    "natural_sciences_lithosphere_mining": ns_planet_earth.generate,
+    "natural_sciences_stellar_evolution": ns_planet_earth.generate,
 }
 
 FOUNDATIONAL_MATH_GENERATORS = {
@@ -633,11 +866,13 @@ FOUNDATIONAL_MATH_GENERATORS = {
 }
 
 
-from app.utils.grade10_physical_sciences import waves_sound_light_generator as phys10_waves
-from app.utils.grade10_physical_sciences import matter_materials_generator as phys10_matter
-from app.utils.grade11_physical_sciences import vectors_newton_generator as phys11_vec
-from app.utils.grade12_physical_sciences import vertical_projectile_generator as phys12_proj
-from app.utils.grade12_physical_sciences import doppler_effect_generator as phys12_doppler
+from app.utils.grade10_physical_sciences import (
+    waves_sound_light_generator as phys10_waves,
+    matter_materials_generator as phys10_matter,
+    electric_circuits_magnetism_generator as phys10_circuits,
+    chemical_change_stoichiometry_generator as phys10_chem,
+    motion_energy_generator as phys10_motion,
+)
 from app.utils.life_sciences import meiosis_human_reproduction_generator as ls_meiosis
 from app.utils.physical_sciences import electrostatics_electromagnetism_generator as phys_electro
 
@@ -661,14 +896,34 @@ from app.utils.mathematical_literacy import (
 )
 
 PHYS_LS_GENERATORS = {
+    # Grade 10 Physical Sciences
     "grade10_physical_sciences_waves_sound_light": phys10_waves.generate,
+    "grade10_physical_sciences_waves": phys10_waves.generate,
     "grade10_physical_sciences_matter_materials": phys10_matter.generate,
     "grade10_physical_sciences_electrostatics": phys_electro.generate,
+    "grade10_physical_sciences_electric_circuits": phys10_circuits.generate,
+    "grade10_physical_sciences_chemical_change": phys10_chem.generate,
+    "grade10_physical_sciences_stoichiometry": phys10_chem.generate,
+    "grade10_physical_sciences_motion_energy": phys10_motion.generate,
+    # Grade 11 Physical Sciences
     "grade11_physical_sciences_vectors_newton": phys11_vec.generate,
+    "grade11_physical_sciences_vectors": phys11_vec.generate,
     "grade11_physical_sciences_electrostatics": phys_electro.generate,
     "grade11_physical_sciences_electromagnetism": phys_electro.generate,
+    "grade11_physical_sciences_electric_circuits": phys11_circuits.generate,
+    "grade11_physical_sciences_energy_chemical_change": phys11_energy.generate,
+    "grade11_physical_sciences_stoichiometry_limiting": phys11_stoich.generate,
+    # Grade 12 Physical Sciences
     "grade12_physical_sciences_vertical_projectile": phys12_proj.generate,
     "grade12_physical_sciences_doppler_effect": phys12_doppler.generate,
+    "grade12_physical_sciences_doppler": phys12_doppler.generate,
+    "grade12_physical_sciences_organic_chemistry": phys12_organic.generate,
+    "grade12_physical_sciences_organic_molecules": phys12_organic.generate,
+    "grade12_physical_sciences_acids_bases": phys12_acids_bases.generate,
+    "grade12_physical_sciences_electrodynamics": phys12_electrodyn.generate,
+    "grade12_physical_sciences_electric_circuits": phys12_electrodyn.generate,
+    "grade12_physical_sciences_optical_phenomena": phys12_photoelectric.generate,
+    "grade12_physical_sciences_photoelectric_effect": phys12_photoelectric.generate,
     "life_sciences_meiosis_human_reproduction": ls_meiosis.generate,
     "physical_sciences_electrostatics": phys_electro.generate,
     "physical_sciences_electromagnetism": phys_electro.generate,
@@ -712,537 +967,7 @@ ALL_GENERATORS: Dict[str, Callable] = {
 # TOPIC ALIAS RESOLVER (Connects human labels & ATP names to generators)
 # ============================================================================
 
-TOPIC_ALIASES: Dict[str, str] = {
-    "waves sound and light": "grade10_physical_sciences_waves_sound_light",
-    "waves": "grade10_physical_sciences_waves_sound_light",
-    "matter and materials": "grade10_physical_sciences_matter_materials",
-    "matter": "grade10_physical_sciences_matter_materials",
-    "vectors and newtons laws": "grade11_physical_sciences_vectors_newton",
-    "vectors": "grade11_physical_sciences_vectors_newton",
-    "vertical projectile motion": "grade12_physical_sciences_vertical_projectile",
-    "vertical projectile": "grade12_physical_sciences_vertical_projectile",
-    "doppler effect": "grade12_physical_sciences_doppler_effect",
-    "doppler": "grade12_physical_sciences_doppler_effect",
-    "meiosis": "life_sciences_meiosis_human_reproduction",
-    "human reproduction": "life_sciences_meiosis_human_reproduction",
-
-    # Foundational Math (Tang & Stokke) aliases
-    "number bonds": "foundational_math_number_bonds",
-    "fractions foundation": "foundational_math_number_bonds",
-    "foundational math": "foundational_math_number_bonds",
-    "foundational number bonds": "foundational_math_number_bonds",
-    "stokke speed sprint": "foundational_math_number_bonds",
-    "tang number bonds": "foundational_math_number_bonds",
-    # Grade 9 Math aliases
-    "factorisation": "grade9_math_factorisation",
-    "algebraic fractions": "grade9_math_algebraic_fractions",
-    "congruence and similarity": "grade9_math_congruence_similarity",
-    "congruence": "grade9_math_congruence_similarity",
-    "similarity": "grade9_math_congruence_similarity",
-    # Grade 10 Math aliases
-    "algebraic expressions": "grade10_math_algebraic_expressions",
-    "equations & inequalities": "grade10_math_equations_inequalities",
-    "equations and inequalities": "grade10_math_equations_inequalities",
-    "exponents & surds": "grade10_math_exponents",
-    "exponents": "grade10_math_exponents",
-    "number patterns": "grade10_math_patterns_sequences",
-    "patterns & sequences": "grade10_math_patterns_sequences",
-    "trigonometry ratios": "grade10_math_trigonometry",
-    "trigonometry": "grade10_math_trigonometry",
-    "functions & graphs": "grade10_math_functions",
-    "functions": "grade10_math_functions",
-    "analytical geometry": "grade10_math_analytical_geometry",
-    "circle & euclidean geometry": "grade10_math_euclidean_geometry",
-    "euclidean geometry": "grade10_math_euclidean_geometry",
-    "measurements": "grade10_math_measurements",
-    "circle geometry": "grade11_math_circle_geometry",
-    # Grade 11 Math aliases
-    "measurement": "grade11_math_measurement",
-    "linear programming": "grade11_math_linear_programming",
-    "investigation and projects": "grade11_math_investigation_and_projects",
-    "equations": "grade11_math_equations_inequalities",
-    "surds": "grade11_math_exponents_surds",
-    "circle geometry riders": "grade11_math_circle_geometry_theorems",
-    "circle geometry theorems": "grade11_math_circle_geometry_theorems",
-    "trigonometry reductions": "grade11_math_trigonometry_reductions",
-    "trig reductions": "grade11_math_trigonometry_reductions",
-    "trigonometric reductions": "grade11_math_trigonometry_reductions",
-    "finance growth and decay": "grade11_math_finance_growth_decay",
-    "finance growth decay": "grade11_math_finance_growth_decay",
-    "finance, growth and decay": "grade11_math_finance_growth_decay",
-    "grade 11 finance": "grade11_math_finance_growth_decay",
-    "depreciation": "grade11_math_finance_growth_decay",
-    "reducing balance": "grade11_math_finance_growth_decay",
-    "nominal and effective rate": "grade11_math_finance_growth_decay",
-    "nominal to effective": "grade11_math_finance_growth_decay",
-    "effective rate": "grade11_math_finance_growth_decay",
-    "probability contingency": "grade11_math_probability_contingency",
-    "probability contingency tables": "grade11_math_probability_contingency",
-    "grade 11 probability": "grade11_math_probability_contingency",
-    "contingency tables": "grade11_math_probability_contingency",
-    "contingency table": "grade11_math_probability_contingency",
-    "two-way contingency tables": "grade11_math_probability_contingency",
-    "two-way tables": "grade11_math_probability_contingency",
-    "independent events": "grade11_math_probability_contingency",
-    "mutually exclusive events": "grade11_math_probability_contingency",
-    "statistics summary ogive": "grade11_math_statistics_summary_ogive",
-    "grade 11 statistics": "grade11_math_statistics_summary_ogive",
-    "ogive": "grade11_math_statistics_summary_ogive",
-    "ogive curve": "grade11_math_statistics_summary_ogive",
-    "five-number summary": "grade11_math_statistics_summary_ogive",
-    "box and whisker": "grade11_math_statistics_summary_ogive",
-    "box-and-whisker": "grade11_math_statistics_summary_ogive",
-    "outliers": "grade11_math_statistics_summary_ogive",
-    "skewness": "grade11_math_statistics_summary_ogive",
-    # Grade 12 Math aliases
-    "financial mathematics": "grade12_math_finance",
-    "finance": "grade12_math_finance",
-    "sequences & series": "grade12_math_patterns_sequences_series",
-    "analytical trigonometry": "grade12_math_trigonometry",
-    "differential calculus": "grade12_math_differential_calculus",
-    "calculus": "grade12_math_differential_calculus",
-    "analytical geometry circles": "grade12_math_analytical_geometry_circles",
-    "circles analytical geometry": "grade12_math_analytical_geometry_circles",
-    "circles": "grade12_math_analytical_geometry_circles",
-    "counting principles": "grade12_math_counting_probability",
-    "fundamental counting principle": "grade12_math_counting_probability",
-    "counting and probability": "grade12_math_counting_probability",
-    "probability": "grade12_math_counting_probability",
-    "venn diagrams": "grade12_math_counting_probability",
-    "permutations": "grade12_math_counting_probability",
-    "bivariate statistics": "grade12_math_bivariate_statistics",
-    "statistics": "grade12_math_bivariate_statistics",
-    "regression": "grade12_math_bivariate_statistics",
-    "least squares regression": "grade12_math_bivariate_statistics",
-    "least squares": "grade12_math_bivariate_statistics",
-    "correlation coefficient": "grade12_math_bivariate_statistics",
-    "scatter plots": "grade12_math_bivariate_statistics",
-    # Accounting aliases
-    "sole trader": "grade10_accounting_sole_trader",
-    "cash receipts journal": "grade10_accounting_sole_trader",
-    "cash receipts journal (crj)": "grade10_accounting_sole_trader",
-    "crj": "grade10_accounting_sole_trader",
-    "cash payments journal": "grade10_accounting_sole_trader",
-    "cash payments journal (cpj)": "grade10_accounting_sole_trader",
-    "cpj": "grade10_accounting_sole_trader",
-    "cash receipts & payments journals": "grade10_accounting_sole_trader",
-    "debtors journal": "grade10_accounting_sole_trader",
-    "debtors allowances journal": "grade10_accounting_sole_trader",
-    "creditors journal": "grade10_accounting_sole_trader",
-    "creditors allowances journal": "grade10_accounting_sole_trader",
-    "gaap": "grade10_accounting_gaap",
-    "ethics": "grade10_accounting_ethics",
-    "internal control": "grade10_accounting_internal_control",
-    "vat": "grade10_accounting_vat",
-    "salaries & wages": "grade10_accounting_salaries_wages",
-    "final accounts": "grade10_accounting_final_accounts",
-    "bank reconciliation": "grade10_accounting_bank_reconciliation",
-    "fixed assets": "grade11_accounting_fixed_assets",
-    "income statement": "grade11_accounting_income_statement",
-    "partnerships": "grade11_accounting_partnerships",
-    "partnerships financial statements": "grade11_accounting_partnerships_financial_statements",
-    "partnership financial statements": "grade11_accounting_partnerships_financial_statements",
-    "appropriation account": "grade11_accounting_partnerships_financial_statements",
-    "current accounts note": "grade11_accounting_partnerships_financial_statements",
-    "current account note": "grade11_accounting_partnerships_financial_statements",
-    "inventory valuation": "grade11_accounting_inventory_valuation",
-    "inventory systems": "grade11_accounting_inventory_valuation",
-    "fifo": "grade11_accounting_inventory_valuation",
-    "weighted average": "grade11_accounting_inventory_valuation",
-    "fifo and weighted average": "grade11_accounting_inventory_valuation",
-    "cash flow": "grade12_accounting_cash_flow_statement",
-    "cash flow statement": "grade12_accounting_cash_flow_statement",
-    "cash flow statements": "grade12_accounting_cash_flow_statement",
-    "cash generated from operations": "grade12_accounting_cash_flow_statement",
-    "taxation paid": "grade12_accounting_cash_flow_statement",
-    "dividends paid": "grade12_accounting_cash_flow_statement",
-    "working capital changes": "grade12_accounting_cash_flow_statement",
-    "financial indicators": "grade12_accounting_financial_indicators",
-    "financial ratios": "grade12_accounting_financial_indicators",
-    "financial indicators & ratios": "grade12_accounting_financial_indicators",
-    "analysis and interpretation": "grade12_accounting_financial_indicators",
-    "analysis and interpretation of financial statements": "grade12_accounting_financial_indicators",
-    "analysis of financial statements": "grade12_accounting_financial_indicators",
-    "interpretation of financial statements": "grade12_accounting_financial_indicators",
-    "current ratio": "grade12_accounting_financial_indicators",
-    "acid test ratio": "grade12_accounting_financial_indicators",
-    "acid test": "grade12_accounting_financial_indicators",
-    "debtors collection period": "grade12_accounting_financial_indicators",
-    "creditors payment period": "grade12_accounting_financial_indicators",
-    "debt equity ratio": "grade12_accounting_financial_indicators",
-    "debt to equity": "grade12_accounting_financial_indicators",
-    "gearing": "grade12_accounting_financial_indicators",
-    "financial risk": "grade12_accounting_financial_indicators",
-    "roshe": "grade12_accounting_financial_indicators",
-    "return on shareholders equity": "grade12_accounting_financial_indicators",
-    "return on average shareholders equity": "grade12_accounting_financial_indicators",
-    "earnings per share": "grade12_accounting_financial_indicators",
-    "dividends per share": "grade12_accounting_financial_indicators",
-    "eps": "grade12_accounting_financial_indicators",
-    "dps": "grade12_accounting_financial_indicators",
-    "cost accounting": "grade12_accounting_cost_accounting",
-    "production cost statement": "grade12_accounting_cost_accounting",
-    "break even analysis": "grade12_accounting_cost_accounting",
-    "budgets": "grade12_accounting_budgets",
-    "budgeting": "grade12_accounting_budgets",
-    "cash budget variance analysis": "grade12_accounting_cash_budget_variance",
-    "companies": "grade12_accounting_companies",
-    "debtors age analysis": "grade12_accounting_debtors_age_analysis",
-    "the accounting equation": "grade12_accounting_equation",
-    "accounting equation": "grade12_accounting_equation",
-    "value added tax": "grade12_accounting_vat",
-    "valued added tax": "grade12_accounting_vat",
-    "disposal of tangible assets": "grade11_accounting_disposal_of_tangible_assets",
-    "fixed tangible assets": "grade11_accounting_fixed_tangible_assets",
-    "cost accounting manufacturing": "grade12_accounting_cost_accounting",
-    "reconciliations": "grade11_accounting_reconciliation",
-    "calculations involving percentages": "grade12_accounting_financial_indicators",
-    "preliminary information": "grade12_accounting_concepts",
-    "basic concepts of accounting": "grade12_accounting_concepts",
-    "accounting principles": "grade10_accounting_gaap",
-    "difference between financial and managerial accounting": "grade12_accounting_concepts",
-    "managing resources": "grade10_accounting_internal_control",
-    "informal or indigenous bookkeeping systems": "grade10_accounting_sole_trader",
-    "salaries and wages journal": "grade10_accounting_salaries_wages",
-    "non profit organisations or clubs": "grade11_accounting_concepts",
-    "introduction to accounting": "grade10_accounting_sole_trader",
-    "inventories": "grade11_accounting_inventory_valuation",
-    "control accounts": "grade11_accounting_partnership_ledger",
-    "financial accounting of a sole trader": "grade10_accounting_sole_trader",
-    "financial accounts and year end adjustments of a sole trader": "grade10_accounting_final_accounts",
-    "financial statements of a sole trader": "grade10_accounting_final_accounts",
-    "analysis and interpretation of financial statements of a sole trader": "grade10_accounting_final_accounts",
-    "partnerships analysis of financial statements": "grade11_accounting_partnerships_financial_statements",
-    "financial information and gaap": "grade10_accounting_gaap",
-    # Business Studies aliases
-    "micro environment": "grade10_bs_micro_environment",
-    "market environment": "grade10_bs_market_environment",
-    "macro environment": "grade10_bs_macro_environment",
-    "business functions": "grade10_bs_business_functions",
-    "forms of ownership": "grade10_bs_forms_of_ownership",
-    "social responsibility": "grade10_bs_social_responsibility",
-    "socio-economic issues": "grade10_bs_socio_economic_issues",
-    "business studies essay": "grade12_bs_essay",
-    "business studies section c": "grade12_bs_essay",
-    "section c essay": "grade12_bs_essay",
-    "impact of recent legislation on businesses": "grade12_bs_legislation_hr",
-    "recent legislation": "grade12_bs_legislation_hr",
-    "human resources function": "grade12_bs_legislation_hr",
-    "human resources": "grade12_bs_legislation_hr",
-    "investments securities": "grade12_bs_investments_management",
-    "investments insurance": "grade12_bs_investments_management",
-    "investments": "grade12_bs_investments_management",
-    "management & leadership": "grade12_bs_investments_management",
-    "management and leadership": "grade12_bs_investments_management",
-    "quality of performance": "grade12_bs_investments_management",
-    "marketing function": "grade11_bs_marketing_production",
-    "the marketing function": "grade11_bs_marketing_production",
-    "production function": "grade11_bs_marketing_production",
-    "the production function": "grade11_bs_marketing_production",
-    # Senior Phase Math aliases
-    "theorem of pythagoras": "grade8_math_theorem_of_pythagoras",
-    "pythagoras": "grade8_math_theorem_of_pythagoras",
-    "geometry of 2d shapes": "grade8_math_geometry_of_2d_shapes",
-    "geometry of 3d objects": "grade8_math_geometry_of_2d_shapes",
-    "geometry of straight lines": "grade8_math_geometry_of_straight_lines",
-    "straight lines": "grade8_math_geometry_of_straight_lines",
-    "area and perimeter of 2d shapes": "grade8_math_area_and_perimeter_of_2d_shapes",
-    "area and perimeter": "grade8_math_area_and_perimeter_of_2d_shapes",
-    "surface area and volume of 3d objects": "grade8_math_surface_area_and_volume_of_3d_objects",
-    "surface area and volume": "grade8_math_surface_area_and_volume_of_3d_objects",
-    "data handling": "grade8_math_data_handling",
-    "transformation geometry": "grade8_math_transformation_geometry",
-    "transformations": "grade8_math_transformation_geometry",
-    "construction of geometric figures": "grade8_math_construction_of_geometric_figures",
-    "constructions": "grade8_math_construction_of_geometric_figures",
-    # EMS aliases
-    "senior phase gap": "grade8_ems_gap",
-    "savings": "grade8_ems_gap",
-    "production process": "grade8_ems_gap",
-    "management levels": "grade8_ems_gap",
-    # Science & Tech aliases
-    "mechanics": "physical_sciences_mechanics",
-    "physical sciences": "physical_sciences_mechanics",
-    "newton's laws": "physical_sciences_mechanics",
-    "vectors": "physical_sciences_mechanics",
-    "inclined planes": "physical_sciences_inclined_planes",
-    "momentum and impulse": "physical_sciences_momentum_impulse",
-    "momentum & impulse": "physical_sciences_momentum_impulse",
-    "momentum": "physical_sciences_momentum_impulse",
-    "impulse": "physical_sciences_momentum_impulse",
-    "collisions": "physical_sciences_momentum_impulse",
-    "conservation of momentum": "physical_sciences_momentum_impulse",
-    "1d momentum": "physical_sciences_momentum_impulse",
-    "elastic and inelastic collisions": "physical_sciences_momentum_impulse",
-    "impulse-momentum theorem": "physical_sciences_momentum_impulse",
-    "chemical equilibrium": "physical_sciences_chemistry_equilibrium",
-    "equilibrium and stoichiometry": "physical_sciences_chemistry_equilibrium",
-    "stoichiometry": "physical_sciences_chemistry_equilibrium",
-    "genetics": "life_sciences_genetics",
-    "life sciences": "life_sciences_genetics",
-    "genetics and inheritance": "life_sciences_genetics",
-    "genetics & inheritance": "life_sciences_genetics",
-    "monohybrid cross": "life_sciences_genetics",
-    "punnett square": "life_sciences_genetics",
-    "dihybrid cross": "life_sciences_dihybrid_cross",
-    "dihybrid": "life_sciences_dihybrid_cross",
-    "pedigree diagram": "life_sciences_pedigree",
-    "pedigree": "life_sciences_pedigree",
-    "meiosis": "life_sciences_genetics",
-    "finance and tax": "mathematical_literacy_finance_tax",
-    "mathematical literacy": "mathematical_literacy_finance_tax",
-    "taxation": "mathematical_literacy_finance_tax",
-    "income tax": "mathematical_literacy_finance_tax",
-    "sars tax": "mathematical_literacy_finance_tax",
-    "paye": "mathematical_literacy_finance_tax",
-    "maps and scales": "mathematical_literacy_maps_scales",
-    "map scales": "mathematical_literacy_maps_scales",
-    "topographic map": "mathematical_literacy_maps_scales",
-    "scale": "mathematical_literacy_maps_scales",
-    "travel time": "mathematical_literacy_maps_scales",
-    "complex numbers": "technical_mathematics_complex_numbers",
-    "technical mathematics": "technical_mathematics_complex_numbers",
-    "complex numbers polar": "technical_mathematics_complex_numbers",
-    "polar form": "technical_mathematics_complex_numbers",
-    "de moivre": "technical_mathematics_complex_numbers",
-    "mensuration": "technical_mathematics_mensuration",
-    "trapezoidal rule": "technical_mathematics_mensuration",
-    "mid-ordinate rule": "technical_mathematics_mensuration",
-    "irregular area": "technical_mathematics_mensuration",
-    # Natural Sciences aliases
-    "electric circuits": "natural_sciences_electric_circuits",
-    "circuits": "natural_sciences_electric_circuits",
-    "circuit analysis": "natural_sciences_electric_circuits",
-    "ohm's law": "natural_sciences_electric_circuits",
-    "series and parallel resistors": "natural_sciences_electric_circuits",
-    "chemical reactions": "natural_sciences_chemical_reactions",
-    "balancing equations": "natural_sciences_chemical_reactions",
-    "reactions": "natural_sciences_chemical_reactions",
-    "acids and bases": "natural_sciences_chemical_reactions",
-    "neutralisation": "natural_sciences_chemical_reactions",
-    "manufacturing": "grade12_accounting_cost_accounting",
-    "cost accounting": "grade12_accounting_cost_accounting",
-    "production cost statement": "grade12_accounting_cost_accounting",
-    "analysis and intepretation of financial statements": "grade12_accounting_financial_indicators",
-    "analysis and interpretation of financial statements": "grade12_accounting_financial_indicators",
-    "polynomials": "grade12_math_functions",
-
-    # Senior Phase Math & Arithmetic Foundation aliases
-    "collect organise and summarise data": "grade8_math_data_handling",
-    "interpret analyse and report on data": "grade8_math_data_handling",
-    "working with whole numbers": "grade8_math_whole_numbers",
-    "whole numbers": "grade8_math_whole_numbers",
-    "integers": "grade8_math_integers",
-    "numeric patterns": "grade8_math_patterns",
-    "relationships between variables": "grade8_math_functions",
-    "the decimal notation for fractions": "grade9_math_decimal_notation",
-    "fractions in decimal notation": "grade9_math_decimal_notation",
-    "common fractions": "grade9_math_fractions",
-    "graph paper types": "grade8_math_graph_paper_types",
-
-    # EMS Senior Phase aliases
-    "cash receipts journal and cash payments journal (sole trader)": "grade9_ems_crj_cpj",
-    "credit transactions (creditors 1)": "grade9_ems_creditors_journal",
-    "credit transactions (creditors 2)": "grade9_ems_creditors_journal",
-    "credit transactions (debtors 1)": "grade9_ems_debtors_journal",
-    "credit transactions (debtors 2)": "grade9_ems_debtors_journal",
-    "transactions (cash and credit)": "grade9_ems_crj_cpj",
-    "cash payments journal for a services business": "grade8_ems_cpj_and_crj",
-    "cash receipts journal for a services business 1": "grade8_ems_crj",
-    "cash receipts journal for a services business 2": "grade8_ems_crj",
-    "general ledger and trial balance of a service business": "grade8_ems_accounting_cycle",
-    "levels and functions of management": "grade8_ems_gap",
-
-    # Business Studies aliases
-    "relationships & team performance": "grade10_bs_entrepreneurial_qualities",
-    "relationships and team performance": "grade10_bs_entrepreneurial_qualities",
-    "self management": "grade10_bs_entrepreneurial_qualities",
-    "assessment of enterpreneural qualities in business": "grade10_bs_entrepreneurial_qualities",
-    "assessment of entrepreneurial qualities in business": "grade10_bs_entrepreneurial_qualities",
-    "citizenship & responsibilities": "grade10_bs_social_responsibility",
-    "citizenship and responsibilities": "grade10_bs_social_responsibility",
-    "creative thinking & problem solving": "grade10_bs_creative_thinking",
-    "creative thinking and problem solving": "grade10_bs_creative_thinking",
-    "ethics and professionalism": "grade10_accounting_ethics",
-    "stress crisis & change management": "grade11_bs_adapting_to_challenges",
-    "stress crisis and change management": "grade11_bs_adapting_to_challenges",
-    "team dynamics & conflict management": "grade12_bs_essay",
-    "team dynamics and conflict management": "grade12_bs_essay",
-    "transformation of a business plan into an action plan": "grade10_bs_business_plans",
-    "business sectors & their environments": "grade10_bs_business_sectors",
-    "business sectors and their environments": "grade10_bs_business_sectors",
-    "human rights inclusivity & environmental issues": "grade10_bs_social_responsibility",
-    "human rights inclusivity and environmental issues": "grade10_bs_social_responsibility",
-    "investement securities": "grade12_bs_investments_management",
-    "presentations & data responses": "grade10_bs_presentation",
-    "presentations and data responses": "grade10_bs_presentation",
-    "team perfomance assessment and conflict management": "grade12_bs_essay",
-    "team performance assessment and conflict management": "grade12_bs_essay",
-
-    # Technical Mathematics aliases
-    "circles angles and angular movement": "technical_mathematics_mensuration",
-    "circles  angles and angular movement": "technical_mathematics_mensuration",
-    "equalities and inequalities": "grade10_math_equations_inequalities",
-    "finance and growth": "grade11_math_finance_growth_decay",
-    "number systems": "grade10_math_algebraic_expressions",
-    "functions and graphs": "grade10_math_functions",
-    "logarithms": "grade11_math_exponents_surds",
-    "differentiation": "grade12_math_differential_calculus",
-    "euclidean geometry proportionality and similarity": "grade11_math_circle_geometry_theorems",
-    "integration": "technical_mathematics_mensuration",
-
-    # Mathematical Literacy aliases
-    "assembly diagrams floor plans and packaging": "mathematical_literacy_maps_scales",
-    "conversions and time": "mathematical_literacy_maps_scales",
-    "conversions & time": "mathematical_literacy_maps_scales",
-    "financial documents and tariff ystems": "mathematical_literacy_tariffs_tax_brackets",
-    "financial documents and tariff systems": "mathematical_literacy_tariffs_tax_brackets",
-    "tariffs and tax": "mathematical_literacy_tariffs_tax_brackets",
-    "water and electricity tariffs": "mathematical_literacy_tariffs_tax_brackets",
-    "measurement of perimeter and area": "grade10_math_measurements",
-    "measuring length weight volume and temperature": "grade10_math_measurements",
-    "numbers and calculations with numbers": "grade8_math_whole_numbers",
-    "patterns relationships and representations": "grade8_math_functions",
-    "personal income expenditure and budgets": "mathematical_literacy_tariffs_tax_brackets",
-    "area and volume": "grade10_math_measurements",
-    "exchange rates": "mathematical_literacy_finance_tax",
-    "interest banking and inflation": "mathematical_literacy_finance_tax",
-    "interest banking inflation": "mathematical_literacy_finance_tax",
-    "plans and other representations": "mathematical_literacy_maps_scales",
-    "weight and temperatute": "grade10_math_measurements",
-    "measuring weight bmi medicine dosages": "grade10_math_measurements",
-    "lengths perimeter area and volume": "grade10_math_measurements",
-
-    # Physical Sciences (Grades 10, 11, 12) aliases
-    "electrostatics": "physical_sciences_electrostatics",
-    "electromagnetism": "physical_sciences_electromagnetism",
-    "coulombs law": "physical_sciences_electrostatics",
-    "coulomb's law": "physical_sciences_electrostatics",
-    "faradays law": "physical_sciences_electromagnetism",
-    "faraday's law": "physical_sciences_electromagnetism",
-    "electric field": "physical_sciences_electrostatics",
-    "magnetic flux": "physical_sciences_electromagnetism",
-    "reaction in aqeuous solution": "natural_sciences_chemical_reactions",
-    "the hydrosphere": "grade10_physical_sciences_matter_materials",
-    "the particles that substances are made of": "grade10_physical_sciences_matter_materials",
-    "classification of matter": "grade10_physical_sciences_matter_materials",
-    "physical and chemical changes": "natural_sciences_chemical_reactions",
-    "quantitative aspects of chemical change": "physical_sciences_chemistry_equilibrium",
-    "representing chemical change": "natural_sciences_chemical_reactions",
-    "units of measurement applied": "grade10_physical_sciences_matter_materials",
-    "states of matter and the kinetic theory molecular theory": "physical_sciences_ideal_gases_thermal",
-    "transverse pulses": "grade10_physical_sciences_waves_sound_light",
-    "transverse waves": "grade10_physical_sciences_waves_sound_light",
-    "longitudinal waves": "grade10_physical_sciences_waves_sound_light",
-    "sound": "grade10_physical_sciences_waves_sound_light",
-    "electromagnetic radiation": "grade10_physical_sciences_waves_sound_light",
-    "magnetism": "natural_sciences_electric_circuits",
-    "the atom": "grade10_physical_sciences_matter_materials",
-    "the periodic table": "grade10_physical_sciences_matter_materials",
-    "chemical bonding": "grade10_physical_sciences_matter_materials",
-    "motion in one dimension": "physical_sciences_mechanics",
-    "mechanical energy": "physical_sciences_work_energy_power",
-    "vectors in two dimensions": "grade11_physical_sciences_vectors_newton",
-    "newton's laws": "grade11_physical_sciences_vectors_newton",
-    "the lithosphere": "grade10_physical_sciences_matter_materials",
-    "atomic combinations": "grade10_physical_sciences_matter_materials",
-    "energy and chemical change": "physical_sciences_electrochemistry",
-    "geometrical optics": "physical_sciences_geometrical_optics",
-    "units applied": "grade10_physical_sciences_matter_materials",
-    "2d and 3d wavefronts": "physical_sciences_geometrical_optics",
-    "intermolecular forces": "grade10_physical_sciences_matter_materials",
-    "ideal gases": "physical_sciences_ideal_gases_thermal",
-    "types of reaction": "natural_sciences_chemical_reactions",
-    "vertical projectile motion in one dimension": "grade12_physical_sciences_vertical_projectile",
-    "rate and extent of reaction": "physical_sciences_electrochemistry",
-    "optical phenomena and properties of matter": "physical_sciences_geometrical_optics",
-    "work energy and power": "physical_sciences_work_energy_power",
-    "electrochemical reactions": "physical_sciences_electrochemistry",
-    "electrodynamics": "natural_sciences_electric_circuits",
-    "organic molecules": "natural_sciences_chemical_reactions",
-    "the chemical industry": "physical_sciences_chemistry_equilibrium",
-    "skills for science": "grade10_physical_sciences_matter_materials",
-
-    # Life Sciences (Grades 10, 11, 12) aliases
-    "biospheres to ecosystems": "life_sciences_environmental_population",
-    "cells the basic units of life": "life_sciences_genetics",
-    "history of life on earth": "life_sciences_environmental_population",
-    "introduction to life sciences": "life_sciences_genetics",
-    "the chemistry of life": "life_sciences_genetics",
-    "biodiversity and classification": "life_sciences_environmental_population",
-    "cell division": "life_sciences_meiosis_human_reproduction",
-    "plant and animal tissues": "life_sciences_human_organ_systems",
-    "support and transport systems in plants": "life_sciences_photosynthesis_respiration",
-    "transport systems in animals": "life_sciences_human_organ_systems",
-    "support systems in animals": "life_sciences_human_organ_systems",
-    "biodiversity and classification of microorganisms": "life_sciences_environmental_population",
-    "gaseous exchange": "life_sciences_human_organ_systems",
-    "photosynthesis": "life_sciences_photosynthesis_respiration",
-    "animal nutrition": "life_sciences_human_organ_systems",
-    "biodiversity of plants": "life_sciences_environmental_population",
-    "excretion in humans": "life_sciences_human_organ_systems",
-    "biodiversity of animals": "life_sciences_environmental_population",
-    "cellular respiration": "life_sciences_photosynthesis_respiration",
-    "population ecology": "life_sciences_environmental_population",
-    "human impact on the environment": "life_sciences_environmental_population",
-    "dna the code of life": "life_sciences_genetics",
-    "human responses to the environment": "life_sciences_human_organ_systems",
-    "reproductive strategies in vertebrates": "life_sciences_meiosis_human_reproduction",
-    "evolution by natural selection": "life_sciences_genetics",
-    "human evolution": "life_sciences_genetics",
-    "plant responses to the environment": "life_sciences_photosynthesis_respiration",
-    "the human endocrine system and homeostasis": "life_sciences_human_organ_systems",
-
-    # Natural Sciences (Grades 7, 8, 9) aliases
-    "acids bases and neutral substances": "physical_sciences_electrochemistry",
-    "acids bases and the ph value": "physical_sciences_electrochemistry",
-    "biodiversity": "life_sciences_environmental_population",
-    "energy transfer to surroundings": "physical_sciences_ideal_gases_thermal",
-    "heat energy transfer": "physical_sciences_ideal_gases_thermal",
-    "heat insulation and energy saving": "physical_sciences_ideal_gases_thermal",
-    "historical development of astronomy": "natural_sciences_senior_phase_astronomy",
-    "potential and kinetic energy": "physical_sciences_work_energy_power",
-    "properties of materials": "natural_sciences_chemical_reactions",
-    "relationship of the moon to the earth": "natural_sciences_senior_phase_astronomy",
-    "relationship of the sun to the earth": "natural_sciences_senior_phase_astronomy",
-    "separating mixtures": "natural_sciences_chemical_reactions",
-    "sexual reproduction": "life_sciences_meiosis_human_reproduction",
-    "sources of energy": "physical_sciences_work_energy_power",
-    "the biosphere": "life_sciences_environmental_population",
-    "the periodic table of elements": "grade10_physical_sciences_matter_materials",
-    "variation": "life_sciences_genetics",
-    "atoms": "grade10_physical_sciences_matter_materials",
-    "beyond the solar system": "natural_sciences_senior_phase_astronomy",
-    "energy transfer in electrical systems": "natural_sciences_electric_circuits",
-    "interactions and interdependence within the environment": "life_sciences_environmental_population",
-    "looking into space": "natural_sciences_senior_phase_astronomy",
-    "microorganisms": "life_sciences_environmental_population",
-    "particle model of matter": "physical_sciences_ideal_gases_thermal",
-    "photosynthesis and respiration": "life_sciences_photosynthesis_respiration",
-    "static electricity": "natural_sciences_electric_circuits",
-    "the solar system": "natural_sciences_senior_phase_astronomy",
-    "visible light": "physical_sciences_geometrical_optics",
-    "birth life and the death of a star": "natural_sciences_senior_phase_astronomy",
-    "cells as the basic units of life": "life_sciences_genetics",
-    "circulatory and respiratory systems": "life_sciences_human_organ_systems",
-    "compounds": "natural_sciences_chemical_reactions",
-    "cost of electrical energy": "natural_sciences_electric_circuits",
-    "digestive system": "life_sciences_human_organ_systems",
-    "electric cells as energy systems": "natural_sciences_electric_circuits",
-    "energy and the national electricity grid": "natural_sciences_electric_circuits",
-    "forces": "physical_sciences_mechanics",
-    "mining of mineral resources": "grade10_physical_sciences_matter_materials",
-    "resistance": "natural_sciences_electric_circuits",
-    "safety with electricity": "natural_sciences_electric_circuits",
-    "systems in the human body": "life_sciences_human_organ_systems",
-    "the atmosphere": "grade10_physical_sciences_matter_materials",
-    "the earth as a system": "natural_sciences_senior_phase_astronomy",
-    "glossary1": "natural_sciences_chemical_reactions",
-    "glossary2": "natural_sciences_chemical_reactions",
-    "glossary3": "natural_sciences_chemical_reactions",
-    "glossary4": "natural_sciences_chemical_reactions",
-    "graphs": "grade8_math_functions",
-}
+from app.services.generator_aliases import TOPIC_ALIASES
 
 
 def resolve_generator_key(topic: str, grade: str = "10", subject: str = "Mathematics") -> str:
@@ -1251,21 +976,368 @@ def resolve_generator_key(topic: str, grade: str = "10", subject: str = "Mathema
     if topic in ALL_GENERATORS:
         return topic
 
-    clean = topic.strip().lower().replace("_", " ")
+    clean = topic.strip().lower().replace("_", " ").replace("-", " ")
     subj_lower = subject.lower()
 
-    is_math = "math" in subj_lower and "technical" not in subj_lower and "literacy" not in subj_lower
-    is_acct = "acct" in subj_lower
-    is_bs = "business" in subj_lower or "ems" in subj_lower
+    is_mathlit = "literacy" in subj_lower
+    is_techmath = "technical" in subj_lower
+    is_math = "math" in subj_lower and not is_techmath and not is_mathlit
+    is_acct = "account" in subj_lower or "acct" in subj_lower
+    is_ems = "ems" in subj_lower or "economic" in subj_lower
+    is_bs = "business" in subj_lower and not is_ems
+    is_phys = "physical" in subj_lower
+    is_life = "life" in subj_lower
+    is_ns = "natural" in subj_lower
+
     stop_words = {"of", "the", "and", "in", "to", "for", "a", "an", "on", "at", "by", "with", "from"}
     meaningful_words = [w for w in clean.split() if w not in stop_words and len(w) > 2]
+    grade_num = "".join(ch for ch in str(grade) if ch.isdigit()) or "10"
+    subj_code = "math" if is_math else ("accounting" if is_acct else ("ems" if is_ems else "bs"))
+
+    # Mathematical Literacy direct topic routing (NEVER proxy to pure math)
+    if is_mathlit:
+        if any(w in clean for w in ["finance", "tax", "tariff", "bracket", "income", "expenditure", "budget", "document", "exchange"]):
+            if "tariff" in clean or "water" in clean or "electricity" in clean:
+                return "mathematical_literacy_tariffs_tax_brackets"
+            return "mathematical_literacy_finance_tax"
+        if any(w in clean for w in ["map", "scale", "plan", "distance", "compass"]):
+            return "mathematical_literacy_maps_scales"
+        if "data" in clean:
+            return "mathematical_literacy_data_handling"
+        if any(w in clean for w in ["measure", "weight", "volume", "length", "bmi", "capacity", "tank", "temperature", "perimeter", "area"]):
+            return "mathematical_literacy_measurement"
+        if "probab" in clean:
+            return "mathematical_literacy_probability"
+        return "mathematical_literacy_finance_tax"
+
+    # Technical Mathematics direct routing
+    if is_techmath:
+        if "complex" in clean:
+            return "technical_mathematics_complex_numbers"
+        if any(w in clean for w in ["mensuration", "circle", "integrat"]):
+            return "technical_mathematics_mensuration"
+        if "trig" in clean:
+            if grade_num == "11": return "grade11_math_trigonometry"
+            elif grade_num == "12": return "grade12_math_trigonometry"
+            return "grade10_math_trigonometry"
+        if "function" in clean:
+            if grade_num == "11": return "grade11_math_functions"
+            elif grade_num == "12": return "grade12_math_functions"
+            return "grade10_math_functions"
+        if any(w in clean for w in ["circle", "angle", "angular", "movement", "arc", "sector", "radian"]):
+            return "technical_mathematics_circles_angles"
+        if "analytical" in clean:
+            return "technical_mathematics_analytical_geometry"
+        if "euclidean" in clean or "geometry" in clean:
+            return "technical_mathematics_euclidean_geometry"
+        return "technical_mathematics_complex_numbers"
+
+    # Natural Sciences direct routing (Senior Phase Grade 7-9)
+    if is_ns:
+        if any(w in clean for w in ["life", "living", "biosphere", "biodiversity", "angiosperm", "flower", "reproduction", "pollination", "variation", "photosynthesis", "respiration", "ecosystem", "microorganism", "cell", "organelle", "organ", "system", "digestive", "circulatory", "respiratory", "excretory"]):
+            return "natural_sciences_life_and_living"
+        if any(w in clean for w in ["mixture", "separat", "filtration", "distillation", "chromatography", "acid", "base", "ph value", "ph scale", "litmus", "salt", "neutralis", "atom", "nuclide", "proton", "neutron", "electron", "matter", "diffusion", "particle", "periodic", "element", "compound"]):
+            return "natural_sciences_matter_and_materials"
+        if any(w in clean for w in ["heat", "conduction", "convection", "radiation", "insulat", "static", "force", "gravity", "mass", "weight", "cost", "kwh", "power", "tariff", "electricity"]):
+            return "natural_sciences_energy_and_change"
+        if any(w in clean for w in ["circuit", "electric", "current", "cell", "resistor", "series", "parallel", "ammeter", "voltmeter"]):
+            return "natural_sciences_electric_circuits"
+        if any(w in clean for w in ["earth", "season", "solstice", "tide", "eclipse", "sun", "moon", "solar system", "planet", "telescope", "salt", "meerkat", "ska", "star", "stellar", "nebula", "supernova", "lithosphere", "mining", "mine", "drainage"]):
+            return "natural_sciences_planet_earth_and_beyond"
+        if any(w in clean for w in ["reaction", "combustion", "chemical equation"]):
+            return "natural_sciences_chemical_reactions"
+        return "natural_sciences_life_and_living"
+# Physical Sciences grade-specific chemistry / physics routing
+    if is_phys:
+        if grade_num == "12":
+            if any(w in clean for w in ["organic", "alkane", "alkene", "alkyne", "haloalkane", "alcohol", "ester", "aldehyde", "ketone", "carboxylic", "iupac", "isomer"]):
+                return "grade12_physical_sciences_organic_chemistry"
+            if any(w in clean for w in ["acid", "base", "ph", "titrat", "hydrolysis", "neutralis", "amphiprotic", "ampholyte", "kw", "h3o"]):
+                return "grade12_physical_sciences_acids_bases"
+            if any(w in clean for w in ["electrodynamic", "generator", "motor", "alternat", "rms", "internal resistance", "lost volt", "circuit", "slip ring", "commutator"]):
+                return "grade12_physical_sciences_electrodynamics"
+            if any(w in clean for w in ["photoelectric", "optical", "work function", "threshold frequency", "photon", "cut off", "spectra"]):
+                return "grade12_physical_sciences_optical_phenomena"
+            if any(w in clean for w in ["momentum", "impulse"]):
+                return "grade12_physical_sciences_momentum"
+            if any(w in clean for w in ["projectile", "vertical", "skill"]):
+                return "grade12_physical_sciences_vertical_projectile"
+            if "doppler" in clean:
+                return "grade12_physical_sciences_doppler_effect"
+            if any(w in clean for w in ["rate", "extent", "equilibrium", "le chatelier", "kc", "chemical industry", "fertilizer", "haber", "contact"]):
+                return "physical_sciences_chemistry_equilibrium"
+            if any(w in clean for w in ["work", "energy", "power"]):
+                return "physical_sciences_work_energy_power"
+            if any(w in clean for w in ["galvanic", "electrolytic", "electrochem", "cell"]):
+                return "physical_sciences_electrochemistry"
+
+        if grade_num == "11":
+            if any(w in clean for w in ["circuit", "ohm", "resistor", "series", "parallel", "tariff", "kwh", "cost"]):
+                return "grade11_physical_sciences_electric_circuits"
+            if any(w in clean for w in ["enthalpy", "delta h", "bond energy", "activated complex", "activation energy", "exothermic", "endothermic"]):
+                return "grade11_physical_sciences_energy_chemical_change"
+            if any(w in clean for w in ["limiting", "excess", "yield", "purity", "stoichiometr"]):
+                return "grade11_physical_sciences_stoichiometry_limiting"
+            if any(w in clean for w in ["atomic", "intermolecular", "bonding", "vsepr", "molecular", "lithosphere"]):
+                return "grade11_physical_sciences_chemistry"
+            if any(w in clean for w in ["vector", "newton", "force", "unit"]):
+                return "grade11_physical_sciences_vectors_newton"
+            if any(w in clean for w in ["ideal gas", "boyle", "charles", "gas"]):
+                return "physical_sciences_ideal_gases_thermal"
+            if any(w in clean for w in ["optics", "snell", "refraction", "critical angle", "reflection", "wavefront"]):
+                return "physical_sciences_geometrical_optics"
+            if any(w in clean for w in ["electrostatic", "coulomb", "electric field"]):
+                return "physical_sciences_electrostatics"
+            if any(w in clean for w in ["electromagnet", "faraday", "magnetic flux"]):
+                return "physical_sciences_electromagnetism"
+
+        if grade_num == "10":
+            if any(w in clean for w in ["circuit", "magnet", "charge", "current", "potential difference", "emf", "resistor"]):
+                return "grade10_physical_sciences_electric_circuits"
+            if any(w in clean for w in ["mole", "empirical", "composition", "stoichiometr", "stoichiometry", "aqueous", "stp", "chemical change"]):
+                return "grade10_physical_sciences_chemical_change"
+            if any(w in clean for w in ["motion", "kinematic", "acceleration", "displacement", "velocity", "mechanical energy", "potential energy", "kinetic energy"]):
+                return "grade10_physical_sciences_motion_energy"
+            if any(w in clean for w in ["wave", "sound", "light", "pulse", "radiation"]):
+                return "grade10_physical_sciences_waves_sound_light"
+            if any(w in clean for w in ["matter", "material", "atom", "periodic", "bonding", "hydrosphere"]):
+                return "grade10_physical_sciences_matter_materials"
+            if any(w in clean for w in ["electrostatic"]):
+                return "physical_sciences_electrostatics"
+
+    # Pure Mathematics grade-specific topics
+    if is_math:
+        if grade_num in ["7", "8", "9"]:
+            if any(w in clean for w in ["3d", "net", "geometric net", "polyhedr", "euler", "folding net", "solid"]) and not any(v in clean for v in ["surface area", "volume", "capacity"]):
+                return "grade8_math_geometry_of_3d_objects" if grade_num == "8" else f"grade{grade_num}_math_geometric_nets_3d"
+        if grade_num == "7":
+            if any(w in clean for w in ["3d", "net", "polyhedr", "solid"]):
+                return "grade7_math_geometric_nets_3d"
+            if "pattern" in clean:
+                return "grade7_math_patterns"
+            if "integer" in clean:
+                return "grade7_math_integers"
+            if "decimal" in clean:
+                return "grade7_math_decimal_notation"
+            if "fraction" in clean:
+                return "grade7_math_fractions"
+            if any(w in clean for w in ["2d", "triangle", "quadrilateral", "polygon"]):
+                return "grade7_math_geometry_of_2d_shapes"
+            if any(w in clean for w in ["function", "relationship", "flow diagram", "graph"]):
+                return "grade7_math_functions"
+            if any(w in clean for w in ["data", "stat", "mean", "median", "mode", "range"]):
+                return "grade7_math_data_handling"
+            if "probab" in clean:
+                return "grade7_math_probability"
+            if any(w in clean for w in ["exponent", "power", "square root", "cube root", "square", "cube"]):
+                return "grade7_math_exponents"
+            if any(w in clean for w in ["perimeter", "area", "volume", "surface area", "measurement", "capacity"]):
+                return "grade7_math_measurement"
+            if any(w in clean for w in ["transform", "symmetr", "translat", "reflect", "enlarg", "reduct"]):
+                return "grade7_math_transformation_geometry"
+            if any(w in clean for w in ["whole", "division", "number"]):
+                return "grade7_math_whole_numbers"
+        if grade_num == "8":
+            if any(w in clean for w in ["3d", "polyhedr", "euler", "platonic", "solid"]):
+                return "grade8_math_geometry_of_3d_objects"
+            if any(w in clean for w in ["pythagoras", "hypotenuse", "right-angled"]):
+                return "grade8_math_pythagoras"
+            if "integer" in clean:
+                return "grade8_math_integers"
+            if any(w in clean for w in ["expression", "equation", "distributive", "algebra"]):
+                return "grade8_math_algebraic_expressions"
+            if any(w in clean for w in ["straight line", "parallel", "transversal", "alternate", "corresponding", "co-interior", "lines"]):
+                return "grade8_math_geometry_of_straight_lines"
+            if any(w in clean for w in ["surface area", "volume", "prism", "cylinder", "measurement"]):
+                return "grade8_math_surface_area_and_volume_of_3d_objects"
+            if "pattern" in clean:
+                return "grade8_math_patterns"
+            if "whole" in clean:
+                return "grade8_math_whole_numbers"
+            if "exponent" in clean:
+                return "grade8_math_exponents"
+            if "fraction" in clean:
+                return "grade8_math_fractions"
+            if "decimal" in clean:
+                return "grade8_math_decimal_notation"
+            if any(w in clean for w in ["2d", "triangle", "quadrilateral", "shape"]):
+                return "grade8_math_geometry_of_2d_shapes"
+            if "percent" in clean:
+                return "grade8_math_percentages"
+            if "data" in clean or "stat" in clean:
+                return "grade8_math_data_handling"
+            if "probab" in clean:
+                return "grade8_math_probability"
+        if grade_num == "9":
+            if any(w in clean for w in ["pythagoras", "hypotenuse", "space diagonal", "distance"]):
+                return "grade9_math_theorem_of_pythagoras"
+            if any(w in clean for w in ["factor", "difference of two squares", "trinomial"]):
+                return "grade9_math_factorisation"
+            if any(w in clean for w in ["equation", "fraction", "lcd", "quadratic"]):
+                return "grade9_math_algebraic_equations_fractions"
+            if any(w in clean for w in ["straight line", "triangle", "exterior angle", "isosceles"]):
+                return "grade9_math_geometry_of_straight_lines"
+            if any(w in clean for w in ["congruen", "similar"]):
+                return "grade9_math_congruence_similarity"
+            if any(w in clean for w in ["surface area", "volume", "cylinder", "prism", "capacity"]):
+                return "grade9_math_surface_area_and_volume_of_3d_objects"
+            if "graph" in clean:
+                return "grade9_math_graphs"
+            if "pattern" in clean:
+                return "grade9_math_patterns"
+            if "integer" in clean:
+                return "grade9_math_integers"
+            if "exponent" in clean:
+                return "grade9_math_exponents"
+            if any(w in clean for w in ["data", "stat"]):
+                return "grade9_math_data_handling"
+            if "probab" in clean:
+                return "grade9_math_probability"
+        if grade_num == "10" and any(w in clean for w in ["finance", "growth", "interest", "hire purchase"]):
+            return "grade10_math_finance"
+        if grade_num == "10" and ("stat" in clean or "quartile" in clean or "box" in clean):
+            return "grade10_math_statistics"
+        if grade_num == "10" and "probab" in clean:
+            return "grade10_math_probability"
+        if grade_num == "11":
+            if any(w in clean for w in ["function", "graph", "parabola", "hyperbola"]):
+                return "grade11_math_functions"
+            if any(w in clean for w in ["circle", "euclidean", "theorem", "rider"]):
+                return "grade11_math_circle_geometry"
+            if any(w in clean for w in ["trig", "reduction", "identity"]):
+                return "grade11_math_trigonometry"
+            if any(w in clean for w in ["finance", "growth", "decay"]):
+                return "grade11_math_finance"
+            if "probab" in clean:
+                return "grade11_math_probability"
+            if "stat" in clean or "ogive" in clean:
+                return "grade11_math_statistics"
+            if any(w in clean for w in ["surd", "exponent"]):
+                return "grade11_math_exponents_surds"
+            if "equation" in clean or "inequal" in clean:
+                return "grade11_math_equations_inequalities"
+        if grade_num == "12":
+            if any(w in clean for w in ["sequence", "series", "pattern", "sigma"]):
+                return "grade12_math_sequences_series"
+            if any(w in clean for w in ["trig", "compound", "double angle"]):
+                return "grade12_math_trigonometry"
+            if any(w in clean for w in ["calculus", "differentiat", "derivative", "cubic"]):
+                return "grade12_math_differential_calculus"
+            if any(w in clean for w in ["circle", "analytical", "tangent"]):
+                return "grade12_math_analytical_geometry_circles"
+            if any(w in clean for w in ["count", "permutation", "factorial", "probab"]):
+                return "grade12_math_counting_probability"
+            if any(w in clean for w in ["stat", "regression", "bivariate", "scatter"]):
+                return "grade12_math_bivariate_statistics"
+            if any(w in clean for w in ["finance", "annuity", "sinking", "loan"]):
+                return "grade12_math_finance"
+            if any(w in clean for w in ["function", "inverse", "log"]):
+                return "grade12_math_functions"
+
+    # Accounting grade-specific topics
+    if is_acct:
+        if grade_num == "10":
+            if any(w in clean for w in ["sole trader", "crj", "cpj", "journal", "ledger", "bookkeeping", "subsidiary"]):
+                return "grade10_accounting_sole_trader"
+            if "gaap" in clean or "principle" in clean or "concept" in clean:
+                return "grade10_accounting_gaap"
+            if "ethic" in clean:
+                return "grade10_accounting_ethics"
+            if "internal control" in clean:
+                return "grade10_accounting_internal_control"
+            if "vat" in clean or "value added" in clean or "tax" in clean:
+                return "grade10_accounting_vat"
+            if any(w in clean for w in ["salary", "wage"]):
+                return "grade10_accounting_salaries_wages"
+            if any(w in clean for w in ["final account", "trial balance", "statement", "balance sheet"]):
+                return "grade10_accounting_final_accounts"
+            if "reconcil" in clean:
+                return "grade10_accounting_bank_reconciliation"
+            if "budget" in clean:
+                return "grade10_accounting_budgets"
+            if "equation" in clean:
+                return "grade10_accounting_equation"
+            if any(w in clean for w in ["fixed asset", "depreciation", "tangible asset"]):
+                return "grade10_accounting_fixed_assets"
+            if any(w in clean for w in ["inventory", "stock", "cost of sales", "markup", "mark up"]):
+                return "grade10_accounting_inventory"
+            if any(w in clean for w in ["indigenous", "informal"]):
+                return "grade10_accounting_sole_trader"
+            if "cost" in clean or "manufacturing" in clean:
+                return "grade10_accounting_inventory"
+        elif grade_num == "11":
+            if any(w in clean for w in ["fixed asset", "depreciation", "tangible asset", "disposal"]):
+                return "grade11_accounting_fixed_assets"
+            if any(w in clean for w in ["income statement", "comprehensive income"]):
+                return "grade11_accounting_income_statement"
+            if "partnership" in clean:
+                return "grade11_accounting_partnerships"
+            if "reconcil" in clean:
+                return "grade11_accounting_reconciliation"
+            if any(w in clean for w in ["inventory", "stock", "valuation", "system"]):
+                return "grade11_accounting_inventory_valuation"
+            if any(w in clean for w in ["vat", "value added", "tax"]):
+                return "grade11_accounting_vat"
+            if any(w in clean for w in ["ethic", "internal control", "gaap", "concept", "principle"]):
+                return "grade11_accounting_concepts"
+            if any(w in clean for w in ["analysis", "interpretation", "indicator", "ratio", "percentage", "profitability", "liquidity", "solvency"]):
+                return "grade11_accounting_analysis_interpretation"
+            if "budget" in clean:
+                return "grade11_accounting_budgets"
+            if "cost" in clean or "manufacturing" in clean:
+                return "grade11_accounting_cost_accounting"
+            if "equation" in clean:
+                return "grade11_accounting_equation"
+        elif grade_num == "12":
+            if "cash flow" in clean:
+                return "grade12_accounting_cash_flow_statement"
+            if any(w in clean for w in ["indicator", "ratio", "solvency", "liquidity"]):
+                return "grade12_accounting_financial_indicators"
+            if any(w in clean for w in ["interpretation", "analysis"]):
+                return "grade12_accounting_analysis_interpretation"
+            if any(w in clean for w in ["company", "companies", "share", "dividend"]):
+                return "grade12_accounting_companies"
+            if "cost" in clean or "manufacturing" in clean:
+                return "grade12_accounting_cost_accounting"
+            if "budget" in clean:
+                return "grade12_accounting_budgets"
+            if "reconcil" in clean:
+                return "grade12_accounting_reconciliations"
+            if "inventory" in clean:
+                return "grade12_accounting_inventories"
+
+    # EMS grade-specific topics
+    if is_ems:
+        if grade_num == "7" and "savings" in clean:
+            return "grade7_ems_savings"
+        if grade_num == "8" and "receipt" in clean:
+            return "grade8_ems_cash_receipts_journal"
+        if grade_num == "8" and "payment" in clean:
+            return "grade8_ems_cash_payments_journal"
+
+    # Business Studies grade-specific topics
+    if is_bs:
+        if grade_num == "11":
+            if "creative" in clean: return "grade11_bs_creative_thinking"
+            if "ethics" in clean or "professionalism" in clean: return "grade11_bs_professionalism_and_ethics"
+            if "human resource" in clean or "hr" in clean: return "grade11_bs_marketing_function"
+            if "team" in clean or "conflict" in clean or "stress" in clean: return "grade11_bs_stress_crisis_change"
+            if "citizenship" in clean or "responsibilit" in clean: return "grade11_bs_citizenship_responsibilities"
+        elif grade_num == "12":
+            if "creative" in clean or "problem" in clean: return "grade12_bs_creative_thinking_problem_solving"
+            if "ethics" in clean or "professionalism" in clean: return "grade12_bs_ethics_and_professionalism"
+            if "human resource" in clean or "hr" in clean or "legislation" in clean: return "grade12_bs_human_resources_function"
+            if "macro" in clean or "strateg" in clean: return "grade12_bs_macro_environment_strategies"
+            if "business sector" in clean or "environment" in clean: return "grade12_bs_business_sectors_environments"
+            if "ownership" in clean: return "grade12_bs_forms_of_ownership_success"
+            if "presentation" in clean or "data response" in clean: return "grade12_bs_presentation_data_responses"
+            if "human right" in clean or "inclusiv" in clean: return "grade12_bs_human_rights_inclusivity"
+            if "team" in clean or "conflict" in clean: return "grade12_bs_team_performance_conflict"
 
     # 2. Check alias map
     if clean in TOPIC_ALIASES:
         resolved = TOPIC_ALIASES[clean]
-        grade_num = "".join(ch for ch in str(grade) if ch.isdigit())
-        if (is_math or is_acct or is_bs) and grade_num and not resolved.startswith(f"grade{grade_num}_"):
-            subj_code = "math" if is_math else ("acct" if is_acct else "bs")
+        if (is_math or is_acct or is_bs or is_ems) and grade_num and not resolved.startswith(f"grade{grade_num}_"):
             target_prefix = f"grade{grade_num}_{subj_code}_"
             for k in ALL_GENERATORS:
                 if k.startswith(target_prefix) and any(w in k for w in meaningful_words):
@@ -1273,32 +1345,38 @@ def resolve_generator_key(topic: str, grade: str = "10", subject: str = "Mathema
         return resolved
 
     # 3. Subject-level direct routing for science & tech
-    if "natural" in subj_lower or "circuit" in clean:
+    if is_ns or "circuit" in clean:
         return "natural_sciences_electric_circuits"
     if "reaction" in clean or "acid" in clean or "base" in clean:
         return "natural_sciences_chemical_reactions"
-    if "life" in subj_lower or "genetics" in clean or "inheritance" in clean:
+    if is_life or "genetics" in clean or "inheritance" in clean:
         return "life_sciences_genetics"
     if "momentum" in clean or "impulse" in clean or "collision" in clean:
         return "physical_sciences_momentum_impulse"
-    if "physical" in subj_lower or "mechanics" in clean:
+    if is_phys or "mechanics" in clean:
         return "physical_sciences_mechanics"
-    if "literacy" in subj_lower:
-        return "mathematical_literacy_finance_tax"
-    if "technical" in subj_lower:
-        return "technical_mathematics_complex_numbers"
 
     # 4. Fuzzy search for key prefix
-    grade_num = "".join(ch for ch in str(grade) if ch.isdigit()) or "10"
-    if (is_math or is_acct or is_bs) and grade_num:
-        subj_code = "math" if is_math else ("acct" if is_acct else "bs")
+    if (is_math or is_acct or is_bs or is_ems) and grade_num:
         target_prefix = f"grade{grade_num}_{subj_code}_"
         for k in ALL_GENERATORS:
             if k.startswith(target_prefix) and any(w in k for w in meaningful_words):
                 return k
 
-    # 5. Fallback for Business Studies / EMS to Combinatorial Engine
-    if "business" in subj_lower or "ems" in subj_lower:
+    # 5. Fallback for Business Studies / EMS
+    if is_bs:
+        if grade_num == "11":
+            return "grade11_bs_adapting_to_challenges"
+        elif grade_num == "12":
+            return "grade12_bs_macro_environment_strategies"
+        return "grade10_bs_combinatorial"
+    if is_ems:
+        if grade_num == "7":
+            return "grade7_ems_money_and_needs"
+        elif grade_num == "8":
+            return "grade8_ems_gov_and_society"
+        elif grade_num == "9":
+            return "grade9_ems_economic_systems"
         return "grade10_bs_combinatorial"
 
     # Default fallback: Only if topic is a math-related request or explicitly generic
@@ -1312,8 +1390,16 @@ def resolve_generator_key(topic: str, grade: str = "10", subject: str = "Mathema
 # 6-PILLAR NORMALIZATION & ENRICHMENT
 # ============================================================================
 
-def _normalize_question(q: Dict[str, Any], default_term: int = 1) -> Dict[str, Any]:
+def _normalize_question(
+    q: Dict[str, Any],
+    default_term: int = 1,
+    topic: str = "",
+    grade: str = "",
+    subject: str = "",
+) -> Dict[str, Any]:
     """Ensures a single question dictionary strictly complies with the 6-pillar contract."""
+    from .caps_term_curriculum_registry import stamp_question_term_metadata, get_term_for_topic
+
     qid = str(q.get("id") or q.get("question_id") or f"q_{random.randint(100000, 999999)}")
     marks = int(q.get("marks", 2))
 
@@ -1345,12 +1431,19 @@ def _normalize_question(q: Dict[str, Any], default_term: int = 1) -> Dict[str, A
         tag = q.get("misconception")
         tags = [tag] if tag else ["general_procedural_error"]
 
-    return {
+    # Resolve authoritative term
+    resolved_term = default_term
+    if topic:
+        resolved_term = get_term_for_topic(topic, grade=grade, subject=subject)
+    elif q.get("term"):
+        resolved_term = int(q.get("term"))
+
+    normalized = {
         **q,
         "id": qid,
         "question_id": qid,
-        "term": int(q.get("term") or default_term),
-        "caps_weight_percent": int(q.get("caps_weight_percent") or 15),
+        "term": resolved_term,
+        "caps_weight_percent": int(q.get("caps_weight_percent") or 25),
         "suggested_duration_mins": int(q.get("suggested_duration_mins") or max(2, int(marks * 1.2))),
         "mode": q.get("mode") or "compound",
         "marks": marks,
@@ -1358,9 +1451,18 @@ def _normalize_question(q: Dict[str, Any], default_term: int = 1) -> Dict[str, A
         "hints": hints,
         "misconception_tags": tags,
     }
+    if topic:
+        stamp_question_term_metadata(normalized, topic=topic, grade=grade, subject=subject)
+    return normalized
 
 
-def _normalize_generator_result(result: Any, default_term: int = 1) -> List[Dict[str, Any]]:
+def _normalize_generator_result(
+    result: Any,
+    default_term: int = 1,
+    topic: str = "",
+    grade: str = "",
+    subject: str = "",
+) -> List[Dict[str, Any]]:
     """Ensures the generator returns a normalized list of 6-pillar question dicts."""
     raw_list: List[Dict[str, Any]] = []
     if isinstance(result, list):
@@ -1378,7 +1480,8 @@ def _normalize_generator_result(result: Any, default_term: int = 1) -> List[Dict
     else:
         raise ValueError("Generator returned an unsupported response shape")
 
-    return [_normalize_question(q, default_term) for q in raw_list]
+    return [_normalize_question(q, default_term=default_term, topic=topic, grade=grade, subject=subject) for q in raw_list]
+
 
 
 # ============================================================================
@@ -1406,6 +1509,8 @@ def generate_variant(
         raise ValueError(f"No generator found for topic: {topic} (resolved: {gen_key})")
 
     config = dict(extra_config or {})
+    if grade and str(grade).isdigit():
+        config.setdefault("grade", int(grade))
     if seed is not None:
         config["seed"] = seed
         random.seed(seed)
@@ -1424,7 +1529,7 @@ def generate_variant(
     for cand in candidates:
         try:
             res = cand()
-            return _normalize_generator_result(res, default_term=term_val)
+            return _normalize_generator_result(res, default_term=term_val, topic=topic, grade=grade, subject=subject)
         except (TypeError, ValueError, KeyError) as e:
             last_err = e
             # If the error provides available_subskills, try the first valid subskill!
@@ -1438,7 +1543,7 @@ def generate_variant(
                         if avail and isinstance(avail, list):
                             first_sub = avail[0]
                             res = generator(subskill=first_sub, difficulty=difficulty, count=count, **config)
-                            return _normalize_generator_result(res, default_term=term_val)
+                            return _normalize_generator_result(res, default_term=term_val, topic=topic, grade=grade, subject=subject)
                     except Exception:
                         pass
             continue

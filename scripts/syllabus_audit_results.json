@@ -1,0 +1,6630 @@
+{
+  "Accounting_Gr10": {
+    "subject": "Accounting",
+    "grade": "10",
+    "total_atp_items": 39,
+    "items": [
+      {
+        "term": "Term 1",
+        "weeks": "**Financial Accounting** (50% to 60%)",
+        "topic": "1. Accounting concepts",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**Managerial Accounting** (20% to 25%)",
+        "topic": "9. Cost accounting",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**Managing Resources** (20% to 25%)",
+        "topic": "11. Indigenous bookkeeping systems",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**2 weeks** (Wk 1-2)",
+        "topic": "1. Informal or indigenous bookkeeping systems",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**1 week** (Wk 3)",
+        "topic": "2. Ethics",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**Wk 2/3**",
+        "topic": "3. Accounting principles",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**1 week** (Wk 4)",
+        "topic": "4. Internal control",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**6 weeks** (Wk 5-10)",
+        "topic": "5. Financial accounting of a sole trader",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**Weeks 1-2**",
+        "topic": "1. Salaries and Wages Journal",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**Week 3**",
+        "topic": "2. Value-Added Tax (VAT)",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**Weeks 4-7**",
+        "topic": "3. Financial accounting of a sole trader",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**Week 8**",
+        "topic": "Revision exercises",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**Weeks 9-10**",
+        "topic": "Mid-year examination",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**Weeks 1-5** (5 weeks)",
+        "topic": "Financial accounting of a sole trader \u2013 Preparation of financial statements",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**Weeks 6-7** (2 weeks)",
+        "topic": "Financial accounting of a sole trader \u2013 Analysis and interpretation of financial statements",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**Weeks 8-9** (2 weeks)",
+        "topic": "Cost accounting",
+        "status": "proxy",
+        "gen_key": "grade12_accounting_cost_accounting",
+        "issue": "Borrowed from Grade 12 (grade12_accounting_cost_accounting)"
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**Week 10** (1 week)",
+        "topic": "Revision exercises",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 4",
+        "weeks": "**Weeks 1-2**",
+        "topic": "1. Budgeting",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 4",
+        "weeks": "**Weeks 3-6**",
+        "topic": "Revision exercisers",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 4",
+        "weeks": "**Weeks 7-8**",
+        "topic": "End-of-year examination",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 4",
+        "weeks": "R \u2013 3",
+        "topic": "100%",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 4",
+        "weeks": "4 \u2013 6",
+        "topic": "75%",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 4",
+        "weeks": "7 \u2013 9",
+        "topic": "40%",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 4",
+        "weeks": "10 and 11",
+        "topic": "25%",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 4",
+        "weeks": "12",
+        "topic": "25%",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 4",
+        "weeks": "7",
+        "topic": "Outstanding achievement",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 4",
+        "weeks": "6",
+        "topic": "Meritorious achievement",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 4",
+        "weeks": "5",
+        "topic": "Substantial achievement",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 4",
+        "weeks": "4",
+        "topic": "Adequate achievement",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 4",
+        "weeks": "3",
+        "topic": "Moderate achievement",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 4",
+        "weeks": "2",
+        "topic": "Elementary achievement",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 4",
+        "weeks": "1",
+        "topic": "Not achieved",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 4",
+        "weeks": "Grade 10",
+        "topic": "1",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 4",
+        "weeks": "Grade 11",
+        "topic": "1",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 4",
+        "weeks": "Grade 12",
+        "topic": "1",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 4",
+        "weeks": "Grade 12",
+        "topic": "1",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 4",
+        "weeks": "Grade 10",
+        "topic": "1",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 4",
+        "weeks": "Grade 11",
+        "topic": "1",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 4",
+        "weeks": "Grade 12",
+        "topic": "1",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      }
+    ]
+  },
+  "Accounting_Gr11": {
+    "subject": "Accounting",
+    "grade": "11",
+    "total_atp_items": 32,
+    "items": [
+      {
+        "term": "Term 1",
+        "weeks": "**Weeks 1-3**",
+        "topic": "3. Reconciliations",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**Weeks 4-5**",
+        "topic": "4. Tangible / fixed assets",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**5 weeks** (Weeks 6-10)",
+        "topic": "**5. Financial accounting of partnerships**",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**Weeks 1-3**",
+        "topic": "1. Financial accounting of partnerships \u2013 analysis and interpretation",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**Weeks 4-7**",
+        "topic": "2. Financial accounting of non-profit organisations (clubs)",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**Week 8**",
+        "topic": "Revision exercises",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**Weeks 9-10**",
+        "topic": "Mid-year examination",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**4 weeks** (Weeks 1-4)",
+        "topic": "**1. Cost Accounting**",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**3 weeks** (Weeks 5-7)",
+        "topic": "**2. Budgeting**",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**2 weeks** (Weeks 8-9)",
+        "topic": "**3. Inventory systems**",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**Week 10**",
+        "topic": "Revision exercises",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 4",
+        "weeks": "**Weeks 1-2**",
+        "topic": "1. Value Added Tax (VAT)",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 4",
+        "weeks": "**Weeks 3-6**",
+        "topic": "Revision exercises",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 4",
+        "weeks": "R \u2013 3",
+        "topic": "100%",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 4",
+        "weeks": "4 \u2013 6",
+        "topic": "75%",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 4",
+        "weeks": "7 \u2013 9",
+        "topic": "40%",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 4",
+        "weeks": "10 and 11",
+        "topic": "25%",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 4",
+        "weeks": "12",
+        "topic": "25%",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 4",
+        "weeks": "7",
+        "topic": "Outstanding achievement",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 4",
+        "weeks": "6",
+        "topic": "Meritorious achievement",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 4",
+        "weeks": "5",
+        "topic": "Substantial achievement",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 4",
+        "weeks": "4",
+        "topic": "Adequate achievement",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 4",
+        "weeks": "3",
+        "topic": "Moderate achievement",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 4",
+        "weeks": "2",
+        "topic": "Elementary achievement",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 4",
+        "weeks": "1",
+        "topic": "Not achieved",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 4",
+        "weeks": "Grade 10",
+        "topic": "1",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 4",
+        "weeks": "Grade 11",
+        "topic": "1",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 4",
+        "weeks": "Grade 12",
+        "topic": "1",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 4",
+        "weeks": "Grade 12",
+        "topic": "1",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 4",
+        "weeks": "Grade 10",
+        "topic": "1",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 4",
+        "weeks": "Grade 11",
+        "topic": "1",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 4",
+        "weeks": "Grade 12",
+        "topic": "1",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      }
+    ]
+  },
+  "Accounting_Gr12": {
+    "subject": "Accounting",
+    "grade": "12",
+    "total_atp_items": 44,
+    "items": [
+      {
+        "term": "Term 1",
+        "weeks": "**Financial Accounting** (50% to 60%)",
+        "topic": "1. Accounting concepts",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**Managerial Accounting** (20% to 25%)",
+        "topic": "9. Cost accounting",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**Managing Resources** (20% to 25%)",
+        "topic": "11. Indigenous bookkeeping systems",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**Weeks 1-2**",
+        "topic": "1. Financial accounting of companies \u2013 concepts and unique ledger accounts",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**Weeks 1-2**",
+        "topic": "Bookkeeping of companies",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**Weeks 3-7**",
+        "topic": "2. Financial accounting of companies \u2013 preparation of final accounts and financial statements",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**Formal (Term 1)**",
+        "topic": "Control Test / Project",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**Weeks 1-7**",
+        "topic": "Financial Accounting of Companies (Cont.)",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**Weeks 8-9**",
+        "topic": "3. Financial accounting of companies \u2013 analysis and interpretation of financial statements",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**Week 10**",
+        "topic": "4. Ethics",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**Week 10**",
+        "topic": "5. Tangible/fixed assets",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**1 week** (Week 1)",
+        "topic": "1. Financial accounting of companies \u2013 analysis of published financial statements",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**\u00bd week** (Week 2)",
+        "topic": "3. Internal control",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**2\u00bd weeks** (Weeks 2-4)",
+        "topic": "4. Inventory systems",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**2 weeks** (Weeks 5-6)",
+        "topic": "5. Reconciliations",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**1 week**",
+        "topic": "6. Value-Added Tax (VAT)",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**Week 7**",
+        "topic": "Tax (VAT)",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**Week 8**",
+        "topic": "Revision exercises",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**Weeks 9-10**",
+        "topic": "Mid-year examination",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**Weeks 1-3**",
+        "topic": "1. Cost Accounting",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**Weeks 4-6**",
+        "topic": "2. Budgeting",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**Weeks 9-10**",
+        "topic": "Assessment",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 4",
+        "weeks": "**Weeks 1-4**",
+        "topic": "Revision exercises",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 4",
+        "weeks": "**Weeks 5-10**",
+        "topic": "Final examination",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 4",
+        "weeks": "100",
+        "topic": "300",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 4",
+        "weeks": "R \u2013 3",
+        "topic": "100%",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 4",
+        "weeks": "4 \u2013 6",
+        "topic": "75%",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 4",
+        "weeks": "7 \u2013 9",
+        "topic": "40%",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 4",
+        "weeks": "10 and 11",
+        "topic": "25%",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 4",
+        "weeks": "12",
+        "topic": "25%",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 4",
+        "weeks": "7",
+        "topic": "Outstanding achievement",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 4",
+        "weeks": "6",
+        "topic": "Meritorious achievement",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 4",
+        "weeks": "5",
+        "topic": "Substantial achievement",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 4",
+        "weeks": "4",
+        "topic": "Adequate achievement",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 4",
+        "weeks": "3",
+        "topic": "Moderate achievement",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 4",
+        "weeks": "2",
+        "topic": "Elementary achievement",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 4",
+        "weeks": "1",
+        "topic": "Not achieved",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 4",
+        "weeks": "Grade 10",
+        "topic": "1",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 4",
+        "weeks": "Grade 11",
+        "topic": "1",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 4",
+        "weeks": "Grade 12",
+        "topic": "1",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 4",
+        "weeks": "Grade 12",
+        "topic": "1",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 4",
+        "weeks": "Grade 10",
+        "topic": "1",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 4",
+        "weeks": "Grade 11",
+        "topic": "1",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 4",
+        "weeks": "Grade 12",
+        "topic": "1",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      }
+    ]
+  },
+  "BusinessStudies_Gr10": {
+    "subject": "BusinessStudies",
+    "grade": "10",
+    "total_atp_items": 47,
+    "items": [
+      {
+        "term": "Term 1",
+        "weeks": "**Business Environment** (25%)",
+        "topic": "1",
+        "status": "covered",
+        "gen_key": "grade10_bs_combinatorial",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**Business Venture** (25%)",
+        "topic": "4",
+        "status": "covered",
+        "gen_key": "grade10_bs_combinatorial",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**Business Role** (25%)",
+        "topic": "14",
+        "status": "covered",
+        "gen_key": "grade10_bs_combinatorial",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**Business Operation** (25%)",
+        "topic": "20",
+        "status": "covered",
+        "gen_key": "grade10_bs_combinatorial",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**Total Weekly Allocation**",
+        "topic": "4 hours per week",
+        "status": "covered",
+        "gen_key": "grade10_bs_combinatorial",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**Level 1**",
+        "topic": "Knowledge and Recall",
+        "status": "covered",
+        "gen_key": "grade10_bs_combinatorial",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**Level 2**",
+        "topic": "Routine Procedures / Comprehension",
+        "status": "covered",
+        "gen_key": "grade10_bs_combinatorial",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**Level 3**",
+        "topic": "Complex Procedures / Application",
+        "status": "covered",
+        "gen_key": "grade10_bs_combinatorial",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**Level 4**",
+        "topic": "Problem Solving / Evaluation",
+        "status": "covered",
+        "gen_key": "grade10_bs_combinatorial",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**Weeks 1-3**",
+        "topic": "**1. Micro environment**",
+        "status": "covered",
+        "gen_key": "grade10_bs_micro_environment",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**1 week (Week 4)**",
+        "topic": "2. Market environment",
+        "status": "covered",
+        "gen_key": "grade10_bs_micro_environment",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**3 weeks (Week 5-7)**",
+        "topic": "3. Macro environment",
+        "status": "covered",
+        "gen_key": "grade10_bs_micro_environment",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**1 week (Week 8)**",
+        "topic": "4. Inter-relationship of micro, market and macro environments",
+        "status": "covered",
+        "gen_key": "grade10_bs_market_environment",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**Week 9**",
+        "topic": "5. Business sectors",
+        "status": "covered",
+        "gen_key": "grade10_bs_business_functions",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**2 weeks** (Week 1-2)",
+        "topic": "1. Contemporary socio-economic issues",
+        "status": "covered",
+        "gen_key": "grade10_bs_socio_economic_issues",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**1 week** (Week 3)",
+        "topic": "2. Social responsibility",
+        "status": "covered",
+        "gen_key": "grade10_bs_social_responsibility",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**1 week** (Week 4)",
+        "topic": "3. Entrepreneurial qualities",
+        "status": "covered",
+        "gen_key": "grade10_bs_entrepreneurial_qualities",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**Formal Assessment Task (Term 2)**",
+        "topic": "1 per term",
+        "status": "covered",
+        "gen_key": "grade10_bs_combinatorial",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "2 Weeks (Weeks 5-6)",
+        "topic": "4. Forms of ownership",
+        "status": "covered",
+        "gen_key": "grade10_bs_forms_of_ownership",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "2 Weeks (Weeks 7-8)",
+        "topic": "Revision exercises",
+        "status": "covered",
+        "gen_key": "grade10_bs_combinatorial",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "2 Weeks (Weeks 9-10)",
+        "topic": "Mid-year examinations",
+        "status": "covered",
+        "gen_key": "grade10_bs_combinatorial",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**1-2**",
+        "topic": "Creative thinking and problem-solving",
+        "status": "covered",
+        "gen_key": "grade10_bs_creative_thinking",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**3**",
+        "topic": "Business opportunity and related factors",
+        "status": "covered",
+        "gen_key": "grade10_bs_business_functions",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**1 week** (Week 4)",
+        "topic": "**3. Business location decision**",
+        "status": "covered",
+        "gen_key": "grade10_bs_business_functions",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**1 week** (Week 5)",
+        "topic": "**4. Contracts**",
+        "status": "covered",
+        "gen_key": "grade10_bs_combinatorial",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**1 week** (Week 6)",
+        "topic": "**5. Presentation of Information**",
+        "status": "covered",
+        "gen_key": "grade10_bs_presentation",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**Weeks 7-9** (3 weeks)",
+        "topic": "6. Business Plan",
+        "status": "covered",
+        "gen_key": "grade10_bs_business_functions",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**Week 10** (1 week)",
+        "topic": "Revision exercises",
+        "status": "covered",
+        "gen_key": "grade10_bs_combinatorial",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "**Weeks 1-2**",
+        "topic": "1. Self-management",
+        "status": "covered",
+        "gen_key": "grade10_bs_combinatorial",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "**Weeks 3-4**",
+        "topic": "2. Relationship and team performance",
+        "status": "covered",
+        "gen_key": "grade10_bs_interrelationship",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "**Weeks 7-10**",
+        "topic": "End-of-year examination",
+        "status": "covered",
+        "gen_key": "grade10_bs_combinatorial",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "**Year Mark (Terms 1-3)**",
+        "topic": "100",
+        "status": "covered",
+        "gen_key": "grade10_bs_combinatorial",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "R \u2013 3",
+        "topic": "100%",
+        "status": "covered",
+        "gen_key": "grade10_bs_combinatorial",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "4 \u2013 6",
+        "topic": "75%",
+        "status": "covered",
+        "gen_key": "grade10_bs_combinatorial",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "7 \u2013 9",
+        "topic": "40%",
+        "status": "covered",
+        "gen_key": "grade10_bs_combinatorial",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "10 and 11",
+        "topic": "25%",
+        "status": "covered",
+        "gen_key": "grade10_bs_combinatorial",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "12",
+        "topic": "25%",
+        "status": "covered",
+        "gen_key": "grade10_bs_combinatorial",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "**Knowledge and Comprehension** (Levels 1 and 2)",
+        "topic": "Basic thinking skills (e.g., factual recall, low-level application, and low-level comprehension)",
+        "status": "covered",
+        "gen_key": "grade10_bs_creative_thinking",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "**Application and Analysis** (Levels 3 and 4)",
+        "topic": "Moderately high thinking skills (e.g., more advanced application, interpretation, and low-level analysis)",
+        "status": "covered",
+        "gen_key": "grade10_bs_creative_thinking",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "**Synthesis and Evaluation** (Levels 5 and 6)",
+        "topic": "Higher-order thinking skills (e.g., advanced analytical skills, synthesis, and evaluation)",
+        "status": "covered",
+        "gen_key": "grade10_bs_creative_thinking",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "7",
+        "topic": "Outstanding achievement",
+        "status": "covered",
+        "gen_key": "grade10_bs_combinatorial",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "6",
+        "topic": "Meritorious achievement",
+        "status": "covered",
+        "gen_key": "grade10_bs_combinatorial",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "5",
+        "topic": "Substantial achievement",
+        "status": "covered",
+        "gen_key": "grade10_bs_combinatorial",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "4",
+        "topic": "Adequate achievement",
+        "status": "covered",
+        "gen_key": "grade10_bs_combinatorial",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "3",
+        "topic": "Moderate achievement",
+        "status": "covered",
+        "gen_key": "grade10_bs_combinatorial",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "2",
+        "topic": "Elementary achievement",
+        "status": "covered",
+        "gen_key": "grade10_bs_combinatorial",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "1",
+        "topic": "Not achieved",
+        "status": "covered",
+        "gen_key": "grade10_bs_combinatorial",
+        "issue": null
+      }
+    ]
+  },
+  "BusinessStudies_Gr11": {
+    "subject": "BusinessStudies",
+    "grade": "11",
+    "total_atp_items": 49,
+    "items": [
+      {
+        "term": "Term 1",
+        "weeks": "**Weekly Time Allocation**",
+        "topic": "4 hours per week",
+        "status": "covered",
+        "gen_key": "grade11_bs_adapting_to_challenges",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**Level 1**",
+        "topic": "Knowledge and Recall",
+        "status": "covered",
+        "gen_key": "grade11_bs_adapting_to_challenges",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**Level 2**",
+        "topic": "Comprehension and Application",
+        "status": "covered",
+        "gen_key": "grade11_bs_adapting_to_challenges",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**Level 3**",
+        "topic": "Analysis and Evaluation",
+        "status": "covered",
+        "gen_key": "grade11_bs_adapting_to_challenges",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**Level 4**",
+        "topic": "Synthesis and Problem Solving",
+        "status": "covered",
+        "gen_key": "grade11_bs_adapting_to_challenges",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**Week 1**",
+        "topic": "1. Influences on business environments",
+        "status": "covered",
+        "gen_key": "grade11_bs_avenues_of_acquiring_businesses",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**Week 2**",
+        "topic": "2. Challenges of the business environment",
+        "status": "covered",
+        "gen_key": "grade11_bs_adapting_to_challenges",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**Week 3**",
+        "topic": "3. Adapting to challenges of the business",
+        "status": "covered",
+        "gen_key": "grade11_bs_adapting_to_challenges",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**Formal Assessment (Term 1)**",
+        "topic": "10% - 15%",
+        "status": "covered",
+        "gen_key": "grade11_bs_adapting_to_challenges",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**Paper 1 (Exam)**",
+        "topic": "50%",
+        "status": "covered",
+        "gen_key": "grade11_bs_adapting_to_challenges",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**Paper 2 (Exam)**",
+        "topic": "50%",
+        "status": "covered",
+        "gen_key": "grade11_bs_adapting_to_challenges",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**Weeks 4-5** (2 weeks)",
+        "topic": "4. Contemporary socio-economic issues",
+        "status": "covered",
+        "gen_key": "grade11_bs_socio_economic_issues",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**Week 6** (1 hour)",
+        "topic": "6. Business sectors",
+        "status": "covered",
+        "gen_key": "grade11_bs_avenues_of_acquiring_businesses",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**Weeks 6-7** (1 week)",
+        "topic": "7. Benefit of a company over other forms of ownership",
+        "status": "covered",
+        "gen_key": "grade11_bs_benefits_of_a_company",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**Week 8**",
+        "topic": "8. Avenues of acquiring a business",
+        "status": "covered",
+        "gen_key": "grade11_bs_avenues_of_acquiring_businesses",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**2 hours** (Week 1)",
+        "topic": "1. Creative thinking and problem-solving",
+        "status": "covered",
+        "gen_key": "grade11_bs_creative_thinking",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**2 hours** (Week 1)",
+        "topic": "2. Stress and crisis management",
+        "status": "covered",
+        "gen_key": "grade11_bs_stress_crisis_change",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**2 weeks** (Weeks 2-3)",
+        "topic": "3. Transformation of a business plan into an action plan",
+        "status": "covered",
+        "gen_key": "grade11_bs_avenues_of_acquiring_businesses",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**2 weeks** (Weeks 4-5)",
+        "topic": "4. Setting up / starting a business",
+        "status": "covered",
+        "gen_key": "grade11_bs_avenues_of_acquiring_businesses",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**2 hours** (Week 6)",
+        "topic": "5. Professionalism and ethics",
+        "status": "covered",
+        "gen_key": "grade11_bs_professionalism_and_ethics",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**Week 6** (2 hours)",
+        "topic": "6. Presentation of business information",
+        "status": "covered",
+        "gen_key": "grade11_bs_avenues_of_acquiring_businesses",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**Weeks 7-8** (2 weeks)",
+        "topic": "Revision exercises",
+        "status": "covered",
+        "gen_key": "grade11_bs_adapting_to_challenges",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**Weeks 9-10** (2 weeks)",
+        "topic": "Mid-year examination",
+        "status": "covered",
+        "gen_key": "grade11_bs_adapting_to_challenges",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**1 week** (Week 1)",
+        "topic": "1. Entrepreneurial qualities and success factors",
+        "status": "covered",
+        "gen_key": "grade11_bs_entrepreneurial_assessment",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**1 week** (Week 2)",
+        "topic": "2. Citizenship role and responsibilities",
+        "status": "covered",
+        "gen_key": "grade11_bs_citizenship_responsibilities",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**4 weeks** (Week 3-6)",
+        "topic": "3. Marketing function",
+        "status": "covered",
+        "gen_key": "grade11_bs_marketing_function",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**Level 1**",
+        "topic": "Knowledge (Recall)",
+        "status": "covered",
+        "gen_key": "grade11_bs_adapting_to_challenges",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**Level 2**",
+        "topic": "Routine procedures (Comprehension/Application)",
+        "status": "covered",
+        "gen_key": "grade11_bs_adapting_to_challenges",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**Level 3**",
+        "topic": "Complex procedures (Analysis)",
+        "status": "covered",
+        "gen_key": "grade11_bs_adapting_to_challenges",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**Level 4**",
+        "topic": "Problem solving (Evaluation/Synthesis)",
+        "status": "covered",
+        "gen_key": "grade11_bs_adapting_to_challenges",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**Weeks 7-9** (3 weeks)",
+        "topic": "4. Production function",
+        "status": "covered",
+        "gen_key": "grade11_bs_marketing_function",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "**Weeks 1-2**",
+        "topic": "**1. Team dynamics**",
+        "status": "covered",
+        "gen_key": "grade11_bs_stress_crisis_change",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "**Weeks 3-4**",
+        "topic": "**2. Introduction to Human Resources**",
+        "status": "covered",
+        "gen_key": "grade11_bs_marketing_function",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "Year Mark (Terms 1\u20133)",
+        "topic": "100",
+        "status": "covered",
+        "gen_key": "grade11_bs_adapting_to_challenges",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "R \u2013 3",
+        "topic": "100%",
+        "status": "covered",
+        "gen_key": "grade11_bs_adapting_to_challenges",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "4 \u2013 6",
+        "topic": "75%",
+        "status": "covered",
+        "gen_key": "grade11_bs_adapting_to_challenges",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "7 \u2013 9",
+        "topic": "40%",
+        "status": "covered",
+        "gen_key": "grade11_bs_adapting_to_challenges",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "10 and 11",
+        "topic": "25%",
+        "status": "covered",
+        "gen_key": "grade11_bs_adapting_to_challenges",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "12",
+        "topic": "25%",
+        "status": "covered",
+        "gen_key": "grade11_bs_adapting_to_challenges",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "**Knowledge and Comprehension** (Levels 1 and 2)",
+        "topic": "Basic thinking skills (e.g., factual recall, low-level application, and low-level comprehension)",
+        "status": "covered",
+        "gen_key": "grade11_bs_creative_thinking",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "**Application and Analysis** (Levels 3 and 4)",
+        "topic": "Moderately high thinking skills (e.g., more advanced application, interpretation, and low-level analysis)",
+        "status": "covered",
+        "gen_key": "grade11_bs_creative_thinking",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "**Synthesis and Evaluation** (Levels 5 and 6)",
+        "topic": "Higher-order thinking skills (e.g., advanced analytical skills, synthesis, and evaluation)",
+        "status": "covered",
+        "gen_key": "grade11_bs_creative_thinking",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "7",
+        "topic": "Outstanding achievement",
+        "status": "covered",
+        "gen_key": "grade11_bs_adapting_to_challenges",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "6",
+        "topic": "Meritorious achievement",
+        "status": "covered",
+        "gen_key": "grade11_bs_adapting_to_challenges",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "5",
+        "topic": "Substantial achievement",
+        "status": "covered",
+        "gen_key": "grade11_bs_adapting_to_challenges",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "4",
+        "topic": "Adequate achievement",
+        "status": "covered",
+        "gen_key": "grade11_bs_adapting_to_challenges",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "3",
+        "topic": "Moderate achievement",
+        "status": "covered",
+        "gen_key": "grade11_bs_adapting_to_challenges",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "2",
+        "topic": "Elementary achievement",
+        "status": "covered",
+        "gen_key": "grade11_bs_adapting_to_challenges",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "1",
+        "topic": "Not achieved",
+        "status": "covered",
+        "gen_key": "grade11_bs_adapting_to_challenges",
+        "issue": null
+      }
+    ]
+  },
+  "BusinessStudies_Gr12": {
+    "subject": "BusinessStudies",
+    "grade": "12",
+    "total_atp_items": 49,
+    "items": [
+      {
+        "term": "Term 1",
+        "weeks": "**Business Environment** (25%)",
+        "topic": "1",
+        "status": "covered",
+        "gen_key": "grade12_bs_macro_environment_strategies",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**Business Venture** (25%)",
+        "topic": "4",
+        "status": "covered",
+        "gen_key": "grade12_bs_macro_environment_strategies",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**Business Role** (25%)",
+        "topic": "14",
+        "status": "covered",
+        "gen_key": "grade12_bs_macro_environment_strategies",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**Business Operation** (25%)",
+        "topic": "20",
+        "status": "covered",
+        "gen_key": "grade12_bs_macro_environment_strategies",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**Weekly Time Allocation**",
+        "topic": "4 hours per week",
+        "status": "covered",
+        "gen_key": "grade12_bs_quality_of_performance",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**Level 1**",
+        "topic": "Knowledge and Recall",
+        "status": "covered",
+        "gen_key": "grade12_bs_macro_environment_strategies",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**Level 2**",
+        "topic": "Routine Procedures / Comprehension",
+        "status": "covered",
+        "gen_key": "grade12_bs_macro_environment_strategies",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**Level 3**",
+        "topic": "Complex Procedures / Application",
+        "status": "covered",
+        "gen_key": "grade12_bs_macro_environment_strategies",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**Level 4**",
+        "topic": "Problem Solving / Evaluation",
+        "status": "covered",
+        "gen_key": "grade12_bs_creative_thinking_problem_solving",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**Weeks 1-3**",
+        "topic": "**1. Macro environment: impact of recent legislation on business**",
+        "status": "covered",
+        "gen_key": "grade12_bs_human_resources_function",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**Weeks 4-5**",
+        "topic": "**2. Human Resources function**",
+        "status": "covered",
+        "gen_key": "grade12_bs_human_resources_function",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**Level 1**",
+        "topic": "Knowledge & Comprehension",
+        "status": "covered",
+        "gen_key": "grade12_bs_macro_environment_strategies",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**Level 2**",
+        "topic": "Application",
+        "status": "covered",
+        "gen_key": "grade12_bs_macro_environment_strategies",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**Level 3**",
+        "topic": "Analysis",
+        "status": "covered",
+        "gen_key": "grade12_bs_macro_environment_strategies",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**Level 4**",
+        "topic": "Evaluation & Synthesis",
+        "status": "covered",
+        "gen_key": "grade12_bs_macro_environment_strategies",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**1 week** (Week 6)",
+        "topic": "3. Ethics and professionalism",
+        "status": "covered",
+        "gen_key": "grade12_bs_ethics_and_professionalism",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**1 week** (Week 7)",
+        "topic": "4. Creative thinking",
+        "status": "covered",
+        "gen_key": "grade12_bs_creative_thinking_problem_solving",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**3 weeks** (Week 8-10)",
+        "topic": "5. Macro environment: Business strategies",
+        "status": "covered",
+        "gen_key": "grade12_bs_macro_environment_strategies",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**1\u00bd weeks** (Weeks 1-2)",
+        "topic": "**1. Social responsibility and corporate citizenship / Corporate Social Responsibility (CSR)**",
+        "status": "covered",
+        "gen_key": "grade12_bs_social_responsibility_csr_csi",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**\u00bd week / 2 hours** (Week 2)",
+        "topic": "**2. Human rights, inclusivity and environmental issues**",
+        "status": "covered",
+        "gen_key": "grade12_bs_business_sectors_environments",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**Week 3**",
+        "topic": "3. Team performance, Conflict management and problem-solving",
+        "status": "covered",
+        "gen_key": "grade12_bs_creative_thinking_problem_solving",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**Week 4**",
+        "topic": "4. Business sector and its environment",
+        "status": "covered",
+        "gen_key": "grade12_bs_business_sectors_environments",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**Week 5**",
+        "topic": "5. Management and leadership",
+        "status": "covered",
+        "gen_key": "grade12_bs_investments_management",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**Week 6**",
+        "topic": "6. Quality of performance",
+        "status": "covered",
+        "gen_key": "grade12_bs_quality_of_performance",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**Week 7-8**",
+        "topic": "Revision exercises",
+        "status": "covered",
+        "gen_key": "grade12_bs_macro_environment_strategies",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**Week 9-10**",
+        "topic": "Mid-year examination",
+        "status": "covered",
+        "gen_key": "grade12_bs_macro_environment_strategies",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**1**",
+        "topic": "Investment: Securities",
+        "status": "covered",
+        "gen_key": "grade12_bs_investment_securities",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**2**",
+        "topic": "Investment: Insurance",
+        "status": "covered",
+        "gen_key": "grade12_bs_investment_insurance",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**3**",
+        "topic": "Forms of Ownership",
+        "status": "covered",
+        "gen_key": "grade12_bs_forms_of_ownership_success",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**4-5**",
+        "topic": "Presentation and Data Response",
+        "status": "covered",
+        "gen_key": "grade12_bs_presentation_data_responses",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**Weeks 8-10**",
+        "topic": "Preliminary Examination",
+        "status": "covered",
+        "gen_key": "grade12_bs_macro_environment_strategies",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "**Weeks 1-4**",
+        "topic": "Revision exercises",
+        "status": "covered",
+        "gen_key": "grade12_bs_macro_environment_strategies",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "**Weeks 5-10**",
+        "topic": "Final examination",
+        "status": "covered",
+        "gen_key": "grade12_bs_macro_environment_strategies",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "**Year Mark** (Terms 1\u20133)",
+        "topic": "100",
+        "status": "covered",
+        "gen_key": "grade12_bs_macro_environment_strategies",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "R \u2013 3",
+        "topic": "100%",
+        "status": "covered",
+        "gen_key": "grade12_bs_macro_environment_strategies",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "4 \u2013 6",
+        "topic": "75%",
+        "status": "covered",
+        "gen_key": "grade12_bs_macro_environment_strategies",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "7 \u2013 9",
+        "topic": "40%",
+        "status": "covered",
+        "gen_key": "grade12_bs_macro_environment_strategies",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "10 and 11",
+        "topic": "25%",
+        "status": "covered",
+        "gen_key": "grade12_bs_macro_environment_strategies",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "12",
+        "topic": "25%",
+        "status": "covered",
+        "gen_key": "grade12_bs_macro_environment_strategies",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "**Knowledge and Comprehension** (Levels 1 and 2)",
+        "topic": "Basic thinking skills (e.g., factual recall, low-level application, and low-level comprehension)",
+        "status": "covered",
+        "gen_key": "grade12_bs_creative_thinking_problem_solving",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "**Application and Analysis** (Levels 3 and 4)",
+        "topic": "Moderately high thinking skills (e.g., more advanced application, interpretation, and low-level analysis)",
+        "status": "covered",
+        "gen_key": "grade12_bs_creative_thinking_problem_solving",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "**Synthesis and Evaluation** (Levels 5 and 6)",
+        "topic": "Higher-order thinking skills (e.g., advanced analytical skills, synthesis, and evaluation)",
+        "status": "covered",
+        "gen_key": "grade12_bs_creative_thinking_problem_solving",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "7",
+        "topic": "Outstanding achievement",
+        "status": "covered",
+        "gen_key": "grade12_bs_macro_environment_strategies",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "6",
+        "topic": "Meritorious achievement",
+        "status": "covered",
+        "gen_key": "grade12_bs_macro_environment_strategies",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "5",
+        "topic": "Substantial achievement",
+        "status": "covered",
+        "gen_key": "grade12_bs_macro_environment_strategies",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "4",
+        "topic": "Adequate achievement",
+        "status": "covered",
+        "gen_key": "grade12_bs_macro_environment_strategies",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "3",
+        "topic": "Moderate achievement",
+        "status": "covered",
+        "gen_key": "grade12_bs_macro_environment_strategies",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "2",
+        "topic": "Elementary achievement",
+        "status": "covered",
+        "gen_key": "grade12_bs_macro_environment_strategies",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "1",
+        "topic": "Not achieved",
+        "status": "covered",
+        "gen_key": "grade12_bs_macro_environment_strategies",
+        "issue": null
+      }
+    ]
+  },
+  "EMS_Gr7": {
+    "subject": "EMS",
+    "grade": "7",
+    "total_atp_items": 20,
+    "items": [
+      {
+        "term": "Term 1",
+        "weeks": "**The Economy** (30%)",
+        "topic": "1. History of money",
+        "status": "covered",
+        "gen_key": "grade7_ems_money_and_needs",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**Financial Literacy** (40%)",
+        "topic": "1. Savings",
+        "status": "covered",
+        "gen_key": "grade7_ems_savings",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**Entrepreneurship** (30%)",
+        "topic": "1. Entrepreneurial skills and knowledge",
+        "status": "covered",
+        "gen_key": "grade7_ems_money_and_needs",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**Weeks 1\u20133**",
+        "topic": "History of money",
+        "status": "covered",
+        "gen_key": "grade7_ems_money_and_needs",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**Weeks 4\u20135**",
+        "topic": "Needs and wants",
+        "status": "covered",
+        "gen_key": "grade7_ems_money_and_needs",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**Weeks 6\u20137**",
+        "topic": "Goods and services",
+        "status": "covered",
+        "gen_key": "grade7_ems_goods_and_services",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**Weeks 8\u201310**",
+        "topic": "Businesses",
+        "status": "covered",
+        "gen_key": "grade7_ems_businesses",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "2\u20133",
+        "topic": "Accounting Concepts",
+        "status": "covered",
+        "gen_key": "grade7_ems_accounting_concepts",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "4\u20136",
+        "topic": "Income and Expenses",
+        "status": "covered",
+        "gen_key": "grade7_ems_income_and_expenses",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "7\u20138",
+        "topic": "Budgets",
+        "status": "covered",
+        "gen_key": "grade7_ems_budgets",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "9\u201310",
+        "topic": "Mid-year Examination",
+        "status": "covered",
+        "gen_key": "grade7_ems_money_and_needs",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**Weeks 2\u20133**",
+        "topic": "The entrepreneur",
+        "status": "covered",
+        "gen_key": "grade7_ems_entrepreneurship",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**Weeks 4\u20135**",
+        "topic": "Starting a business",
+        "status": "covered",
+        "gen_key": "grade7_ems_businesses",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**Weeks 6\u20137**",
+        "topic": "Entrepreneur's Day",
+        "status": "covered",
+        "gen_key": "grade7_ems_entrepreneurs_day",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**Weeks 8\u201310**",
+        "topic": "Inequality and poverty",
+        "status": "covered",
+        "gen_key": "grade7_ems_inequality_and_poverty",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "**Weeks 2 \u2013 4**",
+        "topic": "The production process",
+        "status": "covered",
+        "gen_key": "grade7_ems_money_and_needs",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "**Weeks 5 \u2013 7**",
+        "topic": "Savings",
+        "status": "covered",
+        "gen_key": "grade7_ems_savings",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "**Weeks 8 \u2013 9**",
+        "topic": "Examination preparations",
+        "status": "covered",
+        "gen_key": "grade7_ems_money_and_needs",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "**Week 10**",
+        "topic": "End-of-year examination",
+        "status": "covered",
+        "gen_key": "grade7_ems_money_and_needs",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "**SBA (Terms 1-3)**",
+        "topic": "$100 + 100 + 100$",
+        "status": "covered",
+        "gen_key": "grade7_ems_money_and_needs",
+        "issue": null
+      }
+    ]
+  },
+  "EMS_Gr8": {
+    "subject": "EMS",
+    "grade": "8",
+    "total_atp_items": 21,
+    "items": [
+      {
+        "term": "Term 1",
+        "weeks": "**The Economy** (30%)",
+        "topic": "1. History of money",
+        "status": "covered",
+        "gen_key": "grade8_ems_gov_and_society",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**Financial Literacy** (40%)",
+        "topic": "1. Savings",
+        "status": "covered",
+        "gen_key": "grade8_ems_gov_and_society",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**Entrepreneurship** (30%)",
+        "topic": "1. Entrepreneurial skills and knowledge",
+        "status": "covered",
+        "gen_key": "grade8_ems_gov_and_society",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "2 \u2013 3",
+        "topic": "Government",
+        "status": "covered",
+        "gen_key": "grade8_ems_government",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "4 \u2013 5",
+        "topic": "National Budget",
+        "status": "covered",
+        "gen_key": "grade8_ems_national_budget",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "6",
+        "topic": "Standard of living",
+        "status": "covered",
+        "gen_key": "grade8_ems_standard_of_living",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "7 \u2013 8",
+        "topic": "Accounting concepts",
+        "status": "covered",
+        "gen_key": "grade8_ems_accounting_basics",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "9 \u2013 10",
+        "topic": "Source documents",
+        "status": "covered",
+        "gen_key": "grade8_ems_source_documents",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "2\u20133",
+        "topic": "Overview of the accounting cycle",
+        "status": "covered",
+        "gen_key": "grade8_ems_accounting_basics",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "4\u20138",
+        "topic": "Cash Receipts Journal (CRJ)",
+        "status": "covered",
+        "gen_key": "grade8_ems_cash_receipts_journal",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "4\u20136",
+        "topic": "Factors of production",
+        "status": "covered",
+        "gen_key": "grade8_ems_markets_and_production",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "7\u20138",
+        "topic": "Markets",
+        "status": "covered",
+        "gen_key": "grade8_ems_markets_and_production",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "9\u201310",
+        "topic": "Mid-year examination",
+        "status": "covered",
+        "gen_key": "grade8_ems_gov_and_society",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**Weeks 2\u20133**",
+        "topic": "Cash Receipts Journal (CRJ)",
+        "status": "covered",
+        "gen_key": "grade8_ems_cash_receipts_journal",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**Weeks 4\u201310**",
+        "topic": "Cash Payments Journal (CPJ)",
+        "status": "covered",
+        "gen_key": "grade8_ems_cash_payments_journal",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**Weeks 4\u201310**",
+        "topic": "Forms of ownership",
+        "status": "covered",
+        "gen_key": "grade8_ems_ownership",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "**Weeks 2\u20136**",
+        "topic": "**Entrepreneurship:** Levels and functions of management",
+        "status": "covered",
+        "gen_key": "grade8_ems_gov_and_society",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "**Weeks 2\u20139**",
+        "topic": "**Financial Literacy:** General Ledger and Trial Balance (service)",
+        "status": "covered",
+        "gen_key": "grade8_ems_gov_and_society",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "**Weeks 7\u20139**",
+        "topic": "Examination preparations",
+        "status": "covered",
+        "gen_key": "grade8_ems_gov_and_society",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "**Week 10**",
+        "topic": "End-of-year examinations",
+        "status": "covered",
+        "gen_key": "grade8_ems_gov_and_society",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "**SBA (Terms 1, 2, & 3)**",
+        "topic": "40%",
+        "status": "covered",
+        "gen_key": "grade8_ems_gov_and_society",
+        "issue": null
+      }
+    ]
+  },
+  "EMS_Gr9": {
+    "subject": "EMS",
+    "grade": "9",
+    "total_atp_items": 22,
+    "items": [
+      {
+        "term": "Term 1",
+        "weeks": "**Entrepreneurship** (30%)",
+        "topic": "1. Entrepreneurial skills and knowledge",
+        "status": "covered",
+        "gen_key": "grade9_ems_economic_systems",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**Week 1**",
+        "topic": "**Revision**",
+        "status": "covered",
+        "gen_key": "grade9_ems_economic_systems",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**Weeks 2, 3, 4**",
+        "topic": "**Financial Literacy**",
+        "status": "covered",
+        "gen_key": "grade9_ems_economic_systems",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**Weeks 2, 3, 4**",
+        "topic": "**The Economy**",
+        "status": "covered",
+        "gen_key": "grade9_ems_economic_systems",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**Weeks 5\u201310**",
+        "topic": "**Financial Literacy**",
+        "status": "covered",
+        "gen_key": "grade9_ems_economic_systems",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**Weeks 5\u201310**",
+        "topic": "**The Economy**",
+        "status": "covered",
+        "gen_key": "grade9_ems_economic_systems",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**Weeks 2\u20137**",
+        "topic": "**Financial Literacy:** Credit transactions \u2013 debtors",
+        "status": "covered",
+        "gen_key": "grade9_ems_debtors_journal",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**Weeks 2\u20137**",
+        "topic": "**The Economy:** Price theory",
+        "status": "covered",
+        "gen_key": "grade9_ems_price_theory",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**Weeks 8\u20139**",
+        "topic": "**Entrepreneurship:** Sectors of the economy",
+        "status": "covered",
+        "gen_key": "grade9_ems_sectors_of_economy",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**Week 10**",
+        "topic": "**Mid-year examination**",
+        "status": "covered",
+        "gen_key": "grade9_ems_economic_systems",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**Week 1**",
+        "topic": "**Revision**",
+        "status": "covered",
+        "gen_key": "grade9_ems_economic_systems",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**Weeks 2\u20135**",
+        "topic": "**The Economy:** Trade unions",
+        "status": "covered",
+        "gen_key": "grade9_ems_trade_unions",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**Weeks 2\u20135**",
+        "topic": "**Financial Literacy:** Credit transactions \u2013 debtors",
+        "status": "covered",
+        "gen_key": "grade9_ems_debtors_journal",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**Weeks 6\u20138**",
+        "topic": "**Financial Literacy:** Credit transactions \u2013 creditors",
+        "status": "covered",
+        "gen_key": "grade9_ems_creditors_journal",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**Weeks 6\u20138**",
+        "topic": "**Entrepreneurship:** Functions of a business",
+        "status": "covered",
+        "gen_key": "grade9_ems_business_functions",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**Weeks 9\u201310**",
+        "topic": "**Financial Literacy:** Credit transactions \u2013 creditors",
+        "status": "covered",
+        "gen_key": "grade9_ems_creditors_journal",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "**2\u20137**",
+        "topic": "**Financial Literacy:** Transactions (Cash & Credit)",
+        "status": "covered",
+        "gen_key": "grade9_ems_economic_systems",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "**2\u20137**",
+        "topic": "**Entrepreneurship:** Business Plan",
+        "status": "covered",
+        "gen_key": "grade9_ems_business_functions",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "**8\u20139**",
+        "topic": "Examination Preparation",
+        "status": "covered",
+        "gen_key": "grade9_ems_economic_systems",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "**10**",
+        "topic": "End-of-year Examination",
+        "status": "covered",
+        "gen_key": "grade9_ems_economic_systems",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "**SBA (Terms 1, 2, & 3)**",
+        "topic": "40%",
+        "status": "covered",
+        "gen_key": "grade9_ems_economic_systems",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "**SBA (Terms 1\u20133)**",
+        "topic": "100 marks per term (converted to 40% of final mark).",
+        "status": "covered",
+        "gen_key": "grade9_ems_economic_systems",
+        "issue": null
+      }
+    ]
+  },
+  "LifeSciences_Gr10": {
+    "subject": "LifeSciences",
+    "grade": "10",
+    "total_atp_items": 23,
+    "items": [
+      {
+        "term": "Term 1",
+        "weeks": "Term 1",
+        "topic": "Orientation to Life Sciences: Subject Orientation",
+        "status": "covered",
+        "gen_key": "life_sciences_genetics",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "Term 1",
+        "topic": "Life at the Molecular, Cellular and Tissue Level",
+        "status": "covered",
+        "gen_key": "life_sciences_genetics",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**Term 1**",
+        "topic": "Cells: The Basic Units of Life",
+        "status": "covered",
+        "gen_key": "life_sciences_genetics",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**2 weeks** (8 hours)",
+        "topic": "**Cell Division: Mitosis**",
+        "status": "covered",
+        "gen_key": "life_sciences_genetics",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**1 week** (4 hours)",
+        "topic": "**Plant and Animal Tissues**",
+        "status": "covered",
+        "gen_key": "life_sciences_genetics",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**Total: 9 weeks**",
+        "topic": "(Remaining weeks to be populated)",
+        "status": "covered",
+        "gen_key": "life_sciences_genetics",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**2 weeks** (8 hours)",
+        "topic": "**Plant and Animal Tissues (continued)**",
+        "status": "covered",
+        "gen_key": "life_sciences_genetics",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**\u00bd week** (2 hours)",
+        "topic": "**Organs**",
+        "status": "covered",
+        "gen_key": "life_sciences_genetics",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**Term 2**",
+        "topic": "Life Processes in Plants and Animals",
+        "status": "covered",
+        "gen_key": "life_sciences_genetics",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**Level 1**",
+        "topic": "Knowledge",
+        "status": "covered",
+        "gen_key": "life_sciences_genetics",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**Level 2**",
+        "topic": "Routine Procedures",
+        "status": "covered",
+        "gen_key": "life_sciences_genetics",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**Level 3**",
+        "topic": "Complex Procedures",
+        "status": "covered",
+        "gen_key": "life_sciences_genetics",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**Level 4**",
+        "topic": "Problem Solving",
+        "status": "covered",
+        "gen_key": "life_sciences_genetics",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**Term 2**",
+        "topic": "Support Systems in Animals",
+        "status": "covered",
+        "gen_key": "life_sciences_human_organ_systems",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**3 weeks** (12 hours)",
+        "topic": "**Transport Systems in Mammals (Human)**",
+        "status": "covered",
+        "gen_key": "life_sciences_genetics",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**Term 3**",
+        "topic": "Environmental Studies",
+        "status": "covered",
+        "gen_key": "life_sciences_genetics",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**Term 3**",
+        "topic": "9 Weeks (36 Hours)",
+        "status": "covered",
+        "gen_key": "life_sciences_genetics",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "**1 Week** (4 hours)",
+        "topic": "**Biodiversity and Classification**",
+        "status": "covered",
+        "gen_key": "life_sciences_genetics",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "**Term 4**",
+        "topic": "History of Life on Earth",
+        "status": "covered",
+        "gen_key": "life_sciences_environmental_population",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "**4**",
+        "topic": "**Fossil Formation and Methods of Dating Them**",
+        "status": "covered",
+        "gen_key": "life_sciences_genetics",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "**4**",
+        "topic": "**Key Events in Life's History**",
+        "status": "covered",
+        "gen_key": "life_sciences_genetics",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "**4**",
+        "topic": "**Understanding Fossils**",
+        "status": "covered",
+        "gen_key": "life_sciences_genetics",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "**4**",
+        "topic": "**Fossil Tourism**",
+        "status": "covered",
+        "gen_key": "life_sciences_genetics",
+        "issue": null
+      }
+    ]
+  },
+  "LifeSciences_Gr11": {
+    "subject": "LifeSciences",
+    "grade": "11",
+    "total_atp_items": 12,
+    "items": [
+      {
+        "term": "Term 1",
+        "weeks": "**3 weeks** (12 hours)",
+        "topic": "**Biodiversity and Classification of Microorganisms**",
+        "status": "covered",
+        "gen_key": "life_sciences_genetics",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**2 Weeks** (8 hours)",
+        "topic": "Biodiversity of Animals",
+        "status": "covered",
+        "gen_key": "life_sciences_environmental_population",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**8 Weeks** (32 hours)",
+        "topic": "Developmental Lines & Phylogenetic Trees",
+        "status": "covered",
+        "gen_key": "life_sciences_genetics",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**3 weeks** (12 hours)",
+        "topic": "**Energy Transformations to Sustain Life**",
+        "status": "covered",
+        "gen_key": "life_sciences_genetics",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "- $CO_2$ necessity",
+        "topic": "\u2022 Chemicals",
+        "status": "covered",
+        "gen_key": "life_sciences_genetics",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**Term 2**",
+        "topic": "Animal Nutrition (Mammals)",
+        "status": "covered",
+        "gen_key": "life_sciences_genetics",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**Total Term 2**",
+        "topic": "7\u00bd weeks (34 hours)",
+        "status": "covered",
+        "gen_key": "life_sciences_genetics",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "Strand 2: Life Processes in Plants and Animals (continued)",
+        "topic": "Gaseous Exchange",
+        "status": "covered",
+        "gen_key": "life_sciences_human_organ_systems",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**Term 3**",
+        "topic": "Excretion in Humans",
+        "status": "covered",
+        "gen_key": "life_sciences_human_organ_systems",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**4 weeks** (24 hours)",
+        "topic": "**Population Ecology**",
+        "status": "covered",
+        "gen_key": "life_sciences_genetics",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**Term 3**",
+        "topic": "9\u00bd Weeks",
+        "status": "covered",
+        "gen_key": "life_sciences_genetics",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "**Term 4**",
+        "topic": "Human Impact on the Environment (Continued)",
+        "status": "covered",
+        "gen_key": "life_sciences_genetics",
+        "issue": null
+      }
+    ]
+  },
+  "LifeSciences_Gr12": {
+    "subject": "LifeSciences",
+    "grade": "12",
+    "total_atp_items": 21,
+    "items": [
+      {
+        "term": "Term 1",
+        "weeks": "**2\u00bd weeks** (10 hours)",
+        "topic": "**DNA: The Code of Life**",
+        "status": "covered",
+        "gen_key": "life_sciences_genetics",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**2 weeks** (8 hours)",
+        "topic": "**Meiosis**",
+        "status": "covered",
+        "gen_key": "life_sciences_genetics",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**\u00bd week** (2 hours)",
+        "topic": "**Reproduction in Vertebrates**",
+        "status": "covered",
+        "gen_key": "life_sciences_genetics",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "1",
+        "topic": "Human Reproduction",
+        "status": "covered",
+        "gen_key": "life_sciences_meiosis_human_reproduction",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "1",
+        "topic": "Total (Cumulative)",
+        "status": "covered",
+        "gen_key": "life_sciences_genetics",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**Term 2**",
+        "topic": "Strand 1 & 4",
+        "status": "covered",
+        "gen_key": "life_sciences_genetics",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**4 weeks** (16 hours)",
+        "topic": "**Responding to the Environment: Humans**",
+        "status": "covered",
+        "gen_key": "life_sciences_genetics",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**Term 2**",
+        "topic": "8 Weeks (32 Hours)",
+        "status": "covered",
+        "gen_key": "life_sciences_genetics",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**1\u00bd weeks** (6 hours)",
+        "topic": "**Human Endocrine System**",
+        "status": "covered",
+        "gen_key": "life_sciences_genetics",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**1 week** (4 hours)",
+        "topic": "**Homeostasis in Humans**",
+        "status": "covered",
+        "gen_key": "life_sciences_genetics",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**3**",
+        "topic": "1 Week (4 hours)",
+        "status": "covered",
+        "gen_key": "life_sciences_genetics",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**4**",
+        "topic": "2 Weeks (8 hours)",
+        "status": "covered",
+        "gen_key": "life_sciences_genetics",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**3**",
+        "topic": "**Formation/Emergence of New Species**",
+        "status": "covered",
+        "gen_key": "life_sciences_genetics",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**Knowledge (Level 1)**",
+        "topic": "30%",
+        "status": "covered",
+        "gen_key": "life_sciences_genetics",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**Routine Procedures (Level 2)**",
+        "topic": "40%",
+        "status": "covered",
+        "gen_key": "life_sciences_genetics",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**Complex Procedures (Level 3)**",
+        "topic": "20%",
+        "status": "covered",
+        "gen_key": "life_sciences_genetics",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**Problem Solving (Level 4)**",
+        "topic": "10%",
+        "status": "covered",
+        "gen_key": "life_sciences_genetics",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**3**",
+        "topic": "Human Evolution",
+        "status": "covered",
+        "gen_key": "life_sciences_genetics",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**3**",
+        "topic": "Total (Term 3 Section)",
+        "status": "covered",
+        "gen_key": "life_sciences_genetics",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "**2 Weeks** (8 hours)",
+        "topic": "Human Evolution (continued)",
+        "status": "covered",
+        "gen_key": "life_sciences_genetics",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "**2 Weeks** (8 hours)",
+        "topic": "Alternatives to Evolution",
+        "status": "covered",
+        "gen_key": "life_sciences_genetics",
+        "issue": null
+      }
+    ]
+  },
+  "MathematicalLiteracy_Gr12": {
+    "subject": "MathematicalLiteracy",
+    "grade": "12",
+    "total_atp_items": 2,
+    "items": [
+      {
+        "term": "Term 1",
+        "weeks": "**Paper 1**",
+        "topic": "Focuses on content from Finance, Measurement, and Data Handling (Routine/Complex procedures).",
+        "status": "covered",
+        "gen_key": "mathematical_literacy_finance_tax",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**Paper 2**",
+        "topic": "Focuses on Maps, Plans, and integrated application across all topics (Complex/Problem solving).",
+        "status": "covered",
+        "gen_key": "mathematical_literacy_maps_scales",
+        "issue": null
+      }
+    ]
+  },
+  "Mathematics_Gr10": {
+    "subject": "Mathematics",
+    "grade": "10",
+    "total_atp_items": 29,
+    "items": [
+      {
+        "term": "Term 1",
+        "weeks": "No of Weeks",
+        "topic": "Topic",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**3**",
+        "topic": "**Algebraic Expressions**",
+        "status": "covered",
+        "gen_key": "grade10_math_algebraic_expressions",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**2**",
+        "topic": "**Exponents**",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 1",
+        "weeks": "No of Weeks",
+        "topic": "Topic",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 1",
+        "weeks": "1",
+        "topic": "Numbers and patterns",
+        "status": "covered",
+        "gen_key": "grade10_math_patterns_sequences",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "2",
+        "topic": "Equations and Inequalities",
+        "status": "covered",
+        "gen_key": "grade10_math_equations_inequalities",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "1",
+        "topic": "Trigonometry",
+        "status": "covered",
+        "gen_key": "grade10_math_trigonometry",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "2",
+        "topic": "(4 + 1) 5",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**3**",
+        "topic": "**Euclidean Geometry**",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 3",
+        "weeks": "2",
+        "topic": "**Analytical Geometry**",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 3",
+        "weeks": "2",
+        "topic": "**Finance and growth**",
+        "status": "covered",
+        "gen_key": "grade10_math_finance",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "2",
+        "topic": "Statistics",
+        "status": "covered",
+        "gen_key": "grade10_math_statistics",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "$0 \\le x < 20$",
+        "topic": "4",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 3",
+        "weeks": "$20 \\le x < 30$",
+        "topic": "10",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 3",
+        "weeks": "$30 \\le x < 40$",
+        "topic": "37",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 3",
+        "weeks": "$40 \\le x < 50$",
+        "topic": "43",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 3",
+        "weeks": "$50 \\le x < 60$",
+        "topic": "36",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 3",
+        "weeks": "$60 \\le x < 70$",
+        "topic": "26",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 3",
+        "weeks": "$70 \\le x < 80$",
+        "topic": "24",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 3",
+        "weeks": "$80 \\le x < 100$",
+        "topic": "20",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**2**",
+        "topic": "**Trigonometry**",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**1**",
+        "topic": "**Euclidean Geometry**",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**2**",
+        "topic": "**Measurement**",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 4",
+        "weeks": "No of Weeks",
+        "topic": "Topic",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 4",
+        "weeks": "**2**",
+        "topic": "**Probability**",
+        "status": "covered",
+        "gen_key": "grade10_math_probability",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "**4**",
+        "topic": "**Revision**",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 4",
+        "weeks": "**3**",
+        "topic": "**Examinations**",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 4",
+        "weeks": "**Paper 1**",
+        "topic": "Algebraic expressions ($30 \\pm 3$), Equations and inequalities ($30 \\pm 3$), Functions ($30 \\pm 3$), Finance and growth ($10 \\pm 3$)",
+        "status": "covered",
+        "gen_key": "grade10_math_finance",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "**Paper 2**",
+        "topic": "Trigonometry ($40 \\pm 3$), Analytical Geometry ($15 \\pm 3$), Euclidean Geometry and Measurement ($30 \\pm 3$), Probability ($15 \\pm 3$)",
+        "status": "covered",
+        "gen_key": "grade10_math_probability",
+        "issue": null
+      }
+    ]
+  },
+  "Mathematics_Gr11": {
+    "subject": "Mathematics",
+    "grade": "11",
+    "total_atp_items": 29,
+    "items": [
+      {
+        "term": "Term 1",
+        "weeks": "No. Weeks",
+        "topic": "Topic",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**3**",
+        "topic": "**Exponents and surds**",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**3**",
+        "topic": "**Equations and Inequalities**",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**2**",
+        "topic": "**Number patterns**",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 1",
+        "weeks": "No. Weeks",
+        "topic": "Topic",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 1",
+        "weeks": "3",
+        "topic": "Analytical Geometry",
+        "status": "covered",
+        "gen_key": "grade11_math_analytical_geometry",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**Task 1**",
+        "topic": "Investigation or Project (e.g., Ratios/Golden Ratio)",
+        "status": "covered",
+        "gen_key": "grade11_math_investigation_and_projects",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**Task 2**",
+        "topic": "Test",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 2",
+        "weeks": "2",
+        "topic": "Functions",
+        "status": "covered",
+        "gen_key": "grade11_math_functions",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "No of Weeks",
+        "topic": "Topic",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**4 Weeks**",
+        "topic": "Trigonometry",
+        "status": "covered",
+        "gen_key": "grade11_math_trigonometry_reductions",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**3 Weeks**",
+        "topic": "Mid-year examinations",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 2",
+        "weeks": "Paper 1",
+        "topic": "2 Hours",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 2",
+        "weeks": "Paper 2",
+        "topic": "2 Hours",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 3",
+        "weeks": "No. of Weeks",
+        "topic": "Topic",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 3",
+        "weeks": "1",
+        "topic": "Measurement",
+        "status": "covered",
+        "gen_key": "grade11_math_measurement",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "3",
+        "topic": "Euclidean Geometry",
+        "status": "covered",
+        "gen_key": "grade11_math_analytical_geometry",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**3**",
+        "topic": "$O$ is the centre of the circle; $MPT$ is a tangent; $OP \\perp MT$. Determine $x, y, z$ with reasons.",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**4**",
+        "topic": "Given: $AB = AC$, $AP \\parallel BC$, and $\\hat{A}_2 = \\hat{B}_2$. Prove: 4.1 $PAL$ is a tangent; 4.2 $AB$ is a tangent.",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 3",
+        "weeks": "No. of weeks",
+        "topic": "Topic",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 3",
+        "weeks": "No. of Weeks",
+        "topic": "Topic",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 3",
+        "weeks": "2 Weeks",
+        "topic": "Probability",
+        "status": "covered",
+        "gen_key": "grade11_math_probability",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "Given $P(A) = 0,3$ and $P(A \\text{ or } B) = 0,615$, determine if events are mutually exclusive or independent.",
+        "topic": "(R) / (C)",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 4",
+        "weeks": "No. of Weeks",
+        "topic": "Topic",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 4",
+        "weeks": "**3**",
+        "topic": "**Statistics**",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 4",
+        "weeks": "**3**",
+        "topic": "**Revision**",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 4",
+        "weeks": "**3**",
+        "topic": "**Examinations**",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 4",
+        "weeks": "**Paper 1**",
+        "topic": "3 Hours",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 4",
+        "weeks": "**Paper 2**",
+        "topic": "3 Hours",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      }
+    ]
+  },
+  "Mathematics_Gr12": {
+    "subject": "Mathematics",
+    "grade": "12",
+    "total_atp_items": 49,
+    "items": [
+      {
+        "term": "Term 1",
+        "weeks": "No. of Weeks",
+        "topic": "Topic",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**3**",
+        "topic": "**Patterns, sequences, series**",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**3**",
+        "topic": "**Functions**",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 1",
+        "weeks": "No. of Weeks",
+        "topic": "Topic",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 1",
+        "weeks": "1",
+        "topic": "Functions: Exponential and Logarithmic",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 1",
+        "weeks": "No. of Weeks",
+        "topic": "Topic",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**2**",
+        "topic": "**Finance, growth and decay**",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**2**",
+        "topic": "**Trigonometry**",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 2",
+        "weeks": "No. of Weeks",
+        "topic": "Topic",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**2**",
+        "topic": "Trigonometry (continued)",
+        "status": "covered",
+        "gen_key": "grade12_math_trigonometry",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**1**",
+        "topic": "Functions: Polynomials",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**Level 1**",
+        "topic": "Knowledge (Recall)",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**Level 2**",
+        "topic": "Routine Procedures",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**Level 3**",
+        "topic": "Complex Procedures",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**Level 4**",
+        "topic": "Problem Solving",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 2",
+        "weeks": "No. of Weeks",
+        "topic": "Topic",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 2",
+        "weeks": "3",
+        "topic": "Differential Calculus",
+        "status": "covered",
+        "gen_key": "grade12_math_differential_calculus",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**4. Differentiation Rules**",
+        "topic": "Use the power rule: $\\frac{d}{dx}(ax^n) = anx^{n-1}$",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**4.1 Linearity**",
+        "topic": "$\\frac{d}{dx}[f(x) \\pm g(x)] = \\frac{d}{dx}[f(x)] \\pm \\frac{d}{dx}[g(x)]$",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**4.2 Constant Multiple**",
+        "topic": "$\\frac{d}{dx}[kf(x)] = k\\frac{d}{dx}[f(x)]$",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**5. Tangents**",
+        "topic": "Find equations of tangents to graphs of functions.",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**6. Second Derivative**",
+        "topic": "Introduce $f''(x) = \\frac{d}{dx}(f'(x))$ and its role in concavity.",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**7. Curve Sketching**",
+        "topic": "Sketch cubic polynomial functions using stationary points, points of inflection, and $x$-intercepts.",
+        "status": "covered",
+        "gen_key": "grade12_math_functions",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**8. Applications**",
+        "topic": "Solve practical problems concerning optimisation and rate of change (including motion).",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**Paper 1**",
+        "topic": "50%",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**Paper 2**",
+        "topic": "50%",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 2",
+        "weeks": "No. of Weeks",
+        "topic": "Topic",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 2",
+        "weeks": "2",
+        "topic": "Analytical Geometry",
+        "status": "covered",
+        "gen_key": "grade12_math_analytical_geometry",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "3",
+        "topic": "Mid-Year Examinations",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 2",
+        "weeks": "1",
+        "topic": "Determine the equation of the circle with centre $(-1; 2)$ and radius $\\sqrt{6}$.",
+        "status": "covered",
+        "gen_key": "grade12_math_analytical_geometry_circles",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "2",
+        "topic": "Determine the equation of the circle which has the line segment with endpoints $(5; 3)$ and $(-3; 6)$ as diameter.",
+        "status": "covered",
+        "gen_key": "grade12_math_analytical_geometry_circles",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "3",
+        "topic": "Determine the equation of a circle with a radius of 6 units, which intersects the $x$-axis at $(-2; 0)$ and the $y$-axis at $(0; 3)$. How many such circles are there?",
+        "status": "covered",
+        "gen_key": "grade12_math_analytical_geometry_circles",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "4",
+        "topic": "Determine the equation of the tangent that touches the circle defined by $x^2 - 2x + y^2 + 4y = 5$ at the point $(-2; -1)$.",
+        "status": "covered",
+        "gen_key": "grade12_math_analytical_geometry_circles",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "5.1",
+        "topic": "The line $y = x + 2$ intersects the circle defined by $x^2 + y^2 = 20$ at $A$ and $B$. Determine the co-ordinates of $A$ and $B$.",
+        "status": "covered",
+        "gen_key": "grade12_math_analytical_geometry_circles",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "5.2",
+        "topic": "Determine the length of chord $AB$.",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 2",
+        "weeks": "5.3",
+        "topic": "Determine the co-ordinates of $M$, the midpoint of $AB$.",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 2",
+        "weeks": "5.4",
+        "topic": "Show that $OM \\perp AB$, where $O$ is the origin.",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 2",
+        "weeks": "5.5",
+        "topic": "Determine the equations of the tangents to the circle at the points $A$ and $B$.",
+        "status": "covered",
+        "gen_key": "grade12_math_analytical_geometry_circles",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "5.6",
+        "topic": "Determine the co-ordinates of the point $C$ where the two tangents in 5.5 intersect.",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 2",
+        "weeks": "5.7",
+        "topic": "Verify that $CA = CB$.",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 2",
+        "weeks": "5.8",
+        "topic": "Determine the equations of the two tangents to the circle, both parallel to the line with the equation $y = -2x + 4$.",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 3",
+        "weeks": "No. of Weeks",
+        "topic": "Topic",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**2**",
+        "topic": "**Euclidean Geometry**",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**1**",
+        "topic": "**Statistics (Regression & Correlation)**",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 3",
+        "weeks": "No. of Weeks",
+        "topic": "Topic",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**2**",
+        "topic": "Counting and probability",
+        "status": "covered",
+        "gen_key": "grade12_math_counting_probability",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**3**",
+        "topic": "Examinations / Revision",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 4",
+        "weeks": "No of Weeks",
+        "topic": "Topic",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 4",
+        "weeks": "6",
+        "topic": "Examinations",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      }
+    ]
+  },
+  "Mathematics_Gr7": {
+    "subject": "Mathematics",
+    "grade": "7",
+    "total_atp_items": 3,
+    "items": [
+      {
+        "term": "Term 1",
+        "weeks": "**1.1 Whole numbers**",
+        "topic": "**Calculations with whole numbers**",
+        "status": "covered",
+        "gen_key": "grade7_math_whole_numbers",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "\u2022 Perform calculations involving all four operations using numbers in exponential form, limited to exponents up to 5, and square and cube roots.",
+        "topic": "**Examples:** <br> a) $(7 - 4)^3 = 3^3$ **AND NOT** $7^3 - 4^3$ <br> b) $\\sqrt{16 + 9} = \\sqrt{25}$, **AND NOT** $\\sqrt{16} + \\sqrt{9}$",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**Geometry of 3D objects**",
+        "topic": "3.2 Geometry of 3D objects",
+        "status": "covered",
+        "gen_key": "grade7_math_geometric_nets_3d",
+        "issue": null
+      }
+    ]
+  },
+  "Mathematics_Gr8": {
+    "subject": "Mathematics",
+    "grade": "8",
+    "total_atp_items": 8,
+    "items": [
+      {
+        "term": "Term 1",
+        "weeks": "**1.2 Exponents**",
+        "topic": "**Common Misconceptions to Address:**",
+        "status": "proxy",
+        "gen_key": "grade10_math_algebraic_expressions",
+        "issue": "Borrowed from Grade 10 (grade10_math_algebraic_expressions)"
+      },
+      {
+        "term": "Term 1",
+        "weeks": "$1$",
+        "topic": "$2(1) + 1$",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 1",
+        "weeks": "$2$",
+        "topic": "$2(2) + 1$",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 1",
+        "weeks": "$3$",
+        "topic": "$2(3) + 1$",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**1.5 Decimal Fractions**",
+        "topic": "6 hours",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**Geometry (2D)**",
+        "topic": "**4.1 Area and Perimeter of 2D shapes**",
+        "status": "covered",
+        "gen_key": "grade8_math_area_and_perimeter_of_2d_shapes",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "**2.5 Graphs**",
+        "topic": "9 Hours",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 4",
+        "weeks": "Geometry of 3D objects",
+        "topic": "3.2 Geometry of 3D objects",
+        "status": "covered",
+        "gen_key": "grade8_math_geometric_nets_3d",
+        "issue": null
+      }
+    ]
+  },
+  "Mathematics_Gr9": {
+    "subject": "Mathematics",
+    "grade": "9",
+    "total_atp_items": 7,
+    "items": [
+      {
+        "term": "Term 1",
+        "weeks": "1.4 Common fractions",
+        "topic": "4.5 hours",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 3",
+        "weeks": "$y = 4$ and $x = 4$",
+        "topic": "Constant/Vertical lines",
+        "status": "covered",
+        "gen_key": "grade9_math_geometry_of_straight_lines",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "$y = 2x$ and $y = 2x + 1$",
+        "topic": "Parallel lines with different intercepts",
+        "status": "covered",
+        "gen_key": "grade9_math_geometry_of_straight_lines",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "$y = 3x$ and $y = 4x$ and $y = 5x$",
+        "topic": "Varying gradients",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 3",
+        "weeks": "$y = -3x + 2$",
+        "topic": "Negative gradient with intercept",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      },
+      {
+        "term": "Term 4",
+        "weeks": "Geometry of 3D objects",
+        "topic": "3.2 Geometry of 3D objects",
+        "status": "covered",
+        "gen_key": "grade9_math_geometric_nets_3d",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "1st birth",
+        "topic": "2nd birth (Boy)",
+        "status": "missing",
+        "gen_key": "",
+        "issue": "No generator registered"
+      }
+    ]
+  },
+  "NaturalSciences_Gr7": {
+    "subject": "NaturalSciences",
+    "grade": "7",
+    "total_atp_items": 17,
+    "items": [
+      {
+        "term": "Term 1",
+        "weeks": "**1 week**",
+        "topic": "**The biosphere**",
+        "status": "covered",
+        "gen_key": "natural_sciences_chemical_reactions",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**3 \u00bd weeks**",
+        "topic": "**Biodiversity**",
+        "status": "covered",
+        "gen_key": "natural_sciences_chemical_reactions",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "3 \u00bd weeks",
+        "topic": "Sexual reproduction in Angiosperms",
+        "status": "covered",
+        "gen_key": "natural_sciences_chemical_reactions",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "1 week",
+        "topic": "Variation",
+        "status": "covered",
+        "gen_key": "natural_sciences_chemical_reactions",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**2 Weeks**",
+        "topic": "**Properties of materials**",
+        "status": "covered",
+        "gen_key": "natural_sciences_chemical_reactions",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**2 Weeks**",
+        "topic": "**Separating mixtures**",
+        "status": "covered",
+        "gen_key": "natural_sciences_chemical_reactions",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "2 weeks",
+        "topic": "**Acids, bases and neutrals**",
+        "status": "covered",
+        "gen_key": "natural_sciences_chemical_reactions",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "2 Weeks",
+        "topic": "Introduction to the Periodic Table of Elements",
+        "status": "covered",
+        "gen_key": "natural_sciences_chemical_reactions",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**1 Week**",
+        "topic": "Sources of energy",
+        "status": "covered",
+        "gen_key": "natural_sciences_chemical_reactions",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**2 Weeks**",
+        "topic": "Potential and Kinetic Energy",
+        "status": "covered",
+        "gen_key": "natural_sciences_chemical_reactions",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**2 Weeks**",
+        "topic": "**Heat Transfer**",
+        "status": "covered",
+        "gen_key": "natural_sciences_chemical_reactions",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**2 Weeks**",
+        "topic": "**Insulation and Energy Saving**",
+        "status": "covered",
+        "gen_key": "natural_sciences_chemical_reactions",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**1 Week**",
+        "topic": "Energy transfer to surroundings",
+        "status": "covered",
+        "gen_key": "natural_sciences_chemical_reactions",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**1 Week**",
+        "topic": "The national electricity supply system",
+        "status": "covered",
+        "gen_key": "natural_sciences_electric_circuits",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "4 Weeks",
+        "topic": "Planet Earth and Beyond",
+        "status": "covered",
+        "gen_key": "natural_sciences_senior_phase_astronomy",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "**2 Weeks**",
+        "topic": "Relationship of the Moon to the Earth",
+        "status": "covered",
+        "gen_key": "natural_sciences_senior_phase_astronomy",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "2 Weeks",
+        "topic": "Historical development of astronomy",
+        "status": "covered",
+        "gen_key": "natural_sciences_senior_phase_astronomy",
+        "issue": null
+      }
+    ]
+  },
+  "NaturalSciences_Gr8": {
+    "subject": "NaturalSciences",
+    "grade": "8",
+    "total_atp_items": 13,
+    "items": [
+      {
+        "term": "Term 1",
+        "weeks": "2 Weeks",
+        "topic": "Photosynthesis and Respiration",
+        "status": "covered",
+        "gen_key": "natural_sciences_chemical_reactions",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**5 Weeks**",
+        "topic": "**Interactions and interdependence within the environment**",
+        "status": "covered",
+        "gen_key": "natural_sciences_chemical_reactions",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**2 Weeks**",
+        "topic": "**Micro-organisms**",
+        "status": "covered",
+        "gen_key": "natural_sciences_chemical_reactions",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "2",
+        "topic": "Matter and Materials",
+        "status": "covered",
+        "gen_key": "natural_sciences_chemical_reactions",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**Electrolysis of $CuCl_2$**",
+        "topic": "Using electrodes and a power source (3\u20139V) to decompose Copper(II) chloride into Copper ($Cu$) and Chlorine ($Cl_2$).",
+        "status": "covered",
+        "gen_key": "natural_sciences_chemical_reactions",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "5 Weeks",
+        "topic": "Particle model of matter",
+        "status": "covered",
+        "gen_key": "natural_sciences_chemical_reactions",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "1 week",
+        "topic": "Chemical reactions",
+        "status": "covered",
+        "gen_key": "natural_sciences_chemical_reactions",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**1 week**",
+        "topic": "Static electricity",
+        "status": "covered",
+        "gen_key": "natural_sciences_electric_circuits",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**3 weeks**",
+        "topic": "Energy transfer in electrical systems",
+        "status": "covered",
+        "gen_key": "natural_sciences_electric_circuits",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**2 weeks**",
+        "topic": "**Series and parallel circuits**",
+        "status": "covered",
+        "gen_key": "natural_sciences_electric_circuits",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**3 weeks**",
+        "topic": "**Visible light**",
+        "status": "covered",
+        "gen_key": "natural_sciences_chemical_reactions",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "3 weeks",
+        "topic": "The Solar System",
+        "status": "covered",
+        "gen_key": "natural_sciences_senior_phase_astronomy",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**2 Weeks**",
+        "topic": "**Looking into space**",
+        "status": "covered",
+        "gen_key": "natural_sciences_senior_phase_astronomy",
+        "issue": null
+      }
+    ]
+  },
+  "NaturalSciences_Gr9": {
+    "subject": "NaturalSciences",
+    "grade": "9",
+    "total_atp_items": 26,
+    "items": [
+      {
+        "term": "Term 1",
+        "weeks": "2 Weeks",
+        "topic": "Cells as the basic units of life",
+        "status": "covered",
+        "gen_key": "natural_sciences_electric_circuits",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**2 weeks**",
+        "topic": "Systems in the human body",
+        "status": "covered",
+        "gen_key": "natural_sciences_chemical_reactions",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "2 Weeks",
+        "topic": "Human Reproduction",
+        "status": "covered",
+        "gen_key": "natural_sciences_chemical_reactions",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**1 \u00bd weeks**",
+        "topic": "**Circulatory and respiratory systems**",
+        "status": "covered",
+        "gen_key": "natural_sciences_chemical_reactions",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**1 \u00bd weeks**",
+        "topic": "**Digestive system**",
+        "status": "covered",
+        "gen_key": "natural_sciences_chemical_reactions",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "1 Week",
+        "topic": "Compounds",
+        "status": "covered",
+        "gen_key": "natural_sciences_chemical_reactions",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "1 Week",
+        "topic": "Chemical Reactions",
+        "status": "covered",
+        "gen_key": "natural_sciences_chemical_reactions",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "1 \u00bd weeks",
+        "topic": "Reactions of metals with oxygen",
+        "status": "covered",
+        "gen_key": "natural_sciences_chemical_reactions",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "1 Week",
+        "topic": "Reactions of non-metals with oxygen",
+        "status": "covered",
+        "gen_key": "natural_sciences_chemical_reactions",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "1 week",
+        "topic": "Acids & bases, and pH value",
+        "status": "covered",
+        "gen_key": "natural_sciences_chemical_reactions",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "\u00bd week",
+        "topic": "Reactions of acids with bases: Part I",
+        "status": "covered",
+        "gen_key": "natural_sciences_chemical_reactions",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "1 Week",
+        "topic": "Reactions of acids with bases: Part II",
+        "status": "covered",
+        "gen_key": "natural_sciences_chemical_reactions",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "\u00bd week",
+        "topic": "Reactions of acids with bases: Part III",
+        "status": "covered",
+        "gen_key": "natural_sciences_chemical_reactions",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "\u00bd week",
+        "topic": "Reactions of acids with metals",
+        "status": "covered",
+        "gen_key": "natural_sciences_chemical_reactions",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**2 Weeks**",
+        "topic": "**Forces**",
+        "status": "covered",
+        "gen_key": "natural_sciences_chemical_reactions",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**\u00bd week**",
+        "topic": "Electric cells as energy systems",
+        "status": "covered",
+        "gen_key": "natural_sciences_electric_circuits",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**1 week**",
+        "topic": "Resistance",
+        "status": "covered",
+        "gen_key": "natural_sciences_chemical_reactions",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**2 weeks**",
+        "topic": "Series and parallel circuits",
+        "status": "covered",
+        "gen_key": "natural_sciences_electric_circuits",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**\u00bd week**",
+        "topic": "**Safety with electricity**",
+        "status": "covered",
+        "gen_key": "natural_sciences_electric_circuits",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**1 week**",
+        "topic": "**Energy and the national electricity grid**",
+        "status": "covered",
+        "gen_key": "natural_sciences_electric_circuits",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "2 Weeks",
+        "topic": "Energy and the national electricity grid (continued) & Cost of electrical power",
+        "status": "covered",
+        "gen_key": "natural_sciences_electric_circuits",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "**1 week**",
+        "topic": "The Earth as a system",
+        "status": "covered",
+        "gen_key": "natural_sciences_senior_phase_astronomy",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "**2 weeks**",
+        "topic": "Lithosphere",
+        "status": "covered",
+        "gen_key": "natural_sciences_chemical_reactions",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "**2 weeks**",
+        "topic": "**Mining of mineral resources**",
+        "status": "covered",
+        "gen_key": "natural_sciences_chemical_reactions",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "**2 weeks**",
+        "topic": "**Atmosphere**",
+        "status": "covered",
+        "gen_key": "natural_sciences_chemical_reactions",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "1 week",
+        "topic": "Birth, life and death of stars",
+        "status": "covered",
+        "gen_key": "natural_sciences_senior_phase_astronomy",
+        "issue": null
+      }
+    ]
+  },
+  "PhysicalSciences_Gr10": {
+    "subject": "PhysicalSciences",
+    "grade": "10",
+    "total_atp_items": 78,
+    "items": [
+      {
+        "term": "Term 1",
+        "weeks": "**2 Hours**",
+        "topic": "Revise Matter & Classification (from Grade 9)",
+        "status": "covered",
+        "gen_key": "grade10_physical_sciences_matter_materials",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "0.25 Hour",
+        "topic": "Mixtures: heterogeneous and homogeneous",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "0.25 Hour",
+        "topic": "Pure substances: elements and compounds",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "0.25 hour",
+        "topic": "Names and formulae of substances",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "0.25 hour",
+        "topic": "Metals, metalloids and non-metals",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "0.25 hours",
+        "topic": "Electrical conductors, semiconductors and insulators",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "0.25 hours",
+        "topic": "Thermal conductors and insulators",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**0.25 hours**",
+        "topic": "Magnetic and nonmagnetic materials",
+        "status": "covered",
+        "gen_key": "grade10_physical_sciences_matter_materials",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**2 hours**",
+        "topic": "States of Matter and the Kinetic Molecular Theory",
+        "status": "covered",
+        "gen_key": "grade10_physical_sciences_matter_materials",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**1 hour**",
+        "topic": "Three states of matter",
+        "status": "covered",
+        "gen_key": "grade10_physical_sciences_matter_materials",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**1 hour**",
+        "topic": "Kinetic Molecular Theory",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**0.5 hour**",
+        "topic": "Atomic mass and diameter",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**1 hour**",
+        "topic": "Structure of the atom",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**1 hour**",
+        "topic": "**Isotope**",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**1 hour**",
+        "topic": "**Electron configuration**",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**4 hours**",
+        "topic": "**Periodic Table**",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "2 Hours",
+        "topic": "The position of the elements in the periodic table related to their electronic arrangements",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "2 Hours",
+        "topic": "Similarities in chemical properties among elements in Groups 1, 2, 17 and 18",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**2 Hours**",
+        "topic": "Pulse, amplitude",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**2 Hours**",
+        "topic": "Superposition of Pulses",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**2 HOURS**",
+        "topic": "**Transverse waves**",
+        "status": "covered",
+        "gen_key": "grade10_physical_sciences_waves_sound_light",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**2 HOURS**",
+        "topic": "**Longitudinal waves**",
+        "status": "covered",
+        "gen_key": "grade10_physical_sciences_waves_sound_light",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**1 Hour**",
+        "topic": "Wavelength, frequency, amplitude, period, wave speed",
+        "status": "covered",
+        "gen_key": "grade10_physical_sciences_waves_sound_light",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**2 Hours**",
+        "topic": "Sound waves",
+        "status": "covered",
+        "gen_key": "grade10_physical_sciences_waves_sound_light",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**1 hour**",
+        "topic": "Pitch, loudness, quality (tone)",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**1 hour**",
+        "topic": "Ultrasound",
+        "status": "covered",
+        "gen_key": "grade10_physical_sciences_waves_sound_light",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**0.5 hour**",
+        "topic": "Electromagnetic Radiation",
+        "status": "covered",
+        "gen_key": "grade10_physical_sciences_waves_sound_light",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "1 hour",
+        "topic": "Nature of EM radiation",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "1 hour",
+        "topic": "EM spectrum",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**1 hour**",
+        "topic": "Nature of EM as particle - energy of a photon related to frequency and wavelength",
+        "status": "covered",
+        "gen_key": "grade10_physical_sciences_waves_sound_light",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**0.5 hour**",
+        "topic": "Waves, legends and folklores",
+        "status": "covered",
+        "gen_key": "grade10_physical_sciences_waves_sound_light",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**8 Hours**",
+        "topic": "**Particles substances are made of**",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**Experiment 1**",
+        "topic": "Identify elements and compounds in reactions.",
+        "status": "covered",
+        "gen_key": "natural_sciences_chemical_reactions",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**Experiment 2**",
+        "topic": "Electrolysis of water (with sodium sulphate).",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**Demonstration 1**",
+        "topic": "Visual representation of atoms, elements, and compounds.",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**Demonstration 2**",
+        "topic": "Chemical bonding demonstration.",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "8 hours",
+        "topic": "Matter and Materials (Atomic Combinations)",
+        "status": "covered",
+        "gen_key": "grade10_physical_sciences_matter_materials",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**4 HOURS**",
+        "topic": "**Physical and Chemical Change**",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "1 Hour",
+        "topic": "Conservation of atoms and mass",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**4 Hours**",
+        "topic": "Law of constant composition",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**4 Hours**",
+        "topic": "Representing chemical change",
+        "status": "covered",
+        "gen_key": "natural_sciences_chemical_reactions",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "0.5 Hour",
+        "topic": "Magnetic field of permanent magnets",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "1 Hour",
+        "topic": "Poles of permanent magnets, attraction and repulsion, magnetic field lines",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "0.5 hour",
+        "topic": "Earth's magnetic field, compass",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "1 hour",
+        "topic": "Charge conservation",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "1 hour",
+        "topic": "Charge quantization",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**0.5 Hour**",
+        "topic": "Electrostatics",
+        "status": "covered",
+        "gen_key": "physical_sciences_electrostatics",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**1 Hour**",
+        "topic": "Electric Circuits",
+        "status": "covered",
+        "gen_key": "natural_sciences_electric_circuits",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "1 hour",
+        "topic": "Current",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "1 hour",
+        "topic": "Measurement of voltage (pd) and current",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**1 hour**",
+        "topic": "Resistance",
+        "status": "covered",
+        "gen_key": "natural_sciences_electric_circuits",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**2 hours**",
+        "topic": "Resistors in series",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "2 hours",
+        "topic": "Resistors in parallel",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**TERM 2**",
+        "topic": "1. Experiment (Physics): Prescribed Physics experiments Part 1 and Part 2: Electric circuits with resistors in series and parallel measuring potential difference and current.<br>2. Midyear Examinations",
+        "status": "covered",
+        "gen_key": "natural_sciences_electric_circuits",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "8 Hours",
+        "topic": "Reactions in aqueous solution",
+        "status": "covered",
+        "gen_key": "natural_sciences_chemical_reactions",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "1 Hour",
+        "topic": "Electrolytes and extent of ionization as measured by conductivity",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "3 hours",
+        "topic": "Precipitation reactions",
+        "status": "covered",
+        "gen_key": "natural_sciences_chemical_reactions",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**Experiment 1**",
+        "topic": "Qualitative analysis tests for cations and anions (chlorides, bromides, iodides, sulphates, carbonates).",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**Experiment 2**",
+        "topic": "Preparation of a salt (e.g., $CuCO_3$) from its soluble reagents.",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**8 Hours**",
+        "topic": "Quantitative aspects of chemical change",
+        "status": "covered",
+        "gen_key": "physical_sciences_chemistry_equilibrium",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**1 Hour**",
+        "topic": "Sub-topic: The Mole",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**2 hours**",
+        "topic": "Molecular and formula masses",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**2 hours**",
+        "topic": "Determining the composition of substances",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**1 hour**",
+        "topic": "Amount of substance (mole), molar volume of gases, concentration of solutions",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "4 Hours",
+        "topic": "Introduction to vectors & scalars",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "4 hours",
+        "topic": "Vectors and scalars",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**8 Hours Total**",
+        "topic": "**Motion in one dimension**",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "3 Hours (Segment)",
+        "topic": "Reference frame, position, displacement, and distance",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "5 Hours",
+        "topic": "Average speed, average velocity, acceleration",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**2 Hours**",
+        "topic": "Instantaneous velocity and instantaneous speed",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**6 Hours**",
+        "topic": "Description of motion in words, graphs, and equations",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**Formal Assessment 1**",
+        "topic": "Physics Project OR Chemistry Project",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**Formal Assessment 2**",
+        "topic": "Control Test",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "**1.5 hours**",
+        "topic": "Gravitational potential energy",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "**1.5 hours**",
+        "topic": "Kinetic energy",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "**1 hour**",
+        "topic": "Mechanical energy ($E_M$)",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "4 hours",
+        "topic": "Conservation of mechanical energy (in the absence of dissipative forces)",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "**8 Hours**",
+        "topic": "**The Hydrosphere**",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      }
+    ]
+  },
+  "PhysicalSciences_Gr11": {
+    "subject": "PhysicalSciences",
+    "grade": "11",
+    "total_atp_items": 54,
+    "items": [
+      {
+        "term": "Term 1",
+        "weeks": "**2 Hours**",
+        "topic": "Resultant of perpendicular vectors",
+        "status": "covered",
+        "gen_key": "grade11_physical_sciences_vectors_newton",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**2 Hours**",
+        "topic": "Resolution of a vector into horizontal and vertical components",
+        "status": "covered",
+        "gen_key": "grade11_physical_sciences_vectors_newton",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "3 Hours",
+        "topic": "Force diagrams, free-body diagrams",
+        "status": "covered",
+        "gen_key": "grade11_physical_sciences_vectors_newton",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**11 Hours**",
+        "topic": "Newton\u2019s First, Second, and Third Laws",
+        "status": "covered",
+        "gen_key": "grade11_physical_sciences_vectors_newton",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**Level 1: Knowledge**",
+        "topic": "Recall of definitions (Newton's Third Law).",
+        "status": "covered",
+        "gen_key": "grade11_physical_sciences_vectors_newton",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**Level 2: Routine Procedures**",
+        "topic": "Simple calculations using $F_{net} = ma$.",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**Level 3: Complex Procedures**",
+        "topic": "Multi-step problems involving friction and inclined planes.",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**Level 4: Problem Solving**",
+        "topic": "Non-routine application of laws to complex scenarios.",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "4 Hours",
+        "topic": "Newton's Law of Universal Gravitation",
+        "status": "covered",
+        "gen_key": "grade11_physical_sciences_vectors_newton",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**6 Hours**",
+        "topic": "**Atomic combinations: molecular structure**",
+        "status": "covered",
+        "gen_key": "grade11_physical_sciences_chemistry",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**Activity 1**",
+        "topic": "Build molecular models with identical atoms to observe non-polar characteristics.",
+        "status": "covered",
+        "gen_key": "grade11_physical_sciences_chemistry",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**Activity 2**",
+        "topic": "Build molecular models with different atoms to observe bond polarity and molecular polarity.",
+        "status": "covered",
+        "gen_key": "grade11_physical_sciences_chemistry",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "1 hour",
+        "topic": "**Bond energy and length**",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "10 hours",
+        "topic": "**Intermolecular forces**",
+        "status": "covered",
+        "gen_key": "grade11_physical_sciences_chemistry",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**6 Hours**",
+        "topic": "Intermolecular and interatomic forces (chemical bonds)",
+        "status": "covered",
+        "gen_key": "grade11_physical_sciences_chemistry",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**Activity 1**",
+        "topic": "Read labels of machine oils/motor oils (e.g., 15W40 vs SAE 30).",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**Activity 2**",
+        "topic": "Observe liquid levels in a measuring cylinder (meniscus).",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**Activity 3**",
+        "topic": "Consider heat conductivity in copper vs. graphite.",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**Intermolecular Force Trends:** Illustrate that intermolecular forces increase with increasing molecular size. Examples: $\\text{He}$, $\\text{O}_2$, $\\text{C}_8\\text{H}_{18}$ (petrol), $\\text{C}_{23}\\text{H}_{48}$ (wax). (Only for van der Waals forces).",
+        "topic": "Example $\\text{I-Cl}$: Iodine is less electronegative than chlorine and therefore iodine has a partial positive charge and chlorine a partial negative charge. $\\text{I-Cl}$ will have a higher boiling point than either $\\text{I}_2$ or $\\text{Cl}_2$.",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "4 Hours",
+        "topic": "The chemistry of water",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**(1) Model Building:** Build $H_2O$ molecules using marbles/prestik or Jelly Tots/toothpicks or atomic model kits.",
+        "topic": "PHET simulation of phase changes (where available).",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**(2) Structural Analysis:** Build models of ice, liquid water, and water vapour.",
+        "topic": "PHET simulation of phase changes (where available).",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**(3) Thermal Measurement:** Measure heating and cooling curves of water.",
+        "topic": "PHET simulation of phase changes (where available).",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**TERM 1**",
+        "topic": "N/A",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "2",
+        "topic": "Geometrical Optics (Refraction)",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "2",
+        "topic": "Refraction (Specific sub-topic)",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**4 hours**",
+        "topic": "Snell's Law",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**3 hours**",
+        "topic": "Critical angles & Total internal reflection",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**2D and 3D Wavefronts: Diffraction**",
+        "topic": "3 Hours",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "8 Hours",
+        "topic": "Ideal gases and thermal properties",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "1 hour",
+        "topic": "Temperature and heating, pressure",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**12 Hours**",
+        "topic": "Quantitative aspects of chemical change",
+        "status": "covered",
+        "gen_key": "physical_sciences_chemistry_equilibrium",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "3 hours",
+        "topic": "Volume relationships in gaseous reactions",
+        "status": "covered",
+        "gen_key": "natural_sciences_chemical_reactions",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**TERM 2**",
+        "topic": "1. Experiment (Chemistry): The effects of intermolecular forces.",
+        "status": "covered",
+        "gen_key": "grade11_physical_sciences_chemistry",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**Term 3**",
+        "topic": "Electrostatics: Coulomb's Law",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**6 Hours**",
+        "topic": "Electromagnetism",
+        "status": "covered",
+        "gen_key": "physical_sciences_electromagnetism",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "3 Hours",
+        "topic": "Faraday's Law",
+        "status": "covered",
+        "gen_key": "physical_sciences_electromagnetism",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**8 Hours**",
+        "topic": "**Electromagnetism**",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**4 Hours**",
+        "topic": "**Electric Circuits (Ohm's Law)**",
+        "status": "covered",
+        "gen_key": "natural_sciences_electric_circuits",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "4 Hours",
+        "topic": "Power, Energy",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**1 hour**",
+        "topic": "Activation energy",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**12 HOURS**",
+        "topic": "Types of reaction",
+        "status": "covered",
+        "gen_key": "natural_sciences_chemical_reactions",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**6 hours**",
+        "topic": "Acid-base",
+        "status": "covered",
+        "gen_key": "natural_sciences_chemical_reactions",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**6 hours**",
+        "topic": "Acid-base",
+        "status": "covered",
+        "gen_key": "natural_sciences_chemical_reactions",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "5 Hours",
+        "topic": "Redox Reactions",
+        "status": "covered",
+        "gen_key": "natural_sciences_chemical_reactions",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "1 Hour",
+        "topic": "Oxidation number of atoms in molecules to explain their relative \"richness\" in electrons",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "**8 Hours**",
+        "topic": "**Exploiting the lithosphere or earth's crust**",
+        "status": "covered",
+        "gen_key": "grade11_physical_sciences_chemistry",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "**8 Hours**",
+        "topic": "The Lithosphere: Distribution of elements, mining, and recovery of precious materials.",
+        "status": "covered",
+        "gen_key": "grade11_physical_sciences_chemistry",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "**Experiment (6)**",
+        "topic": "How can we use Oxy-cleaners to produce oxygen?",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "**Experiment (7)**",
+        "topic": "How can we use Oxy-cleaners to get a metal from its ore?",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "**Discussion (8)**",
+        "topic": "Participate in decision-making exercises/discussions on the conservation of natural resources.",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "8 hours",
+        "topic": "Mining and Environmental Impact",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "**Term 4**",
+        "topic": "Formal Assessment",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "**Term 4**",
+        "topic": "Examination",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      }
+    ]
+  },
+  "PhysicalSciences_Gr12": {
+    "subject": "PhysicalSciences",
+    "grade": "12",
+    "total_atp_items": 54,
+    "items": [
+      {
+        "term": "Term 1",
+        "weeks": "4 Hours",
+        "topic": "Skills needed for practical investigations (observation, precautions, data collection, data handling, tables, general types of graphs, analysis, writing a hypothesis, identifying variables, independent, dependent and control variable).",
+        "status": "covered",
+        "gen_key": "grade12_physical_sciences_vertical_projectile",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "(1) Analyse components of a properly designed scientific investigation.",
+        "topic": "Historical development should include the study of contributors (e.g., atomic theory/balanced equations).",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "(2) Choose an experiment and determine appropriate tools for data collection.",
+        "topic": "Skills for practical investigations should be discussed and practiced as a class at regular intervals throughout the year.",
+        "status": "covered",
+        "gen_key": "grade12_physical_sciences_vertical_projectile",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "(3) Defend a conclusion based on scientific evidence.",
+        "topic": "Support material that develops these skills should be used.",
+        "status": "covered",
+        "gen_key": "grade12_physical_sciences_vertical_projectile",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**2 hours**",
+        "topic": "Momentum",
+        "status": "covered",
+        "gen_key": "grade12_physical_sciences_momentum",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**2 hours**",
+        "topic": "Newton's Second Law in terms of momentum",
+        "status": "covered",
+        "gen_key": "grade12_physical_sciences_momentum",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "5 Hours",
+        "topic": "Conservation of Momentum and Elastic and Inelastic Collisions",
+        "status": "covered",
+        "gen_key": "grade12_physical_sciences_momentum",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**Vertical Projectile Motion in One Dimension (1D)**",
+        "topic": "5 Hours",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**12 Hours**",
+        "topic": "**Organic Molecules**",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "1. Reactions of alkanes and alkenes with bromine water and potassium permanganate to indicate saturated/unsaturated molecules.",
+        "topic": "3. Compare physical properties (melting point, boiling point, vapour pressure) of propane, butane, pentane, ethanol, propan-1-ol, and butan-1-ol using models.",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "2. Prepare alkynes and investigate reactions with bromine water and potassium permanganate.",
+        "topic": "4. Search and present information on the principles and applications of the alcohol breathalyser (optional).",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "3 Hours",
+        "topic": "IUPAC Naming and Formulae",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**3 hours**",
+        "topic": "Nomenclature & Structure",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**1 hour**",
+        "topic": "Structure-Property Relationships",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**Formal (Paper 2)**",
+        "topic": "Organic Chemistry (Structure, Properties, Reactions)",
+        "status": "covered",
+        "gen_key": "natural_sciences_chemical_reactions",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "1 Hour",
+        "topic": "Applications of Organic Chemistry",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "3 Hours",
+        "topic": "Substitution, Addition, and Elimination Reactions",
+        "status": "covered",
+        "gen_key": "natural_sciences_chemical_reactions",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "3 hours",
+        "topic": "Addition Reactions",
+        "status": "covered",
+        "gen_key": "natural_sciences_chemical_reactions",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "3 hours",
+        "topic": "Organic Chemistry: Elimination Reactions",
+        "status": "covered",
+        "gen_key": "natural_sciences_chemical_reactions",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**Term 1**",
+        "topic": "Polymers",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**Term 1**",
+        "topic": "Formal Assessment",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**Term 1**",
+        "topic": "Formal Assessment",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**10 Hours**",
+        "topic": "Work, Energy & Power",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "2 Hours",
+        "topic": "Work-Energy Theorem",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "3 Hours",
+        "topic": "Conservation of energy with non-conservative forces present",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "3 Hours",
+        "topic": "Power",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**6 Hours**",
+        "topic": "**Doppler Effect** (relative motion between source and observer)",
+        "status": "covered",
+        "gen_key": "grade12_physical_sciences_doppler_effect",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "2 hours",
+        "topic": "With light - red shifts in the universe (evidence for the expanding universe)",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**2 Hours**",
+        "topic": "Rates of reaction and factors affecting rate",
+        "status": "covered",
+        "gen_key": "natural_sciences_chemical_reactions",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**1 Hour**",
+        "topic": "Measuring rates of reaction",
+        "status": "covered",
+        "gen_key": "natural_sciences_chemical_reactions",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "1 hour",
+        "topic": "Mechanism of reaction and catalysis",
+        "status": "covered",
+        "gen_key": "natural_sciences_chemical_reactions",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "2 Hours",
+        "topic": "Application of equilibrium principles",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**Term 3**",
+        "topic": "Electric Circuits: Internal resistance and series-parallel networks",
+        "status": "covered",
+        "gen_key": "natural_sciences_electric_circuits",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**8 Hours**",
+        "topic": "Electrodynamics (Generators and Motors)",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "4 Hours",
+        "topic": "Alternating Current",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "2 hours",
+        "topic": "Emission and absorption spectra",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**Level 1: Knowledge**",
+        "topic": "15%",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**Level 2: Routine Procedures**",
+        "topic": "35%",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**Level 3: Complex Procedures**",
+        "topic": "40%",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**Level 4: Problem Solving**",
+        "topic": "10%",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**8 HOURS**",
+        "topic": "**Electrochemical reactions**",
+        "status": "covered",
+        "gen_key": "natural_sciences_chemical_reactions",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**1**",
+        "topic": "Electrolysis",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**2**",
+        "topic": "Galvanic Cells",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**3**",
+        "topic": "Redox Reactions",
+        "status": "covered",
+        "gen_key": "natural_sciences_chemical_reactions",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "1 hour",
+        "topic": "Relation of current and potential to equilibrium",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**2 hours**",
+        "topic": "Writing of equations representing oxidation and reduction half reactions and redox reactions",
+        "status": "covered",
+        "gen_key": "natural_sciences_chemical_reactions",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**1 hour**",
+        "topic": "Oxidation numbers and application of oxidation numbers",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**Term 3**",
+        "topic": "Chemical Industry (Fertilizers)",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "**2 hours**",
+        "topic": "Mechanics, Electricity and Magnetism, Waves, Sound and Light",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "**2 hours**",
+        "topic": "Mechanics, Electricity and Magnetism, Waves, Sound and Light",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "**2 hours**",
+        "topic": "Organic Chemistry",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "**1 hour**",
+        "topic": "Rate and Equilibrium",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "**1 hour**",
+        "topic": "Acids & Bases and Electrochemistry",
+        "status": "covered",
+        "gen_key": "natural_sciences_chemical_reactions",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "**Term 4**",
+        "topic": "Prescribed Formal Assessment",
+        "status": "covered",
+        "gen_key": "physical_sciences_mechanics",
+        "issue": null
+      }
+    ]
+  },
+  "TechnicalMathematics_Gr10": {
+    "subject": "TechnicalMathematics",
+    "grade": "10",
+    "total_atp_items": 23,
+    "items": [
+      {
+        "term": "Term 1",
+        "weeks": "**2**",
+        "topic": "**Introduction**",
+        "status": "covered",
+        "gen_key": "technical_mathematics_complex_numbers",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**3**",
+        "topic": "**Number systems**",
+        "status": "covered",
+        "gen_key": "technical_mathematics_complex_numbers",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**2**",
+        "topic": "**Exponents**",
+        "status": "covered",
+        "gen_key": "technical_mathematics_complex_numbers",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**1**",
+        "topic": "**Mensuration**",
+        "status": "covered",
+        "gen_key": "technical_mathematics_mensuration",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "3",
+        "topic": "**Algebraic Expressions**",
+        "status": "covered",
+        "gen_key": "technical_mathematics_complex_numbers",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**2**",
+        "topic": "**Algebraic Expressions** (continue)",
+        "status": "covered",
+        "gen_key": "technical_mathematics_complex_numbers",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**3**",
+        "topic": "**Equations and Inequalities**",
+        "status": "covered",
+        "gen_key": "technical_mathematics_complex_numbers",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**Level 1**",
+        "topic": "Knowledge (K)",
+        "status": "covered",
+        "gen_key": "technical_mathematics_complex_numbers",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**Level 2**",
+        "topic": "Routine Procedures (R)",
+        "status": "covered",
+        "gen_key": "technical_mathematics_complex_numbers",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**Level 3**",
+        "topic": "Complex Procedures (C)",
+        "status": "covered",
+        "gen_key": "technical_mathematics_complex_numbers",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**Level 4**",
+        "topic": "Problem Solving (P)",
+        "status": "covered",
+        "gen_key": "technical_mathematics_complex_numbers",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**3**",
+        "topic": "Trigonometry",
+        "status": "covered",
+        "gen_key": "grade10_math_trigonometry",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**3**",
+        "topic": "Mid-year examinations",
+        "status": "covered",
+        "gen_key": "technical_mathematics_complex_numbers",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**1**",
+        "topic": "**Analytical Geometry**",
+        "status": "covered",
+        "gen_key": "technical_mathematics_analytical_geometry",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**3**",
+        "topic": "**Functions and Graphs**",
+        "status": "covered",
+        "gen_key": "grade10_math_functions",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**4**",
+        "topic": "**Euclidean Geometry**",
+        "status": "covered",
+        "gen_key": "technical_mathematics_euclidean_geometry",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**Formal Test 1**",
+        "topic": "Term 3",
+        "status": "covered",
+        "gen_key": "technical_mathematics_complex_numbers",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**Formal Test 2**",
+        "topic": "Term 3",
+        "status": "covered",
+        "gen_key": "technical_mathematics_complex_numbers",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "**1**",
+        "topic": "Analytical Geometry",
+        "status": "covered",
+        "gen_key": "technical_mathematics_analytical_geometry",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "**1**",
+        "topic": "Circles, angles and angular movement",
+        "status": "covered",
+        "gen_key": "technical_mathematics_mensuration",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "2",
+        "topic": "Finance and growth",
+        "status": "covered",
+        "gen_key": "technical_mathematics_complex_numbers",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "**Paper 1**",
+        "topic": "2 Hours",
+        "status": "covered",
+        "gen_key": "technical_mathematics_complex_numbers",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "**Paper 2**",
+        "topic": "2 Hours",
+        "status": "covered",
+        "gen_key": "technical_mathematics_complex_numbers",
+        "issue": null
+      }
+    ]
+  },
+  "TechnicalMathematics_Gr11": {
+    "subject": "TechnicalMathematics",
+    "grade": "11",
+    "total_atp_items": 18,
+    "items": [
+      {
+        "term": "Term 1",
+        "weeks": "**3**",
+        "topic": "**Exponents and surds**",
+        "status": "covered",
+        "gen_key": "technical_mathematics_complex_numbers",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**2**",
+        "topic": "**Logarithms**",
+        "status": "covered",
+        "gen_key": "technical_mathematics_complex_numbers",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**4**",
+        "topic": "**Equations**",
+        "status": "covered",
+        "gen_key": "technical_mathematics_complex_numbers",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**2**",
+        "topic": "**Analytical Geometry**",
+        "status": "covered",
+        "gen_key": "technical_mathematics_analytical_geometry",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "4",
+        "topic": "Functions and Graphs",
+        "status": "covered",
+        "gen_key": "grade11_math_functions",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**4**",
+        "topic": "**Euclidean Geometry**",
+        "status": "covered",
+        "gen_key": "technical_mathematics_euclidean_geometry",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**3**",
+        "topic": "**Mid-year examinations**",
+        "status": "covered",
+        "gen_key": "technical_mathematics_complex_numbers",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**Paper 1**",
+        "topic": "General Algebra",
+        "status": "covered",
+        "gen_key": "technical_mathematics_complex_numbers",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**Paper 2**",
+        "topic": "Analytical Geometry",
+        "status": "covered",
+        "gen_key": "technical_mathematics_analytical_geometry",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "4",
+        "topic": "Circles, angles and angular movement",
+        "status": "covered",
+        "gen_key": "technical_mathematics_mensuration",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**4**",
+        "topic": "**Trigonometry**",
+        "status": "covered",
+        "gen_key": "grade11_math_trigonometry",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**2**",
+        "topic": "Finance, growth and decay",
+        "status": "covered",
+        "gen_key": "technical_mathematics_complex_numbers",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**3**",
+        "topic": "Mid-year examinations",
+        "status": "covered",
+        "gen_key": "technical_mathematics_complex_numbers",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "**3**",
+        "topic": "**Mensuration**",
+        "status": "covered",
+        "gen_key": "technical_mathematics_mensuration",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "**3**",
+        "topic": "**Revision**",
+        "status": "covered",
+        "gen_key": "technical_mathematics_complex_numbers",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "**3**",
+        "topic": "**Examinations**",
+        "status": "covered",
+        "gen_key": "technical_mathematics_complex_numbers",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "**Paper 1**",
+        "topic": "3 Hours",
+        "status": "covered",
+        "gen_key": "technical_mathematics_complex_numbers",
+        "issue": null
+      },
+      {
+        "term": "Term 4",
+        "weeks": "**Paper 2**",
+        "topic": "3 Hours",
+        "status": "covered",
+        "gen_key": "technical_mathematics_complex_numbers",
+        "issue": null
+      }
+    ]
+  },
+  "TechnicalMathematics_Gr12": {
+    "subject": "TechnicalMathematics",
+    "grade": "12",
+    "total_atp_items": 15,
+    "items": [
+      {
+        "term": "Term 1",
+        "weeks": "**3**",
+        "topic": "**Complex Numbers**",
+        "status": "covered",
+        "gen_key": "technical_mathematics_complex_numbers",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**2**",
+        "topic": "**Polynomials**",
+        "status": "covered",
+        "gen_key": "technical_mathematics_complex_numbers",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "6",
+        "topic": "Differential Calculus",
+        "status": "covered",
+        "gen_key": "technical_mathematics_complex_numbers",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**Formal Assessment 1**",
+        "topic": "Test (Minimum 50 marks)",
+        "status": "covered",
+        "gen_key": "technical_mathematics_complex_numbers",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**Formal Assessment 2**",
+        "topic": "Investigation or Project",
+        "status": "covered",
+        "gen_key": "technical_mathematics_complex_numbers",
+        "issue": null
+      },
+      {
+        "term": "Term 1",
+        "weeks": "**Formal Assessment 3**",
+        "topic": "Test (Minimum 50 marks) OR Assignment (Minimum 50 marks)",
+        "status": "covered",
+        "gen_key": "technical_mathematics_complex_numbers",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**3**",
+        "topic": "**Integration**",
+        "status": "covered",
+        "gen_key": "technical_mathematics_mensuration",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**2**",
+        "topic": "**Analytical Geometry**",
+        "status": "covered",
+        "gen_key": "technical_mathematics_analytical_geometry",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**Term 2**",
+        "topic": "**Euclidean Geometry**",
+        "status": "covered",
+        "gen_key": "technical_mathematics_euclidean_geometry",
+        "issue": null
+      },
+      {
+        "term": "Term 2",
+        "weeks": "**Term 2**",
+        "topic": "**Mid-year Examinations**",
+        "status": "covered",
+        "gen_key": "technical_mathematics_complex_numbers",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**2**",
+        "topic": "Euclidean Geometry",
+        "status": "covered",
+        "gen_key": "technical_mathematics_euclidean_geometry",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**3**",
+        "topic": "Trigonometry",
+        "status": "covered",
+        "gen_key": "grade12_math_trigonometry",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**3**",
+        "topic": "Trial Exam",
+        "status": "covered",
+        "gen_key": "technical_mathematics_complex_numbers",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**Paper 1**",
+        "topic": "Algebraic expressions, equations, and inequalities (nature of roots, logs, complex numbers)",
+        "status": "covered",
+        "gen_key": "technical_mathematics_complex_numbers",
+        "issue": null
+      },
+      {
+        "term": "Term 3",
+        "weeks": "**Paper 2**",
+        "topic": "Analytical Geometry",
+        "status": "covered",
+        "gen_key": "technical_mathematics_analytical_geometry",
+        "issue": null
+      }
+    ]
+  }
+}

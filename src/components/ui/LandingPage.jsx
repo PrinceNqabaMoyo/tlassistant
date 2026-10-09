@@ -225,6 +225,7 @@ const LandingPage = ({ onGetStarted, onSignIn, onViewSubscription, onNavigatePri
                             </button>
                             <button
                                 type="button"
+                                data-testid="btn-landing-signin"
                                 onClick={onSignIn}
                                 className="hidden sm:inline-flex rounded-lg border border-white/20 bg-white/10 px-3 py-1.5 text-sm sm:px-5 sm:py-2 sm:text-base font-medium text-white transition-all duration-300 hover:bg-white/20 cursor-pointer"
                             >
@@ -232,6 +233,7 @@ const LandingPage = ({ onGetStarted, onSignIn, onViewSubscription, onNavigatePri
                             </button>
                             <button 
                                 type="button"
+                                data-testid="btn-landing-signup"
                                 onClick={onGetStarted}
                                 className="bg-[#FF9100] hover:bg-[#f58200] text-white px-3 py-1 sm:px-4 sm:py-1.5 rounded-xl shadow-[0_4px_14px_rgba(255,145,0,0.39)] transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer text-center leading-tight flex flex-col items-center justify-center shrink-0 border border-orange-400/30"
                                 title="Start 2-week Free Trial"
@@ -404,6 +406,7 @@ const LandingPage = ({ onGetStarted, onSignIn, onViewSubscription, onNavigatePri
                                     <div className="flex flex-row items-center justify-center gap-2.5 w-full max-w-md px-1 sm:px-0">
                                         <button
                                             type="button"
+                                            data-testid="btn-landing-signup"
                                             onClick={onGetStarted}
                                             className="flex-1 inline-flex items-center justify-center gap-1.5 sm:gap-2 rounded-xl bg-[#FF9100] px-3 py-2.5 sm:px-8 sm:py-3.5 text-xs sm:text-base font-semibold text-white shadow-[0_16px_50px_rgba(255,145,0,0.3)] transition hover:bg-[#f58200] cursor-pointer whitespace-nowrap"
                                         >
