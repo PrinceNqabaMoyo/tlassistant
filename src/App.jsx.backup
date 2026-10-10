@@ -662,7 +662,25 @@ export default function App() {
     },
     [currentUser, activePersona, effectiveRole, effectiveTier]
   );
-  const hasVerifiedAccess = Boolean(effectiveCurrentUser?.isOwner || effectiveCurrentUser?.isSuperAdmin || effectiveCurrentUser?.emailVerified);
+  const isWithin48hGrace = useMemo(() => {
+    if (!effectiveCurrentUser) return false;
+    if (effectiveCurrentUser.emailVerified) return true;
+    const graceTimestamp = effectiveCurrentUser.emailVerificationGraceUntil || effectiveCurrentUser.createdAt;
+    if (!graceTimestamp) return false;
+    const graceDate = graceTimestamp?.toDate ? graceTimestamp.toDate() : new Date(graceTimestamp);
+    if (Number.isNaN(graceDate.getTime())) return false;
+    const cutoff = effectiveCurrentUser.emailVerificationGraceUntil
+      ? graceDate.getTime()
+      : graceDate.getTime() + 48 * 60 * 60 * 1000;
+    return Date.now() < cutoff;
+  }, [effectiveCurrentUser]);
+
+  const hasVerifiedAccess = Boolean(
+    effectiveCurrentUser?.isOwner ||
+    effectiveCurrentUser?.isSuperAdmin ||
+    effectiveCurrentUser?.emailVerified ||
+    isWithin48hGrace
+  );
   const {
     authMode,
     handleNavigateHome,

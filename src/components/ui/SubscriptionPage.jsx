@@ -19,6 +19,18 @@ const SubscriptionPage = ({
     const [isPopUploadRevealed, setIsPopUploadRevealed] = React.useState(false);
     const paymentReference = currentUser?.paymentReference || currentUser?.lastPaymentReference || 'FND-REF';
 
+    const isTrialActive = Boolean(
+        currentUser?.paymentStatus === 'trial_active' ||
+        (currentUser?.subscriptionExpiry && new Date(currentUser.subscriptionExpiry?.toDate ? currentUser.subscriptionExpiry.toDate() : currentUser.subscriptionExpiry) > new Date() && currentUser?.paymentStatus !== 'approved')
+    );
+
+    const trialDaysLeft = React.useMemo(() => {
+        if (!currentUser?.subscriptionExpiry) return 14;
+        const expiry = currentUser.subscriptionExpiry?.toDate ? currentUser.subscriptionExpiry.toDate() : new Date(currentUser.subscriptionExpiry);
+        const diff = expiry.getTime() - Date.now();
+        return Math.max(0, Math.ceil(diff / (1000 * 60 * 60 * 24)));
+    }, [currentUser?.subscriptionExpiry]);
+
     const handleChoosePop = () => {
         setIsPopUploadRevealed(true);
         fileInputRef.current?.click();
@@ -43,16 +55,47 @@ const SubscriptionPage = ({
 
             <main className="mx-auto max-w-7xl px-4 pb-20 pt-24 sm:px-6 lg:px-8">
                 <div className="space-y-6 lg:space-y-8">
+                    {/* Active Free Trial Status Card */}
+                    {isTrialActive && (
+                        <div className="rounded-[28px] border-2 border-emerald-500 bg-gradient-to-r from-emerald-500/10 via-white to-sky-50 p-6 sm:p-8 shadow-lg shadow-emerald-500/10">
+                            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                                <div className="space-y-1.5">
+                                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-extrabold uppercase tracking-wider">
+                                        <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                                        14-Day Free Trial Active • Grade {currentUser?.grade || targetGrade || 10}
+                                    </div>
+                                    <h2 className="text-2xl sm:text-3xl font-bold text-slate-950" style={{ fontFamily: 'Afacad, sans-serif' }}>
+                                        You have {trialDaysLeft} {trialDaysLeft === 1 ? 'day' : 'days'} remaining in your free trial
+                                    </h2>
+                                    <p className="text-sm text-slate-600 max-w-2xl leading-relaxed">
+                                        All your Grade {currentUser?.grade || targetGrade || 10} subjects are fully accessible right now. You can continue practicing freely, or use the banking details below anytime to activate an uninterrupted Term or Annual Pass via EFT.
+                                    </p>
+                                </div>
+                                <button
+                                    type="button"
+                                    onClick={onNavigateApp || onNavigateHome}
+                                    className="inline-flex items-center justify-center gap-2 rounded-2xl bg-[#13519C] hover:bg-[#0f3e77] text-white px-6 py-3.5 text-sm font-bold shadow-md shadow-blue-900/20 transition cursor-pointer shrink-0"
+                                >
+                                    Continue Learning →
+                                </button>
+                            </div>
+                        </div>
+                    )}
+
                     <section className="grid gap-5 xl:grid-cols-[1.15fr_0.9fr_0.9fr] xl:items-stretch">
                         <div className="rounded-[32px] border border-sky-100 bg-white p-8 shadow-[0_24px_80px_rgba(43,123,216,0.10)]">
-                            <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[#2B7BD8]">Subscription</p>
+                            <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[#2B7BD8]">
+                                {isTrialActive ? 'Extend Your Access' : 'Subscription'}
+                            </p>
                             <h1 className="mt-4 text-4xl font-bold tracking-tight text-slate-950 sm:text-5xl" style={{ fontFamily: 'Afacad, sans-serif' }}>
-                                Fundile currently only accepts EFT payments.
+                                {isTrialActive ? 'Activate Permanent Access via EFT.' : 'Fundile currently only accepts EFT payments.'}
                             </h1>
                             <p className="mt-4 text-sm leading-7 text-slate-500">
-                                {currentUser
-                                    ? 'Your account is signed in. Make the EFT, then attach the POP from this page using the paperclip button.'
-                                    : 'Sign in to upload proof of payment in the subscription page. Banking details provided below.'}
+                                {isTrialActive
+                                    ? 'Your trial access is already active. When you make an EFT for a Term or Annual pass, attach your POP below to lock in permanent access.'
+                                    : (currentUser
+                                        ? 'Your account is signed in. Make the EFT, then attach the POP from this page using the paperclip button.'
+                                        : 'Sign in to upload proof of payment in the subscription page. Banking details provided below.')}
                             </p>
                             <p className="mt-5 text-lg leading-8 text-slate-600">
                                 Choose the package that fits your needs, make your EFT payment, and then upload your proof of payment so your subscription request can be linked to your Fundile profile.

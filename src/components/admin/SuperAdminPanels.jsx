@@ -442,16 +442,21 @@ export function CompetitionSetupView({ onBack }) {
  * 4. System Settings View
  */
 export function SystemSettingsView({ onBack }) {
-  const [settings, setSettings] = useState({
+  const [settings, setSettings] = useState(() => ({
     defaultTerm: '1',
     dataSavingMode: true,
     sandboxTimeout: '2.5',
     maintenanceMode: false,
     aiTutorProvider: 'huggingface_gemma',
-  });
+    landingCtaMode: typeof window !== 'undefined' ? (localStorage.getItem('fundile_landing_cta_mode') || 'free_trial') : 'free_trial',
+  }));
   const [savedToast, setSavedToast] = useState(false);
 
   const handleSave = () => {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('fundile_landing_cta_mode', settings.landingCtaMode);
+      window.dispatchEvent(new Event('storage'));
+    }
     setSavedToast(true);
     setTimeout(() => setSavedToast(false), 2500);
   };
@@ -529,6 +534,55 @@ export function SystemSettingsView({ onBack }) {
               />
               <label htmlFor="lowdata" className="text-xs font-semibold text-slate-700 cursor-pointer">
                 Strict &lt; 2 MB data budget per learner session
+              </label>
+            </div>
+          </div>
+
+          <div className="sm:col-span-2 pt-3 border-t border-slate-100">
+            <label className="text-xs font-bold text-slate-800 block mb-1">
+              Public Landing Page Hero CTA Posture (Conversion &amp; Testing Control)
+            </label>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-2">
+              <label className={`flex items-start gap-3 p-3.5 rounded-xl border cursor-pointer transition ${
+                settings.landingCtaMode === 'free_trial'
+                  ? 'border-[#13519C] bg-blue-50/50 shadow-xs'
+                  : 'border-slate-200 bg-slate-50 hover:bg-slate-100'
+              }`}>
+                <input
+                  type="radio"
+                  name="landingCtaMode"
+                  value="free_trial"
+                  checked={settings.landingCtaMode === 'free_trial'}
+                  onChange={(e) => setSettings({ ...settings, landingCtaMode: e.target.value })}
+                  className="mt-0.5 text-[#13519C] focus:ring-[#13519C]"
+                />
+                <div className="text-xs">
+                  <span className="font-bold text-slate-900 block">14-Day Free Trial Campaign (Production Default)</span>
+                  <span className="text-slate-500 block mt-0.5">
+                    Hero CTA displays "Start 2-week free trial". In the sign-up modal, learners default to 14 days free access with Grade-scoped subjects.
+                  </span>
+                </div>
+              </label>
+
+              <label className={`flex items-start gap-3 p-3.5 rounded-xl border cursor-pointer transition ${
+                settings.landingCtaMode === 'direct_auth'
+                  ? 'border-[#13519C] bg-blue-50/50 shadow-xs'
+                  : 'border-slate-200 bg-slate-50 hover:bg-slate-100'
+              }`}>
+                <input
+                  type="radio"
+                  name="landingCtaMode"
+                  value="direct_auth"
+                  checked={settings.landingCtaMode === 'direct_auth'}
+                  onChange={(e) => setSettings({ ...settings, landingCtaMode: e.target.value })}
+                  className="mt-0.5 text-[#13519C] focus:ring-[#13519C]"
+                />
+                <div className="text-xs">
+                  <span className="font-bold text-slate-900 block">Direct Sign Up / Sign In (Mock Test Posture)</span>
+                  <span className="text-slate-500 block mt-0.5">
+                    Hero CTA displays "Create Account" or "Sign In". Ideal for testing direct subscription, EFT upload, and admin approvals without free trial gating.
+                  </span>
+                </div>
               </label>
             </div>
           </div>

@@ -42,6 +42,28 @@ const LandingPage = ({ onGetStarted, onSignIn, onViewSubscription, onNavigatePri
     const [activePerspective, setActivePerspective] = useState('learners');
     const [mobileTickerPerspective, setMobileTickerPerspective] = useState('learners');
 
+    // ── Super Admin Landing CTA Posture Sync ──
+    const [landingCtaMode, setLandingCtaMode] = useState(() => {
+        return typeof window !== 'undefined'
+            ? (localStorage.getItem('fundile_landing_cta_mode') || 'free_trial')
+            : 'free_trial';
+    });
+
+    useEffect(() => {
+        const handleStorageChange = () => {
+            const currentMode = localStorage.getItem('fundile_landing_cta_mode') || 'free_trial';
+            setLandingCtaMode(currentMode);
+        };
+        window.addEventListener('storage', handleStorageChange);
+        return () => window.removeEventListener('storage', handleStorageChange);
+    }, []);
+
+    const isDirectAuthMode = landingCtaMode === 'direct_auth';
+    const primaryCtaLabel = isDirectAuthMode ? 'Create Account' : HERO_COPY.primaryCta;
+    const trialNoteLabel = isDirectAuthMode
+        ? '100% CAPS-aligned • Grades 7–12 full curriculum coverage'
+        : HERO_COPY.trialNote;
+
     // Auto-cycling highlight ticker on mobile viewports every 3.5s
     // INVARIANT: Visual highlight auto-advances, but simulator view below ONLY swaps when a tab is clicked!
     useEffect(() => {
@@ -236,14 +258,22 @@ const LandingPage = ({ onGetStarted, onSignIn, onViewSubscription, onNavigatePri
                                 data-testid="btn-landing-signup"
                                 onClick={onGetStarted}
                                 className="bg-[#FF9100] hover:bg-[#f58200] text-white px-3 py-1 sm:px-4 sm:py-1.5 rounded-xl shadow-[0_4px_14px_rgba(255,145,0,0.39)] transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer text-center leading-tight flex flex-col items-center justify-center shrink-0 border border-orange-400/30"
-                                title="Start 2-week Free Trial"
+                                title={isDirectAuthMode ? "Create Account" : "Start 2-week Free Trial"}
                             >
-                                <span className="text-[11px] sm:text-xs font-semibold text-amber-100 tracking-tight leading-tight">
-                                    Start 2-week
-                                </span>
-                                <span className="text-xs sm:text-sm font-extrabold tracking-tight leading-tight">
-                                    free trial
-                                </span>
+                                {isDirectAuthMode ? (
+                                    <span className="text-xs sm:text-sm font-extrabold tracking-tight">
+                                        Create Account
+                                    </span>
+                                ) : (
+                                    <>
+                                        <span className="text-[11px] sm:text-xs font-semibold text-amber-100 tracking-tight leading-tight">
+                                            Start 2-week
+                                        </span>
+                                        <span className="text-xs sm:text-sm font-extrabold tracking-tight leading-tight">
+                                            free trial
+                                        </span>
+                                    </>
+                                )}
                             </button>
                         </div>
                     </div>
@@ -410,7 +440,7 @@ const LandingPage = ({ onGetStarted, onSignIn, onViewSubscription, onNavigatePri
                                             onClick={onGetStarted}
                                             className="flex-1 inline-flex items-center justify-center gap-1.5 sm:gap-2 rounded-xl bg-[#FF9100] px-3 py-2.5 sm:px-8 sm:py-3.5 text-xs sm:text-base font-semibold text-white shadow-[0_16px_50px_rgba(255,145,0,0.3)] transition hover:bg-[#f58200] cursor-pointer whitespace-nowrap"
                                         >
-                                            <span>{HERO_COPY.primaryCta}</span>
+                                            <span>{primaryCtaLabel}</span>
                                             <ArrowRight className="h-4 w-4 sm:h-4.5 sm:w-4.5" />
                                         </button>
                                         <button
@@ -423,7 +453,7 @@ const LandingPage = ({ onGetStarted, onSignIn, onViewSubscription, onNavigatePri
                                         </button>
                                     </div>
                                     <p className="mt-2 sm:mt-3 text-xs font-medium text-white/60">
-                                        {HERO_COPY.trialNote}
+                                        {trialNoteLabel}
                                     </p>
                                 </div>
                             </div>
@@ -487,7 +517,7 @@ const LandingPage = ({ onGetStarted, onSignIn, onViewSubscription, onNavigatePri
                                         onClick={onGetStarted}
                                         className="w-full sm:w-auto inline-flex items-center justify-center px-8 py-3.5 text-base font-bold text-white bg-[#FF9100] hover:bg-[#e68200] rounded-xl shadow-lg shadow-orange-500/25 transition-all duration-200 transform hover:-translate-y-0.5 cursor-pointer"
                                     >
-                                        <span>Start 2-Week Free Trial</span>
+                                        <span>{primaryCtaLabel}</span>
                                         <ArrowRight className="w-5 h-5 ml-2" />
                                     </button>
                                 </div>
@@ -904,7 +934,7 @@ const LandingPage = ({ onGetStarted, onSignIn, onViewSubscription, onNavigatePri
                                             onClick={onGetStarted}
                                             className="w-full inline-flex items-center justify-center py-3.5 px-4 rounded-xl text-xs font-bold text-[#13519C] bg-blue-50 hover:bg-blue-100 border border-blue-200 transition cursor-pointer"
                                         >
-                                            Start 2-Week Free Trial
+                                            {isDirectAuthMode ? 'Choose Monthly Pass' : 'Start 2-Week Free Trial'}
                                         </button>
                                     </div>
                                 </div>
@@ -959,7 +989,7 @@ const LandingPage = ({ onGetStarted, onSignIn, onViewSubscription, onNavigatePri
                                             onClick={onViewSubscription || onGetStarted}
                                             className="w-full inline-flex items-center justify-center py-3.5 px-4 rounded-xl text-xs font-bold text-white bg-[#FF9100] hover:bg-[#e68200] shadow-md transition cursor-pointer"
                                         >
-                                            Start 2-Week Free Trial
+                                            {isDirectAuthMode ? 'Choose Term Pass' : 'Start 2-Week Free Trial'}
                                         </button>
                                     </div>
                                 </div>
@@ -1005,7 +1035,7 @@ const LandingPage = ({ onGetStarted, onSignIn, onViewSubscription, onNavigatePri
                                             onClick={onViewSubscription || onGetStarted}
                                             className="w-full inline-flex items-center justify-center py-3.5 px-4 rounded-xl text-xs font-bold text-[#13519C] bg-blue-50 hover:bg-blue-100 border border-blue-200 transition cursor-pointer"
                                         >
-                                            Start 2-Week Free Trial
+                                            {isDirectAuthMode ? 'Choose Annual Pass' : 'Start 2-Week Free Trial'}
                                         </button>
                                     </div>
                                 </div>

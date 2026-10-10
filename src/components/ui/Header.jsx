@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from 'react';
-import { Bell, LogOut, X, Smartphone, Users } from 'lucide-react';
+import { Bell, LogOut, X, Smartphone, Users, Mail } from 'lucide-react';
+import { getAuth, sendEmailVerification } from 'firebase/auth';
 import FundileLogo from './FundileLogo';
 import InstallAppModal from './InstallAppModal';
 import UserProfileModal from '../profile/UserProfileModal';
@@ -55,6 +56,33 @@ const Header = ({
   const [showInstallModal, setShowInstallModal] = useState(false);
   const [showProfileModal, setShowProfileModal] = useState(false);
   const [showMessageBoard, setShowMessageBoard] = useState(false);
+  const [resendingEmail, setResendingEmail] = useState(false);
+  const [emailResentSuccess, setEmailResentSuccess] = useState(false);
+  const [isGraceBannerDismissed, setIsGraceBannerDismissed] = useState(false);
+
+  const showVerificationGraceBanner = Boolean(
+    currentUser &&
+    !currentUser.emailVerified &&
+    !currentUser.isSuperAdmin &&
+    !currentUser.isOwner &&
+    !isGraceBannerDismissed
+  );
+
+  const handleResendVerification = async () => {
+    try {
+      setResendingEmail(true);
+      const auth = getAuth();
+      if (auth.currentUser) {
+        await sendEmailVerification(auth.currentUser);
+        setEmailResentSuccess(true);
+        setTimeout(() => setEmailResentSuccess(false), 5000);
+      }
+    } catch (err) {
+      console.warn('Could not resend verification email:', err);
+    } finally {
+      setResendingEmail(false);
+    }
+  };
 
   const unreadMessageCount = useMemo(() => {
     try {
@@ -76,6 +104,15 @@ const Header = ({
     currentUser?.trialActive ||
     (currentUser?.subscriptionExpiry && !isSubscriptionExpired(currentUser.subscriptionExpiry))
   );
+
+  const isTrialUser = Boolean(!currentUser?.isSuperAdmin && !currentUser?.isOwner && (currentUser?.paymentStatus === 'trial_active' || currentUser?.onboardingPlan === 'free_trial' || (currentUser?.subscriptionExpiry && !isSubscriptionExpired(currentUser.subscriptionExpiry) && currentUser?.paymentStatus !== 'approved')));
+  
+  const trialDaysLeft = useMemo(() => {
+    if (!currentUser?.subscriptionExpiry) return 0;
+    const expiry = currentUser.subscriptionExpiry?.toDate ? currentUser.subscriptionExpiry.toDate() : new Date(currentUser.subscriptionExpiry);
+    const diff = expiry.getTime() - Date.now();
+    return Math.max(0, Math.ceil(diff / (1000 * 60 * 60 * 24)));
+  }, [currentUser?.subscriptionExpiry]);
 
   const handleTrialClick = () => {
     if (typeof onStartTrial === 'function') {
@@ -105,8 +142,47 @@ const Header = ({
           </div>
 
           <div className="flex items-center space-x-2 sm:space-x-3">
-            {/* Start 2-week Free Trial Button (if not already subscribed / active trial) */}
-            {!hasActiveSubscription && (
+            {/* Active 14-Day Free Trial Indicator (Grade-Scoped) */}
+            {isTrialUser && trialDaysLeft > 3 && (
+              <button
+                type="button"
+                onClick={() => typeof onNavigateToSubscription === 'function' && onNavigateToSubscription()}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-500/20 border border-emerald-400/40 text-emerald-100 text-xs font-bold cursor-pointer hover:bg-emerald-500/30 transition shadow-xs shrink-0"
+                title="14-day free trial active. Click to view subscription passes."
+              >
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                <span className="hidden sm:inline">14-Day Free Trial • Grade {currentUser?.grade || 10} • </span>
+                <span>{trialDaysLeft}d left</span>
+              </button>
+            )}
+
+            {/* Trial Winding Down Alert (< 4 Days Left) */}
+            {isTrialUser && trialDaysLeft <= 3 && trialDaysLeft > 0 && (
+              <button
+                type="button"
+                onClick={() => typeof onNavigateToSubscription === 'function' && onNavigateToSubscription()}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#FF9100]/25 border border-orange-400/60 text-amber-200 text-xs font-bold cursor-pointer hover:bg-[#FF9100]/35 transition shadow-xs shrink-0 animate-pulse"
+                title="Trial winding down! Click to extend your pass."
+              >
+                <span>⚠️ {trialDaysLeft} {trialDaysLeft === 1 ? 'day' : 'days'} left</span>
+                <span className="bg-[#FF9100] text-white px-1.5 py-0.5 rounded text-[10px] font-extrabold ml-1 hidden sm:inline">Extend Pass →</span>
+              </button>
+            )}
+
+            {/* Expired Trial Indicator */}
+            {isTrialUser && trialDaysLeft === 0 && (
+              <button
+                type="button"
+                onClick={() => typeof onNavigateToSubscription === 'function' && onNavigateToSubscription()}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-rose-600/30 border border-rose-400/60 text-rose-200 text-xs font-bold cursor-pointer hover:bg-rose-600/40 transition shadow-xs shrink-0"
+                title="Trial concluded. Click to subscribe."
+              >
+                <span>Trial Expired • Activate Pass →</span>
+              </button>
+            )}
+
+            {/* Fallback Start Trial Button if completely non-subscribed & no trial */}
+            {!hasActiveSubscription && !isTrialUser && (
               <button
                 type="button"
                 onClick={handleTrialClick}
@@ -210,6 +286,42 @@ const Header = ({
           </div>
         </div>
       </div>
+
+      {/* 48-Hour Email Verification Grace Banner */}
+      {showVerificationGraceBanner && (
+        <div className="bg-amber-500 text-slate-950 px-4 py-2 text-xs font-medium border-t border-amber-600/30 flex items-center justify-between gap-3 shadow-inner">
+          <div className="flex items-center gap-2 overflow-hidden text-ellipsis">
+            <span className="font-extrabold text-amber-950 shrink-0">✉️ Verify Email:</span>
+            <span className="truncate">
+              A verification link was sent to <strong className="font-bold underline decoration-amber-950/40">{currentUser.email}</strong>. You have full access during your 48-hour grace period.
+            </span>
+          </div>
+          <div className="flex items-center gap-2 shrink-0">
+            {emailResentSuccess ? (
+              <span className="text-emerald-950 font-bold bg-amber-400 px-2 py-0.5 rounded text-[11px]">
+                Link sent! Check spam folder ✓
+              </span>
+            ) : (
+              <button
+                type="button"
+                onClick={handleResendVerification}
+                disabled={resendingEmail}
+                className="bg-amber-950 hover:bg-black text-amber-100 hover:text-white px-2.5 py-1 rounded-lg font-bold text-[11px] transition cursor-pointer disabled:opacity-50"
+              >
+                {resendingEmail ? 'Sending...' : 'Resend Link'}
+              </button>
+            )}
+            <button
+              type="button"
+              onClick={() => setIsGraceBannerDismissed(true)}
+              className="text-amber-950/80 hover:text-amber-950 p-1 cursor-pointer"
+              title="Dismiss banner"
+            >
+              <X className="w-3.5 h-3.5" />
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* Logout Confirmation Modal */}
       {showLogoutConfirm && (

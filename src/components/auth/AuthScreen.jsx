@@ -143,6 +143,7 @@ const AuthScreen = ({ auth, db, initialMode = 'signin', onToggleMode, onNavigate
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const [hasParentalConsent, setHasParentalConsent] = useState(false);
+    const [onboardingPlan, setOnboardingPlan] = useState('free_trial');
     const signupPasswordSatisfiesPolicy = passwordSatisfiesPolicy(password);
 
     useEffect(() => {
@@ -199,11 +200,40 @@ const AuthScreen = ({ auth, db, initialMode = 'signin', onToggleMode, onNavigate
             } else {
                 const userCredential = await createUserWithEmailAndPassword(auth, normalizedEmail, password);
                 const user = userCredential.user;
-                const userData = { name: trimmedName, email: normalizedEmail, role, paymentReference: buildPaymentReference(user.uid) };
+                const paymentRef = buildPaymentReference(user.uid);
+                const isTrial = onboardingPlan === 'free_trial';
+                const trialDays = 14;
+                const trialExpiry = new Date(Date.now() + trialDays * 24 * 60 * 60 * 1000);
+                const graceUntil = new Date(Date.now() + 48 * 60 * 60 * 1000);
+                const numericGrade = selectedGrade ? Number(selectedGrade) : 10;
+
+                const userData = {
+                    name: trimmedName,
+                    email: normalizedEmail,
+                    role,
+                    paymentReference: paymentRef,
+                    tier: 'standard',
+                    onboardingPlan,
+                    createdAt: new Date().toISOString(),
+                    emailVerificationGraceUntil: graceUntil.toISOString(),
+                    subscribedGrades: [numericGrade],
+                    subscribedSubjects: ['all'],
+                };
+
+                if (isTrial) {
+                    userData.subscriptionStatus = 'active';
+                    userData.subscriptionExpiry = trialExpiry.toISOString();
+                    userData.paymentStatus = 'trial_active';
+                    userData.trialStartedAt = new Date().toISOString();
+                } else {
+                    userData.subscriptionStatus = 'inactive';
+                    userData.subscriptionExpiry = null;
+                    userData.paymentStatus = 'not_submitted';
+                }
 
                 if (role === 'student') {
                     userData.curriculum = selectedCurriculum;
-                    userData.grade = selectedGrade;
+                    userData.grade = selectedGrade || '10';
                     userData.popiaGuardianConsent = true;
                     userData.popiaConsentTimestamp = new Date().toISOString();
                 }
@@ -212,9 +242,12 @@ const AuthScreen = ({ auth, db, initialMode = 'signin', onToggleMode, onNavigate
 
                 try {
                     await sendEmailVerification(user);
-                    setError('Account created. Please verify your email (check your inbox/spam), then sign in.');
                 } catch (verificationError) {
-                    setError('Account created, but verification email could not be sent. Please try signing in and resend verification from Firebase, or contact support.');
+                    console.warn('Could not send verification email immediately:', verificationError);
+                }
+
+                if (!isTrial && onNavigateToSubscription) {
+                    onNavigateToSubscription();
                 }
             }
         } catch (err) {
@@ -305,13 +338,65 @@ const AuthScreen = ({ auth, db, initialMode = 'signin', onToggleMode, onNavigate
                                                 <option key={grade} value={grade}>Grade {grade}</option>
                                             ))}
                                         </select>
-                                        {!canUseRestrictedSignupGrades && (
-                                            <p className="text-xs text-slate-500">
-                                                Public sign-up is currently open for Grade 10 and Grade 11 only.
-                                            </p>
-                                        )}
                                     </>
                                 )}
+
+                                {/* Onboarding Preference: 14-Day Free Trial vs. Direct EFT Subscription */}
+                                <div className="space-y-2 pt-1 text-left">
+                                    <label className="text-xs font-bold text-slate-700 block">
+                                        Onboarding Preference:
+                                    </label>
+                                    <div className="space-y-2">
+                                        <label className={`flex items-start gap-2.5 p-2.5 rounded-xl border cursor-pointer transition ${
+                                            onboardingPlan === 'free_trial' 
+                                                ? 'bg-blue-50/80 border-[#13519C] ring-1 ring-[#13519C]' 
+                                                : 'bg-white border-slate-200 hover:bg-slate-50'
+                                        }`}>
+                                            <input 
+                                                type="radio" 
+                                                name="onboardingPlan" 
+                                                value="free_trial" 
+                                                data-testid="radio-plan-free-trial"
+                                                checked={onboardingPlan === 'free_trial'}
+                                                onChange={() => setOnboardingPlan('free_trial')}
+                                                className="mt-0.5 h-4 w-4 text-[#13519C] focus:ring-[#13519C]"
+                                            />
+                                            <div className="text-xs leading-snug">
+                                                <span className="font-bold text-slate-900 flex items-center gap-1.5">
+                                                    <span>Start with 14-day free trial</span>
+                                                    <span className="px-1.5 py-0.2 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-extrabold border border-emerald-200">Recommended</span>
+                                                </span>
+                                                <span className="text-slate-600 block mt-0.5 text-[11px]">
+                                                    Immediate full access to all your Grade {selectedGrade || '10'} subjects • No card required upfront.
+                                                </span>
+                                            </div>
+                                        </label>
+
+                                        <label className={`flex items-start gap-2.5 p-2.5 rounded-xl border cursor-pointer transition ${
+                                            onboardingPlan === 'direct_subscription' 
+                                                ? 'bg-amber-50/80 border-[#FF9100] ring-1 ring-[#FF9100]' 
+                                                : 'bg-white border-slate-200 hover:bg-slate-50'
+                                        }`}>
+                                            <input 
+                                                type="radio" 
+                                                name="onboardingPlan" 
+                                                value="direct_subscription" 
+                                                data-testid="radio-plan-direct-sub"
+                                                checked={onboardingPlan === 'direct_subscription'}
+                                                onChange={() => setOnboardingPlan('direct_subscription')}
+                                                className="mt-0.5 h-4 w-4 text-[#FF9100] focus:ring-[#FF9100]"
+                                            />
+                                            <div className="text-xs leading-snug">
+                                                <span className="font-bold text-slate-900 block">
+                                                    Skip trial &amp; proceed straight to subscription
+                                                </span>
+                                                <span className="text-slate-600 block mt-0.5 text-[11px]">
+                                                    Select Term Pass (R349) / Monthly (R149) and submit EFT Proof of Payment.
+                                                </span>
+                                            </div>
+                                        </label>
+                                    </div>
+                                </div>
                             </div>
                         )}
 
