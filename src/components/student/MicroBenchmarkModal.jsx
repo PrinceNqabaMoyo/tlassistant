@@ -382,7 +382,7 @@ const getTopicBenchmarkQuestions = (subject = '', grade = '', topicTitle = '') =
     },
     {
       step: 3,
-      type: 'CAPS Standard Problem',
+      type: 'Standard Problem',
       prompt: `Calculate the exact result when the sum of 28 and 56 is divided by 7, and the result is multiplied by 3.`,
       hint: 'Brackets first: (28 + 56) = 84. Then 84 ÷ 7 = 12. Finally 12 × 3.',
       sample: '36',

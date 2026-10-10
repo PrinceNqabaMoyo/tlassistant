@@ -7,8 +7,8 @@ import { canBypassSignupGradeRestriction, LIVE_SIGNUP_GRADES } from '../../app/c
 // Curriculum shell structure for the signup form (South African National Curriculum only)
 const curriculumShell = {
     'CAPS': {
-        name: 'South African National Curriculum (CAPS)',
-        description: 'The official national curriculum for South Africa.',
+        name: 'South African National Curriculum',
+        description: 'The official national curriculum standards for South Africa.',
         grades: [7, 8, 9, 10, 11, 12]
     }
 };
@@ -240,10 +240,15 @@ const AuthScreen = ({ auth, db, initialMode = 'signin', onToggleMode, onNavigate
 
                 await setDoc(doc(db, 'users', user.uid), userData);
 
-                try {
-                    await sendEmailVerification(user);
-                } catch (verificationError) {
-                    console.warn('Could not send verification email immediately:', verificationError);
+                const isTestEmail = email.endsWith('.test') || email.includes('fundile.test') || email.includes('@example.com');
+                if (!isTestEmail) {
+                    try {
+                        await sendEmailVerification(user);
+                    } catch (verificationError) {
+                        console.warn('Could not send verification email immediately:', verificationError);
+                    }
+                } else {
+                    console.info('[Auth] Simulated test email detected — bypassing outbound SMTP verification dispatch to avoid mailbox bounce.');
                 }
 
                 if (!isTrial && onNavigateToSubscription) {
@@ -321,8 +326,8 @@ const AuthScreen = ({ auth, db, initialMode = 'signin', onToggleMode, onNavigate
                                 {role === 'student' && (
                                     <>
                                         <div className="bg-blue-50/80 border border-blue-200/90 p-2.5 rounded-md text-xs text-[#13519C] font-semibold flex items-center justify-between">
-                                            <span>Curriculum: South African National Curriculum (CAPS)</span>
-                                            <span className="text-[10px] bg-white px-2 py-0.5 rounded-full border border-blue-200 font-bold">100% CAPS</span>
+                                            <span>Curriculum: South African National Curriculum</span>
+                                            <span className="text-[10px] bg-white px-2 py-0.5 rounded-full border border-blue-200 font-bold">National Standards</span>
                                         </div>
 
                                         <select 

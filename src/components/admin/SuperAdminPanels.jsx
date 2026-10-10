@@ -180,7 +180,7 @@ export function ContentManagementView({ onBack }) {
   return (
     <div className="p-4 sm:p-6 lg:p-8 space-y-6 max-w-7xl mx-auto">
       <AdminPanelHeader
-        title="CAPS Content & Generator Registry"
+        title="Curriculum Content & Generator Registry"
         subtitle="Manage deterministic question archetypes, SymPy generators, and curriculum coverage"
         icon={BookOpen}
         onBack={onBack}
@@ -229,7 +229,7 @@ export function ContentManagementView({ onBack }) {
             <thead className="bg-slate-50 text-slate-500 uppercase tracking-wider text-[10px] border-b border-slate-100 font-semibold font-sans">
               <tr>
                 <th className="py-3 px-4">Subject</th>
-                <th className="py-3 px-4">CAPS Grade</th>
+                <th className="py-3 px-4">Grade</th>
                 <th className="py-3 px-4">Active Archetypes</th>
                 <th className="py-3 px-4">Terms Covered</th>
                 <th className="py-3 px-4">Hint Architecture</th>
@@ -480,7 +480,7 @@ export function SystemSettingsView({ onBack }) {
       <div className="bg-white rounded-2xl border border-slate-200/90 p-6 shadow-xs space-y-6">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
           <div>
-            <label className="text-xs font-bold text-slate-800 block mb-1">Active CAPS Term</label>
+            <label className="text-xs font-bold text-slate-800 block mb-1">Active Term</label>
             <select
               value={settings.defaultTerm}
               onChange={(e) => setSettings({ ...settings, defaultTerm: e.target.value })}

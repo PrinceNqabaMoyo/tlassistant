@@ -299,7 +299,7 @@ const TeacherSimulation = ({ isLightPalette = true, onGetStarted, onSelectPerspe
                                 <thead>
                                     <tr className="bg-slate-100 text-slate-800 font-bold border-b border-slate-300">
                                         <th className="p-3">Step Point &amp; Marking Schema Description</th>
-                                        <th className="p-3 text-center w-28">CAPS Mark</th>
+                                        <th className="p-3 text-center w-28">Official Mark</th>
                                     </tr>
                                 </thead>
                                 <tbody>

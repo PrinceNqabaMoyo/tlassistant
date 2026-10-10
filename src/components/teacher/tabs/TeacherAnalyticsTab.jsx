@@ -199,7 +199,7 @@ export default function TeacherAnalyticsTab({
           <table className="w-full text-left text-xs text-slate-600">
             <thead className="bg-slate-50 text-slate-500 uppercase tracking-wider text-[10px] border-b border-slate-200 font-semibold font-sans">
               <tr>
-                <th className="py-3 px-4">Subject &amp; CAPS Topic</th>
+                <th className="py-3 px-4">Subject &amp; Topic</th>
                 <th className="py-3 px-4">Specific Misconception Obstacle</th>
                 <th className="py-3 px-4">Affected Learners</th>
                 <th className="py-3 px-4">Avg Marks Lost</th>
@@ -346,7 +346,7 @@ export default function TeacherAnalyticsTab({
                 >
                   Grade Distribution
                 </h3>
-                <p className="text-xs text-slate-500">Official CAPS Achievement Levels (1–7)</p>
+                <p className="text-xs text-slate-500">Official Achievement Levels (1–7)</p>
               </div>
             </div>
 
@@ -380,7 +380,7 @@ export default function TeacherAnalyticsTab({
           <div className="mt-6 p-3 bg-blue-50 border border-blue-200/80 rounded-xl text-xs text-[#13519C] flex items-center gap-2">
             <TrendingUp className="w-4 h-4 shrink-0 text-[#13519C]" />
             <span>
-              <strong>68% of cohort</strong> currently achieving CAPS Grade 10+ Bachelor Pass benchmark (&gt;50%).
+              <strong>68% of cohort</strong> currently achieving Grade 10+ Bachelor Pass benchmark (&gt;50%).
             </span>
           </div>
         </section>

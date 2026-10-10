@@ -329,11 +329,13 @@ export default function ParentDashboard({
   initialLearnerId = 'nqobile',
   parentName = 'Mrs. Nomvula Dlamini',
   parentPhone = '+27 82 555 4192',
-  className = ''
+  className = '',
+  onLaunchLearnerWorkspace = null,
 }) {
   const [learners, setLearners] = useState(INITIAL_LEARNERS);
   const [selectedLearnerId, setSelectedLearnerId] = useState(initialLearnerId);
   const [isAddChildModalOpen, setIsAddChildModalOpen] = useState(false);
+  const [addChildMode, setAddChildMode] = useState('direct'); // 'direct' (zero-email hosted) | 'code' (15-min OTP)
   const [isInvoiceModalOpen, setIsInvoiceModalOpen] = useState(false);
   const [copiedTipId, setCopiedTipId] = useState(null);
   const [copiedPulseText, setCopiedPulseText] = useState(false);
@@ -404,7 +406,7 @@ export default function ParentDashboard({
       `📅 Period: Mon 22 Sep – Sun 28 Sep 2026\n\n` +
       `⏱️ *Focus Time:* ${activeLearner.focusTime} (${activeLearner.streakDays}-day streak 🔥)\n` +
       `🎯 *Questions Solved:* ${activeLearner.questionsCompleted} questions • ${activeLearner.accuracyRate}% accuracy\n` +
-      `🏆 *Mastered CAPS Topics:*\n` +
+      `🏆 *Mastered Topics:*\n` +
       activeLearner.masteredTopics.map(t => `  • ${t.name} (${t.score}%)`).join('\n') + `\n\n` +
       `🛠️ *Repaired Misconception:*\n` +
       `  • ${activeLearner.repairedMisconceptions[0]?.topic}: ${activeLearner.repairedMisconceptions[0]?.issue} (${activeLearner.repairedMisconceptions[0]?.status})\n\n` +
@@ -430,6 +432,101 @@ export default function ParentDashboard({
   const handleAddChildSubmit = async (e) => {
     e.preventDefault();
     setAddChildError('');
+
+    if (addChildMode === 'direct') {
+      const finalName = addChildForm.name.trim();
+      if (!finalName) {
+        setAddChildError('Please enter your child\'s full name.');
+        return;
+      }
+      setIsSubmittingChild(true);
+      try {
+        const finalGrade = addChildForm.grade;
+        const finalSchool = addChildForm.school.trim() || 'Secondary School';
+        const newId = finalName.toLowerCase().replace(/[^a-z0-9]/g, '-').slice(0, 15) + '-' + Math.floor(Math.random() * 899 + 100);
+        const initials = finalName
+          .split(' ')
+          .map(p => p[0])
+          .join('')
+          .toUpperCase()
+          .slice(0, 2) || 'ST';
+
+        const numericGrade = Number(String(finalGrade).replace(/\D/g, '')) || 10;
+
+        const newLearnerObj = {
+          id: newId,
+          name: finalName,
+          grade: finalGrade,
+          gradeNumeric: numericGrade,
+          school: finalSchool,
+          avatar: initials,
+          linkCode: `DIR-${Math.random().toString(36).substring(2, 6).toUpperCase()}`,
+          isDirectHosted: true,
+          focusTime: '0m',
+          focusTimeMinutes: 0,
+          questionsCompleted: 0,
+          accuracyRate: 0,
+          streakDays: 1,
+          ungameableXP: 0,
+          dataUsedMB: 0.1,
+          videoEquivalentMB: 0,
+          savedRands: 0,
+          masteredTopics: [],
+          repairedMisconceptions: [],
+          coachingTips: [
+            {
+              id: `tip-${newId}-1`,
+              icon: '🚀',
+              category: 'Welcome to Fundile',
+              badgeColor: 'bg-emerald-50 text-emerald-700 border-emerald-200',
+              prompt: `Click "Launch ${finalName.split(' ')[0]}'s Workspace" to start their first diagnostic baseline!`,
+              rationale: 'Calibrates starting mastery with zero token cost and zero pressure.'
+            }
+          ],
+          subjects: [
+            {
+              id: `${newId}-subj1`,
+              name: numericGrade <= 9 ? 'Economic & Management Sciences' : 'Accounting',
+              code: numericGrade <= 9 ? 'EMS' : 'ACC',
+              formativeMastery: 0,
+              evaluativeScore: 0,
+              level: 'Diagnostic Needed',
+              rating: 'Starting Baseline',
+              recentTopics: ['Diagnostic Baseline'],
+              streak: 'New',
+              needsRefresh: false
+            },
+            {
+              id: `${newId}-subj2`,
+              name: 'Mathematics',
+              code: 'MTH',
+              formativeMastery: 0,
+              evaluativeScore: 0,
+              level: 'Diagnostic Needed',
+              rating: 'Starting Baseline',
+              recentTopics: ['Diagnostic Baseline'],
+              streak: 'New',
+              needsRefresh: false
+            }
+          ]
+        };
+
+        setLearners(prev => ({
+          ...prev,
+          [newId]: newLearnerObj
+        }));
+        setSelectedLearnerId(newId);
+        setAddChildForm({ name: '', grade: 'Grade 10 FET', school: '', linkCode: '' });
+        setIsAddChildModalOpen(false);
+        setPulseToastMessage(`🎒 Profile created for ${finalName}! Click "Launch Workspace" to start learning.`);
+        setTimeout(() => setPulseToastMessage(''), 5000);
+      } catch (err) {
+        setAddChildError(err.message || 'Failed to create child profile.');
+      } finally {
+        setIsSubmittingChild(false);
+      }
+      return;
+    }
 
     const rawInputCode = addChildForm.linkCode.trim();
     if (!rawInputCode) {
@@ -673,12 +770,34 @@ export default function ParentDashboard({
               </div>
             </div>
 
-            {/* Zero Nagging Trust Badge */}
-            <div className="flex items-center gap-2 text-xs bg-amber-500/10 border border-amber-300/40 text-amber-900 px-3.5 py-2 rounded-xl font-medium">
-              <Sparkles className="w-4 h-4 text-[#FF9100] shrink-0" />
-              <span>
-                <strong>Zero Nagging Philosophy:</strong> Objective cognitive tracking replaces stressful interrogation with transparent praise.
-              </span>
+            {/* Launch Active Learner's Workspace Button & Zero Nagging Trust Badge */}
+            <div className="flex items-center gap-3 shrink-0 flex-wrap">
+              <button
+                type="button"
+                data-testid="btn-launch-learner-workspace"
+                onClick={() => {
+                  if (onLaunchLearnerWorkspace) {
+                    onLaunchLearnerWorkspace(activeLearner);
+                  } else {
+                    setPulseToastMessage(`🎒 Launching ${activeLearner.name}'s workspace...`);
+                    setTimeout(() => setPulseToastMessage(''), 3000);
+                  }
+                }}
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-[#13519C] to-[#0f4280] hover:from-[#0f3e77] hover:to-[#0c315e] text-white text-xs font-bold shadow-xs hover:shadow-md transition cursor-pointer active:scale-95"
+                title={`Launch student workspace for ${activeLearner.name}`}
+              >
+                <span className="text-base leading-none">🎒</span>
+                <span>Launch {activeLearner.name.split(' ')[0]}'s Workspace</span>
+                <ArrowUpRight className="w-3.5 h-3.5 opacity-90" />
+              </button>
+
+              {/* Zero Nagging Trust Badge */}
+              <div className="hidden xl:flex items-center gap-2 text-xs bg-amber-500/10 border border-amber-300/40 text-amber-900 px-3.5 py-2 rounded-xl font-medium">
+                <Sparkles className="w-4 h-4 text-[#FF9100] shrink-0" />
+                <span>
+                  <strong>Zero Nagging:</strong> Objective tracking replaces interrogation with transparent praise.
+                </span>
+              </div>
             </div>
           </div>
         </section>
@@ -843,7 +962,7 @@ export default function ParentDashboard({
                       <div className="bg-white/80 p-3 rounded-xl border border-emerald-200/60 text-xs space-y-1.5">
                         <p className="font-bold text-slate-900 flex items-center gap-1.5">
                           <Award className="w-3.5 h-3.5 text-[#FF9100]" />
-                          <span>CAPS Topics Mastered This Week:</span>
+                          <span>Topics Mastered This Week:</span>
                         </p>
                         <ul className="space-y-1 pl-1 text-slate-700">
                           {activeLearner.masteredTopics.map((top, idx) => (
@@ -899,7 +1018,7 @@ export default function ParentDashboard({
                       <div className="p-3.5 bg-slate-50 rounded-xl border border-slate-200">
                         <span className="text-xs text-slate-500 font-medium">Cognitive Accuracy</span>
                         <div className="text-xl font-bold font-mono text-emerald-600 mt-1">{activeLearner.accuracyRate}%</div>
-                        <span className="text-xs text-slate-500">{activeLearner.questionsCompleted} CAPS questions answered</span>
+                        <span className="text-xs text-slate-500">{activeLearner.questionsCompleted} exam-standard questions answered</span>
                       </div>
                     </div>
 
@@ -907,7 +1026,7 @@ export default function ParentDashboard({
                     <div className="p-4 bg-slate-50 rounded-xl border border-slate-200">
                       <h3 className="text-xs font-bold uppercase tracking-wider text-slate-600 mb-2 flex items-center gap-1.5">
                         <Award className="w-3.5 h-3.5 text-amber-500" />
-                        <span>CAPS Curriculum Mastery Unlocked</span>
+                        <span>Curriculum Mastery Unlocked</span>
                       </h3>
                       <div className="space-y-2">
                         {activeLearner.masteredTopics.map((topic, i) => (
@@ -1010,7 +1129,7 @@ export default function ParentDashboard({
                   <span className="text-xs font-normal text-blue-200">across 2 learners</span>
                 </div>
                 <p className="text-xs text-blue-100/90 mt-2 leading-relaxed">
-                  Fundile caches full CAPS scaffolds locally in an offline PWA. No YouTube buffering, zero unexpected out-of-bundle airtime charges.
+                  Fundile caches full worked scaffolds locally in an offline PWA. No YouTube buffering, zero unexpected out-of-bundle airtime charges.
                 </p>
               </div>
 
@@ -1176,7 +1295,7 @@ export default function ParentDashboard({
                     Live Dual-Ring Subject Mastery
                   </h2>
                   <span className="px-2 py-0.5 rounded-full text-xs font-bold bg-[#FF9100]/15 text-[#f58200]">
-                    CAPS Aligned
+                    National Standards Aligned
                   </span>
                 </div>
                 <p className="text-xs sm:text-sm text-slate-500">
@@ -1373,91 +1492,201 @@ export default function ParentDashboard({
 
             {/* Modal Body Form */}
             <form onSubmit={handleAddChildSubmit} className="p-5 space-y-4 text-xs">
-              {/* POPIA Section 35 Ephemeral Security Banner */}
-              <div className="bg-amber-50 border border-amber-300/80 rounded-xl p-3 flex items-start gap-2.5 text-xs text-amber-900">
-                <AlertTriangle className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
-                <div>
-                  <p className="font-bold">Confidential One-Time Linking Handshake</p>
-                  <p className="text-[11px] text-amber-800 mt-0.5 leading-snug">
-                    Link passcodes expire after <strong>15 minutes</strong> and can only be used once. Keep this code confidential to safeguard your child's academic privacy (POPIA Sec 35).
-                  </p>
-                </div>
+              {/* Mode Selector Tabs: Direct Profile (Zero Email) vs Link Phone Code */}
+              <div className="flex rounded-xl bg-slate-100 p-1 gap-1">
+                <button
+                  type="button"
+                  data-testid="tab-add-child-direct"
+                  onClick={() => {
+                    setAddChildMode('direct');
+                    setAddChildError('');
+                  }}
+                  className={`flex-1 py-1.5 px-2.5 rounded-lg text-xs font-bold transition cursor-pointer flex items-center justify-center gap-1.5 ${
+                    addChildMode === 'direct'
+                      ? 'bg-white text-[#13519C] shadow-xs'
+                      : 'text-slate-600 hover:text-slate-900'
+                  }`}
+                >
+                  <span>🎒 Add Profile (Zero-Email)</span>
+                </button>
+                <button
+                  type="button"
+                  data-testid="tab-add-child-code"
+                  onClick={() => {
+                    setAddChildMode('code');
+                    setAddChildError('');
+                  }}
+                  className={`flex-1 py-1.5 px-2.5 rounded-lg text-xs font-bold transition cursor-pointer flex items-center justify-center gap-1.5 ${
+                    addChildMode === 'code'
+                      ? 'bg-white text-[#13519C] shadow-xs'
+                      : 'text-slate-600 hover:text-slate-900'
+                  }`}
+                >
+                  <span>🔗 Link Device Code</span>
+                </button>
               </div>
 
-              {addChildError && (
-                <div className="p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-xs flex items-center gap-2">
-                  <AlertTriangle className="w-4 h-4 shrink-0 text-rose-600" />
-                  <span>{addChildError}</span>
-                </div>
+              {addChildMode === 'direct' ? (
+                /* ── DIRECT DUAL-USE PROFILE MODE ── */
+                <>
+                  <div className="bg-blue-50 border border-blue-200/80 rounded-xl p-3 flex items-start gap-2.5 text-xs text-[#13519C]">
+                    <Info className="w-4 h-4 text-[#13519C] shrink-0 mt-0.5" />
+                    <div>
+                      <p className="font-bold">Single-Account Household Hosting</p>
+                      <p className="text-[11px] text-slate-600 mt-0.5 leading-snug">
+                        Zero email required for your child. Their learning workspace will be securely hosted right on your Guardian account with 1-click workspace switching.
+                      </p>
+                    </div>
+                  </div>
+
+                  {addChildError && (
+                    <div className="p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-xs flex items-center gap-2">
+                      <AlertTriangle className="w-4 h-4 shrink-0 text-rose-600" />
+                      <span>{addChildError}</span>
+                    </div>
+                  )}
+
+                  <div>
+                    <label className="block font-semibold text-slate-700 mb-1">
+                      Learner Full Name <span className="text-rose-500">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="e.g. Lesedi Khumalo"
+                      data-testid="input-child-name-direct"
+                      value={addChildForm.name}
+                      onChange={(e) => setAddChildForm(prev => ({ ...prev, name: e.target.value }))}
+                      className="w-full px-3 py-2 rounded-xl border border-slate-300 focus:outline-none focus:border-[#13519C] text-sm text-slate-900"
+                      required
+                      autoFocus
+                    />
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                      <label className="block font-semibold text-slate-700 mb-1">
+                        Grade / Phase <span className="text-rose-500">*</span>
+                      </label>
+                      <select
+                        value={addChildForm.grade}
+                        data-testid="select-child-grade-direct"
+                        onChange={(e) => setAddChildForm(prev => ({ ...prev, grade: e.target.value }))}
+                        className="w-full px-3 py-2 rounded-xl border border-slate-300 focus:outline-none focus:border-[#13519C] text-sm bg-white text-slate-900"
+                      >
+                        <option value="Grade 7 Senior Phase">Grade 7 Senior Phase</option>
+                        <option value="Grade 8 Senior Phase">Grade 8 Senior Phase</option>
+                        <option value="Grade 9 Senior Phase">Grade 9 Senior Phase</option>
+                        <option value="Grade 10 FET">Grade 10 FET</option>
+                        <option value="Grade 11 FET">Grade 11 FET</option>
+                        <option value="Grade 12 Matric FET">Grade 12 Matric FET</option>
+                      </select>
+                    </div>
+
+                    <div>
+                      <label className="block font-semibold text-slate-700 mb-1">
+                        School Name <span className="text-slate-400 font-normal">(Optional)</span>
+                      </label>
+                      <input
+                        type="text"
+                        placeholder="e.g. Westville High"
+                        value={addChildForm.school}
+                        onChange={(e) => setAddChildForm(prev => ({ ...prev, school: e.target.value }))}
+                        className="w-full px-3 py-2 rounded-xl border border-slate-300 focus:outline-none focus:border-[#13519C] text-sm text-slate-900"
+                      />
+                    </div>
+                  </div>
+                </>
+              ) : (
+                /* ── PASSCODE LINK MODE ── */
+                <>
+                  {/* POPIA Section 35 Ephemeral Security Banner */}
+                  <div className="bg-amber-50 border border-amber-300/80 rounded-xl p-3 flex items-start gap-2.5 text-xs text-amber-900">
+                    <AlertTriangle className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
+                    <div>
+                      <p className="font-bold">Confidential One-Time Linking Handshake</p>
+                      <p className="text-[11px] text-amber-800 mt-0.5 leading-snug">
+                        Link passcodes expire after <strong>15 minutes</strong> and can only be used once. Keep this code confidential to safeguard your child's academic privacy (POPIA Sec 35).
+                      </p>
+                    </div>
+                  </div>
+
+                  {addChildError && (
+                    <div className="p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-xs flex items-center gap-2">
+                      <AlertTriangle className="w-4 h-4 shrink-0 text-rose-600" />
+                      <span>{addChildError}</span>
+                    </div>
+                  )}
+
+                  <div>
+                    <label className="block font-semibold text-slate-700 mb-1">
+                      6-Character Learner Link Code <span className="text-rose-500">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="e.g. LNK-PAR8M4"
+                      maxLength={10}
+                      data-testid="input-child-link-code"
+                      value={addChildForm.linkCode}
+                      onChange={(e) => setAddChildForm(prev => ({ ...prev, linkCode: e.target.value.toUpperCase() }))}
+                      className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:border-[#13519C] font-mono text-base font-bold tracking-widest uppercase text-slate-900 bg-slate-50/50"
+                      required
+                      autoFocus
+                    />
+                    <p className="text-[11px] text-slate-600 mt-1.5 flex items-start gap-1">
+                      <Info className="w-3.5 h-3.5 text-[#13519C] shrink-0 mt-0.5" />
+                      <span>
+                        Your child generates this on their phone under <strong>Profile &gt; Link Parent/Guardian</strong> or on Today's Desk.
+                      </span>
+                    </p>
+                  </div>
+
+                  <div>
+                    <label className="block font-semibold text-slate-700 mb-1">
+                      Learner Full Name <span className="text-slate-400 font-normal">(Optional if code contains profile)</span>
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="e.g. Andile Dlamini"
+                      value={addChildForm.name}
+                      onChange={(e) => setAddChildForm(prev => ({ ...prev, name: e.target.value }))}
+                      className="w-full px-3 py-2 rounded-xl border border-slate-300 focus:outline-none focus:border-[#13519C] text-sm"
+                    />
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                      <label className="block font-semibold text-slate-700 mb-1">
+                        Grade / Phase
+                      </label>
+                      <select
+                        value={addChildForm.grade}
+                        onChange={(e) => setAddChildForm(prev => ({ ...prev, grade: e.target.value }))}
+                        className="w-full px-3 py-2 rounded-xl border border-slate-300 focus:outline-none focus:border-[#13519C] text-sm bg-white"
+                      >
+                        <option value="Grade 7 Senior Phase">Grade 7 Senior Phase</option>
+                        <option value="Grade 8 Senior Phase">Grade 8 Senior Phase</option>
+                        <option value="Grade 9 Senior Phase">Grade 9 Senior Phase</option>
+                        <option value="Grade 10 FET">Grade 10 FET</option>
+                        <option value="Grade 11 FET">Grade 11 FET</option>
+                        <option value="Grade 12 Matric FET">Grade 12 Matric FET</option>
+                      </select>
+                    </div>
+
+                    <div>
+                      <label className="block font-semibold text-slate-700 mb-1">
+                        School Name (Optional)
+                      </label>
+                      <input
+                        type="text"
+                        placeholder="e.g. Phakamani Secondary"
+                        value={addChildForm.school}
+                        onChange={(e) => setAddChildForm(prev => ({ ...prev, school: e.target.value }))}
+                        className="w-full px-3 py-2 rounded-xl border border-slate-300 focus:outline-none focus:border-[#13519C] text-sm"
+                      />
+                    </div>
+                  </div>
+                </>
               )}
-
-              <div>
-                <label className="block font-semibold text-slate-700 mb-1">
-                  6-Character Learner Link Code <span className="text-rose-500">*</span>
-                </label>
-                <input
-                  type="text"
-                  placeholder="e.g. LNK-PAR8M4"
-                  maxLength={10}
-                  data-testid="input-child-link-code"
-                  value={addChildForm.linkCode}
-                  onChange={(e) => setAddChildForm(prev => ({ ...prev, linkCode: e.target.value.toUpperCase() }))}
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:border-[#13519C] font-mono text-base font-bold tracking-widest uppercase text-slate-900 bg-slate-50/50"
-                  required
-                  autoFocus
-                />
-                <p className="text-[11px] text-slate-600 mt-1.5 flex items-start gap-1">
-                  <Info className="w-3.5 h-3.5 text-[#13519C] shrink-0 mt-0.5" />
-                  <span>
-                    Your child generates this on their phone under <strong>Profile &gt; Link Parent/Guardian</strong> or on Today's Desk.
-                  </span>
-                </p>
-              </div>
-
-              <div>
-                <label className="block font-semibold text-slate-700 mb-1">
-                  Learner Full Name <span className="text-slate-400 font-normal">(Optional if code contains profile)</span>
-                </label>
-                <input
-                  type="text"
-                  placeholder="e.g. Andile Dlamini"
-                  value={addChildForm.name}
-                  onChange={(e) => setAddChildForm(prev => ({ ...prev, name: e.target.value }))}
-                  className="w-full px-3 py-2 rounded-xl border border-slate-300 focus:outline-none focus:border-[#13519C] text-sm"
-                />
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <div>
-                  <label className="block font-semibold text-slate-700 mb-1">
-                    Grade / Phase
-                  </label>
-                  <select
-                    value={addChildForm.grade}
-                    onChange={(e) => setAddChildForm(prev => ({ ...prev, grade: e.target.value }))}
-                    className="w-full px-3 py-2 rounded-xl border border-slate-300 focus:outline-none focus:border-[#13519C] text-sm bg-white"
-                  >
-                    <option value="Grade 8 Senior Phase">Grade 8 Senior Phase</option>
-                    <option value="Grade 9 Senior Phase">Grade 9 Senior Phase</option>
-                    <option value="Grade 10 FET">Grade 10 FET</option>
-                    <option value="Grade 11 FET">Grade 11 FET</option>
-                    <option value="Grade 12 Matric FET">Grade 12 Matric FET</option>
-                  </select>
-                </div>
-
-                <div>
-                  <label className="block font-semibold text-slate-700 mb-1">
-                    School Name (Optional)
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="e.g. Phakamani Secondary"
-                    value={addChildForm.school}
-                    onChange={(e) => setAddChildForm(prev => ({ ...prev, school: e.target.value }))}
-                    className="w-full px-3 py-2 rounded-xl border border-slate-300 focus:outline-none focus:border-[#13519C] text-sm"
-                  />
-                </div>
-              </div>
 
               <div className="pt-2 flex items-center justify-end gap-2 border-t border-slate-100">
                 <button
@@ -1477,10 +1706,10 @@ export default function ParentDashboard({
                   {isSubmittingChild ? (
                     <>
                       <RefreshCw className="w-3.5 h-3.5 animate-spin" />
-                      <span>Verifying...</span>
+                      <span>{addChildMode === 'direct' ? 'Creating...' : 'Verifying...'}</span>
                     </>
                   ) : (
-                    <span>Connect Learner</span>
+                    <span>{addChildMode === 'direct' ? 'Create Learner Profile' : 'Connect Learner'}</span>
                   )}
                 </button>
               </div>
@@ -1564,7 +1793,7 @@ export default function ParentDashboard({
                     <tr>
                       <td className="py-3">
                         <strong className="text-slate-900 font-medium">Fundile Household Family Plan</strong>
-                        <p className="text-[11px] text-slate-500">Unlimited CAPS cognitive diagnostics, in-app Sunday Academic Pulse, &lt; 2 MB offline PWA</p>
+                        <p className="text-[11px] text-slate-500">Unlimited cognitive diagnostics, in-app Sunday Academic Pulse, &lt; 2 MB offline PWA</p>
                       </td>
                       <td className="py-3 text-center text-slate-600">Sep 2026</td>
                       <td className="py-3 text-right text-slate-600">1</td>

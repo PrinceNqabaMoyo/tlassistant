@@ -294,7 +294,7 @@ export default function UniversalWorkspace({
     const rawHints = question?.hints;
     const hints = {
         tier_1: (typeof rawHints === 'object' && rawHints?.tier_1) || rawHints?.[0] || 'Carefully inspect the parameters given in the question and identify the required formula or accounting columns.',
-        tier_2: (typeof rawHints === 'object' && rawHints?.tier_2) || rawHints?.[1] || question?.explanation || 'Apply standard CAPS procedural steps: isolate the unknowns and check directional signs or contra accounts.',
+        tier_2: (typeof rawHints === 'object' && rawHints?.tier_2) || rawHints?.[1] || question?.explanation || 'Apply standard procedural steps: isolate the unknowns and check directional signs or contra accounts.',
         tier_3: (typeof rawHints === 'object' && rawHints?.tier_3) || rawHints?.[2] || question?.worked_solution || 'Refer to the memo calculation to verify your step.'
     };
 
@@ -374,7 +374,7 @@ export default function UniversalWorkspace({
                     </div>
                     <div className="flex items-center gap-2 mt-1">
                         <h2 className="text-base sm:text-lg font-bold text-slate-900" style={{ fontFamily: 'Afacad, sans-serif' }}>
-                            {topic || 'Authentic CAPS Problem Solving'}
+                            {topic || 'Authentic Problem Solving'}
                         </h2>
                         <button
                             type="button"
@@ -489,7 +489,7 @@ export default function UniversalWorkspace({
                                     ? 'text-slate-400 bg-slate-50/70 opacity-70 hover:bg-slate-100'
                                     : 'text-slate-600 hover:text-slate-900'
                             }`}
-                            title={isDiagnosticRequired ? "Locked: Complete diagnostic baseline first" : currentFormative < 80 ? "Locked: Reach 80% BKT Mastery to unlock" : "Exam Mode: Timed CAPS assessment"}
+                            title={isDiagnosticRequired ? "Locked: Complete diagnostic baseline first" : currentFormative < 80 ? "Locked: Reach 80% BKT Mastery to unlock" : "Exam Mode: Timed formal assessment"}
                         >
                             <span>3. Exam Mode</span>
                             {(isDiagnosticRequired || currentFormative < 80) && <Lock className="w-2.5 h-2.5 text-slate-400" />}
@@ -651,7 +651,7 @@ export default function UniversalWorkspace({
                                         className="inline-flex items-center gap-1.5 text-[10px] font-bold px-2.5 py-1 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-300 shadow-2xs transition-all cursor-pointer group"
                                         title="Click to Change Topic or Align with School Exam Scope"
                                     >
-                                        <span>Term 1 • {topic || 'CAPS Problem Solving'}</span>
+                                        <span>Term 1 • {topic || 'Problem Solving'}</span>
                                         <ChevronDown className="w-3 h-3 text-emerald-700 group-hover:translate-y-0.5 transition-transform" />
                                     </button>
                                     <span className="text-xs text-slate-500 font-sans">
@@ -695,7 +695,7 @@ export default function UniversalWorkspace({
                                                     📋
                                                 </span>
                                                 <span className="text-xs font-bold text-slate-800 uppercase tracking-wide font-sans">
-                                                    Required Guidelines &amp; CAPS Checklist
+                                                    Required Guidelines &amp; Checklist
                                                 </span>
                                                 <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-blue-100 text-[#13519C] font-mono">
                                                     {question.guidelines.length} rules

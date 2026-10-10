@@ -248,7 +248,7 @@ export default function TopicScopeModal({
             <div>
               <div className="flex items-center gap-2">
                 <span className="text-[11px] font-bold uppercase tracking-wider text-blue-200 font-mono">
-                  CAPS Curriculum Alignment
+                  National Curriculum Alignment
                 </span>
                 <span className="text-[10px] px-2 py-0.5 rounded-full bg-white/20 text-white font-bold">
                   Grade {numericGrade}
@@ -375,7 +375,7 @@ export default function TopicScopeModal({
           {filteredTopics.length === 0 ? (
             <div className="py-12 text-center text-slate-500 space-y-2">
               <Filter className="w-8 h-8 text-slate-300 mx-auto" />
-              <p className="text-sm font-semibold text-slate-700">No CAPS topics found</p>
+              <p className="text-sm font-semibold text-slate-700">No curriculum topics found</p>
               <p className="text-xs text-slate-500">Try typing a different keyword or clear the search filter.</p>
             </div>
           ) : (
@@ -412,7 +412,7 @@ export default function TopicScopeModal({
                         )}
                       </div>
                       <div className="flex items-center gap-2 mt-0.5 text-[11px] text-slate-500">
-                        <span>CAPS Term {topic.term}</span>
+                        <span>Term {topic.term}</span>
                         <span>•</span>
                         <span>Grade {numericGrade}</span>
                       </div>
@@ -436,7 +436,7 @@ export default function TopicScopeModal({
         <div className="bg-slate-50 px-5 py-3 border-t border-slate-200 flex items-center justify-between text-xs text-slate-500">
           <div className="flex items-center gap-1.5">
             <GraduationCap className="w-4 h-4 text-[#13519C]" />
-            <span>100% Aligned with South African Curriculum Standards (CAPS)</span>
+            <span>100% Aligned with South African Curriculum Standards</span>
           </div>
           <button
             type="button"

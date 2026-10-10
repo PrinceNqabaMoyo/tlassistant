@@ -96,7 +96,7 @@ export default function TeacherAssessmentsTab({
 
   // Assessment Builder State
   const [assessmentScope, setAssessmentScope] = useState({
-    title: 'CAPS Term 1 Controlled Assessment',
+    title: 'Term 1 Controlled Assessment',
     type: 'Controlled Test', // Exam | Controlled Test | Quiz | Assignment
     subject: 'Accounting',
     grade: '10',
@@ -282,7 +282,7 @@ export default function TeacherAssessmentsTab({
 
         <div className="flex items-center gap-2 px-2">
           <span className="text-xs text-slate-500 font-sans hidden md:inline">
-            CAPS Formal Assessment Task (FAT) Engine
+            Formal Assessment Task (FAT) Engine
           </span>
         </div>
       </div>

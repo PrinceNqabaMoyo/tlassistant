@@ -60,18 +60,27 @@ test.describe('Autonomous Mock User Autopilot — Pipeline A: Independent Learne
     });
     await page1.waitForTimeout(600);
 
-    // 4. Enter Student Workspace via Instant Demo or Explore
-    await updateHud(page1, 'LESEDI KHUMALO', 'Launching Grade 10 Learner Workspace');
-    const demoBtn = page1.locator('[data-testid="btn-demo-student-login"]');
-    if (await demoBtn.isVisible()) {
-      await glideAndClick(page1, '[data-testid="btn-demo-student-login"]', {
+    // Select Direct Subscription to test EFT POP flow
+    const directPlanRadio = page1.locator('[data-testid="radio-plan-direct-sub"]').first();
+    if (await directPlanRadio.isVisible()) {
+      await updateHud(page1, 'LESEDI KHUMALO', 'Selecting Direct Subscription Plan (EFT Flow)');
+      await glideAndClick(page1, '[data-testid="radio-plan-direct-sub"]', {
         persona: 'LESEDI KHUMALO',
-        message: 'Entering Student Workspace'
+        message: 'Selecting Direct Subscription (Skip trial)'
       });
+      await page1.waitForTimeout(500);
     }
 
-    await page1.waitForTimeout(1500);
-    await injectGlidingCursorAndHud(page1);
+    // Submit Registration Form
+    await updateHud(page1, 'LESEDI KHUMALO', 'Submitting Registration to enter Subscription flow');
+    const submitBtn = page1.locator('[data-testid="btn-auth-submit"]').first();
+    if (await submitBtn.isVisible()) {
+      await glideAndClick(page1, '[data-testid="btn-auth-submit"]', {
+        persona: 'LESEDI KHUMALO',
+        message: 'Submitting CAPS Grade 10 Registration'
+      });
+      await page1.waitForTimeout(1500);
+    }
 
     // 5. Navigate to Subscription / EFT Page
     await updateHud(page1, 'LESEDI KHUMALO', 'Navigating to Subscription & EFT POP Upload');
@@ -123,31 +132,11 @@ test.describe('Autonomous Mock User Autopilot — Pipeline A: Independent Learne
     });
     const page2 = await context2.newPage();
 
-    await page2.goto('/', { waitUntil: 'domcontentloaded' });
+    await page2.goto('/?sandbox', { waitUntil: 'domcontentloaded' });
     await page2.waitForTimeout(500);
     await injectGlidingCursorAndHud(page2);
     await updateHud(page2, 'MR. VINAY PILLAY', 'Logging into Super Admin Cockpit • Westville High');
     await page2.waitForTimeout(1000);
-
-    // If on landing page, click Sign in / demo login to enter authenticated state
-    const landingSignIn = page2.locator('[data-testid="btn-landing-signin"]').first();
-    if (await landingSignIn.isVisible()) {
-      await glideAndClick(page2, '[data-testid="btn-landing-signin"]', {
-        persona: 'MR. VINAY PILLAY',
-        message: 'Opening Authentication Portal'
-      });
-      await page2.waitForTimeout(600);
-    }
-
-    const demoLogin = page2.locator('[data-testid="btn-demo-student-login"]').first();
-    if (await demoLogin.isVisible()) {
-      await glideAndClick(page2, '[data-testid="btn-demo-student-login"]', {
-        persona: 'MR. VINAY PILLAY',
-        message: 'Authenticating Privileged Session'
-      });
-      await page2.waitForTimeout(1000);
-      await injectGlidingCursorAndHud(page2);
-    }
 
     // Open User Profile Modal to switch to Admin perspective
     const profileBtn = page2.locator('button[title*="Profile"], button:has-text("Welcome")').first();

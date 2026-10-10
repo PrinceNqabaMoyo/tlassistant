@@ -1,9 +1,9 @@
 # Fundile National Curriculum Full Stack Mock Testing Master Plan (Grades 7–12)
 
-**Version:** 1.0.0  
+**Version:** 1.1.0  
 **Protocol:** Step-by-Step Interactive Human-in-the-Loop Certification  
 **Testing Principle:** The Super Admin (You) manually approves all payments and inspects live state transitions with your own eyes. No blackbox automation until manual verification of each set is complete.  
-**Payment Ratio:** 95% submit Proof of Payment (EFT) requiring manual Super Admin approval; 5% sample the 2-week free trial.  
+**Payment Ratio:** 90% submit Proof of Payment (EFT) requiring manual Super Admin approval; 10% sample the 2-week free trial.  
 **Scope:** 100% of South African CAPS Subjects across Senior Phase (Grades 7–9) and FET Phase (Grades 10–12).
 
 ---
@@ -12,16 +12,16 @@
 
 | Set | Grade & Focus | Concurrent Stakeholders | Cognitive Modality | Payment Mode | Status |
 | :---: | :--- | :--- | :--- | :---: | :---: |
-| **Set 1** | **Gr 10 FET Core**<br>Mathematics & Accounting | Lesedi Khumalo (Learner)<br>Super Admin (You) | 2D Ledger Table + KaTeX/SymPy | R349 Term Pass (EFT) | 🟡 **Ready to Run** |
-| **Set 2** | **Gr 7 Senior Phase Foundation**<br>Maths (Nets, Patterns & Div) & EMS | Ayanda Ndlovu (Learner)<br>Mrs. P. Khumalo (Teacher, `MTH701`)<br>Mr. S. Ndlovu (Parent)<br>Super Admin (You) | Columnar Long Division Grid + Geometric Net Unfolding SVG + Source Documents | R349 Term Pass (EFT) | ⚪ Queued |
-| **Set 3** | **Gr 8 Senior Phase**<br>Maths & Natural Sciences | Bongani Sithole (Learner)<br>Mr. D. Naidoo (Teacher, `SCI802`)<br>Mrs. T. Sithole (Parent)<br>Super Admin (You) | Symbolic Algebra + Particle Matter Diagrams | R149 Monthly (EFT) | ⚪ Queued |
-| **Set 4** | **Gr 9 Senior Phase Transition**<br>EMS & Natural Sciences | Zanele Mthembu (Learner)<br>Mrs. V. Pillay (Teacher, `EMS903`)<br>Super Admin (You) | Accounting Equation (A = O + L) + Ohm's Law Circuits | **2-Week Free Trial**<br>*(5% Sample)* | ⚪ Queued |
-| **Set 5** | **Gr 10 Commercial & Applied**<br>Business Studies & Maths Lit | Siyabonga Cele (Learner)<br>Super Admin (You) | Environmental Rubric + Tariff Rate Schedules | R149 Monthly (EFT) | ⚪ Queued |
-| **Set 6** | **Gr 11 Physical & Tech Maths**<br>Physical Sciences & Tech Maths | Ntsako Baloyi (Learner)<br>Dr. K. Mokoena (Teacher, `PHY110`)<br>Super Admin (You) | Vector Resolution & SI Units + Radians & Complex Numbers | R349 Term Pass (EFT) | ⚪ Queued |
-| **Set 7** | **Gr 11 Life Sciences & Accounting**<br>Life Sciences & Asset Accounting | Kelebogile Dlamini (Learner)<br>Mrs. N. Dlamini (Parent)<br>Super Admin (You) | Biological Process Flowcharts + Depreciation Schedules | R349 Term Pass (EFT) | ⚪ Queued |
-| **Set 8** | **Gr 12 Matric Distinction Peak**<br>Mathematics & Physical Sciences | Prince Mthembu (Learner)<br>Mr. V. Pillay (Principal / HOD)<br>Super Admin (You) | Differential Calculus [M][CA] + Chemical Equilibrium Kc | R999 Annual (EFT) | ⚪ Queued |
-| **Set 9** | **Gr 12 Corporate & Governance**<br>Accounting & Business Studies | Thabo Molefe (Learner)<br>Mr. N. Sithole (Teacher, `ACC12B`)<br>Super Admin (You) | Published Corporate Balance Sheet + King IV / Companies Act Rubrics | R349 Term Pass (EFT) | ⚪ Queued |
-| **Set 10** | **Gr 12 Applied & Technical**<br>Technical Maths & Maths Lit | Lerato Khanyile (Learner)<br>Mr. J. Khanyile (Parent)<br>Super Admin (You) | Integration Mechanics + SARS Tax Brackets (PAYE) | R149 Monthly (EFT) | ⚪ Queued |
+| **Set 1** | **Gr 10 FET Core**<br>Mathematics & Accounting | Lesedi Khumalo (Learner)<br>Super Admin (You) | 2D Ledger Table + KaTeX/SymPy | R349 Term Pass (EFT)<br>*(90% Paid Cohort)* | 🟡 **Ready to Run** |
+| **Set 2** | **Gr 7 Senior Phase Foundation**<br>Maths (3D Geometric Nets, Patterns & Div) & EMS (Source Docs) | Ayanda Ndlovu (Learner)<br>Mrs. P. Khumalo (Teacher, `MTH701`)<br>Mr. S. Ndlovu (Parent)<br>Super Admin (You) | Columnar Long Division Grid + Geometric Net Unfolding SVG + Source Documents | R349 Term Pass (EFT)<br>*(90% Paid Cohort)* | ⚪ Queued |
+| **Set 3** | **Gr 8 Senior Phase Core**<br>Maths (Linear Eq & Integers) & Natural Sciences (Density $\rho = m/V$) | Bongani Sithole (Learner)<br>Mr. D. Naidoo (Teacher, `SCI802`)<br>Mrs. T. Sithole (Parent)<br>Super Admin (You) | Symbolic Algebra + Particle Matter Diagrams | R149 Monthly (EFT)<br>*(90% Paid Cohort)* | ⚪ Queued |
+| **Set 4** | **Gr 9 Senior Phase Transition**<br>EMS (Accounting Eq $A=O+L$) & Natural Sciences (Circuits & Ohm's Law) | Zanele Mthembu (Learner)<br>Mrs. V. Pillay (Teacher, `EMS903`)<br>Super Admin (You) | Accounting Equation (A = O + L) + Ohm's Law Circuits | **2-Week Free Trial**<br>*(10% Sample)* | ⚪ Queued |
+| **Set 5** | **Gr 10 Commercial & Applied**<br>Business Studies & Maths Lit (Tiered Tariffs) | Siyabonga Cele (Learner)<br>Super Admin (You) | Environmental Rubric + Tariff Rate Schedules | R149 Monthly (EFT)<br>*(90% Paid Cohort)* | ⚪ Queued |
+| **Set 6** | **Gr 11 Physical & Tech Maths**<br>Physical Sciences (Vectors & Incline) & Tech Maths (Complex Numbers & Radians) | Ntsako Baloyi (Learner)<br>Dr. K. Mokoena (Teacher, `PHY110`)<br>Super Admin (You) | Vector Resolution & SI Units + Radians & Complex Numbers | R349 Term Pass (EFT)<br>*(90% Paid Cohort)* | ⚪ Queued |
+| **Set 7** | **Gr 11 Life Sciences & Accounting**<br>Life Sciences (Respiration/ATP) & Asset Accounting (Depreciation) | Kelebogile Dlamini (Learner)<br>Mrs. N. Dlamini (Parent)<br>Super Admin (You) | Biological Process Flowcharts + Depreciation Schedules | R349 Term Pass (EFT)<br>*(90% Paid Cohort)* | ⚪ Queued |
+| **Set 8** | **Gr 12 Matric Distinction Peak**<br>Mathematics (Calculus [M][CA]) & Physical Sciences (Equilibrium $K_c$) | Prince Mthembu (Learner)<br>Mr. V. Pillay (Principal / HOD)<br>Super Admin (You) | Differential Calculus [M][CA] + Chemical Equilibrium Kc | R999 Annual (EFT)<br>*(90% Paid Cohort)* | ⚪ Queued |
+| **Set 9** | **Gr 12 Corporate & Governance**<br>Accounting (Published Statements) & Business Studies (King IV) | Thabo Molefe (Learner)<br>Mr. N. Sithole (Teacher, `ACC12B`)<br>Super Admin (You) | Published Corporate Balance Sheet + King IV / Companies Act Rubrics | R349 Term Pass (EFT)<br>*(90% Paid Cohort)* | ⚪ Queued |
+| **Set 10** | **Gr 12 Applied & Technical**<br>Technical Maths (Integral Calculus) & Maths Lit (SARS Tax Brackets) | Lerato Khanyile (Learner)<br>Mr. J. Khanyile (Parent)<br>Super Admin (You) | Integration Mechanics + SARS Tax Brackets (PAYE) | R149 Monthly (EFT)<br>*(90% Paid Cohort)* | ⚪ Queued |
 | **Set 11** | **Cross-Grade Adaptive Descent**<br>Gr 12 -> Gr 10 -> Gr 8 Regression | Sibusiso Zulu (Struggling Learner)<br>HOD / Principal Pillay<br>Super Admin (You) | Automated Prerequisite Descent & Foundational Repair | Systemic License Sync | ⚪ Queued |
 
 ---
@@ -69,7 +69,9 @@
   - `subtraction_borrowing_inversion`: Student subtracts smaller from larger in column borrowing slip (enters `128` instead of `169`).
   - `source_doc_receipt_vs_invoice`: Confusing cash received document with credit invoice.
 - **Payment & Linking Workflow:**
-  - Enrolls via Teacher Join Code `MTH701` → Error recovery on arithmetic grid → Generates 15-minute ephemeral linking passcode `PAR-7892`.
+  - Fresh signup → Selects `[○] Skip trial & proceed straight to subscription` → Selects **School Term Pass (R349 / 3 Months)** → Attaches Nedbank EFT POP (`e2e/fixtures/sample_pop.pdf`).
+  - **You open Super Admin**: Inspect pending slip in EFT Approvals desk → Click **`3 Mo (Term)`** button.
+  - **Live Verification**: Student paywall drops in real time → Enrolls via Teacher Join Code `MTH701` → Error recovery on arithmetic grid → Generates 15-minute ephemeral linking passcode `PAR-7892`.
   - **Mr. Sipho Ndlovu (Parent)** redeems `PAR-7892` on mobile viewport → Inspects in-app Sunday Academic Pulse showing **1.4 MB cellular data consumption** (< 2 MB PWA vs 450 MB video tutoring) and the repaired cognitive card.
 
 ---
@@ -108,8 +110,8 @@
 - **Misconceptions Targeted:**
   - `owner_equity_expense_inversion`: Recording an expense as an increase in Owner's Equity.
   - `series_parallel_current_confusion`: Assuming current splits in a series circuit.
-- **Payment Workflow (The 5% Trial Sample):**
-  - Fresh signup → **Activates 14-Day Free Diagnostic Trial** → Banner displays countdown ("14 Days Remaining on Trial") → Workspace unlocks immediately with zero payment friction.
+- **Payment Workflow (The 10% Free Trial Sample):**
+  - Fresh signup → Selects `[●] Start with 14-day free trial` → Immediate activation with 48h email verification grace window → Header displays grade-scoped trial countdown ("14 Days Remaining on Trial") → Workspace unlocks immediately with zero payment friction.
 
 ---
 

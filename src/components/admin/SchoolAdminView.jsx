@@ -348,7 +348,7 @@ const ATP_PACING_DATA = [
     masteryDepth: 78,
     benchmarkMastery: 65,
     enrolledLearners: 140,
-    currentTopic: 'Term 1 CAPS Formal Assessment Review',
+    currentTopic: 'Term 1 Formal Assessment Review',
     nextMilestone: 'Term 2 Business Sectors Kickoff',
     weeklyTopics: [
       { week: 1, topic: 'Micro, Market & Macro Business Environments', status: 'completed', mastery: 68 },
@@ -1353,7 +1353,7 @@ const SchoolAdminView = ({ currentUser, onBack }) => {
                   </h1>
                   <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800">
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5 animate-pulse" />
-                    CAPS ATP Live
+                    Curriculum ATP Live
                   </span>
                 </div>
                 <p className="text-xs text-slate-500 flex items-center space-x-2 mt-0.5">
@@ -1552,7 +1552,7 @@ const SchoolAdminView = ({ currentUser, onBack }) => {
                     Annual Teaching Plan (ATP) Curriculum Heatmap — Term {selectedTerm}
                   </h2>
                   <p className="text-xs text-slate-500 mt-0.5">
-                    Live pacing tracker across CAPS subjects (Grades 7–12) benchmarked against National Department of Basic Education ATP schedules.
+                    Live pacing tracker across curriculum subjects (Grades 7–12) benchmarked against National Department of Basic Education ATP schedules.
                   </p>
                 </div>
 
@@ -2196,7 +2196,7 @@ const SchoolAdminView = ({ currentUser, onBack }) => {
                 </div>
 
                 <div className="flex items-center space-x-1.5 text-xs text-slate-600">
-                  <span className="font-semibold">CAPS Level:</span>
+                  <span className="font-semibold">Curriculum Level:</span>
                   <select
                     value={sasamsLevelFilter}
                     onChange={(e) => setSasamsLevelFilter(e.target.value)}
@@ -2228,7 +2228,7 @@ const SchoolAdminView = ({ currentUser, onBack }) => {
                       <th className="py-3.5 px-4 text-center">Formative (40%)</th>
                       <th className="py-3.5 px-4 text-center">Formal Exam (60%)</th>
                       <th className="py-3.5 px-4 text-center">Term 1 Mark</th>
-                      <th className="py-3.5 px-4">CAPS Level & Descriptor</th>
+                      <th className="py-3.5 px-4">Curriculum Level &amp; Descriptor</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-slate-100">
@@ -2586,7 +2586,7 @@ const SchoolAdminView = ({ currentUser, onBack }) => {
                   Invite Faculty Educator
                 </h3>
                 <p className="text-xs text-slate-500">
-                  Onboard a new high school teacher to Fundile School Admin with verified CAPS permissions.
+                  Onboard a new high school teacher to Fundile School Admin with verified curriculum permissions.
                 </p>
               </div>
             </div>
@@ -2725,7 +2725,7 @@ const SchoolAdminView = ({ currentUser, onBack }) => {
               </div>
               <div>
                 <h3 className="text-xl font-bold text-slate-900 font-afacad">
-                  CAPS ATP Schedule: {inspectingSubject.subject} Grade {inspectingSubject.grade}
+                  Curriculum ATP Schedule: {inspectingSubject.subject} Grade {inspectingSubject.grade}
                 </h3>
                 <p className="text-xs text-slate-500">
                   HOD: <span className="font-semibold text-slate-700">{inspectingSubject.hod}</span> • Term {selectedTerm} (Weeks 1–{inspectingSubject.totalWeeks})
@@ -2872,7 +2872,7 @@ const SchoolAdminView = ({ currentUser, onBack }) => {
                   </div>
 
                   <div className="text-[11px] text-slate-500 bg-white p-2 rounded-md border border-slate-100">
-                    <strong className="text-slate-700">CAPS Rationale:</strong> {qItem.explanation}
+                    <strong className="text-slate-700">Curriculum Rationale:</strong> {qItem.explanation}
                   </div>
                 </div>
               ))}

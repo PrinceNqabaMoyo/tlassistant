@@ -645,10 +645,42 @@ export default function App() {
     }
   }, [activePersona]);
 
-  const effectiveRole = activePersona ? activePersona.role : (currentUser?.isSuperAdmin ? superAdminMode : currentUser?.role);
+  const [parentDualUseChild, setParentDualUseChild] = useState(null);
+
+  const handleLaunchLearnerWorkspace = useCallback((childProfile) => {
+    if (!childProfile) return;
+    const numericGrade = Number(String(childProfile.grade || '10').replace(/\D/g, '')) || 10;
+    studentStore.setStudentProfile(childProfile.name, numericGrade, childProfile.school || 'High School');
+    setSelectedGrade(numericGrade);
+    setParentDualUseChild(childProfile);
+  }, [setSelectedGrade]);
+
+  const handleExitParentDualUse = useCallback(() => {
+    setParentDualUseChild(null);
+  }, []);
+
+  const effectiveRole = parentDualUseChild
+    ? 'student'
+    : (activePersona ? activePersona.role : (currentUser?.isSuperAdmin ? superAdminMode : currentUser?.role));
   const effectiveTier = currentUser?.isSuperAdmin || currentUser?.isOwner ? superAdminTier : currentUser?.tier;
   const effectiveCurrentUser = useMemo(
     () => {
+      if (parentDualUseChild) {
+        const numericGrade = Number(String(parentDualUseChild.grade || '10').replace(/\D/g, '')) || 10;
+        return {
+          ...currentUser,
+          uid: currentUser?.uid,
+          name: parentDualUseChild.name,
+          displayName: parentDualUseChild.name,
+          grade: numericGrade,
+          school: parentDualUseChild.school || 'High School',
+          role: 'student',
+          tier: effectiveTier,
+          isParentDualUse: true,
+          parentDualUseChild,
+          parentUser: currentUser,
+        };
+      }
       if (activePersona) {
         return {
           ...currentUser,
@@ -660,7 +692,7 @@ export default function App() {
       }
       return currentUser ? { ...currentUser, role: effectiveRole, tier: effectiveTier } : null;
     },
-    [currentUser, activePersona, effectiveRole, effectiveTier]
+    [currentUser, activePersona, effectiveRole, effectiveTier, parentDualUseChild]
   );
   const isWithin48hGrace = useMemo(() => {
     if (!effectiveCurrentUser) return false;
@@ -1146,6 +1178,9 @@ export default function App() {
       effectiveCurrentUser,
       effectiveRole,
     },
+    parentProps: {
+      onLaunchLearnerWorkspace: handleLaunchLearnerWorkspace,
+    },
     roleState: {
       adminView,
       setAdminView,
@@ -1385,9 +1420,34 @@ export default function App() {
 
   // If student: render the modern unified LearnerAppContainer (desktop folder tabs on PC, mobile bottom carousel on phone)
   if (effectiveRole === 'student' || !effectiveRole) {
+    const parentReturnRibbon = parentDualUseChild ? (
+      <aside aria-label="Dual-Use Mode Active" className="bg-gradient-to-r from-[#13519C] via-[#0f4280] to-[#13519C] border-b border-blue-400/40 text-white px-4 py-2 flex items-center justify-between shadow-md text-xs shrink-0 z-50">
+        <div className="flex items-center gap-2">
+          <span className="bg-[#FF9100] text-slate-950 font-extrabold px-2 py-0.5 rounded text-[10px] uppercase tracking-wider shadow-xs">
+            Dual-Use Account Active
+          </span>
+          <span className="font-medium text-slate-100 hidden sm:inline">
+            Guardian Account hosting learner:
+          </span>
+          <span className="font-bold text-white bg-white/20 px-2 py-0.5 rounded text-xs">
+            {parentDualUseChild.name} ({parentDualUseChild.grade})
+          </span>
+        </div>
+        <button
+          type="button"
+          data-testid="btn-return-guardian-portal"
+          onClick={handleExitParentDualUse}
+          className="bg-white text-[#13519C] hover:bg-slate-100 font-bold px-3 py-1.5 rounded-xl text-xs flex items-center gap-1.5 transition shadow-xs cursor-pointer active:scale-95"
+        >
+          <span>👨‍👩‍👧 Return to Guardian Portal</span>
+        </button>
+      </aside>
+    ) : null;
+
     if (!isStandaloneApp()) {
       return (
         <div className="h-[100dvh] md:min-h-screen flex flex-col bg-slate-900 overflow-hidden md:overflow-visible">
+          {parentReturnRibbon}
           <div className="hidden md:block">
             <Header
               currentUser={effectiveCurrentUser}
@@ -1431,24 +1491,27 @@ export default function App() {
     }
 
     return (
-      <>
-        <LearnerAppContainer 
-          isSandboxMode={false} 
-          currentUser={effectiveCurrentUser} 
-          onOpenPersonaSwitcher={() => setShowPersonaSwitcher(true)}
-          onLogout={handleAppLogout}
-          superAdminMode={superAdminMode}
-          setSuperAdminMode={handleSetSuperAdminMode}
-          superAdminTier={superAdminTier}
-          setSuperAdminTier={setSuperAdminTier}
-        />
+      <div className="h-[100dvh] flex flex-col overflow-hidden">
+        {parentReturnRibbon}
+        <div className="flex-1 min-h-0">
+          <LearnerAppContainer 
+            isSandboxMode={false} 
+            currentUser={effectiveCurrentUser} 
+            onOpenPersonaSwitcher={() => setShowPersonaSwitcher(true)}
+            onLogout={handleAppLogout}
+            superAdminMode={superAdminMode}
+            setSuperAdminMode={handleSetSuperAdminMode}
+            superAdminTier={superAdminTier}
+            setSuperAdminTier={setSuperAdminTier}
+          />
+        </div>
         <PersonaSwitcherModal
           isOpen={showPersonaSwitcher}
           onClose={() => setShowPersonaSwitcher(false)}
           currentUser={effectiveCurrentUser}
           onSwitchPersona={handleSwitchPersona}
         />
-      </>
+      </div>
     );
   }
 

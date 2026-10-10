@@ -337,7 +337,7 @@ const SchoolSimulation = ({ isLightPalette = true, onGetStarted, onSelectPerspec
                             <div className="p-3 bg-slate-50 border border-slate-200 rounded-xl">
                                 <span className="text-[10px] font-bold text-slate-500 uppercase">Syllabus Pacing</span>
                                 <p className="text-2xl font-extrabold text-emerald-600 mt-0.5">91%</p>
-                                <span className="text-[10px] text-slate-500 font-semibold">Term 2 CAPS Target</span>
+                                <span className="text-[10px] text-slate-500 font-semibold">Term 2 Syllabus Target</span>
                             </div>
                             <div className="p-3 bg-slate-50 border border-slate-200 rounded-xl">
                                 <span className="text-[10px] font-bold text-slate-500 uppercase">Educators</span>
@@ -444,11 +444,11 @@ const SchoolSimulation = ({ isLightPalette = true, onGetStarted, onSelectPerspec
                             <div className="flex gap-2">
                                 <button
                                     type="button"
-                                    onClick={() => alert('Downloading official Department CAPS Compliance Audit PDF...')}
+                                    onClick={() => alert('Downloading official Department Curriculum Compliance Audit PDF...')}
                                     className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white border border-slate-300 font-bold text-slate-700 hover:bg-slate-100 transition cursor-pointer"
                                 >
                                     <Download className="h-3.5 w-3.5" />
-                                    <span>Download CAPS Audit PDF</span>
+                                    <span>Download Curriculum Audit PDF</span>
                                 </button>
                             </div>
                         </div>

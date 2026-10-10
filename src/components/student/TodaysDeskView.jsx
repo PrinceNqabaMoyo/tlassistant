@@ -50,7 +50,7 @@ const SUBJECT_DETAILS = {
   physical_sciences: {
     topic: 'Motion in 1D & Constant Acceleration',
     stage: 'Stage 1: Scaffold',
-    desc: 'CAPS equations of motion, displacement vectors, acceleration.',
+    desc: 'Equations of motion, displacement vectors, acceleration.',
   },
   life_sciences: {
     topic: 'Cell Division: Mitosis & Microscope Slides',
@@ -109,7 +109,7 @@ export default function TodaysDeskView({
     : null;
   const currentDetails = {
     ...(SUBJECT_DETAILS[currentSubjItem.id] || {
-      topic: 'Foundational CAPS Drill',
+      topic: 'Foundational Drill',
       stage: 'Stage 2: Practice',
       desc: 'Core procedural calculations and conceptual practice.'
     }),
@@ -540,7 +540,7 @@ export default function TodaysDeskView({
                     {task.title}
                   </h4>
                   <p className="text-xs text-slate-600 mt-1">
-                    Assigned by <strong>{task.assignedBy || 'Faculty'}</strong> • {task.marks || 10} Marks • {task.notes || 'Targeted CAPS practice.'}
+                    Assigned by <strong>{task.assignedBy || 'Faculty'}</strong> • {task.marks || 10} Marks • {task.notes || 'Targeted practice.'}
                   </p>
                 </div>
 

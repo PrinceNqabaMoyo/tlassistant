@@ -186,7 +186,7 @@ export default function LedgerModalityRenderer({
                             <BookOpen className="w-3.5 h-3.5" />
                         </span>
                         <span className="text-xs font-bold text-[#13519C] uppercase tracking-wide">
-                            CAPS Accounting Rules &amp; Double-Entry Equation
+                            Accounting Rules &amp; Double-Entry Equation
                         </span>
                     </div>
                     <button

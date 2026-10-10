@@ -61,7 +61,7 @@ const LandingPage = ({ onGetStarted, onSignIn, onViewSubscription, onNavigatePri
     const isDirectAuthMode = landingCtaMode === 'direct_auth';
     const primaryCtaLabel = isDirectAuthMode ? 'Create Account' : HERO_COPY.primaryCta;
     const trialNoteLabel = isDirectAuthMode
-        ? '100% CAPS-aligned • Grades 7–12 full curriculum coverage'
+        ? '100% Aligned with South African Curriculum Standards • Grades 7–12'
         : HERO_COPY.trialNote;
 
     // Auto-cycling highlight ticker on mobile viewports every 3.5s

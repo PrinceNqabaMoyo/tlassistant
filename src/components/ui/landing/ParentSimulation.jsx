@@ -118,7 +118,7 @@ const ParentSimulation = ({ isLightPalette = true, onGetStarted, onSelectPerspec
                                         {current.pdfFilename}
                                     </h4>
                                     <span className="text-[11px] text-blue-100">
-                                        Authentic South African CAPS Diagnostic Report • {current.fileSize}
+                                        Authentic South African Diagnostic Report • {current.fileSize}
                                     </span>
                                 </div>
                             </div>
@@ -155,7 +155,7 @@ const ParentSimulation = ({ isLightPalette = true, onGetStarted, onSelectPerspec
                                     <span className="text-xl font-bold text-[#13519C]">{current.mastery}%</span>
                                 </div>
                                 <div className="bg-white p-3 rounded-xl border border-slate-200 shadow-xs">
-                                    <span className="text-[10px] text-slate-500 font-bold uppercase block">CAPS Standing</span>
+                                    <span className="text-[10px] text-slate-500 font-bold uppercase block">Curriculum Standing</span>
                                     <span className="text-xs font-bold text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded inline-block mt-1">
                                         {current.level}
                                     </span>
@@ -227,7 +227,7 @@ const ParentSimulation = ({ isLightPalette = true, onGetStarted, onSelectPerspec
                             {/* Verification & POPIA Notice */}
                             <div className="text-[10px] text-slate-500 border-t border-slate-200 pt-2 flex flex-col sm:flex-row justify-between items-center gap-2">
                                 <span>100% POPIA Section 35 Minor Privacy Compliant</span>
-                                <span>Verified NSC/CAPS Syllabus Alignment</span>
+                                <span>Verified National Curriculum Syllabus Alignment</span>
                             </div>
                         </div>
 
@@ -277,7 +277,7 @@ const ParentSimulation = ({ isLightPalette = true, onGetStarted, onSelectPerspec
                 {[
                     { id: 'whatsapp', label: '1. WhatsApp Weekly PDF Report', icon: MessageCircle, badge: 'Official A4 Report' },
                     { id: 'data', label: '2. 98% Mobile Data Savings', icon: Zap, badge: '1.6MB vs 450MB' },
-                    { id: 'readiness', label: '3. CAPS Exam Readiness', icon: Award, badge: 'Verified Mastery' },
+                    { id: 'readiness', label: '3. Exam Readiness', icon: Award, badge: 'Verified Mastery' },
                 ].map((tab) => {
                     const Icon = tab.icon;
                     const isActive = activeTab === tab.id;
@@ -565,7 +565,7 @@ const ParentSimulation = ({ isLightPalette = true, onGetStarted, onSelectPerspec
 
                                                 {/* Digest Micro-Stats */}
                                                 <div className="bg-blue-50/80 border border-blue-100 p-2 rounded-lg text-[10px] flex justify-between items-center">
-                                                    <span className="text-slate-600 font-medium">CAPS Readiness:</span>
+                                                    <span className="text-slate-600 font-medium">Exam Readiness:</span>
                                                     <span className="font-bold text-[#13519C]">{current.mastery}% ({current.level})</span>
                                                 </div>
 
@@ -611,7 +611,7 @@ const ParentSimulation = ({ isLightPalette = true, onGetStarted, onSelectPerspec
                                                 <h4 className="font-bold text-sm text-slate-900 mt-0.5 leading-tight">
                                                     {current.name} • {current.grade}
                                                 </h4>
-                                                <span className="text-[10px] text-slate-500">CAPS Term Evaluation • Overall Mastery: {current.mastery}%</span>
+                                                <span className="text-[10px] text-slate-500">Term Evaluation • Overall Mastery: {current.mastery}%</span>
                                             </div>
 
                                             {/* Procedural Flaw Autopsy */}

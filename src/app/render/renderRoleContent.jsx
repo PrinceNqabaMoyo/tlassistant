@@ -15,6 +15,7 @@ export default function RenderRoleContent({ roleContentProps }) {
     roleState,
     services,
     studentContentProps,
+    parentProps,
   } = roleContentProps;
 
   const {
@@ -59,7 +60,13 @@ export default function RenderRoleContent({ roleContentProps }) {
       return <TeacherView view={teacherView} setView={setTeacherView} db={dbService} currentUser={effectiveCurrentUser} />;
     }
     if (effectiveRole === 'parent') {
-      return <ParentDashboard currentUser={effectiveCurrentUser} db={dbService} />;
+      return (
+        <ParentDashboard 
+          currentUser={effectiveCurrentUser} 
+          db={dbService} 
+          onLaunchLearnerWorkspace={parentProps?.onLaunchLearnerWorkspace} 
+        />
+      );
     }
     if (effectiveRole === 'school' || effectiveRole === 'school_admin') {
       return <SchoolAdminView currentUser={effectiveCurrentUser} />;
@@ -75,7 +82,13 @@ export default function RenderRoleContent({ roleContentProps }) {
   }
 
   if (effectiveRole === 'parent') {
-    return <ParentDashboard currentUser={effectiveCurrentUser} db={dbService} />;
+    return (
+      <ParentDashboard 
+        currentUser={effectiveCurrentUser} 
+        db={dbService} 
+        onLaunchLearnerWorkspace={parentProps?.onLaunchLearnerWorkspace} 
+      />
+    );
   }
 
   if (effectiveRole === 'school' || effectiveRole === 'school_admin') {

@@ -1136,7 +1136,7 @@ export default function ComplexPlaneExplorer({
       <div className="px-5 py-3 border-t border-slate-800 bg-slate-950 flex flex-wrap items-center justify-between gap-2 text-xs text-slate-400">
         <div className="flex items-center gap-1.5">
           <CheckCircle className="w-3.5 h-3.5 text-emerald-400" />
-          <span>CAPS FET Mathematics Grade 11-12 &amp; Technical Mathematics Enrichment</span>
+          <span>National Curriculum FET Mathematics Grade 11-12 &amp; Technical Mathematics Enrichment</span>
         </div>
         <div className="font-mono text-[11px] text-slate-400">Fundile Cognitive Explorers</div>
       </div>

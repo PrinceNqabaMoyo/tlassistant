@@ -71,7 +71,7 @@ export default function ArithmeticGridModalityRenderer({
                 <div className="flex flex-wrap items-center justify-between gap-3 mb-4 pb-3 border-b border-slate-100">
                     <div>
                         <span className="text-[10px] font-extrabold px-2 py-0.5 rounded bg-blue-50 text-[#13519C] border border-blue-200 uppercase tracking-wider font-mono">
-                            Long Division Algorithm • CAPS Grade 7
+                            Long Division Algorithm • Grade 7 Standard
                         </span>
                         <h4 className="text-sm font-bold text-slate-800 mt-1" style={{ fontFamily: 'Afacad, sans-serif' }}>
                             Columnar Division Bracket &amp; Place-Value Grid
