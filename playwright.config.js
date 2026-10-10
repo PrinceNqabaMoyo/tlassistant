@@ -18,7 +18,7 @@ export default defineConfig({
     ['html', { outputFolder: 'playwright-report', open: 'never' }]
   ],
   use: {
-    baseURL: 'http://127.0.0.1:5173',
+    baseURL: process.env.PLAYWRIGHT_BASE_URL || 'https://caps-ai-math-assistant-app.web.app',
     trace: 'retain-on-failure',
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',
@@ -26,13 +26,17 @@ export default defineConfig({
       slowMo: process.env.SLOWMO ? parseInt(process.env.SLOWMO, 10) : 350,
     },
   },
-  // Automatically spin up Vite dev server if not already running
-  webServer: {
-    command: 'npm run dev',
-    url: 'http://127.0.0.1:5173',
-    reuseExistingServer: true,
-    timeout: 120000,
-  },
+  // Spin up local Vite dev server ONLY if explicitly targeting localhost
+  ...(process.env.PLAYWRIGHT_BASE_URL && (process.env.PLAYWRIGHT_BASE_URL.includes('localhost') || process.env.PLAYWRIGHT_BASE_URL.includes('127.0.0.1'))
+    ? {
+        webServer: {
+          command: 'npm run dev',
+          url: 'http://127.0.0.1:5173',
+          reuseExistingServer: true,
+          timeout: 120000,
+        },
+      }
+    : {}),
   projects: [
     {
       name: 'fundile-autopilot',

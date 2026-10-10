@@ -46,7 +46,10 @@ test('Set 1: Deep Multi-Subject Learner Journey — Accounting & Mathematics (Gr
     viewport: { width: 720, height: 880 }
   });
 
-  await page1.goto('http://127.0.0.1:5173/', { waitUntil: 'domcontentloaded' });
+  const targetBaseUrl = process.env.PLAYWRIGHT_BASE_URL || 'https://caps-ai-math-assistant-app.web.app';
+  console.log(`   Target Server: ${targetBaseUrl}`);
+
+  await page1.goto(`${targetBaseUrl}/`, { waitUntil: 'domcontentloaded' });
   await page1.waitForTimeout(600);
   await injectGlidingCursorAndHud(page1);
   await updateHud(page1, 'LESEDI KHUMALO', 'Exploring Landing Page • Grade 10 FET Candidate');
@@ -168,7 +171,7 @@ test('Set 1: Deep Multi-Subject Learner Journey — Accounting & Mathematics (Gr
     viewport: { width: 720, height: 880 }
   });
 
-  await page2.goto('http://127.0.0.1:5173/?sandbox', { waitUntil: 'domcontentloaded' });
+  await page2.goto(`${targetBaseUrl}/?sandbox`, { waitUntil: 'domcontentloaded' });
   await page2.waitForTimeout(600);
   await injectGlidingCursorAndHud(page2);
   await updateHud(page2, 'SUPER ADMIN', 'Opening Super Admin Cockpit • Payment Queue');

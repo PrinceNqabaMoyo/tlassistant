@@ -43,9 +43,12 @@ export async function runParticipantSet(config) {
     breakDurationSec = 15, // short for automated runs, 60s for full demo
   } = config;
 
+  const targetBaseUrl = process.env.PLAYWRIGHT_BASE_URL || 'https://caps-ai-math-assistant-app.web.app';
+
   console.log(`\n🚀 [${setName}] Launching Full Multi-Subject Learner Journey Simulation...`);
   console.log(`   Learner: ${learnerName} (Grade ${grade}, ${isMobile ? 'Mobile Pixel 7' : 'Desktop PWA'})`);
   console.log(`   Email: ${email}`);
+  console.log(`   Target Server: ${targetBaseUrl}`);
   console.log(`   Subjects: ${subject1} & ${subject2 || 'None'}\n`);
 
   // STEP 0: PRE-FLIGHT PURGE (Clean slate)
@@ -77,7 +80,7 @@ export async function runParticipantSet(config) {
     });
   }
 
-  await page1.goto('http://127.0.0.1:5173/', { waitUntil: 'domcontentloaded' });
+  await page1.goto(`${targetBaseUrl}/`, { waitUntil: 'domcontentloaded' });
   await page1.waitForTimeout(600);
   await injectGlidingCursorAndHud(page1);
   await updateHud(page1, learnerName.toUpperCase(), `Launching ${setName} • Grade ${grade}`);
@@ -208,7 +211,7 @@ export async function runParticipantSet(config) {
       args: ['--window-position=745,0', '--window-size=740,980']
     });
     const page2 = await browser2.newPage({ viewport: { width: 720, height: 880 } });
-    await page2.goto('http://127.0.0.1:5173/?sandbox', { waitUntil: 'domcontentloaded' });
+    await page2.goto(`${targetBaseUrl}/?sandbox`, { waitUntil: 'domcontentloaded' });
     await page2.waitForTimeout(600);
     await injectGlidingCursorAndHud(page2);
 
