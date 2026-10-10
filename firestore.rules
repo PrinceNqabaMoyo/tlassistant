@@ -17,6 +17,7 @@ service cloud.firestore {
         );
     }
 
+
     function hasAdminProfile() {
       return signedIn()
         && exists(/databases/$(database)/documents/users/$(request.auth.uid))
@@ -71,7 +72,8 @@ service cloud.firestore {
           'role', 'isSuperAdmin', 'isOwner', 'tier', 'subscriptionStatus', 'subscriptionExpiry'
         ])
       );
-      allow delete: if isAdminUser();
+      // POPIA Section 24 (Right of Erasure) & Pre-Flight Automated Test User Purge
+      allow delete: if isAdminUser() || (signedIn() && request.auth.uid == userId);
 
       match /assignments/{assignmentId} {
         allow read, write: if signedIn() && (request.auth.uid == userId || isAdminUser());
@@ -96,11 +98,11 @@ service cloud.firestore {
           && request.resource.data.userId == resource.data.userId
           && request.resource.data.diff(resource.data).changedKeys().hasOnly(['isRead', 'readAt'])
         );
-        allow delete: if isAdminUser();
+        allow delete: if isAdminUser() || (signedIn() && request.auth.uid == userId);
       }
     }
 
-    // 2. Students & Learner Progression (POPIA Sec 35 Minor Protection)
+    // 2. Students & Learner Progression (POPIA Sec 35 Minor Protection & Sec 24 Erasure)
     match /students/{studentId} {
       allow read: if signedIn() && (
         request.auth.uid == studentId
@@ -108,9 +110,10 @@ service cloud.firestore {
         || (resource.data.linkedParentIds is list && request.auth.uid in resource.data.linkedParentIds)
       );
       allow write: if signedIn() && (request.auth.uid == studentId || isAdminUser());
+      allow delete: if signedIn() && (request.auth.uid == studentId || isAdminUser());
 
       match /sessions/{sessionId} {
-        allow read, write: if signedIn() && (request.auth.uid == studentId || isAdminUser());
+        allow read, write, delete: if signedIn() && (request.auth.uid == studentId || isAdminUser());
       }
 
       match /session_index/{indexId} {
@@ -120,11 +123,11 @@ service cloud.firestore {
           || (get(/databases/$(database)/documents/students/$(studentId)).data.linkedParentIds is list
               && request.auth.uid in get(/databases/$(database)/documents/students/$(studentId)).data.linkedParentIds)
         );
-        allow write: if signedIn() && (request.auth.uid == studentId || isAdminUser());
+        allow write, delete: if signedIn() && (request.auth.uid == studentId || isAdminUser());
       }
 
       match /diagnostics/{diagnosticId} {
-        allow read, write: if signedIn() && (request.auth.uid == studentId || isAdminUser());
+        allow read, write, delete: if signedIn() && (request.auth.uid == studentId || isAdminUser());
       }
     }
 
@@ -143,7 +146,7 @@ service cloud.firestore {
           || resource.data.teacherId == request.auth.uid
           || isAdminUser()
         );
-        allow write: if isTeacherUser() || isAdminUser();
+        allow write, delete: if isTeacherUser() || isAdminUser();
       }
     }
 
@@ -156,9 +159,13 @@ service cloud.firestore {
 
     // 5. Submissions Collection (Learner Submissions & Teacher Marking Review)
     match /submissions/{submissionId} {
-      allow create: if signedIn() && request.resource.data.studentId == request.auth.uid;
+      allow create: if signedIn() && (
+        request.resource.data.studentId == request.auth.uid
+        || request.resource.data.userId == request.auth.uid
+      );
       allow read: if signedIn() && (
         resource.data.studentId == request.auth.uid
+        || resource.data.userId == request.auth.uid
         || resource.data.teacherId == request.auth.uid
         || isAdminUser()
       );
@@ -167,19 +174,25 @@ service cloud.firestore {
         resource.data.teacherId == request.auth.uid
         || isAdminUser()
       );
-      allow delete: if isAdminUser();
+      // POPIA Sec 24 Right of Erasure & Test Purge
+      allow delete: if isAdminUser() || (
+        signedIn() && (
+          resource.data.studentId == request.auth.uid
+          || resource.data.userId == request.auth.uid
+        )
+      );
     }
 
     // 6. Parent Family Hub (Multi-Child Subscriptions & Linking)
     match /parents/{parentId} {
-      allow read, write: if signedIn() && (request.auth.uid == parentId || isAdminUser());
+      allow read, write, delete: if signedIn() && (request.auth.uid == parentId || isAdminUser());
 
       match /children/{childId} {
-        allow read, write: if signedIn() && (request.auth.uid == parentId || isAdminUser());
+        allow read, write, delete: if signedIn() && (request.auth.uid == parentId || isAdminUser());
       }
 
       match /links/{linkCode} {
-        allow read, write: if signedIn() && (request.auth.uid == parentId || isAdminUser());
+        allow read, write, delete: if signedIn() && (request.auth.uid == parentId || isAdminUser());
       }
     }
 
@@ -187,7 +200,13 @@ service cloud.firestore {
     match /pending_payments/{paymentId} {
       allow create: if signedIn() && request.resource.data.userId == request.auth.uid;
       allow read: if isAdminUser() || (signedIn() && resource.data.userId == request.auth.uid);
-      allow update, delete: if isAdminUser();
+      allow update: if isAdminUser() || (
+        signedIn()
+        && resource.data.userId == request.auth.uid
+        && !request.resource.data.diff(resource.data).affectedKeys().hasAny(['status', 'approvedBy', 'approvedAt', 'verifiedAmount'])
+      );
+      // Cancellation by subscriber, POPIA erasure, or test purge
+      allow delete: if isAdminUser() || (signedIn() && resource.data.userId == request.auth.uid);
     }
 
     // 8. Interest Submissions (Landing Page Lead Form)
@@ -246,6 +265,10 @@ service cloud.firestore {
       allow read, write: if isAdminUser();
     }
 
+    match /artifacts/{appId}/users/{userId}/teacher_classes/{classDocId} {
+      allow read, write: if signedIn() && (request.auth.uid == userId || isAdminUser());
+    }
+
     match /chat_rooms/{chatRoomId}/messages/{messageId} {
       allow read, write: if signedIn();
     }
@@ -264,11 +287,48 @@ service cloud.firestore {
 
     // 11. Family Guardians Subcollections (Parent <-> Child Links)
     match /users/{userId}/guardians/{guardianId} {
-      allow read, write: if signedIn() && (request.auth.uid == userId || request.auth.uid == guardianId || isAdminUser());
+      allow read, write, delete: if signedIn() && (request.auth.uid == userId || request.auth.uid == guardianId || isAdminUser());
     }
 
     match /users/{userId}/linked_learners/{studentId} {
-      allow read, write: if signedIn() && (request.auth.uid == userId || request.auth.uid == studentId || isAdminUser());
+      allow read, write, delete: if signedIn() && (request.auth.uid == userId || request.auth.uid == studentId || isAdminUser());
+    }
+
+    // 12. Learner Mastery Collection (Per-Subskill Mastery & BKT Progression)
+    match /learner_mastery/{masteryId} {
+      allow read: if signedIn() && (
+        resource.data.userId == request.auth.uid
+        || resource.data.studentId == request.auth.uid
+        || isAdminUser()
+      );
+      allow create, update: if signedIn() && (
+        request.resource.data.userId == request.auth.uid
+        || request.resource.data.studentId == request.auth.uid
+        || isAdminUser()
+      );
+      allow delete: if isAdminUser() || (
+        signedIn() && (
+          resource.data.userId == request.auth.uid
+          || resource.data.studentId == request.auth.uid
+        )
+      );
+    }
+
+    // 13. Root Assignments & Performance (Teacher Forms & Roster Reporting)
+    match /assignments/{assignmentId} {
+      allow read: if signedIn();
+      allow create: if isTeacherUser() && request.resource.data.teacherId == request.auth.uid;
+      allow update, delete: if isTeacherUser() && (resource.data.teacherId == request.auth.uid || isAdminUser());
+    }
+
+    match /performance/{perfId} {
+      allow read: if signedIn() && (
+        resource.data.studentId == request.auth.uid
+        || resource.data.teacherId == request.auth.uid
+        || isAdminUser()
+      );
+      allow create, update: if isTeacherUser() || isAdminUser();
+      allow delete: if isAdminUser();
     }
   }
 }

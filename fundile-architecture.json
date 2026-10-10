@@ -1399,6 +1399,30 @@
       {
         "collection": "users/{userId}/linked_learners/{studentId}",
         "description": "Verified student records linked to a parent user account with studentId, studentName, grade, and school."
+      },
+      {
+        "collection": "pending_payments/{paymentId}",
+        "description": "Manual EFT Proof of Payment receipts, unique banking references (FND-XXXX), verification status, verified amount, and approved timestamp. Secured against unauthorized status changes."
+      },
+      {
+        "collection": "submissions/{submissionId}",
+        "description": "Learner submissions and teacher marking reviews. Fully compliant with POPIA Section 24 Right of Erasure and test runner pre-flight purges."
+      },
+      {
+        "collection": "learner_mastery/{masteryId}",
+        "description": "Per-subskill mastery, formative BKT ratings, and misconception taxonomy tracking with learner self-purge and POPIA Sec 24 compliance."
+      },
+      {
+        "collection": "performance/{perfId}",
+        "description": "Teacher class performance and diagnostic logs for roster analytics and remediation planning."
+      },
+      {
+        "collection": "parents/{parentId}",
+        "description": "Multi-child household subscription and dual-use single-account learner management hub."
+      },
+      {
+        "collection": "interest_submissions/{submissionId}",
+        "description": "Landing page lead and expression of interest form submissions."
       }
     ],
     "planned": []

@@ -45,20 +45,30 @@ export async function purgeTestUser(email, password = 'Fundile@2026!') {
       }
     } catch (e) {}
 
-    // 3. Query and delete submissions
+    // 3. Query and delete submissions (both userId and studentId)
     try {
       const subQ = query(collection(db, 'submissions'), where('userId', '==', uid));
       const subSnaps = await getDocs(subQ);
       for (const d of subSnaps.docs) {
         await deleteDoc(d.ref).catch(() => {});
       }
+      const subStudentQ = query(collection(db, 'submissions'), where('studentId', '==', uid));
+      const subStudentSnaps = await getDocs(subStudentQ);
+      for (const d of subStudentSnaps.docs) {
+        await deleteDoc(d.ref).catch(() => {});
+      }
     } catch (e) {}
 
-    // 4. Query and delete learner mastery
+    // 4. Query and delete learner mastery (both userId and studentId)
     try {
       const masteryQ = query(collection(db, 'learner_mastery'), where('userId', '==', uid));
       const masterySnaps = await getDocs(masteryQ);
       for (const d of masterySnaps.docs) {
+        await deleteDoc(d.ref).catch(() => {});
+      }
+      const masteryStudentQ = query(collection(db, 'learner_mastery'), where('studentId', '==', uid));
+      const masteryStudentSnaps = await getDocs(masteryStudentQ);
+      for (const d of masteryStudentSnaps.docs) {
         await deleteDoc(d.ref).catch(() => {});
       }
     } catch (e) {}
