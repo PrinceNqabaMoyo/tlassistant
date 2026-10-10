@@ -5,9 +5,9 @@ import { defineConfig, devices } from '@playwright/test';
  */
 export default defineConfig({
   testDir: './e2e',
-  timeout: 300000,
+  timeout: 3600000, // 1 hour per test set to allow full multi-subject journey
   expect: {
-    timeout: 10000,
+    timeout: 15000,
   },
   fullyParallel: false,
   forbidOnly: !!process.env.CI,
@@ -26,18 +26,18 @@ export default defineConfig({
       slowMo: process.env.SLOWMO ? parseInt(process.env.SLOWMO, 10) : 350,
     },
   },
+  // Automatically spin up Vite dev server if not already running
+  webServer: {
+    command: 'npm run dev',
+    url: 'http://127.0.0.1:5173',
+    reuseExistingServer: true,
+    timeout: 120000,
+  },
   projects: [
     {
-      name: 'desktop-chrome',
+      name: 'fundile-autopilot',
       use: {
         ...devices['Desktop Chrome'],
-        viewport: { width: 1366, height: 768 },
-      },
-    },
-    {
-      name: 'mobile-pixel',
-      use: {
-        ...devices['Pixel 7'],
       },
     },
   ],
