@@ -10,19 +10,19 @@
 
 ## 1. Quick Participant Directory & Matrix
 
-| Set | Learner Name | Grade & Phase | Device Form Factor & Viewport | Sign-Up Email | Plan / Mode | Primary Subjects & Topics | Concurrent Stakeholders |
-| :---: | :--- | :---: | :--- | :--- | :---: | :--- | :--- |
-| **Set 1** | **Lesedi Khumalo** | Gr 10 FET | **Desktop Installed App**<br>(Standalone Window 1024x768) | `lesedi.khumalo@fundile.test` | R349 Term Pass (EFT) | **Accounting:** Cash Receipts Journal (VAT 15%)<br>**Mathematics:** Euclidean Geometry & Algebra | **Super Admin:** Browser Web Cockpit |
-| **Set 2** | **Ayanda Ndlovu** | Gr 7 Senior | **Mobile Installed App**<br>(Pixel 7 WebAPK Viewport 393x851) | `ayanda.ndlovu@fundile.test` | R349 Term Pass (EFT) | **Mathematics:** 3D Geometric Nets, Patterns & Division<br>**EMS:** Financial Literacy (Source Documents) | **Teacher:** Mrs. P. Khumalo (`MTH701` Browser)<br>**Parent:** Mr. S. Ndlovu (`PAR-7892` Mobile)<br>**Super Admin:** Browser Web Cockpit |
-| **Set 3** | **Bongani Sithole** | Gr 8 Senior | **Mobile Installed App**<br>(Pixel 7 WebAPK Viewport 393x851) | `bongani.sithole@fundile.test` | R149 Monthly (EFT) | **Mathematics:** Linear Equations & Negative Integers<br>**Natural Sciences:** Particle Matter & Density $\rho = \frac{m}{V}$ | **Teacher:** Mr. D. Naidoo (`SCI802` Browser)<br>**Parent:** Mrs. T. Sithole (Mobile)<br>**Super Admin:** Browser Web Cockpit |
-| **Set 4** | **Zanele Mthembu** | Gr 9 Senior | **Mobile Installed App**<br>(Pixel 7 WebAPK Viewport 393x851) | `zanele.mthembu@fundile.test` | **14-Day Free Trial**<br>*(10% Sample)* | **EMS:** Accounting Equation ($A = O + L$)<br>**Natural Sciences:** Electric Circuits & Ohm's Law | **Teacher:** Mrs. V. Pillay (`EMS903` Browser)<br>**Super Admin:** Browser Web Cockpit |
-| **Set 5** | **Siyabonga Cele** | Gr 10 FET | **Desktop Installed App**<br>(Standalone Window 1024x768) | `siyabonga.cele@fundile.test` | R149 Monthly (EFT) | **Business Studies:** Micro, Market & Macro Environments<br>**Maths Lit:** Municipal Tiered Water/Power Tariffs | **Super Admin:** Browser Web Cockpit |
-| **Set 6** | **Ntsako Baloyi** | Gr 11 FET | **Desktop Installed App**<br>(Standalone Window 1024x768) | `ntsako.baloyi@fundile.test` | R349 Term Pass (EFT) | **Physical Sciences:** Newton's Laws & Incline Vectors<br>**Tech Maths:** Complex Numbers & Angular Velocity $\omega$ | **Teacher:** Dr. K. Mokoena (`PHY110` Browser)<br>**Super Admin:** Browser Web Cockpit |
-| **Set 7** | **Kelebogile Dlamini** | Gr 11 FET | **Desktop Installed App**<br>(Standalone Window 1024x768) | `kelebogile.dlamini@fundile.test` | R349 Term Pass (EFT) | **Life Sciences:** Photosynthesis, Respiration & ATP Yield<br>**Accounting:** Asset Disposal & Depreciation | **Parent:** Mrs. N. Dlamini (Mobile)<br>**Super Admin:** Browser Web Cockpit |
-| **Set 8** | **Prince Mthembu** | Gr 12 Matric | **Desktop Installed App**<br>(Standalone Window 1024x768) | `prince.mthembu@fundile.test` | R999 Annual (EFT) | **Mathematics:** Differential Calculus First Principles [M][CA]<br>**Physical Sciences:** Chemical Equilibrium $K_c$ RICE Tables | **Principal:** Mr. V. Pillay (SASAMS Browser Cockpit)<br>**Super Admin:** Browser Web Cockpit |
-| **Set 9** | **Thabo Molefe** | Gr 12 Matric | **Desktop Installed App**<br>(Standalone Window 1024x768) | `thabo.molefe@fundile.test` | R349 Term Pass (EFT) | **Accounting:** Published Company Balance Sheet<br>**Business Studies:** King IV Code of Governance & CSR | **Teacher:** Mr. N. Sithole (`ACC12B` Browser)<br>**Super Admin:** Browser Web Cockpit |
-| **Set 10** | **Lerato Khanyile** | Gr 12 Technical | **Desktop Installed App**<br>(Standalone Window 1024x768) | `lerato.khanyile@fundile.test` | R149 Monthly (EFT) | **Tech Maths:** Integral Calculus $\int [f(x)-g(x)]dx$<br>**Maths Lit:** SARS Progressive Tax Brackets (PAYE) | **Parent:** Mr. J. Khanyile (Mobile)<br>**Super Admin:** Browser Web Cockpit |
-| **Set 11** | **Sibusiso Zulu** | Gr 12 -> 8 Regression | **Desktop Installed App**<br>(Standalone Window 1024x768) | `sibusiso.zulu@fundile.test` | Systemic License Sync | **Adaptive Descent:** Gr 12 Optimization $\to$ Gr 10 Trinomials $\to$ Gr 8 HCF Factorisation (5-Min SimuLearn Replay) | **Principal / HOD:** Mr. V. Pillay (Browser)<br>**Super Admin:** Browser Web Cockpit |
+| Set | Learner Name | Grade & Phase | Device Form Factor & Viewport | Sign-Up Email | Plan / Mode | Primary Subjects & Topics | Concurrent Stakeholders | Playwright Command |
+| :---: | :--- | :---: | :--- | :--- | :---: | :--- | :--- | :--- |
+| **Set 1** | **Lesedi Khumalo** | Gr 10 FET | **Desktop Installed App**<br>(Standalone Window 1024x768) | `lesedi.khumalo@fundile.test` | R349 Term Pass (EFT) | **Accounting:** Cash Receipts Journal (VAT 15%)<br>**Mathematics:** Euclidean Geometry & Algebra | **Super Admin:** Browser Web Cockpit | `npx playwright test e2e/set1_interactive_side_by_side.spec.js --headed` |
+| **Set 2** | **Ayanda Ndlovu** | Gr 7 Senior | **Mobile Installed App**<br>(Pixel 7 WebAPK Viewport 393x851) | `ayanda.ndlovu@fundile.test` | R349 Term Pass (EFT) | **Mathematics:** 3D Geometric Nets, Patterns & Division<br>**EMS:** Financial Literacy (Source Documents) | **Teacher:** Mrs. P. Khumalo (`MTH701` Browser)<br>**Parent:** Mr. S. Ndlovu (`PAR-7892` Mobile)<br>**Super Admin:** Browser Web Cockpit | `npx playwright test e2e/set2_ayanda_gr7.spec.js --headed` |
+| **Set 3** | **Bongani Sithole** | Gr 8 Senior | **Mobile Installed App**<br>(Pixel 7 WebAPK Viewport 393x851) | `bongani.sithole@fundile.test` | R149 Monthly (EFT) | **Mathematics:** Linear Equations & Negative Integers<br>**Natural Sciences:** Particle Matter & Density $\rho = \frac{m}{V}$ | **Teacher:** Mr. D. Naidoo (`SCI802` Browser)<br>**Parent:** Mrs. T. Sithole (Mobile)<br>**Super Admin:** Browser Web Cockpit | `npx playwright test e2e/set3_bongani_gr8.spec.js --headed` |
+| **Set 4** | **Zanele Mthembu** | Gr 9 Senior | **Mobile Installed App**<br>(Pixel 7 WebAPK Viewport 393x851) | `zanele.mthembu@fundile.test` | **14-Day Free Trial**<br>*(10% Sample)* | **EMS:** Accounting Equation ($A = O + L$)<br>**Natural Sciences:** Electric Circuits & Ohm's Law | **Teacher:** Mrs. V. Pillay (`EMS903` Browser)<br>**Super Admin:** Browser Web Cockpit | `npx playwright test e2e/set4_zanele_gr9.spec.js --headed` |
+| **Set 5** | **Siyabonga Cele** | Gr 10 FET | **Desktop Installed App**<br>(Standalone Window 1024x768) | `siyabonga.cele@fundile.test` | R149 Monthly (EFT) | **Business Studies:** Micro, Market & Macro Environments<br>**Maths Lit:** Municipal Tiered Water/Power Tariffs | **Super Admin:** Browser Web Cockpit | `npx playwright test e2e/set5_siyabonga_gr10.spec.js --headed` |
+| **Set 6** | **Ntsako Baloyi** | Gr 11 FET | **Desktop Installed App**<br>(Standalone Window 1024x768) | `ntsako.baloyi@fundile.test` | R349 Term Pass (EFT) | **Physical Sciences:** Newton's Laws & Incline Vectors<br>**Tech Maths:** Complex Numbers & Angular Velocity $\omega$ | **Teacher:** Dr. K. Mokoena (`PHY110` Browser)<br>**Super Admin:** Browser Web Cockpit | `npx playwright test e2e/set6_ntsako_gr11.spec.js --headed` |
+| **Set 7** | **Kelebogile Dlamini** | Gr 11 FET | **Desktop Installed App**<br>(Standalone Window 1024x768) | `kelebogile.dlamini@fundile.test` | R349 Term Pass (EFT) | **Life Sciences:** Photosynthesis, Respiration & ATP Yield<br>**Accounting:** Asset Disposal & Depreciation | **Parent:** Mrs. N. Dlamini (Mobile)<br>**Super Admin:** Browser Web Cockpit | `npx playwright test e2e/set7_kelebogile_gr11.spec.js --headed` |
+| **Set 8** | **Prince Mthembu** | Gr 12 Matric | **Desktop Installed App**<br>(Standalone Window 1024x768) | `prince.mthembu@fundile.test` | R999 Annual (EFT) | **Mathematics:** Differential Calculus First Principles [M][CA]<br>**Physical Sciences:** Chemical Equilibrium $K_c$ RICE Tables | **Principal:** Mr. V. Pillay (SASAMS Browser Cockpit)<br>**Super Admin:** Browser Web Cockpit | `npx playwright test e2e/set8_prince_gr12.spec.js --headed` |
+| **Set 9** | **Thabo Molefe** | Gr 12 Matric | **Desktop Installed App**<br>(Standalone Window 1024x768) | `thabo.molefe@fundile.test` | R349 Term Pass (EFT) | **Accounting:** Published Company Balance Sheet<br>**Business Studies:** King IV Code of Governance & CSR | **Teacher:** Mr. N. Sithole (`ACC12B` Browser)<br>**Super Admin:** Browser Web Cockpit | `npx playwright test e2e/set9_thabo_gr12.spec.js --headed` |
+| **Set 10** | **Lerato Khanyile** | Gr 12 Technical | **Desktop Installed App**<br>(Standalone Window 1024x768) | `lerato.khanyile@fundile.test` | R149 Monthly (EFT) | **Tech Maths:** Integral Calculus $\int [f(x)-g(x)]dx$<br>**Maths Lit:** SARS Progressive Tax Brackets (PAYE) | **Parent:** Mr. J. Khanyile (Mobile)<br>**Super Admin:** Browser Web Cockpit | `npx playwright test e2e/set10_lerato_gr12.spec.js --headed` |
+| **Set 11** | **Sibusiso Zulu** | Gr 12 -> 8 Regression | **Desktop Installed App**<br>(Standalone Window 1024x768) | `sibusiso.zulu@fundile.test` | Systemic License Sync | **Adaptive Descent:** Gr 12 Optimization $\to$ Gr 10 Trinomials $\to$ Gr 8 HCF Factorisation (5-Min SimuLearn Replay) | **Principal / HOD:** Mr. V. Pillay (Browser)<br>**Super Admin:** Browser Web Cockpit | `npx playwright test e2e/set11_sibusiso_regression.spec.js --headed` |
 
 ---
 
@@ -113,6 +113,13 @@ flowchart TD
    - **Verification:** Inspect pending slip from Lesedi Khumalo ($R349$) $\to$ Click **`3 Mo (Term)`** button (`btn-approve-payment-90d`).
    - **Result:** Paywall drops in real time via Firestore `onSnapshot`; problem surface renders instantly with pre-baked 3-tier hints.
 
+#### E. Playwright Execution Command
+```bash
+npx playwright test e2e/set1_interactive_side_by_side.spec.js --headed
+# Or shorthand npm command:
+npm run test:set1
+```
+
 ---
 
 ### Set 2: Grade 7 Senior Phase Foundation — Mathematics & EMS
@@ -159,6 +166,13 @@ flowchart TD
 3. **Super Admin (You):**
    - **Action:** Manual approval of R349 Term Pass in Super Admin EFT desk.
 
+#### E. Playwright Execution Command
+```bash
+npx playwright test e2e/set2_ayanda_gr7.spec.js --headed
+# Or shorthand npm command:
+npm run test:set2
+```
+
 ---
 
 ### Set 3: Grade 8 Senior Phase Core — Mathematics & Natural Sciences
@@ -201,6 +215,13 @@ flowchart TD
 3. **Super Admin (You):**
    - **Action:** Manual approval of R149 Monthly Pass (`btn-approve-payment-30d`).
 
+#### E. Playwright Execution Command
+```bash
+npx playwright test e2e/set3_bongani_gr8.spec.js --headed
+# Or shorthand npm command:
+npm run test:set3
+```
+
 ---
 
 ### Set 4: Grade 9 Senior Phase Transition — EMS & Natural Sciences (10% Free Trial)
@@ -239,6 +260,13 @@ flowchart TD
 2. **Super Admin (You):**
    - **Oversight:** Inspects system analytics confirming zero payment barrier was encountered and trial countdown badge rendered with accurate days-remaining indicator.
 
+#### E. Playwright Execution Command
+```bash
+npx playwright test e2e/set4_zanele_gr9.spec.js --headed
+# Or shorthand npm command:
+npm run test:set4
+```
+
 ---
 
 ### Set 5: Grade 10 Commercial & Applied — Business Studies & Maths Lit
@@ -271,6 +299,13 @@ flowchart TD
 #### D. Concurrent Stakeholders
 1. **Super Admin (You):**
    - **Action:** Manual approval of R149 Monthly Pass in Super Admin desk.
+
+#### E. Playwright Execution Command
+```bash
+npx playwright test e2e/set5_siyabonga_gr10.spec.js --headed
+# Or shorthand npm command:
+npm run test:set5
+```
 
 ---
 
@@ -310,6 +345,13 @@ flowchart TD
 2. **Super Admin (You):**
    - **Action:** Manual approval of R349 Term Pass in Super Admin desk.
 
+#### E. Playwright Execution Command
+```bash
+npx playwright test e2e/set6_ntsako_gr11.spec.js --headed
+# Or shorthand npm command:
+npm run test:set6
+```
+
 ---
 
 ### Set 7: Grade 11 Life Sciences & Asset Accounting
@@ -347,6 +389,13 @@ flowchart TD
    - **Parent View:** In-app weekly profile monitor displaying topic mastery ring and saved mobile data counter.
 2. **Super Admin (You):**
    - **Action:** Manual approval of R349 Term Pass in Super Admin desk.
+
+#### E. Playwright Execution Command
+```bash
+npx playwright test e2e/set7_kelebogile_gr11.spec.js --headed
+# Or shorthand npm command:
+npm run test:set7
+```
 
 ---
 
@@ -386,6 +435,13 @@ flowchart TD
 2. **Super Admin (You):**
    - **Action:** Manual approval of R999 Annual Distinction Pass (`btn-approve-payment-365d`).
 
+#### E. Playwright Execution Command
+```bash
+npx playwright test e2e/set8_prince_gr12.spec.js --headed
+# Or shorthand npm command:
+npm run test:set8
+```
+
 ---
 
 ### Set 9: Grade 12 Corporate & Governance — Accounting & Business Studies
@@ -424,6 +480,13 @@ flowchart TD
 2. **Super Admin (You):**
    - **Action:** Manual approval of R349 Term Pass in Super Admin desk.
 
+#### E. Playwright Execution Command
+```bash
+npx playwright test e2e/set9_thabo_gr12.spec.js --headed
+# Or shorthand npm command:
+npm run test:set9
+```
+
 ---
 
 ### Set 10: Grade 12 Applied & Technical Pathways — Tech Maths & Maths Lit
@@ -460,6 +523,13 @@ flowchart TD
    - **Email:** `joshua.khanyile@guardianmail.co.za`
 2. **Super Admin (You):**
    - **Action:** Manual approval of R149 Monthly Pass in Super Admin desk.
+
+#### E. Playwright Execution Command
+```bash
+npx playwright test e2e/set10_lerato_gr12.spec.js --headed
+# Or shorthand npm command:
+npm run test:set10
+```
 
 ---
 
@@ -513,6 +583,13 @@ flowchart TD
    - **Cockpit Action:** Spots the systemic factoring blocker flagged across 38 learners on the School Misconception Heatmap $\to$ Clicks **`[ Broadcast Remedial Drill ]`** in `SchoolAdminView.jsx` to dispatch the 5-minute micro-fix school-wide.
 2. **Super Admin (You):**
    - **Oversight:** Validates that cross-grade regression preserved student psychological safety (zero punitive XP loss) and successfully repaired prerequisite foundations.
+
+#### E. Playwright Execution Command
+```bash
+npx playwright test e2e/set11_sibusiso_regression.spec.js --headed
+# Or shorthand npm command:
+npm run test:set11
+```
 
 ---
 

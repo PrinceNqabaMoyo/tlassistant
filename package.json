@@ -12,7 +12,18 @@
     "sync:daemon": "python scripts/hourly_sync_deploy.py --daemon",
     "audit:full": "python scripts/run_system_certification.py",
     "deploy:hosting": "npm run build && npx firebase deploy --only hosting",
-    "deploy:backend": "python caps-ai-backend/deploy_hf.py"
+    "deploy:backend": "python caps-ai-backend/deploy_hf.py",
+    "test:set1": "playwright test e2e/set1_interactive_side_by_side.spec.js --headed",
+    "test:set2": "playwright test e2e/set2_ayanda_gr7.spec.js --headed",
+    "test:set3": "playwright test e2e/set3_bongani_gr8.spec.js --headed",
+    "test:set4": "playwright test e2e/set4_zanele_gr9.spec.js --headed",
+    "test:set5": "playwright test e2e/set5_siyabonga_gr10.spec.js --headed",
+    "test:set6": "playwright test e2e/set6_ntsako_gr11.spec.js --headed",
+    "test:set7": "playwright test e2e/set7_kelebogile_gr11.spec.js --headed",
+    "test:set8": "playwright test e2e/set8_prince_gr12.spec.js --headed",
+    "test:set9": "playwright test e2e/set9_thabo_gr12.spec.js --headed",
+    "test:set10": "playwright test e2e/set10_lerato_gr12.spec.js --headed",
+    "test:set11": "playwright test e2e/set11_sibusiso_regression.spec.js --headed"
   },
   "dependencies": {
     "@fontsource/afacad": "^5.1.1",
