@@ -208,13 +208,14 @@ def _generate_table_of_values_question(rng: random.Random) -> Dict[str, Any]:
     )
 
     diff = y_vals[1] - y_vals[0]
+    calc_expr = f"({m} \\times {x_missing}) - {c}" if op_is_sub else f"({m} \\times {x_missing}) + {c}"
     sol = (
         f"Step 1: Find the common difference in \\(y\\) as \\(x\\) increases by 1:\n"
         f"\\({y_vals[1]} - {y_vals[0]} = {diff}\\). Therefore, the rule involves multiplying by {diff}.\n\n"
         f"Step 2: Check constant term:\n"
         f"For \\(x = 1\\), \\({diff} \\times 1 = {diff}\\). Since \\(y = {y_vals[0]}\\), the rule is \\({rule_str}\\).\n\n"
         f"Step 3: Calculate \\(y\\) when \\(x = {x_missing}\\):\n"
-        f"\\(y = {'(' + str(m) + ' \\times ' + str(x_missing) + ') - ' + str(c) if op_is_sub else '(' + str(m) + ' \\times ' + str(x_missing) + ') + ' + str(c)} = {y_missing}\\)."
+        f"\\(y = {calc_expr} = {y_missing}\\)."
     )
 
     return {
