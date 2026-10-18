@@ -148,6 +148,7 @@ export default function PhysicalFolderTabs({
               key={tab.id}
               ref={isActive ? activeTabRef : null}
               type="button"
+              data-testid={`tab-${tab.id}`}
               onClick={() => onSelectTab(tab.id)}
               className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs transition-all duration-200 shrink-0 whitespace-nowrap min-h-[44px] cursor-pointer select-none font-bold ${
                 isActive
@@ -226,6 +227,7 @@ export default function PhysicalFolderTabs({
               <button
                 key={tab.id}
                 type="button"
+                data-testid={`tab-${tab.id}`}
                 onClick={() => onSelectTab(tab.id)}
                 title={`${tab.name} (Grade ${numericGrade})`}
                 className={`folder-tab group shrink-0 min-w-[125px] max-w-[210px] px-3.5 py-3 flex items-center justify-center gap-2 text-xs font-bold transition-all cursor-pointer relative select-none ${

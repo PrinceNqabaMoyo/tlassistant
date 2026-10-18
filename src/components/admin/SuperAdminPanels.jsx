@@ -75,7 +75,7 @@ export function SystemAnalyticsView({ onBack }) {
     { name: '2D Accounting Coordinate Marker', status: 'Healthy', latency: '12 ms', uptime: '100%' },
     { name: 'Hugging Face Socratic Tutor Layer', status: 'Standby / Healthy', latency: '210 ms', uptime: '99.9%' },
     { name: 'Firebase Firestore Data Store', status: 'Healthy', latency: '65 ms', uptime: '99.99%' },
-    { name: 'PWA WebAPK Service Worker Cache', status: 'Active (v2.4)', latency: 'Instant', uptime: '100%' },
+    { name: 'PWA Mobile Service Worker Cache', status: 'Active (v2.4)', latency: 'Instant', uptime: '100%' },
   ];
 
   return (
@@ -523,7 +523,7 @@ export function SystemSettingsView({ onBack }) {
           </div>
 
           <div>
-            <label className="text-xs font-bold text-slate-800 block mb-1">Low-Data WebAPK Mode</label>
+            <label className="text-xs font-bold text-slate-800 block mb-1">Low-Data Mobile Mode</label>
             <div className="flex items-center gap-2 pt-1">
               <input
                 type="checkbox"

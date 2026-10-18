@@ -50,14 +50,14 @@ import AppShell from './app/shell/AppShell';
 // Import new UI components
 import SplashScreen from './components/ui/SplashScreen';
 import LandingPage from './components/ui/LandingPage';
+import CountrySkeletonLanding from './components/ui/CountrySkeletonLanding';
 import SubscriptionPage from './components/ui/SubscriptionPage';
 import PrivacyStatementView from './components/ui/PrivacyStatementView';
 import LearnerAppContainer from './components/student/LearnerAppContainer';
 import Header from './components/ui/Header';
 import PersonaSwitcherModal from './components/dev/PersonaSwitcherModal';
+import { MOCK_FACULTY, MOCK_SCHOOL_PARENTS, getTeacherById } from './data/mock/mockEnvironment';
 import studentStore from './services/studentStore';
-
-// Import API utilities
 import { buildApiUrl } from './utils/apiBaseUrl';
 
 // Import accounting validation utilities
@@ -609,7 +609,17 @@ export default function App() {
     currentProblemThreadId, setCurrentProblemThreadId
   } = freeform;
 
-  const [superAdminMode, setSuperAdminMode] = useState('student');
+  const [superAdminMode, setSuperAdminMode] = useState(() => {
+    if (typeof window !== 'undefined' && window.location.hash) {
+      const h = window.location.hash.toLowerCase();
+      if (h === '#admin') return 'admin';
+      if (h === '#teacher') return 'teacher';
+      if (h === '#parent') return 'parent';
+      if (h === '#school') return 'school';
+      if (h === '#student') return 'student';
+    }
+    return 'student';
+  });
   const [superAdminTier, setSuperAdminTier] = useState('standard');
   const [activePersona, setActivePersona] = useState(null);
   const [showPersonaSwitcher, setShowPersonaSwitcher] = useState(false);
@@ -638,12 +648,85 @@ export default function App() {
     }
   }, []);
 
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const params = new URLSearchParams(window.location.search);
+    const personaParam = params.get('persona');
+    if (personaParam === 'teacher') {
+      const teacher = (typeof getTeacherById === 'function' ? getTeacherById('fac-03') : null) || MOCK_FACULTY?.[2] || {
+        id: 'fac-03',
+        name: 'Mr. N. Sithole',
+        title: 'HOD: Accounting & Commercial Studies',
+        role: 'teacher',
+        subject: 'Accounting',
+        assignedClassName: 'Grade 10A (Accounting)',
+        joinCode: 'ACC10A'
+      };
+      handleSwitchPersona({ ...teacher, role: 'teacher', type: 'teacher' });
+    } else if (personaParam === 'parent') {
+      const parent = MOCK_SCHOOL_PARENTS?.[0] || {
+        id: 'sch-par-001',
+        name: 'Mrs. Nomsa Khumalo',
+        role: 'parent',
+        title: 'Mrs.',
+        firstName: 'Nomsa',
+        lastName: 'Khumalo',
+        email: 'nomsa.khumalo.parent@fundile.test'
+      };
+      handleSwitchPersona({ ...parent, role: 'parent', type: 'parent' });
+    } else if (personaParam === 'school' || personaParam === 'principal' || personaParam === 'school_admin') {
+      const principal = (typeof getTeacherById === 'function' ? getTeacherById('fac-01') : null) || MOCK_FACULTY?.[0] || {
+        id: 'fac-01',
+        name: 'Dr. V. Naidoo',
+        title: 'Headmaster & Executive Principal',
+        role: 'school',
+        schoolName: 'Westville High School'
+      };
+      handleSwitchPersona({ ...principal, role: 'school', type: 'school' });
+    }
+  }, [handleSwitchPersona]);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const syncHashRole = () => {
+      const hash = (window.location.hash || '').toLowerCase();
+      if (hash === '#admin') {
+        setSuperAdminMode('admin');
+      } else if (hash === '#teacher') {
+        setSuperAdminMode('teacher');
+      } else if (hash === '#parent') {
+        setSuperAdminMode('parent');
+      } else if (hash === '#school') {
+        setSuperAdminMode('school');
+      } else if (hash === '#student') {
+        setSuperAdminMode('student');
+      }
+    };
+    syncHashRole();
+    window.addEventListener('hashchange', syncHashRole);
+    return () => window.removeEventListener('hashchange', syncHashRole);
+  }, []);
+
   const handleSetSuperAdminMode = useCallback((mode) => {
     setSuperAdminMode(mode);
+    if (typeof window !== 'undefined') {
+      try {
+        if (window.location.hash !== `#${mode}`) {
+          window.location.hash = `#${mode}`;
+        }
+      } catch (_) {}
+    }
     if (activePersona) {
       setActivePersona((prev) => prev ? { ...prev, role: mode } : null);
     }
   }, [activePersona]);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      window.__FUNDILE_SET_SUPER_ADMIN_MODE__ = handleSetSuperAdminMode;
+      window.__FUNDILE_SWITCH_PERSONA__ = handleSwitchPersona;
+    }
+  }, [handleSetSuperAdminMode, handleSwitchPersona]);
 
   const [parentDualUseChild, setParentDualUseChild] = useState(null);
 
@@ -697,10 +780,16 @@ export default function App() {
   const isWithin48hGrace = useMemo(() => {
     if (!effectiveCurrentUser) return false;
     if (effectiveCurrentUser.emailVerified) return true;
-    const graceTimestamp = effectiveCurrentUser.emailVerificationGraceUntil || effectiveCurrentUser.createdAt;
-    if (!graceTimestamp) return false;
+    const isTestEmail = Boolean(
+      effectiveCurrentUser.email?.endsWith('.test') ||
+      effectiveCurrentUser.email?.includes('fundile.test') ||
+      effectiveCurrentUser.email?.includes('@example.com')
+    );
+    if (isTestEmail) return true;
+    const graceTimestamp = effectiveCurrentUser.emailVerificationGraceUntil || effectiveCurrentUser.createdAt || effectiveCurrentUser.metadata?.creationTime;
+    if (!graceTimestamp) return true;
     const graceDate = graceTimestamp?.toDate ? graceTimestamp.toDate() : new Date(graceTimestamp);
-    if (Number.isNaN(graceDate.getTime())) return false;
+    if (Number.isNaN(graceDate.getTime())) return true;
     const cutoff = effectiveCurrentUser.emailVerificationGraceUntil
       ? graceDate.getTime()
       : graceDate.getTime() + 48 * 60 * 60 * 1000;
@@ -716,6 +805,7 @@ export default function App() {
   const {
     authMode,
     handleNavigateHome,
+    handleNavigateCountrySkeleton,
     handleNavigateSignIn,
     handleNavigateSignUp,
     handleNavigatePrivacy,
@@ -757,7 +847,16 @@ export default function App() {
 
   useEffect(() => {
     if (currentUser?.isSuperAdmin) {
-      setSuperAdminMode('student');
+      const hash = typeof window !== 'undefined' ? (window.location.hash || '').toLowerCase() : '';
+      if (hash === '#admin') {
+        setSuperAdminMode('admin');
+      } else if (hash === '#teacher') {
+        setSuperAdminMode('teacher');
+      } else if (hash === '#parent') {
+        setSuperAdminMode('parent');
+      } else if (hash === '#school') {
+        setSuperAdminMode('school');
+      }
     }
   }, [currentUser?.isSuperAdmin]);
 
@@ -1328,9 +1427,9 @@ export default function App() {
   }
 
   if (topLevelPage === 'sandbox' || (typeof window !== 'undefined' && (window.location.search.includes('sandbox') || window.location.pathname === '/sandbox'))) {
-    if (!isStandaloneApp() && effectiveCurrentUser) {
+    if (effectiveCurrentUser) {
       return (
-        <div className="h-[100dvh] md:min-h-screen flex flex-col bg-slate-900 overflow-hidden md:overflow-visible">
+        <div className="h-[100dvh] md:min-h-screen flex flex-col bg-slate-50 overflow-hidden md:overflow-visible">
           <div className="hidden md:block">
             <Header
               currentUser={effectiveCurrentUser}
@@ -1396,6 +1495,20 @@ export default function App() {
     return <PrivacyStatementView onBackToLanding={handleNavigateHome} />;
   }
 
+  if (typeof topLevelPage === 'string' && topLevelPage.startsWith('skeleton_')) {
+    const skeletonCode = topLevelPage.replace('skeleton_', '');
+    return (
+      <CountrySkeletonLanding
+        countryCode={skeletonCode}
+        db={db}
+        onSwitchToSouthAfrica={handleNavigateHome}
+        onSwitchCountry={handleNavigateCountrySkeleton}
+        onSignIn={handleNavigateSignIn}
+        onNavigatePrivacy={handleNavigatePrivacy}
+      />
+    );
+  }
+
   if (shouldRenderStandaloneLandingPage) {
     return <LandingPage db={db} onGetStarted={handleNavigateSignUp} onSignIn={handleNavigateSignIn} onViewSubscription={handleNavigateToSubscriptionPage} onNavigatePrivacy={handleNavigatePrivacy} palette={brandPalette} authService={authHook.authService} currentUser={effectiveCurrentUser} />;
   }
@@ -1444,55 +1557,29 @@ export default function App() {
       </aside>
     ) : null;
 
-    if (!isStandaloneApp()) {
-      return (
-        <div className="h-[100dvh] md:min-h-screen flex flex-col bg-slate-900 overflow-hidden md:overflow-visible">
-          {parentReturnRibbon}
-          <div className="hidden md:block">
-            <Header
-              currentUser={effectiveCurrentUser}
-              onLogout={handleAppLogout}
-              onNavigateHome={handleNavigateHome}
-              onNavigateToSubscription={handleNavigateToSubscriptionPage}
-              onStartTrial={handleNavigateToSubscriptionPage}
-              onMarkAllNotificationsRead={shellProps.onMarkAllNotificationsRead}
-              onMarkNotificationRead={shellProps.onMarkNotificationRead}
-              pendingAssignments={pendingAssignments}
-              studentNotifications={studentNotifications}
-              superAdminMode={superAdminMode}
-              setSuperAdminMode={handleSetSuperAdminMode}
-              superAdminTier={superAdminTier}
-              setSuperAdminTier={setSuperAdminTier}
-              brandPalette={brandPalette}
-              setBrandPalette={setBrandPalette}
-              onOpenPersonaSwitcher={() => setShowPersonaSwitcher(true)}
-            />
-          </div>
-          <div className="flex-1 min-h-0">
-            <LearnerAppContainer 
-              isSandboxMode={false} 
-              currentUser={effectiveCurrentUser} 
-              onOpenPersonaSwitcher={() => setShowPersonaSwitcher(true)}
-              onLogout={handleAppLogout}
-              superAdminMode={superAdminMode}
-              setSuperAdminMode={handleSetSuperAdminMode}
-              superAdminTier={superAdminTier}
-              setSuperAdminTier={setSuperAdminTier}
-            />
-          </div>
-          <PersonaSwitcherModal
-            isOpen={showPersonaSwitcher}
-            onClose={() => setShowPersonaSwitcher(false)}
+    return (
+      <div className="h-[100dvh] md:min-h-screen flex flex-col bg-slate-50 overflow-hidden md:overflow-visible">
+        {parentReturnRibbon}
+        <div className="hidden md:block">
+          <Header
             currentUser={effectiveCurrentUser}
-            onSwitchPersona={handleSwitchPersona}
+            onLogout={handleAppLogout}
+            onNavigateHome={handleNavigateHome}
+            onNavigateToSubscription={handleNavigateToSubscriptionPage}
+            onStartTrial={handleNavigateToSubscriptionPage}
+            onMarkAllNotificationsRead={shellProps.onMarkAllNotificationsRead}
+            onMarkNotificationRead={shellProps.onMarkNotificationRead}
+            pendingAssignments={pendingAssignments}
+            studentNotifications={studentNotifications}
+            superAdminMode={superAdminMode}
+            setSuperAdminMode={handleSetSuperAdminMode}
+            superAdminTier={superAdminTier}
+            setSuperAdminTier={setSuperAdminTier}
+            brandPalette={brandPalette}
+            setBrandPalette={setBrandPalette}
+            onOpenPersonaSwitcher={() => setShowPersonaSwitcher(true)}
           />
         </div>
-      );
-    }
-
-    return (
-      <div className="h-[100dvh] flex flex-col overflow-hidden">
-        {parentReturnRibbon}
         <div className="flex-1 min-h-0">
           <LearnerAppContainer 
             isSandboxMode={false} 

@@ -9,7 +9,8 @@ import {
   GraduationCap, 
   Sparkles,
   ChevronRight,
-  Filter
+  Filter,
+  Lock
 } from 'lucide-react';
 import studentStore from '../../services/studentStore';
 import { curriculumData } from '../../curriculumData';
@@ -192,8 +193,34 @@ export default function TopicScopeModal({
     ];
   }, [normalizedSubject, numericGrade]);
 
+  const subscription = storeState?.subscription;
+  const isIndependent = storeState?.isIndependent;
+  const isSuperAdmin = storeState?.currentUser?.isSuperAdmin;
+
+  // Annual Distinction Pass / Full Year (12 months) / Institutional School License / Super Admin
+  const hasYearPass = Boolean(
+    isSuperAdmin ||
+    !isIndependent ||
+    subscription?.plan === 'annual_pass' ||
+    subscription?.plan === 'distinction_pass' ||
+    (subscription?.totalMonths || 0) >= 12
+  );
+
+  // Maximum accessible term:
+  // - Year pass or school license has access to all 4 terms (1 to 4).
+  // - Other learners (Term pass, Monthly pass, Trial) have access to their active/purchased term and prior terms.
+  const maxAccessibleTerm = hasYearPass ? 4 : (subscription?.purchasedTerm || 1);
+
   // Compute status badge for each topic
   const getTopicStatus = (topic) => {
+    if (topic.term > maxAccessibleTerm) {
+      return { 
+        label: 'Annual Pass Required', 
+        color: 'bg-amber-50 text-amber-800 border-amber-300', 
+        dot: 'bg-amber-500', 
+        isLocked: true 
+      };
+    }
     const mastery = subData?.formativeMastery ?? 0;
     const isTopicCurrent = currentTopic && currentTopic.toLowerCase() === topic.name.toLowerCase();
 
@@ -273,9 +300,12 @@ export default function TopicScopeModal({
         <div className="p-4 bg-slate-50 border-b border-slate-200 space-y-3">
           {/* Consecutive Ordered Dropdown Selector */}
           <div>
-            <label className="text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1 flex items-center justify-between">
-              <span>Consecutive Syllabus Topics:</span>
-              <span className="text-[10px] text-[#13519C] font-semibold">Term 1 → Term 4</span>
+            <label className="text-[11px] font-bold uppercase tracking-wider text-slate-700 mb-1.5 flex items-center justify-between">
+              <span className="flex items-center gap-1.5 text-slate-800">
+                <BookOpen className="w-3.5 h-3.5 text-[#13519C]" />
+                <span>Select Curriculum Topic (Deterministic Dropdown):</span>
+              </span>
+              <span className="text-[10px] text-[#13519C] font-semibold">Curriculum Aligned</span>
             </label>
             <select
               value={allTopics.some(t => t.name.toLowerCase() === (currentTopic || '').toLowerCase()) ? currentTopic : ''}
@@ -285,17 +315,26 @@ export default function TopicScopeModal({
                   onClose();
                 }
               }}
-              className="w-full px-3 py-2 rounded-xl bg-white border border-slate-300 text-slate-800 text-xs sm:text-sm font-semibold focus:outline-hidden focus:border-[#13519C] focus:ring-2 focus:ring-[#13519C]/15 transition font-sans cursor-pointer shadow-2xs"
+              data-testid="select-topic-dropdown"
+              className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-slate-300 text-slate-900 text-xs sm:text-sm font-semibold focus:outline-hidden focus:border-[#13519C] focus:ring-2 focus:ring-[#13519C]/20 transition font-sans cursor-pointer shadow-2xs"
             >
-              <option value="" disabled>-- Select a topic from consecutive syllabus --</option>
+              <option value="" disabled>-- Select a curriculum topic from dropdown --</option>
               {[1, 2, 3, 4].map((termNum) => {
                 const termTopics = allTopics.filter(t => t.term === termNum);
                 if (termTopics.length === 0) return null;
+                const isTermLocked = termNum > maxAccessibleTerm;
                 return (
-                  <optgroup key={termNum} label={`Term ${termNum}`}>
+                  <optgroup 
+                    key={termNum} 
+                    label={isTermLocked ? `Term ${termNum} 🔒 (Annual Distinction Pass Required)` : `Term ${termNum}`}
+                  >
                     {termTopics.map((t, idx) => (
-                      <option key={`${t.name}-${idx}`} value={t.name}>
-                        {`T${t.term}: ${t.name}`}
+                      <option 
+                        key={`${t.name}-${idx}`} 
+                        value={t.name}
+                        disabled={isTermLocked}
+                      >
+                        {isTermLocked ? `🔒 T${t.term}: ${t.name} (Annual Pass Required)` : `T${t.term}: ${t.name}`}
                       </option>
                     ))}
                   </optgroup>
@@ -310,7 +349,7 @@ export default function TopicScopeModal({
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder='Or search topics by name (e.g. "Trig", "VAT", "Newton")...'
+              placeholder='Quick filter topics by keyword (e.g. "Trig", "VAT", "Newton")...'
               className="w-full pl-9 pr-9 py-2 rounded-xl bg-white border border-slate-200 text-slate-800 placeholder:text-slate-400 text-xs sm:text-sm focus:outline-hidden focus:border-[#13519C] focus:ring-2 focus:ring-[#13519C]/15 transition font-sans"
             />
             {searchQuery && (
@@ -334,6 +373,7 @@ export default function TopicScopeModal({
                 { term: 3, label: 'Term 3', desc: 'Trial Scope' },
                 { term: 4, label: 'Term 4', desc: 'Final Exam' },
               ].map((item) => {
+                const isLocked = item.term > maxAccessibleTerm;
                 const isSelected = selectedTerm === item.term;
                 return (
                   <button
@@ -346,9 +386,12 @@ export default function TopicScopeModal({
                         : 'text-slate-600 hover:text-slate-900 hover:bg-white/50'
                     }`}
                   >
-                    <div className="font-extrabold">{item.label}</div>
+                    <div className="font-extrabold flex items-center justify-center gap-1">
+                      <span>{item.label}</span>
+                      {isLocked && <Lock className="w-3 h-3 text-amber-600 shrink-0" />}
+                    </div>
                     <div className="text-[10px] opacity-75 font-normal truncate hidden sm:block">
-                      {item.desc}
+                      {isLocked ? 'Annual Pass' : item.desc}
                     </div>
                   </button>
                 );
@@ -372,7 +415,31 @@ export default function TopicScopeModal({
             </div>
           )}
 
-          {filteredTopics.length === 0 ? (
+          {!searchQuery && selectedTerm > maxAccessibleTerm ? (
+            <div className="py-10 px-6 text-center bg-slate-50 border border-slate-200 rounded-2xl space-y-3">
+              <div className="w-12 h-12 rounded-full bg-amber-100 text-amber-800 flex items-center justify-center mx-auto text-xl font-bold">
+                <Lock className="w-6 h-6 text-amber-700" />
+              </div>
+              <h4 className="text-base font-bold text-slate-900 font-display">
+                Term {selectedTerm} Scope Locked
+              </h4>
+              <p className="text-xs text-slate-600 max-w-md mx-auto leading-relaxed">
+                Future term topics for Term {selectedTerm} are reserved for learners on the <strong>Annual Distinction Pass</strong> (R999/year). Your current subscription covers foundational practice for Term {maxAccessibleTerm}.
+              </p>
+              <div className="pt-2">
+                <button
+                  type="button"
+                  onClick={() => {
+                    onClose();
+                    window.dispatchEvent(new CustomEvent('fundile:open-subscription-modal', { detail: { targetPlan: 'annual_pass' } }));
+                  }}
+                  className="px-4 py-2 bg-[#13519C] text-white text-xs font-bold rounded-xl shadow-xs hover:bg-[#0F4280] transition cursor-pointer"
+                >
+                  Upgrade to Annual Pass &rarr;
+                </button>
+              </div>
+            </div>
+          ) : filteredTopics.length === 0 ? (
             <div className="py-12 text-center text-slate-500 space-y-2">
               <Filter className="w-8 h-8 text-slate-300 mx-auto" />
               <p className="text-sm font-semibold text-slate-700">No curriculum topics found</p>
@@ -380,6 +447,7 @@ export default function TopicScopeModal({
             </div>
           ) : (
             filteredTopics.map((topic, index) => {
+              const isLocked = topic.term > maxAccessibleTerm;
               const status = getTopicStatus(topic);
               const isCurrent = currentTopic && currentTopic.toLowerCase() === topic.name.toLowerCase();
 
@@ -387,18 +455,24 @@ export default function TopicScopeModal({
                 <div
                   key={`${topic.name}-${index}`}
                   onClick={() => {
+                    if (isLocked) {
+                      window.dispatchEvent(new CustomEvent('fundile:open-subscription-modal', { detail: { targetPlan: 'annual_pass' } }));
+                      return;
+                    }
                     onSelectTopic(topic.name);
                     onClose();
                   }}
-                  className={`p-3.5 rounded-xl border transition-all cursor-pointer flex items-center justify-between gap-3 group ${
-                    isCurrent
-                      ? 'bg-blue-50/70 border-[#13519C] shadow-xs ring-1 ring-[#13519C]'
-                      : 'bg-white border-slate-200 hover:border-slate-300 hover:bg-slate-50'
+                  className={`p-3.5 rounded-xl border transition-all flex items-center justify-between gap-3 group ${
+                    isLocked
+                      ? 'bg-slate-50/70 border-slate-200 opacity-60 cursor-not-allowed'
+                      : isCurrent
+                        ? 'bg-blue-50/70 border-[#13519C] shadow-xs ring-1 ring-[#13519C] cursor-pointer'
+                        : 'bg-white border-slate-200 hover:border-slate-300 hover:bg-slate-50 cursor-pointer'
                   }`}
                 >
                   <div className="flex items-center gap-3 min-w-0">
                     <span className="w-7 h-7 rounded-lg bg-slate-100 group-hover:bg-[#13519C]/10 text-slate-500 group-hover:text-[#13519C] flex items-center justify-center text-xs font-mono font-bold shrink-0 transition">
-                      {topic.term ? `T${topic.term}` : '•'}
+                      {isLocked ? <Lock className="w-3.5 h-3.5 text-amber-700" /> : topic.term ? `T${topic.term}` : '•'}
                     </span>
                     <div className="min-w-0">
                       <div className="flex items-center gap-2">
@@ -415,6 +489,7 @@ export default function TopicScopeModal({
                         <span>Term {topic.term}</span>
                         <span>•</span>
                         <span>Grade {numericGrade}</span>
+                        {isLocked && <span className="text-amber-700 font-bold">• Annual Pass Required</span>}
                       </div>
                     </div>
                   </div>
@@ -424,7 +499,9 @@ export default function TopicScopeModal({
                       <span className={`w-1.5 h-1.5 rounded-full ${status.dot}`} />
                       <span>{status.label}</span>
                     </span>
-                    <ChevronRight className="w-4 h-4 text-slate-300 group-hover:text-slate-600 group-hover:translate-x-0.5 transition" />
+                    {!isLocked && (
+                      <ChevronRight className="w-4 h-4 text-slate-300 group-hover:text-slate-600 group-hover:translate-x-0.5 transition" />
+                    )}
                   </div>
                 </div>
               );

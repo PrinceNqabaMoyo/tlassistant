@@ -23,6 +23,7 @@ import {
     X,
     GraduationCap,
 } from 'lucide-react';
+import FundileLogo from '../FundileLogo';
 import { getSubjectTheme } from '../../../theme/subjectPalette';
 
 // ═══════════════════════════════════════════════════════════════
@@ -59,6 +60,53 @@ export default function HeroSimulation() {
     const [selectedExamOption, setSelectedExamOption] = useState(null);
 
     const timerRef = useRef(null);
+
+    // ── Dynamic Mobile Device & Viewport Detection (iPhone Pro Max 440 x 956) ──
+    const [deviceView, setDeviceView] = useState('auto'); // 'auto' | 'desktop' | 'mobile'
+    const [detectedDimensions, setDetectedDimensions] = useState(() => {
+        if (typeof window !== 'undefined') {
+            const w = window.innerWidth;
+            const h = window.innerHeight;
+            const isMobileScreen = w < 640;
+            // Flagship iPhone Pro Max viewport reference: 440px wide by 956px high
+            // Dynamically adapts down if user visits on a smaller real phone (e.g. 390px / 412px)
+            const targetWidth = isMobileScreen 
+                ? Math.min(Math.max(w - 24, 320), 440) 
+                : 440;
+            const targetHeight = Math.round(targetWidth * (956 / 440));
+            return {
+                width: targetWidth,
+                height: targetHeight,
+                screenWidth: w,
+                screenHeight: h,
+                isMobileScreen,
+                label: isMobileScreen && w < 440 ? `Mobile (${w} × ${h})` : 'iPhone Pro Max (440 × 956)'
+            };
+        }
+        return { width: 440, height: 956, screenWidth: 440, screenHeight: 956, isMobileScreen: false, label: 'iPhone Pro Max (440 × 956)' };
+    });
+
+    useEffect(() => {
+        const handleResize = () => {
+            const w = window.innerWidth;
+            const h = window.innerHeight;
+            const isMobileScreen = w < 640;
+            const targetWidth = isMobileScreen 
+                ? Math.min(Math.max(w - 24, 320), 440) 
+                : 440;
+            const targetHeight = Math.round(targetWidth * (956 / 440));
+            setDetectedDimensions({
+                width: targetWidth,
+                height: targetHeight,
+                screenWidth: w,
+                screenHeight: h,
+                isMobileScreen,
+                label: isMobileScreen && w < 440 ? `Mobile (${w} × ${h})` : 'iPhone Pro Max (440 × 956)'
+            });
+        };
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
     // ═══════════════════════════════════════════════════════════
     // SIMULEARN ORCHESTRATION LOOP
@@ -253,7 +301,7 @@ export default function HeroSimulation() {
                             {formativeMastery}%
                         </span>
                         <span className="text-[9px] uppercase font-bold text-slate-500 tracking-wider">
-                            BKT Mastery
+                            Topic Mastery
                         </span>
                     </div>
                 </div>
@@ -274,15 +322,44 @@ export default function HeroSimulation() {
     return (
         <div className="relative w-full select-none" style={{ minHeight: '660px' }}>
             
+            {/* ── Device Viewport Toggle (Windows 11 PWA vs. iPhone 16 Pro Max 440 x 956) ── */}
+            <div className="flex items-center justify-center gap-2 mb-4 select-none">
+                <button
+                    type="button"
+                    onClick={() => setDeviceView('desktop')}
+                    className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer ${
+                        (deviceView === 'desktop' || (deviceView === 'auto' && !detectedDimensions.isMobileScreen))
+                            ? 'bg-[#13519C] text-white shadow-xs scale-[1.02]'
+                            : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50'
+                    }`}
+                >
+                    <span>💻</span>
+                    <span>Desktop PWA</span>
+                </button>
+                <button
+                    type="button"
+                    onClick={() => setDeviceView('mobile')}
+                    className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer ${
+                        (deviceView === 'mobile' || (deviceView === 'auto' && detectedDimensions.isMobileScreen))
+                            ? 'bg-[#13519C] text-white shadow-xs scale-[1.02]'
+                            : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50'
+                    }`}
+                >
+                    <span>📱</span>
+                    <span>Mobile WebAPK ({detectedDimensions.label})</span>
+                </button>
+            </div>
+
             {/* ═══════════════════════════════════════════════════════════════ */}
             {/* 1. DESKTOP VIEWPORT (Windows 11 PWA + Universal Workspace)     */}
             {/* ═══════════════════════════════════════════════════════════════ */}
-            <div className="hidden sm:flex flex-col rounded-2xl bg-white border border-slate-300 shadow-xl overflow-hidden text-slate-800">
+            {(deviceView === 'desktop' || (deviceView === 'auto' && !detectedDimensions.isMobileScreen)) && (
+                <div className="flex flex-col rounded-2xl bg-white border border-slate-300 shadow-xl overflow-hidden text-slate-800 animate-fadeIn">
                 
                 {/* ── Level 1: System Title Bar (Windows 11 Controls ─, □, ✕ + URL route pill) ── */}
                 <div className="px-3 sm:px-4 py-1.5 bg-slate-100 border-b border-slate-200 flex items-center justify-between gap-3 text-xs select-none">
                     <div className="flex items-center gap-2">
-                        <GraduationCap className="w-4 h-4 text-[#FF9100] shrink-0" title="Fundile Desktop App" />
+                        <FundileLogo className="h-4 w-auto shrink-0" wordmarkColor="#13519C" />
                         <span className="font-semibold text-slate-700 text-[11px] sm:text-xs tracking-tight" style={{ fontFamily: 'Afacad, sans-serif' }}>
                             Fundile — Learner Workspace ({selectedSubject.grade} {selectedSubject.name})
                         </span>
@@ -308,13 +385,7 @@ export default function HeroSimulation() {
                 {/* ── Level 2: User Ribbon (bg-[#13519C] with learner avatar, grade, streak, and XP) ── */}
                 <div className="px-4 py-2.5 bg-[#13519C] text-white flex items-center justify-between gap-3 text-xs">
                     <div className="flex items-center gap-2.5">
-                        <div className="w-6 h-6 rounded-lg bg-white/15 border border-white/25 flex items-center justify-center shrink-0 shadow-xs">
-                            <GraduationCap className="w-4 h-4 text-[#FF9100]" />
-                        </div>
-                        <div>
-                            <span className="font-bold text-sm tracking-tight text-white block leading-tight" style={{ fontFamily: 'Afacad, sans-serif' }}>FUNDILE</span>
-                            <span className="hidden md:block text-blue-200 text-[10px] leading-tight font-medium">Learn • Practice • Progress</span>
-                        </div>
+                        <FundileLogo className="h-7 w-auto shrink-0" wordmarkColor="white" />
                     </div>
 
                     <div className="flex items-center gap-2">
@@ -607,7 +678,7 @@ export default function HeroSimulation() {
                             <div className="md:col-span-5 flex flex-col items-center">
                                 {renderMasteryDial(160, 10)}
                                 <span className="text-[11px] text-slate-500 mt-2 text-center">
-                                    Inner: BKT Formative Mastery ({formativeMastery}%) • Outer: Evaluative Score ({evaluativeScore}%)
+                                    Inner: Formative Mastery ({formativeMastery}%) • Outer: Evaluative Score ({evaluativeScore}%)
                                 </span>
                             </div>
 
@@ -621,7 +692,7 @@ export default function HeroSimulation() {
                                         Adaptive Progression: Scaffold &rarr; Exam Ready Mode
                                     </h4>
                                     <p className="text-xs text-slate-600 mt-1">
-                                        Fundile continuously estimates your latent knowledge state P(L_n). Crossing 80% automatically unlocks Timed Exam Mode and reduces scaffold hints.
+                                        Fundile continuously estimates your conceptual understanding. Crossing 80% automatically unlocks Timed Exam Mode and reduces scaffold hints.
                                     </p>
                                 </div>
 
@@ -629,7 +700,7 @@ export default function HeroSimulation() {
                                     <div className="p-3 rounded-xl bg-white border border-slate-200 shadow-xs">
                                         <span className="text-[10px] uppercase font-bold text-slate-400 block">Formative Mastery</span>
                                         <span className="text-xl font-bold text-emerald-600 mt-0.5 block">{formativeMastery}%</span>
-                                        <span className="text-[11px] text-slate-500">Autonomous BKT Trajectory</span>
+                                        <span className="text-[11px] text-slate-500">Autonomous Mastery Trajectory</span>
                                     </div>
                                     <div className="p-3 rounded-xl bg-white border border-slate-200 shadow-xs">
                                         <span className="text-[10px] uppercase font-bold text-slate-400 block">Evaluative Homework</span>
@@ -784,200 +855,256 @@ export default function HeroSimulation() {
                 </div>
 
             </div>
+            )}
 
             {/* ═══════════════════════════════════════════════════════════════ */}
-            {/* 2. MOBILE VIEWPORT (Phone Chassis Matching MobileWebApkView)   */}
+            {/* 2. MOBILE VIEWPORT (iPhone 16 Pro Max 440 x 956 Chassis)       */}
             {/* ═══════════════════════════════════════════════════════════════ */}
-            <div className="block sm:hidden w-full max-w-[340px] mx-auto bg-slate-900 p-2.5 rounded-[36px] shadow-2xl border-4 border-slate-700 select-none text-slate-800">
-                {/* Phone Top Notch / Camera Pill */}
-                <div className="w-16 h-3 bg-black rounded-full mx-auto mb-1.5" />
-
-                {/* Inner Screen */}
-                <div className="rounded-[24px] overflow-hidden bg-white flex flex-col shadow-inner">
-                    {/* Android Status Bar */}
-                    <div className="px-3.5 pt-1.5 pb-1 bg-[#13519C] text-white flex items-center justify-between text-[10px] font-mono select-none">
-                        <span>14:30</span>
-                        <div className="flex items-center gap-1.5 text-[9px]">
-                            <span className="bg-blue-800/80 px-1 py-0.2 rounded border border-blue-400/30">LTE</span>
-                            <span>📶</span>
-                            <span>🔋 88%</span>
-                        </div>
+            {(deviceView === 'mobile' || (deviceView === 'auto' && detectedDimensions.isMobileScreen)) && (
+                <div 
+                    className="w-full mx-auto bg-slate-900 p-3 sm:p-4 rounded-[48px] sm:rounded-[54px] shadow-2xl border-4 sm:border-[6px] border-slate-700/90 select-none text-slate-800 transition-all duration-300 animate-fadeIn"
+                    style={{ maxWidth: `${detectedDimensions.width}px` }}
+                >
+                    {/* Dynamic Island (iPhone 16 Pro Max Camera & Sensor Pill) */}
+                    <div className="w-28 sm:w-32 h-6 sm:h-7 bg-black rounded-full mx-auto mb-2.5 flex items-center justify-end px-2.5 shadow-inner">
+                        <div className="w-2.5 h-2.5 rounded-full bg-slate-900 ring-1 ring-slate-800" />
                     </div>
 
-                    {/* Collapsible Profile Ribbon */}
-                    <div className="px-3 py-2 bg-[#13519C] text-white flex items-center justify-between border-t border-blue-800/40 text-xs">
-                        <div className="flex items-center gap-2">
-                            <div className="w-6 h-6 rounded-full bg-white text-[#13519C] flex items-center justify-center font-bold text-[10px]">
-                                N
-                            </div>
-                            <div>
-                                <span className="font-bold text-[11px] block leading-tight" style={{ fontFamily: 'Afacad, sans-serif' }}>Nqobile Dlamini</span>
-                                <span className="text-[9px] text-blue-100 block leading-tight">Grade 10 • Westville High</span>
+                    {/* Inner Screen */}
+                    <div className="rounded-[28px] sm:rounded-[36px] overflow-hidden bg-white flex flex-col shadow-inner border border-slate-200/50">
+                        {/* iOS 18 / Flagship Status Bar */}
+                        <div className="px-5 pt-2.5 pb-1.5 bg-[#13519C] text-white flex items-center justify-between text-[11px] font-semibold select-none font-sans">
+                            <span>09:41</span>
+                            <div className="flex items-center gap-2 text-[10px]">
+                                <span className="font-bold">5G</span>
+                                <span>📶</span>
+                                <span>🔋 100%</span>
                             </div>
                         </div>
-                        <div className="flex items-center gap-1.5 text-[10px] font-bold">
-                            <span className="bg-amber-400 text-slate-950 px-1.5 py-0.5 rounded-full">🔥 5d</span>
-                            <span className="bg-blue-900 text-blue-100 px-1.5 py-0.5 rounded-full border border-blue-400/40">⚡ 1.4k</span>
+
+                        {/* Collapsible Mobile Header Ribbon with Organic SVG Wave */}
+                        <div className="relative bg-[#13519C] text-white px-4 pt-2.5 pb-5 border-t border-blue-400/20 shadow-xs">
+                            <div className="flex items-center justify-between">
+                                <FundileLogo className="h-6 w-auto shrink-0" wordmarkColor="white" />
+                                <div className="flex items-center gap-2">
+                                    <span className="text-[11px] font-bold bg-white/10 px-2 py-0.5 rounded-full text-blue-100">
+                                        🔔
+                                    </span>
+                                    <span className="text-[11px] font-bold bg-white/10 px-2 py-0.5 rounded-full text-blue-100">
+                                        🚪
+                                    </span>
+                                </div>
+                            </div>
+                            {/* Organic SVG Wave transition */}
+                            <div className="absolute bottom-0 left-0 right-0 w-full overflow-hidden leading-none pointer-events-none">
+                                <svg className="h-3.5 w-full text-slate-50 block" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                                    <path d="M0,0 C180,45 420,55 600,32 C820,8 1020,42 1200,22 L1200,120 L0,120 Z" fill="currentColor" />
+                                </svg>
+                            </div>
                         </div>
-                    </div>
 
-                    {/* Mobile 4-Stage Progression Stepper */}
-                    <div className="px-2.5 py-1.5 bg-slate-100 border-b border-slate-200 flex items-center justify-between text-[10px] font-bold">
-                        {[
-                            { id: 'diag', label: '0. Diag' },
-                            { id: 'scaff', label: '1. Scaff' },
-                            { id: 'prac', label: '2. Prac' },
-                            { id: 'exam', label: '3. Exam' },
-                        ].map((stg, i) => {
-                            const isCurrent = (simuStep === 0 && i === 1) || (simuStep === 1 && i === 2) || (simuStep === 2 && i === 2) || (simuStep === 3 && i === 3);
-                            return (
-                                <span
-                                    key={stg.id}
-                                    className={`px-1.5 py-0.5 rounded-md transition ${
-                                        isCurrent ? 'bg-[#13519C] text-white shadow-xs font-bold' : 'text-slate-500'
-                                    }`}
-                                >
-                                    {stg.label}
-                                </span>
-                            );
-                        })}
-                    </div>
-
-                    {/* Mobile Problem Solving Surface */}
-                    <div className="p-3 bg-slate-50 min-h-[300px] flex flex-col justify-between">
-                        {simuStep === 0 && (
-                            <div className="space-y-2">
-                                <div className="bg-white p-2.5 rounded-xl border border-slate-200 shadow-xs space-y-2">
-                                    <div className="flex items-center justify-between text-[10px] pb-1 border-b border-slate-100">
-                                        <span className="font-bold text-emerald-800 uppercase">Cash Receipts Journal</span>
-                                        <span className="font-bold text-amber-700 bg-amber-50 px-1.5 py-0.5 rounded border border-amber-200">6 Marks</span>
+                        {/* Clean Student Profile Card (Strict Parity with MobileWebApkView — Zero Streak/XP Clutter) */}
+                        <div className="p-3 bg-slate-50 border-b border-slate-200/60">
+                            <div className="bg-white p-3 rounded-2xl border border-slate-200/80 shadow-2xs flex items-center justify-between gap-2.5">
+                                <div className="flex items-center gap-2.5 min-w-0">
+                                    <div className="w-10 h-10 rounded-full bg-[#13519C] text-white font-extrabold text-sm flex items-center justify-center shrink-0 shadow-2xs ring-2 ring-slate-100">
+                                        N
                                     </div>
-                                    <p className="text-[11px] text-slate-700 font-medium">Cash sales R11,500 (incl. 15% VAT). Cost of sales R8,000.</p>
-
-                                    {/* 2x2 Problem Solving Surface */}
-                                    <div className="grid grid-cols-2 gap-1.5 text-[10px]">
-                                        <div className="p-1.5 bg-emerald-50 rounded-lg border border-emerald-200">
-                                            <span className="text-slate-500 block">Bank (Gross 115%)</span>
-                                            <span className="font-mono font-bold text-emerald-900 text-xs">{accountingFilled.bank || '...'}</span>
-                                        </div>
-                                        <div className="p-1.5 bg-emerald-50 rounded-lg border border-emerald-200">
-                                            <span className="text-slate-500 block">Sales (Excl 100%)</span>
-                                            <span className="font-mono font-bold text-emerald-900 text-xs">{accountingFilled.sales || '...'}</span>
-                                        </div>
-                                        <div className="p-1.5 bg-emerald-50 rounded-lg border border-emerald-200">
-                                            <span className="text-slate-500 block">Output VAT (15%)</span>
-                                            <span className="font-mono font-bold text-emerald-900 text-xs">{accountingFilled.vat || '...'}</span>
-                                        </div>
-                                        <div className="p-1.5 bg-slate-50 rounded-lg border border-slate-200">
-                                            <span className="text-slate-500 block">Cost of Sales</span>
-                                            <span className="font-mono font-bold text-slate-800 text-xs">R 8 000</span>
-                                        </div>
+                                    <div className="min-w-0">
+                                        <span className="font-extrabold text-sm text-slate-900 block leading-tight truncate" style={{ fontFamily: 'Afacad, sans-serif' }}>
+                                            Nqobile Dlamini
+                                        </span>
+                                        <span className="text-[10px] text-slate-500 font-bold uppercase tracking-wider block mt-0.5 truncate">
+                                            Grade 10 • Westville High School
+                                        </span>
                                     </div>
                                 </div>
+                                <div className="flex items-center gap-1 shrink-0">
+                                    <span className="px-2 py-1 rounded-xl bg-emerald-50 text-emerald-800 text-[10px] font-extrabold border border-emerald-200">
+                                        🏫 Class
+                                    </span>
+                                    <span className="px-2 py-1 rounded-xl bg-blue-50 text-[#13519C] text-[10px] font-extrabold border border-blue-200">
+                                        🔗 Parent
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
 
-                                {/* 3-Tier Hints Drawer */}
-                                {showHints && (
-                                    <div className="p-2 bg-amber-50 rounded-xl border border-amber-200 text-[10px] text-amber-900 space-y-1">
-                                        <div className="flex items-center justify-between font-bold">
-                                            <span>💡 Hint Tier {activeHintTier}</span>
-                                            <div className="flex gap-1">
-                                                {[1, 2, 3].map((t) => (
-                                                    <span key={t} className={`px-1 rounded ${activeHintTier === t ? 'bg-[#13519C] text-white' : 'bg-white text-slate-600'}`}>T{t}</span>
-                                                ))}
+                        {/* Mobile 4-Stage Progression Stepper */}
+                        <div className="px-3 py-2 bg-slate-100 border-b border-slate-200 flex items-center justify-between text-[11px] font-bold">
+                            {[
+                                { id: 'diag', label: '0. Diag' },
+                                { id: 'scaff', label: '1. Scaff' },
+                                { id: 'prac', label: '2. Prac' },
+                                { id: 'exam', label: '3. Exam' },
+                            ].map((stg, i) => {
+                                const isCurrent = (simuStep === 0 && i === 1) || (simuStep === 1 && i === 2) || (simuStep === 2 && i === 2) || (simuStep === 3 && i === 3);
+                                return (
+                                    <span
+                                        key={stg.id}
+                                        className={`px-2.5 py-1 rounded-lg transition ${
+                                            isCurrent ? 'bg-[#13519C] text-white shadow-xs font-bold' : 'text-slate-500'
+                                        }`}
+                                    >
+                                        {stg.label}
+                                    </span>
+                                );
+                            })}
+                        </div>
+
+                        {/* Mobile Problem Solving Surface (With Generous 440px iPhone Pro Max Width) */}
+                        <div className="p-3.5 bg-slate-50 min-h-[340px] flex flex-col justify-between">
+                            {simuStep === 0 && (
+                                <div className="space-y-2.5">
+                                    <div className="bg-white p-3 rounded-2xl border border-slate-200 shadow-xs space-y-2">
+                                        <div className="flex items-center justify-between text-[11px] pb-1.5 border-b border-slate-100">
+                                            <span className="font-extrabold text-emerald-800 uppercase tracking-wider" style={{ fontFamily: 'Afacad, sans-serif' }}>
+                                                Accounting • Cash Receipts Journal
+                                            </span>
+                                            <span className="font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded-full border border-amber-200 text-[10px]">
+                                                6 Marks
+                                            </span>
+                                        </div>
+                                        <p className="text-xs text-slate-700 font-medium leading-relaxed">
+                                            Cash sales R11,500 (incl. 15% VAT). Cost of sales R8,000. Record in the CRJ.
+                                        </p>
+
+                                        {/* 2x2 Problem Solving Surface */}
+                                        <div className="grid grid-cols-2 gap-2 text-xs">
+                                            <div className="p-2 bg-emerald-50 rounded-xl border border-emerald-200">
+                                                <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block">Bank (Gross 115%)</span>
+                                                <span className="font-mono font-extrabold text-emerald-900 text-sm">{accountingFilled.bank || '...'}</span>
+                                            </div>
+                                            <div className="p-2 bg-emerald-50 rounded-xl border border-emerald-200">
+                                                <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block">Sales (Excl 100%)</span>
+                                                <span className="font-mono font-extrabold text-emerald-900 text-sm">{accountingFilled.sales || '...'}</span>
+                                            </div>
+                                            <div className="p-2 bg-emerald-50 rounded-xl border border-emerald-200">
+                                                <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block">Output VAT (15%)</span>
+                                                <span className="font-mono font-extrabold text-emerald-900 text-sm">{accountingFilled.vat || '...'}</span>
+                                            </div>
+                                            <div className="p-2 bg-slate-50 rounded-xl border border-slate-200">
+                                                <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block">Cost of Sales</span>
+                                                <span className="font-mono font-extrabold text-slate-800 text-sm">R 8 000</span>
                                             </div>
                                         </div>
-                                        <p className="text-[10px]">
-                                            {activeHintTier === 1 && 'Look at Bank Gross and calculate 15/115.'}
-                                            {activeHintTier === 2 && 'Gross = 115%, Sales = 100%, VAT = 15%.'}
-                                            {activeHintTier === 3 && 'R11,500 × 15/115 = R1,500 VAT. Sales = R10,000.'}
-                                        </p>
                                     </div>
-                                )}
 
-                                {accountingFilled.vat && (
-                                    <div className="p-2 bg-emerald-50 border border-emerald-300 rounded-xl flex items-center justify-between text-[10px] text-emerald-900 font-bold shadow-xs">
-                                        <span>✓ 6/6 Marks Credited</span>
-                                        <span className="bg-emerald-600 text-white px-2 py-0.5 rounded-full text-[9px]">+35 XP</span>
+                                    {/* 3-Tier Hints Drawer */}
+                                    {showHints && (
+                                        <div className="p-2.5 bg-amber-50 rounded-2xl border border-amber-200 text-xs text-amber-900 space-y-1.5 shadow-2xs">
+                                            <div className="flex items-center justify-between font-bold">
+                                                <span className="flex items-center gap-1 font-extrabold text-amber-950">
+                                                    💡 Hint Tier {activeHintTier}
+                                                </span>
+                                                <div className="flex gap-1">
+                                                    {[1, 2, 3].map((t) => (
+                                                        <span key={t} className={`px-1.5 py-0.2 rounded text-[10px] font-bold ${activeHintTier === t ? 'bg-[#13519C] text-white' : 'bg-white text-slate-600'}`}>T{t}</span>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                            <p className="text-[11px] leading-relaxed">
+                                                {activeHintTier === 1 && 'Look at Bank Gross and calculate 15/115 for inclusive VAT.'}
+                                                {activeHintTier === 2 && 'Gross = 115%, Sales = 100%, VAT = 15% (consequential method marking applies).'}
+                                                {activeHintTier === 3 && 'R11,500 × 15/115 = R1,500 VAT. Sales (100/115) = R10,000.'}
+                                            </p>
+                                        </div>
+                                    )}
+
+                                    {accountingFilled.vat && (
+                                        <div className="p-2.5 bg-emerald-50 border border-emerald-300 rounded-2xl flex items-center justify-between text-xs text-emerald-900 font-bold shadow-xs">
+                                            <span className="flex items-center gap-1">✓ 6/6 Marks Credited (Consequential Accuracy)</span>
+                                            <span className="bg-emerald-600 text-white px-2.5 py-0.5 rounded-full text-[10px] font-extrabold">+35 XP</span>
+                                        </div>
+                                    )}
+                                </div>
+                            )}
+
+                            {simuStep === 1 && (
+                                <div className="space-y-3 py-3 text-center">
+                                    <div className="flex justify-center">
+                                        {renderMasteryDial(140, 9)}
                                     </div>
-                                )}
-                            </div>
-                        )}
-
-                        {simuStep === 1 && (
-                            <div className="space-y-3 py-2 text-center">
-                                <div className="flex justify-center">
-                                    {renderMasteryDial(130, 8)}
-                                </div>
-                                <span className="text-[11px] font-bold text-slate-700 block" style={{ fontFamily: 'Afacad, sans-serif' }}>
-                                    Formative Mastery: {formativeMastery}% • Exam Ready
-                                </span>
-                            </div>
-                        )}
-
-                        {simuStep === 2 && (
-                            <div className="bg-white p-3 rounded-xl border border-slate-200 space-y-2 text-xs">
-                                <span className="text-[10px] font-bold text-blue-800 uppercase block">Grade 10 Mathematics</span>
-                                <p className="font-bold text-slate-900">Factorise: x² − 7x + 12</p>
-                                <div className="p-2 bg-blue-50 border border-blue-300 rounded-lg font-mono font-bold text-blue-950 text-xs">
-                                    {mathStepSubmitted ? '(x − 3)(x − 4) ✓' : 'Working...'}
-                                </div>
-                                {mathStepSubmitted && (
-                                    <div className="p-1.5 bg-emerald-50 border border-emerald-300 rounded-lg flex items-center justify-between text-[10px] text-emerald-900 font-bold">
-                                        <span>Step Verified</span>
-                                        <span className="bg-emerald-600 text-white px-2 py-0.5 rounded-full text-[9px]">+35 XP</span>
-                                    </div>
-                                )}
-                            </div>
-                        )}
-
-                        {simuStep === 3 && (
-                            <div className="bg-white p-3 rounded-xl border border-slate-200 space-y-2 text-xs">
-                                <div className="flex justify-between items-center text-[10px] font-bold text-rose-700">
-                                    <span>EXAM MODE</span>
-                                    <span>⏱️ {formatTimer(examTimer)}</span>
-                                </div>
-                                <p className="text-[11px] text-slate-800 font-semibold">R2,300 stock incl. 15% VAT. Output VAT?</p>
-                                <div className="p-2 bg-blue-50 border border-blue-400 rounded-lg text-[10px] text-blue-900 font-bold">
-                                    Option A: R300 (15/115 × R2,300) ✓
-                                </div>
-                                {examSubmitted && (
-                                    <div className="p-2 bg-amber-50 border border-amber-300 rounded-lg text-[10px] text-amber-900 space-y-1">
-                                        <span className="font-bold block">Autopsy Report: Score 84%</span>
-                                        <span>Net vs. Gross VAT procedure verified.</span>
-                                    </div>
-                                )}
-                            </div>
-                        )}
-                    </div>
-
-                    {/* Pinned Bottom Horizontal Subject Carousel */}
-                    <div className="border-t border-slate-200 bg-white/95 px-2 py-1.5 flex items-center gap-1.5 overflow-x-auto scrollbar-none rounded-b-2xl">
-                        {SUBJECTS.map((sub) => {
-                            const isSelected = selectedSubject.id === sub.id;
-                            return (
-                                <button
-                                    key={sub.id}
-                                    type="button"
-                                    onClick={() => {
-                                        setIsAutoPlaying(false);
-                                        setSelectedSubject(sub);
-                                    }}
-                                    className={`flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-[10px] font-bold shrink-0 min-h-[44px] cursor-pointer ${
-                                        isSelected
-                                            ? 'bg-blue-50 text-[#13519C] border-2 border-blue-400 shadow-xs'
-                                            : 'bg-slate-50 text-slate-600 border border-slate-200'
-                                    }`}
-                                >
-                                    <span>{sub.name === 'Physical Sciences' ? 'Physics' : sub.name === 'Business Studies' ? 'Business' : sub.name}</span>
-                                    <span className={`text-[9px] px-1 py-0.2 rounded-full ${isSelected ? 'bg-blue-600 text-white' : 'bg-slate-200 text-slate-700'}`}>
-                                        {sub.mastery}%
+                                    <span className="text-xs font-bold text-slate-700 block" style={{ fontFamily: 'Afacad, sans-serif' }}>
+                                        Formative Mastery: {formativeMastery}% • Exam Ready (Level 7)
                                     </span>
-                                </button>
-                            );
-                        })}
+                                </div>
+                            )}
+
+                            {simuStep === 2 && (
+                                <div className="bg-white p-3.5 rounded-2xl border border-slate-200 space-y-2.5 text-xs shadow-xs">
+                                    <span className="text-[11px] font-extrabold text-blue-800 uppercase tracking-wider block" style={{ fontFamily: 'Afacad, sans-serif' }}>
+                                        Grade 10 Mathematics • Algebraic Expressions
+                                    </span>
+                                    <p className="font-extrabold text-slate-900 text-sm">Factorise: x² − 7x + 12</p>
+                                    <div className="p-2.5 bg-blue-50 border border-blue-300 rounded-xl font-mono font-bold text-blue-950 text-xs">
+                                        {mathStepSubmitted ? '(x − 3)(x − 4) ✓' : 'Entering factors on working pad...'}
+                                    </div>
+                                    {mathStepSubmitted && (
+                                        <div className="p-2 bg-emerald-50 border border-emerald-300 rounded-xl flex items-center justify-between text-xs text-emerald-900 font-bold">
+                                            <span>SymPy Step Verified</span>
+                                            <span className="bg-emerald-600 text-white px-2.5 py-0.5 rounded-full text-[10px] font-extrabold">+35 XP</span>
+                                        </div>
+                                    )}
+                                </div>
+                            )}
+
+                            {simuStep === 3 && (
+                                <div className="bg-white p-3.5 rounded-2xl border border-slate-200 space-y-2.5 text-xs shadow-xs">
+                                    <div className="flex justify-between items-center text-xs font-extrabold text-rose-700">
+                                        <span>TIMED EXAM MODE</span>
+                                        <span>⏱️ {formatTimer(examTimer)}</span>
+                                    </div>
+                                    <p className="text-xs text-slate-800 font-semibold leading-relaxed">
+                                        A sole trader sells R2,300 stock incl. 15% VAT. Calculate Output VAT.
+                                    </p>
+                                    <div className="p-2.5 bg-blue-50 border border-blue-400 rounded-xl text-xs text-blue-900 font-bold">
+                                        Selected Option A: R300 (15/115 × R2,300) ✓
+                                    </div>
+                                    {examSubmitted && (
+                                        <div className="p-2.5 bg-amber-50 border border-amber-300 rounded-xl text-xs text-amber-900 space-y-1 shadow-2xs">
+                                            <span className="font-extrabold block text-amber-950">Post-Exam Autopsy Report: Score 84%</span>
+                                            <span className="text-[11px] text-amber-800 leading-snug block">Net vs. Gross VAT procedure verified. Consequential mark awarded.</span>
+                                        </div>
+                                    )}
+                                </div>
+                            )}
+                        </div>
+
+                        {/* Pinned Bottom Horizontal Subject Carousel */}
+                        <div className="border-t border-slate-200 bg-white/95 px-3 py-2 flex items-center gap-2 overflow-x-auto scrollbar-none">
+                            {SUBJECTS.map((sub) => {
+                                const isSelected = selectedSubject.id === sub.id;
+                                return (
+                                    <button
+                                        key={sub.id}
+                                        type="button"
+                                        onClick={() => {
+                                            setIsAutoPlaying(false);
+                                            setSelectedSubject(sub);
+                                        }}
+                                        className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold shrink-0 min-h-[44px] cursor-pointer transition ${
+                                            isSelected
+                                                ? 'bg-blue-50 text-[#13519C] border-2 border-blue-400 shadow-xs'
+                                                : 'bg-slate-50 text-slate-600 border border-slate-200 hover:text-slate-900'
+                                        }`}
+                                    >
+                                        <span>{sub.name === 'Physical Sciences' ? 'Physics' : sub.name === 'Business Studies' ? 'Business' : sub.name}</span>
+                                        <span className={`text-[10px] px-1.5 py-0.5 rounded-full font-extrabold ${isSelected ? 'bg-blue-600 text-white' : 'bg-slate-200 text-slate-700'}`}>
+                                            {sub.mastery}%
+                                        </span>
+                                    </button>
+                                );
+                            })}
+                        </div>
+
+                        {/* iPhone Home Indicator Bar */}
+                        <div className="bg-white py-1.5 flex justify-center">
+                            <div className="w-32 h-1 bg-slate-400/60 rounded-full" />
+                        </div>
                     </div>
                 </div>
-            </div>
+            )}
 
             {/* ═══════════════════════════════════════════════════════════════ */}
             {/* 3. SIMULEARN INTERACTIVE STEP CONTROLS (User Journey Bar)      */}

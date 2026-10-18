@@ -24,8 +24,25 @@ LO = "ns_senior_planet_earth_beyond"
 # ARCHETYPE 1: SEASONS, TIDES & ECLIPSES (Grade 7)
 # ============================================================================
 
+ASTRO_PROMPT_HOOKS = [
+    "Astronomical movements of the Earth and Moon govern cycles of day and night, seasons, and ocean tides.",
+    "Celestial mechanics involving the Sun, Earth, and Moon produce regular cyclical phenomena across planet Earth.",
+    "Observations recorded by astronomers demonstrate how Earth's orbital tilt and gravitational interactions shape global tides and seasons.",
+    "In planetary science, the gravitational interplay among the Sun, Earth, and Moon produces tides, eclipses, and seasonal climatic variations.",
+]
+
+SEASONAL_EVENTS = [
+    {"name": "Summer Solstice", "month": "December (around 21-22 December)", "desc": "Southern Hemisphere leans most directly towards the Sun, receiving maximum daily solar irradiation."},
+    {"name": "Winter Solstice", "month": "June (around 20-21 June)", "desc": "Southern Hemisphere tilts furthest away from the Sun, resulting in the shortest daylight hours and lowest solar elevation."},
+    {"name": "Autumnal Equinox", "month": "March (around 20-21 March)", "desc": "Solar declination crosses the equator northward; day and night are approximately equal in duration globally."},
+    {"name": "Vernal (Spring) Equinox", "month": "September (around 22-23 September)", "desc": "Solar declination crosses the equator southward; day and night are approximately equal in duration globally."},
+]
+
+
 def _gen_sun_earth_moon_question(r: random.Random, mode: str = "compound") -> Dict[str, Any]:
     tide_type = r.choice(["Spring tides", "Neap tides"])
+    event = r.choice(SEASONAL_EVENTS)
+    hook = r.choice(ASTRO_PROMPT_HOOKS)
     
     if tide_type == "Spring tides":
         tide_align = "The Sun, Earth, and Moon are aligned in a straight line (Syzygy) during either New Moon or Full Moon."
@@ -35,24 +52,24 @@ def _gen_sun_earth_moon_question(r: random.Random, mode: str = "compound") -> Di
         tide_effect = "The gravitational pull of the Sun partially cancels that of the Moon, resulting in lower high tides and higher low tides (minimum tidal range)."
 
     prompt = (
-        f"Astronomical movements of the Earth and Moon govern cycles of day and night, seasons, and ocean tides.\n\n"
+        f"{hook}\n\n"
         f"1. Explain why Earth experiences four distinct seasons during its orbit around the Sun. "
         f"State the angle of tilt of the Earth's rotational axis.\n"
-        f"2. During which calendar month does the Southern Hemisphere experience its **Summer Solstice**?\n"
+        f"2. During which calendar month does the Southern Hemisphere experience its **{event['name']}**?\n"
         f"3. Explain the gravitational alignment that causes **{tide_type}** in our coastal oceans, and describe the resulting water levels.\n"
         f"4. Differentiate between a **solar eclipse** and a **lunar eclipse** in terms of which celestial body casts a shadow on which."
     )
     prompt_latex = (
         rf"\textbf{{Astronomical Mechanics: Earth, Moon & Sun}}" "\n\n"
         rf"\text{{1. Orbital tilt and mechanism of seasons (Axial tilt }} \theta \approx 23,5^\circ\text{{)}}" "\n"
-        rf"\text{{2. Southern Hemisphere Summer Solstice timing}}" "\n"
+        rf"\text{{2. Southern Hemisphere {event['name']} timing}}" "\n"
         rf"\text{{3. Gravitational alignment for {tide_type}}}" "\n"
         r"\text{4. Solar eclipse vs. Lunar eclipse geometry}"
     )
     answer_latex = (
         r"\text{1. Earth's rotational axis is tilted at } 23{,}5^\circ\text{ relative to its orbital plane. As Earth revolves around the Sun, "
         r"different hemispheres lean towards the Sun (receiving direct, concentrated sunlight for longer daylight hours) or away.}" "\n"
-        r"\text{2. December (around 21-22 December).}" "\n"
+        rf"\text{{2. {event['name']}: {event['month']}. ({event['desc']})}}" "\n"
         rf"\text{{3. Alignment: {tide_align} Effect: {tide_effect}}}" "\n"
         r"\text{4. Solar eclipse: Moon passes between Sun and Earth, casting Moon's shadow on Earth. "
         r"Lunar eclipse: Earth passes between Sun and Moon, casting Earth's shadow across the Full Moon.}"
@@ -60,7 +77,7 @@ def _gen_sun_earth_moon_question(r: random.Random, mode: str = "compound") -> Di
     sample = (
         "1. Seasons are caused by the 23,5° tilt of Earth's rotational axis combined with its revolution around the Sun. "
         "When a hemisphere is tilted toward the Sun, solar rays strike at a direct, concentrated angle, and daylight hours are longer, creating summer.\n"
-        "2. December (approximately 21 December).\n"
+        f"2. {event['name']}: {event['month']}. {event['desc']}\n"
         f"3. {tide_align} {tide_effect}\n"
         "4. A solar eclipse occurs when the Moon moves directly between the Sun and the Earth, casting the Moon's shadow onto Earth's surface during the day. "
         "A lunar eclipse occurs when the Earth passes directly between the Sun and the Moon, casting Earth's shadow onto the Moon during the night."
@@ -69,7 +86,7 @@ def _gen_sun_earth_moon_question(r: random.Random, mode: str = "compound") -> Di
         "total_marks": 7,
         "marking_points": [
             {"id": "mp1", "desc": "Explain 23,5° axial tilt and revolution causing seasons", "marks": 2, "editable": True},
-            {"id": "mp2", "desc": "Identify December for Southern Hemisphere Summer Solstice", "marks": 1, "editable": True},
+            {"id": "mp2", "desc": f"Identify {event['month']} for {event['name']}", "marks": 1, "editable": True},
             {"id": "mp3", "desc": f"Accurately explain {tide_type} alignment and tidal range", "marks": 2, "editable": True},
             {"id": "mp4", "desc": "Accurately contrast solar vs lunar eclipse geometry", "marks": 2, "editable": True},
         ],
@@ -79,7 +96,7 @@ def _gen_sun_earth_moon_question(r: random.Random, mode: str = "compound") -> Di
     hints = {
         "nudge": "Seasons are not caused by Earth being closer or further from the Sun; they are caused by axial tilt (23,5°).",
         "concept": "Spring tides = Sun, Earth, Moon in a straight line (maximum range). Neap tides = 90° right angle (minimum range).",
-        "breakdown": f"Axis tilt = 23,5°. December = Southern summer solstice. {tide_type}: {tide_align[:60]}...",
+        "breakdown": f"Axis tilt = 23,5°. {event['name']} occurs in {event['month']}. {tide_type}: {tide_align[:60]}...",
     }
     return make_science_question(
         prefix="ns_seasons_tides",
@@ -126,14 +143,40 @@ MINERALS_SA = [
         "ore_extraction": "Both open-cast strip mining and underground bord-and-pillar mining",
         "environmental_impact": "Severe air pollution (sulphur dioxide SO2 and greenhouse gases), sinkhole formation from collapsed pillars, and acid runoff contaminating rivers",
     },
+    {
+        "mineral": "Platinum Group Metals (PGMs)",
+        "mining_region": "Bushveld Igneous Complex (Rustenburg / Limpopo)",
+        "ore_extraction": "Underground narrow-reef mining followed by froth flotation and smelting",
+        "environmental_impact": "Vast tailings storage facilities risking dam breach, high freshwater consumption, and SO2 emissions during smelting",
+    },
+    {
+        "mineral": "Diamonds (C)",
+        "mining_region": "Venetia Mine (Limpopo) / Kimberley Pipes (Northern Cape)",
+        "ore_extraction": "Open-pit transitioning to underground block-cave mining of kimberlite volcanic pipes",
+        "environmental_impact": "Massive volume waste rock dumps, disruption of arid ecosystem groundwater, and heavy energy consumption",
+    },
+    {
+        "mineral": "Manganese (Mn)",
+        "mining_region": "Kalahari Manganese Basin (Hotazel / Kuruman, Northern Cape)",
+        "ore_extraction": "Open-cast and underground sub-surface mining of sedimentary ore beds",
+        "environmental_impact": "Dust dispersion across fragile Kalahari thornveld, heavy transport road degradation, and worker dust exposure",
+    },
+]
+
+LITHO_PROMPT_HOOKS = [
+    "The lithosphere is the rigid outer crust and upper mantle of the Earth containing vital non-renewable mineral resources.",
+    "South Africa possesses some of the world's most valuable geological mineral reserves within its continental lithosphere.",
+    "Economic geology demonstrates how ancient geological formations across southern Africa deposited diverse precious minerals.",
+    "Environmental management reports evaluate the ecological sustainability and extraction methods of South African mining operations.",
 ]
 
 
 def _gen_lithosphere_mining_question(r: random.Random, mode: str = "compound") -> Dict[str, Any]:
     min_data = r.choice(MINERALS_SA)
+    hook = r.choice(LITHO_PROMPT_HOOKS)
     
     prompt = (
-        f"The lithosphere is the rigid outer crust and upper mantle of the Earth containing vital non-renewable mineral resources. "
+        f"{hook} "
         f"In South Africa, the mining and refining of **{min_data['mineral']}** is a major industrial sector.\n\n"
         f"1. Name the primary geological province / region in South Africa where {min_data['mineral']} is mined.\n"
         f"2. Describe the primary extraction method used to recover {min_data['mineral']} ore from the ground.\n"
@@ -200,22 +243,38 @@ def _gen_lithosphere_mining_question(r: random.Random, mode: str = "compound") -
     )
 
 
-# ============================================================================
-# ARCHETYPE 3: STELLAR EVOLUTION & TELESCOPES (Grade 8)
-# ============================================================================
+STELLAR_PROMPT_HOOKS = [
+    "Stars undergo a dynamic lifecycle driven by the opposing forces of inward gravitational collapse and outward nuclear fusion pressure.",
+    "Astrophysical observations by space telescopes reveal that the life history and death of any star are governed by its initial birth mass.",
+    "The evolution of stars across the cosmos illustrates the synthesis of heavy chemical elements and the birth of stellar remnants.",
+    "Theoretical astrophysics models show how stars maintain hydrostatic equilibrium between radiation pressure and self-gravity over billions of years.",
+]
+
 
 def _gen_stellar_evolution_question(r: random.Random, mode: str = "compound") -> Dict[str, Any]:
-    star_type = r.choice(["Massive star (greater than 8 solar masses)", "Sun-like star (average low/medium mass)"])
+    star_type = r.choice([
+        "Massive star (greater than 8 solar masses)",
+        "Sun-like star (average low/medium mass)",
+        "Very high-mass hypergiant star (greater than 25 solar masses)",
+        "Low-mass Red Dwarf star (less than 0.5 solar masses)",
+    ])
+    hook = r.choice(STELLAR_PROMPT_HOOKS)
     
-    if "Massive" in star_type:
+    if "hypergiant" in star_type:
+        cycle_stages = "Stellar Nebula -> Blue Supergiant -> Wolf-Rayet star -> Core-collapse Supernova -> Black Hole (gravitational singularity)"
+        final_fate = "Core collapses beyond the neutron degeneracy pressure limit, forming a Black Hole surrounded by an event horizon."
+    elif "Massive" in star_type:
         cycle_stages = "Stellar Nebula -> Massive Main Sequence -> Red Supergiant -> Supernova explosion -> Neutron Star or Black Hole"
         final_fate = "Supernova explosion leaving a core that collapses into an ultra-dense Neutron Star or a Black Hole (singularity)."
+    elif "Red Dwarf" in star_type:
+        cycle_stages = "Stellar Nebula -> Red Dwarf Main Sequence -> Fully convective hydrogen burning -> Blue Dwarf -> White Dwarf"
+        final_fate = "Slowly exhausts hydrogen over trillions of years without expanding into a red giant, cooling into a dense White Dwarf."
     else:
         cycle_stages = "Stellar Nebula -> Main Sequence star -> Red Giant -> Planetary Nebula -> White Dwarf -> (Black Dwarf)"
         final_fate = "Red Giant sheds its outer atmospheric layers as a planetary nebula, leaving a dense, cooling White Dwarf core."
 
     prompt = (
-        f"Stars undergo a lifecycle driven by the opposing forces of inward gravitational collapse and outward nuclear fusion pressure.\n\n"
+        f"{hook}\n\n"
         f"1. Name the dense cloud of interstellar gas and dust where all stars begin their formation.\n"
         f"2. Identify the nuclear reaction taking place in the core of a **main sequence star** that produces its vast energy output.\n"
         f"3. Trace the evolutionary lifecycle stages of a **{star_type}** from birth to its final remnant.\n"

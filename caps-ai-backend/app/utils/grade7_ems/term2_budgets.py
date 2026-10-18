@@ -116,7 +116,7 @@ def _calc_question(rng, item, mode="scaffold"):
     return question
 
 def _concept_pool(rng):
-    """Dynamic concept pool."""
+    """Dynamic concept pool with 6 distinct CAPS archetypes."""
     return [
         _with_metadata({
             'title': 'Defining a Budget',
@@ -138,6 +138,106 @@ def _concept_pool(rng):
             ],
             'guidelines': ['Identify the definition that involves future estimates of income and expenses.']
         }, subskill='concepts', learning_objective_id='lo_def_budget', question_family_id='def_budget', concept_id='budget', concept_group='budgets', misconception_tags=['confuses_budget_with_past_records'], diagnostic_tags=['definition']),
+        _with_metadata({
+            'title': 'Budget Surplus vs Deficit',
+            'prompt': "If a household's expected monthly income is GREATER than its expected monthly expenditure, the budget reflects a …",
+            'options': [
+                "Budget Surplus",
+                "Budget Deficit",
+                "Capital Depreciation",
+                "Liability Shortage"
+            ],
+            'correct_index': 0,
+            'explanation': "When Total Income > Total Expenditure, the difference is a Budget Surplus (extra money available for savings or investments). If Expenditure > Income, it is a Deficit.",
+            'difficulties': ['easy', 'medium'],
+            'marks': 1,
+            'hint_sections': [
+                {'title': 'What is being tested?', 'text': 'Differentiating between a budget surplus and deficit.'},
+                {'title': 'Reasoning path', 'text': 'Income is coming in; expenditure is going out. If you earn more than you spend, is it extra (surplus) or a shortage (deficit)?'},
+                {'title': 'Transfer idea', 'text': 'A budget surplus should be allocated to savings or debt reduction.'}
+            ],
+            'guidelines': ['Identify that excess income over expenditure is a surplus.']
+        }, subskill='concepts', learning_objective_id='lo_surplus_deficit', question_family_id='budget_surplus_deficit', concept_id='surplus_deficit', concept_group='budgets', misconception_tags=['confuses_surplus_with_deficit'], diagnostic_tags=['terminology']),
+        _with_metadata({
+            'title': 'Fixed vs Variable Expenses',
+            'prompt': "Which of the following items is classified as a FIXED expense in a family budget?",
+            'options': [
+                "Monthly rent or house bond repayment",
+                "Weekend entertainment and movies",
+                "Buying birthday gifts for friends",
+                "Monthly water and electricity bill that changes each season"
+            ],
+            'correct_index': 0,
+            'explanation': "A fixed expense stays constant every month (e.g. rent, school fees, car bond). Variable expenses fluctuate based on consumption and lifestyle choices.",
+            'difficulties': ['medium'],
+            'marks': 1,
+            'hint_sections': [
+                {'title': 'What is being tested?', 'text': 'Classifying expenses as fixed or variable.'},
+                {'title': 'Reasoning path', 'text': 'Which of these expenses stays the exact same amount every month regardless of your daily habits?'},
+                {'title': 'Transfer idea', 'text': 'Fixed expenses must always be prioritized in a budget before variable or luxury spending.'}
+            ],
+            'guidelines': ['Identify the expense with a constant monthly obligation.']
+        }, subskill='concepts', learning_objective_id='lo_fixed_variable_expenses', question_family_id='fixed_variable_expense', concept_id='expense_types', concept_group='budgets', misconception_tags=['confuses_fixed_with_variable'], diagnostic_tags=['classification']),
+        _with_metadata({
+            'title': 'Business vs Personal Budget',
+            'prompt': "How does an operating budget for a small trading business primarily differ from a personal household budget?",
+            'options': [
+                "A business budget estimates sales revenue, cost of sales, and operating expenses to project net profit.",
+                "A business budget only lists expenses and does not record any income.",
+                "A personal budget must be audited by registered chartered accountants.",
+                "A business budget never accounts for unexpected repairs or maintenance."
+            ],
+            'correct_index': 0,
+            'explanation': "A business budget projects sales revenue, cost of sales (trading inventory), and operating expenses (rent, wages, utilities) to estimate whether the enterprise will yield a net profit.",
+            'difficulties': ['medium', 'hard'],
+            'marks': 1,
+            'hint_sections': [
+                {'title': 'What is being tested?', 'text': 'Understanding the commercial purpose of a business budget.'},
+                {'title': 'Reasoning path', 'text': 'Why does an entrepreneur create a budget? To plan for sales revenue, overheads, and profit.'},
+                {'title': 'Transfer idea', 'text': 'Business budgets connect sales volume to profitability.'}
+            ],
+            'guidelines': ['Connect trading revenues and operating expenses to net profit.']
+        }, subskill='concepts', learning_objective_id='lo_business_budget_purpose', question_family_id='business_budget_comparison', concept_id='business_budget', concept_group='budgets', misconception_tags=['confuses_business_with_personal_finance'], diagnostic_tags=['commercial_application']),
+        _with_metadata({
+            'title': 'Budget Contingency & Savings',
+            'prompt': "Why should a prudent budget always include an allocation for savings or contingency funds?",
+            'options': [
+                "To absorb unexpected emergency expenses without incurring high-interest debt",
+                "To ensure that all earned money is spent completely before month-end",
+                "To reduce the bank balance to zero so inflation does not affect cash",
+                "To hide income from financial records"
+            ],
+            'correct_index': 0,
+            'explanation': "A contingency allocation provides an emergency safety cushion so that sudden unexpected expenses (car repairs, medical bills) do not force the household or business into high-interest debt.",
+            'difficulties': ['easy', 'medium'],
+            'marks': 1,
+            'hint_sections': [
+                {'title': 'What is being tested?', 'text': 'The role of emergency savings in financial planning.'},
+                {'title': 'Reasoning path', 'text': 'What happens if a sudden medical bill or burst geyser occurs? Savings prevent taking emergency loans.'},
+                {'title': 'Transfer idea', 'text': 'Emergency savings should ideally cover 3 to 6 months of essential fixed expenses.'}
+            ],
+            'guidelines': ['Focus on financial resilience against unexpected emergencies.']
+        }, subskill='concepts', learning_objective_id='lo_contingency_savings', question_family_id='budget_contingency', concept_id='savings_contingency', concept_group='budgets', misconception_tags=['underestimates_financial_risk'], diagnostic_tags=['financial_literacy']),
+        _with_metadata({
+            'title': 'Budget Variance Interpretation',
+            'prompt': "If a business budgeted R8 000 for monthly electricity but the actual municipal bill came to R11 500, how is this variance described?",
+            'options': [
+                "Unfavourable expense variance of R3 500",
+                "Favourable savings surplus of R3 500",
+                "Net capital gain of R3 500",
+                "Balanced budget variance of R11 500"
+            ],
+            'correct_index': 0,
+            'explanation': "When actual expenses exceed budgeted expenses, the variance is unfavourable (negative impact on profit). Overspending by R3 500 reduces net profit.",
+            'difficulties': ['medium', 'hard'],
+            'marks': 1,
+            'hint_sections': [
+                {'title': 'What is being tested?', 'text': 'Interpreting budget variance.'},
+                {'title': 'Reasoning path', 'text': 'Did the business spend more or less than planned? If expenses were higher, is that good (favourable) or bad (unfavourable)?'},
+                {'title': 'Transfer idea', 'text': 'Actual Expenses > Budgeted Expenses = Unfavourable Variance.'}
+            ],
+            'guidelines': ['Identify that excess spending is an unfavourable variance.']
+        }, subskill='concepts', learning_objective_id='lo_variance_analysis', question_family_id='budget_variance_eval', concept_id='variance_analysis', concept_group='budgets', misconception_tags=['inverts_variance_polarity'], diagnostic_tags=['analytical_reasoning']),
     ]
 
 def _calculation_pool(rng):
@@ -248,5 +348,8 @@ def generate(subskill="concepts", difficulty="medium", count=1, mode="scaffold",
         pool = _concept_pool(rng)
         selected = [q for q in pool if difficulty in q['difficulties']]
         if not selected: selected = pool
-        chosen = rng.sample(selected, min(count, len(selected)))
+        if seed is not None and count == 1 and len(selected) > 1:
+            chosen = [selected[int(seed) % len(selected)]]
+        else:
+            chosen = rng.sample(selected, min(count, len(selected)))
         return [_mcq_question(rng, item, mode=mode) for item in chosen]

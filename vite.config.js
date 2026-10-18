@@ -7,6 +7,21 @@ export default defineConfig({
   server: {
     host: '0.0.0.0',
     port: 5173,
+    watch: {
+      ignored: [
+        '**/playwright-report/**',
+        '**/test-results/**',
+        '**/.playwright-artifacts*/**',
+        '**/caps-ai-backend/**',
+        '**/.git/**',
+      ],
+    },
+    proxy: {
+      '/api': {
+        target: 'http://localhost:5001',
+        changeOrigin: true,
+      },
+    },
   },
   plugins: [
     react(),
@@ -77,7 +92,7 @@ export default defineConfig({
         ],
       },
       devOptions: {
-        enabled: true,
+        enabled: false,
       },
     }),
   ],

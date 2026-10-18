@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { initializeApp } from 'firebase/app';
-import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, signInAnonymously } from 'firebase/auth';
+import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, signInAnonymously, signInWithCustomToken } from 'firebase/auth';
 import { getFirestore, doc, setDoc, getDoc, updateDoc, onSnapshot } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
 import { firebaseConfig } from '../constants/sourceDocuments';
@@ -98,6 +98,10 @@ export const useAuthentication = () => {
             const dbInstance = getFirestore(app);
             const storageInstance = getStorage(app);
             
+            if (typeof window !== 'undefined') {
+                window.__FUNDILE_FIREBASE_AUTH__ = authInstance;
+                window.__FUNDILE_SIGN_IN_CUSTOM_TOKEN__ = (customToken) => signInWithCustomToken(authInstance, customToken);
+            }
             
             setAuth(authInstance);
             setDb(dbInstance);
@@ -142,10 +146,13 @@ export const useAuthentication = () => {
                                 const expired = checkSubscriptionExpiry(userData.subscriptionExpiry, isOwner);
                                 setSubscriptionExpired(expired);
 
+                                const PROTECTED_MUTATION_KEYS = ['role', 'isSuperAdmin', 'isOwner', 'tier', 'subscriptionStatus', 'subscriptionExpiry'];
                                 const userPatch = {};
                                 Object.entries(subscriptionFields).forEach(([key, value]) => {
                                     if (userData[key] !== value) {
-                                        userPatch[key] = value;
+                                        if (isOwner || !PROTECTED_MUTATION_KEYS.includes(key)) {
+                                            userPatch[key] = value;
+                                        }
                                     }
                                 });
 
@@ -194,22 +201,27 @@ export const useAuthentication = () => {
                                 setUserRole(userData.role || 'student');
                                 setAuthLoading(false);
                             } else {
-                                // Create new user document if it doesn't exist
-                                const newUserData = {
-                                    email: user.email,
-                                    role: 'student',
-                                    createdAt: new Date(),
-                                    curriculum: null,
-                                    grade: null,
-                                    tier: isOwner ? 'owner' : 'standard',
-                                    subscribedGrades: isOwner ? [7,8,9,10,11,12] : [],
-                                    subscribedSubjects: isOwner ? ['all'] : [],
-                                    paymentReference: buildPaymentReference(user.uid),
-                                    subscriptionExpiry: null,
-                                    isOwner: isOwner,
-                                    ...buildSubscriptionFields(isOwner)
-                                };
-                                await setDoc(doc(dbInstance, 'users', user.uid), newUserData);
+                                // For anonymous explore users, provision a lightweight guest doc.
+                                // For authentic registered users (Learner, Teacher, Parent, School Admin),
+                                // AuthScreen is currently persisting their comprehensive profile doc.
+                                if (user.isAnonymous) {
+                                    const anonUserData = {
+                                        email: null,
+                                        role: 'student',
+                                        isAnonymous: true,
+                                        createdAt: new Date(),
+                                        curriculum: 'National Curriculum',
+                                        grade: '10',
+                                        tier: 'standard',
+                                        subscribedGrades: [10],
+                                        subscribedSubjects: ['all'],
+                                        paymentReference: buildPaymentReference(user.uid),
+                                        subscriptionExpiry: null,
+                                        isOwner: false,
+                                        ...buildSubscriptionFields(false)
+                                    };
+                                    await setDoc(doc(dbInstance, 'users', user.uid), anonUserData);
+                                }
                             }
                         } catch (docErr) {
                             console.error('Error in user onSnapshot listener:', docErr);

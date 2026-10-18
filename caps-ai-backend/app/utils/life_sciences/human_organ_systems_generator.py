@@ -91,9 +91,13 @@ def _generate_gr9_organ_systems(r: random.Random, seed: Optional[int], idx: int,
         "suggested_duration_mins": 8,
         "mode": mode,
         "question_type": "short_answer",
+        "modality": "semantic",
+        "solution_type": "marking_points",
         "question": prompt,
+        "prompt": prompt,
         "correct_answer": ans_str,
         "sample_answer": ans_str,
+        "expected_answer": ans_str,
         "worked_solution": memo,
         "explanation": memo,
         "marks": marks,
@@ -112,18 +116,32 @@ def _generate_gr9_organ_systems(r: random.Random, seed: Optional[int], idx: int,
     }
 
 
+ORGAN_INQUIRY_HOOKS = [
+    "During a clinical physiology investigation at a South African academic hospital,",
+    "In a controlled laboratory experiment on human metabolic organ systems,",
+    "A sports science research team analyzes physiological adaptations in endurance athletes,",
+    "In a Life Sciences practical examination question on human organ physiology,",
+    "An investigative medical diagnostic unit evaluates biochemical organ clearance,"
+]
+
+
 def _generate_gr11_nutrition_excretion(r: random.Random, seed: Optional[int], idx: int, mode: str) -> Dict[str, Any]:
     """Grade 11 Life Sciences: Animal Nutrition (enzymes, villi), Gaseous Exchange (alveoli), and Excretion (nephron)."""
-    sub_topic = r.choice(["nutrition", "gaseous_exchange", "excretion"])
+    s_val = (int(seed or 0) + idx) if seed is not None else r.randint(0, 10000)
+    hook = ORGAN_INQUIRY_HOOKS[s_val % len(ORGAN_INQUIRY_HOOKS)]
+    sub_topics = ["nutrition", "gaseous_exchange", "excretion", "nutrition", "gaseous_exchange", "excretion"]
+    sub_topic = sub_topics[s_val % len(sub_topics)]
     qid = _make_id("ls11_organ_physiology", seed, idx)
 
     if mode == "elementary_enzyme_ph" or sub_topic == "nutrition":
+        temp = r.choice([36.5, 37.0, 37.5, 38.0])
+        substrate = r.choice(["egg albumen (protein)", "dilute starch suspension", "gelatin sol", "casein protein"])
         prompt = (
-            "A test tube investigation is conducted on human digestive enzymes.\n"
-            "Enzyme A (pepsin) and Enzyme B (pancreatic amylase) are incubated with their substrates at $37^\\circ\\text{C}$ "
-            "across varying pH levels from 1 to 10.\n\n"
-            "1. State the optimum pH for Enzyme A (pepsin) and name the digestive organ where it operates.\n"
-            "2. Explain the structural adaptations of intestinal villi that facilitate efficient absorption of digested food."
+            f"{hook} test tube investigations are conducted on human digestive enzymes using a {substrate} substrate.\n"
+            f"Enzyme A (pepsin) and Enzyme B (pancreatic amylase) are incubated at {temp}°C "
+            f"across varying pH levels from 1 to 10.\n\n"
+            f"1. State the optimum pH for Enzyme A (pepsin) and name the digestive organ where it operates.\n"
+            f"2. Explain the structural adaptations of intestinal villi that facilitate efficient absorption of digested food."
         )
         ans_str = "1. Optimum pH 1.5–2 (acidic), operates in the stomach; 2. Microvilli (large surface area), single cell epithelium (thin), lacteal, dense capillary network."
         memo = (
@@ -141,11 +159,13 @@ def _generate_gr11_nutrition_excretion(r: random.Random, seed: Optional[int], id
         }
         marks = 6
     elif mode == "elementary_nephron_ultrafiltration" or sub_topic == "excretion":
+        gfr = r.choice([120, 125, 130, 180])
         prompt = (
-            "Excretion in humans is carried out primarily by the kidneys, containing millions of microscopic functional units called nephrons.\n\n"
-            "1. Name the two components that make up the Malpighian body (renal corpuscle).\n"
-            "2. Describe the process of ultrafiltration that occurs in the Malpighian body, explaining how high filtration pressure is generated.\n"
-            "3. State which major blood components are normally prevented from passing into the glomerular filtrate."
+            f"{hook} renal excretion is evaluated in a patient with a glomerular filtration rate of {gfr} cm³·min⁻¹.\n"
+            f"The human kidneys contain millions of microscopic functional units called nephrons.\n\n"
+            f"1. Name the two components that make up the Malpighian body (renal corpuscle).\n"
+            f"2. Describe the process of ultrafiltration that occurs in the Malpighian body, explaining how high filtration pressure is generated.\n"
+            f"3. State which major blood components are normally prevented from passing into the glomerular filtrate."
         )
         ans_str = "1. Glomerulus and Bowman's capsule; 2. Afferent arteriole wider than efferent arteriole, high pressure forces water/solutes through podocyte slits; 3. Blood cells and plasma proteins."
         memo = (
@@ -162,10 +182,12 @@ def _generate_gr11_nutrition_excretion(r: random.Random, seed: Optional[int], id
         marks = 7
     else:
         # Gaseous exchange
+        altitude = r.choice([1400, 1750, 2000, 2500])
         prompt = (
-            "In human lungs, gaseous exchange occurs between the alveoli and pulmonary blood capillaries.\n\n"
-            "1. State Fick's Law of diffusion and identify three structural features of human alveoli that satisfy this law.\n"
-            "2. Explain how oxygen and carbon dioxide are transported in human blood."
+            f"{hook} pulmonary gaseous exchange is measured in athletes training at an altitude of {altitude} m above sea level.\n"
+            f"In human lungs, gaseous exchange occurs between the alveoli and pulmonary blood capillaries.\n\n"
+            f"1. State Fick's Law of diffusion and identify three structural features of human alveoli that satisfy this law.\n"
+            f"2. Explain how oxygen and carbon dioxide are transported in human blood."
         )
         ans_str = "1. Rate of diffusion proportional to surface area and concentration gradient, inversely proportional to thickness; large surface area, 1-cell thin, moist lining; 2. Oxygen by oxyhemoglobin; CO2 mostly as bicarbonate ions."
         memo = (
@@ -189,9 +211,13 @@ def _generate_gr11_nutrition_excretion(r: random.Random, seed: Optional[int], id
         "suggested_duration_mins": 10,
         "mode": mode,
         "question_type": "short_answer",
+        "modality": "semantic",
+        "solution_type": "marking_points",
         "question": prompt,
+        "prompt": prompt,
         "correct_answer": ans_str,
         "sample_answer": ans_str,
+        "expected_answer": ans_str,
         "worked_solution": memo,
         "explanation": memo,
         "marks": marks,
@@ -290,9 +316,13 @@ def _generate_gr12_homeostasis_endocrine(r: random.Random, seed: Optional[int], 
         "suggested_duration_mins": 10,
         "mode": mode,
         "question_type": "short_answer",
+        "modality": "semantic",
+        "solution_type": "marking_points",
         "question": prompt,
+        "prompt": prompt,
         "correct_answer": ans_str,
         "sample_answer": ans_str,
+        "expected_answer": ans_str,
         "worked_solution": memo,
         "explanation": memo,
         "marks": marks,
@@ -327,7 +357,7 @@ def generate(
     grade_num = "".join(ch for ch in str(grade) if ch.isdigit()) or "11"
 
     for i in range(count):
-        sub_seed = r.randint(1, 1_000_000_000)
+        sub_seed = (int(seed or 0) * 1000 + i) if seed is not None else random.randint(1, 1_000_000_000)
         sub_r = random.Random(sub_seed)
 
         if grade_num in ("7", "8", "9") or subskill in ("digestive", "circulatory", "respiratory"):

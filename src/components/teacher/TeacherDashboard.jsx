@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import {
-  Users, BookOpen, BarChart3, Plus, Printer,
+  Users, BookOpen, BarChart3, Plus, Printer, FilePlus,
   Sparkles, AlertTriangle, ShieldCheck, FileText, CheckCircle2,
   Clock, X, Trash2, RefreshCw
 } from 'lucide-react';
@@ -16,6 +16,7 @@ import TeacherAssessmentsTab from './tabs/TeacherAssessmentsTab';
 import ClassManagerModal from './ClassManagerModal';
 import PrintableTestModal from './PrintableTestModal';
 import studentStore from '../../services/studentStore';
+import { removeStudentFromClassRoster } from '../../services/schoolEnrollmentService';
 
 /**
  * TeacherDashboard Component (Educator LMS Cockpit — Clean 3-Tab Architecture)
@@ -83,7 +84,7 @@ export default function TeacherDashboard({
 
   // 3-Click Printable Exam State
   const [printableProps, setPrintableProps] = useState({
-    title: 'CAPS Classroom Assessment',
+    title: 'Classroom Assessment',
     subject: 'Accounting',
     grade: '10',
     term: 1,
@@ -187,7 +188,7 @@ export default function TeacherDashboard({
   // Reset or Load Sample CAPS Roster
   const handleLoadSampleRoster = () => {
     setClasses(FIVE_TEST_CLASSES);
-    setDispatchedAlert('Loaded authentic 5-class CAPS test suite (Accounting, Maths Alpha, Maths Extended, EMS, Physical Sciences).');
+    setDispatchedAlert('Loaded authentic 5-class test suite (Accounting, Maths Alpha, Maths Extended, EMS, Physical Sciences).');
     setTimeout(() => setDispatchedAlert(null), 3500);
   };
 
@@ -249,6 +250,31 @@ export default function TeacherDashboard({
     return `${prefix}${gr}${randChars}`.slice(0, 6);
   }
 
+  // Teacher Authority: Remove Student from Class Roster
+  const handleRemoveStudentFromClass = (studentId, studentName, classId, joinCode) => {
+    setClasses(prev => prev.map(c => {
+      if (c.classId === classId || c.joinCode === joinCode) {
+        const updatedStudents = (c.students || []).filter(s => s.id !== studentId && s.name !== studentName);
+        return {
+          ...c,
+          students: updatedStudents,
+          studentCount: updatedStudents.length,
+          avgMastery: updatedStudents.length > 0 
+            ? Math.round(updatedStudents.reduce((sum, s) => sum + (s.score || 0), 0) / updatedStudents.length)
+            : 0
+        };
+      }
+      return c;
+    }));
+
+    if (joinCode) {
+      removeStudentFromClassRoster(joinCode, studentId);
+    }
+
+    setDispatchedAlert(`Removed ${studentName} from this class roster.`);
+    setTimeout(() => setDispatchedAlert(null), 3500);
+  };
+
   // 3-Click Exam Launch
   const handleLaunch3ClickExam = () => {
     const questions = generateCapsTestQuestions(
@@ -258,7 +284,7 @@ export default function TeacherDashboard({
       examBuilder.marks
     );
 
-    const title = `CAPS Term ${examBuilder.term} ${examBuilder.subject} Standard Assessment`;
+    const title = `Term ${examBuilder.term} ${examBuilder.subject} Standard Assessment`;
     setPrintableProps({
       title,
       subject: examBuilder.subject,
@@ -301,7 +327,7 @@ export default function TeacherDashboard({
                 </h1>
                 <span className="bg-blue-50 border border-blue-200/80 text-[#13519C] text-xs font-semibold px-2.5 py-0.5 rounded-full inline-flex items-center gap-1">
                   <ShieldCheck className="w-3.5 h-3.5" />
-                  CAPS LMS Cockpit
+                  Teacher LMS Cockpit
                 </span>
               </div>
               <p className="text-sm text-slate-500 mt-1 flex flex-wrap items-center gap-2">
@@ -330,6 +356,15 @@ export default function TeacherDashboard({
             >
               <Plus className="w-4 h-4" />
               <span>Create Class</span>
+            </button>
+
+            <button
+              onClick={() => onNavigate('assignmentManagement')}
+              data-testid="btn-open-assessment-generator"
+              className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-2 bg-white hover:bg-slate-50 border border-slate-200/90 text-slate-700 px-4 py-2.5 rounded-xl font-semibold text-xs transition-all shadow-xs hover:border-[#13519C]/40 cursor-pointer"
+            >
+              <FilePlus className="w-4 h-4 text-[#13519C]" />
+              <span>Assessment Scope Author</span>
             </button>
 
             <button
@@ -364,7 +399,7 @@ export default function TeacherDashboard({
                 className="inline-flex items-center gap-1.5 bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-200 px-3 py-2 rounded-xl text-xs font-semibold transition cursor-pointer"
               >
                 <Sparkles className="w-3.5 h-3.5 text-[#FF9100]" />
-                <span>Load CAPS Roster</span>
+                <span>Load Sample Roster</span>
               </button>
             )}
           </div>
@@ -435,7 +470,7 @@ export default function TeacherDashboard({
               style={{ width: `${Math.min(overallMastery, 100)}%` }}
             />
           </div>
-          <p className="text-xs text-slate-500 mt-1">CAPS Target: 65% benchmark</p>
+          <p className="text-xs text-slate-500 mt-1">Curriculum Target: 65% benchmark</p>
         </div>
 
         {/* KPI 3: Homework & Submissions Due */}
@@ -535,6 +570,7 @@ export default function TeacherDashboard({
           onSelectClassForTest={handleSelectClassForTest}
           onNavigate={onNavigate}
           onResetAvatar={handleResetAvatar}
+          onRemoveStudent={handleRemoveStudentFromClass}
           teacherName={currentUser?.name || 'Your Teacher'}
         />
       )}
@@ -687,7 +723,7 @@ export default function TeacherDashboard({
                   >
                     3-Click Printable Exam &amp; Memo Generator
                   </h3>
-                  <p className="text-[11px] text-slate-500">Unlimited CAPS question papers with complete marking memorandums</p>
+                  <p className="text-[11px] text-slate-500">Unlimited exam-standard question papers with complete marking memorandums</p>
                 </div>
               </div>
               <button 

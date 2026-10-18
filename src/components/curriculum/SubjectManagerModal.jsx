@@ -32,7 +32,7 @@ export const ALL_SENIOR_PHASE_SUBJECTS = [
 export default function SubjectManagerModal({
   isOpen = false,
   onClose = () => {},
-  enabledSubjects = ['accounting', 'mathematics', 'technical_mathematics', 'mathematical_literacy', 'physical_sciences', 'life_sciences', 'business_studies'],
+  enabledSubjects = ['accounting', 'mathematics', 'physical_sciences', 'life_sciences'],
   onSaveSubjects = () => {},
   currentGrade = 10,
 }) {

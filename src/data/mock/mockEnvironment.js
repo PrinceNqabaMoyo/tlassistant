@@ -20,6 +20,19 @@ export {
   MOCK_ALL_PARENTS
 };
 
+export const MOCK_SUPER_ADMIN = {
+  id: 'super-admin-fundile',
+  name: 'Fundile Platform Super Administrator',
+  title: 'Executive Super Admin & Clearance Desk',
+  type: 'admin',
+  role: 'admin',
+  isSuperAdmin: true,
+  isOwner: true,
+  email: 'admin@fundile.co.za',
+  badge: 'Super Admin Cockpit',
+  subtitle: 'System Control, EFT Payment Approvals & School Governance'
+};
+
 export const MOCK_ALL_STUDENTS = [
   ...MOCK_SCHOOL_STUDENTS,
   ...MOCK_INDEPENDENT_STUDENTS
@@ -101,8 +114,24 @@ export function searchPersonas(query = '', filterRole = 'all') {
       name: 'Westville High School Administration',
       title: 'Principal Dr. V. Naidoo & SGB Executive',
       type: 'school_admin',
+      role: 'school_admin',
       badge: 'School Admin Cockpit',
       subtitle: 'SASAMS EMIS: 500124892 • 300 Learners • 60 Teachers'
+    });
+  }
+
+  if (filterRole === 'all' || filterRole === 'admin' || filterRole === 'super_admin') {
+    pool.push({
+      id: 'super-admin-fundile',
+      name: 'Fundile Platform Super Administrator',
+      title: 'Executive Super Admin & Clearance Desk',
+      type: 'admin',
+      role: 'admin',
+      isSuperAdmin: true,
+      isOwner: true,
+      email: 'admin@fundile.co.za',
+      badge: 'Super Admin Cockpit',
+      subtitle: 'System Control, EFT Payment Approvals & School Governance'
     });
   }
 

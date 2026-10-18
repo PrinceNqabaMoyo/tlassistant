@@ -5,16 +5,18 @@
  * while maintaining clean empty state for general teacher signups.
  */
 
+import { getAssignedFacultyClasses } from '../../services/schoolEnrollmentService';
+
 export const STORAGE_KEY = 'fundile_teacher_classes_v3';
 
 export const FIVE_TEST_CLASSES = [
   {
     classId: 'cls_gr10_acc',
-    name: 'Grade 10 Accounting (Period 2)',
+    name: 'Grade 10A (Commerce)',
     subject: 'Accounting',
     grade: '10',
     term: 1,
-    joinCode: 'ACC10B',
+    joinCode: 'ACC10A',
     studentCount: 28,
     avgMastery: 78,
     homeworkDue: 8,
@@ -28,7 +30,7 @@ export const FIVE_TEST_CLASSES = [
         email: 'thabo.n@school.co.za',
         score: 88,
         status: 'Mastered',
-        photoURL: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=120&q=80',
+        photoURL: null,
         topic: 'Cash Receipts & Payments Journals',
         olympiadBadge: '🥇 SAICA Gold (94%)',
         misconception: null,
@@ -40,7 +42,7 @@ export const FIVE_TEST_CLASSES = [
         email: 'lerato.d@school.co.za',
         score: 58,
         status: 'Remedial',
-        photoURL: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=120&q=80',
+        photoURL: null,
         topic: 'Debtors Ledger & Allowances',
         olympiadBadge: null,
         misconception: 'net_vs_gross_confusion',
@@ -53,7 +55,7 @@ export const FIVE_TEST_CLASSES = [
         email: 'sipho.z@school.co.za',
         score: 92,
         status: 'Mastered',
-        photoURL: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=120&q=80',
+        photoURL: null,
         topic: 'Trial Balance & Financial Statements',
         olympiadBadge: '🥈 SAICA Top 5%',
         misconception: null,
@@ -65,7 +67,7 @@ export const FIVE_TEST_CLASSES = [
         email: 'zanele.k@school.co.za',
         score: 74,
         status: 'On Track',
-        photoURL: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=120&q=80',
+        photoURL: null,
         topic: 'VAT Output vs VAT Input',
         olympiadBadge: null,
         misconception: 'net_vs_gross_confusion',
@@ -78,7 +80,7 @@ export const FIVE_TEST_CLASSES = [
         email: 'nkosana.s@school.co.za',
         score: 64,
         status: 'In Progress',
-        photoURL: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=120&q=80',
+        photoURL: null,
         topic: 'Posting from Cash Receipts Journal',
         olympiadBadge: null,
         misconception: 'cost_of_sales_omission',
@@ -107,7 +109,7 @@ export const FIVE_TEST_CLASSES = [
         email: 'kagiso.m@school.co.za',
         score: 68,
         status: 'On Track',
-        photoURL: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=120&q=80',
+        photoURL: null,
         topic: 'Algebraic Expressions & Factoring',
         olympiadBadge: '🥈 SAMO Silver (88%)',
         misconception: 'sign_error_distribution',
@@ -120,7 +122,7 @@ export const FIVE_TEST_CLASSES = [
         email: 'naledi.s@school.co.za',
         score: 52,
         status: 'Remedial',
-        photoURL: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=120&q=80',
+        photoURL: null,
         topic: 'Exponential Equations & Laws',
         olympiadBadge: null,
         misconception: 'sign_error_distribution',
@@ -133,7 +135,7 @@ export const FIVE_TEST_CLASSES = [
         email: 'bongani.n@school.co.za',
         score: 91,
         status: 'Mastered',
-        photoURL: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=120&q=80',
+        photoURL: null,
         topic: 'Analytical Geometry & Linear Functions',
         olympiadBadge: '🥇 SAMO Top 100 Provincial',
         misconception: null,
@@ -145,7 +147,7 @@ export const FIVE_TEST_CLASSES = [
         email: 'buhle.m@school.co.za',
         score: 72,
         status: 'On Track',
-        photoURL: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=120&q=80',
+        photoURL: null,
         topic: 'Trigonometric Ratios (SOH CAH TOA)',
         olympiadBadge: null,
         misconception: null,
@@ -157,7 +159,7 @@ export const FIVE_TEST_CLASSES = [
         email: 'ayanda.m@school.co.za',
         score: 61,
         status: 'In Progress',
-        photoURL: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=120&q=80',
+        photoURL: null,
         topic: 'Number Patterns & Linear Sequences',
         olympiadBadge: null,
         misconception: 'sequence_difference_multiplier',
@@ -186,7 +188,7 @@ export const FIVE_TEST_CLASSES = [
         email: 'tumelo.k@school.co.za',
         score: 89,
         status: 'Mastered',
-        photoURL: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=120&q=80',
+        photoURL: null,
         topic: 'Quadratic Equations & Nature of Roots',
         olympiadBadge: '🥇 SAMO Round 2 Qualifier',
         misconception: null,
@@ -198,7 +200,7 @@ export const FIVE_TEST_CLASSES = [
         email: 'nomsa.g@school.co.za',
         score: 54,
         status: 'Remedial',
-        photoURL: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=120&q=80',
+        photoURL: null,
         topic: 'Trigonometric Reduction Formulae',
         olympiadBadge: null,
         misconception: 'quadratic_formula_sign',
@@ -211,7 +213,7 @@ export const FIVE_TEST_CLASSES = [
         email: 'jabu.m@school.co.za',
         score: 76,
         status: 'On Track',
-        photoURL: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=120&q=80',
+        photoURL: null,
         topic: 'Analytical Geometry (Inclination angles)',
         olympiadBadge: null,
         misconception: null,
@@ -239,7 +241,7 @@ export const FIVE_TEST_CLASSES = [
         email: 'andile.m@school.co.za',
         score: 94,
         status: 'Mastered',
-        photoURL: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=120&q=80',
+        photoURL: null,
         topic: 'Cash Receipts Journal (CRJ)',
         olympiadBadge: '🥇 EMS Provincial Quiz Winner',
         misconception: null,
@@ -251,7 +253,7 @@ export const FIVE_TEST_CLASSES = [
         email: 'precious.m@school.co.za',
         score: 79,
         status: 'On Track',
-        photoURL: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=120&q=80',
+        photoURL: null,
         topic: 'The Circular Flow Model of Economy',
         olympiadBadge: null,
         misconception: null,
@@ -263,7 +265,7 @@ export const FIVE_TEST_CLASSES = [
         email: 'kgotso.b@school.co.za',
         score: 56,
         status: 'Remedial',
-        photoURL: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=120&q=80',
+        photoURL: null,
         topic: 'Accounting Equation: Assets = OE + Liab',
         olympiadBadge: null,
         misconception: 'debit_credit_inversion',
@@ -276,7 +278,7 @@ export const FIVE_TEST_CLASSES = [
         email: 'minenhle.r@school.co.za',
         score: 82,
         status: 'Mastered',
-        photoURL: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=120&q=80',
+        photoURL: null,
         topic: 'Entrepreneurship & SWOT Analysis',
         olympiadBadge: null,
         misconception: null,
@@ -304,7 +306,7 @@ export const FIVE_TEST_CLASSES = [
         email: 'khaya.c@school.co.za',
         score: 85,
         status: 'Mastered',
-        photoURL: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=120&q=80',
+        photoURL: null,
         topic: 'Transverse Waves & Pulses (v = fλ)',
         olympiadBadge: '🥈 SAASTA Science Top 10%',
         misconception: null,
@@ -316,7 +318,7 @@ export const FIVE_TEST_CLASSES = [
         email: 'gugu.m@school.co.za',
         score: 55,
         status: 'Remedial',
-        photoURL: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=120&q=80',
+        photoURL: null,
         topic: 'Vectors & Scalar Quantities in 1D',
         olympiadBadge: null,
         misconception: 'vector_direction_omission',
@@ -329,7 +331,7 @@ export const FIVE_TEST_CLASSES = [
         email: 'sandile.v@school.co.za',
         score: 72,
         status: 'On Track',
-        photoURL: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=120&q=80',
+        photoURL: null,
         topic: 'Atomic Structure & Electron Configuration',
         olympiadBadge: null,
         misconception: null,
@@ -381,6 +383,74 @@ export const FIVE_TEST_CLASSES = [
 ];
 
 /**
+ * Dynamic Enrollment Hydration Helper:
+ * Seamlessly merges learners who registered and joined via class codes (e.g. ACC10A)
+ * into the teacher's active roster with their live marks, real profile photos, and topic status.
+ */
+export function hydrateClassesWithDynamicEnrollments(classList) {
+  if (!Array.isArray(classList) || typeof window === 'undefined') return classList;
+
+  return classList.map(c => {
+    const enrolledKey = `fundile_class_enrolled_students_${c.joinCode}`;
+    let dynamicallyEnrolled = [];
+    try {
+      const stored = localStorage.getItem(enrolledKey);
+      if (stored) {
+        dynamicallyEnrolled = JSON.parse(stored);
+      }
+    } catch (e) {
+      console.warn('Error reading class enrolled storage:', e);
+    }
+
+    // Check studentStore: if the active student in studentStore has joined this class
+    try {
+      const studentState = JSON.parse(localStorage.getItem('fundile_student_state_v1') || '{}');
+      const teacherLinks = studentState.teacherLinks || [];
+      const isLinked = teacherLinks.some(t => t.code === c.joinCode);
+      if (isLinked && studentState.studentName) {
+        const studentName = studentState.studentName;
+        const studentPhoto = studentState.photoURL || localStorage.getItem('fundile_user_photoURL') || null;
+        const subKey = c.subject ? c.subject.toLowerCase().replace(/\s+/g, '_') : 'accounting';
+        const subProgress = studentState.subjects?.[subKey] || {};
+        const score = subProgress.formativeMastery || 88;
+        const status = score >= 80 ? 'Mastered' : score >= 60 ? 'On Track' : 'In Progress';
+
+        const alreadyInList = dynamicallyEnrolled.some(s => s.name === studentName);
+        if (!alreadyInList) {
+          dynamicallyEnrolled.unshift({
+            id: `std_live_${c.joinCode}`,
+            name: studentName,
+            email: `${studentName.toLowerCase().replace(/\s+/g, '.')}@fundile.co.za`,
+            score,
+            status,
+            photoURL: studentPhoto,
+            topic: subProgress.lastPracticed ? 'Cash Receipts Journal (VAT 15%)' : 'Cash Receipts & Payments Journals',
+            olympiadBadge: score >= 90 ? '🥇 Live Distinction' : null,
+            misconception: null,
+            lastActive: 'Active now'
+          });
+        }
+      }
+    } catch (e) {
+      console.warn('Error syncing studentStore to class roster:', e);
+    }
+
+    if (dynamicallyEnrolled.length > 0) {
+      const existingNames = new Set(dynamicallyEnrolled.map(s => s.name));
+      const remainingExisting = (c.students || []).filter(s => !existingNames.has(s.name));
+      const mergedStudents = [...dynamicallyEnrolled, ...remainingExisting];
+      return {
+        ...c,
+        students: mergedStudents,
+        studentCount: mergedStudents.length,
+        avgMastery: Math.round(mergedStudents.reduce((sum, s) => sum + (s.score || 0), 0) / mergedStudents.length)
+      };
+    }
+    return c;
+  });
+}
+
+/**
  * Scoped Seeding Helper:
  * Ensures the 5 test classes are strictly provided for testing/owner accounts,
  * while other teacher accounts default to an empty roster [].
@@ -403,17 +473,28 @@ export function getInitialTeacherClasses(currentUser) {
     const saved = localStorage.getItem(STORAGE_KEY);
     if (saved) {
       const parsed = JSON.parse(saved);
-      if (Array.isArray(parsed)) {
-        return parsed;
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        return hydrateClassesWithDynamicEnrollments(parsed);
       }
     }
   } catch (e) {
     console.warn('Error reading saved classes:', e);
   }
 
+  // If institutional teacher, auto-hydrate pre-assigned departmental classes
+  if (currentUser?.isInstitutionalTeacher || currentUser?.schoolId || currentUser?.facultyPasscode) {
+    const schoolId = currentUser.schoolId || 'sch_westville_high';
+    const code = currentUser.facultyPasscode || 'WHS-TEACH-2026';
+    const assigned = getAssignedFacultyClasses(schoolId, code, currentUser?.subject || 'Accounting');
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(assigned));
+    } catch (_) {}
+    return hydrateClassesWithDynamicEnrollments(assigned);
+  }
+
   // If tester/owner and no saved state, load the 5 rich test classes
   if (isTester) {
-    return FIVE_TEST_CLASSES;
+    return hydrateClassesWithDynamicEnrollments(FIVE_TEST_CLASSES);
   }
 
   // For any other user, return empty classes array

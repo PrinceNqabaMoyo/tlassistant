@@ -94,7 +94,7 @@ export const AUTHENTIC_DIAGNOSTIC_BANK = {
   business_studies: {
     id: 'diag_bs_environments_101',
     question_type: 'mcq',
-    modality: 'rubric',
+    modality: 'math',
     title: 'Business Environments: Market Environment Analysis',
     prompt: 'Read the scenario below and answer the question:\n\nKhaya operates a bakery in Umlazi called "Khaya Sweets". He employs three bakers and purchases flour from Golden Grain Mills. Recently, a rival bakery opened across the street offering discounted bread.\n\nWhich ONE of the following is an element of the MARKET ENVIRONMENT affecting Khaya Sweets?',
     options: [
@@ -105,6 +105,7 @@ export const AUTHENTIC_DIAGNOSTIC_BANK = {
     ],
     correct_index: 1,
     ideal_answer: 'Competitors (the rival bakery)',
+    expected_answer: 'Competitors (the rival bakery)',
     marks: 3,
     worked_solution: 'Competitors belong to the market environment because they operate outside the firm within the immediate industry, where the business has influence but not complete control.',
     hints: {
@@ -117,7 +118,7 @@ export const AUTHENTIC_DIAGNOSTIC_BANK = {
   life_sciences: {
     id: 'diag_lifesci_genetics_101',
     question_type: 'mcq',
-    modality: 'rubric',
+    modality: 'math',
     title: 'Genetics: Monohybrid Dominance & Phenotypes',
     prompt: 'In pea plants, the allele for purple flowers (P) is dominant over the allele for white flowers (p).\n\nA heterozygous purple flowering plant (Pp) is crossed with a homozygous recessive white flowering plant (pp).\n\nWhat is the expected percentage of offspring with purple flowers?',
     options: [
@@ -128,6 +129,7 @@ export const AUTHENTIC_DIAGNOSTIC_BANK = {
     ],
     correct_index: 0,
     ideal_answer: '50%',
+    expected_answer: '50%',
     marks: 4,
     worked_solution: 'Cross Pp x pp. Gametes: P, p with p, p. Punnett square gives 2 Pp (purple) and 2 pp (white). Probability of purple = 2/4 = 50%.',
     hints: {
@@ -209,7 +211,7 @@ export const AUTHENTIC_DIAGNOSTIC_BANK = {
   ems: {
     id: 'diag_ems_circular_101',
     question_type: 'mcq',
-    modality: 'rubric',
+    modality: 'math',
     title: 'The Economy: Closed Circular Flow Model',
     prompt: 'In the closed circular flow of goods and services between Households and Businesses:\n\nHouseholds provide the factors of production (land, labour, capital, entrepreneurship) to businesses via the factor market.\n\nWhat remuneration do households receive in exchange for providing LABOUR?',
     options: [
@@ -220,6 +222,7 @@ export const AUTHENTIC_DIAGNOSTIC_BANK = {
     ],
     correct_index: 0,
     ideal_answer: 'Salaries and wages',
+    expected_answer: 'Salaries and wages',
     marks: 3,
     worked_solution: 'The remuneration for labour is salaries and wages. (Rent is for land, interest is for capital, and profit is for entrepreneurship).',
     hints: {
@@ -231,10 +234,242 @@ export const AUTHENTIC_DIAGNOSTIC_BANK = {
 };
 
 /**
+ * Multi-Topic Calibrated Diagnostic Batteries
+ * Policy: 5–6 minutes per topic/concept within the subject.
+ * Each topic battery features a 3-probe diagnostic sequence:
+ * - Probe 1: Prerequisite Foundation (Grade N-1 Gateway)
+ * - Probe 2: Standard Grade-Level Procedure
+ * - Probe 3: Non-Routine Problem Solving & Misconception Trap
+ */
+export const AUTHENTIC_TOPIC_DIAGNOSTIC_BATTERIES = {
+  mathematics: [
+    {
+      topicId: 'math_algebra_trinomials',
+      topicName: 'Algebraic Expressions & Trinomial Factorisation',
+      allocatedMins: 6,
+      probes: [
+        {
+          id: 'diag_math_p1_foundation',
+          probeType: 'prerequisite_foundation',
+          prompt: 'Find two integers whose product is +24 and whose sum is -11.',
+          options: ['-3 and -8', '-4 and -6', '-2 and -12', '-1 and -24'],
+          correct_index: 0,
+          ideal_answer: '-3 and -8',
+          marks: 2,
+          worked_solution: 'Factor pairs of 24: (-1, -24), (-2, -12), (-3, -8). Notice -3 + (-8) = -11.',
+          hints: { tier1: 'Look for factors of +24 that add up to -11.', tier2: 'Both factors must be negative.', tier3: '-3 * -8 = 24 and -3 + -8 = -11.' }
+        },
+        AUTHENTIC_DIAGNOSTIC_BANK.mathematics, // Probe 2: Standard Gateway (x^2 - 7x + 12)
+        {
+          id: 'diag_math_p3_application',
+          probeType: 'application_misconception',
+          prompt: 'Factorise completely by removing the common factor first:\n2x^3 - 10x^2 - 48x',
+          options: ['2x(x - 8)(x + 3)', '2x(x + 8)(x - 3)', 'x(2x - 16)(x + 3)', '(2x^2 - 16x)(x + 3)'],
+          correct_index: 0,
+          ideal_answer: '2x(x - 8)(x + 3)',
+          marks: 4,
+          worked_solution: 'Step 1: Extract 2x -> 2x(x^2 - 5x - 24). Step 2: Factorise trinomial -> 2x(x - 8)(x + 3).',
+          hints: { tier1: 'Always extract the Highest Common Factor (2x) first.', tier2: 'Now factorise the remaining trinomial x^2 - 5x - 24.', tier3: 'Factor pairs of -24 summing to -5 are -8 and +3.' }
+        }
+      ]
+    },
+    {
+      topicId: 'math_equations_inequalities',
+      topicName: 'Linear & Quadratic Equations',
+      allocatedMins: 6,
+      probes: [
+        {
+          id: 'diag_math_eq_p1',
+          probeType: 'prerequisite_foundation',
+          prompt: 'Solve for x: 3x - 7 = 14',
+          options: ['x = 7', 'x = 21', 'x = 2.33', 'x = 5'],
+          correct_index: 0,
+          ideal_answer: 'x = 7',
+          marks: 2,
+          worked_solution: '3x = 14 + 7 = 21 => x = 21 / 3 = 7.',
+          hints: { tier1: 'Add 7 to both sides.', tier2: '3x = 21.', tier3: 'Divide by 3: x = 7.' }
+        },
+        {
+          id: 'diag_math_eq_p2',
+          probeType: 'standard_method',
+          prompt: 'Solve for x: (2x - 1)(x + 4) = 0',
+          options: ['x = 1/2 or x = -4', 'x = -1/2 or x = 4', 'x = 1 or x = -4', 'x = 2 or x = -4'],
+          correct_index: 0,
+          ideal_answer: 'x = 1/2 or x = -4',
+          marks: 3,
+          worked_solution: '2x - 1 = 0 => x = 1/2; x + 4 = 0 => x = -4.',
+          hints: { tier1: 'Zero-product principle: either bracket equals zero.', tier2: '2x - 1 = 0 or x + 4 = 0.', tier3: 'x = 1/2 or x = -4.' }
+        },
+        {
+          id: 'diag_math_eq_p3',
+          probeType: 'application_misconception',
+          prompt: 'Solve for x: x^2 = 5x (Do not divide by x without considering x = 0)',
+          options: ['x = 0 or x = 5', 'x = 5 only', 'x = ±√5', 'x = 0 only'],
+          correct_index: 0,
+          ideal_answer: 'x = 0 or x = 5',
+          marks: 3,
+          worked_solution: 'x^2 - 5x = 0 => x(x - 5) = 0 => x = 0 or x = 5.',
+          hints: { tier1: 'Move all terms to one side: x^2 - 5x = 0.', tier2: 'Factorise out the common factor x.', tier3: 'x = 0 or x = 5.' }
+        }
+      ]
+    },
+    {
+      topicId: 'math_trigonometry',
+      topicName: 'Trigonometry: Ratios & Right-Angled Triangles',
+      allocatedMins: 5,
+      probes: [
+        {
+          id: 'diag_math_trig_p1',
+          probeType: 'prerequisite_foundation',
+          prompt: 'In a right-angled triangle, which ratio defines sin(θ)?',
+          options: ['Opposite / Hypotenuse', 'Adjacent / Hypotenuse', 'Opposite / Adjacent', 'Hypotenuse / Opposite'],
+          correct_index: 0,
+          ideal_answer: 'Opposite / Hypotenuse',
+          marks: 2,
+          worked_solution: 'SOH CAH TOA: Sin = Opposite / Hypotenuse.',
+          hints: { tier1: 'Remember SOH CAH TOA.', tier2: 'S = O / H.', tier3: 'Opposite / Hypotenuse.' }
+        },
+        {
+          id: 'diag_math_trig_p2',
+          probeType: 'standard_method',
+          prompt: 'Given a right triangle with Opposite = 3 and Adjacent = 4. What is the length of the Hypotenuse?',
+          options: ['5', '7', '1', '25'],
+          correct_index: 0,
+          ideal_answer: '5',
+          marks: 2,
+          worked_solution: 'Pythagoras: r = √(3^2 + 4^2) = √(9 + 16) = √25 = 5.',
+          hints: { tier1: 'Use Theorem of Pythagoras: c^2 = a^2 + b^2.', tier2: 'c^2 = 9 + 16 = 25.', tier3: 'c = 5.' }
+        },
+        {
+          id: 'diag_math_trig_p3',
+          probeType: 'application_misconception',
+          prompt: 'If tan(θ) = 3/4 and θ is an acute angle, determine the value of cos(θ).',
+          options: ['4/5', '3/5', '5/4', '3/4'],
+          correct_index: 0,
+          ideal_answer: '4/5',
+          marks: 3,
+          worked_solution: 'Opp = 3, Adj = 4 => Hyp = 5. Therefore cos(θ) = Adj / Hyp = 4/5.',
+          hints: { tier1: 'Identify Opp = 3, Adj = 4.', tier2: 'Hypotenuse is 5.', tier3: 'cos(θ) = Adj / Hyp = 4/5.' }
+        }
+      ]
+    }
+  ],
+
+  accounting: [
+    {
+      topicId: 'acct_crj_vat',
+      topicName: 'Cash Receipts Journal & 15% VAT',
+      allocatedMins: 6,
+      probes: [
+        {
+          id: 'diag_acct_p1_equation',
+          probeType: 'prerequisite_foundation',
+          prompt: 'Which accounting equation relationship is fundamentally correct?',
+          options: ['Assets = Owner\'s Equity + Liabilities', 'Owner\'s Equity = Assets + Liabilities', 'Liabilities = Assets + Owner\'s Equity', 'Assets + Owner\'s Equity = Liabilities'],
+          correct_index: 0,
+          ideal_answer: 'Assets = Owner\'s Equity + Liabilities',
+          marks: 2,
+          worked_solution: 'The basic accounting equation is Assets = Owner\'s Equity + Liabilities (A = OE + L).',
+          hints: { tier1: 'Recall the dual-entry accounting equation.', tier2: 'Resources owned (Assets) equal capital plus borrowings.', tier3: 'A = OE + L.' }
+        },
+        AUTHENTIC_DIAGNOSTIC_BANK.accounting, // Probe 2: Standard Gateway (CRJ Bank Gross)
+        {
+          id: 'diag_acct_p3_costofsales',
+          probeType: 'application_misconception',
+          prompt: 'Goods with a cost price of R4 000 were sold at a mark-up of 50% on cost. Determine the selling price EXCLUDING VAT.',
+          options: ['R6 000.00', 'R8 000.00', 'R4 600.00', 'R5 000.00'],
+          correct_index: 0,
+          ideal_answer: 'R6 000.00',
+          marks: 3,
+          worked_solution: 'Selling Price = Cost Price x (100 + 50) / 100 = 4000 x 1.50 = R6 000.00.',
+          hints: { tier1: 'Mark-up on cost formula: Cost × 150 / 100.', tier2: '4 000 × 1.5 = 6 000.', tier3: 'Selling price = R6 000.00.' }
+        }
+      ]
+    }
+  ],
+
+  business_studies: [
+    {
+      topicId: 'bs_environments',
+      topicName: 'Business Environments: Micro, Market & Macro',
+      allocatedMins: 5,
+      probes: [
+        AUTHENTIC_DIAGNOSTIC_BANK.business_studies,
+        {
+          id: 'diag_bs_p2_macro',
+          probeType: 'standard_method',
+          prompt: 'An increase in the South African VAT rate from 14% to 15% is an element of which business environment?',
+          options: ['Macro environment', 'Micro environment', 'Market environment', 'Internal environment'],
+          correct_index: 0,
+          ideal_answer: 'Macro environment',
+          marks: 2,
+          worked_solution: 'Taxation and legislation are external factors in the macro environment over which businesses have no direct control.',
+          hints: { tier1: 'Government taxation legislation applies nationwide.', tier2: 'Businesses have no direct control over national tax rates.', tier3: 'Macro environment.' }
+        },
+        {
+          id: 'diag_bs_p3_ownership',
+          probeType: 'application_misconception',
+          prompt: 'Which form of ownership offers limited liability to shareholders and ends with "(Pty) Ltd"?',
+          options: ['Private Company', 'Sole Proprietorship', 'Partnership', 'Public Company'],
+          correct_index: 0,
+          ideal_answer: 'Private Company',
+          marks: 3,
+          worked_solution: 'A Private Company is designated as (Proprietary) Limited or (Pty) Ltd and provides limited liability to its shareholders.',
+          hints: { tier1: '(Pty) Ltd stands for Proprietary Limited.', tier2: 'Sole traders and partnerships have unlimited liability.', tier3: 'Private Company.' }
+        }
+      ]
+    }
+  ],
+
+  physical_sciences: [
+    {
+      topicId: 'phys_kinematics',
+      topicName: 'Mechanics: 1D Kinematics & Acceleration',
+      allocatedMins: 5,
+      probes: [
+        AUTHENTIC_DIAGNOSTIC_BANK.physical_sciences,
+        {
+          id: 'diag_phys_p2_displacement',
+          probeType: 'standard_method',
+          prompt: 'A runner travels 100 m East, then turns and runs 40 m West. What is the runner\'s resultant DISPLACEMENT?',
+          options: ['60 m East', '140 m', '60 m West', '100 m East'],
+          correct_index: 0,
+          ideal_answer: '60 m East',
+          marks: 3,
+          worked_solution: 'Displacement is a vector quantity: Δx = +100 m + (-40 m) = +60 m East.',
+          hints: { tier1: 'Displacement is the change in position from start to end with direction.', tier2: 'East is positive (+100), West is negative (-40).', tier3: '100 - 40 = 60 m East.' }
+        },
+        {
+          id: 'diag_phys_p3_newton',
+          probeType: 'application_misconception',
+          prompt: 'A 5 kg block rests on a horizontal frictionless surface. A force of 20 N is applied. Calculate its acceleration.',
+          options: ['4 m/s²', '100 m/s²', '0.25 m/s²', '15 m/s²'],
+          correct_index: 0,
+          ideal_answer: '4 m/s²',
+          marks: 3,
+          worked_solution: 'Newton\'s Second Law: F_net = m * a => a = F_net / m = 20 / 5 = 4 m/s².',
+          hints: { tier1: 'Use Newton\'s Second Law: F = ma.', tier2: 'a = F / m.', tier3: '20 / 5 = 4 m/s².' }
+        }
+      ]
+    }
+  ]
+};
+
+/**
  * Retrieves the authentic diagnostic question for any subject key
  */
-export function getAuthenticDiagnosticQuestion(subjectKey) {
+export function getAuthenticDiagnosticQuestion(subjectKey, topicKey = null, probeIndex = 0) {
   const s = String(subjectKey || '').toLowerCase();
+  
+  // If specific topic battery requested
+  if (topicKey && AUTHENTIC_TOPIC_DIAGNOSTIC_BATTERIES[s]) {
+    const topicBat = AUTHENTIC_TOPIC_DIAGNOSTIC_BATTERIES[s].find(t => t.topicId === topicKey);
+    if (topicBat && topicBat.probes[probeIndex]) {
+      return topicBat.probes[probeIndex];
+    }
+  }
+
+  // Canonical fallback per subject
   if (s.includes('acc')) return AUTHENTIC_DIAGNOSTIC_BANK.accounting;
   if (s.includes('tech')) return AUTHENTIC_DIAGNOSTIC_BANK.technical_mathematics;
   if (s.includes('lit') || s.includes('mathslit')) return AUTHENTIC_DIAGNOSTIC_BANK.mathematical_literacy;
@@ -246,3 +481,16 @@ export function getAuthenticDiagnosticQuestion(subjectKey) {
   if (s.includes('nat') || s.includes('sci')) return AUTHENTIC_DIAGNOSTIC_BANK.natural_sciences;
   return AUTHENTIC_DIAGNOSTIC_BANK.mathematics;
 }
+
+/**
+ * Returns the topic-level diagnostic battery for a given subject
+ * Paced at 5–6 minutes per topic.
+ */
+export function getAuthenticTopicDiagnosticBattery(subjectKey) {
+  const s = String(subjectKey || '').toLowerCase();
+  const normalizedKey = s.includes('acc') ? 'accounting' :
+                        s.includes('bus') ? 'business_studies' :
+                        s.includes('phys') ? 'physical_sciences' : 'mathematics';
+  return AUTHENTIC_TOPIC_DIAGNOSTIC_BATTERIES[normalizedKey] || AUTHENTIC_TOPIC_DIAGNOSTIC_BATTERIES.mathematics;
+}
+

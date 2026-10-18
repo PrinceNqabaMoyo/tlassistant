@@ -211,7 +211,16 @@ def _generate_gr11_photosynthesis_phases(r: random.Random, seed: Optional[int], 
 
 def _generate_gr11_cellular_respiration(r: random.Random, seed: Optional[int], idx: int, mode: str) -> Dict[str, Any]:
     """Grade 11 Life Sciences: Aerobic vs anaerobic respiration, glycolysis, Krebs cycle, and ATP yield."""
-    exercise_type = r.choice(["sprinting 100m", "long-distance marathon running", "vigorous weightlifting"])
+    exercise_types = [
+        "sprinting 100m in a high-intensity track event",
+        "long-distance marathon running over 42 kilometres",
+        "vigorous Olympic weightlifting and clean-and-jerk sets",
+        "high-intensity interval swimming in 50m freestyle heats",
+        "endurance cycling up a steep mountain pass",
+        "competitive rugby scrums and high-speed pitch sprints",
+    ]
+    s_val = (int(seed or 0) + idx) if seed is not None else r.randint(0, 10000)
+    exercise_type = exercise_types[s_val % len(exercise_types)]
     qid = _make_id("ls11_respiration", seed, idx)
 
     if mode == "elementary_atp_yield":
@@ -307,7 +316,7 @@ def generate(
     grade_num = "".join(ch for ch in str(grade) if ch.isdigit()) or "11"
 
     for i in range(count):
-        sub_seed = r.randint(1, 1_000_000_000)
+        sub_seed = (int(seed or 0) * 1000 + i) if seed is not None else random.randint(1, 1_000_000_000)
         sub_r = random.Random(sub_seed)
 
         if grade_num == "8" or subskill == "photosynthesis_gr8" or mode == "elementary_starch_test":
@@ -318,7 +327,8 @@ def generate(
             q = _generate_gr11_photosynthesis_phases(sub_r, sub_seed, i, mode)
         else:
             # Default mixed mode for Grade 11 Life Sciences
-            chosen = sub_r.choice(["photo", "resp"])
+            s_val = (int(seed or 0) + i) if seed is not None else sub_r.randint(0, 10000)
+            chosen = "photo" if (s_val % 2 == 0) else "resp"
             if chosen == "photo":
                 q = _generate_gr11_photosynthesis_phases(sub_r, sub_seed, i, mode)
             else:

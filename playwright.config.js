@@ -18,30 +18,58 @@ export default defineConfig({
     ['html', { outputFolder: 'playwright-report', open: 'never' }]
   ],
   use: {
-    baseURL: process.env.PLAYWRIGHT_BASE_URL || 'https://caps-ai-math-assistant-app.web.app',
-    trace: 'retain-on-failure',
-    screenshot: 'only-on-failure',
-    video: 'retain-on-failure',
+    baseURL: process.env.PLAYWRIGHT_BASE_URL || 'http://127.0.0.1:5173',
+    trace: 'on',
+    screenshot: 'on',
+    video: 'on',
     launchOptions: {
       slowMo: process.env.SLOWMO ? parseInt(process.env.SLOWMO, 10) : 350,
     },
   },
-  // Spin up local Vite dev server ONLY if explicitly targeting localhost
-  ...(process.env.PLAYWRIGHT_BASE_URL && (process.env.PLAYWRIGHT_BASE_URL.includes('localhost') || process.env.PLAYWRIGHT_BASE_URL.includes('127.0.0.1'))
-    ? {
-        webServer: {
-          command: 'npm run dev',
-          url: 'http://127.0.0.1:5173',
-          reuseExistingServer: true,
-          timeout: 120000,
-        },
-      }
-    : {}),
+  // Spin up or reuse local Vite dev server on port 5173
+  webServer: {
+    command: process.platform === 'win32' ? 'npm.cmd run dev' : 'npm run dev',
+    url: 'http://127.0.0.1:5173',
+    reuseExistingServer: true,
+    timeout: 120000,
+  },
   projects: [
     {
       name: 'fundile-autopilot',
       use: {
         ...devices['Desktop Chrome'],
+      },
+    },
+    {
+      name: 'desktop-browser',
+      use: {
+        ...devices['Desktop Chrome'],
+        viewport: { width: 1280, height: 800 },
+      },
+    },
+    {
+      name: 'desktop-pwa',
+      use: {
+        ...devices['Desktop Chrome'],
+        viewport: { width: 1280, height: 800 },
+        launchOptions: {
+          args: ['--app=http://127.0.0.1:5173/?standalone=true', '--window-size=1280,850'],
+        },
+      },
+    },
+    {
+      name: 'mobile-browser',
+      use: {
+        ...devices['Pixel 7'],
+      },
+    },
+    {
+      name: 'mobile-pwa',
+      use: {
+        ...devices['Pixel 7'],
+        launchOptions: {
+          args: ['--app=http://127.0.0.1:5173/?standalone=true', '--window-size=430,950'],
+        },
       },
     },
   ],

@@ -67,16 +67,42 @@ def generate(**kwargs) -> Dict[str, Any]:
             "rubric": "2 marks per valid point (Max 6)."
         })
         
+    full_prompt = f"{context}\n\n{instruction}\n\n" + "\n\n".join(
+        f"{p['id']}. {p['question']} ({p['marks']} marks)" for p in parts
+    )
+    total_marks = sum(p["marks"] for p in parts)
+    
     return {
+        "id": f"g11_bs_mkt_prod_{r.randint(100000, 999999)}",
+        "topic": "Marketing and Production",
+        "subskill": "marketing_production_integration",
+        "mode": mode,
+        "marks": total_marks,
+        "prompt": full_prompt,
+        "question": full_prompt,
+        "sample_answer": "\n\n".join(f"{p['id']}: {p['solution']}" for p in parts),
+        "marking_schema": {
+            "total_marks": total_marks,
+            "marking_points": [
+                {"id": p["id"], "desc": p["question"][:60], "marks": p["marks"], "editable": True}
+                for p in parts
+            ],
+            "deductions": [],
+            "carry_forward_rule": "consequential_accuracy"
+        },
+        "hints": {
+            "tier_1": "Review the 4Ps of marketing (Product, Price, Place, Promotion) and production quality systems.",
+            "tier_2": "Quality control is reactive end-of-line testing; quality assurance is proactive process prevention.",
+            "tier_3": "Connect OHSA regulations (protective gear, machine guards) directly to workplace compliance."
+        },
         "metadata": {
             "subject": "Business Studies",
             "grade": 11,
             "topic": "Marketing and Production",
             "mode": mode,
-            "total_marks": sum(p["marks"] for p in parts)
+            "total_marks": total_marks
         },
         "context": context,
         "instruction": instruction,
         "parts": parts,
-        "hints": ["Remember the 4Ps of marketing.", "Quality control is end-of-line inspection, quality assurance is process-based."]
     }

@@ -44,14 +44,22 @@ def rng(seed: Optional[int] = None) -> random.Random:
     return random.Random(seed)
 
 
-def select_items(r: random.Random, pool: Sequence[Any], count: int, difficulty: str) -> List[Any]:
+def select_items(r: random.Random, pool: Sequence[Any], count: int, difficulty: str, seed: Optional[int] = None) -> List[Any]:
     """Deterministically select `count` items, filtered by difficulty band."""
     filtered = [item for item in pool if difficulty in _difficulties(item)]
     working = filtered or list(pool)
     if not working:
         return []
+    if count == 1 and len(working) > 1:
+        if seed is not None:
+            offset = int(seed) % len(working)
+        else:
+            offset = r.randint(0, len(working) - 1)
+        return [working[offset]]
     if count <= len(working):
-        return r.sample(working, count)
+        shuffled = list(working)
+        r.shuffle(shuffled)
+        return shuffled[:count]
     result = working[:]
     r.shuffle(result)
     while len(result) < count:
@@ -247,22 +255,22 @@ def make_generate(
         discussion = apply_metadata_filters(discussion_pool(r), **kwargs)
 
         if subskill == 'application':
-            return [make_typed_question(meta, r, item) for item in select_items(r, application, count, difficulty)]
+            return [make_typed_question(meta, r, item) for item in select_items(r, application, count, difficulty, seed=seed)]
         if subskill == 'discussion':
-            return [make_typed_question(meta, r, item) for item in select_items(r, discussion, count, difficulty)]
+            return [make_typed_question(meta, r, item) for item in select_items(r, discussion, count, difficulty, seed=seed)]
         if subskill == 'mixed':
             mixed_pool = (
                 [('mcq', item) for item in concepts]
                 + [('typed', item) for item in application]
                 + [('typed', item) for item in discussion]
             )
-            selected = select_items(r, mixed_pool, count, difficulty)
+            selected = select_items(r, mixed_pool, count, difficulty, seed=seed)
             questions = []
             for kind, item in selected:
                 questions.append(
                     make_mcq_question(meta, r, item) if kind == 'mcq' else make_typed_question(meta, r, item)
                 )
             return questions
-        return [make_mcq_question(meta, r, item) for item in select_items(r, concepts, count, difficulty)]
+        return [make_mcq_question(meta, r, item) for item in select_items(r, concepts, count, difficulty, seed=seed)]
 
     return generate

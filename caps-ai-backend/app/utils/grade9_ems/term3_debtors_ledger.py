@@ -14,18 +14,29 @@ def _with_metadata(item, subskill, learning_objective_id, question_family_id, co
     item['diagnostic_tags'] = diagnostic_tags
     return item
 
-def _generate_debtors_ledger(rng, mode):
-    business_name = rng.choice(["Trader Joes", "Quick Mart", "Smart Shopper", "Elite Electronics"])
-    month = rng.choice(["March 2026", "June 2026", "September 2026", "November 2026"])
+def _generate_debtors_ledger(rng, mode, seed=None):
+    businesses = ["Trader Joes", "Quick Mart", "Smart Shopper", "Elite Electronics", "Soweto General Dealers", "Durban Retailers"]
+    months = ["January 2026", "February 2026", "March 2026", "April 2026", "May 2026", "June 2026", "July 2026", "August 2026", "September 2026", "October 2026", "November 2026"]
+    debtors = ["S. Sithole", "B. Khumalo", "N. Dlamini", "T. Naidoo", "P. Van der Merwe", "L. Mthembu", "J. Botha", "M. Cele"]
+    
+    if seed is not None:
+        s_int = int(seed)
+        business_name = businesses[s_int % len(businesses)]
+        month = months[(s_int // len(businesses)) % len(months)]
+        debtor_name = debtors[s_int % len(debtors)]
+    else:
+        business_name = rng.choice(businesses)
+        month = rng.choice(months)
+        debtor_name = rng.choice(debtors)
     
     opening_bal = rng.randint(5, 20) * 100
     sale_amt = rng.randint(2, 8) * 100
     receipt_amt = rng.randint(1, 5) * 100
     
     transactions = [
-        f"1st: Account balance for debtor S. Sithole was R{opening_bal}.",
-        f"12th: Sold goods on credit to S. Sithole, R{sale_amt}. Invoice 101.",
-        f"20th: Received a cheque from S. Sithole for R{receipt_amt}. Receipt 44."
+        f"1st: Account balance for debtor {debtor_name} was R{opening_bal}.",
+        f"12th: Sold goods on credit to {debtor_name}, R{sale_amt}. Invoice 101.",
+        f"20th: Received a payment from {debtor_name} for R{receipt_amt}. Receipt 44."
     ]
 
     data_rows = [
@@ -53,9 +64,9 @@ def _generate_debtors_ledger(rng, mode):
     
     item = {
         "id": f"ems9_dl_{rng.randint(1000, 9999)}",
-        "topic": "Debtors Ledger - S. Sithole",
+        "topic": f"Debtors Ledger - {debtor_name}",
         "question_type": "ledger",
-        "prompt": f"Complete the Debtors Ledger account for S. Sithole for {month}.",
+        "prompt": f"Complete the Debtors Ledger account for {debtor_name} in the books of {business_name} for {month}. Starting balance: R{opening_bal}.",
         "transactions": transactions,
         "journal": {
             "journal_type": "debtors_ledger",
@@ -66,8 +77,8 @@ def _generate_debtors_ledger(rng, mode):
         "correct_map": correct_map,
         "cell_hints": cell_hints,
         "marks": 18,
-        "sample_answer": "See completed table",
-        "ideal_answer": "See completed table",
+        "sample_answer": f"Completed Debtors Ledger for {debtor_name}: final balance R{opening_bal + sale_amt - receipt_amt}",
+        "ideal_answer": f"Completed Debtors Ledger for {debtor_name}: final balance R{opening_bal + sale_amt - receipt_amt}",
         "marking_points": ["Correct folios", "Correct debit/credit columns", "Correct running balances"],
         "hint_sections": {
             "1_nudge": "A debtor is an asset. Their account increases on the Debit side (+) and decreases on the Credit side (-).",
@@ -81,7 +92,7 @@ def _generate_debtors_ledger(rng, mode):
 
 def generate(subskill="dl", difficulty="medium", count=1, mode="scaffold", seed=None, **kwargs):
     rng = _rng(seed)
-    pool = _generate_debtors_ledger(rng, mode)
+    pool = _generate_debtors_ledger(rng, mode, seed=seed)
     selected = pool
     if count < len(selected):
         selected = rng.sample(selected, count)

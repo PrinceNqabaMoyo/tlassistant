@@ -436,3 +436,29 @@ def circle_tangent_secant(
         "caption": str(caption),
     }
 
+
+def function_graph(
+    *,
+    family: str = "linear",
+    a: float = 1.0,
+    q: float = 0.0,
+    b: Optional[float] = None,
+    domain: Optional[List[float]] = None,
+    features: Optional[Dict[str, Any]] = None,
+    interactive: Optional[Dict[str, Any]] = None,
+    caption: str = "",
+    **kwargs: Any,
+) -> Dict[str, Any]:
+    """Build a function graph diagram spec for 2D cartesian functions."""
+    return {
+        "kind": "function_graph",
+        "family": str(family),
+        "a": float(a),
+        "q": float(q),
+        "b": float(b) if b is not None else None,
+        "domain": list(domain) if domain is not None else [-6.0, 6.0],
+        "features": dict(features or {}),
+        "interactive": dict(interactive or {}),
+        "caption": str(caption),
+        **kwargs,
+    }

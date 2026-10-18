@@ -843,10 +843,10 @@ NATURAL_SCIENCES_GENERATORS = {
     "natural_sciences_reactions": ns_reactions.generate,
     "natural_sciences_senior_phase_astronomy": ns_astronomy.generate,
     "natural_sciences_life_and_living": ns_life_living.generate,
-    "natural_sciences_photosynthesis": ns_life_living.generate,
-    "natural_sciences_cell_cytology": ns_life_living.generate,
-    "natural_sciences_human_systems": ns_life_living.generate,
-    "natural_sciences_angiosperm_reproduction": ns_life_living.generate,
+    "natural_sciences_photosynthesis": lambda **kw: ns_life_living.generate(archetype="photosynthesis", **kw),
+    "natural_sciences_cell_cytology": lambda **kw: ns_life_living.generate(archetype="cell_cytology", **kw),
+    "natural_sciences_human_systems": lambda **kw: ns_life_living.generate(archetype="human_systems", **kw),
+    "natural_sciences_angiosperm_reproduction": lambda **kw: ns_life_living.generate(archetype="angiosperm", **kw),
     "natural_sciences_matter_and_materials": ns_matter_materials.generate,
     "natural_sciences_separating_mixtures": ns_matter_materials.generate,
     "natural_sciences_atomic_structure": ns_matter_materials.generate,
@@ -1402,17 +1402,129 @@ def _normalize_question(
 
     qid = str(q.get("id") or q.get("question_id") or f"q_{random.randint(100000, 999999)}")
     marks = int(q.get("marks", 2))
+    subj_lower = str(subject or "").lower()
 
-    # Marking Schema
+    # 1. Authoritative Modality Resolution
+    raw_mod = str(q.get("modality") or "").strip().lower()
+    if raw_mod == "rubric":
+        raw_mod = "semantic"
+
+    if raw_mod in ("semantic", "math", "ledger", "diagram", "arithmetic_grid", "geometric_nets", "electrodynamics", "organic_chemistry"):
+        modality = raw_mod
+    elif q.get("journal") or isinstance(q.get("rows"), list) or q.get("question_type") in ("journal", "ledger", "accounting_equation"):
+        modality = "ledger"
+    elif q.get("arithmetic_grid") or q.get("question_type") == "arithmetic_grid":
+        modality = "arithmetic_grid"
+    elif q.get("diagram_spec") or q.get("question_type") == "diagram_select" or "correct_edge" in q:
+        modality = "diagram"
+    elif q.get("question_type") in ("mcq", "matching", "word_bank") or isinstance(q.get("options"), list) or isinstance(q.get("pairs"), list) or isinstance(q.get("column_a"), list):
+        modality = "math"
+    elif q.get("marking_points") or q.get("content_rubric") or q.get("question_type") in ("typed", "rubric", "essay", "short_answer", "scenario"):
+        modality = "semantic"
+    elif any(s in subj_lower for s in ("business", "life", "bio")) and not isinstance(q.get("options"), list):
+        modality = "semantic"
+    else:
+        modality = "math"
+
+    # 2. Authoritative Solution Type
+    sol_type = q.get("solution_type")
+    if not sol_type:
+        if modality == "semantic":
+            sol_type = "marking_points"
+        elif modality == "ledger":
+            sol_type = "tabular_cells"
+        elif modality == "diagram":
+            sol_type = "diagram_element"
+        elif q.get("question_type") == "mcq" or isinstance(q.get("options"), list):
+            sol_type = "mcq"
+        elif q.get("question_type") in ("matching", "matching_columns"):
+            sol_type = "matching"
+        else:
+            sol_type = "symbolic_steps"
+
+    # 3. Authoritative Expected Answer
+    expected_answer = (
+        q.get("expected_answer")
+        or q.get("ideal_answer")
+        or q.get("correct_answer")
+        or q.get("sample_answer")
+        or q.get("model_answer")
+        or q.get("answer")
+    )
+    if not expected_answer:
+        if isinstance(q.get("options"), list) and q.get("correct_index") is not None:
+            try:
+                c_idx = int(q.get("correct_index"))
+                if 0 <= c_idx < len(q["options"]):
+                    expected_answer = str(q["options"][c_idx])
+            except (ValueError, TypeError):
+                pass
+        elif q.get("worked_solution"):
+            expected_answer = str(q["worked_solution"])
+        else:
+            expected_answer = ""
+
+    # 4. Structured Marking Schema Synthesis
     schema = q.get("marking_schema")
-    if not schema or not isinstance(schema, dict):
+    if not schema or not isinstance(schema, dict) or not schema.get("marking_points"):
+        marking_points = []
+        raw_pts = q.get("marking_points") or q.get("content_rubric") or q.get("rubric")
+
+        if isinstance(raw_pts, list) and raw_pts:
+            pts_count = max(1, len(raw_pts))
+            default_pt_marks = max(1, marks // pts_count)
+            for idx, pt in enumerate(raw_pts):
+                if isinstance(pt, dict):
+                    desc = pt.get("desc") or pt.get("criterion") or pt.get("description") or f"Criterion {idx + 1}"
+                    pt_marks = int(pt.get("marks", default_pt_marks))
+                    tc = pt.get("target_concepts") or [w for w in re.split(r"[,/;\s]+", desc) if len(w) > 3]
+                else:
+                    desc = str(pt)
+                    pt_marks = default_pt_marks
+                    tc = [w for w in re.split(r"[,/;\s]+", desc) if len(w) > 3]
+                marking_points.append({
+                    "id": f"mp_{idx + 1}",
+                    "desc": desc,
+                    "marks": pt_marks,
+                    "target_concepts": tc,
+                    "editable": True,
+                })
+        elif modality == "semantic":
+            sol_text = str(q.get("worked_solution") or q.get("sample_answer") or q.get("explanation") or "")
+            lines = [line.strip("-•* \t") for line in sol_text.split("\n") if len(line.strip("-•* \t")) > 10]
+            if len(lines) >= 2:
+                alloc = max(1, marks // len(lines))
+                for idx, line in enumerate(lines[:marks]):
+                    marking_points.append({
+                        "id": f"mp_{idx + 1}",
+                        "desc": line,
+                        "marks": alloc,
+                        "target_concepts": [w for w in re.split(r"[,/;\s]+", line) if len(w) > 3],
+                        "editable": True,
+                    })
+            else:
+                marking_points = [
+                    {"id": "mp_1", "desc": "Substantive explanation addressing core curriculum concept", "marks": max(1, marks // 2), "editable": True},
+                    {"id": "mp_2", "desc": "Supporting justification, analysis, or practical context", "marks": max(1, marks - (marks // 2)), "editable": True},
+                ]
+        else:
+            marking_points = [
+                {"id": "mp_1", "desc": "Accurate method/procedure [M]", "marks": max(1, marks - 1), "editable": True},
+                {"id": "mp_2", "desc": "Accurate final value/accuracy mark [A]", "marks": 1, "editable": True},
+            ] if marks >= 2 else [
+                {"id": "mp_1", "desc": "Accurate calculation or selection [A]", "marks": marks, "editable": True}
+            ]
+
+        curr_total = sum(p.get("marks", 1) for p in marking_points)
+        if curr_total != marks and marking_points:
+            diff = marks - curr_total
+            marking_points[-1]["marks"] = max(1, marking_points[-1]["marks"] + diff)
+
         schema = {
             "total_marks": marks,
-            "marking_points": [
-                {"id": "mp_1", "desc": "Accurate method/answer", "marks": marks, "editable": True}
-            ],
+            "marking_points": marking_points,
             "deductions": [],
-            "carry_forward_rule": "consequential_accuracy"
+            "carry_forward_rule": "consequential_accuracy",
         }
 
     # 3-Tier Hints
@@ -1422,7 +1534,7 @@ def _normalize_question(
         hints = {
             "tier_1": "Carefully inspect the question parameters.",
             "tier_2": base_hint,
-            "tier_3": f"Correct solution step: {q.get('correct_answer') or q.get('sample_answer') or 'Refer to memo.'}"
+            "tier_3": f"Correct solution step: {expected_answer or 'Refer to memo.'}"
         }
 
     # Misconception tags
@@ -1447,6 +1559,9 @@ def _normalize_question(
         "suggested_duration_mins": int(q.get("suggested_duration_mins") or max(2, int(marks * 1.2))),
         "mode": q.get("mode") or "compound",
         "marks": marks,
+        "modality": modality,
+        "solution_type": sol_type,
+        "expected_answer": expected_answer,
         "marking_schema": schema,
         "hints": hints,
         "misconception_tags": tags,
@@ -1490,7 +1605,7 @@ def _normalize_generator_result(
 
 def generate_variant(
     topic: str,
-    subskill: str = "concepts",
+    subskill: str = "mixed",
     difficulty: str = "medium",
     count: int = 1,
     seed: Optional[int] = None,

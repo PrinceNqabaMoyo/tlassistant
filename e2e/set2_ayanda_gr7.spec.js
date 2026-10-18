@@ -16,5 +16,6 @@ test('Set 2: Ayanda Ndlovu — Mathematics & EMS (Gr 7 Senior Phase Mobile Pixel
     subject2: 'Economic & Management Sciences',
     subject2TabName: 'EMS',
     teacherCode: 'MTH701',
+    abilityProfile: 'visual_spatial',
   });
 });

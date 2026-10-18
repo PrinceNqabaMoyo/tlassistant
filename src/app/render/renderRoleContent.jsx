@@ -2,11 +2,21 @@ import React from 'react';
 import { Loader2 } from 'lucide-react';
 
 import AuthScreen from '../../components/auth/AuthScreen';
-import { TeacherView } from '../../components/teacher';
-import { AdminView } from '../../components/admin';
-import ParentDashboard from '../../components/parent/ParentDashboard';
-import SchoolAdminView from '../../components/admin/SchoolAdminView';
 import RenderStudentContent from './renderStudentContent';
+
+const TeacherView = React.lazy(() => import('../../components/teacher/TeacherView'));
+const AdminView = React.lazy(() => import('../../components/admin/AdminView'));
+const ParentDashboard = React.lazy(() => import('../../components/parent/ParentDashboard'));
+const SchoolAdminView = React.lazy(() => import('../../components/admin/SchoolAdminView'));
+
+function RoleLoadingFallback() {
+  return (
+    <div className="flex flex-col items-center justify-center min-h-[60vh] p-8 space-y-3">
+      <Loader2 className="h-8 w-8 animate-spin text-[#13519C]" />
+      <span className="text-xs font-semibold text-slate-500">Loading workspace...</span>
+    </div>
+  );
+}
 
 export default function RenderRoleContent({ roleContentProps }) {
   const {
@@ -54,45 +64,73 @@ export default function RenderRoleContent({ roleContentProps }) {
 
   if (effectiveCurrentUser.isSuperAdmin) {
     if (effectiveRole === 'admin') {
-      return <AdminView view={adminView} setView={setAdminView} db={dbService} currentUser={effectiveCurrentUser} />;
+      return (
+        <React.Suspense fallback={<RoleLoadingFallback />}>
+          <AdminView view={adminView} setView={setAdminView} db={dbService} currentUser={effectiveCurrentUser} />
+        </React.Suspense>
+      );
     }
     if (effectiveRole === 'teacher') {
-      return <TeacherView view={teacherView} setView={setTeacherView} db={dbService} currentUser={effectiveCurrentUser} />;
+      return (
+        <React.Suspense fallback={<RoleLoadingFallback />}>
+          <TeacherView view={teacherView} setView={setTeacherView} db={dbService} currentUser={effectiveCurrentUser} />
+        </React.Suspense>
+      );
     }
     if (effectiveRole === 'parent') {
       return (
+        <React.Suspense fallback={<RoleLoadingFallback />}>
+          <ParentDashboard 
+            currentUser={effectiveCurrentUser} 
+            db={dbService} 
+            onLaunchLearnerWorkspace={parentProps?.onLaunchLearnerWorkspace} 
+          />
+        </React.Suspense>
+      );
+    }
+    if (effectiveRole === 'school' || effectiveRole === 'school_admin') {
+      return (
+        <React.Suspense fallback={<RoleLoadingFallback />}>
+          <SchoolAdminView currentUser={effectiveCurrentUser} db={dbService} />
+        </React.Suspense>
+      );
+    }
+  }
+
+  if (effectiveRole === 'admin') {
+    return (
+      <React.Suspense fallback={<RoleLoadingFallback />}>
+        <AdminView view={adminView} setView={setAdminView} db={dbService} currentUser={effectiveCurrentUser} />
+      </React.Suspense>
+    );
+  }
+
+  if (effectiveRole === 'teacher') {
+    return (
+      <React.Suspense fallback={<RoleLoadingFallback />}>
+        <TeacherView view={teacherView} setView={setTeacherView} db={dbService} currentUser={effectiveCurrentUser} />
+      </React.Suspense>
+    );
+  }
+
+  if (effectiveRole === 'parent') {
+    return (
+      <React.Suspense fallback={<RoleLoadingFallback />}>
         <ParentDashboard 
           currentUser={effectiveCurrentUser} 
           db={dbService} 
           onLaunchLearnerWorkspace={parentProps?.onLaunchLearnerWorkspace} 
         />
-      );
-    }
-    if (effectiveRole === 'school' || effectiveRole === 'school_admin') {
-      return <SchoolAdminView currentUser={effectiveCurrentUser} />;
-    }
-  }
-
-  if (effectiveRole === 'admin') {
-    return <AdminView view={adminView} setView={setAdminView} db={dbService} currentUser={effectiveCurrentUser} />;
-  }
-
-  if (effectiveRole === 'teacher') {
-    return <TeacherView view={teacherView} setView={setTeacherView} db={dbService} currentUser={effectiveCurrentUser} />;
-  }
-
-  if (effectiveRole === 'parent') {
-    return (
-      <ParentDashboard 
-        currentUser={effectiveCurrentUser} 
-        db={dbService} 
-        onLaunchLearnerWorkspace={parentProps?.onLaunchLearnerWorkspace} 
-      />
+      </React.Suspense>
     );
   }
 
   if (effectiveRole === 'school' || effectiveRole === 'school_admin') {
-    return <SchoolAdminView currentUser={effectiveCurrentUser} />;
+    return (
+      <React.Suspense fallback={<RoleLoadingFallback />}>
+        <SchoolAdminView currentUser={effectiveCurrentUser} db={dbService} />
+      </React.Suspense>
+    );
   }
 
   if (effectiveRole === 'student') {

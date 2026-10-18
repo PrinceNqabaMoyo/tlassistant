@@ -488,7 +488,7 @@ export const EftUploadModal = ({ isOpen, onClose, currentUser, db, targetGrade, 
     if (compact) {
         return (
             <div className="w-full">
-                <input ref={resolvedFileInputRef} type="file" className="hidden" accept=".pdf,image/png,image/jpeg" onChange={handleFileChange} disabled={isBusy || isPendingReview} />
+                <input data-testid="input-file-pop" ref={resolvedFileInputRef} type="file" className="hidden" accept=".pdf,image/png,image/jpeg" onChange={handleFileChange} disabled={isBusy || isPendingReview} />
                 <div className={`overflow-hidden transition-all duration-300 ${shouldShowCompactPanel ? 'max-h-80 opacity-100' : 'max-h-0 opacity-0'}`}>
                     <div className="rounded-[28px] border border-sky-100 bg-white px-6 py-5 shadow-lg shadow-sky-100/40">
                         {isPendingReview ? (
@@ -509,6 +509,7 @@ export const EftUploadModal = ({ isOpen, onClose, currentUser, db, targetGrade, 
                                     {file && status !== 'success' ? (
                                         <button
                                             type="button"
+                                            data-testid="btn-submit-pop"
                                             onClick={handleUpload}
                                             disabled={!canSubmitUploadedPop || isBusy}
                                             className={`inline-flex items-center justify-center gap-2 rounded-2xl px-5 py-3 text-sm font-semibold text-white transition ${
@@ -655,6 +656,8 @@ export const EftUploadModal = ({ isOpen, onClose, currentUser, db, targetGrade, 
                                 <div className="mt-6 flex justify-center">
                                     {onClose ? (
                                         <button
+                                            type="button"
+                                            data-testid="btn-back-to-dashboard"
                                             onClick={onClose}
                                             className="px-8 py-3 bg-indigo-600 text-white rounded-full font-semibold hover:bg-indigo-700 transition"
                                         >

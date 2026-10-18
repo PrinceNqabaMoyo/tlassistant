@@ -91,16 +91,42 @@ def generate(**kwargs) -> Dict[str, Any]:
             "rubric": "1 mark PAYE, 1 mark UIF, 1 mark Net."
         })
         
+    full_prompt = f"{context}\n\n{instruction}\n\n" + "\n\n".join(
+        f"{p['id']}. {p['question']} ({p['marks']} marks)" for p in parts
+    )
+    total_marks = sum(p["marks"] for p in parts)
+    
     return {
+        "id": f"g12_bs_leg_hr_{r.randint(100000, 999999)}",
+        "topic": "Legislation and Human Resources",
+        "subskill": "legislation_human_resources",
+        "mode": mode,
+        "marks": total_marks,
+        "prompt": full_prompt,
+        "question": full_prompt,
+        "sample_answer": "\n\n".join(f"{p['id']}: {p['solution']}" for p in parts),
+        "marking_schema": {
+            "total_marks": total_marks,
+            "marking_points": [
+                {"id": p["id"], "desc": p["question"][:60], "marks": p["marks"], "editable": True}
+                for p in parts
+            ],
+            "deductions": [],
+            "carry_forward_rule": "consequential_accuracy"
+        },
+        "hints": {
+            "tier_1": "Statutory employee deductions are PAYE (income tax) and UIF (1% employee contribution).",
+            "tier_2": "Calculate: Net Salary = Gross Salary - Total Deductions (PAYE + UIF).",
+            "tier_3": "When evaluating labour acts (BCEA, LRA, B-BBEE), contrast employee rights with employer compliance costs."
+        },
         "metadata": {
             "subject": "Business Studies",
             "grade": 12,
             "topic": "Legislation and Human Resources",
             "mode": mode,
-            "total_marks": sum(p["marks"] for p in parts)
+            "total_marks": total_marks
         },
         "context": context,
         "instruction": instruction,
         "parts": parts,
-        "hints": ["Remember that net salary = gross - deductions.", "Consider both positives and negatives for legislative impacts."]
     }

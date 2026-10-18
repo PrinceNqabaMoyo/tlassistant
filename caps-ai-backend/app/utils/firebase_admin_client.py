@@ -35,6 +35,7 @@ def _resolve_credentials_path():
 def get_firebase_app():
     import json
     import os
+    storage_bucket = os.environ.get('FIREBASE_STORAGE_BUCKET', 'caps-ai-math-assistant-app.firebasestorage.app')
     try:
         return firebase_admin.get_app()
     except ValueError:
@@ -43,17 +44,17 @@ def get_firebase_app():
         if env_json:
             try:
                 creds_dict = json.loads(env_json)
-                return firebase_admin.initialize_app(credentials.Certificate(creds_dict))
+                return firebase_admin.initialize_app(credentials.Certificate(creds_dict), options={'storageBucket': storage_bucket})
             except json.JSONDecodeError as e:
                 raise RuntimeError(f"Failed to parse FIREBASE_CREDENTIALS_JSON: {e}")
 
         # 2. Try file path
         credentials_path = _resolve_credentials_path()
         if credentials_path:
-            return firebase_admin.initialize_app(credentials.Certificate(str(credentials_path)))
+            return firebase_admin.initialize_app(credentials.Certificate(str(credentials_path)), options={'storageBucket': storage_bucket})
             
         # 3. Fallback to ADC
-        return firebase_admin.initialize_app()
+        return firebase_admin.initialize_app(options={'storageBucket': storage_bucket})
 
 
 def verify_firebase_id_token(id_token):
@@ -65,4 +66,6 @@ def get_firestore_client():
 
 
 def get_storage_bucket(bucket_name=None):
-    return storage.bucket(name=bucket_name, app=get_firebase_app())
+    import os
+    bucket = bucket_name or os.environ.get('FIREBASE_STORAGE_BUCKET', 'caps-ai-math-assistant-app.firebasestorage.app')
+    return storage.bucket(name=bucket, app=get_firebase_app())

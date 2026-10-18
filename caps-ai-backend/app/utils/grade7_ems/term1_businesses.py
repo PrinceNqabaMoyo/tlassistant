@@ -108,7 +108,7 @@ def _concept_pool(rng):
             ],
             'correct_index': 1,
             'explanation': "Because the spaza shop is not registered for tax and is not monitored by the government, it is classified as an informal business.",
-            'difficulties': ['easy'],
+            'difficulties': ['easy', 'medium', 'hard'],
             'marks': 1,
             'hint_sections': [
                 {'title': 'What is being tested?', 'text': 'Identifying the difference between formal and informal businesses.'},
@@ -129,7 +129,7 @@ def _concept_pool(rng):
             ],
             'correct_index': 2,
             'explanation': "Bread and milk are consumable goods because they do not last and are used up quickly after purchase.",
-            'difficulties': ['easy', 'medium'],
+            'difficulties': ['easy', 'medium', 'hard'],
             'marks': 1,
             'hint_sections': [
                 {'title': 'What is being tested?', 'text': 'Classifying goods into specific categories (durable, consumable, capital, luxury).'},
@@ -150,7 +150,7 @@ def _concept_pool(rng):
             ],
             'correct_index': 1,
             'explanation': "Manufacturers are people or businesses who use resources to produce goods and services.",
-            'difficulties': ['hard'],
+            'difficulties': ['easy', 'medium', 'hard'],
             'marks': 1,
             'hint_sections': [
                 {'title': 'What is being tested?', 'text': 'Defining the role of manufacturers.'},
@@ -159,6 +159,69 @@ def _concept_pool(rng):
             ],
             'guidelines': ['Match the definition to the correct terminology.']
         }, subskill='concepts', learning_objective_id='lo_manufacturers', question_family_id='manufacturers_def', concept_id='manufacturers', concept_group='businesses', misconception_tags=['confuses_manufacturer_consumer'], diagnostic_tags=['definition']),
+
+        _with_metadata({
+            'title': 'Trading vs Service Business',
+            'prompt': f"{scenario['entrepreneur']} operates a hair salon and car wash in {scenario['area']}. What type of business is this?",
+            'options': [
+                "A service business, because they provide skills, expertise, and labour rather than tangible goods.",
+                "A manufacturing business, because they build vehicles from raw metals.",
+                "A trading business, because they buy and sell pre-packaged supermarket items.",
+                "A primary sector business, because they harvest agricultural crops."
+            ],
+            'correct_index': 0,
+            'explanation': "A service business sells activities, skills, advice, or labour (hair styling, washing) rather than physical merchandise.",
+            'difficulties': ['easy', 'medium', 'hard'],
+            'marks': 1,
+            'hint_sections': [
+                {'title': 'What is being tested?', 'text': 'Distinguishing service businesses from trading and manufacturing businesses.'},
+                {'title': 'Reasoning path', 'text': 'Does a salon customer walk away with a manufactured product, or did they pay for a skilled service?'},
+                {'title': 'Transfer idea', 'text': 'Service businesses satisfy intangible needs.'}
+            ],
+            'guidelines': ['Identify that hair salons and car washes are service businesses.']
+        }, subskill='concepts', learning_objective_id='lo_service_business', question_family_id='service_business_classification', concept_id='service_business', concept_group='businesses', misconception_tags=['confuses_service_with_trading'], diagnostic_tags=['classification']),
+
+        _with_metadata({
+            'title': 'Sectors of Production - Primary Sector',
+            'prompt': f"A business in {scenario['area']} extracts coal from a mine and grows timber on a plantation. Which economic sector is this?",
+            'options': [
+                "Primary sector, which involves extracting natural resources directly from the earth.",
+                "Secondary sector, which manufactures finished furniture and plastics.",
+                "Tertiary sector, which sells insurance and internet banking.",
+                "Quaternary sector, which develops artificial intelligence software."
+            ],
+            'correct_index': 0,
+            'explanation': "The primary sector deals with raw material extraction from nature (mining, agriculture, fishing, forestry).",
+            'difficulties': ['easy', 'medium', 'hard'],
+            'marks': 1,
+            'hint_sections': [
+                {'title': 'What is being tested?', 'text': 'Identifying the primary sector of production.'},
+                {'title': 'Reasoning path', 'text': 'Where does the resource come from? Directly from the ground or nature.'},
+                {'title': 'Transfer idea', 'text': 'Primary sector activities provide the raw inputs for factories in the secondary sector.'}
+            ],
+            'guidelines': ['Identify the primary sector.']
+        }, subskill='concepts', learning_objective_id='lo_primary_sector', question_family_id='primary_sector_def', concept_id='primary_sector', concept_group='businesses', misconception_tags=['confuses_primary_secondary'], diagnostic_tags=['classification']),
+
+        _with_metadata({
+            'title': 'Durable vs Non-Durable Capital Goods',
+            'prompt': f"Which of the following is considered a CAPITAL GOOD purchased by a bakery in {scenario['area']}?",
+            'options': [
+                "An industrial commercial baking oven that lasts for 10 years to produce bread.",
+                "Bags of cake flour and packets of yeast used in daily baking.",
+                "Paper bags and serviettes given to customers.",
+                "Fresh milk purchased every morning for staff tea."
+            ],
+            'correct_index': 0,
+            'explanation': "Capital goods are long-lasting man-made tools and machinery used by businesses to produce other goods and services.",
+            'difficulties': ['easy', 'medium', 'hard'],
+            'marks': 1,
+            'hint_sections': [
+                {'title': 'What is being tested?', 'text': 'Identifying capital goods used in production.'},
+                {'title': 'Reasoning path', 'text': 'What machine or tool does the bakery use repeatedly over many years to make products?'},
+                {'title': 'Transfer idea', 'text': 'Flour and yeast are raw materials; the oven is a capital good.'}
+            ],
+            'guidelines': ['Select the industrial oven as a capital good.']
+        }, subskill='concepts', learning_objective_id='lo_capital_goods', question_family_id='capital_goods_def', concept_id='capital_goods', concept_group='goods_and_services', misconception_tags=['confuses_capital_good_raw_material'], diagnostic_tags=['classification']),
     ]
 
 def _discussion_pool(rng):
@@ -253,13 +316,19 @@ def generate(subskill="concepts", difficulty="medium", count=1, mode="scaffold",
     
     if subskill == "discussion":
         pool = _discussion_pool(rng)
-        selected = [q for q in pool if difficulty in q['difficulties']]
+        selected = [q for q in pool if difficulty in q.get('difficulties', ['medium'])]
         if not selected: selected = pool
-        chosen = rng.sample(selected, min(count, len(selected)))
+        if count == 1 and seed is not None:
+            chosen = [selected[int(seed) % len(selected)]]
+        else:
+            chosen = rng.sample(selected, min(count, len(selected)))
         return [_typed_question(rng, item, mode=mode) for item in chosen]
     else:
         pool = _concept_pool(rng)
-        selected = [q for q in pool if difficulty in q['difficulties']]
+        selected = [q for q in pool if difficulty in q.get('difficulties', ['medium'])]
         if not selected: selected = pool
-        chosen = rng.sample(selected, min(count, len(selected)))
+        if count == 1 and seed is not None:
+            chosen = [selected[int(seed) % len(selected)]]
+        else:
+            chosen = rng.sample(selected, min(count, len(selected)))
         return [_mcq_question(rng, item, mode=mode) for item in chosen]

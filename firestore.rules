@@ -13,7 +13,6 @@ service cloud.firestore {
         && (
           request.auth.token.email == 'princenqaba@gmail.com'
           || request.auth.token.email == 'princenqabamoyo@outlook.com'
-          || request.auth.token.email == 'sithole@school.co.za'
         );
     }
 
@@ -46,6 +45,21 @@ service cloud.firestore {
         );
     }
 
+    function isSchoolAdminUser() {
+      return signedIn()
+        && (
+          isAdminUser()
+          || (
+            exists(/databases/$(database)/documents/users/$(request.auth.uid))
+            && (
+              get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'school_admin'
+              || get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'school'
+              || get(/databases/$(database)/documents/users/$(request.auth.uid)).data.isInstitutionalAdmin == true
+            )
+          )
+        );
+    }
+
     // 0. System Statistics
     match /systemStats/{statId} {
       allow read: if isAdminUser();
@@ -54,12 +68,12 @@ service cloud.firestore {
 
     // 1. Users Collection (Profile & Account Details)
     match /users/{userId} {
-      allow read: if signedIn() && (request.auth.uid == userId || isAdminUser());
+      allow read: if signedIn() && (request.auth.uid == userId || isAdminUser() || isSchoolAdminUser());
       allow create: if signedIn() && (
         isAdminUser()
         || (
           request.auth.uid == userId
-          && (!('role' in request.resource.data) || request.resource.data.role in ['student', 'parent'])
+          && (!('role' in request.resource.data) || request.resource.data.role in ['student', 'parent', 'teacher', 'school_admin', 'school'])
           && (!('isSuperAdmin' in request.resource.data) || request.resource.data.isSuperAdmin == false)
           && (!('isOwner' in request.resource.data) || request.resource.data.isOwner == false)
           && (!('tier' in request.resource.data) || request.resource.data.tier == 'standard')

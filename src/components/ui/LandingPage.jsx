@@ -83,8 +83,10 @@ const LandingPage = ({ onGetStarted, onSignIn, onViewSubscription, onNavigatePri
     useEffect(() => {
         if (!mobileTickerPerspective) return;
         const activeTabEl = document.getElementById(`audience-tab-${mobileTickerPerspective}`);
-        if (activeTabEl) {
-            activeTabEl.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+        if (activeTabEl && audienceRibbonContainerRef.current) {
+            const container = audienceRibbonContainerRef.current;
+            const offsetLeft = activeTabEl.offsetLeft - (container.clientWidth / 2) + (activeTabEl.clientWidth / 2);
+            container.scrollTo({ left: offsetLeft, behavior: 'smooth' });
         }
     }, [mobileTickerPerspective]);
 
@@ -203,8 +205,10 @@ const LandingPage = ({ onGetStarted, onSignIn, onViewSubscription, onNavigatePri
         setActivePerspective(perspective);
         // Automatically scroll the clicked tab button into center view
         const tabEl = document.getElementById(`audience-tab-${perspective}`);
-        if (tabEl) {
-            tabEl.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+        if (tabEl && audienceRibbonContainerRef.current) {
+            const container = audienceRibbonContainerRef.current;
+            const offsetLeft = tabEl.offsetLeft - (container.clientWidth / 2) + (tabEl.clientWidth / 2);
+            container.scrollTo({ left: offsetLeft, behavior: 'smooth' });
         }
         const el = document.getElementById('how-it-works');
         if (el) {
@@ -249,7 +253,7 @@ const LandingPage = ({ onGetStarted, onSignIn, onViewSubscription, onNavigatePri
                                 type="button"
                                 data-testid="btn-landing-signin"
                                 onClick={onSignIn}
-                                className="hidden sm:inline-flex rounded-lg border border-white/20 bg-white/10 px-3 py-1.5 text-sm sm:px-5 sm:py-2 sm:text-base font-medium text-white transition-all duration-300 hover:bg-white/20 cursor-pointer"
+                                className="inline-flex items-center justify-center rounded-lg border border-white/20 bg-white/10 px-2.5 py-1.5 text-xs sm:px-5 sm:py-2 sm:text-base font-semibold text-white transition-all duration-300 hover:bg-white/20 active:scale-95 cursor-pointer shrink-0"
                             >
                                 Sign in
                             </button>

@@ -41,13 +41,35 @@ const createInitialState = () => {
   });
 
   const storedPhoto = typeof window !== 'undefined' ? localStorage.getItem('fundile_user_photoURL') : null;
+  let initialEnabledSubjects = null;
+  try {
+    const saved = localStorage.getItem('fundile_enabled_subjects');
+    if (saved) initialEnabledSubjects = JSON.parse(saved);
+  } catch {}
+  if (!initialEnabledSubjects || !Array.isArray(initialEnabledSubjects) || initialEnabledSubjects.length === 0) {
+    initialEnabledSubjects = ['accounting', 'mathematics', 'physical_sciences', 'life_sciences'];
+  }
+
   return {
     studentName: 'Nqobile Dlamini',
     grade: 10,
     school: 'Westville High School',
     isIndependent: false,
+    subscription: {
+      plan: 'term_pass',
+      status: 'active',
+      totalMonths: 3,
+      paidAmountRands: 349,
+      activatedAt: new Date(Date.now() - 20 * 86400000).toISOString(),
+      expiresAt: new Date(Date.now() + 70 * 86400000).toISOString()
+    },
+    familyWallet: {
+      creditBalanceRands: 0,
+      pendingRefundClaims: []
+    },
     phase: 'FET Phase (Gr 10–12)',
     photoURL: storedPhoto || null,
+    enabledSubjects: initialEnabledSubjects,
     streakDays: 5,
     totalXp: 1420,
     deskDues: 2,
@@ -62,44 +84,8 @@ const createInitialState = () => {
         verified: true,
       }
     ],
-    teacherLinks: [
-      {
-        id: 'teacher_1',
-        name: 'Mrs. P. Khumalo',
-        subject: 'Accounting',
-        code: 'ACC10A',
-        school: 'Westville High School'
-      },
-      {
-        id: 'teacher_2',
-        name: 'Mr. J. Botha',
-        subject: 'Mathematics',
-        code: 'MAT10B',
-        school: 'Westville High School'
-      }
-    ],
-    messages: [
-      {
-        id: 'msg_1',
-        sender: 'Mrs. P. Khumalo',
-        senderRole: 'Teacher',
-        subject: 'Accounting',
-        text: 'Class task sent from Mrs. P. Khumalo / Accounting: Debtors Journal & Bad Debts, deadline Friday 17:00.',
-        date: new Date().toLocaleDateString('en-ZA', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }),
-        deadline: new Date(Date.now() + 86400000 * 2).toISOString(),
-        isRead: false
-      },
-      {
-        id: 'msg_2',
-        sender: 'Fundile Learning Team',
-        senderRole: 'Fundile',
-        subject: 'Platform',
-        text: 'Welcome to Term 1 Benchmark Week! Remember to complete your diagnostic benchmark in your registered subjects.',
-        date: new Date().toLocaleDateString('en-ZA', { month: 'short', day: 'numeric' }),
-        deadline: null,
-        isRead: true
-      }
-    ],
+    teacherLinks: [],
+    messages: [],
     activeSession: {
       subjectId: 'accounting',
       topic: 'Cash Receipts Journal (VAT 15%)',
@@ -145,6 +131,9 @@ class StudentStore {
         parsed.subjects = { ...initial.subjects, ...(parsed.subjects || {}) };
         parsed.photoURL = parsed.photoURL || (typeof window !== 'undefined' ? localStorage.getItem('fundile_user_photoURL') : null);
         parsed.activeSession = parsed.activeSession || initial.activeSession;
+        parsed.enabledSubjects = (Array.isArray(parsed.enabledSubjects) && parsed.enabledSubjects.length > 0)
+          ? parsed.enabledSubjects
+          : initial.enabledSubjects;
         return parsed;
       }
     } catch (e) {
@@ -163,6 +152,13 @@ class StudentStore {
       console.warn('Failed to save student state to localStorage', e);
     }
     this.notify();
+  }
+
+  setState(partialState) {
+    this.saveState({
+      ...this.state,
+      ...partialState
+    });
   }
 
   // Active Session Persistence (Resume where learner left off)
@@ -211,6 +207,37 @@ class StudentStore {
     return this.state;
   }
 
+  // Reactive enabled phase subjects management
+  getEnabledSubjects(grade = null) {
+    if (this.state.enabledSubjects && Array.isArray(this.state.enabledSubjects) && this.state.enabledSubjects.length > 0) {
+      return this.state.enabledSubjects;
+    }
+    try {
+      const saved = localStorage.getItem('fundile_enabled_subjects');
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          return parsed;
+        }
+      }
+    } catch {}
+    const g = Number(grade || this.state.grade || 10);
+    return g <= 9
+      ? ['mathematics', 'ems', 'natural_sciences']
+      : ['accounting', 'mathematics', 'physical_sciences', 'life_sciences'];
+  }
+
+  setEnabledSubjects(subjects) {
+    if (!Array.isArray(subjects) || subjects.length === 0) return;
+    try {
+      localStorage.setItem('fundile_enabled_subjects', JSON.stringify(subjects));
+    } catch {}
+    this.saveState({
+      ...this.state,
+      enabledSubjects: subjects
+    });
+  }
+
   // Update student profile photo
   updateProfilePhoto(photoURL) {
     if (typeof window !== 'undefined' && photoURL) {
@@ -224,6 +251,17 @@ class StudentStore {
       ...this.state,
       photoURL
     });
+  }
+
+  setStudentProfile(studentName, grade, school) {
+    this.updateProfileDetails({ studentName, grade, school });
+  }
+
+  // Set student grade directly (Grades 7–12)
+  setGrade(grade) {
+    if (grade !== undefined && grade !== null) {
+      this.updateProfileDetails({ grade: Number(grade) });
+    }
   }
 
   // Update student profile details
@@ -308,18 +346,22 @@ class StudentStore {
     else if (normalizedCode.startsWith('BUS')) subject = 'Business Studies';
     else if (normalizedCode.startsWith('EMS')) subject = 'EMS';
 
+    const resolvedSchool = (this.state.school && this.state.school !== 'Independent Homeschool Learner' && this.state.school !== 'Independent Homeschool' && this.state.school !== 'Independent Account')
+      ? this.state.school
+      : 'Westville High School';
+
     const newTeacher = {
       id: `teacher_${Date.now()}`,
       name: teacherName,
       subject,
       code: normalizedCode,
-      school: this.state.school || 'Westville High School'
+      school: resolvedSchool
     };
 
-    let updatedTasks = this.state.currentUser?.assignedTasks || [];
+    let updatedTasks = Array.isArray(this.state.currentUser?.assignedTasks) ? [...this.state.currentUser.assignedTasks] : [];
     let updatedGrade = this.state.grade;
     let updatedPhase = this.state.phase;
-    let unviewed = this.state.unviewedTaskIds || [];
+    let unviewed = Array.isArray(this.state.unviewedTaskIds) ? [...this.state.unviewedTaskIds] : [];
 
     if (normalizedCode === 'MTH701') {
       updatedGrade = 7;
@@ -354,20 +396,184 @@ class StudentStore {
         }
       ];
       unviewed = ['task_g7_pat', 'task_g7_div'];
+    } else if (normalizedCode.startsWith('ACC')) {
+      const accTask = {
+        id: `task_acc_${Date.now()}`,
+        subject: 'accounting',
+        subjectName: 'Accounting',
+        title: 'Cash Receipts Journal (VAT 15%)',
+        topic: 'Cash Receipts Journal (VAT 15%)',
+        assignedBy: teacherName,
+        dueText: 'DUE TODAY',
+        dueTime: '17:00',
+        marks: 12,
+        notes: `${teacherName} • 12 Marks • Enter transactions into 2D ledger columns.`,
+        estimatedMins: 15
+      };
+      updatedTasks = [accTask, ...updatedTasks.filter(t => t.title !== accTask.title)];
+      unviewed = [accTask.id, ...unviewed];
+    } else if (normalizedCode.startsWith('MAT') || normalizedCode.startsWith('MTH')) {
+      const matTask = {
+        id: `task_mat_${Date.now()}`,
+        subject: 'mathematics',
+        subjectName: 'Mathematics',
+        title: 'Quadratic Trinomial Factorisation',
+        topic: 'Algebraic Expressions',
+        assignedBy: teacherName,
+        dueText: 'DUE TOMORROW',
+        dueTime: '08:30',
+        marks: 10,
+        notes: `${teacherName} • 10 Marks • Factorise trinomial expressions stepwise.`,
+        estimatedMins: 12
+      };
+      updatedTasks = [matTask, ...updatedTasks.filter(t => t.title !== matTask.title)];
+      unviewed = [matTask.id, ...unviewed];
+    } else if (normalizedCode.startsWith('PHY')) {
+      const phyTask = {
+        id: `task_phy_${Date.now()}`,
+        subject: 'physical_sciences',
+        subjectName: 'Physical Sciences',
+        title: 'Vectors & Resultants in Two Dimensions',
+        topic: 'Vectors in Two Dimensions',
+        assignedBy: teacherName,
+        dueText: 'DUE TODAY',
+        dueTime: '16:00',
+        marks: 8,
+        notes: `${teacherName} • 8 Marks • Calculate resultant vector and directional bearing.`,
+        estimatedMins: 12
+      };
+      updatedTasks = [phyTask, ...updatedTasks.filter(t => t.title !== phyTask.title)];
+      unviewed = [phyTask.id, ...unviewed];
+    } else {
+      const genericTask = {
+        id: `task_gen_${Date.now()}`,
+        subject: subject.toLowerCase().replace(/\s+/g, '_'),
+        subjectName: subject,
+        title: `${subject} Core Procedural Practice`,
+        topic: 'Foundational Drill',
+        assignedBy: teacherName,
+        dueText: 'DUE TODAY',
+        dueTime: '17:00',
+        marks: 10,
+        notes: `${teacherName} • Active class assignment.`,
+        estimatedMins: 15
+      };
+      updatedTasks = [genericTask, ...updatedTasks.filter(t => t.title !== genericTask.title)];
+      unviewed = [genericTask.id, ...unviewed];
     }
 
     this.saveState({
       ...this.state,
+      isIndependent: false,
+      school: resolvedSchool,
       grade: updatedGrade,
       phase: updatedPhase,
+      deskDues: updatedTasks.length,
       teacherLinks: [...current, newTeacher],
       currentUser: {
         ...(this.state.currentUser || {}),
+        isIndependent: false,
+        school: resolvedSchool,
+        schoolName: resolvedSchool,
         assignedTasks: updatedTasks,
       },
       unviewedTaskIds: unviewed,
     });
     return true;
+  }
+
+  // Set Independent Mode for testing / onboarding
+  setIndependentMode(isIndependent = true, plan = 'term_pass') {
+    const totalMonths = plan === 'annual_pass' ? 12 : plan === 'term_pass' ? 3 : 1;
+    const paidAmount = plan === 'annual_pass' ? 999 : plan === 'term_pass' ? 349 : 149;
+    this.saveState({
+      ...this.state,
+      isIndependent,
+      schoolId: isIndependent ? null : (this.state.schoolId || 'sch_westville_high'),
+      school: isIndependent ? 'Independent Homeschool Learner' : 'Westville High School',
+      subscription: {
+        plan,
+        status: 'active',
+        totalMonths,
+        paidAmountRands: paidAmount,
+        activatedAt: new Date(Date.now() - 20 * 86400000).toISOString(),
+        expiresAt: new Date(Date.now() + (totalMonths * 30 - 20) * 86400000).toISOString()
+      }
+    });
+  }
+
+  // Institutional Transition & Refund Calculation
+  // Policy: Within active month is forfeited; remaining un-activated full months trigger refund claim.
+  transitionIndependentToSchool(passkey, schoolInfo = {}) {
+    const sub = this.state.subscription || { plan: 'term_pass', totalMonths: 3, paidAmountRands: 349 };
+    const totalMonths = sub.totalMonths || (sub.plan === 'annual_pass' ? 12 : sub.plan === 'term_pass' ? 3 : 1);
+    const paidAmount = sub.paidAmountRands || (totalMonths === 12 ? 999 : totalMonths === 3 ? 349 : 149);
+
+    const now = Date.now();
+    const activatedTime = sub.activatedAt ? new Date(sub.activatedAt).getTime() : (now - 20 * 86400000);
+    const daysElapsed = Math.max(1, Math.floor((now - activatedTime) / (1000 * 60 * 60 * 24)));
+    const monthsElapsed = Math.ceil(daysElapsed / 30); // 1-based current active month
+
+    const unactivatedMonths = Math.max(0, totalMonths - monthsElapsed);
+    let refundAmount = 0;
+    if (unactivatedMonths > 0) {
+      refundAmount = Math.round((paidAmount * (unactivatedMonths / totalMonths)) * 100) / 100;
+    }
+
+    const claimId = `ref_claim_${Date.now()}`;
+    const refundClaim = {
+      id: claimId,
+      passkey,
+      schoolName: schoolInfo.name || 'Westville High School',
+      totalPlanMonths: totalMonths,
+      monthsUsed: monthsElapsed,
+      unactivatedMonths,
+      paidAmountRands: paidAmount,
+      refundAmountRands: refundAmount,
+      claimDate: new Date().toISOString(),
+      status: refundAmount > 0 ? 'queued_for_disbursement' : 'forfeited_final_month',
+      policyNote: refundAmount > 0 
+        ? `Month ${monthsElapsed} active (forfeited). ${unactivatedMonths} un-activated month(s) queued for refund to guardian.`
+        : 'Active month access utilized (forfeited). Zero un-activated months remaining.'
+    };
+
+    const updatedRefunds = [refundClaim, ...(this.state.familyWallet?.pendingRefundClaims || [])];
+    const updatedMessages = [
+      {
+        id: `msg_ref_${Date.now()}`,
+        sender: 'Fundile Billing & Administration',
+        senderRole: 'Billing',
+        subject: 'Institutional Transition & Refund Notice',
+        text: `Your school (${schoolInfo.name || 'Westville High School'}) has subscribed institutionally. ` +
+              (refundAmount > 0
+                ? `Your retail pass has been transitioned. Current month was forfeited; ${unactivatedMonths} un-activated month(s) totaling R${refundAmount.toFixed(2)} have been queued for refund to your guardian.`
+                : 'Your retail pass has been transitioned to the school institutional license. Current active month was forfeited.'),
+        date: new Date().toLocaleDateString('en-ZA', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }),
+        deadline: null,
+        isRead: false
+      },
+      ...(this.state.messages || [])
+    ];
+
+    this.saveState({
+      ...this.state,
+      isIndependent: false,
+      schoolId: schoolInfo.id || 'sch_westville_high',
+      school: schoolInfo.name || 'Westville High School',
+      subscription: {
+        ...sub,
+        status: 'transitioned_to_school',
+        transitionedAt: new Date().toISOString(),
+        passkeyUsed: passkey
+      },
+      familyWallet: {
+        ...(this.state.familyWallet || {}),
+        pendingRefundClaims: updatedRefunds
+      },
+      messages: updatedMessages
+    });
+
+    return refundClaim;
   }
 
   // Message Board: auto-deletes 3 days after deadline
@@ -407,6 +613,15 @@ class StudentStore {
   markMessageRead(msgId) {
     const current = this.state.messages || [];
     const updated = current.map(m => m.id === msgId ? { ...m, isRead: true } : m);
+    this.saveState({
+      ...this.state,
+      messages: updated
+    });
+  }
+
+  markAllMessagesRead() {
+    const current = this.state.messages || [];
+    const updated = current.map(m => ({ ...m, isRead: true }));
     this.saveState({
       ...this.state,
       messages: updated
@@ -459,8 +674,7 @@ class StudentStore {
 
     const newStatus = 
       newFormative >= 80 ? 'exam_ready' :
-      newFormative >= 60 ? 'practice' :
-      newFormative > 0 ? 'scaffold' : 'diagnostic_required';
+      newFormative >= 60 ? 'practice' : 'scaffold';
 
     const updatedSub = {
       ...currentSub,
@@ -496,6 +710,15 @@ class StudentStore {
     });
   }
 
+  // Award XP directly (e.g. from Post-Exam Triage or SimuLearn completion)
+  awardXP(amount = 50) {
+    const currentXp = this.state.totalXp || 0;
+    this.saveState({
+      ...this.state,
+      totalXp: currentXp + amount
+    });
+  }
+
   // Complete diagnostic test and assign baseline score
   completeDiagnostic(subjectId, initialScore = 40) {
     const sId = String(subjectId || '').toLowerCase();
@@ -512,7 +735,8 @@ class StudentStore {
       ...currentSub,
       formativeMastery: initialScore,
       evaluativeScore: Math.round(initialScore * 0.8),
-      status: initialScore >= 60 ? 'practice' : 'scaffold',
+      status: initialScore >= 80 ? 'exam_ready' : initialScore >= 60 ? 'practice' : 'scaffold',
+      questionsAttempted: Math.max(1, (currentSub.questionsAttempted || 0) + 1),
       lastPracticed: new Date().toISOString()
     };
 
@@ -563,8 +787,57 @@ class StudentStore {
 
   // Reset all subjects to 0% and clear dues
   resetAllSubjectsToZero() {
+    this.resetAllProgress();
+  }
+
+  // Full progression reset to 0% baseline (Item 7)
+  resetAllProgress() {
     const fresh = createInitialState();
-    this.saveState(fresh);
+    const isInd = Boolean(this.state.isIndependent);
+    const updated = {
+      ...fresh,
+      isIndependent: isInd,
+      school: isInd ? 'Independent Homeschool' : 'Westville High School',
+      teacherLinks: isInd ? [] : fresh.teacherLinks,
+      deskDues: 0,
+      unviewedTaskIds: [],
+      messages: [],
+      streakDays: 0,
+      totalXp: 0,
+      hasFailedExam: false,
+      triageRecord: null
+    };
+    this.saveState(updated);
+
+    // Clean up draft storage keys
+    if (typeof window !== 'undefined') {
+      try {
+        Object.keys(localStorage).forEach((key) => {
+          if (key.startsWith('fundile_draft_') || key.startsWith('fundile_offline_draft_')) {
+            localStorage.removeItem(key);
+          }
+        });
+        Object.keys(sessionStorage).forEach((key) => {
+          if (key.startsWith('fundile_draft_')) {
+            sessionStorage.removeItem(key);
+          }
+        });
+      } catch (e) {}
+    }
+    return updated;
+  }
+
+  // Super Admin switch for independent vs institutional learner (Item 1)
+  setEnrolmentType(isIndependent) {
+    const isInd = Boolean(isIndependent);
+    this.saveState({
+      ...this.state,
+      isIndependent: isInd,
+      school: isInd ? 'Independent Homeschool' : (this.state.school && this.state.school !== 'Independent Homeschool' ? this.state.school : 'Westville High School'),
+      teacherLinks: isInd ? [] : (this.state.teacherLinks?.length ? this.state.teacherLinks : createInitialState().teacherLinks),
+      deskDues: isInd ? 0 : this.state.deskDues,
+      unviewedTaskIds: isInd ? [] : this.state.unviewedTaskIds
+    });
   }
 
   // Set predefined testing profiles

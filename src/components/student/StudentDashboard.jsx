@@ -76,7 +76,8 @@ export default function StudentDashboard({
 
   const studentName = currentUser?.name || currentUser?.displayName || currentUser?.email?.split('@')[0] || 'Learner';
   const numericGrade = parseInt(String(currentUser?.grade || '7').replace(/\D/g, ''), 10) || 7;
-  const curriculum = currentUser?.curriculum || 'CAPS';
+  const rawCurriculum = currentUser?.curriculum;
+  const curriculum = (!rawCurriculum || rawCurriculum === 'CAPS') ? 'National Curriculum' : rawCurriculum;
 
   const studentInitials = useMemo(() => {
     const parts = studentName.trim().split(/\s+/);

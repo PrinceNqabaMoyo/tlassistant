@@ -91,11 +91,18 @@ def _generate_systems_matrix_drill(r: random.Random, mode: str = "scaffold") -> 
             {"coordinate": c_mix, "value": mixed_ans if mode == "scaffold" else "", "type": "required", "editable": True},
         ])
 
+    criteria_bullets = "\n".join([f"• {crit}" for crit, _, _, _ in selected_criteria])
+    prompt = (
+        "Complete the comparative matrix below to distinguish how **Planned**, **Market**, and **Mixed** economic systems answer the fundamental economic questions.\n\n"
+        f"**Key Economic Characteristics to Compare:**\n{criteria_bullets}\n\n"
+        "Fill in the required cells for each economic system."
+    )
+
     item = {
         "id": f"ems9_econ_matrix_{r.randint(1000, 9999)}",
         "title": "Economic Systems Comparison Matrix",
         "question_type": "table_completion",
-        "prompt": "Complete the comparative matrix below to distinguish how **Planned**, **Market**, and **Mixed** economic systems answer the fundamental economic questions.",
+        "prompt": prompt,
         "headers": headers,
         "rows": rows,
         "correct_map": correct_map,
@@ -275,6 +282,61 @@ def _generate_sa_mixed_drill(r: random.Random, mode: str = "scaffold") -> Dict[s
 
 
 # --------------------------------------------------------------------------- #
+# Sub-Drill 4: Global Economy & International Trade
+# --------------------------------------------------------------------------- #
+def _generate_global_trade_drill(r: random.Random, mode: str = "scaffold") -> Dict[str, Any]:
+    prompt = (
+        "South Africa participates actively in the global economic system, exporting minerals (platinum, gold, coal) "
+        "and agricultural produce, while importing refined petroleum, vehicles, and electronics.\n\n"
+        "1. Differentiate between **imports** and **exports**. (2 marks)\n"
+        "2. State TWO reasons why a country like South Africa cannot produce all the goods and services its citizens need. (2 marks)\n"
+        "3. Explain how a depreciation of the South African Rand (ZAR) against the US Dollar affects local exporters and importers differently. (2 marks)"
+    )
+    sample_ans = (
+        "1. Imports are goods and services bought from foreign countries into South Africa. Exports are domestically produced goods sold to buyers in other countries.\n"
+        "2. Reasons: (a) Countries lack certain natural resources or specific climatic conditions (e.g., SA has no crude oil reserves). (b) Other countries have superior technology or economies of scale.\n"
+        "3. A weaker Rand benefits exporters because they receive more Rand for foreign currency earnings, but harms importers because foreign goods become more expensive."
+    )
+    item = {
+        "id": f"ems9_econ_trade_{r.randint(1000, 9999)}",
+        "title": "South Africa and the Global Economy",
+        "question_type": "typed",
+        "prompt": prompt,
+        "marks": 6,
+        "sample_answer": sample_ans,
+        "ideal_answer": sample_ans,
+        "marking_points": [
+            "Definition of imports (goods entering) vs exports (goods leaving).",
+            "Reasons for trade: lack of specific resources or technological specialisation.",
+            "Currency depreciation impact: benefits exporters, raises costs for importers.",
+        ],
+        "hint_sections": {
+            "1_nudge": "Think about what South Africa buys from abroad vs what it sells overseas.",
+            "2_concept": "No single country is completely self-sufficient. Specialisation and comparative advantage drive global trade.",
+            "3_breakdown": "Answer definitions, then reasons for trade, then the exchange rate impact."
+        },
+        "marking_schema": {
+            "total_marks": 6,
+            "marking_points": [
+                {"id": "mp_def", "desc": "Accurate distinction between imports and exports", "marks": 2, "editable": True},
+                {"id": "mp_reasons", "desc": "Two valid reasons for international trade", "marks": 2, "editable": True},
+                {"id": "mp_fx", "desc": "Analysis of currency depreciation on trade", "marks": 2, "editable": True},
+            ],
+            "deductions": [],
+            "carry_forward_rule": "consequential_accuracy",
+        },
+        "misconception_tags": ["confused_imports_and_exports", "misunderstood_currency_depreciation"],
+    }
+    return _with_metadata(
+        item,
+        subskill="global_economy_trade",
+        learning_objective_id="lo_g9_global_economy_trade",
+        question_family_id="global_trade_essay",
+        misconception_tags=["confused_imports_and_exports", "misunderstood_currency_depreciation"],
+    )
+
+
+# --------------------------------------------------------------------------- #
 # Public Dispatcher
 # --------------------------------------------------------------------------- #
 BUILDERS = {
@@ -282,12 +344,13 @@ BUILDERS = {
     "elementary_matrix": lambda rng, mode: [_generate_systems_matrix_drill(rng, mode)],
     "advantages_disadvantages": lambda rng, mode: [_generate_pros_cons_drill(rng, mode)],
     "south_african_mixed_economy": lambda rng, mode: [_generate_sa_mixed_drill(rng, mode)],
+    "global_economy_trade": lambda rng, mode: [_generate_global_trade_drill(rng, mode)],
     "concepts": lambda rng, mode: [_generate_systems_matrix_drill(rng, mode)],
 }
 
 
 def generate(
-    subskill: str = "economic_systems_matrix",
+    subskill: Optional[str] = None,
     difficulty: str = "medium",
     count: int = 1,
     mode: str = "scaffold",
@@ -295,15 +358,21 @@ def generate(
     **kwargs: Any,
 ) -> List[Dict[str, Any]]:
     rng = _rng(seed)
-    builder = BUILDERS.get(subskill)
-    if builder is not None:
+    builders_list = [
+        _generate_systems_matrix_drill,
+        _generate_pros_cons_drill,
+        _generate_sa_mixed_drill,
+        _generate_global_trade_drill,
+    ]
+    
+    if subskill and subskill in BUILDERS and subskill not in ["economic_systems_matrix", "concepts"]:
+        builder = BUILDERS[subskill]
         pool = builder(rng, mode)
     else:
-        pool = (
-            [_generate_systems_matrix_drill(rng, mode)]
-            + [_generate_pros_cons_drill(rng, mode)]
-            + [_generate_sa_mixed_drill(rng, mode)]
-        )
+        if seed is not None and count == 1:
+            idx = int(seed) % len(builders_list)
+            return [builders_list[idx](rng, mode)]
+        pool = [b(rng, mode) for b in builders_list]
 
     selected = pool
     if count < len(selected):

@@ -185,10 +185,22 @@ export default function SimuLearnPlayer({
   const frames = script.frames || [];
 
   const [currentFrameIndex, setCurrentFrameIndex] = useState(0);
-  const [isPlaying, setIsPlaying] = useState(true);
+  const [isPlaying, setIsPlaying] = useState(false);
   const [playbackSpeed, setPlaybackSpeed] = useState(1);
   const [tableValues, setTableValues] = useState({});
   const timerRef = useRef(null);
+
+  // Reset playback and frames whenever modal opens or script changes
+  useEffect(() => {
+    if (isOpen) {
+      setCurrentFrameIndex(0);
+      setIsPlaying(false);
+      setTableValues({});
+    } else {
+      setIsPlaying(false);
+      if (timerRef.current) clearTimeout(timerRef.current);
+    }
+  }, [isOpen, archetypeKey]);
 
   const currentFrame = frames[currentFrameIndex] || frames[0];
   const isFinished = currentFrameIndex >= frames.length - 1;
@@ -205,9 +217,9 @@ export default function SimuLearnPlayer({
     setTableValues(newValues);
   }, [currentFrameIndex, frames]);
 
-  // Autoplay step timer
+  // Autoplay step timer (only active when modal is open and isPlaying is true)
   useEffect(() => {
-    if (!isPlaying || isFinished) {
+    if (!isOpen || !isPlaying || isFinished) {
       if (timerRef.current) clearTimeout(timerRef.current);
       return;
     }
@@ -228,7 +240,7 @@ export default function SimuLearnPlayer({
     return () => {
       if (timerRef.current) clearTimeout(timerRef.current);
     };
-  }, [isPlaying, currentFrameIndex, frames, playbackSpeed, isFinished]);
+  }, [isOpen, isPlaying, currentFrameIndex, frames, playbackSpeed, isFinished]);
 
   if (!isOpen) return null;
 
@@ -251,7 +263,7 @@ export default function SimuLearnPlayer({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-slate-950/80 backdrop-blur-md animate-fade-in">
+    <div data-testid="modal-simulearn-player" className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-slate-950/80 backdrop-blur-md animate-fade-in">
       <div className="bg-slate-900 border border-slate-700/80 rounded-2xl shadow-2xl max-w-3xl w-full flex flex-col overflow-hidden text-slate-100">
         {/* Header */}
         <div className="flex items-center justify-between px-5 py-4 border-b border-slate-800 bg-slate-950/50">
@@ -273,8 +285,10 @@ export default function SimuLearnPlayer({
           </div>
           {onClose && (
             <button
+              type="button"
+              data-testid="btn-simulearn-close"
               onClick={onClose}
-              className="p-1.5 rounded-lg text-slate-400 hover:text-slate-100 hover:bg-slate-800 transition-colors"
+              className="p-1.5 rounded-lg text-slate-400 hover:text-slate-100 hover:bg-slate-800 transition-colors cursor-pointer"
             >
               ✕
             </button>
@@ -386,30 +400,38 @@ export default function SimuLearnPlayer({
         <div className="p-4 bg-slate-950 flex flex-wrap items-center justify-between gap-3 border-t border-slate-800/80">
           <div className="flex items-center gap-2">
             <button
+              type="button"
+              data-testid="btn-simulearn-restart"
               onClick={handleRestart}
-              className="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors"
+              className="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors cursor-pointer"
               title="Restart"
             >
               ↺
             </button>
             <button
+              type="button"
+              data-testid="btn-simulearn-prev"
               onClick={handlePrev}
               disabled={currentFrameIndex === 0}
-              className="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 disabled:opacity-40 disabled:cursor-not-allowed text-slate-300 transition-colors"
+              className="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 disabled:opacity-40 disabled:cursor-not-allowed text-slate-300 transition-colors cursor-pointer"
               title="Previous Step"
             >
               ⏮
             </button>
             <button
+              type="button"
+              data-testid="btn-simulearn-play-pause"
               onClick={() => setIsPlaying(!isPlaying)}
-              className="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-xs transition-colors flex items-center gap-1.5 shadow-md shadow-indigo-900/40"
+              className="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-xs transition-colors flex items-center gap-1.5 shadow-md shadow-indigo-900/40 cursor-pointer"
             >
               {isPlaying ? '⏸ Pause' : '▶ Play'}
             </button>
             <button
+              type="button"
+              data-testid="btn-simulearn-next"
               onClick={handleNext}
               disabled={isFinished}
-              className="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 disabled:opacity-40 disabled:cursor-not-allowed text-slate-300 transition-colors"
+              className="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 disabled:opacity-40 disabled:cursor-not-allowed text-slate-300 transition-colors cursor-pointer"
               title="Next Step"
             >
               ⏭
@@ -422,8 +444,9 @@ export default function SimuLearnPlayer({
               {[0.5, 1, 1.5, 2].map(speed => (
                 <button
                   key={speed}
+                  type="button"
                   onClick={() => setPlaybackSpeed(speed)}
-                  className={`px-2 py-1 rounded transition-colors ${
+                  className={`px-2 py-1 rounded transition-colors cursor-pointer ${
                     playbackSpeed === speed
                       ? 'bg-slate-700 text-indigo-300 font-semibold'
                       : 'text-slate-400 hover:text-slate-200'
@@ -436,11 +459,13 @@ export default function SimuLearnPlayer({
 
             {/* Complete / Try Practice button */}
             <button
+              type="button"
+              data-testid="btn-simulearn-complete"
               onClick={() => {
                 if (onComplete) onComplete();
                 if (onClose) onClose();
               }}
-              className="px-4 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-xs transition-colors shadow-md shadow-emerald-900/40"
+              className="px-4 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-xs transition-colors shadow-md shadow-emerald-900/40 cursor-pointer font-bold"
             >
               Try Question Now →
             </button>

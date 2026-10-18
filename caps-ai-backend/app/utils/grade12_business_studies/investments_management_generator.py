@@ -89,16 +89,42 @@ def generate(**kwargs) -> Dict[str, Any]:
             "rubric": "2 marks per valid recommendation (Max 4)."
         })
         
+    full_prompt = f"{context}\n\n{instruction}\n\n" + "\n\n".join(
+        f"{p['id']}. {p['question']} ({p['marks']} marks)" for p in parts
+    )
+    total_marks = sum(p["marks"] for p in parts)
+    
     return {
+        "id": f"g12_bs_inv_man_{r.randint(100000, 999999)}",
+        "topic": "Investments, Insurance & Management",
+        "subskill": "investments_insurance_management",
+        "mode": mode,
+        "marks": total_marks,
+        "prompt": full_prompt,
+        "question": full_prompt,
+        "sample_answer": "\n\n".join(f"{p['id']}: {p['solution']}" for p in parts),
+        "marking_schema": {
+            "total_marks": total_marks,
+            "marking_points": [
+                {"id": p["id"], "desc": p["question"][:60], "marks": p["marks"], "editable": True}
+                for p in parts
+            ],
+            "deductions": [],
+            "carry_forward_rule": "consequential_accuracy"
+        },
+        "hints": {
+            "tier_1": "Apply the average clause formula: Claim = (Insured Amount / Market Value) × Loss.",
+            "tier_2": "Contrast equity shares (ownership + variable dividends) with debentures (debt instrument + fixed interest).",
+            "tier_3": "Democratic leadership is most effective when employees are knowledgeable and collaborative problem-solving is needed."
+        },
         "metadata": {
             "subject": "Business Studies",
             "grade": 12,
             "topic": "Investments, Insurance & Management",
             "mode": mode,
-            "total_marks": sum(p["marks"] for p in parts)
+            "total_marks": total_marks
         },
         "context": context,
         "instruction": instruction,
         "parts": parts,
-        "hints": ["Remember the average clause formula for under-insurance.", "Interest is the cost of borrowing or return on investment."]
     }

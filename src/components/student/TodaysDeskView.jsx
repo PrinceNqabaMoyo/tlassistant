@@ -78,6 +78,7 @@ export default function TodaysDeskView({
   grade = 10,
   schoolName = 'Westville High School',
   currentUser = null,
+  isIndependent: propIsIndependent = null,
   activeMode = 'self_paced', // 'self_paced' | 'classwork'
   onChangeActiveMode = () => {},
   activeReelSubjectId = 'accounting',
@@ -85,6 +86,8 @@ export default function TodaysDeskView({
   enabledSubjects = ['accounting', 'mathematics', 'technical_mathematics', 'mathematical_literacy', 'physical_sciences', 'life_sciences', 'business_studies'],
   onOpenSubject = () => {},
   onOpenJoinClassModal = () => {},
+  onOpenLinkGuardian = () => {},
+  onOpenOfflinePacks = () => {},
 }) {
   const [storeState, setStoreState] = useState(() => studentStore.getState());
   const [animatingCard, setAnimatingCard] = useState(false);
@@ -141,35 +144,10 @@ export default function TodaysDeskView({
   };
 
   const effectiveUser = currentUser || storeState.currentUser;
-  const isIndependent = Boolean(effectiveUser?.isIndependent);
+  const isIndependent = Boolean(propIsIndependent ?? effectiveUser?.isIndependent ?? storeState?.isIndependent);
   const assignedTasks = isIndependent
     ? []
-    : (effectiveUser?.assignedTasks || storeState?.currentUser?.assignedTasks || [
-        {
-          id: 'task_acc_1',
-          subject: 'accounting',
-          subjectName: 'Accounting',
-          title: 'General Journal: Debtors & Bad Debts',
-          assignedBy: 'Mrs. P. Khumalo',
-          dueText: 'DUE TODAY',
-          dueTime: '17:00',
-          marks: 12,
-          notes: 'Mrs. Khumalo assigned 12 marks practice (J. Dlamini dividend).',
-          estimatedMins: 15
-        },
-        {
-          id: 'task_math_1',
-          subject: 'mathematics',
-          subjectName: 'Mathematics',
-          title: 'Trinomial Factorisation Drill',
-          assignedBy: 'Mr. J. Botha',
-          dueText: 'DUE FRIDAY',
-          dueTime: '08:00',
-          marks: 10,
-          notes: 'Mr. Botha • 10 Marks • Friday test prep.',
-          estimatedMins: 12
-        }
-      ]);
+    : (effectiveUser?.assignedTasks || storeState?.assignedTasks || []);
 
   // ═══════════════════════════════════════════════════════════════════════════
   // VIEW 1: SELF-PACED MASTERY STUDIO (PRIORITY DEFAULT VIEW)
@@ -185,20 +163,40 @@ export default function TodaysDeskView({
               Self-Paced Mastery Studio • Grade {grade} {isSeniorPhase ? 'Senior Phase' : 'FET'}
             </h3>
             <p className="text-xs text-slate-500">
-              Autonomous concept drills calibrated by Bayesian Knowledge Tracing (BKT).
+              Autonomous concept drills calibrated for curriculum mastery.
             </p>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2.5">
             <button
               type="button"
               data-testid="btn-open-join-class-modal"
               onClick={onOpenJoinClassModal}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-emerald-300 bg-emerald-50 hover:bg-emerald-100 text-xs font-semibold text-emerald-800 transition cursor-pointer shadow-2xs"
+              className="inline-flex items-center gap-1.5 min-h-[36px] px-3.5 py-2 rounded-xl border border-emerald-300 bg-emerald-50 hover:bg-emerald-100 text-xs font-semibold text-emerald-800 transition cursor-pointer shadow-2xs"
               title="Join a Teacher's Class Code"
             >
               <span>🏫</span>
               <span>Join Class</span>
+            </button>
+            <button
+              type="button"
+              data-testid="btn-open-link-guardian-modal"
+              onClick={onOpenLinkGuardian}
+              className="inline-flex items-center gap-1.5 min-h-[36px] px-3.5 py-2 rounded-xl border border-blue-300 bg-blue-50 hover:bg-blue-100 text-xs font-semibold text-[#13519C] transition cursor-pointer shadow-2xs"
+              title="Family & Guardian Link"
+            >
+              <span>🔗</span>
+              <span>Link Parent</span>
+            </button>
+            <button
+              type="button"
+              data-testid="btn-open-offline-pack-modal"
+              onClick={onOpenOfflinePacks}
+              className="inline-flex items-center gap-1.5 min-h-[36px] px-3.5 py-2 rounded-xl border border-violet-300 bg-violet-50 hover:bg-violet-100 text-xs font-semibold text-violet-800 transition cursor-pointer shadow-2xs"
+              title="Download 30-Day Offline Study Packs"
+            >
+              <span>📦</span>
+              <span>Offline Packs</span>
             </button>
             {!isIndependent && assignedTasks.length > 0 && (
               <div className="flex items-center gap-2 bg-amber-50 border border-amber-200 px-3 py-1.5 rounded-xl text-xs text-amber-900 font-semibold shadow-2xs">
@@ -322,7 +320,7 @@ export default function TodaysDeskView({
                   {isDiagnostic ? 'New' : `${masteryScore}%`}
                 </span>
                 <span className="block text-[9px] text-slate-400 font-mono tracking-wider">
-                  BKT INDEX
+                  MASTERY INDEX
                 </span>
               </div>
             </div>
@@ -346,8 +344,9 @@ export default function TodaysDeskView({
             <div className="pt-1">
               <button
                 type="button"
+                data-testid="btn-open-subject-session"
                 onClick={() => onOpenSubject(currentSubjItem.id, currentDetails.topic)}
-                className="w-full py-2.5 text-white text-xs font-bold rounded-xl transition hover:opacity-95 active:scale-98 cursor-pointer flex items-center justify-center gap-2"
+                className="w-full min-h-[44px] py-3 text-white text-sm font-bold rounded-xl transition hover:opacity-95 active:scale-98 cursor-pointer flex items-center justify-center gap-2"
                 style={{ 
                   background: currentTheme.gradient,
                   boxShadow: currentTheme.glow 
@@ -363,7 +362,7 @@ export default function TodaysDeskView({
           {/* ───────────────────────────────────────────────────────────────── */}
           {/* SINGLE-ROW SOLID COLOR SUBJECT PILLS (NO INNER BOX, NO SCROLLBAR) */}
           {/* ───────────────────────────────────────────────────────────────── */}
-          <div className="w-full flex items-center justify-center gap-1.5 sm:gap-2 mt-6 select-none flex-nowrap">
+          <div className="w-full flex items-center justify-center gap-2.5 sm:gap-3 mt-6 select-none flex-nowrap">
             {enrolledList.map((s) => {
               const theme = getSubjectTheme(s.id);
               const isSelected = (s.id === currentSubjItem.id);
@@ -373,7 +372,7 @@ export default function TodaysDeskView({
                   key={s.id}
                   type="button"
                   onClick={() => triggerGenieAnimation(s.id)}
-                  className={`px-2.5 sm:px-3 py-1.5 rounded-xl text-[11px] font-bold text-white transition-all duration-200 shrink-0 cursor-pointer ${
+                  className={`min-h-[36px] px-3 sm:px-3.5 py-2 rounded-xl text-xs font-bold text-white transition-all duration-200 shrink-0 cursor-pointer ${
                     isSelected
                       ? 'ring-2 ring-slate-900 ring-offset-2 scale-105 opacity-100'
                       : 'opacity-80 hover:opacity-100 hover:scale-102 shadow-2xs'
@@ -392,35 +391,41 @@ export default function TodaysDeskView({
 
         </div>
 
-        {/* Targeted 5-Minute Pitstop Banner (Post-Exam Triage Fix) */}
-        <div className="bg-amber-50/80 p-3.5 rounded-xl border border-amber-300 text-xs flex items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg bg-amber-200/60 text-amber-900 flex items-center justify-center shrink-0">
-              <Lightbulb className="w-4 h-4 text-amber-800" />
+        {/* Targeted 5-Minute Pitstop Banner (Shown strictly when an authentic diagnostic/exam gap exists) */}
+        {Boolean(storeState?.hasFailedExam || storeState?.triageRecord || (storeState?.strugglingTopics && storeState.strugglingTopics.length > 0)) && (
+          <div className="bg-amber-50/80 p-3.5 rounded-xl border border-amber-300 text-xs flex items-center justify-between gap-4">
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 rounded-lg bg-amber-200/60 text-amber-900 flex items-center justify-center shrink-0">
+                <Lightbulb className="w-4 h-4 text-amber-800" />
+              </div>
+              <div>
+                <span className="font-bold text-amber-900 text-sm block">
+                  Post-Exam Triage Pitstop Available
+                </span>
+                <p className="text-[11px] text-amber-800">
+                  {storeState?.triageRecord?.diagnosticSummary || 'Targeted atomic micro-drill available to close prerequisite concept gaps.'}
+                </p>
+              </div>
             </div>
-            <div>
-              <span className="font-bold text-amber-900 text-sm block">
-                Post-Exam Triage Pitstop Available
-              </span>
-              <p className="text-[11px] text-amber-800">
-                You previously confused Net vs Gross VAT on Cash Receipts. Take a 5-minute atomic micro-drill to close the prerequisite gap.
-              </p>
-            </div>
+            <button
+              type="button"
+              onClick={() => {
+                const triageSubject = storeState?.triageRecord?.subject || currentSubjItem.id;
+                const triageTopic = storeState?.triageRecord?.topic || currentDetails.topic;
+                onOpenSubject(triageSubject, triageTopic);
+              }}
+              className="min-h-[36px] px-4 py-2 bg-[#FF9100] text-[#0B2545] font-bold rounded-lg shadow-sm hover:opacity-90 shrink-0 cursor-pointer text-xs"
+            >
+              Start 5-Min Fix &rarr;
+            </button>
           </div>
-          <button
-            type="button"
-            onClick={() => onOpenSubject('accounting', 'Cash Receipts Journal')}
-            className="px-3.5 py-1.5 bg-[#FF9100] text-[#0B2545] font-bold rounded-lg shadow-sm hover:opacity-90 shrink-0 cursor-pointer text-xs"
-          >
-            Start 5-Min Fix &rarr;
-          </button>
-        </div>
+        )}
 
         {/* Offline Cache Indicator */}
         <div className="bg-white p-3.5 rounded-xl border border-slate-200 shadow-2xs flex items-center justify-between text-xs">
           <div className="flex items-center gap-2.5">
             <CheckCircle2 className="w-4 h-4 text-emerald-600" />
-            <span className="text-slate-700 font-medium">Offline WebAPK Cache Active • &lt; 2 MB Data • Instant Loading</span>
+            <span className="text-slate-700 font-medium">Offline Storage Ready • &lt; 2 MB Data • Instant Loading</span>
           </div>
           <span className="text-emerald-700 font-bold bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200 text-[11px]">
             Ready ✓
@@ -442,16 +447,18 @@ export default function TodaysDeskView({
         <div>
           <div className="flex items-center gap-2">
             <h3 className="text-base font-bold text-slate-900 tracking-tight font-display">
-              School Classwork &amp; Teacher Assignments
+              {isIndependent ? 'Institutional Classwork' : 'School Classwork & Teacher Assignments'}
             </h3>
-            {assignedTasks.length > 0 && (
+            {!isIndependent && assignedTasks.length > 0 && (
               <span className="text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-rose-500 text-white">
                 {assignedTasks.length} Due
               </span>
             )}
           </div>
           <p className="text-xs text-slate-500">
-            Tasks assigned by your educators at {schoolName}.
+            {isIndependent 
+              ? 'Independent Account • Not linked to any school or institution.'
+              : `Tasks assigned by your educators at ${schoolName}.`}
           </p>
         </div>
 
@@ -466,22 +473,34 @@ export default function TodaysDeskView({
 
       {/* Homework Tasks List */}
       {isIndependent ? (
-        <div className="bg-purple-50/90 border border-purple-200 p-8 rounded-2xl shadow-xs space-y-2 text-center">
-          <span className="text-3xl block">🏡</span>
+        <div className="bg-purple-50/90 border border-purple-200 p-8 rounded-2xl shadow-xs space-y-3 text-center">
+          <div className="w-12 h-12 rounded-2xl bg-purple-100 text-purple-700 flex items-center justify-center text-2xl mx-auto shadow-2xs">
+            🏡
+          </div>
           <h4 className="text-base font-bold text-purple-900 font-display">
-            Independent Homeschool Path • Self-Paced Study Plan
+            Independent Account — No Institutional Affiliation
           </h4>
-          <p className="text-xs text-purple-700 max-w-lg mx-auto">
-            Zero school homework deadlines assigned. Return to Self-Paced Studio to practice autonomously.
+          <p className="text-xs text-purple-800 max-w-lg mx-auto leading-relaxed">
+            You are registered as an Independent Learner and are not linked to any school or institution. You have no teacher-assigned homework or class deadlines. All curriculum topics, drills, and exam simulations are available directly through your <strong>Self-Paced Learning Studio</strong>.
           </p>
-          <div className="pt-2">
+          <div className="pt-2 flex flex-wrap items-center justify-center gap-3">
             <button
               type="button"
               onClick={() => onChangeActiveMode('self_paced')}
-              className="px-4 py-2 bg-[#13519C] text-white text-xs font-bold rounded-xl shadow-xs cursor-pointer"
+              className="px-4 py-2 bg-[#13519C] hover:bg-blue-800 text-white text-xs font-bold rounded-xl shadow-xs cursor-pointer transition"
             >
               Open Self-Paced Studio &rarr;
             </button>
+            {onOpenJoinClassModal && (
+              <button
+                type="button"
+                data-testid="btn-link-class-code"
+                onClick={onOpenJoinClassModal}
+                className="px-4 py-2 bg-white hover:bg-slate-50 text-slate-700 border border-slate-300 text-xs font-semibold rounded-xl shadow-xs cursor-pointer transition"
+              >
+                🏫 Join a School Class
+              </button>
+            )}
           </div>
         </div>
       ) : assignedTasks.length === 0 ? (

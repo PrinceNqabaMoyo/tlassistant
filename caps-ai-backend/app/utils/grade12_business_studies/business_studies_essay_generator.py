@@ -145,6 +145,46 @@ ESSAY_ARCHETYPES = [
                 ]
             }
         }
+    },
+    {
+        "id": "essay_ethics_king_code",
+        "topic": "Ethics and Professionalism",
+        "title": "Professional Business Practices, Ethical Conduct & King Code Principles",
+        "term": 2,
+        "caps_weight_percent": 33,
+        "suggested_duration_mins": 35,
+        "scenario": "Phambili Corporate Holdings faces governance scrutiny over supply chain procurement and executive decision-making.",
+        "prompt": (
+            "Write an in-depth Section C examination essay on Ethics, Professionalism and Corporate Governance:\n\n"
+            "• Differentiate between ethical behaviour and professional behaviour in the workplace.\n"
+            "• Explain how businesses can apply the King Code principles of Transparency, Accountability, and Responsibility for good corporate governance.\n"
+            "• Discuss how unethical business practices (unfair advertising, pricing of goods in rural areas, and tax evasion) pose serious challenges to businesses.\n"
+            "• Recommend practical ways in which businesses can conduct professional, responsible, and ethical business operations."
+        ),
+        "structure_subheadings": [
+            "Introduction",
+            "Differentiating Ethical and Professional Behaviour",
+            "Application of King Code Governance Principles",
+            "Challenges Posed by Unethical Business Practices",
+            "Recommendations for Professional and Ethical Business Practices",
+            "Conclusion"
+        ],
+        "content_rubric": [
+            {"criterion": "Ethical vs Professional Behaviour distinction", "max_marks": 6, "key_concepts": ["ethics conforms to moral principles and societal values", "professionalism adheres to workplace competence and occupational standards", "code of conduct guidelines"]},
+            {"criterion": "King Code Principles application", "max_marks": 12, "key_concepts": ["transparency open communication and audited financial reports", "accountability taking responsibility for executive decisions", "responsibility sustainable environmental and social impact", "fairness stakeholder interests balancing"]},
+            {"criterion": "Unethical practices challenges", "max_marks": 8, "key_concepts": ["unfair advertising misleads consumers and damages brand reputation", "rural price exploitation causes public boycott and consumer tribunal fines", "tax evasion results in heavy SARS penalties and criminal prosecution"]},
+            {"criterion": "Recommendations for ethical conduct", "max_marks": 6, "key_concepts": ["enforce internal whistleblowing hotlines", "regular independent ethical audits", "comprehensive staff ethics training", "clear corporate code of conduct"]},
+        ],
+        "elementary_drills": {
+            "ethics_match": {
+                "prompt": "Classify the scenario as Transparency, Accountability, or Responsibility:",
+                "pairs": [
+                    ("Publishing full integrated annual reports and executive remuneration tables", "Transparency"),
+                    ("Directors appearing before shareholders to explain an operating deficit", "Accountability"),
+                    ("Investing in carbon-neutral manufacturing to protect the local wetland", "Responsibility"),
+                ]
+            }
+        }
     }
 ]
 
@@ -236,8 +276,11 @@ def _build_concept_match_drill(r: random.Random) -> Dict[str, Any]:
 # --------------------------------------------------------------------------- #
 # Compound Level 3 & 4 Exam Question: Authentic 40-Mark Section C Essay
 # --------------------------------------------------------------------------- #
-def _build_compound_essay(r: random.Random) -> Dict[str, Any]:
-    archetype = r.choice(ESSAY_ARCHETYPES)
+def _build_compound_essay(r: random.Random, seed: Optional[int] = None) -> Dict[str, Any]:
+    if seed is not None:
+        archetype = ESSAY_ARCHETYPES[int(seed) % len(ESSAY_ARCHETYPES)]
+    else:
+        archetype = r.choice(ESSAY_ARCHETYPES)
 
     laso_breakdown = [
         {"dimension": "Layout (L)", "marks": 2, "desc": "Introduction, body subheadings, and conclusion present (at least 2 subheadings with content)."},
@@ -340,9 +383,13 @@ def generate(
 
     questions = []
     for i in range(max(1, count)):
-        r = _rng(base_seed * 1000 + i)
-        q = builder(r)
-        q["seed"] = base_seed * 1000 + i
+        curr_seed = base_seed + i
+        r = _rng(curr_seed * 1000 + i)
+        try:
+            q = builder(r, seed=curr_seed)
+        except TypeError:
+            q = builder(r)
+        q["seed"] = curr_seed * 1000 + i
         questions.append(q)
 
     return {"questions": questions}

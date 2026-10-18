@@ -1,7 +1,7 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import {
   Users, BookOpen, Plus, Copy, Check, Share2, AlertTriangle,
-  CheckCircle2, Search, Award, RotateCcw, ExternalLink, Sparkles
+  CheckCircle2, Search, Award, RotateCcw, ExternalLink, Sparkles, UserX
 } from 'lucide-react';
 
 /**
@@ -75,8 +75,8 @@ export function StatusBadge({ status }) {
       );
     case 'In Progress':
       return (
-        <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-amber-50 text-amber-900 border border-amber-200/90 font-mono">
-          <span className="w-1.5 h-1.5 rounded-full bg-[#FF9100]" />
+        <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-slate-100 text-slate-700 border border-slate-200 font-mono">
+          <span className="w-1.5 h-1.5 rounded-full bg-slate-400" />
           In Progress
         </span>
       );
@@ -99,6 +99,7 @@ export default function TeacherRostersTab({
   onSelectClassForTest = () => {},
   onNavigate = () => {},
   onResetAvatar = () => {},
+  onRemoveStudent = () => {},
   teacherName = 'Teacher'
 }) {
   const [copiedCode, setCopiedCode] = useState(null);
@@ -134,6 +135,20 @@ export default function TeacherRostersTab({
     });
   }, [allStudents, activeClassFilter, statusFilter, searchQuery]);
 
+  // Declutter: 10 Students per Page Pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 10;
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [activeClassFilter, statusFilter, searchQuery]);
+
+  const totalPages = Math.ceil(filteredStudents.length / pageSize) || 1;
+  const paginatedStudents = useMemo(() => {
+    const start = (currentPage - 1) * pageSize;
+    return filteredStudents.slice(start, start + pageSize);
+  }, [filteredStudents, currentPage, pageSize]);
+
   // 1-Click Join Code Copying with 2.5s Tooltip Feedback
   const handleCopyCode = (code) => {
     if (navigator?.clipboard?.writeText) {
@@ -150,7 +165,7 @@ export default function TeacherRostersTab({
       `Join *${cls.name}* on Fundile:\n` +
       `1. Open Fundile and go to your Student Dashboard\n` +
       `2. Click "Join Class" and enter Code: *${cls.joinCode}*\n` +
-      `Instant access to authentic CAPS exam practice!`;
+      `Instant access to authentic exam practice!`;
     const url = `https://wa.me/?text=${encodeURIComponent(message)}`;
     window.open(url, '_blank');
   };
@@ -203,7 +218,7 @@ export default function TeacherRostersTab({
               No classes created yet
             </h3>
             <p className="text-sm text-slate-500 mt-2 max-w-md mx-auto">
-              Click <strong className="text-[#13519C]">Create Class</strong> to start managing your learner roster, or load our pre-populated CAPS demo class to explore instant analytics, join codes, and remedial micro-drills.
+              Click <strong className="text-[#13519C]">Create Class</strong> to start managing your learner roster, or load our pre-populated sample class to explore instant analytics, join codes, and remedial micro-drills.
             </p>
             <div className="flex flex-wrap items-center justify-center gap-3 mt-6">
               <button
@@ -218,7 +233,7 @@ export default function TeacherRostersTab({
                 className="inline-flex items-center gap-2 bg-amber-50 hover:bg-amber-100 border border-amber-200 text-amber-900 px-5 py-2.5 rounded-xl font-semibold text-sm transition cursor-pointer"
               >
                 <Sparkles className="w-4 h-4 text-[#FF9100]" />
-                <span>Load Sample CAPS Class Roster</span>
+                <span>Load Sample Class Roster</span>
               </button>
             </div>
           </div>
@@ -261,7 +276,7 @@ export default function TeacherRostersTab({
                       <button
                         onClick={() => handleCopyCode(cls.joinCode)}
                         title="Copy 6-char join code"
-                        className="p-2 rounded-lg bg-white hover:bg-slate-100 border border-slate-200 text-slate-700 hover:text-slate-900 transition-colors flex items-center gap-1 text-xs cursor-pointer shadow-2xs"
+                        className="min-h-[34px] min-w-[34px] p-2 rounded-lg bg-white hover:bg-slate-100 border border-slate-200 text-slate-700 hover:text-slate-900 transition-colors flex items-center justify-center gap-1 text-xs cursor-pointer shadow-2xs"
                       >
                         {copiedCode === cls.joinCode ? (
                           <>
@@ -277,7 +292,7 @@ export default function TeacherRostersTab({
                       <button
                         onClick={() => handleShareWhatsApp(cls)}
                         title="Share invite via WhatsApp"
-                        className="p-2 rounded-lg bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 text-emerald-700 hover:text-emerald-900 transition-colors cursor-pointer shadow-2xs"
+                        className="min-h-[34px] min-w-[34px] p-2 rounded-lg bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 text-emerald-700 hover:text-emerald-900 transition-colors cursor-pointer shadow-2xs flex items-center justify-center"
                       >
                         <Share2 className="w-4 h-4" />
                       </button>
@@ -320,7 +335,7 @@ export default function TeacherRostersTab({
                   ) : (
                     <div className="bg-emerald-50 border border-emerald-200/80 rounded-xl p-2.5 flex items-center text-xs my-2 text-emerald-800">
                       <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 mr-2 shrink-0" />
-                      <span className="text-[11px] font-medium">All core CAPS objectives on track</span>
+                      <span className="text-[11px] font-medium">All core curriculum objectives on track</span>
                     </div>
                   )}
                 </div>
@@ -369,7 +384,7 @@ export default function TeacherRostersTab({
             {/* Class Filter Pills */}
             <button
               onClick={() => setActiveClassFilter('all')}
-              className={`px-3 py-1 rounded-lg text-xs font-semibold transition cursor-pointer ${
+              className={`min-h-[34px] px-3.5 py-1.5 rounded-lg text-xs font-semibold transition cursor-pointer ${
                 activeClassFilter === 'all'
                   ? 'bg-[#13519C] text-white shadow-2xs'
                   : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-100'
@@ -381,7 +396,7 @@ export default function TeacherRostersTab({
               <button
                 key={c.classId}
                 onClick={() => setActiveClassFilter(c.classId)}
-                className={`px-3 py-1 rounded-lg text-xs font-semibold transition cursor-pointer ${
+                className={`min-h-[34px] px-3.5 py-1.5 rounded-lg text-xs font-semibold transition cursor-pointer ${
                   activeClassFilter === c.classId
                     ? 'bg-[#13519C] text-white shadow-2xs'
                     : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-100'
@@ -401,7 +416,7 @@ export default function TeacherRostersTab({
                 value={searchQuery}
                 onChange={e => setSearchQuery(e.target.value)}
                 placeholder="Search learner or topic..."
-                className="w-full pl-8 pr-3 py-1.5 rounded-lg bg-white border border-slate-200 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-[#13519C]"
+                className="w-full pl-8 pr-3 min-h-[34px] py-1.5 rounded-lg bg-white border border-slate-200 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-[#13519C]"
               />
             </div>
 
@@ -409,7 +424,7 @@ export default function TeacherRostersTab({
             <select
               value={statusFilter}
               onChange={e => setStatusFilter(e.target.value)}
-              className="px-2.5 py-1.5 rounded-lg bg-white border border-slate-200 text-xs text-slate-700 focus:outline-none focus:border-[#13519C] cursor-pointer"
+              className="min-h-[34px] px-2.5 py-1.5 rounded-lg bg-white border border-slate-200 text-xs text-slate-700 focus:outline-none focus:border-[#13519C] cursor-pointer"
             >
               <option value="all">All Statuses</option>
               <option value="Mastered">Mastered (80%+)</option>
@@ -427,7 +442,7 @@ export default function TeacherRostersTab({
               <tr>
                 <th className="py-3 px-4">Learner Profile</th>
                 <th className="py-3 px-4">Class</th>
-                <th className="py-3 px-4">Active CAPS Topic</th>
+                <th className="py-3 px-4">Active Curriculum Topic</th>
                 <th className="py-3 px-4">Score</th>
                 <th className="py-3 px-4">Live Status</th>
                 <th className="py-3 px-4">Olympiad / Honors</th>
@@ -435,14 +450,14 @@ export default function TeacherRostersTab({
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100 bg-white">
-              {filteredStudents.length === 0 ? (
+              {paginatedStudents.length === 0 ? (
                 <tr>
                   <td colSpan={7} className="py-8 text-center text-slate-400 text-xs">
                     No learners match the current filter.
                   </td>
                 </tr>
               ) : (
-                filteredStudents.map((student) => (
+                paginatedStudents.map((student) => (
                   <tr key={student.id} className="hover:bg-slate-50/80 transition-colors">
                     {/* Learner Avatar & Name */}
                     <td className="py-3 px-4 font-semibold text-slate-900">
@@ -513,7 +528,7 @@ export default function TeacherRostersTab({
                           <button
                             onClick={() => onDispatchDrill(student.misconception || 'Foundational Revision', student.className, 1)}
                             title="Assign 5-minute remedial micro-drill"
-                            className="px-2 py-1 bg-rose-50 hover:bg-rose-100 border border-rose-200 text-rose-700 rounded-md text-[10px] font-bold transition-colors cursor-pointer"
+                            className="min-h-[34px] px-2.5 py-1.5 bg-rose-50 hover:bg-rose-100 border border-rose-200 text-rose-700 rounded-lg text-xs font-bold transition-colors cursor-pointer"
                           >
                             Assign Fix
                           </button>
@@ -523,10 +538,10 @@ export default function TeacherRostersTab({
                         <button
                           onClick={() => handleSendNudge(student)}
                           title="Send learner practice nudge via WhatsApp"
-                          className="px-2 py-1 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 text-emerald-800 rounded-md text-[10px] font-semibold transition-colors flex items-center gap-1 cursor-pointer"
+                          className="min-h-[34px] px-2.5 py-1.5 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 text-emerald-800 rounded-lg text-xs font-semibold transition-colors flex items-center gap-1.5 cursor-pointer"
                         >
-                          <Share2 className="w-3 h-3 text-emerald-600" />
-                          <span>{copiedNudge === student.id ? 'Nudge Copied!' : 'Send Nudge'}</span>
+                          <Share2 className="w-3.5 h-3.5 text-emerald-600" />
+                          <span>{copiedNudge === student.id ? 'Copied!' : 'Nudge'}</span>
                         </button>
 
                         {/* POPIA Avatar Reset */}
@@ -534,7 +549,7 @@ export default function TeacherRostersTab({
                           <button
                             onClick={() => onResetAvatar(student.id, student.name)}
                             title="POPIA Minor Safety: Reset avatar to monogram initials"
-                            className="p-1 rounded-md text-slate-400 hover:text-amber-700 hover:bg-amber-50 border border-transparent hover:border-amber-200 transition-colors cursor-pointer"
+                            className="min-h-[34px] min-w-[34px] flex items-center justify-center p-1.5 rounded-lg text-slate-400 hover:text-amber-700 hover:bg-amber-50 border border-slate-200 transition-colors cursor-pointer"
                           >
                             <RotateCcw className="w-3.5 h-3.5" />
                           </button>
@@ -544,9 +559,19 @@ export default function TeacherRostersTab({
                         <button
                           onClick={() => onNavigate('submissions')}
                           title="Inspect learner submissions"
-                          className="p-1 text-slate-400 hover:text-[#13519C] hover:bg-blue-50 rounded-md transition-colors cursor-pointer"
+                          className="min-h-[34px] min-w-[34px] flex items-center justify-center p-1.5 text-slate-500 hover:text-[#13519C] hover:bg-blue-50 border border-slate-200 rounded-lg transition-colors cursor-pointer"
                         >
                           <ExternalLink className="w-3.5 h-3.5" />
+                        </button>
+
+                        {/* Teacher Authority: Remove from Class Roster */}
+                        <button
+                          onClick={() => onRemoveStudent(student.id, student.name, student.classId, student.joinCode)}
+                          data-testid={`btn-remove-student-${student.id}`}
+                          title={`Remove ${student.name} from this class roster`}
+                          className="min-h-[34px] min-w-[34px] flex items-center justify-center p-1.5 text-slate-400 hover:text-rose-600 hover:bg-rose-50 border border-slate-200 rounded-lg transition-colors cursor-pointer"
+                        >
+                          <UserX className="w-3.5 h-3.5" />
                         </button>
                       </div>
                     </td>
@@ -555,6 +580,34 @@ export default function TeacherRostersTab({
               )}
             </tbody>
           </table>
+
+          {/* Declutter: Pagination Controls */}
+          {filteredStudents.length > pageSize && (
+            <div className="flex items-center justify-between p-4 border-t border-slate-100 bg-slate-50/50 text-xs">
+              <span className="text-slate-500">
+                Showing <strong className="text-slate-800">{filteredStudents.length > 0 ? (currentPage - 1) * pageSize + 1 : 0}</strong> to <strong className="text-slate-800">{Math.min(currentPage * pageSize, filteredStudents.length)}</strong> of <strong className="text-slate-800">{filteredStudents.length}</strong> learners
+              </span>
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+                  disabled={currentPage === 1}
+                  className="min-h-[34px] px-3 py-1.5 rounded-lg border border-slate-200 bg-white text-slate-700 disabled:opacity-40 hover:bg-slate-50 font-medium transition cursor-pointer"
+                >
+                  Previous
+                </button>
+                <span className="px-2 font-mono text-slate-600">Page {currentPage} of {totalPages}</span>
+                <button
+                  type="button"
+                  onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+                  disabled={currentPage === totalPages}
+                  className="min-h-[34px] px-3 py-1.5 rounded-lg border border-slate-200 bg-white text-slate-700 disabled:opacity-40 hover:bg-slate-50 font-medium transition cursor-pointer"
+                >
+                  Next
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       </section>
 

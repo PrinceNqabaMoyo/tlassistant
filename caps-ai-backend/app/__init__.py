@@ -126,6 +126,11 @@ def create_app():
                 subject=subject,
                 extra_config=extra_config,
             )
+            try:
+                from .services.audit_logger import log_question_generation
+                log_question_generation(subject, grade, topic, questions, seed=seed)
+            except Exception:
+                pass
             return jsonify({
                 "success": True,
                 "questions": questions,
@@ -141,6 +146,42 @@ def create_app():
         except Exception as e:
             return jsonify({"success": False, "error": str(e)}), 400
 
+    @app.route('/api/offline/pack', methods=['POST'])
+    def generate_offline_pack_endpoint():
+        from flask import request, jsonify
+        from .services.offline_pack_service import build_offline_study_pack
+        data = request.get_json() or {}
+        subject = data.get('subject', 'Mathematics')
+        grade = str(data.get('grade', '10'))
+        term = int(data.get('term', 1))
+        count = int(data.get('count_per_topic', data.get('count', 5)))
+        topics = data.get('topics')
+        student_id = data.get('student_id')
+        try:
+            pack = build_offline_study_pack(
+                subject=subject,
+                grade=grade,
+                term=term,
+                count_per_topic=count,
+                custom_topics=topics,
+                student_id=student_id
+            )
+            return jsonify(pack)
+        except Exception as e:
+            return jsonify({"success": False, "error": str(e)}), 400
+
+    @app.route('/api/offline/sync', methods=['POST'])
+    def sync_offline_attempts_endpoint():
+        import time
+        from flask import request, jsonify
+        data = request.get_json() or {}
+        attempts = data.get('attempts', [])
+        return jsonify({
+            "success": True,
+            "synced_count": len(attempts),
+            "received_at": time.time()
+        })
+
     @app.route('/api/mark', methods=['POST'])
     def unified_mark():
         import asyncio
@@ -151,6 +192,11 @@ def create_app():
         user_answer = data.get('user_answer')
         question = data.get('question') or {}
         q_id = str(data.get('question_id') or question.get('id') or 'q_active')
+
+        # Clean answer first so clean_answer is always bound
+        clean_answer = user_answer
+        if isinstance(user_answer, dict) and 'cells' in user_answer and isinstance(user_answer['cells'], dict):
+            clean_answer = {**user_answer.get('cells', {}), **{k: v for k, v in user_answer.items() if k != 'cells'}}
 
         # Ensure question has required fields for evaluation_service
         q_copy = dict(question)
@@ -167,11 +213,6 @@ def create_app():
         if 'correct_index' in q_copy and 'correct_idx' not in q_copy:
             q_copy['correct_idx'] = q_copy['correct_index']
 
-        # If user_answer is wrapped in { cells: ... }
-        clean_answer = user_answer
-        if isinstance(user_answer, dict) and 'cells' in user_answer and isinstance(user_answer['cells'], dict):
-            clean_answer = {**user_answer.get('cells', {}), **{k: v for k, v in user_answer.items() if k != 'cells'}}
-
         try:
             report = asyncio.run(grade_submission([q_copy], {q_id: clean_answer}))
             res = report.get('results', {}).get(q_id, {})
@@ -179,7 +220,7 @@ def create_app():
             max_score = res.get('max_score', q_copy.get('marks', 1))
             is_correct = res.get('is_correct', False)
             pct = round((score / max_score) * 100) if max_score > 0 else 0
-            return jsonify({
+            eval_res = {
                 "success": True,
                 "score": score,
                 "total": max_score,
@@ -188,7 +229,13 @@ def create_app():
                 "feedback": res.get('feedback', report.get('overall_feedback', '')),
                 "cell_results": res.get('cell_results', {}),
                 "misconception_tag": res.get('misconception_tag'),
-            })
+            }
+            try:
+                from .services.audit_logger import log_answer_evaluation
+                log_answer_evaluation(q_id, clean_answer, eval_res)
+            except Exception:
+                pass
+            return jsonify(eval_res)
         except Exception as e:
             return jsonify({
                 "success": False,

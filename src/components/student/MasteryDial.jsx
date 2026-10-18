@@ -121,7 +121,7 @@ export default function MasteryDial({
               {Math.round(clampedFormative)}%
             </span>
             <span className="text-[9px] uppercase font-bold text-slate-500 tracking-wider font-sans">
-              BKT Mastery
+              Topic Mastery
             </span>
           </div>
         </div>
@@ -151,7 +151,7 @@ export default function MasteryDial({
         <div className="mt-3 grid grid-cols-2 gap-2 w-full text-[11px] text-slate-500 pt-2.5 border-t border-slate-100 font-mono">
           <div className="flex items-center gap-1.5">
             <span className="w-2.5 h-2.5 rounded-full bg-[#10B981] shrink-0" />
-            <span className="truncate">BKT: {Math.round(clampedFormative)}%</span>
+            <span className="truncate">Mastery: {Math.round(clampedFormative)}%</span>
           </div>
           <div className="flex items-center gap-1.5 justify-end">
             <span className="w-2.5 h-2.5 rounded-full bg-[#F59E0B] shrink-0" />

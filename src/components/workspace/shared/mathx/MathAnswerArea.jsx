@@ -32,78 +32,143 @@ const MathAnswerArea = ({ question, topic, onCheck, result, busy = false }) => {
         (question?.diagram_spec ? 'diagram_select' :
         (question?.canonical_solution?.steps?.length > 1 ? 'math_steps' : 'math_short')));
     const mathStorageKey = question?.id ? `fundile_draft_math_${question.id}` : null;
+    const offlineStorageKey = question?.id ? `fundile_offline_draft_math_${question.id}` : null;
+
+    const [isOnline, setIsOnline] = React.useState(() => (typeof navigator !== 'undefined' ? navigator.onLine : true));
+    const [draftSaved, setDraftSaved] = React.useState(false);
+
+    // Track online/offline status
+    React.useEffect(() => {
+        const handleOnline = () => setIsOnline(true);
+        const handleOffline = () => setIsOnline(false);
+        window.addEventListener('online', handleOnline);
+        window.addEventListener('offline', handleOffline);
+        return () => {
+            window.removeEventListener('online', handleOnline);
+            window.removeEventListener('offline', handleOffline);
+        };
+    }, []);
 
     const [selected, setSelected] = React.useState(null);
     const [selectedEdge, setSelectedEdge] = React.useState(null);
     const [value, setValue] = React.useState(() => {
-        if (typeof window !== 'undefined' && mathStorageKey) {
+        if (typeof window !== 'undefined') {
             try {
-                const saved = sessionStorage.getItem(mathStorageKey);
-                if (saved) {
-                    const parsed = JSON.parse(saved);
-                    return parsed.value || '';
+                if (mathStorageKey) {
+                    const saved = sessionStorage.getItem(mathStorageKey);
+                    if (saved) {
+                        const parsed = JSON.parse(saved);
+                        return parsed.value || '';
+                    }
+                }
+                if (offlineStorageKey) {
+                    const savedLocal = localStorage.getItem(offlineStorageKey);
+                    if (savedLocal) {
+                        const parsed = JSON.parse(savedLocal);
+                        return parsed.value || '';
+                    }
                 }
             } catch (e) {}
         }
         return '';
     });
     const [lines, setLines] = React.useState(() => {
-        if (typeof window !== 'undefined' && mathStorageKey) {
+        if (typeof window !== 'undefined') {
             try {
-                const saved = sessionStorage.getItem(mathStorageKey);
-                if (saved) {
-                    const parsed = JSON.parse(saved);
-                    if (Array.isArray(parsed.lines) && parsed.lines.length > 0) return parsed.lines;
+                if (mathStorageKey) {
+                    const saved = sessionStorage.getItem(mathStorageKey);
+                    if (saved) {
+                        const parsed = JSON.parse(saved);
+                        if (Array.isArray(parsed.lines) && parsed.lines.length > 0) return parsed.lines;
+                    }
+                }
+                if (offlineStorageKey) {
+                    const savedLocal = localStorage.getItem(offlineStorageKey);
+                    if (savedLocal) {
+                        const parsed = JSON.parse(savedLocal);
+                        if (Array.isArray(parsed.lines) && parsed.lines.length > 0) return parsed.lines;
+                    }
                 }
             } catch (e) {}
         }
         return [''];
     });
     const [showSolution, setShowSolution] = React.useState(false);
+    const [savedLearnerWorking, setSavedLearnerWorking] = React.useState(null);
     const inputs = React.useRef({});
     const activeField = React.useRef(qType === 'math_short' ? 'single' : 'line-0');
 
     React.useEffect(() => {
         setSelected(null);
         setSelectedEdge(null);
-        if (mathStorageKey) {
+        setSavedLearnerWorking(null);
+        if (typeof window !== 'undefined') {
             try {
-                const saved = sessionStorage.getItem(mathStorageKey);
-                if (saved) {
-                    const parsed = JSON.parse(saved);
-                    setValue(parsed.value || '');
-                    setLines(parsed.lines || ['']);
-                    setShowSolution(false);
-                    activeField.current = qType === 'math_short' ? 'single' : 'line-0';
-                    return;
+                if (mathStorageKey) {
+                    const saved = sessionStorage.getItem(mathStorageKey);
+                    if (saved) {
+                        const parsed = JSON.parse(saved);
+                        setValue(parsed.value || '');
+                        setLines(parsed.lines || ['']);
+                        setShowSolution(false);
+                        setDraftSaved(true);
+                        activeField.current = qType === 'math_short' ? 'single' : 'line-0';
+                        return;
+                    }
+                }
+                if (offlineStorageKey) {
+                    const savedLocal = localStorage.getItem(offlineStorageKey);
+                    if (savedLocal) {
+                        const parsed = JSON.parse(savedLocal);
+                        setValue(parsed.value || '');
+                        setLines(parsed.lines || ['']);
+                        setShowSolution(false);
+                        setDraftSaved(true);
+                        if (mathStorageKey) {
+                            try { sessionStorage.setItem(mathStorageKey, JSON.stringify(parsed)); } catch (e) {}
+                        }
+                        activeField.current = qType === 'math_short' ? 'single' : 'line-0';
+                        return;
+                    }
                 }
             } catch (e) {}
         }
         setValue('');
         setLines(['']);
         setShowSolution(false);
+        setDraftSaved(false);
         activeField.current = qType === 'math_short' ? 'single' : 'line-0';
-    }, [question?.id, qType, mathStorageKey]);
+    }, [question?.id, qType, mathStorageKey, offlineStorageKey]);
 
-    // Persist draft in sessionStorage as learner inputs math
+    // Persist draft in sessionStorage and localStorage as learner inputs math
     React.useEffect(() => {
-        if (typeof window !== 'undefined' && mathStorageKey) {
-            if (value || (lines.length > 1 || lines[0])) {
-                try {
-                    sessionStorage.setItem(mathStorageKey, JSON.stringify({ value, lines }));
-                } catch (e) {}
+        if (typeof window !== 'undefined') {
+            const hasContent = Boolean(value || (lines.length > 1 || lines[0]));
+            if (hasContent) {
+                const payload = JSON.stringify({ value, lines, updatedAt: Date.now() });
+                if (mathStorageKey) {
+                    try { sessionStorage.setItem(mathStorageKey, payload); } catch (e) {}
+                }
+                if (offlineStorageKey) {
+                    try { localStorage.setItem(offlineStorageKey, payload); } catch (e) {}
+                }
+                setDraftSaved(true);
             }
         }
-    }, [value, lines, mathStorageKey]);
+    }, [value, lines, mathStorageKey, offlineStorageKey]);
 
     // Clear draft once marked
     React.useEffect(() => {
-        if (result && mathStorageKey) {
-            try {
-                sessionStorage.removeItem(mathStorageKey);
-            } catch (e) {}
+        if (result) {
+            if (mathStorageKey) {
+                try { sessionStorage.removeItem(mathStorageKey); } catch (e) {}
+            }
+            if (offlineStorageKey) {
+                try { localStorage.removeItem(offlineStorageKey); } catch (e) {}
+            }
+            setDraftSaved(false);
         }
-    }, [result, mathStorageKey]);
+    }, [result, mathStorageKey, offlineStorageKey]);
 
     const registerInput = (id, el) => { if (el) inputs.current[id] = el; };
     const onFocusField = (id) => {
@@ -139,8 +204,54 @@ const MathAnswerArea = ({ question, topic, onCheck, result, busy = false }) => {
     const diagram = question?.diagram_spec;
     const checkDisabled = busy || (qType === 'diagram_select' && !selectedEdge && !result);
 
+    const handleToggleRevealSolution = () => {
+        if (!showSolution) {
+            setSavedLearnerWorking({
+                value,
+                lines: [...lines],
+                selected,
+                selectedEdge,
+            });
+            if (qType === 'math_steps' && sol?.steps?.length) {
+                setLines(sol.steps.map((st) => st.to_latex || st.step || ''));
+            } else if (qType === 'math_short') {
+                setValue(sol?.final_latex || question?.correct_answer || '');
+            } else if (qType === 'mcq' && question?.correct_index !== undefined) {
+                setSelected(question.correct_index);
+            } else if (qType === 'diagram_select' && (question?.correct_edge || result?.correct_edge)) {
+                setSelectedEdge(question?.correct_edge || result?.correct_edge);
+            }
+            setShowSolution(true);
+        } else {
+            if (savedLearnerWorking) {
+                setValue(savedLearnerWorking.value || '');
+                setLines(savedLearnerWorking.lines || ['']);
+                setSelected(savedLearnerWorking.selected ?? null);
+                setSelectedEdge(savedLearnerWorking.selectedEdge ?? null);
+            }
+            setShowSolution(false);
+        }
+    };
+
     return (
         <div className="space-y-5">
+            {/* Model Working Active Banner */}
+            {showSolution && (
+                <div data-testid="banner-math-model-active" className="p-2.5 rounded-xl bg-amber-50 border border-amber-300 text-xs text-amber-900 flex items-center justify-between shadow-2xs font-sans">
+                    <div className="flex items-center gap-2">
+                        <span className="font-bold">📖 Model Working Displayed:</span>
+                        <span>Studying expected mathematical steps. Click &quot;Restore My Working&quot; to continue.</span>
+                    </div>
+                    <button
+                        type="button"
+                        onClick={handleToggleRevealSolution}
+                        className="text-amber-800 font-bold underline cursor-pointer text-xs shrink-0 ml-2"
+                    >
+                        Restore My Working
+                    </button>
+                </div>
+            )}
+
             {/* Diagram (the figure is the question/answer surface) */}
             {diagram ? (
                 <DiagramRenderer
@@ -170,6 +281,7 @@ const MathAnswerArea = ({ question, topic, onCheck, result, busy = false }) => {
                             <button
                                 key={i}
                                 type="button"
+                                data-testid={`btn-math-option-${i}`}
                                 onClick={() => setSelected(i)}
                                 className={`w-full text-left flex items-center gap-3 rounded-xl border px-4 py-3 transition-all cursor-pointer ${
                                     isSel ? 'border-brand-blue bg-blue-50/70 ring-1 ring-brand-blue text-slate-950 shadow-xs' : 'border-slate-200 bg-white hover:bg-slate-50 text-slate-800'
@@ -224,7 +336,7 @@ const MathAnswerArea = ({ question, topic, onCheck, result, busy = false }) => {
             )}
 
             {/* Check + Solution */}
-            <div className="flex flex-wrap gap-3">
+            <div className="flex flex-wrap items-center gap-3">
                 <button
                     type="button"
                     data-testid="btn-check-answer"
@@ -235,39 +347,35 @@ const MathAnswerArea = ({ question, topic, onCheck, result, busy = false }) => {
                     <CheckCircle2 className="h-4 w-4" />
                     {busy ? 'Checking…' : 'Check'}
                 </button>
-                {sol?.steps?.length ? (
+                {(sol?.steps?.length || sol?.final_latex || question?.correct_answer) ? (
                     <button
                         type="button"
-                        onClick={() => setShowSolution((v) => !v)}
-                        className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold bg-white text-brand-blue border border-brand-blue/30 hover:bg-blue-50 active:scale-95 cursor-pointer"
+                        data-testid="btn-reveal-math-model"
+                        onClick={handleToggleRevealSolution}
+                        className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition shadow-xs cursor-pointer ${
+                            showSolution
+                                ? 'bg-amber-600 hover:bg-amber-700 text-white'
+                                : 'bg-white text-brand-blue border border-brand-blue/30 hover:bg-blue-50'
+                        }`}
                     >
-                        <Eye className="h-4 w-4" />
-                        {showSolution ? 'Hide solution' : 'Show worked solution'}
+                        <Eye className="h-3.5 w-3.5" />
+                        <span>{showSolution ? '↩ Restore My Working' : '👁️ Show Model Steps'}</span>
                     </button>
                 ) : null}
+                {draftSaved && (
+                    <span data-testid="draft-offline-sync-badge" className="inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-md border border-emerald-200">
+                        💾 Draft saved locally
+                    </span>
+                )}
+                {!isOnline && (
+                    <span data-testid="draft-offline-mode-badge" className="inline-flex items-center gap-1 text-[11px] font-semibold text-amber-700 bg-amber-50 px-2.5 py-1 rounded-md border border-amber-200">
+                        ⚡ Offline Mode
+                    </span>
+                )}
             </div>
 
             {/* Feedback */}
             {result && <MarkFeedback result={result} />}
-
-            {/* Worked solution */}
-            {showSolution && sol?.steps?.length ? (
-                <div className="rounded-xl border border-slate-200 bg-white p-4 space-y-2">
-                    <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">Worked solution</p>
-                    {sol.steps.map((st, i) => (
-                        <div key={i} className="flex items-start gap-2 text-sm">
-                            <span className="text-slate-400 w-5">{i + 1}.</span>
-                            <div>
-                                <MathText latex={st.to_latex} />
-                                {st.op ? <span className="ml-2 text-xs text-slate-400">({st.op})</span> : null}
-                            </div>
-                        </div>
-                    ))}
-                    <div className="pt-2 border-t border-slate-100 text-sm font-semibold text-slate-800">
-                        <MathText latex={sol.final_latex} />
-                    </div>
-                </div>
-            ) : null}
         </div>
     );
 };

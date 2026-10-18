@@ -116,7 +116,7 @@ def _calc_question(rng, item, mode="scaffold"):
     return question
 
 def _concept_pool(rng):
-    """Dynamic concept pool."""
+    """Dynamic concept pool with 6 distinct CAPS archetypes."""
     return [
         _with_metadata({
             'title': 'Defining Personal Income',
@@ -138,6 +138,106 @@ def _concept_pool(rng):
             ],
             'guidelines': ['Identify the correct definition of personal income.']
         }, subskill='concepts', learning_objective_id='lo_personal_income', question_family_id='def_personal_income', concept_id='personal_income', concept_group='income_and_expenses', misconception_tags=['confuses_income_with_net_worth'], diagnostic_tags=['definition']),
+        _with_metadata({
+            'title': 'Defining Personal Expenses',
+            'prompt': "In personal finance, which of the following is classified as a VARIABLE personal expense?",
+            'options': [
+                "Dining out at restaurants and entertainment",
+                "Fixed monthly car insurance premium",
+                "Monthly bond repayment on a flat",
+                "Annual school tuition fee paid in fixed monthly installments"
+            ],
+            'correct_index': 0,
+            'explanation': "Variable personal expenses change based on lifestyle choices and day-to-day decisions, such as entertainment, clothing, and dining out.",
+            'difficulties': ['easy', 'medium'],
+            'marks': 1,
+            'hint_sections': [
+                {'title': 'What is being tested?', 'text': 'Differentiating variable expenses from contractual fixed expenses.'},
+                {'title': 'Reasoning path', 'text': 'Which of these expenses can you easily cut down immediately during a financially tight month?'},
+                {'title': 'Transfer idea', 'text': 'Variable expenses are discretionary and easiest to adjust when balancing a personal budget.'}
+            ],
+            'guidelines': ['Identify the expense that fluctuates by personal choice.']
+        }, subskill='concepts', learning_objective_id='lo_personal_expenses', question_family_id='def_personal_expenses', concept_id='personal_expenses', concept_group='income_and_expenses', misconception_tags=['confuses_fixed_with_variable'], diagnostic_tags=['classification']),
+        _with_metadata({
+            'title': 'Understanding Assets',
+            'prompt': "Which of the following items owned by an individual is classified as an ASSET?",
+            'options': [
+                "A fully paid family motor vehicle and cash in a savings account",
+                "An outstanding student study loan owed to the bank",
+                "Monthly credit card debt for clothing purchases",
+                "An unpaid municipal water bill"
+            ],
+            'correct_index': 0,
+            'explanation': "Assets are possessions and property of financial value that a person owns (vehicles, houses, savings, investments). Debts owed to others are liabilities.",
+            'difficulties': ['easy', 'medium'],
+            'marks': 1,
+            'hint_sections': [
+                {'title': 'What is being tested?', 'text': 'Identifying assets versus liabilities.'},
+                {'title': 'Reasoning path', 'text': 'Assets are what you OWN; liabilities are what you OWE.'},
+                {'title': 'Transfer idea', 'text': 'Assets put money in your pocket or hold resale value.'}
+            ],
+            'guidelines': ['Identify possessions of economic value owned by the person.']
+        }, subskill='concepts', learning_objective_id='lo_personal_assets', question_family_id='identify_assets', concept_id='assets', concept_group='income_and_expenses', misconception_tags=['confuses_assets_with_liabilities'], diagnostic_tags=['terminology']),
+        _with_metadata({
+            'title': 'Understanding Liabilities',
+            'prompt': "Which of the following is the best definition of a financial LIABILITY?",
+            'options': [
+                "Money, debt, or financial obligations that an individual or business owes to outside parties",
+                "The total cash deposited into a fixed 32-day bank account",
+                "The original purchase price of trading equipment",
+                "The net profit generated from selling second-hand goods"
+            ],
+            'correct_index': 0,
+            'explanation': "A liability is a legal debt or obligation owed to another person, business, or financial institution (e.g. loans, credit cards, bank overdrafts).",
+            'difficulties': ['medium'],
+            'marks': 1,
+            'hint_sections': [
+                {'title': 'What is being tested?', 'text': 'Defining financial liabilities.'},
+                {'title': 'Reasoning path', 'text': 'If you borrow money to buy a computer, what is the money you still have to repay called?'},
+                {'title': 'Transfer idea', 'text': 'Liabilities decrease your total net worth until settled.'}
+            ],
+            'guidelines': ['Focus on financial obligations owed to others.']
+        }, subskill='concepts', learning_objective_id='lo_personal_liabilities', question_family_id='identify_liabilities', concept_id='liabilities', concept_group='income_and_expenses', misconception_tags=['confuses_debt_with_asset'], diagnostic_tags=['definition']),
+        _with_metadata({
+            'title': 'The Net Worth Formula',
+            'prompt': "What is the correct mathematical formula to calculate an individual's personal Net Worth?",
+            'options': [
+                "Net Worth = Total Assets - Total Liabilities",
+                "Net Worth = Total Liabilities - Total Assets",
+                "Net Worth = Monthly Income + Monthly Expenses",
+                "Net Worth = Total Capital × Interest Rate"
+            ],
+            'correct_index': 0,
+            'explanation': "Net Worth is the true financial value of an individual: what they OWN (Assets) minus what they OWE (Liabilities).",
+            'difficulties': ['easy', 'medium'],
+            'marks': 1,
+            'hint_sections': [
+                {'title': 'What is being tested?', 'text': 'The fundamental Net Worth equation.'},
+                {'title': 'Reasoning path', 'text': 'Take everything you possess (Assets) and pay off every single debt (Liabilities). What remains is your Net Worth.'},
+                {'title': 'Transfer idea', 'text': 'Assets - Liabilities = Owner\'s Equity / Net Worth.'}
+            ],
+            'guidelines': ['Select the subtraction of liabilities from assets.']
+        }, subskill='concepts', learning_objective_id='lo_net_worth_formula', question_family_id='net_worth_equation', concept_id='net_worth_formula', concept_group='income_and_expenses', misconception_tags=['inverts_subtraction_order'], diagnostic_tags=['equation_rule']),
+        _with_metadata({
+            'title': 'Personal Savings & Wealth Creation',
+            'prompt': "If an employee earns R20 000 per month, spends R16 000 on essential expenses, and deposits R4 000 into a unit trust investment, what does the R4 000 represent?",
+            'options': [
+                "Personal savings / investment contributing to future wealth creation",
+                "A non-operating fixed expenditure loss",
+                "A short-term current liability debt",
+                "A penalty fine payable to the bank"
+            ],
+            'correct_index': 0,
+            'explanation': "Money saved from current disposable income and invested into interest-bearing assets increases personal wealth and future net worth.",
+            'difficulties': ['medium', 'hard'],
+            'marks': 1,
+            'hint_sections': [
+                {'title': 'What is being tested?', 'text': 'Understanding the role of savings in building wealth.'},
+                {'title': 'Reasoning path', 'text': 'When income exceeds living expenses, the surplus saved builds assets over time.'},
+                {'title': 'Transfer idea', 'text': 'Income - Expenses = Surplus (Savings).' }
+            ],
+            'guidelines': ['Connect personal savings to asset and wealth growth.']
+        }, subskill='concepts', learning_objective_id='lo_savings_wealth', question_family_id='savings_wealth_creation', concept_id='savings_wealth', concept_group='income_and_expenses', misconception_tags=['considers_savings_an_expense'], diagnostic_tags=['financial_literacy']),
     ]
 
 def _calculation_pool(rng):
@@ -235,5 +335,8 @@ def generate(subskill="concepts", difficulty="medium", count=1, mode="scaffold",
         pool = _concept_pool(rng)
         selected = [q for q in pool if difficulty in q['difficulties']]
         if not selected: selected = pool
-        chosen = rng.sample(selected, min(count, len(selected)))
+        if seed is not None and count == 1 and len(selected) > 1:
+            chosen = [selected[int(seed) % len(selected)]]
+        else:
+            chosen = rng.sample(selected, min(count, len(selected)))
         return [_mcq_question(rng, item, mode=mode) for item in chosen]

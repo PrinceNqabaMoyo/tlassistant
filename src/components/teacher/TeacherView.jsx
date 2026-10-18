@@ -76,10 +76,10 @@ const TeacherView = ({ view, setView, db, currentUser }) => {
                         </button>
                         <div className="bg-white rounded-2xl border border-slate-200/90 p-8 shadow-xs text-center space-y-3">
                             <h2 style={{ fontFamily: "'Afacad', sans-serif" }} className="text-2xl font-bold text-slate-900">
-                                CAPS Lesson Planner &amp; ATP Schedules
+                                National Curriculum Lesson Planner &amp; ATP Schedules
                             </h2>
                             <p className="text-sm text-slate-500 max-w-lg mx-auto">
-                                Generate and synchronize term-by-term lesson plans, curriculum pacing guides, and homework sequences directly aligned with the official South African CAPS Annual Teaching Plans.
+                                Generate and synchronize term-by-term lesson plans, curriculum pacing guides, and homework sequences directly aligned with official Annual Teaching Plans.
                             </p>
                             <div className="pt-4 flex justify-center gap-3">
                                 <button

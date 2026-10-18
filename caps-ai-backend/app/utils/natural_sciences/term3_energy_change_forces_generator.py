@@ -31,11 +31,23 @@ APPLIANCES_DB = [
     {"name": "Oil heater", "power_w": 1500, "hours_day": 6, "tariff_cents": 285},
     {"name": "Air conditioner", "power_w": 1800, "hours_day": 5, "tariff_cents": 285},
     {"name": "Incandescent lighting bank", "power_w": 600, "hours_day": 8, "tariff_cents": 285},
+    {"name": "Borehole submersible water pump", "power_w": 2200, "hours_day": 4, "tariff_cents": 285},
+    {"name": "Commercial kitchen convection oven", "power_w": 3200, "hours_day": 3.5, "tariff_cents": 285},
+    {"name": "School computer lab workstation cluster", "power_w": 1200, "hours_day": 7, "tariff_cents": 285},
+    {"name": "Cold-room refrigeration compressor", "power_w": 2500, "hours_day": 12, "tariff_cents": 285},
+]
+
+POWER_SCENARIO_HOOKS = [
+    "A South African household operates a",
+    "A rural agricultural cooperative runs a",
+    "A community healthcare clinic powers a",
+    "A high school consumer studies facility operates a",
 ]
 
 
 def _gen_cost_of_electricity_question(r: random.Random, mode: str = "compound") -> Dict[str, Any]:
     app = r.choice(APPLIANCES_DB)
+    hook = r.choice(POWER_SCENARIO_HOOKS)
     days = r.choice([30, 31, 28])
     power_kw = app["power_w"] / 1000.0
     total_hours = app["hours_day"] * days
@@ -49,7 +61,7 @@ def _gen_cost_of_electricity_question(r: random.Random, mode: str = "compound") 
     tariff_rand_str = fmt_sa(tariff_rand, 2)
     
     prompt = (
-        f"A South African household operates a **{app['name']}** rated at **{app['power_w']} W** for an average of **{app['hours_day']} hours per day** "
+        f"{hook} **{app['name']}** rated at **{app['power_w']} W** for an average of **{app['hours_day']} hours per day** "
         f"throughout a **{days}-day** billing month. The municipal electricity tariff is **{app['tariff_cents']} cents per kWh**.\n\n"
         f"1. Convert the appliance's power rating from watts (W) to kilowatts (kW).\n"
         f"2. Calculate the total electrical energy consumed in kilowatt-hours (kWh) over the {days}-day period.\n"

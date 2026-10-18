@@ -109,7 +109,7 @@ export default function SuperAdminProgressResetModal({
             <div className="grid grid-cols-2 gap-3 text-center">
               <div className="p-2 bg-white rounded-lg border border-slate-200 shadow-2xs">
                 <div className="text-xl font-bold text-slate-900">{currentSub.formativeMastery}%</div>
-                <div className="text-[10px] text-slate-500 uppercase font-bold tracking-wider">Formative BKT</div>
+                <div className="text-[10px] text-slate-500 uppercase font-bold tracking-wider">Formative Mastery</div>
               </div>
               <div className="p-2 bg-white rounded-lg border border-slate-200 shadow-2xs">
                 <div className="text-xl font-bold text-slate-900">{currentSub.evaluativeScore}%</div>
@@ -178,7 +178,7 @@ export default function SuperAdminProgressResetModal({
 
               <button
                 type="button"
-                onClick={() => handleApplyPreset('exam_ready_85', 'Exam Ready (85% BKT Mastery)')}
+                onClick={() => handleApplyPreset('exam_ready_85', 'Exam Ready (85% Mastery)')}
                 className="w-full flex items-center justify-between p-2.5 rounded-xl bg-white border border-emerald-200 hover:border-emerald-300 transition text-xs font-semibold text-left cursor-pointer"
               >
                 <div>

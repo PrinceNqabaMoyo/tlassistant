@@ -56,3 +56,11 @@ playwright-report/
 *.trace
 screencast/
 *.backup
+smoke_fail.png
+test-recordings/
+playwright-powershell-report.txt
+reports/
+curriculum_docs/
+curriculum_docs_auto/
+
+

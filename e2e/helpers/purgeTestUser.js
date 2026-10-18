@@ -5,11 +5,18 @@
  * Strictly whitelists and protects Super Admin / owner accounts.
  */
 
+import { execSync } from 'child_process';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import { initializeApp, deleteApp } from 'firebase/app';
 import { getAuth, signInWithEmailAndPassword, deleteUser } from 'firebase/auth';
 import { getFirestore, doc, deleteDoc, collection, query, where, getDocs, terminate } from 'firebase/firestore';
 import { firebaseConfig } from '../../src/constants/sourceDocuments.js';
 import { OWNER_EMAILS } from '../../src/app/constants/access.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const projectRoot = path.resolve(__dirname, '../..');
 
 export async function purgeTestUser(email, password = 'Fundile@2026!') {
   const normalizedEmail = email.trim().toLowerCase();
@@ -18,6 +25,20 @@ export async function purgeTestUser(email, password = 'Fundile@2026!') {
   const isProtectedOwner = OWNER_EMAILS.some(owner => owner.toLowerCase() === normalizedEmail);
   if (isProtectedOwner) {
     throw new Error(`[Security Invariant] Refusing to purge Super Admin / Owner account: ${email}`);
+  }
+
+  // 1. Try Firebase Admin SDK first (clean, master privileges, zero password requirement)
+  try {
+    const purgeScript = path.resolve(projectRoot, 'scripts/purge_test_user_admin.py');
+    const out = execSync(`python "${purgeScript}" "${normalizedEmail}"`, {
+      cwd: projectRoot,
+      encoding: 'utf-8',
+      timeout: 15000
+    });
+    console.log(out.trim());
+    return { purged: true, method: 'admin_sdk' };
+  } catch (adminErr) {
+    console.warn('   [Admin Purge Fallback] Calling client SDK purge...');
   }
 
   console.log(`\n🧹 [Pre-Flight Purge] Checking for existing test user: ${email}...`);

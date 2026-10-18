@@ -147,7 +147,7 @@ export default function StudentWorkspaceView(props) {
       {viewMode === 'dashboard' ? (
         <div className="flex-1 p-3 sm:p-6 max-w-7xl mx-auto w-full">
           <StudentDashboard
-            currentUser={{ name: 'Learner', grade: currentGrade || '10', curriculum: 'CAPS' }}
+            currentUser={{ name: 'Learner', grade: currentGrade || '10', curriculum: 'National Curriculum' }}
             onNavigateToSubject={(subjId) => {
               if (onSelectSubject) onSelectSubject(subjId);
               setViewMode('practice');

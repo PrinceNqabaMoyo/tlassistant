@@ -1,0 +1,59 @@
+{
+  "cookies": [
+    {
+      "name": "_ga_34HG8NYE07",
+      "value": "GS2.1.s1791973932$o1$g0$t1791973932$j60$l0$h0",
+      "domain": "127.0.0.1",
+      "path": "/",
+      "expires": 1826533932.791811,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "_ga",
+      "value": "GA1.1.2030190905.1791973933",
+      "domain": "127.0.0.1",
+      "path": "/",
+      "expires": 1826533932.792531,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    }
+  ],
+  "origins": [
+    {
+      "origin": "http://127.0.0.1:5173",
+      "localStorage": [
+        {
+          "name": "fundile_family_link_code_fnQr7ScLWyMXJ0GUdZ8c6MWupMw1",
+          "value": "{\"code\":\"LNK-ECY6X6\",\"rawCode\":\"ECY6X6\",\"studentId\":\"fnQr7ScLWyMXJ0GUdZ8c6MWupMw1\",\"studentName\":\"Lesedi Khumalo\",\"studentGrade\":\"10\",\"studentSchool\":\"High School\",\"createdAt\":\"2026-10-14T10:33:11.563Z\",\"expiresAt\":\"2026-10-14T10:48:11.563Z\",\"expiresAtTimestamp\":1791974891563,\"status\":\"active\"}"
+        },
+        {
+          "name": "fundile_registered_schools",
+          "value": "[{\"id\":\"sch_westville_high\",\"schoolId\":\"sch_westville_high\",\"name\":\"Westville High School\",\"shortName\":\"Westville\",\"emisNumber\":\"500124892\",\"billingModel\":\"bulk_prepaid\",\"status\":\"active\",\"grades\":[7,8,9,10,11,12],\"province\":\"KwaZulu-Natal\",\"district\":\"Umlazi District\",\"facultyPasscode\":\"WHS-TEACH-2026\",\"registeredAt\":\"2026-10-14T10:29:43.984Z\"}]"
+        },
+        {
+          "name": "fundile_student_state_v1",
+          "value": "{\"studentName\":\"Nqobile Dlamini\",\"grade\":10,\"school\":\"Westville High School\",\"isIndependent\":false,\"phase\":\"FET Phase (Gr 10–12)\",\"photoURL\":null,\"streakDays\":5,\"totalXp\":1450,\"deskDues\":2,\"unviewedTaskIds\":[\"task_acc_1\",\"task_math_1\"],\"parentLinks\":[{\"id\":\"parent_1\",\"name\":\"Sipho Dlamini\",\"contact\":\"+27 82 456 7890\",\"relationship\":\"Father\",\"status\":\"Linked\",\"verified\":true}],\"teacherLinks\":[{\"id\":\"teacher_1\",\"name\":\"Mrs. P. Khumalo\",\"subject\":\"Accounting\",\"code\":\"ACC10A\",\"school\":\"Westville High School\"},{\"id\":\"teacher_2\",\"name\":\"Mr. J. Botha\",\"subject\":\"Mathematics\",\"code\":\"MAT10B\",\"school\":\"Westville High School\"}],\"messages\":[{\"id\":\"msg_1\",\"sender\":\"Mrs. P. Khumalo\",\"senderRole\":\"Teacher\",\"subject\":\"Accounting\",\"text\":\"Class task sent from Mrs. P. Khumalo / Accounting: Debtors Journal & Bad Debts, deadline Friday 17:00.\",\"date\":\"14 Oct, 12:32\",\"deadline\":\"2026-10-16T10:32:10.426Z\",\"isRead\":false},{\"id\":\"msg_2\",\"sender\":\"Fundile Learning Team\",\"senderRole\":\"Fundile\",\"subject\":\"Platform\",\"text\":\"Welcome to Term 1 Benchmark Week! Remember to complete your diagnostic benchmark in your registered subjects.\",\"date\":\"14 Oct\",\"deadline\":null,\"isRead\":true}],\"activeSession\":{\"subjectId\":\"mathematics\",\"topic\":\"Algebraic Expressions\",\"progressionMode\":\"practice\",\"lastActiveTab\":\"desk\",\"lastUpdated\":\"2026-10-14T10:33:52.461Z\"},\"subjects\":{\"accounting\":{\"id\":\"accounting\",\"formativeMastery\":43,\"evaluativeScore\":44,\"status\":\"scaffold\",\"questionsAttempted\":3,\"questionsPassed\":0,\"xpEarned\":20,\"lastPracticed\":\"2026-10-14T10:33:41.247Z\",\"history\":[]},\"mathematics\":{\"id\":\"mathematics\",\"formativeMastery\":55,\"evaluativeScore\":44,\"status\":\"scaffold\",\"questionsAttempted\":2,\"questionsPassed\":0,\"xpEarned\":10,\"lastPracticed\":\"2026-10-14T10:33:51.160Z\",\"history\":[]},\"physical_sciences\":{\"id\":\"physical_sciences\",\"formativeMastery\":0,\"evaluativeScore\":0,\"status\":\"diagnostic_required\",\"questionsAttempted\":0,\"questionsPassed\":0,\"xpEarned\":0,\"lastPracticed\":null,\"history\":[]},\"business_studies\":{\"id\":\"business_studies\",\"formativeMastery\":0,\"evaluativeScore\":0,\"status\":\"diagnostic_required\",\"questionsAttempted\":0,\"questionsPassed\":0,\"xpEarned\":0,\"lastPracticed\":null,\"history\":[]},\"life_sciences\":{\"id\":\"life_sciences\",\"formativeMastery\":0,\"evaluativeScore\":0,\"status\":\"diagnostic_required\",\"questionsAttempted\":0,\"questionsPassed\":0,\"xpEarned\":0,\"lastPracticed\":null,\"history\":[]},\"technical_mathematics\":{\"id\":\"technical_mathematics\",\"formativeMastery\":0,\"evaluativeScore\":0,\"status\":\"diagnostic_required\",\"questionsAttempted\":0,\"questionsPassed\":0,\"xpEarned\":0,\"lastPracticed\":null,\"history\":[]},\"mathematical_literacy\":{\"id\":\"mathematical_literacy\",\"formativeMastery\":0,\"evaluativeScore\":0,\"status\":\"diagnostic_required\",\"questionsAttempted\":0,\"questionsPassed\":0,\"xpEarned\":0,\"lastPracticed\":null,\"history\":[]},\"ems\":{\"id\":\"ems\",\"formativeMastery\":0,\"evaluativeScore\":0,\"status\":\"diagnostic_required\",\"questionsAttempted\":0,\"questionsPassed\":0,\"xpEarned\":0,\"lastPracticed\":null,\"history\":[]},\"natural_sciences\":{\"id\":\"natural_sciences\",\"formativeMastery\":0,\"evaluativeScore\":0,\"status\":\"diagnostic_required\",\"questionsAttempted\":0,\"questionsPassed\":0,\"xpEarned\":0,\"lastPracticed\":null,\"history\":[]}},\"lastUpdated\":\"2026-10-14T10:33:52.461Z\"}"
+        },
+        {
+          "name": "fundile_school_admin_enrolled_marks",
+          "value": "[{\"id\":\"adm_1791973985059\",\"name\":\"Lesedi Khumalo\",\"firstName\":\"Lesedi\",\"surname\":\"Khumalo\",\"photoURL\":null,\"emis\":\"500124892\",\"emisNumber\":\"500124892\",\"lurits\":\"LUR9821045\",\"luritsNumber\":\"LUR9821045\",\"grade\":\"10\",\"class\":\"10A\",\"classSection\":\"10A\",\"subject\":\"Accounting\",\"formativeScore\":88,\"formalExamScore\":84,\"examScore\":84,\"termMark\":86,\"capsLevel\":7,\"status\":\"Active\",\"schoolId\":\"sch_westville_high\"}]"
+        },
+        {
+          "name": "fundile_class_enrolled_students_ACC10A",
+          "value": "[{\"id\":\"fnQr7ScLWyMXJ0GUdZ8c6MWupMw1\",\"name\":\"Lesedi Khumalo\",\"email\":\"lesedi.khumalo@fundile.test\",\"score\":88,\"status\":\"Mastered\",\"photoURL\":null,\"topic\":\"Cash Receipts Journal (VAT 15%)\",\"olympiadBadge\":\"🥇 Live Distinction\",\"misconception\":null,\"lastActive\":\"Active now\",\"className\":\"Class 10A (Commerce)\",\"enrolledAt\":\"2026-10-14T10:33:07.544Z\"}]"
+        },
+        {
+          "name": "fundile_class_enrolled_students_MATH10B",
+          "value": "[{\"id\":\"fnQr7ScLWyMXJ0GUdZ8c6MWupMw1\",\"name\":\"Lesedi Khumalo\",\"email\":\"lesedi.khumalo@fundile.test\",\"score\":88,\"status\":\"Mastered\",\"photoURL\":null,\"topic\":\"Trinomial Factorisation Drill\",\"olympiadBadge\":\"🥇 Live Distinction\",\"misconception\":null,\"lastActive\":\"Active now\",\"className\":\"Class 10B (Sciences)\",\"enrolledAt\":\"2026-10-14T10:33:07.544Z\"}]"
+        },
+        {
+          "name": "fundile_master_passes_sch_westville_high_10",
+          "value": "[{\"passkey\":\"WHS-GR10-8421\",\"schoolId\":\"sch_westville_high\",\"grade\":10,\"isClaimed\":true,\"claimedBy\":\"Lesedi Khumalo\",\"claimedAt\":\"2026-10-14T10:33:05.058Z\",\"claimedByEmail\":\"lesedi.khumalo@fundile.test\"},{\"passkey\":\"WHS-GR10-8422\",\"schoolId\":\"sch_westville_high\",\"grade\":10,\"isClaimed\":false,\"claimedBy\":null,\"claimedAt\":null},{\"passkey\":\"WHS-GR10-8423\",\"schoolId\":\"sch_westville_high\",\"grade\":10,\"isClaimed\":false,\"claimedBy\":null,\"claimedAt\":null},{\"passkey\":\"WHS-GR10-8424\",\"schoolId\":\"sch_westville_high\",\"grade\":10,\"isClaimed\":false,\"claimedBy\":null,\"claimedAt\":null},{\"passkey\":\"WHS-GR10-8425\",\"schoolId\":\"sch_westville_high\",\"grade\":10,\"isClaimed\":false,\"claimedBy\":null,\"claimedAt\":null},{\"passkey\":\"WHS-GR10-8426\",\"schoolId\":\"sch_westville_high\",\"grade\":10,\"isClaimed\":false,\"claimedBy\":null,\"claimedAt\":null}]"
+        }
+      ]
+    }
+  ]
+}

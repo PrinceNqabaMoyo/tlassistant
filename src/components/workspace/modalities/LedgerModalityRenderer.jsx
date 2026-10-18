@@ -13,35 +13,122 @@ export default function LedgerModalityRenderer({
     if (!question) return null;
 
     const questionStorageKey = question?.id ? `fundile_draft_cells_${question.id}` : null;
+    const offlineStorageKey = question?.id ? `fundile_offline_draft_cells_${question.id}` : null;
+
+    const [isOnline, setIsOnline] = useState(() => (typeof navigator !== 'undefined' ? navigator.onLine : true));
+    const [draftSaved, setDraftSaved] = useState(false);
+
+    // Track online/offline status
+    useEffect(() => {
+        const handleOnline = () => setIsOnline(true);
+        const handleOffline = () => setIsOnline(false);
+        window.addEventListener('online', handleOnline);
+        window.addEventListener('offline', handleOffline);
+        return () => {
+            window.removeEventListener('online', handleOnline);
+            window.removeEventListener('offline', handleOffline);
+        };
+    }, []);
 
     const [cellValues, setCellValues] = useState(() => {
-        if (typeof window !== 'undefined' && questionStorageKey) {
+        if (typeof window !== 'undefined') {
             try {
-                const saved = sessionStorage.getItem(questionStorageKey);
-                if (saved) return JSON.parse(saved);
+                if (questionStorageKey) {
+                    const savedSession = sessionStorage.getItem(questionStorageKey);
+                    if (savedSession) return JSON.parse(savedSession);
+                }
+                if (offlineStorageKey) {
+                    const savedLocal = localStorage.getItem(offlineStorageKey);
+                    if (savedLocal) {
+                        const parsed = JSON.parse(savedLocal);
+                        return parsed.values || parsed;
+                    }
+                }
             } catch (e) {}
         }
         return {};
     });
     const [activeCellId, setActiveCellId] = useState(null);
+    const [revealedMemo, setRevealedMemo] = useState(false);
+    const [savedLearnerValues, setSavedLearnerValues] = useState(null);
 
     // Reset entered values or rehydrate draft whenever question changes
     useEffect(() => {
         if (questionStorageKey) {
             try {
-                const saved = sessionStorage.getItem(questionStorageKey);
-                if (saved) {
-                    setCellValues(JSON.parse(saved));
+                const savedSession = sessionStorage.getItem(questionStorageKey);
+                if (savedSession) {
+                    setCellValues(JSON.parse(savedSession));
+                    setDraftSaved(true);
                     return;
+                }
+                if (offlineStorageKey) {
+                    const savedLocal = localStorage.getItem(offlineStorageKey);
+                    if (savedLocal) {
+                        const parsed = JSON.parse(savedLocal);
+                        const vals = parsed.values || parsed;
+                        setCellValues(vals);
+                        setDraftSaved(true);
+                        try { sessionStorage.setItem(questionStorageKey, JSON.stringify(vals)); } catch (e) {}
+                        return;
+                    }
                 }
             } catch (e) {}
         }
         setCellValues({});
         setActiveCellId(null);
-    }, [question?.id, question?.question_id, question?.prompt, questionStorageKey]);
+        setDraftSaved(false);
+        setRevealedMemo(false);
+        setSavedLearnerValues(null);
+    }, [question?.id, question?.question_id, question?.prompt, questionStorageKey, offlineStorageKey]);
 
     const journal = question.journal || {};
     const titleFields = journal.title_fields || question.title_fields || [];
+
+    // Calculate authentic South African paper stationery column proportions
+    const getColumnWidthInfo = (label) => {
+        const l = String(label || '').toLowerCase().trim();
+        if (/^(day|date)$/i.test(l)) {
+            return {
+                widthClass: 'w-[48px] min-w-[44px] max-w-[55px]',
+                colWidth: '48px',
+            };
+        }
+        if (/^(doc|no|doc\s*no|voucher|inv|invoice)$/i.test(l)) {
+            return {
+                widthClass: 'w-[56px] min-w-[50px] max-w-[65px]',
+                colWidth: '56px',
+            };
+        }
+        if (/^(fol|folio|sundry\s*fol)$/i.test(l)) {
+            return {
+                widthClass: 'w-[50px] min-w-[46px] max-w-[60px]',
+                colWidth: '50px',
+            };
+        }
+        if (/creditor|debtor|details|account|particulars|description/i.test(l)) {
+            return {
+                widthClass: 'w-[250px] min-w-[210px]',
+                colWidth: '250px',
+            };
+        }
+        if (/sundry\s*details/i.test(l)) {
+            return {
+                widthClass: 'w-[180px] min-w-[150px]',
+                colWidth: '180px',
+            };
+        }
+        if (/amount|control|stock|stationery|bank|sales|cost|vat|total|price/i.test(l)) {
+            return {
+                widthClass: 'w-[110px] min-w-[95px] max-w-[130px]',
+                colWidth: '110px',
+            };
+        }
+        return {
+            widthClass: 'w-[96px] min-w-[85px]',
+            colWidth: '96px',
+        };
+    };
 
     // Normalize column headers
     const rawHeaders = journal.headers || question.columns || question.table_schema?.columns || ['Date', 'Details', 'Fol', 'Debit', 'Credit'];
@@ -50,10 +137,13 @@ export default function LedgerModalityRenderer({
         const lNorm = label.toLowerCase();
         const isNumeric = /debit|credit|bank|sales|cost|amount|total|vat|receipts|r|price|disc/i.test(lNorm);
         const isCenter = /^(doc|day|fol|no|date)$/i.test(lNorm);
+        const widthInfo = getColumnWidthInfo(label);
         return {
             label,
             isNumeric,
             isCenter,
+            widthClass: widthInfo.widthClass,
+            colWidth: widthInfo.colWidth,
         };
     });
 
@@ -147,23 +237,43 @@ export default function LedgerModalityRenderer({
                 ...prev,
                 [cellId]: val,
             };
-            if (typeof window !== 'undefined' && questionStorageKey) {
-                try {
-                    sessionStorage.setItem(questionStorageKey, JSON.stringify(next));
-                } catch (e) {}
+            if (typeof window !== 'undefined') {
+                if (questionStorageKey) {
+                    try {
+                        sessionStorage.setItem(questionStorageKey, JSON.stringify(next));
+                    } catch (e) {}
+                }
+                if (offlineStorageKey) {
+                    try {
+                        localStorage.setItem(offlineStorageKey, JSON.stringify({
+                            values: next,
+                            updatedAt: Date.now(),
+                            questionId: question?.id
+                        }));
+                    } catch (e) {}
+                }
             }
+            setDraftSaved(true);
             return next;
         });
     };
 
     // Clean up draft once checking result is verified
     useEffect(() => {
-        if (result && questionStorageKey) {
-            try {
-                sessionStorage.removeItem(questionStorageKey);
-            } catch (e) {}
+        if (result) {
+            if (questionStorageKey) {
+                try {
+                    sessionStorage.removeItem(questionStorageKey);
+                } catch (e) {}
+            }
+            if (offlineStorageKey) {
+                try {
+                    localStorage.removeItem(offlineStorageKey);
+                } catch (e) {}
+            }
+            setDraftSaved(false);
         }
-    }, [result, questionStorageKey]);
+    }, [result, questionStorageKey, offlineStorageKey]);
 
     const handleCheckSubmission = () => {
         if (onCheck) {
@@ -174,10 +284,100 @@ export default function LedgerModalityRenderer({
         }
     };
 
+    const handleToggleRevealExpectedAnswers = () => {
+        if (!revealedMemo) {
+            setSavedLearnerValues({ ...cellValues });
+            const expected = {};
+
+            // 1. Primary ground-truth: question.correct_map (used across accounting & EMS generators)
+            if (question?.correct_map && typeof question.correct_map === 'object') {
+                Object.entries(question.correct_map).forEach(([k, v]) => {
+                    if (v !== undefined && v !== null && String(v).trim() !== '') {
+                        expected[k] = String(v);
+                    }
+                });
+            }
+
+            // 2. Expected cells / values aliases
+            const altSources = [question?.expected_cells, question?.expected_values, question?.model_table];
+            altSources.forEach((src) => {
+                if (src && typeof src === 'object') {
+                    Object.entries(src).forEach(([k, v]) => {
+                        if (v !== undefined && v !== null && String(v).trim() !== '' && !expected[k]) {
+                            expected[k] = String(v);
+                        }
+                    });
+                }
+            });
+
+            // 3. Evaluation result cell_results expected values (if verified by backend evaluator)
+            if (result?.cell_results) {
+                Object.entries(result.cell_results).forEach(([k, v]) => {
+                    if (v && v.expected !== undefined && v.expected !== null && String(v.expected).trim() !== '') {
+                        expected[k] = String(v.expected);
+                    }
+                });
+            }
+
+            // 4. Pre-baked row cell values ONLY if they specify an explicit expected or solution property
+            if (question?.journal?.rows && Array.isArray(question.journal.rows)) {
+                question.journal.rows.forEach((r) => {
+                    if (Array.isArray(r)) {
+                        r.forEach((c) => {
+                            if (c && c.cell_id) {
+                                const explicitExpected = c.expected ?? c.solution;
+                                if (explicitExpected !== undefined && explicitExpected !== null && String(explicitExpected).trim() !== '') {
+                                    expected[c.cell_id] = String(explicitExpected);
+                                }
+                            }
+                        });
+                    }
+                });
+            }
+
+            // 5. Title fields if any
+            if (question?.journal?.title_fields && Array.isArray(question.journal.title_fields)) {
+                question.journal.title_fields.forEach((f) => {
+                    if (f && f.cell_id && f.value && !expected[f.cell_id]) {
+                        expected[f.cell_id] = String(f.value);
+                    }
+                });
+            }
+
+            setCellValues((prev) => ({
+                ...prev,
+                ...expected,
+            }));
+            setRevealedMemo(true);
+        } else {
+            if (savedLearnerValues) {
+                setCellValues({ ...savedLearnerValues });
+            }
+            setRevealedMemo(false);
+        }
+    };
+
     const activeHint = activeCellId ? getCellHint(activeCellId) : null;
 
     return (
         <div className="space-y-4 font-sans">
+            {/* Model Solution Populated Banner */}
+            {revealedMemo && (
+                <div data-testid="banner-ledger-memo-active" className="p-2.5 rounded-xl bg-amber-50 border border-amber-300 text-xs text-amber-900 flex items-center justify-between shadow-2xs font-sans">
+                    <div className="flex items-center gap-2">
+                        <span className="font-bold">📖 Model Solution Populated in Table:</span>
+                        <span>Studying expected journal values. Click &quot;Restore My Entries&quot; to continue your attempt.</span>
+                    </div>
+                    <button
+                        type="button"
+                        onClick={handleToggleRevealExpectedAnswers}
+                        className="text-amber-800 font-bold underline cursor-pointer text-xs shrink-0 ml-2"
+                    >
+                        Restore My Entries
+                    </button>
+                </div>
+            )}
+
             {/* Dynamic Ledger Scaffold Guidance */}
             <div className="rounded-xl border border-blue-200 bg-blue-50/60 p-3.5 transition-all">
                 <div className="flex items-center justify-between">
@@ -241,6 +441,15 @@ export default function LedgerModalityRenderer({
                             );
                         }
 
+                        const fl = String(field.label || '').toLowerCase();
+                        const fieldWidthClass = /journal|statement/i.test(fl)
+                            ? 'w-64 min-w-[220px]'
+                            : /business|name|trader/i.test(fl)
+                                ? 'w-52 min-w-[180px]'
+                                : /month|year|date/i.test(fl)
+                                    ? 'w-32 min-w-[110px]'
+                                    : 'w-40 min-w-[140px]';
+
                         return (
                             <div key={cellId} className="flex items-center gap-2 text-xs">
                                 <span className="font-semibold text-slate-700">{field.label}:</span>
@@ -249,9 +458,8 @@ export default function LedgerModalityRenderer({
                                         type="text"
                                         value={fieldVal}
                                         onChange={(e) => handleCellChange(cellId, e.target.value)}
-                                        onFocus={() => setActiveCellId(cellId)}
                                         placeholder={`Enter ${field.label}...`}
-                                        className={`px-2.5 py-1 rounded-lg border text-xs font-semibold font-sans outline-none transition ${
+                                        className={`${fieldWidthClass} px-2.5 py-1 ${hasHint ? 'pr-6' : ''} rounded-lg border text-xs font-semibold font-sans outline-none transition ${
                                             cellResult
                                                 ? (cellResult.score > 0 || cellResult.is_correct)
                                                     ? 'bg-emerald-50 border-emerald-500 text-emerald-900 ring-1 ring-emerald-400'
@@ -264,7 +472,7 @@ export default function LedgerModalityRenderer({
                                     {hasHint && (
                                         <button
                                             type="button"
-                                            onClick={() => setActiveCellId(cellId)}
+                                            onClick={() => setActiveCellId((prev) => prev === cellId ? null : cellId)}
                                             title="View hint for heading"
                                             className="absolute right-1.5 top-1/2 -translate-y-1/2 text-amber-500 hover:text-amber-600 text-[11px] cursor-pointer"
                                         >
@@ -285,15 +493,21 @@ export default function LedgerModalityRenderer({
                 </div>
             )}
 
-            {/* 2D Tabular Grid */}
-            <div className="overflow-x-auto rounded-xl border border-slate-200 bg-white shadow-xs">
-                <table className="w-full text-left border-collapse text-xs">
+            {/* 2D Tabular Grid - Styled like authentic South African Accounting Ledger Stationery */}
+            <div className="overflow-x-auto rounded-xl border border-slate-300 bg-[#FAFBFD] shadow-2xs">
+                <table className="w-full min-w-max border-collapse text-xs select-text">
+                    <colgroup>
+                        {headers.map((col, idx) => (
+                            <col key={idx} style={{ width: col.colWidth, minWidth: col.colWidth }} />
+                        ))}
+                    </colgroup>
                     <thead>
-                        <tr className="bg-slate-100 border-b-2 border-slate-300 text-slate-700 uppercase text-[10px] font-bold font-sans">
+                        <tr className="bg-slate-100 border-b-2 border-slate-300 text-slate-700 uppercase text-[10px] font-bold font-sans tracking-wide">
                             {headers.map((col, idx) => (
                                 <th
                                     key={idx}
-                                    className={`p-2.5 border-r border-slate-200 last:border-r-0 ${
+                                    style={{ width: col.colWidth, minWidth: col.colWidth }}
+                                    className={`p-2 border-r border-slate-300 last:border-r-0 ${col.widthClass} ${
                                         col.isNumeric ? 'text-right' : col.isCenter ? 'text-center' : 'text-left'
                                     }`}
                                 >
@@ -302,7 +516,7 @@ export default function LedgerModalityRenderer({
                             ))}
                         </tr>
                     </thead>
-                    <tbody className="divide-y divide-slate-100 font-mono text-xs">
+                    <tbody className="divide-y divide-slate-200/80 font-mono text-xs">
                         {normalizedRows.map((row, rIdx) => {
                             // Check if category/section row or totals row
                             const isTotalRow = row.some((c) =>
@@ -314,7 +528,7 @@ export default function LedgerModalityRenderer({
                                 /section|account/i.test(String(row[0]?.value || ''));
 
                             const rowClasses = isTotalRow
-                                ? 'bg-slate-100/90 font-bold border-t-2 border-slate-300 border-b-4 border-double border-slate-400'
+                                ? 'bg-slate-100/90 font-bold border-t-2 border-slate-400 border-b-4 border-double border-slate-700'
                                 : isSectionRow
                                     ? 'bg-slate-50 font-bold text-slate-800'
                                     : 'hover:bg-slate-50/60';
@@ -333,13 +547,14 @@ export default function LedgerModalityRenderer({
                                             return (
                                                 <td
                                                     key={cIdx}
-                                                    className={`px-3 py-2 border-r border-slate-200 last:border-r-0 ${
+                                                    style={{ width: colMeta.colWidth, minWidth: colMeta.colWidth }}
+                                                    className={`px-2.5 py-1.5 border-r border-slate-200 last:border-r-0 ${colMeta.widthClass || ''} ${
                                                         colMeta.isNumeric
                                                             ? 'text-right font-mono font-semibold'
                                                             : colMeta.isCenter
                                                                 ? 'text-center font-mono'
                                                                 : 'text-left font-sans'
-                                                    } ${isTotalRow ? 'font-bold text-slate-900' : 'text-slate-800'}`}
+                                                    } ${isTotalRow ? 'font-bold text-slate-900 bg-slate-100/90' : 'text-slate-800'}`}
                                                 >
                                                     {cellVal ? (
                                                         <span>{String(cellVal)}</span>
@@ -351,43 +566,48 @@ export default function LedgerModalityRenderer({
                                         }
 
                                         return (
-                                            <td key={cIdx} className="p-1 border-r border-slate-200 last:border-r-0 relative">
-                                                <div className="relative flex items-center">
+                                            <td
+                                                key={cIdx}
+                                                style={{ width: colMeta.colWidth, minWidth: colMeta.colWidth }}
+                                                className={`p-1 border-r border-slate-200 last:border-r-0 relative ${colMeta.widthClass || ''}`}
+                                            >
+                                                <div className="relative flex items-center w-full">
                                                     <input
                                                         type="text"
                                                         value={cellVal}
                                                         onChange={(e) => handleCellChange(cellId, e.target.value)}
-                                                        onFocus={() => setActiveCellId(cellId)}
-                                                        className={`w-full px-2 py-1.5 rounded-lg border text-xs transition outline-none ${
+                                                        className={`w-full px-2 py-1.5 ${cellHint ? 'pr-6' : 'pr-1.5'} rounded-md border text-xs transition outline-none ${
                                                             colMeta.isNumeric
                                                                 ? 'text-right font-mono font-bold'
                                                                 : colMeta.isCenter
                                                                     ? 'text-center font-mono font-semibold'
                                                                     : 'text-left font-sans font-semibold'
                                                         } ${
-                                                            cellResult
-                                                                ? (cellResult.score > 0 || cellResult.is_correct)
-                                                                    ? 'bg-emerald-50 border-emerald-500 text-emerald-900 ring-1 ring-emerald-400'
-                                                                    : 'bg-rose-50 border-rose-400 text-rose-900 ring-1 ring-rose-300'
-                                                                : cellVal
-                                                                    ? 'bg-blue-50/70 border-[#13519C] text-slate-900'
-                                                                    : 'bg-white border-slate-300 text-slate-700 hover:border-slate-400 focus:bg-white focus:border-[#13519C] focus:ring-1 focus:ring-[#13519C]'
+                                                            revealedMemo
+                                                                ? 'bg-amber-50/90 border-amber-400 text-amber-950 font-bold ring-1 ring-amber-300'
+                                                                : cellResult
+                                                                    ? (cellResult.score > 0 || cellResult.is_correct)
+                                                                        ? 'bg-emerald-50 border-emerald-500 text-emerald-900 ring-1 ring-emerald-400'
+                                                                        : 'bg-rose-50 border-rose-400 text-rose-900 ring-1 ring-rose-300'
+                                                                    : cellVal
+                                                                        ? 'bg-blue-50/70 border-[#13519C] text-slate-900'
+                                                                        : 'bg-white border-slate-300 text-slate-700 hover:border-slate-400 focus:bg-white focus:border-[#13519C] focus:ring-1 focus:ring-[#13519C]'
                                                         }`}
                                                         placeholder="..."
                                                     />
                                                     {cellHint && (
                                                         <button
                                                             type="button"
-                                                            onClick={() => setActiveCellId(cellId)}
+                                                            onClick={() => setActiveCellId((prev) => prev === cellId ? null : cellId)}
                                                             title="Hint available"
-                                                            className="absolute right-1 text-[11px] opacity-70 hover:opacity-100 cursor-pointer"
+                                                            className="absolute right-1 text-[11px] opacity-75 hover:opacity-100 cursor-pointer"
                                                         >
                                                             💡
                                                         </button>
                                                     )}
                                                 </div>
                                                 {cellResult && (
-                                                    <div className="absolute top-0 right-1 -translate-y-1/2 pointer-events-none">
+                                                    <div className="absolute top-0 right-1 -translate-y-1/2 pointer-events-none z-10">
                                                         <span
                                                             className={`text-[9px] font-bold px-1 rounded shadow-2xs font-mono ${
                                                                 cellResult.score > 0
@@ -452,8 +672,8 @@ export default function LedgerModalityRenderer({
             )}
 
             {/* Submission Action Footer */}
-            <div className="flex items-center justify-between pt-1">
-                <div className="text-xs text-slate-500 font-sans">
+            <div className="flex flex-wrap items-center justify-between gap-2 pt-1">
+                <div className="text-xs text-slate-500 font-sans flex items-center gap-2 flex-wrap">
                     {Object.keys(cellValues).filter((k) => cellValues[k] !== '').length > 0 ? (
                         <span>
                             <strong className="font-mono text-slate-800 font-bold">
@@ -464,23 +684,49 @@ export default function LedgerModalityRenderer({
                     ) : (
                         <span>Enter balances or details into editable cells</span>
                     )}
-                </div>
-                <button
-                    type="button"
-                    data-testid="btn-check-answer"
-                    onClick={handleCheckSubmission}
-                    disabled={isChecking}
-                    className="px-5 py-2 rounded-xl text-xs font-bold bg-[#13519C] hover:bg-blue-800 text-white transition shadow-xs cursor-pointer disabled:opacity-50 active:scale-98 font-sans flex items-center gap-1.5"
-                >
-                    {isChecking ? (
-                        <>
-                            <Loader2 className="w-3.5 h-3.5 animate-spin" />
-                            <span>Verifying Ledger...</span>
-                        </>
-                    ) : (
-                        <span>Check Table</span>
+                    {draftSaved && (
+                        <span data-testid="draft-offline-sync-badge" className="inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-200">
+                            💾 Draft saved locally
+                        </span>
                     )}
-                </button>
+                    {!isOnline && (
+                        <span data-testid="draft-offline-mode-badge" className="inline-flex items-center gap-1 text-[11px] font-semibold text-amber-700 bg-amber-50 px-2 py-0.5 rounded-md border border-amber-200">
+                            ⚡ Offline Mode
+                        </span>
+                    )}
+                </div>
+                <div className="flex items-center gap-2">
+                    {Boolean(result) && (
+                        <button
+                            type="button"
+                            data-testid="btn-reveal-ledger-memo"
+                            onClick={handleToggleRevealExpectedAnswers}
+                            className={`px-3.5 py-2 rounded-xl text-xs font-bold transition shadow-xs cursor-pointer flex items-center gap-1.5 font-sans ${
+                                revealedMemo
+                                    ? 'bg-amber-600 hover:bg-amber-700 text-white'
+                                    : 'bg-white text-[#13519C] border border-[#13519C]/40 hover:bg-blue-50'
+                            }`}
+                        >
+                            <span>{revealedMemo ? '↩ Restore My Entries' : '👁️ Show Model Answer'}</span>
+                        </button>
+                    )}
+                    <button
+                        type="button"
+                        data-testid="btn-check-answer"
+                        onClick={handleCheckSubmission}
+                        disabled={isChecking}
+                        className="px-5 py-2 rounded-xl text-xs font-bold bg-[#13519C] hover:bg-blue-800 text-white transition shadow-xs cursor-pointer disabled:opacity-50 active:scale-98 font-sans flex items-center gap-1.5"
+                    >
+                        {isChecking ? (
+                            <>
+                                <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                                <span>Verifying Ledger...</span>
+                            </>
+                        ) : (
+                            <span>Check Table</span>
+                        )}
+                    </button>
+                </div>
             </div>
         </div>
     );

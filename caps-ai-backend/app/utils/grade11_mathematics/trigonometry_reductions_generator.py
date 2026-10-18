@@ -158,71 +158,175 @@ def _build_general_solution_drill(r, difficulty: str) -> Dict[str, Any]:
 # Compound Level 3 & 4 Exam Question: Multi-Term Reduction Simplification
 # --------------------------------------------------------------------------- #
 def _build_compound_trig_simplification(r, difficulty: str) -> Dict[str, Any]:
-    # Archetype:
-    # [sin(180 + th) * cos(360 - th) * tan(180 - th)] / [cos(180 - th) * sin(-th)]
-    # Numerator: (-sin th) * (cos th) * (-tan th) = + sin th * cos th * (sin th / cos th) = sin^2 th
-    # Denominator: (-cos th) * (-sin th) = + sin th * cos th
-    # Ratio: sin^2 th / (sin th * cos th) = sin th / cos th = tan th
-    num_str = r"\sin(180^\circ + \theta) \cdot \cos(360^\circ - \theta) \cdot \tan(180^\circ - \theta)"
-    den_str = r"\cos(180^\circ - \theta) \cdot \sin(-\theta)"
-    expr_str = rf"\frac{{{num_str}}}{{{den_str}}}"
+    archetype_idx = r.randint(0, 4)
 
-    steps = [
-        step(
-            from_latex=expr_str,
-            to_latex_str=r"\frac{(-\sin\theta)(\cos\theta)(-\tan\theta)}{(-\cos\theta)(-\sin\theta)}",
-            op="apply quadrant reduction formulas to each factor",
-            rule="CAST diagram reductions",
-        ),
-        step(
-            from_latex=r"\frac{(-\sin\theta)(\cos\theta)(-\tan\theta)}{(-\cos\theta)(-\sin\theta)}",
-            to_latex_str=r"\frac{\sin\theta \cos\theta \tan\theta}{\sin\theta \cos\theta}",
-            op="simplify signs in numerator and denominator: (-)(-)=+ and (-)(-)=+",
-            rule="sign multiplication",
-        ),
-        step(
-            from_latex=r"\frac{\sin\theta \cos\theta \tan\theta}{\sin\theta \cos\theta}",
-            to_latex_str=r"\tan\theta",
-            op="cancel common factors: sin θ and cos θ",
-            rule="algebraic fraction cancellation",
-        ),
-    ]
+    if archetype_idx == 0:
+        # Archetype 1: CAST Quadrant reductions -> tan(theta)
+        num_str = r"\sin(180^\circ + \theta) \cdot \cos(360^\circ - \theta) \cdot \tan(180^\circ - \theta)"
+        den_str = r"\cos(180^\circ - \theta) \cdot \sin(-\theta)"
+        expr_str = rf"\frac{{{num_str}}}{{{den_str}}}"
+        steps = [
+            step(from_latex=expr_str, to_latex_str=r"\frac{(-\sin\theta)(\cos\theta)(-\tan\theta)}{(-\cos\theta)(-\sin\theta)}", op="apply quadrant reduction formulas to each factor", rule="CAST diagram reductions"),
+            step(from_latex=r"\frac{(-\sin\theta)(\cos\theta)(-\tan\theta)}{(-\cos\theta)(-\sin\theta)}", to_latex_str=r"\frac{\sin\theta \cos\theta \tan\theta}{\sin\theta \cos\theta}", op="simplify signs in numerator and denominator", rule="sign multiplication"),
+            step(from_latex=r"\frac{\sin\theta \cos\theta \tan\theta}{\sin\theta \cos\theta}", to_latex_str=r"\tan\theta", op="cancel common factors: sin θ and cos θ", rule="algebraic fraction cancellation"),
+        ]
+        ans_latex = r"\tan\theta"
+        ans_sympy = "tan(theta)"
+        marking_schema = {
+            "total_marks": 6,
+            "marking_points": [
+                {"id": "mp1", "desc": "sin(180 + theta) reduced to -sin(theta)", "marks": 1, "editable": True},
+                {"id": "mp2", "desc": "cos(360 - theta) reduced to cos(theta)", "marks": 1, "editable": True},
+                {"id": "mp3", "desc": "tan(180 - theta) reduced to -tan(theta)", "marks": 1, "editable": True},
+                {"id": "mp4", "desc": "cos(180 - theta) reduced to -cos(theta)", "marks": 1, "editable": True},
+                {"id": "mp5", "desc": "sin(-theta) reduced to -sin(theta)", "marks": 1, "editable": True},
+                {"id": "mp6", "desc": "Final simplified answer: tan(theta)", "marks": 1, "editable": True},
+            ],
+            "deductions": [{"rule": "sign_error_in_reduction", "penalty": -1}],
+            "carry_forward_rule": "consequential_accuracy",
+        }
+        hints = {
+            "nudge": "Reduce each trigonometric ratio individually to an acute angle before multiplying.",
+            "concept": "Signs: sin(180 + th) = -sin th, cos(360 - th) = cos th, tan(180 - th) = -tan th, cos(180 - th) = -cos th, sin(-th) = -sin th.",
+            "breakdown": "Numerator = (-sin th)(cos th)(-tan th) = sin th cos th tan th. Denominator = (-cos th)(-sin th) = cos th sin th. Result = tan th.",
+        }
+
+    elif archetype_idx == 1:
+        # Archetype 2: Co-function and square identity -> sin^2(theta)
+        num_str = r"\cos(90^\circ - \theta) \cdot \sin(180^\circ - \theta)"
+        den_str = r"\cos(-\theta) \cdot \cos(360^\circ - \theta) + \sin^2(180^\circ + \theta)"
+        expr_str = rf"\frac{{{num_str}}}{{{den_str}}}"
+        steps = [
+            step(from_latex=expr_str, to_latex_str=r"\frac{(\sin\theta)(\sin\theta)}{(\cos\theta)(\cos\theta) + (-\sin\theta)^2}", op="apply co-function and quadrant reductions", rule="co-functions and negative angles"),
+            step(from_latex=r"\frac{(\sin\theta)(\sin\theta)}{(\cos\theta)(\cos\theta) + (-\sin\theta)^2}", to_latex_str=r"\frac{\sin^2\theta}{\cos^2\theta + \sin^2\theta}", op="simplify products and powers", rule="algebraic multiplication"),
+            step(from_latex=r"\frac{\sin^2\theta}{\cos^2\theta + \sin^2\theta}", to_latex_str=r"\sin^2\theta", op="apply square identity cos^2 theta + sin^2 theta = 1", rule="Pythagorean identity"),
+        ]
+        ans_latex = r"\sin^2\theta"
+        ans_sympy = "sin(theta)**2"
+        marking_schema = {
+            "total_marks": 6,
+            "marking_points": [
+                {"id": "mp1", "desc": "cos(90 - theta) reduced to sin(theta)", "marks": 1, "editable": True},
+                {"id": "mp2", "desc": "sin(180 - theta) reduced to sin(theta)", "marks": 1, "editable": True},
+                {"id": "mp3", "desc": "cos(-theta) reduced to cos(theta)", "marks": 1, "editable": True},
+                {"id": "mp4", "desc": "cos(360 - theta) reduced to cos(theta)", "marks": 1, "editable": True},
+                {"id": "mp5", "desc": "sin^2(180 + theta) reduced to sin^2(theta)", "marks": 1, "editable": True},
+                {"id": "mp6", "desc": "Application of cos^2(theta) + sin^2(theta) = 1 to get sin^2(theta)", "marks": 1, "editable": True},
+            ],
+            "deductions": [{"rule": "sign_error_in_reduction", "penalty": -1}],
+            "carry_forward_rule": "consequential_accuracy",
+        }
+        hints = {
+            "nudge": "Remember that cos(90 - theta) is a co-function reduction, and cos^2(theta) + sin^2(theta) = 1.",
+            "concept": "cos(90 - th) = sin th; sin(180 - th) = sin th; cos(-th) = cos th; cos^2 th + sin^2 th = 1.",
+            "breakdown": "Numerator = (sin th)(sin th) = sin^2 th. Denominator = cos^2 th + sin^2 th = 1. Result = sin^2 th.",
+        }
+
+    elif archetype_idx == 2:
+        # Archetype 3: Tangent quotient reduction -> sin(theta)
+        num_str = r"\sin(180^\circ - \theta) \cdot \cos(90^\circ + \theta)"
+        den_str = r"\tan(360^\circ - \theta) \cdot \cos(-\theta)"
+        expr_str = rf"\frac{{{num_str}}}{{{den_str}}}"
+        steps = [
+            step(from_latex=expr_str, to_latex_str=r"\frac{(\sin\theta)(-\sin\theta)}{(-\tan\theta)(\cos\theta)}", op="apply quadrant reductions and co-function (90 + theta)", rule="CAST and co-functions"),
+            step(from_latex=r"\frac{(\sin\theta)(-\sin\theta)}{(-\tan\theta)(\cos\theta)}", to_latex_str=r"\frac{-\sin^2\theta}{-\left(\frac{\sin\theta}{\cos\theta}\right)\cos\theta}", op="express tan theta as sin theta / cos theta", rule="quotient identity"),
+            step(from_latex=r"\frac{-\sin^2\theta}{-\sin\theta}", to_latex_str=r"\sin\theta", op="cancel -sin theta from numerator and denominator", rule="fraction division"),
+        ]
+        ans_latex = r"\sin\theta"
+        ans_sympy = "sin(theta)"
+        marking_schema = {
+            "total_marks": 5,
+            "marking_points": [
+                {"id": "mp1", "desc": "sin(180 - theta) = sin(theta)", "marks": 1, "editable": True},
+                {"id": "mp2", "desc": "cos(90 + theta) = -sin(theta)", "marks": 1, "editable": True},
+                {"id": "mp3", "desc": "tan(360 - theta) = -tan(theta)", "marks": 1, "editable": True},
+                {"id": "mp4", "desc": "cos(-theta) = cos(theta)", "marks": 1, "editable": True},
+                {"id": "mp5", "desc": "Quotient identity tan = sin/cos and final answer: sin(theta)", "marks": 1, "editable": True},
+            ],
+            "deductions": [{"rule": "sign_error_in_reduction", "penalty": -1}],
+            "carry_forward_rule": "consequential_accuracy",
+        }
+        hints = {
+            "nudge": "Notice cos(90 + theta) is in Quadrant 2 where cosine is negative, so cos(90 + theta) = -sin theta.",
+            "concept": "tan(360 - th) = -tan th = -sin th / cos th; cos(-th) = cos th.",
+            "breakdown": "Numerator = (sin th)(-sin th) = -sin^2 th. Denominator = (-sin th / cos th)(cos th) = -sin th. Division gives sin th.",
+        }
+
+    elif archetype_idx == 3:
+        # Archetype 4: Unit cancellation -> 1
+        num_str = r"\cos(180^\circ + \theta) \cdot \tan(360^\circ - \theta) \cdot \sin(90^\circ - \theta)"
+        den_str = r"\sin(180^\circ - \theta) \cdot \cos(-\theta)"
+        expr_str = rf"\frac{{{num_str}}}{{{den_str}}}"
+        steps = [
+            step(from_latex=expr_str, to_latex_str=r"\frac{(-\cos\theta)(-\tan\theta)(\cos\theta)}{(\sin\theta)(\cos\theta)}", op="apply quadrant reductions and co-function", rule="CAST and co-functions"),
+            step(from_latex=r"\frac{(-\cos\theta)(-\tan\theta)(\cos\theta)}{(\sin\theta)(\cos\theta)}", to_latex_str=r"\frac{\cos^2\theta \cdot \left(\frac{\sin\theta}{\cos\theta}\right)}{\sin\theta \cos\theta}", op="substitute tan theta = sin theta / cos theta", rule="quotient identity"),
+            step(from_latex=r"\frac{\sin\theta \cos\theta}{\sin\theta \cos\theta}", to_latex_str=r"1", op="cancel identical numerator and denominator terms", rule="simplification"),
+        ]
+        ans_latex = r"1"
+        ans_sympy = "1"
+        marking_schema = {
+            "total_marks": 5,
+            "marking_points": [
+                {"id": "mp1", "desc": "cos(180 + theta) = -cos(theta)", "marks": 1, "editable": True},
+                {"id": "mp2", "desc": "tan(360 - theta) = -tan(theta)", "marks": 1, "editable": True},
+                {"id": "mp3", "desc": "sin(90 - theta) = cos(theta)", "marks": 1, "editable": True},
+                {"id": "mp4", "desc": "sin(180 - theta) = sin(theta) and cos(-theta) = cos(theta)", "marks": 1, "editable": True},
+                {"id": "mp5", "desc": "Final simplified value: 1", "marks": 1, "editable": True},
+            ],
+            "deductions": [{"rule": "sign_error_in_reduction", "penalty": -1}],
+            "carry_forward_rule": "consequential_accuracy",
+        }
+        hints = {
+            "nudge": "Convert all angles using CAST rules and rewrite tan theta as sin theta / cos theta.",
+            "concept": "(-cos th)(-tan th) = + cos th (sin th / cos th) = sin th.",
+            "breakdown": "Numerator = cos^2 th * (sin th / cos th) = sin th cos th. Denominator = sin th cos th. Expression simplifies to 1.",
+        }
+
+    else:
+        # Archetype 5: Negative signs cancelling -> tan^2(theta)
+        num_str = r"\sin(180^\circ + \theta) \cdot \cos(90^\circ - \theta)"
+        den_str = r"\cos(180^\circ - \theta) \cdot \sin(90^\circ + \theta)"
+        expr_str = rf"\frac{{{num_str}}}{{{den_str}}}"
+        steps = [
+            step(from_latex=expr_str, to_latex_str=r"\frac{(-\sin\theta)(\sin\theta)}{(-\cos\theta)(\cos\theta)}", op="apply quadrant and co-function reductions", rule="CAST reductions and co-functions"),
+            step(from_latex=r"\frac{(-\sin\theta)(\sin\theta)}{(-\cos\theta)(\cos\theta)}", to_latex_str=r"\frac{-\sin^2\theta}{-\cos^2\theta}", op="simplify signs and exponents in numerator and denominator", rule="exponent and sign laws"),
+            step(from_latex=r"\frac{-\sin^2\theta}{-\cos^2\theta}", to_latex_str=r"\tan^2\theta", op="apply quotient identity (sin theta / cos theta)^2 = tan^2 theta", rule="quotient identity"),
+        ]
+        ans_latex = r"\tan^2\theta"
+        ans_sympy = "tan(theta)**2"
+        marking_schema = {
+            "total_marks": 5,
+            "marking_points": [
+                {"id": "mp1", "desc": "sin(180 + theta) = -sin(theta)", "marks": 1, "editable": True},
+                {"id": "mp2", "desc": "cos(90 - theta) = sin(theta)", "marks": 1, "editable": True},
+                {"id": "mp3", "desc": "cos(180 - theta) = -cos(theta)", "marks": 1, "editable": True},
+                {"id": "mp4", "desc": "sin(90 + theta) = cos(theta)", "marks": 1, "editable": True},
+                {"id": "mp5", "desc": "Final ratio: tan^2(theta)", "marks": 1, "editable": True},
+            ],
+            "deductions": [{"rule": "sign_error_in_reduction", "penalty": -1}],
+            "carry_forward_rule": "consequential_accuracy",
+        }
+        hints = {
+            "nudge": "Reduce both the numerator and denominator to single trig ratios in terms of theta.",
+            "concept": "sin(180 + theta) = -sin theta and sin(90 + theta) = cos theta.",
+            "breakdown": "Numerator = -sin^2 theta. Denominator = -cos^2 theta. Result = tan^2 theta.",
+        }
 
     canonical = solution_graph(
         goal="simplify trigonometric reduction expression without calculator",
         steps=steps,
-        final_latex=r"\tan\theta",
+        final_latex=ans_latex,
     )
-
-    marking_schema = {
-        "total_marks": 6,
-        "marking_points": [
-            {"id": "mp1", "desc": "sin(180 + theta) reduced to -sin(theta)", "marks": 1, "editable": True},
-            {"id": "mp2", "desc": "cos(360 - theta) reduced to cos(theta)", "marks": 1, "editable": True},
-            {"id": "mp3", "desc": "tan(180 - theta) reduced to -tan(theta)", "marks": 1, "editable": True},
-            {"id": "mp4", "desc": "cos(180 - theta) reduced to -cos(theta)", "marks": 1, "editable": True},
-            {"id": "mp5", "desc": "sin(-theta) reduced to -sin(theta)", "marks": 1, "editable": True},
-            {"id": "mp6", "desc": "Final simplified answer: tan(theta)", "marks": 1, "editable": True},
-        ],
-        "deductions": [{"rule": "sign_error_in_reduction", "penalty": -1}],
-        "carry_forward_rule": "consequential_accuracy",
-    }
-
-    hints = {
-        "nudge": "Reduce each trigonometric ratio individually to an acute angle $\\theta$ before multiplying.",
-        "concept": "Signs: $\\sin(180^\\circ + \\theta) = -\\sin\\theta$, $\\cos(360^\\circ - \\theta) = \\cos\\theta$, $\\tan(180^\\circ - \\theta) = -\\tan\\theta$, $\\cos(180^\\circ - \\theta) = -\\cos\\theta$, $\\sin(-\\theta) = -\\sin\\theta$.",
-        "breakdown": f"Numerator = $(-\\sin\\theta)(\\cos\\theta)(-\\tan\\theta) = \\sin\\theta \\cos\\theta \\tan\\theta$. Denominator = $(-\\cos\\theta)(-\\sin\\theta) = \\cos\\theta \\sin\\theta$. Cancelling gives $\\tan\\theta$.",
-    }
 
     return make_math_question(
         prefix="trig_red_compound",
         topic=TOPIC,
         subskill="trigonometric_reduction_compound",
         learning_objective_id=f"{LO}_compound_reduction",
-        prompt=f"Simplify the following trigonometric expression to a single trigonometric ratio without using a calculator. Show ALL reduction steps:\n\n$${expr_str}$$",
+        prompt=f"Simplify the following trigonometric expression to a single trigonometric ratio or numerical value without using a calculator. Show ALL reduction steps:\n\n$${expr_str}$$",
         prompt_latex=expr_str,
-        answer_latex=r"\tan\theta",
-        answer_sympy=r"tan(theta)",
+        answer_latex=ans_latex,
+        answer_sympy=ans_sympy,
         sample_answer=canonical["final_latex"],
         canonical_solution=canonical,
         marking_schema=marking_schema,

@@ -159,6 +159,54 @@ def generate_questions(
         )
     )
 
+    company_governance_pool.append(
+        _make_typed(
+            prompt="Differentiate between the primary role of an Internal Auditor and an External Auditor in a public company.",
+            sample_answer="Internal auditor: Employed by the company to evaluate and improve the effectiveness of risk management, internal controls, and governance processes.\nExternal auditor: Independent registered auditor appointed by shareholders to express an opinion on whether the financial statements are fairly presented in all material respects.",
+            mode=mode_norm,
+        )
+    )
+
+    company_governance_pool.append(
+        _make_typed(
+            prompt="Explain the difference between an unqualified audit report and a qualified audit report.",
+            sample_answer="Unqualified report (clean report): The auditor concludes that the financial statements fairly present the financial position in accordance with IFRS/GAAP without material errors.\nQualified report: The auditor identifies specific material disagreements, misstatements, or limitations in scope, though the rest of the statements are acceptable.",
+            mode=mode_norm,
+        )
+    )
+
+    company_governance_pool.append(
+        _make_typed(
+            prompt="Explain TWO key functions of the Audit Committee of a listed company in South Africa.",
+            sample_answer="1. Recommend the appointment and oversee the independence of external auditors.\n2. Review the integrity of financial statements, internal financial controls, and risk management systems.",
+            mode=mode_norm,
+        )
+    )
+
+    company_governance_pool.append(
+        _make_typed(
+            prompt="State TWO ethical responsibilities of company directors towards shareholders in terms of King IV.",
+            sample_answer="1. Act in good faith and in the best interests of the company (fiduciary duty).\n2. Exercise reasonable care, skill, and diligence, ensuring transparent and accountable reporting.",
+            mode=mode_norm,
+        )
+    )
+
+    company_governance_pool.append(
+        _make_typed(
+            prompt="State TWO reasons why a company might decide to repurchase (buy back) its own shares on the JSE.",
+            sample_answer="1. To increase the Earnings Per Share (EPS) and Net Asset Value (NAV) of the remaining shares.\n2. To return surplus cash to shareholders when the shares are undervalued in the market.",
+            mode=mode_norm,
+        )
+    )
+
+    company_governance_pool.append(
+        _make_typed(
+            prompt="Explain what is meant by 'separation of ownership and control' in a public company, and why this necessitates financial reporting regulations.",
+            sample_answer="Ownership lies with the shareholders who invest capital, but control is delegated to the board of directors and executive management. Because managers may pursue personal interests rather than shareholder wealth, strict accounting standards (IFRS) and statutory audits are required to protect investors.",
+            mode=mode_norm,
+        )
+    )
+
     stardif_terms = [
         "Social responsibilities",
         "Transparency",
@@ -233,7 +281,10 @@ def generate_questions(
         pool = pools["mixed"]
 
     out: List[Dict[str, Any]] = []
-    for _ in range(n):
-        out.append(r.choice(pool))
+    if n == 1 and seed is not None:
+        out = [pool[int(seed) % len(pool)]]
+    else:
+        for _ in range(n):
+            out.append(r.choice(pool))
 
     return out

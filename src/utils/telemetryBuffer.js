@@ -5,6 +5,65 @@
  */
 
 const OFFLINE_QUEUE_KEY = 'fundile_offline_session_queue';
+const DB_NAME = 'fundile_offline_db';
+const DB_VERSION = 1;
+const STORE_NAME = 'offline_sessions';
+
+async function openIndexedDB() {
+  if (typeof window === 'undefined' || !window.indexedDB) return null;
+  return new Promise((resolve) => {
+    try {
+      const req = window.indexedDB.open(DB_NAME, DB_VERSION);
+      req.onupgradeneeded = (e) => {
+        const db = e.target.result;
+        if (!db.objectStoreNames.contains(STORE_NAME)) {
+          db.createObjectStore(STORE_NAME, { keyPath: 'sessionId' });
+        }
+      };
+      req.onsuccess = () => resolve(req.result);
+      req.onerror = () => resolve(null);
+    } catch {
+      resolve(null);
+    }
+  });
+}
+
+async function idbSaveSession(session) {
+  try {
+    const db = await openIndexedDB();
+    if (!db) return;
+    const tx = db.transaction(STORE_NAME, 'readwrite');
+    tx.objectStore(STORE_NAME).put(session);
+  } catch (e) {
+    console.warn('[TelemetryBuffer] IndexedDB put error:', e);
+  }
+}
+
+async function idbRemoveSession(sessionId) {
+  try {
+    const db = await openIndexedDB();
+    if (!db) return;
+    const tx = db.transaction(STORE_NAME, 'readwrite');
+    tx.objectStore(STORE_NAME).delete(sessionId);
+  } catch (e) {
+    console.warn('[TelemetryBuffer] IndexedDB delete error:', e);
+  }
+}
+
+async function idbGetAllSessions() {
+  try {
+    const db = await openIndexedDB();
+    if (!db) return null;
+    return new Promise((resolve) => {
+      const tx = db.transaction(STORE_NAME, 'readonly');
+      const req = tx.objectStore(STORE_NAME).getAll();
+      req.onsuccess = () => resolve(req.result || []);
+      req.onerror = () => resolve(null);
+    });
+  } catch {
+    return null;
+  }
+}
 
 class TelemetryBuffer {
   constructor() {
@@ -73,9 +132,14 @@ class TelemetryBuffer {
       const currentQueue = this.getQueuedSessions();
       // Deduplicate by sessionId
       const filtered = currentQueue.filter(s => s.sessionId !== sessionBody.sessionId);
-      filtered.push({ ...sessionBody, queuedAt: new Date().toISOString() });
+      const sessionWithTimestamp = { ...sessionBody, queuedAt: new Date().toISOString() };
+      filtered.push(sessionWithTimestamp);
       localStorage.setItem(OFFLINE_QUEUE_KEY, JSON.stringify(filtered));
-      console.log(`[TelemetryBuffer] Queued session offline (${filtered.length} pending).`);
+      
+      // Dual-write to IndexedDB
+      idbSaveSession(sessionWithTimestamp);
+
+      console.log(`[TelemetryBuffer] Queued session offline in IndexedDB + localStorage (${filtered.length} pending).`);
       this.notifyListeners();
     } catch (err) {
       console.error('[TelemetryBuffer] Failed to save offline queue:', err);
@@ -99,6 +163,10 @@ class TelemetryBuffer {
         });
         if (res.ok) {
           flushedCount++;
+          // Remove from IndexedDB
+          if (session.sessionId) {
+            idbRemoveSession(session.sessionId);
+          }
         } else {
           remaining.push(session);
         }

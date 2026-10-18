@@ -11,6 +11,9 @@ test('Set 1: Lesedi Khumalo — Accounting & Mathematics (Gr 10 FET Desktop)', a
     password: 'Fundile@2026!',
     plan: 'term_pass', // R349 School Term Pass
     isMobile: false,
+    teacherCode: 'ACC10A',
+    parentName: 'Mrs. Nomsa Khumalo',
+    parentEmail: 'nomsa.khumalo.parent@fundile.test',
     subject1: 'Accounting',
     subject1TabName: 'Accounting',
     subject2: 'Mathematics',

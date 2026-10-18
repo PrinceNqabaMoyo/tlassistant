@@ -228,7 +228,7 @@ export default function InstallAppModal({ isOpen, onClose }) {
                         className="w-full py-3.5 px-6 rounded-xl bg-[#FF9100] hover:bg-[#e07f00] text-white font-bold text-sm shadow-md shadow-orange-500/25 transition flex items-center justify-center gap-2 cursor-pointer"
                       >
                         <Download className="w-4 h-4" />
-                        <span>{isInstalled ? 'App Already Installed' : 'Install Mobile WebAPK Now'}</span>
+                        <span>{isInstalled ? 'App Already Installed' : 'Install Mobile App Now'}</span>
                       </button>
                       <p className="text-[11px] text-slate-500">
                         {deferredPrompt 
@@ -264,7 +264,7 @@ export default function InstallAppModal({ isOpen, onClose }) {
             <div className="space-y-4">
               <div className="flex items-start gap-3 p-3.5 rounded-2xl bg-blue-50/70 border border-blue-200/70">
                 <div className="w-10 h-10 flex items-center justify-center shrink-0" title="Fundile Desktop App">
-                  <GraduationCap className="w-8 h-8 text-[#FF9100]" />
+                  <img src="/fundile-favicon.svg" alt="Fundile" className="w-8 h-8" />
                 </div>
                 <div>
                   <h4 className="text-sm font-bold text-blue-950">Standalone Desktop Application</h4>

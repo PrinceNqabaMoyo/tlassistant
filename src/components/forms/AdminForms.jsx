@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { getAuth } from 'firebase/auth';
-import { collection, getDocs, getDoc, doc, updateDoc, query, where, Timestamp } from 'firebase/firestore';
+import { collection, getDocs, getDoc, doc, updateDoc, setDoc, query, where, Timestamp } from 'firebase/firestore';
 import { Users, Settings, BarChart3, Shield, Database, Activity, FileText, Plus, Edit, Trash2, Eye, CheckCircle, XCircle, ChevronLeft, School } from 'lucide-react';
 import { buildApiUrl } from '../../utils/apiBaseUrl';
 
@@ -879,11 +879,19 @@ export const PendingPayments = ({ currentUser, db, onBack }) => {
             // 1. Fetch user profile first to check existing subscription status
             const userRef = doc(db, 'users', payment.userId);
             const userSnap = await getDoc(userRef);
-            if (!userSnap.exists()) {
-                throw new Error('User profile not found for this payment.');
+            let existingUserData = {};
+            if (userSnap.exists()) {
+                existingUserData = userSnap.data() || {};
+            } else {
+                existingUserData = {
+                    email: payment.email || null,
+                    name: payment.userName || 'Subscriber',
+                    role: payment.source === 'school_admin_bulk_portal' ? 'school_admin' : 'student',
+                    schoolName: payment.schoolName || null,
+                    schoolId: payment.schoolId || null,
+                    createdAt: new Date().toISOString()
+                };
             }
-
-            const existingUserData = userSnap.data();
             
             // Calculate new expiry date by stacking days if already active
             const now = new Date();
@@ -905,8 +913,8 @@ export const PendingPayments = ({ currentUser, db, onBack }) => {
                 ? [...existingGrades, grade]
                 : existingGrades;
 
-            // 2. Update the user's subscription fields
-            await updateDoc(userRef, {
+            // 2. Upsert the user's subscription fields
+            await setDoc(userRef, {
                 subscriptionExpiry: Timestamp.fromDate(expiryDate),
                 subscriptionStatus: 'active',
                 paymentStatus: 'approved',
@@ -919,9 +927,9 @@ export const PendingPayments = ({ currentUser, db, onBack }) => {
                 lastPaymentReference: payment.paymentReference || payment.referenceUsed || existingUserData.lastPaymentReference || null,
                 lastRequestedGrade: payment.requestedGrade || existingUserData.lastRequestedGrade || null,
                 latestPendingPaymentId: null
-            });
+            }, { merge: true });
 
-            // 2. Mark the payment as approved
+            // 3. Mark the payment as approved in pending_payments
             const paymentRef = doc(db, 'pending_payments', payment.id);
             await updateDoc(paymentRef, {
                 status: 'approved',
@@ -933,7 +941,7 @@ export const PendingPayments = ({ currentUser, db, onBack }) => {
                 syncedUserSubscriptionStatus: 'active'
             });
 
-            // 3. Update local state
+            // 4. Update local state
             setPayments(prev => prev.map(p =>
                 p.id === payment.id ? { ...p, status: 'approved', durationDays, expiryDate: Timestamp.fromDate(expiryDate) } : p
             ));
@@ -951,16 +959,22 @@ export const PendingPayments = ({ currentUser, db, onBack }) => {
         try {
             const userRef = doc(db, 'users', payment.userId);
             const userSnap = await getDoc(userRef);
-            if (!userSnap.exists()) {
-                throw new Error('User profile not found for this payment.');
+            let existingUserData = {};
+            if (userSnap.exists()) {
+                existingUserData = userSnap.data() || {};
+            } else {
+                existingUserData = {
+                    email: payment.email || null,
+                    name: payment.userName || 'Subscriber',
+                    role: payment.source === 'school_admin_bulk_portal' ? 'school_admin' : 'student',
+                    createdAt: new Date().toISOString()
+                };
             }
-
-            const existingUserData = userSnap.data();
             const nextSubscriptionStatus = existingUserData.subscriptionExpiry
                 ? (getDaysLeft(existingUserData.subscriptionExpiry) > 0 ? 'active' : 'expired')
                 : 'inactive';
 
-            await updateDoc(userRef, {
+            await setDoc(userRef, {
                 paymentStatus: 'rejected',
                 subscriptionStatus: nextSubscriptionStatus,
                 hasUploadedPop: true,
@@ -969,7 +983,7 @@ export const PendingPayments = ({ currentUser, db, onBack }) => {
                 lastPaymentReference: payment.paymentReference || payment.referenceUsed || existingUserData.lastPaymentReference || null,
                 lastRequestedGrade: payment.requestedGrade || existingUserData.lastRequestedGrade || null,
                 latestPendingPaymentId: null
-            });
+            }, { merge: true });
 
             const paymentRef = doc(db, 'pending_payments', payment.id);
             await updateDoc(paymentRef, {
@@ -1026,7 +1040,8 @@ export const PendingPayments = ({ currentUser, db, onBack }) => {
                 throw new Error(payload?.error || 'Could not prepare the POP preview link.');
             }
 
-            window.open(payload.url, '_blank', 'noopener,noreferrer');
+            const targetUrl = payload.url.startsWith('http') ? payload.url : buildApiUrl(payload.url);
+            window.open(targetUrl, '_blank', 'noopener,noreferrer');
         } catch (error) {
             console.error('Error creating signed POP URL:', error);
             alert(error?.message || 'Could not open the POP file.');
@@ -1087,7 +1102,7 @@ export const PendingPayments = ({ currentUser, db, onBack }) => {
             ) : (
                 <div className="space-y-4">
                     {payments.map(payment => (
-                        <div key={payment.id} className={`bg-white rounded-xl shadow-md p-5 border-l-4 ${
+                        <div key={payment.id} data-testid={`payment-card-${payment.id}`} className={`bg-white rounded-xl shadow-md p-5 border-l-4 ${
                             payment.status === 'approved' ? 'border-emerald-500' :
                             payment.status === 'rejected' ? 'border-red-400' :
                             'border-amber-400'
@@ -1105,7 +1120,7 @@ export const PendingPayments = ({ currentUser, db, onBack }) => {
                                         </span>
                                         <span className="text-xs text-gray-400">{payment.timestampDisplay}</span>
                                     </div>
-                                    <p className="font-semibold text-gray-800 truncate">{payment.email}</p>
+                                    <p data-testid={`payment-email-${payment.email}`} className="font-semibold text-gray-800 truncate">{payment.email}</p>
                                     <p className="text-sm text-gray-500">Grade {payment.requestedGrade} · {payment.plan}</p>
                                     <p className="text-xs text-gray-400 mt-0.5">Ref: <span className="font-mono">{payment.paymentReference || payment.referenceUsed}</span></p>
                                 </div>
@@ -1116,6 +1131,7 @@ export const PendingPayments = ({ currentUser, db, onBack }) => {
                                     {(payment.storagePath || payment.popUrl) && (
                                         <button
                                             type="button"
+                                            data-testid="btn-view-pop"
                                             onClick={() => handleViewPop(payment)}
                                             disabled={viewingPaymentId === payment.id}
                                             className="flex items-center gap-1 px-3 py-2 bg-blue-50 text-blue-700 rounded-lg text-sm font-medium hover:bg-blue-100 transition disabled:opacity-50"

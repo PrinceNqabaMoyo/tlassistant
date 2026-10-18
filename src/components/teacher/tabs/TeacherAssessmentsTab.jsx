@@ -6,6 +6,7 @@ import {
 } from 'lucide-react';
 import { generateCapsTestQuestions } from '../sampleClassesData';
 import PrintableTestModal from '../PrintableTestModal';
+import { AvatarWithFallback } from './TeacherRostersTab';
 
 // Anatomical parts for Life Sciences / Natural Sciences Alimentary Canal Diagram
 const ALIMENTARY_CANAL_PARTS = [
@@ -24,7 +25,7 @@ const INITIAL_SUBMISSIONS = [
     id: 'sub_1',
     studentId: 's2',
     studentName: 'Lerato Dlamini',
-    studentPhoto: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=120&q=80',
+    studentPhoto: null,
     className: 'Grade 10 Accounting (Period 2)',
     assessmentTitle: 'VAT Output & Input Calculation Assessment',
     assessmentType: 'Controlled Test',
@@ -46,7 +47,7 @@ const INITIAL_SUBMISSIONS = [
     id: 'sub_2',
     studentId: 's7',
     studentName: 'Naledi Sithole',
-    studentPhoto: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=120&q=80',
+    studentPhoto: null,
     className: 'Grade 10 Mathematics — Alpha',
     assessmentTitle: 'Term 1 Algebraic Factoring & Trinomials Quiz',
     assessmentType: 'Quiz',
@@ -68,7 +69,7 @@ const INITIAL_SUBMISSIONS = [
     id: 'sub_3',
     studentId: 's18',
     studentName: 'Khaya Cele',
-    studentPhoto: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=120&q=80',
+    studentPhoto: null,
     className: 'Grade 10 Physical Sciences (Physics & Chem)',
     assessmentTitle: 'Digestive Anatomy & Waves Joint Assessment',
     assessmentType: 'Assignment',
@@ -244,6 +245,52 @@ export default function TeacherAssessmentsTab({
 
   const pendingCount = submissions.filter(s => s.status === 'pending_review').length;
 
+  // 1-Click Provincial Common Assessment Scope Presets (Terms 1 to 4)
+  const handleApplyProvincialTermPreset = (termNum = 1) => {
+    const grNum = Number(assessmentScope.grade);
+    let standardMarks;
+    let standardDuration;
+    let termTitle;
+    let assessmentType;
+
+    if (termNum === 1) {
+      standardMarks = grNum >= 12 ? 100 : (grNum >= 10 ? 75 : 50);
+      standardDuration = grNum >= 12 ? 120 : (grNum >= 10 ? 90 : 60);
+      termTitle = `March Provincial Common Control Test — Term 1 (${assessmentScope.subject} Gr ${assessmentScope.grade})`;
+      assessmentType = 'Controlled Test';
+    } else if (termNum === 2) {
+      standardMarks = grNum >= 12 ? 150 : (grNum >= 10 ? 100 : 75);
+      standardDuration = grNum >= 12 ? 150 : (grNum >= 10 ? 120 : 90);
+      termTitle = `June Mid-Year Examination — Terms 1–2 (${assessmentScope.subject} Gr ${assessmentScope.grade})`;
+      assessmentType = 'Exam';
+    } else if (termNum === 3) {
+      standardMarks = grNum >= 12 ? 150 : (grNum >= 10 ? 100 : 75);
+      standardDuration = grNum >= 12 ? 150 : (grNum >= 10 ? 120 : 90);
+      termTitle = `September Trial / Prep Examination — Terms 1–3 (${assessmentScope.subject} Gr ${assessmentScope.grade})`;
+      assessmentType = 'Exam';
+    } else {
+      standardMarks = grNum >= 12 ? 150 : (grNum >= 10 ? 150 : 100);
+      standardDuration = grNum >= 12 ? 180 : (grNum >= 10 ? 120 : 90);
+      termTitle = `November Final Examination — Full Scope (${assessmentScope.subject} Gr ${assessmentScope.grade})`;
+      assessmentType = 'Exam';
+    }
+
+    setAssessmentScope(prev => ({
+      ...prev,
+      title: termTitle,
+      type: assessmentType,
+      term: termNum,
+      marks: standardMarks,
+      durationMins: standardDuration,
+    }));
+
+    handleRegenerateQuestions(assessmentScope.subject, assessmentScope.grade, termNum, standardMarks);
+    setFeedbackToast(`Scope synchronized with Provincial Term ${termNum} Standards: ATP prescribed concepts loaded with official ${standardMarks}-mark weighting.`);
+    setTimeout(() => setFeedbackToast(null), 4500);
+  };
+
+  const handleApplyProvincialMarchPreset = () => handleApplyProvincialTermPreset(1);
+
   return (
     <div className="space-y-6 animate-in fade-in duration-200">
 
@@ -308,7 +355,7 @@ export default function TeacherAssessmentsTab({
 
           {/* 1. Assessment Parameters & Scope Bar */}
           <section className="bg-white border border-slate-200/90 rounded-2xl p-6 shadow-xs hover:shadow-md transition-all duration-200">
-            <div className="flex items-center justify-between mb-4 border-b border-slate-100 pb-3">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-4 border-b border-slate-100 pb-3">
               <div className="flex items-center gap-2">
                 <Sparkles className="w-5 h-5 text-[#13519C]" />
                 <h3 
@@ -318,9 +365,65 @@ export default function TeacherAssessmentsTab({
                   Assessment Scope &amp; Target Specifications
                 </h3>
               </div>
-              <span className="text-xs font-semibold text-[#13519C] bg-blue-50 border border-blue-200/80 px-2.5 py-0.5 rounded-full">
-                Grades 7–12 Curriculum Standards
-              </span>
+              <div className="flex items-center gap-1.5 flex-wrap">
+                <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider mr-1">ATP Presets:</span>
+                <button
+                  type="button"
+                  data-testid="btn-align-provincial-march-preset"
+                  onClick={() => handleApplyProvincialTermPreset(1)}
+                  className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border text-xs font-bold transition shadow-2xs hover:shadow-xs cursor-pointer active:scale-95 ${
+                    assessmentScope.term === 1
+                      ? 'bg-[#13519C] text-white border-[#13519C]'
+                      : 'bg-gradient-to-r from-blue-50 to-indigo-50 hover:from-blue-100 hover:to-indigo-100 border-blue-200 text-[#13519C]'
+                  }`}
+                  title="Term 1 March Control Test Scope"
+                >
+                  <Sparkles className="w-3.5 h-3.5 text-[#FF9100]" />
+                  <span>⚡ Term 1 Control Test</span>
+                </button>
+                <button
+                  type="button"
+                  data-testid="preset-term-2"
+                  onClick={() => handleApplyProvincialTermPreset(2)}
+                  className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border text-xs font-bold transition shadow-2xs hover:shadow-xs cursor-pointer active:scale-95 ${
+                    assessmentScope.term === 2
+                      ? 'bg-[#13519C] text-white border-[#13519C]'
+                      : 'bg-slate-50 hover:bg-slate-100 border-slate-200 text-slate-700'
+                  }`}
+                  title="Term 2 June Mid-Year Scope"
+                >
+                  <span>⚡ Term 2 Mid-Year</span>
+                </button>
+                <button
+                  type="button"
+                  data-testid="preset-term-3"
+                  onClick={() => handleApplyProvincialTermPreset(3)}
+                  className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border text-xs font-bold transition shadow-2xs hover:shadow-xs cursor-pointer active:scale-95 ${
+                    assessmentScope.term === 3
+                      ? 'bg-[#13519C] text-white border-[#13519C]'
+                      : 'bg-slate-50 hover:bg-slate-100 border-slate-200 text-slate-700'
+                  }`}
+                  title="Term 3 September Trial / Prep Scope"
+                >
+                  <span>⚡ Term 3 Trial/Prep</span>
+                </button>
+                <button
+                  type="button"
+                  data-testid="preset-term-4"
+                  onClick={() => handleApplyProvincialTermPreset(4)}
+                  className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border text-xs font-bold transition shadow-2xs hover:shadow-xs cursor-pointer active:scale-95 ${
+                    assessmentScope.term === 4
+                      ? 'bg-[#13519C] text-white border-[#13519C]'
+                      : 'bg-slate-50 hover:bg-slate-100 border-slate-200 text-slate-700'
+                  }`}
+                  title="Term 4 November Final Exam Full Scope"
+                >
+                  <span>⚡ Term 4 Final Exam</span>
+                </button>
+                <span className="text-xs font-semibold text-[#13519C] bg-blue-50 border border-blue-200/80 px-2.5 py-1 rounded-full hidden sm:inline-block">
+                  Grades 7–12 Curriculum Standards
+                </span>
+              </div>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
@@ -890,10 +993,10 @@ export default function TeacherAssessmentsTab({
                 className="bg-white border border-slate-200/90 rounded-2xl p-5 shadow-xs hover:shadow-md transition-all duration-200 flex flex-col lg:flex-row lg:items-center justify-between gap-4"
               >
                 <div className="flex items-start gap-4">
-                  <img
+                  <AvatarWithFallback
                     src={sub.studentPhoto}
-                    alt={sub.studentName}
-                    className="w-11 h-11 rounded-full object-cover border border-slate-200 shadow-2xs shrink-0"
+                    name={sub.studentName}
+                    size="md"
                   />
                   <div>
                     <div className="flex items-center gap-2">
@@ -969,10 +1072,10 @@ export default function TeacherAssessmentsTab({
               <div className="bg-white rounded-2xl border border-slate-200/90 shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto animate-in zoom-in-95 duration-200">
                 <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between bg-slate-50/60 sticky top-0 z-10">
                   <div className="flex items-center gap-3">
-                    <img
+                    <AvatarWithFallback
                       src={inspectingSub.studentPhoto}
-                      alt={inspectingSub.studentName}
-                      className="w-9 h-9 rounded-full object-cover border border-slate-200"
+                      name={inspectingSub.studentName}
+                      size="md"
                     />
                     <div>
                       <h4 

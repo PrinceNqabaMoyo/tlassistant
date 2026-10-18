@@ -14,5 +14,6 @@ test('Set 11: Sibusiso Zulu — Cross-Grade Adaptive Descent (Gr 12 Optimization
     subject1: 'Mathematics',
     subject1TabName: 'Maths',
     subject2: null,
+    abilityProfile: 'struggling_regression',
   });
 });

@@ -163,6 +163,48 @@ def _concept_pool(rng: random.Random) -> List[Dict[str, Any]]:
             'marks': 2,
             'hint_sections': {'1_nudge': 'CCMA is an independent third party that mediates labour disputes.'},
         }, subskill='concepts', learning_objective_id='lo_ccma', question_family_id='ccma_dispute_resolution'),
+        _with_metadata({
+            'title': 'Freedom of Association (Section 23)',
+            'prompt': 'Which constitutional right is protected under Section 23 of the South African Constitution regarding labour relations?',
+            'options': [
+                'Every worker has the right to form and join a trade union, and to participate in lawful union activities and strikes.',
+                'Employers have the right to dismiss any employee who joins a trade union without compensation.',
+                'Trade unions have the right to force all company employees to pay monthly union membership fees.',
+                'The government has the right to determine all private company worker wage levels annually.'
+            ],
+            'correct_index': 0,
+            'explanation': 'Section 23 of the South African Constitution guarantees the right to fair labour practices, including freedom of association to form and join trade unions and engage in collective bargaining.',
+            'marks': 2,
+            'hint_sections': {'1_nudge': 'Section 23 protects the democratic right to join a union and strike.'},
+        }, subskill='concepts', learning_objective_id='lo_section23_rights', question_family_id='section23_constitution'),
+        _with_metadata({
+            'title': 'Protected vs Unprotected Strikes',
+            'prompt': 'What makes a worker strike in South Africa legally PROTECTED under the Labour Relations Act (LRA)?',
+            'options': [
+                'The dispute was referred to the CCMA, a certificate of non-resolution was issued, and 48 hours written notice was given to the employer.',
+                'The workers walked off the job immediately after a dispute without consulting union leadership or the CCMA.',
+                'The workers blocked access to factory gates using physical violence and property destruction.',
+                'The political opposition party authorized the strike on social media without a ballot.'
+            ],
+            'correct_index': 0,
+            'explanation': 'For a strike to be protected, procedures in the LRA must be strictly followed: conciliation by CCMA or bargaining council, 30-day waiting period, and at least 48 hours written notice.',
+            'marks': 2,
+            'hint_sections': {'1_nudge': 'Protected strikes must follow CCMA dispute referral and notice rules.'},
+        }, subskill='concepts', learning_objective_id='lo_protected_strikes', question_family_id='protected_strikes_lra'),
+        _with_metadata({
+            'title': 'Collective Bargaining Forums',
+            'prompt': 'What is the primary function of a Bargaining Council in South African industrial sectors?',
+            'options': [
+                'To bring registered trade unions and employer organizations together to negotiate collective agreements on wages and working conditions across an entire industry.',
+                'To replace company HR departments and manage daily payroll calculations.',
+                'To determine corporate income tax rates for manufacturing businesses.',
+                'To loan investment capital to new entrepreneurial start-ups.'
+            ],
+            'correct_index': 0,
+            'explanation': 'Bargaining councils are statutory bodies formed by registered trade unions and employer organizations to negotiate industry-wide wages, resolve disputes, and manage employee benefit funds.',
+            'marks': 2,
+            'hint_sections': {'1_nudge': 'Bargaining councils negotiate sector-wide collective agreements.'},
+        }, subskill='concepts', learning_objective_id='lo_bargaining_council', question_family_id='bargaining_councils'),
     ]
 
 
@@ -221,7 +263,10 @@ def generate(
     else:
         pool = _concept_pool(rng) + [_roles_vs_responsibilities_drill(rng, mode)] + _discussion_pool(rng)
 
-    selected = pool
-    if count < len(selected):
+    if count == 1 and seed is not None:
+        selected = [pool[int(seed) % len(pool)]]
+    elif count < len(selected):
         selected = rng.sample(selected, count)
+    else:
+        selected = pool
     return selected

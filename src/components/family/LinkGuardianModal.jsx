@@ -173,7 +173,7 @@ const LinkGuardianModal = ({ isOpen, onClose, db, currentUser }) => {
               {/* Code Display */}
               <div className="flex items-center justify-center gap-3">
                 <div className="px-5 py-3 rounded-xl bg-white border-2 border-[#13519C] shadow-xs">
-                  <span className="font-mono text-3xl sm:text-4xl font-black tracking-widest text-[#13519C]">
+                  <span data-testid="text-guardian-link-code" className="font-mono text-3xl sm:text-4xl font-black tracking-widest text-[#13519C]">
                     {activeCodeData.code}
                   </span>
                 </div>
@@ -250,6 +250,7 @@ const LinkGuardianModal = ({ isOpen, onClose, db, currentUser }) => {
 
               <button
                 type="button"
+                data-testid="btn-generate-link-code"
                 onClick={handleGenerate}
                 disabled={isGenerating}
                 className="w-full py-3 px-4 rounded-xl bg-[#13519C] hover:bg-[#0f3e77] text-white font-bold text-sm shadow-xs transition-colors flex items-center justify-center gap-2 cursor-pointer disabled:bg-slate-400"
@@ -314,6 +315,7 @@ const LinkGuardianModal = ({ isOpen, onClose, db, currentUser }) => {
         <div className="p-4 border-t border-slate-200 flex justify-end bg-slate-50">
           <button
             type="button"
+            data-testid="btn-close-link-guardian-modal"
             onClick={onClose}
             className="px-4 py-2 rounded-xl bg-slate-200 hover:bg-slate-300 text-slate-700 text-xs font-bold transition-colors cursor-pointer"
           >

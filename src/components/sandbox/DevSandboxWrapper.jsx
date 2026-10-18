@@ -12,6 +12,7 @@ import {
 } from 'lucide-react';
 import MobileWebApkView from '../mobile/MobileWebApkView';
 import SuperAdminProgressResetModal from '../admin/SuperAdminProgressResetModal';
+import FundileLogo from '../ui/FundileLogo';
 import studentStore from '../../services/studentStore';
 
 /**
@@ -47,6 +48,8 @@ export default function DevSandboxWrapper({
   onNextQuestion = () => {},
   onOpenProfilePhoto = () => {},
   onOpenLinkGuardian = () => {},
+  enabledSubjects = null,
+  onOpenManageSubjects = null,
 }) {
   const [sandboxMode, setSandboxMode] = useState('desktop'); // 'desktop' | 'mobile' | 'native'
   const [mobileOrientation, setMobileOrientation] = useState('portrait'); // 'portrait' | 'landscape'
@@ -172,7 +175,7 @@ export default function DevSandboxWrapper({
             {/* Windows 11 Title Bar & Address Bar */}
             <div className="bg-[#081326] px-4 py-2 border-b border-slate-700/80 flex items-center justify-between select-none">
               <div className="flex items-center gap-2 min-w-0">
-                <GraduationCap className="w-4 h-4 text-[#FF9100] shrink-0" title="Fundile Desktop App" />
+                <FundileLogo className="h-4 w-auto shrink-0" wordmarkColor="white" />
                 <span className="font-semibold text-slate-200 text-xs tracking-tight truncate" style={{ fontFamily: 'Afacad, sans-serif' }}>
                   Fundile — Learner Workspace ({studentName} • Grade {currentGrade} FET)
                 </span>
@@ -194,13 +197,7 @@ export default function DevSandboxWrapper({
             <div className="px-6 py-2.5 bg-[#13519C] text-white flex flex-wrap items-center justify-between gap-3 shadow-inner">
               <div className="flex items-center gap-4">
                 <div className="flex items-center gap-2.5">
-                  <div className="w-6 h-6 rounded-lg bg-white/15 border border-white/25 flex items-center justify-center shrink-0 shadow-xs">
-                    <GraduationCap className="w-4 h-4 text-[#FF9100]" />
-                  </div>
-                  <div>
-                    <span className="font-bold text-sm tracking-tight text-white block leading-tight" style={{ fontFamily: 'Afacad, sans-serif' }}>FUNDILE</span>
-                    <span className="hidden md:block text-blue-200 text-[10px] leading-tight font-medium">Learn • Practice • Progress</span>
-                  </div>
+                  <FundileLogo className="h-7 w-auto shrink-0" wordmarkColor="white" />
                 </div>
 
                 <div className="h-6 w-px bg-white/20 hidden sm:block" />
@@ -339,6 +336,8 @@ export default function DevSandboxWrapper({
                   onNextQuestion={onNextQuestion}
                   onOpenProfilePhoto={onOpenProfilePhoto}
                   onOpenLinkGuardian={onOpenLinkGuardian}
+                  enabledSubjects={enabledSubjects}
+                  onOpenManageSubjects={onOpenManageSubjects}
                 />
               </div>
 

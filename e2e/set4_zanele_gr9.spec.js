@@ -16,5 +16,6 @@ test('Set 4: Zanele Mthembu — EMS & Natural Sciences (Gr 9 Senior Phase 14-Day
     subject2: 'Natural Sciences',
     subject2TabName: 'Nat Sci',
     teacherCode: 'EMS903',
+    abilityProfile: 'trial_autonomous',
   });
 });

@@ -76,14 +76,55 @@ export const KEYPAD_GROUPS = {
         { label: '\\angle', insert: 'angle ', title: 'Angle' },
         { label: '\\triangle', insert: 'triangle ', title: 'Triangle' },
     ],
+    complex_numbers: [
+        { label: 'i', insert: 'i', title: 'Imaginary unit i (sqrt(-1))' },
+        { label: 'j', insert: 'j', title: 'Engineering imaginary unit j' },
+        { label: 'z', insert: 'z', title: 'Complex variable z' },
+        { label: '\\overline{z}', insert: 'conjugate(z)', title: 'Complex conjugate z-bar' },
+        { label: '\\text{cis}\\,\\theta', insert: 'cis(theta)', title: 'Polar form cis(theta) = cos(theta) + i*sin(theta)' },
+        { label: 'r\\angle\\theta', insert: 'r/_theta', title: 'Phasor / Polar form magnitude and angle' },
+        { label: '\\text{Re}(z)', insert: 're(z)', title: 'Real part of z' },
+        { label: '\\text{Im}(z)', insert: 'im(z)', title: 'Imaginary part of z' },
+        { label: '|z|', insert: '|z|', title: 'Modulus of z' },
+        { label: '\\theta', insert: 'theta', title: 'Theta angle argument' },
+        { label: '^{\\circ}', insert: 'deg', title: 'Degrees' },
+    ],
+    calculus: [
+        { label: '\\dfrac{dy}{dx}', insert: 'dy/dx', title: 'Derivative dy/dx' },
+        { label: '\\dfrac{d}{dx}', insert: 'diff()', offset: -1, title: 'Derivative d/dx operator' },
+        { label: "f'(x)", insert: "f'(x)", title: "First derivative f'(x)" },
+        { label: "f''(x)", insert: "f''(x)", title: "Second derivative f''(x)" },
+        { label: '\\lim_{h\\to 0}', insert: 'lim_{h->0}()', offset: -1, title: 'Limit from first principles' },
+        { label: '\\int', insert: 'integral()', offset: -1, title: 'Indefinite integral' },
+        { label: '\\int_a^b', insert: 'integral(, a, b)', offset: -7, title: 'Definite integral [a, b]' },
+        { label: 'dx', insert: ' dx', title: 'Differential element dx' },
+        { label: '+ C', insert: ' + C', title: 'Constant of integration C' },
+    ],
+    angular_movement: [
+        { label: '\\omega', insert: 'omega', title: 'Angular velocity omega (rad/s)' },
+        { label: '\\alpha', insert: 'alpha', title: 'Angular acceleration alpha (rad/s^2)' },
+        { label: 'v = r\\omega', insert: 'v = r*omega', title: 'Tangential linear velocity v = r*omega' },
+        { label: 's = r\\theta', insert: 's = r*theta', title: 'Arc length s = r*theta' },
+        { label: '\\text{rad}', insert: ' rad', title: 'Radians angular unit' },
+        { label: '\\text{rpm}', insert: ' rpm', title: 'Revolutions per minute (n)' },
+        { label: '\\pi', insert: 'pi', title: 'Pi' },
+        { label: '2\\pi r', insert: '2*pi*r', title: 'Circumference formula' },
+        { label: '\\theta', insert: 'theta', title: 'Angular displacement theta' },
+    ],
 };
 
 // Aliases for backwards-compatibility
 KEYPAD_GROUPS.exponents = KEYPAD_GROUPS.powers_roots;
 KEYPAD_GROUPS.sequences = KEYPAD_GROUPS.subscripts;
+KEYPAD_GROUPS.complex = KEYPAD_GROUPS.complex_numbers;
+KEYPAD_GROUPS.integration = KEYPAD_GROUPS.calculus;
+KEYPAD_GROUPS.circles = KEYPAD_GROUPS.angular_movement;
 
 export const KEYPAD_CATEGORY_TABS = [
     { id: 'topic', label: 'Topic Keys' },
+    { id: 'complex_numbers', label: 'Complex & Polar' },
+    { id: 'calculus', label: 'Calculus & Limits' },
+    { id: 'angular_movement', label: 'Angular & Circles' },
     { id: 'powers_roots', label: 'Powers & Roots' },
     { id: 'fractions_division', label: 'Fractions & Div' },
     { id: 'subscripts', label: 'Subscripts' },
@@ -99,6 +140,9 @@ export const TOPIC_KEYPADS = {
     grade10_math_trigonometry: ['trigonometry', 'powers_roots', 'fractions_division', 'algebra', 'arithmetic'],
     grade10_math_equations_inequalities: ['algebra', 'inequalities', 'powers_roots', 'arithmetic'],
     grade10_math_patterns_sequences: ['subscripts', 'algebra', 'arithmetic'],
+    grade12_tech_math_complex_numbers: ['complex_numbers', 'trigonometry', 'powers_roots', 'fractions_division', 'algebra', 'arithmetic'],
+    grade12_tech_math_calculus: ['calculus', 'powers_roots', 'fractions_division', 'algebra', 'arithmetic'],
+    grade12_tech_math_circles_angular: ['angular_movement', 'trigonometry', 'fractions_division', 'algebra', 'arithmetic'],
 };
 
 /** Resolve the flat key list for a topic (deduped, group order preserved). */
@@ -108,6 +152,14 @@ export const getKeypadForTopic = (topic) => {
 
     if (TOPIC_KEYPADS[topic]) {
         groups = TOPIC_KEYPADS[topic];
+    } else if (raw.includes('complex') || raw.includes('polar') || raw.includes('argand') || raw.includes('phasor')) {
+        groups = ['complex_numbers', 'trigonometry', 'powers_roots', 'fractions_division', 'algebra', 'arithmetic'];
+    } else if (raw.includes('calculus') || raw.includes('derivative') || raw.includes('integral') || raw.includes('differentiat')) {
+        groups = ['calculus', 'powers_roots', 'fractions_division', 'algebra', 'arithmetic'];
+    } else if (raw.includes('angular') || raw.includes('circle') || raw.includes('rotation') || raw.includes('mensuration')) {
+        groups = ['angular_movement', 'trigonometry', 'powers_roots', 'fractions_division', 'algebra', 'arithmetic'];
+    } else if (raw.includes('tech_math') || raw.includes('technical_mathematics')) {
+        groups = ['complex_numbers', 'calculus', 'angular_movement', 'powers_roots', 'fractions_division', 'algebra', 'arithmetic'];
     } else if (raw.includes('exponent') || raw.includes('power') || raw.includes('surd') || raw.includes('radic')) {
         groups = ['powers_roots', 'fractions_division', 'algebra', 'arithmetic'];
     } else if (raw.includes('trig')) {

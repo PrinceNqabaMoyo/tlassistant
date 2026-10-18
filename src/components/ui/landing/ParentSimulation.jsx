@@ -423,8 +423,8 @@ const ParentSimulation = ({ isLightPalette = true, onGetStarted, onSelectPerspec
                                 </div>
                             </div>
 
-                            {/* The Realistic Smartphone Frame */}
-                            <div className="w-full max-w-sm rounded-[36px] border-[6px] border-slate-900 bg-slate-950 shadow-2xl overflow-hidden text-slate-900 relative aspect-[9/17] max-h-[580px] flex flex-col">
+                            {/* The Realistic Smartphone Frame (iPhone 16 Pro Max 440px Reference Chassis) */}
+                            <div className="w-full max-w-[440px] rounded-[44px] border-[6px] border-slate-900 bg-slate-950 shadow-2xl overflow-hidden text-slate-900 relative aspect-[9/17] max-h-[620px] flex flex-col">
                                 
                                 {/* Phone Status Bar & Notch */}
                                 <div className="bg-black text-white px-5 pt-2 pb-1.5 flex items-center justify-between text-[11px] font-semibold shrink-0 z-30">

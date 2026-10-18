@@ -423,12 +423,24 @@ def _build_compound_statistics_exam(r, difficulty: str) -> Dict[str, Any]:
     # Construct 15 sorted test scores
     # Ensure controlled skewness and an outlier at the top or bottom
     skew_choice = r.choice(["right", "left"])
+    right_skewed_pools = [
+        [28, 32, 35, 38, 40, 42, 44, 46, 50, 54, 58, 64, 70, 78, 96],
+        [22, 26, 30, 34, 38, 40, 42, 44, 48, 52, 60, 68, 76, 84, 98],
+        [30, 33, 36, 38, 41, 43, 45, 48, 52, 56, 62, 69, 75, 82, 95],
+        [25, 29, 32, 36, 39, 41, 43, 47, 51, 55, 63, 71, 79, 85, 99],
+        [20, 24, 28, 32, 36, 39, 42, 45, 49, 54, 61, 67, 74, 83, 97],
+    ]
+    left_skewed_pools = [
+        [12, 30, 36, 42, 46, 50, 54, 56, 58, 60, 62, 64, 66, 70, 74],
+        [15, 32, 38, 44, 48, 52, 55, 58, 61, 63, 65, 68, 71, 75, 80],
+        [10, 28, 35, 40, 45, 49, 53, 57, 59, 62, 65, 67, 70, 73, 78],
+        [14, 26, 34, 41, 47, 51, 56, 59, 62, 64, 66, 69, 72, 76, 82],
+        [16, 31, 37, 43, 49, 53, 57, 60, 63, 65, 67, 70, 74, 77, 85],
+    ]
     if skew_choice == "right":
-        # Clustered lower values, stretched upper values
-        s_vals = [28, 32, 35, 38, 40, 42, 44, 46, 50, 54, 58, 64, 70, 78, 96]
+        s_vals = list(r.choice(right_skewed_pools))
     else:
-        # Stretched lower values, clustered upper values
-        s_vals = [12, 30, 36, 42, 46, 50, 54, 56, 58, 60, 62, 64, 66, 70, 74]
+        s_vals = list(r.choice(left_skewed_pools))
 
     summary = _compute_summary(s_vals)
     min_v = summary["min"]

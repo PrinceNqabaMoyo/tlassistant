@@ -2,8 +2,8 @@
   "_meta": {
     "app": "Fundile",
     "tagline": "Adaptive learning aligned with South African National Curriculum Standards for Grades 7–12",
-    "lastUpdated": "2026-10-10",
-    "version": "0.9.5",
+    "lastUpdated": "2026-10-18",
+    "version": "0.9.11",
     "maintainedBy": "owner",
     "updateProtocol": "Update this file when a layer, service, route, data model, or external dependency is added or its build status changes. Do NOT update for internal function changes or bug fixes.",
     "agentInstruction": "Read this file at session start to understand the full system. Do not ask the owner to explain the architecture — it is here. Cross-reference planning documents for detail on planned items."
@@ -29,16 +29,16 @@
     "frontend": {
       "framework": "React 18 (Vite)",
       "language": "JSX",
-      "styling": "Tailwind CSS v4 + Option 1 Dual-Font System (Afacad display headings, system-ui font-sans for workspace/controls, font-mono for numbers/tables/timers; 60-30-10 simulation box color palette)",
+      "styling": "Tailwind CSS v4 + Option 1 Dual-Font System (Afacad display headings, system-ui font-sans for workspace/controls, font-mono for numbers/tables/timers; 60-30-10 simulation box color palette); Native Markdown Table Parser in UniversalWorkspace.jsx rendering responsive, styled HTML tables with KaTeX math and monospace numbers",
       "mathRendering": "KaTeX",
       "diagramRendering": "JSXGraph + Dynamic Circle Geometry Gliders",
-      "sotaModalities": "AI Blackboard-inspired interactive 3D and dynamic visualizers: GeometricNets3DViewer.jsx (2D-to-3D folding net slider + rotatable polyhedra + Euler counter F+V-E=2), ElectrodynamicsMotorViewer.jsx (rotatable armature + Fleming's rule + live 60fps HTML5 oscilloscope), OrganicChemistry3DViewer.jsx (3D ball-and-stick CPK isomer explorer + IMF), and DiagramRenderer.jsx circle gliders (dynamic theorem proofs)",
+      "sotaModalities": "AI Blackboard-inspired interactive 3D and dynamic visualizers: GeometricNets3DViewer.jsx (2D-to-3D folding net slider + rotatable polyhedra + Euler counter F+V-E=2), ElectrodynamicsMotorViewer.jsx (rotatable armature + Fleming's rule + live 60fps HTML5 oscilloscope), OrganicChemistry3DViewer.jsx (3D ball-and-stick CPK isomer explorer + IMF), and DiagramRenderer.jsx circle gliders (dynamic theorem proofs); Accounting/EMS Ledger Modality Renderer with [📖 Reveal Expected Answers] model answer toggle and [📖 View Full Memorandum] worked solution viewer",
       "bundler": "Vite",
-      "progressionLifecycle": "Gated 4-stage progression state machine: 0. Diagnostic (Required at 0% baseline) -> 1. Scaffold (Guided hints) -> 2. Practice (Unassisted, unlocks >=60%) -> 3. Exam Mode (Timed assessment, unlocks >=80% Level 7)",
-      "onboardingAndTrial": "Unified 14-day free trial and direct subscription onboarding journey: in-modal plan selector ([●] 14-day free trial vs [○] Skip trial straight to subscription), 48-hour email verification grace period (emailVerificationGraceUntil) permitting immediate uninterrupted exploration while safeguarding against disposable trial abuse, grade-scoped trial countdown badge in Header.jsx with dynamic days-remaining and winding-down alerts, 48h email verification grace notification bar with resend triggers, active trial bridge card on SubscriptionPage.jsx, Super Admin landing page hero CTA toggle in SystemSettingsView (14-day campaign vs Direct Auth), and frosted-white POPIA Section 35 compliance header ribbon on privacy-statement.html.",
+      "progressionLifecycle": "Gated 4-stage progression state machine: 0. Diagnostic (Required at 0% baseline; 3-question cognitive cluster probe: Foundations -> Operations -> Synthesis across all grades/subjects with subskill='mixed' default in generator_registry.py) -> 1. Scaffold (Guided 3-tier hints + SimuLearn vector worked solution replays; decoupled compact Exam Guidelines & Criteria pill toggle) -> 2. Practice (Unassisted, unlocks >=60%) -> 3. Exam Mode (Timed assessment with 10-min countdown, unlocks >=80% Level 7); Compact 1-line horizontal Topic Mastery strip in UniversalWorkspace.jsx; Post-Exam Triage Engine strictly gated to formal assessment failures; Super Admin 1-click progression reset to 0% baseline (resetAllProgress); Super Admin Independent vs. Institutional Learner Enrolment Switcher.",
+      "onboardingAndTrial": "Chronological Multi-Stakeholder Institutional Architecture (School Registration 1st -> Super Admin Clearance 2nd -> Teacher Onboarding 3rd -> Learner Registration 4th -> Teacher Roster Review 5th -> Parent Pulse 6th -> School Admin SASAMS Mark Ledger 7th): 1) School Admin dynamically registers institution (e.g. Westville High School, EMIS 500124892, Bulk Prepaid license) generating Faculty Passcodes (WHS-TEACH-2026), single-use Grade 10 Master Passkeys (WHS-GR10-8421 through 8426), and uploads genuine Access Bank electronic funds transfer POP receipt (WHS-BULK-2026) creating pending_payments record, 2) Super Admin reviews and approves institutional bulk payment (btn-approve-payment-365d) granting 365-day clearance, 3) Teachers onboard with Faculty Passcode auto-binding to school and inheriting departmental rosters (ACC10A, EMS9Q1), 4) School-Linked learners register with Master Passkey waiving individual payment and self-allocating subjects/teachers in SubjectEnrollmentModal.jsx, 5) Teachers exercise roster authority and progress tracking, 6) Parents review Sunday Academic Pulse, 7) School Admins monitor ATP pacing and export official SASAMS CSV mark ledgers. Includes POPIA Section 35 compliance and independent learner EFT/free-trial journeys.",
       "pwa": "vite-plugin-pwa & custom Service Worker fundile-v2 with development isolation in index.html (unregisters stale dev SWs and purges cache on localhost/LAN 192.168.x to prevent mobile LAN cache poisoning; enables full Workbox/sw.js offline caching in production)",
       "pwaAssets": "public/manifest.json, public/sw.js, pwa-192x192.png, pwa-256x256.png, pwa-512x512.png, pwa-maskable-192x192.png, pwa-maskable-512x512.png, apple-touch-icon.png, favicon.svg, fundile-favicon.svg, favicon.ico (VS Code style 100% transparent floating gold graduation cap with zero background box for desktop shortcuts, taskbar pins, title bars, and browser tabs; maskable icons reserved for Android adaptive system cropping)",
-      "navigation": "Option A Desktop Command Rail (DesktopCommandRail.jsx) with smooth complete collapse to w-0, hierarchical mutually-exclusive accordions for Self-Paced Learning and School Classwork, central rotation reel with luminous jewel tone pills and springy genie bloom animation; Centralized navigationHistoryService.js synchronizing PWA/WebAPK modal states; permanently pinned fixed bottom navigation rail on mobile; SubjectManagerModal for Phase subject enrollment management; Session rehydration & resumption engine (studentStore activeSession + sessionStorage in-progress drafts for 2D ledgers and KaTeX math inputs) restoring exact subject, topic, and entered steps across desktop PWA, mobile WebAPK, and browser.",
+      "navigation": "Option A Desktop Command Rail (DesktopCommandRail.jsx) with smooth complete collapse to w-0, hierarchical mutually-exclusive accordions for Self-Paced Learning and School Classwork, central rotation reel with luminous jewel tone pills and springy genie bloom animation; 100% UI and structural parity between Browser Desktop and Desktop App (isStandaloneApp()), rendering unified Header and DesktopCommandRail on both; Decluttered Mobile WebAPK with Zero-Bounce Native Mobile Scroll Architecture (MobileWebApkView.jsx: header ribbon moves inside scroll container, eliminating flexbox height transitions that triggered resonant touch-drag displacement and scroll-anchoring oscillations; Sub-Header Topic Pill and category section headers pin cleanly via sticky top-0 z-20 at 120 FPS native compositor speed; bottom rail Desk button smoothly scrolls to top on re-tap); Unified Single-Switcher Architecture (removed redundant crammed mode pill from header ribbon, standardizing on the ergonomic Desk Switcher positioned in the one-handed thumb zone below the student profile card with real-time badge counters '2 Due' / '5 Active' and data-testid='mob-mode-classwork' / 'mob-mode-self-paced'; disambiguated data-testid='tab-desk' strictly to the bottom rail); FundileLogo branding and single prominent student avatar on Today's Desk (eliminating duplicate ribbon profile avatar when on desk; removed legacy temporal greetings and redundant gamification clutter '1d 🔥' / '⚡ Mastery Track' in strict alignment with desktop DNA); Inverted mobile subject card hierarchy making Subject & Grade primary/bold and Topic a secondary subtitle; Dynamic iPhone 16 Pro Max 440 × 956 reference viewport simulation on landing page HeroSimulation and ParentSimulation (with dynamic window detection adapting to user device screens); reactive cross-device enrolled subject sync via studentStore.getEnabledSubjects() and setEnabledSubjects() with dynamic active badge counts, [⚙️ Manage Subjects] modal triggers, clean enrolled-subject bottom rail, and dynamic phase-enrolled subjects styled with subjectPalette.js tokens in Today's Desk; Unified routing from both rail clicks and horizontal Today's Desk reel directly to the Start/Continue Session card island; Right-anchored slide-out Profile & Settings Drawer (UserProfileModal.jsx) with authentic Super Admin 6-button Grade Switcher (Gr 7 to Gr 12), Super Admin Enrolment Type Switcher, and Super Admin Progress Reset; Centralized navigationHistoryService.js synchronizing PWA/WebAPK modal states; permanently pinned fixed bottom navigation rail on mobile; SubjectManagerModal for Phase subject enrollment management; Session rehydration & resumption engine (studentStore activeSession + resilient dual-layer sessionStorage and localStorage in-progress drafts for 2D ledgers and KaTeX math inputs with real-time online/offline indicators and re-sync) restoring exact subject, topic, and entered steps across desktop PWA, mobile WebAPK, and browser.",
       "subjectPalette": "Shopify-inspired centralized theme tokens (src/theme/subjectPalette.js) calibrated for high visual vibrancy, WCAG AA compliance (>=4.5:1 on white and soft tints), harmonious with brand anchors #13519C blue and #FF9100 orange",
       "parentDualUse": "Household Dual-Use Single-Account Architecture: Enables parents to host multiple learner profiles (Grades 7–12) with zero student email addresses required. Includes 1-click [🎒 Launch Learner Workspace] from ParentDashboard, dynamic role/state switching in App.jsx retaining parent billing/auth, and persistent [👨‍👩‍👧 Return to Guardian Portal] top header ribbon.",
       "mockEnvironment": "Institutional scale test harness (src/data/mock/): Westville High School (360 Named Students across Grades 7–12 across 24 class sections), 100 Named Independent Homeschool Students across Grades 7–12, 60 Faculty Members (Principal, Deputy, 9 HODs, 49 Educators), 330 Parents with cross-grade sibling linking, and 1-click PersonaSwitcherModal.jsx testing cockpit",
@@ -53,11 +53,11 @@
       "entryPoint": "caps-ai-backend/run.py",
       "mainApp": "caps-ai-backend/MainApp.py",
       "lanRouting": "Auto-detected LAN IP (192.168.x / 10.x) and localhost routing to port 5001 via src/utils/apiBaseUrl.js for real-time mobile cross-device testing",
-      "automatedTesting": "Unified 4-Pillar Certification Suite (npm run audit:full / scripts/run_system_certification.py): 1. Procedure Tracker SymPy step checker, 2. Monte Carlo 100-generator quality auditor (0% meta-curriculum jargon), 3. 4-persona BKT adaptive progression simulator with circuit breakers, 4. 141-button interactive UI crawler. Generates fundile-system-audit-report.html; National Curriculum Full Stack Mock Testing Master Plan v1.1.0 (mocktest.md / mock_test_participants.md / e2e/): calibrated to 90% Paid Subscriptions (EFT POP upload, unique FND-... banking reference, Super Admin manual clearance desk, real-time Firestore onSnapshot paywall drop) and 10% 2-Week Free Trial, with complete participant dossiers covering all concurrent stakeholders (parents, teachers with join codes, school admins, super admin) and explicitly certifying all recently closed generator gaps (Grade 7 3D Geometric Nets with SVG net folding and Euler formula F+V-E=2, Columnar Long Division, Grade 8 Linear Equations with transposition & Density rho=m/V, Grade 9 EMS Accounting Equation A=O+L & Ohm's Law circuits, Grade 10 Dynamic Circle Gliders & CRJ VAT 15%, Grade 11 Complex Numbers, Radians, Vectors on Inclines & Electrodynamics Motor, Grade 12 Integral Calculus, SARS Tax Brackets, Calculus [M][CA], Chemical Equilibrium Kc RICE tables, and Published Financial Statements); Autonomous Mock User Autopilot Engine v2.0 (Pipeline A & Pipeline B)."
+      "automatedTesting": "Unified 4-Pillar Certification Suite (npm run audit:full / scripts/run_system_certification.py): 1. Procedure Tracker SymPy step checker, 2. Monte Carlo 100-generator quality auditor (0% meta-curriculum jargon), 3. 4-persona BKT adaptive progression simulator with circuit breakers, 4. 141-button interactive UI crawler. Generates fundile-system-audit-report.html; Zero-Theater Playwright E2E Architecture (e2e/E2E_CONTRACT.md & scripts/audit_e2e_specs.py): Rules 0d-1 through 0d-7 Anti-Hollywood Invariant enforced mechanically across all 33 specs with 0 violations (zero silent skips via isVisible, zero mid-test backdoor database writes, zero phantom selectors, zero persona query spoofing); Rule 0d-8 Holistic Cross-Spec Pre-Flight Gate (npm run test:audit / scripts/run_audit_pipeline.js): Enforces 4-tier pre-flight checks (0. Generator preservation audit with 253/253 intact, 1. Mechanical purity with 0 violations across 33 specs, 2. Full 32-file Playwright test discovery with 350 tests, 3. Live 127.0.0.1:5173 headless DOM mount smoke check) ensuring zero cross-spec regressions; Rules 0d-9 (Responsive Visibility & Strict :visible Union Invariant), 0d-10 (Multi-Card Clearance Desk Scoping Invariant), 0d-11 (Resilient Profile Upsert & Authentic South African Banking POP Standard); Invariant 0d-12 (Systematic Cross-Grade & Cross-Subject Generalization Invariant / Anti-Whack-A-Mole Law): Mandates that any UX consistency, generator parameter, or diagnostic improvement identified in one grade or subject must be systematically audited and resolved across all 6 grades (Grades 7–12) and all 9 subjects (Mathematics, Accounting, Physical Sciences, Life Sciences, Business Studies, Technical Mathematics, Mathematical Literacy, EMS, Natural Sciences); Complete 30-Track Curriculum Matrix Evaluation Suite (e2e/curriculum_matrix/grade07_senior_matrix.spec.js through grade12_fet_matrix.spec.js): Certified 100% pass rate (30 passed / 30 tests) evaluating every subject across Senior Phase Grades 7–9 (Mathematics, Natural Sciences, EMS) and FET Phase Grades 10–12 (Mathematics, Accounting, Physical Sciences, Business Studies, Life Sciences, Mathematical Literacy, Technical Mathematics) verifying real-world learner journeys, multi-seed entropy, gated 4-stage progression, and differentiated learner support (Accelerated, Steady, Struggling with Post-Exam Triage & 3-Step Cognitive Repair); Topic Scope & Subscription Gating Specification (e2e/engine/05_topic_scope_and_term_gating.spec.js) verifying zero-ambiguity deterministic dropdown exact-match selection and annual vs term pass lock state; Real-Time Cognitive Audit Ledger (e2e/helpers/cognitiveAuditLogger.js): Intercepts, deduplicates, and logs every generated question prompt, learner input payload, and marking evaluation outcome to reports/cognitive_audit/question_input_eval_log.json (335 live records) and question_input_eval_log.html; Comprehensive Evaluation & Improvement Report (reports/curriculum_eval/curriculum_matrix_evaluation_report.md); Certified 11-Participant Multi-Subject Real-World Test Suite (Set 1 through Set 11 certified 100% pass rate hitting live Vite port 5173 and Flask port 5001 with authentic deterministic generator outputs, real Access Bank vector POP previews, and Super Admin clearances: Set 1 Lesedi Khumalo Gr 10 FET Desktop Accounting & Mathematics, Set 2 Ayanda Ndlovu Gr 7 Senior Mobile Pixel 7 Mathematics & EMS, Set 3 Bongani Sithole Gr 8 Senior Mobile Pixel 7 Mathematics & Natural Sciences, Set 4 Zanele Mthembu Gr 9 Senior Mobile Pixel 7 EMS & Natural Sciences 14-Day Free Trial, Set 5 Siyabonga Cele Gr 10 FET Desktop Business Studies & Mathematical Literacy R149 Monthly Pass, Set 6 Ntsako Baloyi Gr 11 FET Desktop Physical Sciences & Technical Mathematics R349 Term Pass, Set 7 Kelebogile Dlamini Gr 11 FET Desktop Life Sciences & Accounting R349 Term Pass, Set 8 Prince Mthembu Gr 12 Matric Desktop Mathematics Calculus & Physical Sciences R999 Annual Distinction Pass with Stage 3 Timed Exam Mode, Set 9 Thabo Molefe Gr 12 Matric Desktop Accounting & Business Studies King IV R349 Term Pass, Set 10 Lerato Khanyile Gr 12 Technical Desktop Technical Mathematics & Mathematical Literacy SARS Brackets R149 Monthly Pass, Set 11 Sibusiso Zulu Gr 12 to 8 Cross-Grade Adaptive Descent Calculus to Trinomials to HCF Factorisation with SimuLearn Visual Replay); Authentic Access Bank Vector PDF Generator (scripts/generate_authentic_pop_pdf.py) producing authentic vector-compliant EFT receipts with PASA disclosures, Access Bank FSP 5865 letterhead, and double-ring audit stamps; Firebase Admin SDK Targeted Pre-Flight Purge (scripts/purge_test_user_admin.py) ensuring 100% clean-slate test isolation; Decoupled 4-Domain Testing Architecture: 1) e2e/journeys/ for multi-stakeholder handshakes & trial/EFT paths, 2) e2e/cockpits/ for exhaustive button, tab & modal surface audits across Super Admin, School Admin, Teacher, Parent, and Student, 3) e2e/engine/ for CAPS level calibration, input modalities (2D ledger, SymPy math, long division, rubric), procedural marking, and Bayesian Knowledge Tracing (BKT) collation, 4) e2e/visual/ for Visual Neatness, Screenshot Capture & Cockpit Busyness Audit with button ergonomics evaluation (e2e/helpers/neatnessEvaluator.js generating reports/visual_audits/neatness_report.html). Super Admin clearance desk operates strictly via authentic owner authentication (princenqaba@gmail.com / princenqabamoyo@outlook.com) with valid Firebase ID tokens accessing /api/payments/pop-view-url signed URLs. Sequential Single-Window Lifecycle & On-Demand Interactive Pause (scripts/run_interactive_e2e.js & e2e/helpers/autopilotHud.js): Continuous automated execution with on-demand pause via PowerShell terminal ('p' + Enter) or browser [⏸️ Pause Autopilot] pill in non-interactive canvas margins (bottom: 16px; left: 16px)."
     },
     "database": {
       "primary": "Firebase Firestore",
-      "storage": "Dual-Redundant Firebase Storage (Primary) + Supabase Storage (Fallback on quota/network error)",
+      "storage": "3-Tier Resilient Storage: Firebase Storage (Primary) + Supabase Storage (Fallback on quota/network error) + Local instance uploads (Dev/Test offline fallback)",
       "auth": "Firebase Authentication"
     },
     "llm": {
@@ -183,7 +183,12 @@
         "GeometricNets3DViewer.jsx",
         "ElectrodynamicsMotorViewer.jsx",
         "OrganicChemistry3DViewer.jsx",
-        "audit_terms_against_atp.py"
+        "audit_terms_against_atp.py",
+        "capsTopicTaxonomy.js",
+        "authenticDiagnosticBank.js",
+        "audit_generators_preservation.py",
+        "PostExamTriageModal.jsx",
+        "telemetryBuffer.js"
       ],
       "dependsOn": [
         "A"
@@ -559,7 +564,17 @@
         "subject": "Geography",
         "description": "Not yet started"
       }
-    ]
+    ],
+    "seedEntropyRemediation": {
+      "status": "completed",
+      "totalGeneratorsAudited": 399,
+      "totalGeneratorsCompliant": 399,
+      "complianceRate": "100%",
+      "minimumEntropy": 0.75,
+      "errorsOrFailures": 0,
+      "auditScript": "scripts/audit_all_generators_entropy.py",
+      "lastAudited": "2026-10-15"
+    }
   },
   "backendServices": {
     "built": [
@@ -727,6 +742,12 @@
         "name": "hourly_sync_deploy",
         "file": "scripts/hourly_sync_deploy.py",
         "responsibility": "Automated hourly change detection, verified production building (npm run build), architecture manifest sync (Rule 0c), GitHub synchronization (origin/main), and dual redeployment to Firebase Hosting and Hugging Face Spaces (snombi/tlassistant)."
+      },
+      {
+        "name": "Offline Pack Service",
+        "file": "caps-ai-backend/app/services/offline_pack_service.py",
+        "status": "built",
+        "description": "On-demand deterministic 30-day offline study pack bundler across all CAPS subjects and grades (7-12) with HMAC-SHA256 lease validation tokens and pre-computed 3-tier hints."
       }
     ],
     "planned": []
@@ -765,6 +786,24 @@
       },
       {
         "method": "POST",
+        "route": "/api/teacher/create-assessment",
+        "handler": "app/api/teacher.py",
+        "description": "Unified 6-pillar question generation pipeline for teachers: maps SymPy and deterministic generator archetypes to editable teacher assessment schema with worked solutions and custom marking rubrics."
+      },
+      {
+        "method": "POST",
+        "route": "/api/teacher/regenerate-question",
+        "handler": "app/api/teacher.py",
+        "description": "1-click isomorphic question variant regeneration: pulls fresh seeds from the 6-pillar generator registry while preserving the educator's custom point allocations and rubric criteria."
+      },
+      {
+        "method": "POST",
+        "route": "/api/teacher/copilot-assist",
+        "handler": "app/api/teacher.py",
+        "description": "Grounded Teacher AI Copilot: provides South African scenario reskinning (Township Retail, Solar Energy, Agriculture, Sports, Tech Startup) with Numerical Invariance Guardrail, CAPS cognitive level balance audit, and rubric polishing."
+      },
+      {
+        "method": "POST",
         "route": "/api/teacher/*",
         "handler": "teacher.py",
         "description": "Teacher mode: generate assignments, mark overrides, class management"
@@ -780,6 +819,12 @@
         "route": "/api/payments/*",
         "handler": "payments/routes.py",
         "description": "Direct Access Bank South Africa EFT payment processing with automated Gemini 1.5 Flash multimodal proof-of-payment (POP) review, 14-day Pro grace period fallback, and pending POP audit queue."
+      },
+      {
+        "method": "POST",
+        "route": "/api/payments/pop-view-url",
+        "handler": "caps-ai-backend/MainApp.py & payments/routes.py",
+        "description": "Authentic signed 15-minute Google Cloud Storage/Firebase URL generator for uploaded POP documents, restricted strictly to platform owners (princenqaba@gmail.com, princenqabamoyo@outlook.com) via Firebase ID token verification."
       },
       {
         "method": "POST",
@@ -882,6 +927,18 @@
         "route": "/api/mark",
         "handler": "app/__init__.py -> evaluation_service.grade_submission",
         "description": "Deterministic submission grading endpoint for 2D ledgers, KaTeX math procedures, and MCQs with cell coordinate marking"
+      },
+      {
+        "method": "POST",
+        "route": "/api/offline/pack",
+        "handler": "app/__init__.py -> offline_pack_service.build_offline_pack",
+        "description": "Generates bundled deterministic question packs for 30-day offline study with cryptographic HMAC lease signature and calculated byte size."
+      },
+      {
+        "method": "POST",
+        "route": "/api/offline/sync",
+        "handler": "app/__init__.py -> offline_pack_service.sync_offline_telemetry",
+        "description": "Batch telemetry synchronization endpoint for offline student attempts and concept mastery records."
       }
     ],
     "planned": []
@@ -967,7 +1024,7 @@
       {
         "name": "mathKeypadRegistry",
         "path": "src/components/workspace/shared/mathx/mathKeypadRegistry.js",
-        "description": "Registry-driven mathematical symbol dictionary mapping topics and categories to SymPy/KaTeX parseable tokens including roots, powers, subscripts, fractions, and South African comma decimals",
+        "description": "Registry-driven mathematical symbol dictionary mapping topics and categories to SymPy/KaTeX parseable tokens including roots, powers, subscripts, fractions, dedicated Technical Mathematics groups (Calculus & Limits: \\int, dy/dx, \\lim_{h\\to 0}, +C; Angular Movement & Circles: \\omega, \\alpha, v=r\\omega, s=r\\theta, rad, rpm, \\pi; Complex Numbers: i, j, z, \\bar{z}), and South African comma decimals",
         "layer": "A"
       },
       {
@@ -1144,6 +1201,12 @@
         "layer": "A"
       },
       {
+        "name": "CountrySkeletonLanding",
+        "path": "src/components/ui/CountrySkeletonLanding.jsx",
+        "description": "Pan-African regional curriculum preview and early access waitlist landing page for Zimbabwe (/zw), Tanzania (/tz), Kenya (/ke), Ghana (/gh), and Nigeria (/ng), with seamless direction to South Africa (/za).",
+        "layer": "D"
+      },
+      {
         "name": "LandingPage",
         "path": "src/components/ui/LandingPage.jsx",
         "description": "High-conversion landing page with streamlined 3-bullet value propositions, continuous upward slot-machine ticker across all 10 subjects, right-to-left running audience highlight for mobile, single-line mobile eyebrow pill, and footer Install App CTA.",
@@ -1182,8 +1245,14 @@
       {
         "name": "UniversalWorkspace",
         "path": "src/components/workspace/UniversalWorkspace.jsx",
-        "description": "Declared cognitive workspace with 4-stage progression gating, renderFormattedPrompt with numbered transaction badges, guidelines checklist drawer, and automatic modality dispatching (ledger, math, rubric, diagram).",
+        "description": "Declared cognitive workspace with 4-stage progression gating, renderFormattedPrompt with numbered transaction badges, streamlined Exam Guidelines & Criteria pill toggle (collapsed by default, decoupled from hints), 3-question diagnostic cognitive cluster probe (Foundations -> Operations -> Synthesis) with aggregated baseline calibration, and automatic modality dispatching (ledger, math, rubric, diagram).",
         "layer": "A"
+      },
+      {
+        "name": "UserProfileModal",
+        "path": "src/components/profile/UserProfileModal.jsx",
+        "description": "Desktop right-anchored slide-out sheet drawer (folds in/out on avatar click) and responsive full-screen mobile drawer, featuring authentic profile details, photo updater, subscription status, and authentic Super Admin 6-button Grade Switcher (Gr 7 to Gr 12) with instant studentStore grade synchronization.",
+        "layer": "D"
       },
       {
         "name": "SuperAdminProgressResetModal",
@@ -1206,7 +1275,7 @@
       {
         "name": "LedgerModalityRenderer",
         "path": "src/components/workspace/modalities/LedgerModalityRenderer.jsx",
-        "description": "Native 2D accounting ledger & journal matrix renderer: formats title_fields, authentic headers, static given cells vs interactive editable input cells, cell coordinate binding (rX_cY), and cell-level 3-tier pedagogical hint drawer.",
+        "description": "Native 2D accounting ledger & journal matrix renderer: formats title_fields, authentic headers, static given cells vs interactive editable input cells, cell coordinate binding (rX_cY), cell-level 3-tier pedagogical hint drawer, and resilient dual-layer sessionStorage + localStorage offline caching with real-time online/offline indicator and automatic draft rehydration.",
         "layer": "A"
       },
       {
@@ -1266,7 +1335,7 @@
       {
         "name": "TopicScopeModal",
         "path": "src/components/curriculum/TopicScopeModal.jsx",
-        "description": "Interactive CAPS Annual Teaching Plan (ATP) topic scope selector modal. Groups curriculum topics by Terms 1-4, supports instant search, displays diagnostic/practice/exam readiness badges, and allows 1-click topic switching for school test preparation."
+        "description": "Interactive CAPS Annual Teaching Plan (ATP) topic scope selector modal with zero-ambiguity deterministic dropdown as primary hero selector, strict subscription term gating (Terms 2-4 locked for non-annual subscribers with upgrade CTA; unlocked terms grant complete access to all term topics without weekly limitations), search keyword filter, and diagnostic/practice/exam readiness badges."
       },
       {
         "name": "ErrorBoundary",
@@ -1303,7 +1372,31 @@
       {
         "name": "TeacherAssessmentsTab",
         "path": "src/components/teacher/tabs/TeacherAssessmentsTab.jsx",
-        "description": "Teacher cockpit Assessments & Activities tab: Author & Generate mode with question-by-question inspector, question format toggles (MCQ, Stepwise, Fill-in, Diagram Labeling), interactive anatomical diagram blanking (Alimentary Canal / Digestive Tract), intelligent suggested mark allocations with teacher edit & lock-in, Mark Release Policy toggle (Instant vs Teacher Review First), and full Submissions & Mark Review workflow.",
+        "description": "Teacher cockpit Assessments & Activities tab: Author & Generate mode with 1-click ATP common assessment scope presets for Terms 1 to 4 (Term 1 Control Test 50M, Term 2 Mid-Year 100M, Term 3 Trial/Prep 150M, Term 4 Final Exam 150M), question-by-question inspector, question format toggles (MCQ, Stepwise, Fill-in, Diagram Labeling), interactive anatomical diagram blanking (Alimentary Canal / Digestive Tract), intelligent suggested mark allocations with teacher edit & lock-in, Mark Release Policy toggle (Instant vs Teacher Review First), and full Submissions & Mark Review workflow.",
+        "layer": "D"
+      },
+      {
+        "name": "AssessmentGenerator",
+        "path": "src/components/teacher/AssessmentGenerator.jsx",
+        "description": "Unified 4-Format Assessment Author & Paper Generator: Quiz (10–15M, diagnostic MCQ with authentic misconception distractors), Assignment (20–30M, structured homework problem set with stepwise working pad entries), Control Test (40–50M, timed formal CAPS SBA test), and Exam (75–100+M, comprehensive formal examination); connects directly to authoritative 6-pillar generators, supports multi-topic composite papers, granular subskill scope toggles, live marking scheme point editing, 1-click isomorphic question variant regeneration, Grounded AI Copilot integration, and printable test & memorandum PDF export.",
+        "layer": "D"
+      },
+      {
+        "name": "TeacherAiCopilotPanel",
+        "path": "src/components/teacher/TeacherAiCopilotPanel.jsx",
+        "description": "Grounded Educator AI Copilot panel: allows 1-click South African scenario reskinning across 5 local themes (Township Retail, Solar Energy, Agriculture, Sports, Tech Startup) protected by Numerical Invariance Guardrail, CAPS Level 1–4 Cognitive Balance Audit against DBE paper weights, and Rubric Polisher standardizing marking shorthand ([M], [A], [CA]).",
+        "layer": "D"
+      },
+      {
+        "name": "TeacherFacultySubjectsModal",
+        "path": "src/components/teacher/TeacherFacultySubjectsModal.jsx",
+        "description": "Departmental subject allocation modal: enforces official South African faculty quotas (Senior Phase max 2 subjects, FET Phase max 3 subjects) with real-time selection caps and local storage synchronization.",
+        "layer": "D"
+      },
+      {
+        "name": "teacherSubjectQuotaService",
+        "path": "src/services/teacherSubjectQuotaService.js",
+        "description": "Authoritative faculty quota enforcement service: defines SENIOR_PHASE_SUBJECTS (max 2) and FET_PHASE_SUBJECTS (max 3), grade eligibility validation (isSubjectAllowedForGrade), and persistent subject allocations.",
         "layer": "D"
       },
       {
@@ -1337,6 +1430,18 @@
         "name": "PrivacyStatementView.jsx",
         "path": "src/components/ui/PrivacyStatementView.jsx",
         "note": "Dedicated /privacy route view with POPIA Section 35 compliance text, brand blue #13519C header, and smooth in-app navigation back to landing page."
+      },
+      {
+        "name": "Offline Storage Service",
+        "file": "src/services/offlineStorageService.js",
+        "status": "built",
+        "description": "IndexedDB storage engine (FundileOfflineDB) managing 30-day offline packs, scratch drafts, telemetry queue, and cryptographic leases."
+      },
+      {
+        "name": "Offline Study Pack Modal",
+        "file": "src/components/student/OfflineStudyPackModal.jsx",
+        "status": "built",
+        "description": "On-demand offline pack management modal with enrolled subject checkboxes, term selector, live dynamic MB counter, and Wi-Fi only toggle."
       }
     ],
     "planned": []
@@ -1823,7 +1928,7 @@
     "Comma decimal separator throughout (SA/CAPS standard): LaTeX uses {,}.",
     "Generator Contract: All generators must emit term metadata (1..4), deconstructible elementary sub-drills, standardized misconception tags, and teacher-editable marking schemas.",
     "Exam-on-Demand with Calendar Pacing: Students can trigger full mock exams at any time, bounded by current school term (term <= selected_term) with post-exam triage debriefs.",
-    "Examining Body Trademark Policy: Never use IEB, SACAI, DBE, or NSC trademarks in marketing. Use universal public-domain statements: '100% Aligned with South African Curriculum Standards (CAPS)'.",
+    "Examining Body Trademark & Zero-CAPS UI Invariant: The South African UI, marketing copy, landing pages, memoranda, and dashboards must NEVER reference or display the acronym 'CAPS' due to the widespread misconception that it is a public-school-only curriculum. The platform must strictly use universal, public-domain curriculum alignment statements instead: '100% Aligned with South African National Curriculum Standards', 'Authentic Grade 7–12 Exam-Standard Questions & Marking Rubrics', 'Trusted preparation for public, private, and independent school examinations nationwide'.",
     "Production Scalability at 10k Users: FastAPI ASGI architecture with asyncio.to_thread sandboxing for SymPy (2.5s timeout), client-side batched telemetry buffers, and single mastery_snapshot document reads (reducing Firestore reads by 97.5%).",
     "LLM Infrastructure & Economics: Standardize on Google Gemini 2.0 Flash via provider abstraction for sub-dollar monthly costs at scale, maintaining 100% zero-LLM deterministic Python for Standard tier question generation and marking.",
     "Cyclomatic Complexity Standards: Enforce maximum CC of 12 for generator code via radon/CI gates, and derive mathematical procedural_complexity_score (1..10) directly from canonical solution graph branch points.",
@@ -1844,7 +1949,16 @@
     "Mobile-First & Touch-Native UX: All interactive elements maintain a minimum 44px touch target, modals flow into full-viewport layouts on mobile without horizontal clipping, and sticky headers consume <= 15% of vertical viewport real estate. In LandingPage.jsx, the mobile audience selector automatically centers active tabs with smooth auto-scroll and responsive short labels ('Schools' vs 'School Admins'), while the hero CTA row utilizes a compact horizontal layout preserving 'See how it works' strictly above the mobile fold. Dynamic auto-hiding scroll behaviors are implemented in MobileWebApkView.jsx and LandingPage.jsx to maximize screen real estate.",
     "Comprehensive QA & Scale Testing: Generator determinism, mathematical solvability, responsive viewports, and consequential accuracy marking are continuously verified by qa_test_architect via Monte Carlo seed sweeps, Vitest/Playwright suites, and offline telemetry buffer validation.",
     "Cross-Platform App Installation & PWA Reliability: Installation is streamlined via a simplified, clean white InstallAppModal.jsx featuring an un-obscured high-resolution vector QR code, neutral segmented controls (Mobile Phone vs PC/Mac), zero dark-navy headers or teal badges, auto-detected LAN/domain URLs, and Brand Orange (#FF9100) graduation cap iconography across all 4 PWA icons and mobile install surfaces. To prevent mobile LAN cache poisoning during local Wi-Fi testing, development service worker isolation in index.html dynamically unregisters stale dev workers and purges caches on localhost/192.168.x while reserving sw.js caching for production.",
-    "Persistent Sticky Authenticated Navigation & Automated Backend Dispatch: Logged-in web browser users in Header.jsx & App.jsx are anchored by a persistent sticky royal blue (#13519C) header ribbon with white FundileLogo, prominent 'Start Free Trial' action, context-aware 'Install App' modal trigger, student notification center, superadmin role/tier switchers, and secure log out. In LearnerAppContainer.jsx, question generation dispatches automatically on tab/topic navigation, routing seamlessly to caps-ai-backend on port 5001 via auto-detected LAN IPs (192.168.x / 10.x) and localhost."
+    "Persistent Sticky Authenticated Navigation & Automated Backend Dispatch: Logged-in web browser users in Header.jsx & App.jsx are anchored by a persistent sticky royal blue (#13519C) header ribbon with white FundileLogo, prominent 'Start Free Trial' action, context-aware 'Install App' modal trigger, student notification center, superadmin role/tier switchers, and secure log out. In LearnerAppContainer.jsx, question generation dispatches automatically on tab/topic navigation, routing seamlessly to caps-ai-backend on port 5001 via auto-detected LAN IPs (192.168.x / 10.x) and localhost.",
+    "Zero-Theater E2E Testing Contract & Anti-Hollywood Invariant: Strictly enforced across all Playwright suites (e2e/*.spec.js) via scripts/audit_e2e_specs.py and e2e/E2E_CONTRACT.md. Prohibits silent skips (if (isVisible())), privilege spoofing (?persona=admin), mid-test backdoor database writes (approveTestPayment), and phantom selectors not present in src/. Super Admin clearance operations are strictly isolated to verified platform owners (princenqaba@gmail.com, princenqabamoyo@outlook.com) using authentic Firebase Auth ID tokens to access signed URL facilities.",
+    "Independent Learner Lifecycle & Two-Tier School Transition Law: When an independent subscriber transitions to an institutional bulk school license, the active month is forfeited, while remaining un-activated full months (from Term Pass R349 or Annual Distinction Pass R999) trigger an automated refund claim for the guardian (e.g. R232.67 for 2 remaining months), with 100% preservation of academic mastery, XP, and guardian links.",
+    "Diagnostic Battery Pacing & Depth Law: Diagnostic assessments must never be compressed to generic 5-6 minutes per subject. Pacing is calibrated to 5-6 minutes per topic/concept within the topic, structured into 3-probe diagnostic batteries (Foundation -> Standard -> Trap/Misconception) to yield high-resolution diagnostic data for adaptive progression.",
+    "Educator Assessment Scope Authority: Educators have full sovereignty over assessment scope, selecting multiple topics simultaneously, toggling granular subskills, editing question text/criteria/marks in-line with live dynamic total calculation, and generating standard duplex A4 printable test papers and confidential memoranda.",
+    "Generator Preservation Law & Zero-Deletion Invariant: Deletion of generator files, seeds, or archetypes is strictly prohibited. Verified continuously via audit_generators_preservation.py across all 253 generator files as Step 0 of pre-flight audit gates.",
+    "Curriculum Matrix Multi-Track Evaluation & Cognitive Audit Invariant: Complete, zero-theater Playwright evaluation across all 30 official Senior (Grades 7–9) and FET (Grades 10–12) curriculum tracks. Every single test execution must record authentic question generation prompts, learner answer submissions, and backend marking evaluation outcomes into an inspectable JSON/HTML cognitive audit ledger (reports/cognitive_audit/question_input_eval_log.json/html) to certify end-to-end pedagogical and procedural integrity with zero simulated mocks.",
+    "Curriculum Source Grounding & Consultation Law: Whenever authoring, renovating, expanding, or improving question generators (including seed entropy, archetypes, distractors, worked solutions, and marking schemas), agents must consult the authentic source documents (.md files) at fundile-tlassistant-vite\\caps-ai-backend\\curriculum_docs_auto\\ (and root curriculum_docs_auto\\) for pacing and exam weighting, and the curriculum_docs\\ folder in the project root (and caps-ai-backend\\curriculum_docs\\) for conceptual depth and syllabus completeness. All edits must be grounded in these source documents before writing code.",
+    "Unified Cross-Platform DNA & Archetype Modality Contract: Ensures 100% UI and layout parity between Browser Desktop and Desktop App (isStandaloneApp()), rendering unified Header and DesktopCommandRail across both surfaces. Declutters Mobile WebAPK by eliminating fake graduation caps in favor of FundileLogo and student monogram avatars, removing redundant bottom-nav Desk buttons, embedding the Self-Paced vs. Classwork mode toggle into the persistent mobile header ribbon, and rendering dynamic phase-enrolled subjects styled with subjectPalette.js tokens. Guarantees archetype-level question determination with explicit modality ('semantic' | 'math' | 'ledger' | 'diagram' | 'arithmetic_grid'), discrete marking_schema marking points with target concepts, authoritative expected_answer, and solution_type across all 253+ generators and generator_registry.py normalization, completely eliminating frontend guessing heuristics.",
+    "Pan-African Regional Curriculum & Skeleton Routing Architecture: All incoming root traffic (/) is directed to /za (the fully live South African national curriculum platform). Skeleton landing pages for upcoming national curricula (/zw for Zimbabwe ZIMSEC, /tz for Tanzania NECTA, /ke for Kenya CBC, /gh for Ghana NaCCA/WAEC, /ng for Nigeria WAEC/JAMB) provide localized curriculum specifications, planned subject roadmaps, and early access waitlist capture via DemandCaptureForm while allowing visitors to switch to the active South African platform at any time."
   ],
   "openQuestions": [],
   "planningDocuments": [

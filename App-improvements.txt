@@ -1,0 +1,11 @@
+1. For the superadmin please also add independent and institutional switch for the learner user.
+2. That grad cap icon on the learner Profile & settings column should either have the brand grad cap or no icon at all
+3.Im in gr10 and I see that the offline study packs are ticked implying accounting, mathematics and technical maths (aprox 4 topics) are already enrolled. where in the learner journey do they select subjects to enroll in. we need to streamline 
+4.There are sign app modals with the 'CAPS' in them. I don not want any reference of CAPS any where on the UI.
+5. There is reference of WebAPK and BKT on the UI, I don't want any thing on the UI that gives competitors an idea of the architecture of the app.
+6.There is a lot of hard coded things like the notification bell has a '1', unclickable, and where is the notification come from ? Also the self-paced mastery studio has 2 assignments- who assigned those?
+7. I need to be able to reset progressions on the super admin account, because its for testing.. therefore the learner/teacher/parent/school admin linked to my superadmin email should be resettable. The reset button should be in the profile and settings and only available to the superadmin account.
+8. Seems to me the post-exam triage is available even before a user has done an exam.
+9. What is XP, why should a user have to see that?
+10. When a user gets the answer wrong, is there a memo button that then reveals the correct answers e.g on the journals in account, is there a memo button that inputs the expected values in the journal?
+11. The real time progress dial thing is making the workspace too busy, it needs to be small/ 1 line in size

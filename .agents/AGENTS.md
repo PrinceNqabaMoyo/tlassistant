@@ -25,6 +25,25 @@
     This regenerates `fundile-architecture.html` from the updated JSON. Always run this last.
     Never edit `fundile-architecture.html` directly — it is a generated file.
 
+0d. **ZERO-THEATER & ANTI-SHODDY ENGINEERING INVARIANT (MANDATORY LAW)**:
+    - **0d-1. No Theatrical Testing ("Hollywood Pattern")**: Never write fake test actions, cosmetic HUD banners, simulated progress countdowns, or screenplay scripts that do not interact with live, real application components. Every test step must execute the genuine end-to-end user movement (real authentication, real form submissions, real database state changes, real navigation). Console logs must only report verified post-assertion states, never theatrical pre-action narration.
+    - **0d-2. Strict Identity & Privilege Isolation (The Super Admin Law)**: The Super Admin / Owner is strictly the authentic platform owner (restricted to verified owner emails in `firestore.rules`: `princenqaba@gmail.com`, `princenqabamoyo@outlook.com`). The Super Admin is NEVER a mock persona (`MOCK_SUPER_ADMIN`), NEVER simulated with URL query parameters (`?persona=admin`), and NEVER seeded from mock classroom rosters. School Admin and classroom stakeholders may use mock environments for class roster simulation; Super Admin governance, clearance, and security must use authentic authentication and valid Firebase ID tokens.
+    - **0d-3. Role-State Decoupling Invariant**: Administrative and educator components must NEVER read or display state from `studentStore` unless explicitly querying a student's record for academic oversight. Header avatars, profile modals, and settings for administrators must derive identity strictly from the authenticated admin user profile, never defaulting to mock learner state (e.g. "Nqobile Dlamini").
+    - **0d-4. Source-Code Grounding Invariant (Zero Phantom Selectors)**: An agent is strictly forbidden from writing or modifying a locator, test ID, or action in an E2E spec without first viewing the exact target component source file in `src/`. Every selector must have its exact presence in the live JSX confirmed before appearing in a test spec. Hallucinating, guessing, or writing from memory is strictly considered a defect.
+    - **0d-5. Genuine End-to-End Actions (No Backdoor Scripting Substitution)**: In an E2E test, database helper scripts are ONLY permitted for pre-test clean-slate setup (e.g. purging test accounts before the test begins). Database scripts must NEVER substitute for the actual user actions being tested. If a test narrative states "Super Admin reviews and approves the payment", the Super Admin window MUST navigate the UI, open the uploaded POP file via the authentic signed URL endpoint, verify the reference, and click the on-screen approval button. No backdoors.
+    - **0d-6. Zero Silent Skips in E2E**: NEVER wrap critical test steps in `if (await isVisible())`, `if (count > 0)`, or empty `catch` blocks. Test steps must use explicit assertions (`await expect(locator).toBeVisible({ timeout: ... })` or `await expect(locator).toBeEnabled()`) so that if a selector, button, modal, or backend fails, the test halts and fails loudly. Silent skipping is strictly considered a defect.
+    - **0d-7. Runtime Execution Verification & Viewport Non-Interference**: Never claim code, features, or tests work solely based on `npm run build` or static lint checks. Building is not executing. You must run the actual scripts/tests, inspect the live runtime output, and confirm all steps succeeded before reporting completion. Test instrumentation (cursors, pause buttons, test helpers) must NEVER occupy header, top-bar, or primary action zones (must stay in non-interactive canvas margins like `bottom: 16px; left: 16px`) and must never intercept pointer events directed at application components. Local development (`http://localhost:5173` / `http://localhost:5001`) is the default test environment to protect production data from pollution.
+    - **0d-8. Holistic Cross-Spec & Pre-Flight Audit Invariant (Anti-Whack-A-Mole Law)**: Never conclude a debugging turn or code modification by fixing only a single isolated failure line. In a Vite SPA, syntax errors in downstream components or omissions in shared utilities (`autopilotHud.js`, `studentStore.js`, `schoolEnrollmentService.js`, `playwright.config.js`) will invisibly break upstream pages or sibling test specs. Before declaring any fix complete, you MUST execute the holistic pre-flight gate (`npm run test:audit`), asserting:
+      1. Mechanical E2E purity: 0 selector or privilege violations across all 13 specs (`python scripts/audit_e2e_specs.py`).
+      2. Zero cross-spec syntax/export breakage: 0 errors across all 12 test specs (`npx playwright test --list`).
+      3. Live browser connectivity: Clean, unblocked DOM mount in < 2 seconds on `127.0.0.1:5173` with 0 console errors (`node scripts/smoke_check.js`).
+    - **0d-9. Responsive Visibility & CSS Union Invariant (The Anti-Hidden Selector Law)**: When targeting interactive components that exist in both mobile and desktop viewports, locators MUST strictly filter by `:visible` across all union clauses (e.g. `[data-testid="btn"]:visible, button:has-text("..."):visible`), and never append a trailing non-`:visible` fallback (e.g. `..., [data-testid="btn"]`) with `.first()`. In document-order evaluation, this causes Playwright to select the hidden desktop DOM node when running in a mobile viewport, resulting in `Received: hidden` failure.
+    - **0d-10. Multi-Card Clearance Desk Scoping Invariant**: On administrative management desks containing repeating card lists (such as EFT Payment Approvals), action triggers and post-action verification assertions MUST strictly scope to the specific card container:
+      `locator('div[data-testid^="payment-card-"]:has([data-testid="payment-email-${email}"])')`.
+      Never use global `.first()` action locators or global text matchers (`text=approved`), which falsely match filter tabs or neighboring records.
+    - **0d-11. Resilient Profile Upsert & Authentic Banking Receipt Law**: Institutional workflows and approval handlers in `AdminForms.jsx` and `SchoolAdminView.jsx` must use `setDoc(ref, data, { merge: true })` instead of throwing or assuming client documents are pre-materialized. All E2E verification must utilize authentic, vector-compliant South African banking receipts (Access Bank letterhead, double-ring audit stamps, PASA disclosures) rather than plain-text stubs.
+    - **0d-12. Systematic Cross-Grade & Cross-Subject Generalization Invariant (The Anti-Silo / Anti-Whack-A-Mole Law)**: Whenever a defect, UX inconsistency, or engine limitation is identified in one grade or subject (e.g. Grade 10 Mathematics), the agent is strictly forbidden from applying a localized fix solely to that specific instance. The agent MUST systematically audit all grades (Senior Phase Grades 7–9 and FET Phase Grades 10–12) and all subjects (Mathematics, Accounting, Physical Sciences, Life Sciences, Business Studies, Technical Mathematics, Mathematical Literacy, EMS, Natural Sciences) to eradicate the architectural root cause across the entire platform. Zero localized patching; zero whack-a-mole engineering.
+
 ---
 
 1. **Always Build Full-Stack**: When tasked with building a new module or feature (like EMS), you MUST implement both the backend logic (generators, endpoints) AND the frontend React UI (Scaffold, Practice, and Assessment modes). Do not stop at the backend.
@@ -33,10 +52,14 @@
    - Mathematics: Stepwise symbolic derivations (SymPy line transitions + KaTeX working pad).
    - Business Studies: Rubric-based semantic points with keyword & concept matching.
    - Geometry: Spatial declarative visualisations (JSXGraph/Mafs).
-2b. **Examining Body Branding & Legal Policy**: Never use proprietary examining body trademarks (IEB, SACAI, DBE, NSC) in student/parent marketing, UI copy, or landing pages. Use universal, public-domain curriculum alignment statements instead:
-   - "100% Aligned with South African Curriculum Standards (CAPS)"
-   - "Authentic Grade 8–12 Exam-Standard Questions & Marking Rubrics"
-   - "Trusted preparation for public, private, and independent school examinations nationwide"
+2b. **Examining Body Branding, Legal Policy & Zero "CAPS" in South African UI Law (Permanent Memory Invariant)**:
+   - **Zero "CAPS" Acronym in UI / Marketing**: The South African UI, marketing copy, landing pages, memoranda, student dashboards, and parent/teacher-facing interfaces must NEVER reference or display the acronym or term "CAPS". In South Africa, there is a widespread misconception that "CAPS" refers solely to the public/government school curriculum. Advertising or displaying "CAPS" creates resistance among private schools, independent examination candidates (IEB/SACAI), and homeschoolers.
+   - **Universal Alignment Language Only**: Always use neutral, universal, public-domain curriculum alignment statements instead:
+     - "100% Aligned with South African National Curriculum Standards"
+     - "Authentic Grade 7–12 Exam-Standard Questions & Marking Rubrics"
+     - "Trusted preparation for public, private, and independent school examinations nationwide"
+     - "National Curriculum Statements / Standards"
+   - **Examining Body Trademarks**: Never use proprietary examining body trademarks (IEB, SACAI, DBE, NSC) as brand endorsements or product claims in student/parent marketing, UI copy, or landing pages.
 3. **Follow the Hint System**: You must strictly adhere to the hint architecture defined in `hint_system_specification.md` (rich cell-level hints for tabular data, 3-tier hints for non-tabular data). Always read that file before implementing new generators or UI components.
 4. **File Size Limit**: No file should exceed 2000 lines of code. Modularization must be implemented to keep files focused and maintainable. This is especially important for backend generators which can become huge.
 
@@ -91,11 +114,11 @@
     - Wiki files are structured as Markdown with optional YAML frontmatter. They are compatible with the Open Knowledge Format (OKF) idea: a portable, human-readable knowledge bundle for the agent.
     - Syllabi and per-topic guidance live in `caps-wiki/{subject}/{grade}/{topic}.md`.
 
-11b. **Curriculum Source Documents for Generator Creation (Priority & Pacing)**
-    - When creating or refining question generators, always consult the curriculum source documents:
-      - `curriculum_docs_auto/` takes **primary priority** for pacing, authentic exam mark allocations, term weighting, and diagram vision annotations.
-      - It must be used **in conjunction with** the manually typed `curriculum_docs/` files to ensure comprehensive conceptual depth, teacher notes, and syllabus completeness.
-      - Together, these documents serve as the authoritative curricular ground truth from which all deterministic generators are created and calibrated.
+11b. **Curriculum Source Documents for Generator Creation, Renovation & Expansion (Mandatory Law)**
+    - Whenever authoring, expanding, renovating, or improving question generators (including seed entropy, question archetypes, distractors, worked solutions, and marking schemas), the agent MUST ALWAYS consult the source documents (`.md` files) at all times:
+      - `fundile-tlassistant-vite\caps-ai-backend\curriculum_docs_auto\` (and root `curriculum_docs_auto\`) takes **primary priority** for pacing, authentic exam mark allocations, term weighting, and diagram vision annotations.
+      - `curriculum_docs\` folder in the project root (and `caps-ai-backend\curriculum_docs\`) must be used **in conjunction** for comprehensive conceptual depth, teacher notes, and syllabus completeness.
+    - Zero Guesswork / Zero LLM Invention: Never modify or expand generator archetypes or answer keys from memory or assumptions. Ground every concept, scenario parameter, vocabulary term, and marking point directly in these source `.md` files before writing generator code.
 
 ## Shared Student Model
 
@@ -207,10 +230,11 @@ All new question generators and refactored existing generators MUST implement th
       - *Mathematics:* LaTeX KaTeX strings, SymPy canonical solution graphs, and South African comma decimal separator normalization (`_decomma`).
       - *Business Studies:* Rubric bullet points + concept match definitions from `caps-wiki`.
 
-26. **Curriculum Source Precedence (Authoring Generators)**
-    - When authoring question archetypes, learning objectives, marking schemas, and worked solutions, refer to both curriculum document trees:
-      - `curriculum_docs_auto/` takes priority for authentic exam marks, time pacing, term scheduling, and diagram annotations.
-      - Use in conjunction with manually typed `curriculum_docs/` for syllabus completeness, conceptual depth, and teacher notes.
+26. **Curriculum Source Precedence (Authoring, Renovating & Expanding Generators)**
+    - When authoring, renovating, or expanding question archetypes, learning objectives, marking schemas, and worked solutions, agents must consult both curriculum document trees at all times:
+      - `fundile-tlassistant-vite\caps-ai-backend\curriculum_docs_auto\` (and root `curriculum_docs_auto\`) takes **primary priority** for authentic exam marks, time pacing, term scheduling, and diagram annotations.
+      - `curriculum_docs\` folder in the project root (and `caps-ai-backend\curriculum_docs\`) must be used **in conjunction** for syllabus completeness, conceptual depth, and teacher notes.
+    - No changes or entropy expansions may be made without first viewing the relevant topic markdown files in these folders.
 
 26b. **Zero-Meta-Curriculum Invariant & Exam Paper Authenticity Standard**
     - **Absolute Negative Constraint**: Students in tests and exams are tested on **subject concepts, procedures, calculations, and analytical problem-solving**—NEVER on administrative policy or curriculum bureaucracy.
@@ -222,48 +246,11 @@ All new question generators and refactored existing generators MUST implement th
     - Every question must directly mimic an authentic high school test or national examination paper (DBE/IEB standard) with realistic scenarios, concrete numbers, formulas, or accounting ledgers.
     - When extracting from curriculum documents, adversarially strip all teacher notes, pacing comments, and administrative policy text.
 
-27. **Specialized Custom Subagents & Autonomous Delegation**
-    - The repository maintains 17 persistent specialist configurations in `.agents/agents/`:
-      - Systems & Engine Specialists:
-        - `generator_architect.json`: 6-pillar deterministic Python/SymPy generators, AST purity, CC <= 12, horizontal and vertical slicing, Zero-Meta-Curriculum Invariant.
-        - `curriculum_specialist.json`: CAPS syllabus, pacing, diagnostic calibration (beta 0.3, 0.6, 0.85), coverage completeness audits, zero-trademark policy, cross-grade spiral maps, zero-meta policy.
-        - `question_appropriateness_specialist.json`: Exam authenticity and question appropriateness auditor. Enforces the Zero-Meta-Curriculum Invariant across all generators, static fallback banks, and challenges.
-        - `cognitive_ui_engineer.json`: React 18/Vite cognitive modalities (KaTeX, JSXGraph, 2D ledgers), mobile-first 44px touch targets, full-viewport mobile layouts, file size < 2000 lines, brand visual consistency (#13519C brand blue, #FF9100 brand orange, bg-slate-50 canvas).
-        - `eval_triage_architect.json`: Memory-Decayed BKT (P(L, dt)), post-exam triage 3-step repair, PDF memos, cross-grade spiral adaptive regression.
-        - `systems_security_architect.json`: Socket pooling, query projections, SymPy thread sandboxing (2.5s timeout), POPIA Sec 35, token budgets, and operational cost governance.
-        - `architecture_governor.json`: Manifest synchronization (Rule 0a-0c), quarterly SOTA stack audits, and generate_architecture_html.py.
-        - `learning_journey_architect.json`: End-to-end pedagogical progression harmony (Diagnostic -> Scaffold -> Practice -> Assessment -> Prerequisite Regression), ungameable gamification (XP, streaks, 4-tier badges), cognitive pacing circuit breakers, and mastery thresholds.
-        - `agentic_orchestrator_architect.json`: Pro tier Socratic conversational tutor, orchestrator tool belt, declarative suggestion chips taxonomy, topic guardrail, regex solution-leak shields, frustration circuit breakers, and provider abstraction.
-        - `qa_test_architect.json`: End-to-end testing strategy, large-scale Monte Carlo generator seed determinism, responsive viewport validation, procedure tracker precision, and offline telemetry buffer testing.
-      - Stakeholder Persona Specialists (UX, Ergonomics & Market Strategy):
-        - `learner_ux_specialist.json`: Student psychology, distraction-free light workspaces, 3-tier progression pacing (Scaffold -> Practice -> Assessment), procedure tracker visual feedback, and ungameable gamification.
-        - `teacher_cockpit_designer.json`: Educator ergonomics, D2L Brightspace-style humanized student rosters with real photo upload support, 3-click friction-free exam and memo authoring, rubric customization without code, and 1-click targeted micro-fix assignments.
-        - `parent_bridge_marketer.json`: Parental trust, anxiety reduction, zero-nagging weekly Sunday WhatsApp pulse summaries, actionable coaching recommendations, transparent data savings marketing (< 2MB vs 450MB), and accessible home communication.
-        - `school_admin_strategist.json`: School leadership administration, class roster creation, custom term mark collation and weightings (SASAMS alignment), Annual Teaching Plan (ATP) curriculum pacing heatmaps, grade-wide misconception remediation broadcasts, and POPIA child privacy governance.
-      - Subject Pedagogy Specialists (Lead Subject Examiners):
-        - `math_sciences_specialist.json`: Mathematics, Technical Mathematics, Mathematical Literacy (Grades 7–12) — procedural calculation purity, SA comma decimals, method marks [M] and consequential accuracy [CA], MathKeypad completeness, and Grade 12->7 prerequisite lineage.
-        - `commercial_sciences_specialist.json`: EMS (7–9), Accounting (10–12), Business Studies (10–12) — 2D ledger coordinate marking, Accounting Equation columns, 15% VAT, and business legislation rubrics.
-        - `sciences_domain_specialist.json`: Natural Sciences (7–9), Physical Sciences (10–12), Life Sciences (10–12) — CAPS Data Sheet equations, mandatory SI units, vector directions, balanced chemical equations, and biological diagram accuracy.
-    - **In any conversation:** When the user requests work in one of these domains, or references an agent by name, the main agent must either adopt that specialist's strict invariants directly or register and invoke the subagent via `define_subagent` / `invoke_subagent` using the corresponding `.agents/agents/*.json` configuration.
+27. **Direct Engineering Standard (Zero Subagent Persona Bureaucracy)**
+    - Work directly on the codebase: read the exact source files, make grounded edits, and verify immediately via terminal commands.
+    - Do not delegate implementation tasks to artificial specialist subagent personas. Subagents are strictly reserved for isolated, read-only research exploration when necessary.
 
-28. **Mandatory Specialist Agent Routing Protocol (Enforced Delegation Pipeline)**
-    - The main agent must NEVER attempt ad-hoc shortcuts or bypass specialized subagents when implementing tasks across distinct architectural domains.
-    - **Enforced Task-to-Agent Delegation Matrix:**
-      1. **Frontend React UI, Mobile Viewports & Ergonomics:** MUST be delegated to `cognitive_ui_engineer` (React 18, Vite, mobile touch targets, landscape/portrait workspace maximization, skeuo-modern folder tabs, cognitive modalities).
-      2. **Learner Journey & Psychology:** MUST be delegated to `learner_ux_specialist` (dashboard layouts, emotional safety of looping, distraction-free workspaces).
-      3. **Backend Question Generators:** MUST be delegated to `generator_architect` + Domain Specialist (`math_sciences_specialist`, `commercial_sciences_specialist`, `sciences_domain_specialist`).
-      4. **End-to-End QA, Testing & Viewport Verification:** MUST be delegated to `qa_test_architect` (Vite production builds, Monte Carlo determinism, DOM/chassis validation).
-      5. **Curriculum Pacing, Term Calibration & Alignment:** MUST be delegated to `curriculum_specialist`.
-      6. **Architecture Manifest & Rule 0 Governance:** MUST be delegated to `architecture_governor`.
-    - **Execution Mandate:**
-      - Whenever a user task involves mobile UI, React layout refactoring, or cognitive modalities, the main agent MUST invoke `cognitive_ui_engineer` to perform the changes and verify fidelity against prototypes before presenting to the user.
-      - Any QA or verification check MUST be executed or validated by `qa_test_architect`.
-      - This protocol is non-negotiable and guarantees absolute consistency across the development pipeline.
-    - **Agent Creation & Modification Governance (Explicit Permission Required):**
-      - For any task requiring the creation of a **new specialist agent** or the **modification of an existing agent** (its definition, system prompt, capabilities, or tooling in `.agents/agents/*.json`), the assistant MUST explicitly ask the user for permission first before executing the modification or creating the agent.
-      - Never unilaterally alter an existing agent's architecture, tools, or configuration, nor define new agent types without prior explicit user consent.
-
-29. **Continuous Hourly Check, GitHub Sync & Dual Redeployment Protocol**
+28. **Continuous Hourly Check, GitHub Sync & Dual Redeployment Protocol**
     - The repository maintains an automated hourly cycle to inspect for codebase updates, sync changes to GitHub, and trigger production redeployments across both frontend (Firebase Hosting) and backend (Hugging Face Spaces).
     - **Hourly Execution Pipeline:**
       1. **Change Detection (Every 60 Minutes):**

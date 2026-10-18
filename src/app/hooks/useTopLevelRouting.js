@@ -159,9 +159,14 @@ export const useTopLevelRouting = ({
     setRoutePage('landing');
   }, []);
 
+  const handleNavigateCountrySkeleton = useCallback((countryCode) => {
+    navigateToRoutePage(`skeleton_${countryCode}`);
+  }, [navigateToRoutePage]);
+
   return {
     authMode,
     handleNavigateHome,
+    handleNavigateCountrySkeleton,
     handleNavigateSignIn,
     handleNavigateSignUp,
     handleNavigatePrivacy,

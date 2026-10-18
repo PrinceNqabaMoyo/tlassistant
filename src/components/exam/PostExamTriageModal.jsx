@@ -408,12 +408,12 @@ export default function PostExamTriageModal({
             <p className="text-sm text-slate-300 max-w-md mx-auto leading-relaxed">
               You successfully repaired your understanding of{' '}
               <span className="text-sky-300 font-semibold">{primaryMisconception.tag}</span>. Your
-              BKT mastery dial has been re-calibrated.
+              topic mastery dial has been re-calibrated.
             </p>
 
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-bold">
               <Zap className="w-4 h-4" />
-              <span>+50 Ungameable Mastery XP Awarded</span>
+              <span>Mastery Milestone Verified ✓</span>
             </div>
 
             <div className="pt-4">

@@ -12,6 +12,7 @@ No LLM is used. Generation is fully deterministic given a seed.
 from __future__ import annotations
 
 import random
+import re
 import uuid
 from typing import Any, Dict, List, Optional
 
@@ -59,18 +60,29 @@ def make_mcq(
     marks: int = 2,
     hint: Optional[str] = None,
     visual_aid_key: Optional[str] = None,
+    guidelines: Optional[List[str]] = None,
 ) -> Dict[str, Any]:
     hint_text = hint or explanation
+    c_idx = int(correct_index)
+    exp_ans = options[c_idx] if 0 <= c_idx < len(options) else ""
     return {
         "id": make_id(f"{prefix}_mcq"),
         "question_type": "mcq",
+        "modality": "math",
+        "solution_type": "mcq",
         "prompt": prompt,
         "options": list(options),
-        "correct_index": str(int(correct_index)),
+        "correct_index": str(c_idx),
+        "expected_answer": exp_ans,
         "explanation": explanation,
         "marks": int(marks),
         "hint_trigger": hint_text,
-        "guidelines": [hint_text],
+        "hints": {
+            "tier_1": hint or "Read the question carefully and review all multiple-choice options.",
+            "tier_2": explanation or "Apply the governing CAPS business principle to identify the single correct choice.",
+            "tier_3": f"Core rationale: {explanation}" if explanation else "Eliminate the distractors to select the correct answer.",
+        },
+        "guidelines": list(guidelines or []),
         "visual_aid_key": visual_aid_key,
     }
 
@@ -84,19 +96,44 @@ def make_typed(
     marks: Optional[int] = None,
     hint: Optional[str] = None,
     visual_aid_key: Optional[str] = None,
+    guidelines: Optional[List[str]] = None,
 ) -> Dict[str, Any]:
     resolved_marks = int(marks) if marks is not None else max(1, len(marking_points))
     hint_text = hint or (f"Make sure your answer covers: {', '.join(marking_points[:3])}." if marking_points else "")
+    schema = {
+        "total_marks": resolved_marks,
+        "marking_points": [
+            {
+                "id": f"mp_{idx + 1}",
+                "desc": pt,
+                "marks": max(1, resolved_marks // max(1, len(marking_points))),
+                "target_concepts": [w for w in re.split(r"[,/;\s]+", pt) if len(w) > 3],
+                "editable": True,
+            }
+            for idx, pt in enumerate(marking_points)
+        ],
+        "deductions": [],
+        "carry_forward_rule": "consequential_accuracy",
+    }
     return {
         "id": make_id(f"{prefix}_typed"),
         "question_type": "typed",
+        "modality": "semantic",
+        "solution_type": "marking_points",
         "prompt": prompt,
         "marking_points": list(marking_points),
+        "marking_schema": schema,
         "sample_answer": sample_answer,
+        "expected_answer": sample_answer,
         "explanation": sample_answer,
         "marks": resolved_marks,
         "hint_trigger": hint_text,
-        "guidelines": [hint_text] if hint_text else [],
+        "hints": {
+            "tier_1": hint or "Focus on the key business concept or definition requested.",
+            "tier_2": "Ensure your explanation addresses each required marking point.",
+            "tier_3": f"Sample response direction: {sample_answer}" if sample_answer else "State the concept clearly with relevant business context.",
+        },
+        "guidelines": list(guidelines or []),
         "visual_aid_key": visual_aid_key,
     }
 
@@ -113,6 +150,7 @@ def make_wordbank(
     hint: Optional[str] = None,
     visual_aid_key: Optional[str] = None,
     text_parts: Optional[List[str]] = None,
+    guidelines: Optional[List[str]] = None,
 ) -> Dict[str, Any]:
     """Build a word-bank question.
 
@@ -129,15 +167,23 @@ def make_wordbank(
     return {
         "id": make_id(f"{prefix}_wb"),
         "question_type": "word_bank",
+        "modality": "math",
+        "solution_type": "word_bank",
         "prompt": prompt,
         "word_bank": list(pool),
         "blanks": structured_blanks,
         "correct_map": dict(correct_map),
+        "expected_answer": str(correct_map),
         "text_parts": resolved_text_parts,
         "explanation": explanation,
         "marks": int(marks),
         "hint_trigger": hint_text,
-        "guidelines": [hint_text] if hint_text else [],
+        "hints": {
+            "tier_1": hint or "Read the entire sentence and identify the missing business term.",
+            "tier_2": "Eliminate terms from the word bank that don't match the grammatical context.",
+            "tier_3": f"Correct concept: {explanation}" if explanation else "Place the exact terminology from the bank.",
+        },
+        "guidelines": list(guidelines or []),
         "visual_aid_key": visual_aid_key,
     }
 
@@ -153,6 +199,7 @@ def make_matching(
     marks: int = 2,
     hint: Optional[str] = None,
     visual_aid_key: Optional[str] = None,
+    guidelines: Optional[List[str]] = None,
 ) -> Dict[str, Any]:
     """Build a matching-columns question.
 
@@ -165,14 +212,22 @@ def make_matching(
     return {
         "id": make_id(f"{prefix}_match"),
         "question_type": "matching_columns",
+        "modality": "math",
+        "solution_type": "matching",
         "prompt": prompt,
         "column_a": list(column_a),
         "column_b": list(column_b),
         "correct_pairs": dict(correct_pairs),
+        "expected_answer": str(correct_pairs),
         "explanation": explanation,
         "marks": int(marks),
         "hint_trigger": hint_text,
-        "guidelines": [hint_text] if hint_text else [],
+        "hints": {
+            "tier_1": hint or "Match the most obvious business concept first.",
+            "tier_2": "Look for defining keywords connecting Column A to Column B.",
+            "tier_3": f"Matching rationale: {explanation}" if explanation else "Align each descriptor with its exact term.",
+        },
+        "guidelines": list(guidelines or []),
         "visual_aid_key": visual_aid_key,
     }
 
@@ -188,6 +243,7 @@ def make_crossword(
     marks: int = 2,
     hint: Optional[str] = None,
     visual_aid_key: Optional[str] = None,
+    guidelines: Optional[List[str]] = None,
 ) -> Dict[str, Any]:
     """Build a crossword question.
 
@@ -199,14 +255,22 @@ def make_crossword(
     return {
         "id": make_id(f"{prefix}_cross"),
         "question_type": "crossword",
+        "modality": "math",
+        "solution_type": "crossword",
         "prompt": prompt,
         "words": [w.upper() for w in words],
         "clues": dict(clues),
         "grid_size": int(grid_size),
+        "expected_answer": ", ".join(words),
         "explanation": explanation,
         "marks": int(marks),
         "hint_trigger": hint_text,
-        "guidelines": [hint_text] if hint_text else [],
+        "hints": {
+            "tier_1": hint or "Check the letter count of the blank grid slots.",
+            "tier_2": "Read the clue carefully for CAPS business vocabulary terms.",
+            "tier_3": f"Clue answer: {explanation}" if explanation else "Fill the intersecting letters to verify.",
+        },
+        "guidelines": list(guidelines or []),
         "visual_aid_key": visual_aid_key,
     }
 
@@ -222,6 +286,7 @@ def make_essay(
     max_words: int = 400,
     hint: Optional[str] = None,
     visual_aid_key: Optional[str] = None,
+    guidelines: Optional[List[str]] = None,
 ) -> Dict[str, Any]:
     """Build an essay / long-form question.
 
@@ -232,18 +297,42 @@ def make_essay(
         "Plan your answer: write an introduction, develop your points in the body, "
         "and finish with a conclusion."
     )
+    schema = {
+        "total_marks": int(marks),
+        "marking_points": [
+            {
+                "id": f"mp_{idx + 1}",
+                "desc": f"{crit.get('criterion', 'Criterion')}: {crit.get('description', '')}".strip(": "),
+                "marks": int(crit.get("marks", max(1, int(marks) // max(1, len(rubric))))),
+                "target_concepts": [w for w in re.split(r"[,/;\s]+", f"{crit.get('criterion', '')} {crit.get('description', '')}") if len(w) > 3],
+                "editable": True,
+            }
+            for idx, crit in enumerate(rubric)
+        ],
+        "deductions": [],
+        "carry_forward_rule": "consequential_accuracy",
+    }
     return {
         "id": make_id(f"{prefix}_essay"),
         "question_type": "essay",
+        "modality": "semantic",
+        "solution_type": "rubric",
         "prompt": prompt,
         "rubric": list(rubric),
+        "marking_schema": schema,
         "sample_answer": sample_answer,
+        "expected_answer": sample_answer,
         "explanation": sample_answer,
         "marks": int(marks),
         "min_words": int(min_words),
         "max_words": int(max_words),
         "hint_trigger": hint_text,
-        "guidelines": [hint_text],
+        "hints": {
+            "tier_1": hint or "Structure your essay with an Introduction, Body paragraphs, and a Conclusion.",
+            "tier_2": "Use clear subheadings for each rubric criterion to maximize marks.",
+            "tier_3": f"Key arguments: {sample_answer[:120]}..." if sample_answer else "Develop full explanatory sentences with practical business examples.",
+        },
+        "guidelines": list(guidelines or [f"Word range: {min_words}–{max_words} words.", "Structure: Introduction, Body, Conclusion."]),
         "visual_aid_key": visual_aid_key,
     }
 

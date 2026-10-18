@@ -15,5 +15,6 @@ test('Set 8: Prince Mthembu — Mathematics Calculus & Physical Sciences (Gr 12 
     subject1TabName: 'Maths',
     subject2: 'Physical Sciences',
     subject2TabName: 'Physics',
+    abilityProfile: 'distinction_candidate',
   });
 });

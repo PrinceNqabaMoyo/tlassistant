@@ -33,21 +33,34 @@ from typing import Any, Dict, List, Optional, Tuple
 #                       MATH EXPRESSION PARSER
 # ---------------------------------------------------------------------------
 
-def _clean_number_str(s: str) -> str:
+def _clean_number_str(s: Any) -> str:
     """Remove spaces inside numbers like '26 000' → '26000', handle R prefix."""
-    s = s.strip()
+    if s is None:
+        return ""
+    if isinstance(s, (list, tuple)):
+        s = s[0] if s else ""
+    s = str(s).strip()
     s = re.sub(r'^[Rr]\s*', '', s)           # strip currency prefix
     s = re.sub(r'[,\s]+(?=\d)', '', s)        # '26 000' → '26000'
     s = s.replace('(', '-').replace(')', '')   # accounting brackets → negative
     return s
 
 
-def _safe_eval_expr(expr_str: str) -> Optional[float]:
+def _safe_eval_expr(expr_str: Any) -> Optional[float]:
     """
     Safely evaluate a mathematical expression string.
     Uses Python's ast module to parse and evaluate only arithmetic nodes.
     Returns None if the expression is not a valid arithmetic expression.
     """
+    if expr_str is None:
+        return None
+    if isinstance(expr_str, (int, float)):
+        return float(expr_str)
+    if isinstance(expr_str, (list, tuple)):
+        if not expr_str:
+            return None
+        expr_str = expr_str[0]
+
     cleaned = _clean_number_str(expr_str)
     if not cleaned:
         return None
@@ -112,13 +125,29 @@ def _numbers_close(a: float, b: float, tol: float = 0.5) -> bool:
 #                   CELL-LEVEL SCORING (TABULAR QUESTIONS)
 # ---------------------------------------------------------------------------
 
-def _score_string_cell(student: str, expected: str) -> Dict[str, Any]:
+def _score_string_cell(student: Any, expected: Any) -> Dict[str, Any]:
     """
     Score a text/string cell (details column, dates, folio references).
     Rule 2 & Rule 1c: 1 mark for each correct string cell.
     """
-    s = student.strip().lower()
-    e = expected.strip().lower()
+    s = str(student if student is not None else '').strip().lower()
+
+    if isinstance(expected, (list, tuple)):
+        expected_candidates = [str(x).strip().lower() for x in expected if str(x).strip()]
+        if not expected_candidates:
+            return {"score": 0, "max_score": 0, "feedback": ""}
+        if any(s == c for c in expected_candidates):
+            return {"score": 1, "max_score": 1, "feedback": "Correct."}
+        # Partial match: check if key words overlap with any candidate
+        for c in expected_candidates:
+            e_words = set(c.split())
+            s_words = set(s.split())
+            overlap = e_words & s_words
+            if len(overlap) >= len(e_words) * 0.7 and len(e_words) > 1:
+                return {"score": 0.5, "max_score": 1, "feedback": f"Partially correct. Expected: {expected[0]}"}
+        return {"score": 0, "max_score": 1, "feedback": f"Incorrect. Expected: {expected[0]}"}
+
+    e = str(expected if expected is not None else '').strip().lower()
 
     if not e:
         # Empty expected → nothing to mark
@@ -137,17 +166,29 @@ def _score_string_cell(student: str, expected: str) -> Dict[str, Any]:
     return {"score": 0, "max_score": 1, "feedback": f"Incorrect. Expected: {expected}"}
 
 
-def _classify_cell_type(cell_id: str, expected_val: str, headers: List[str],
+def _classify_cell_type(cell_id: str, expected_val: Any, headers: List[str],
                         row_idx: int, col_idx: int) -> str:
     """
     Classify a cell as 'numeric', 'string', or 'empty' based on its
     expected value and its column header.
     """
-    if not expected_val or expected_val.strip() == '':
+    if expected_val is None:
+        return 'empty'
+    if isinstance(expected_val, (list, tuple)):
+        if not expected_val:
+            return 'empty'
+        for elem in expected_val:
+            elem_type = _classify_cell_type(cell_id, elem, headers, row_idx, col_idx)
+            if elem_type != 'empty':
+                return elem_type
+        return 'string'
+
+    val_str = str(expected_val).strip()
+    if not val_str:
         return 'empty'
 
     # Try to parse as number
-    cleaned = _clean_number_str(expected_val)
+    cleaned = _clean_number_str(val_str)
     try:
         float(cleaned)
         return 'numeric'
@@ -156,8 +197,8 @@ def _classify_cell_type(cell_id: str, expected_val: str, headers: List[str],
 
 
 def _score_numeric_cell(
-    student_input: str,
-    expected_val: str,
+    student_input: Any,
+    expected_val: Any,
     rubric: Optional[Dict[str, Any]] = None,
     is_total: bool = False,
     student_context: Optional[Dict[str, float]] = None,
@@ -168,10 +209,10 @@ def _score_numeric_cell(
 
     Parameters
     ----------
-    student_input : str
+    student_input : Any
         Raw student input (could be a number or expression like '26000 + 12000')
-    expected_val : str
-        The expected correct value as a string
+    expected_val : Any
+        The expected correct value as a string or list of acceptable values
     rubric : dict, optional
         Structured rubric with 'foundational_values', 'operations', 'formula_structure'
     is_total : bool
@@ -181,18 +222,31 @@ def _score_numeric_cell(
     dependencies : list, optional
         List of cell_ids this cell depends on for consequential marking
     """
-    expected_num = _safe_eval_expr(expected_val)
+    if isinstance(expected_val, (list, tuple)):
+        best_res = None
+        for cand in expected_val:
+            res = _score_numeric_cell(student_input, cand, rubric, is_total, student_context, dependencies)
+            if best_res is None or res.get('score', 0) > best_res.get('score', 0):
+                best_res = res
+            if res.get('score', 0) == res.get('max_score', 1):
+                return res
+        return best_res or {"score": 0, "max_score": 1, "feedback": "Incorrect."}
+
+    student_str = str(student_input if student_input is not None else '').strip()
+    expected_str = str(expected_val if expected_val is not None else '').strip()
+
+    expected_num = _safe_eval_expr(expected_str)
     if expected_num is None:
         # Not a numeric cell after all
-        return _score_string_cell(student_input or '', expected_val)
+        return _score_string_cell(student_str, expected_str)
 
-    if not student_input or student_input.strip() == '':
+    if not student_str:
         max_s = 0.5 if is_total else 1
         if rubric:
             max_s = rubric.get('max_score', max_s)
         return {"score": 0, "max_score": max_s, "feedback": "No answer provided."}
 
-    student_num = _safe_eval_expr(student_input)
+    student_num = _safe_eval_expr(student_str)
 
     # ── CASE 1: Simple cell with no rubric (foundational value) ──
     if not rubric:
@@ -378,8 +432,17 @@ async def _grade_table(question: Dict[str, Any], answer: Any) -> Dict[str, Any]:
         # Parse cell coordinates
         parts = cell_id.split('_')
         if len(parts) >= 3:
-            row_idx = int(parts[1].replace('r', ''))
-            col_idx = int(parts[2].replace('c', ''))
+            try:
+                row_idx = int(parts[1].replace('r', ''))
+                col_idx = int(parts[2].replace('c', ''))
+            except ValueError:
+                row_idx, col_idx = 0, 0
+        elif len(parts) == 2 and parts[0].startswith('r') and parts[1].startswith('c'):
+            try:
+                row_idx = int(parts[0].replace('r', ''))
+                col_idx = int(parts[1].replace('c', ''))
+            except ValueError:
+                row_idx, col_idx = 0, 0
         else:
             row_idx, col_idx = 0, 0
 
@@ -541,6 +604,211 @@ async def _grade_arithmetic_grid(question: Dict[str, Any], answer: Any) -> Dict[
     }
 
 
+async def _grade_diagram_select(question: Dict[str, Any], answer: Any) -> Dict[str, Any]:
+    """Grade a diagram / geometry element selection question."""
+    correct_edge = str(question.get('correct_edge', '')).strip()
+    is_correct = str(answer or '').strip().lower() == correct_edge.lower()
+    max_score = int(question.get('marks', 1))
+    return {
+        "is_correct": is_correct,
+        "score": max_score if is_correct else 0,
+        "max_score": max_score,
+        "feedback": "Correct." if is_correct else f"Not quite — review which element is highlighted relative to the diagram.",
+        "correct_edge": correct_edge,
+    }
+
+
+async def _grade_rubric(question: Dict[str, Any], answer: Any) -> Dict[str, Any]:
+    """
+    Grades semantic, conceptual, and rubric questions across all subjects
+    (Business Studies, Life Sciences, Natural Sciences, EMS theory, Accounting theory).
+    Supports explicit marking_points with part-marks, keyword criteria, and analytical depth.
+    """
+    max_score = int(question.get('marks', 6))
+    expected_keywords = question.get('key_concepts') or question.get('keywords') or []
+
+    if isinstance(answer, dict):
+        selected = answer.get('keywords', [])
+        explanation = str(answer.get('explanation', ''))
+    elif isinstance(answer, list):
+        selected = answer
+        explanation = ''
+    else:
+        selected = []
+        explanation = str(answer or '')
+
+    student_corpus = f"{' '.join(str(s) for s in selected)} {explanation}".lower()
+
+    # Extract marking points if defined on the question
+    raw_marking_points = (
+        question.get('marking_schema', {}).get('marking_points') or
+        question.get('marking_points') or
+        question.get('content_rubric') or
+        question.get('parts') or
+        []
+    )
+
+    awarded_points = []
+    earned_score = 0
+
+    if raw_marking_points:
+        total_mp_marks = 0
+        for idx, mp in enumerate(raw_marking_points):
+            if isinstance(mp, str):
+                p_id = f"mp_{idx + 1}"
+                p_desc = mp
+                p_marks = 2 if '2' in mp else 1
+                p_concepts = []
+            else:
+                p_id = mp.get('id', f"mp_{idx + 1}")
+                p_desc = mp.get('desc') or mp.get('point') or mp.get('criterion') or mp.get('question') or ''
+                p_marks = int(mp.get('marks') or mp.get('max_marks') or 2)
+                p_concepts = mp.get('concepts') or mp.get('target_concepts') or mp.get('key_concepts') or []
+
+            total_mp_marks += p_marks
+            point_achieved = False
+
+            # Check target concepts
+            if p_concepts:
+                matched_c = [c for c in p_concepts if str(c).lower() in student_corpus]
+                if len(matched_c) >= max(1, len(p_concepts) // 2):
+                    point_achieved = True
+
+            # Check description keywords if not already achieved
+            if not point_achieved and p_desc:
+                words = re.findall(r'[a-zA-Z0-9_\-]+', p_desc.lower())
+                meaningful_words = [w for w in words if len(w) > 3 and w not in ('explain', 'discuss', 'outline', 'state', 'describe', 'impact', 'marks', 'point')]
+                if meaningful_words:
+                    matched_words = [w for w in meaningful_words if w in student_corpus]
+                    if len(matched_words) >= max(1, len(meaningful_words) // 3):
+                        point_achieved = True
+
+            if point_achieved:
+                earned_score += p_marks
+                awarded_points.append({"id": p_id, "marks": p_marks, "desc": p_desc})
+
+        if total_mp_marks > 0 and max_score <= 0:
+            max_score = total_mp_marks
+
+    # Also match general expected_keywords if provided
+    matched = [k for k in expected_keywords if str(k).lower() in student_corpus]
+
+    # If no marking points or nothing awarded yet, fall back to keyword score
+    if not raw_marking_points:
+        if expected_keywords:
+            earned_score = min(len(matched) * 2, max_score)
+        elif explanation.strip():
+            earned_score = max(1, max_score - 2) if len(explanation.split()) >= 15 else 1
+        else:
+            earned_score = 0
+
+    earned_score = min(earned_score, max_score)
+    is_correct = earned_score >= (max_score * 0.6) if max_score > 0 else False
+
+    feedback_msg = (
+        f"Awarded {earned_score} / {max_score} marks based on marking rubric criteria."
+        if earned_score > 0
+        else "Ensure your analytical response incorporates the required core criteria and statutory concepts."
+    )
+
+    return {
+        "is_correct": is_correct,
+        "score": earned_score,
+        "max_score": max_score,
+        "feedback": feedback_msg,
+        "awarded_points": awarded_points,
+        "matched_concepts": matched,
+    }
+
+
+async def _grade_teacher_custom_stepwise(question: Dict[str, Any], answer: Any) -> Dict[str, Any]:
+    """
+    Grades a teacher-customized assessment question using the teacher's edited marking_scheme
+    and custom point weights.
+    """
+    marking_scheme = question.get('marking_scheme') or []
+    expected_ans = str(question.get('expected_answer') or question.get('solution') or '').strip()
+    student_ans_str = str(answer or '').strip()
+
+    max_score = sum(int(p.get('marks', 1)) for p in marking_scheme) if marking_scheme else int(question.get('marks', 5))
+
+    if not student_ans_str:
+        return {
+            "score": 0,
+            "max_score": max_score,
+            "is_correct": False,
+            "feedback": "No answer provided.",
+            "points_awarded": []
+        }
+
+    awarded_points = []
+    earned_score = 0
+
+    for p in marking_scheme:
+        p_id = p.get('id', 'mp_1')
+        p_desc = str(p.get('point', '')).lower()
+        p_marks = int(p.get('marks', 1))
+        target_val = str(p.get('target_val') or '').strip()
+
+        point_awarded = False
+        
+        # Method A: Direct target value match (numeric or substring)
+        if target_val:
+            num_t = _safe_eval_expr(target_val)
+            num_s = _safe_eval_expr(student_ans_str)
+            if num_t is not None and num_s is not None and _numbers_close(num_s, num_t):
+                point_awarded = True
+            elif target_val.lower() in student_ans_str.lower():
+                point_awarded = True
+
+        # Method B: Formula or algebraic fragment match from criterion description
+        if not point_awarded:
+            norm_s = re.sub(r'[^a-zA-Z0-9]', '', student_ans_str.lower())
+            formulas = re.findall(r'\(.*?\)|[a-zA-Z0-9\^_\+\-\*\/]+=[a-zA-Z0-9\^_\+\-\*\/]+|\d+(?:[,\.]\d+)?', p.get('point', ''))
+            for f in formulas:
+                clean_f = re.sub(r'[^a-zA-Z0-9]', '', f.lower())
+                if clean_f and clean_f in norm_s:
+                    point_awarded = True
+                    break
+
+        # Method C: Conceptual keyword or step match from criterion description
+        if not point_awarded:
+            terms = re.findall(r'[a-zA-Z0-9_\-\.\=\/\+\*]+', p_desc)
+            meaningful_terms = [t for t in terms if len(t) > 2 and t not in ('the', 'and', 'for', 'with', 'from', 'step', 'point', 'correct')]
+            if meaningful_terms:
+                matches = sum(1 for t in meaningful_terms if t in student_ans_str.lower())
+                if matches >= max(1, len(meaningful_terms) // 2):
+                    point_awarded = True
+
+        if point_awarded:
+            earned_score += p_marks
+            awarded_points.append({"id": p_id, "marks": p_marks, "desc": p.get('point')})
+
+    # If final answer is algebraically/numerically equivalent, ensure at least majority marks
+    final_eq = False
+    expected_num = _safe_eval_expr(expected_ans)
+    student_num = _safe_eval_expr(student_ans_str)
+    if expected_num is not None and student_num is not None:
+        final_eq = _numbers_close(expected_num, student_num)
+    elif expected_ans and expected_ans.lower() in student_ans_str.lower():
+        final_eq = True
+
+    if final_eq and earned_score == 0:
+        earned_score = max_score
+        awarded_points = marking_scheme
+
+    earned_score = min(earned_score, max_score)
+    is_correct = earned_score >= (max_score * 0.75)
+
+    return {
+        "score": earned_score,
+        "max_score": max_score,
+        "is_correct": is_correct,
+        "feedback": f"Awarded {earned_score} / {max_score} marks based on assessment marking rubric." if earned_score > 0 else "Review the model memorandum steps.",
+        "awarded_points": awarded_points
+    }
+
+
 # ---------------------------------------------------------------------------
 #                         SINGLE QUESTION DISPATCHER
 # ---------------------------------------------------------------------------
@@ -556,10 +824,16 @@ async def _grade_single_question(question: Dict[str, Any], answer: Any) -> Dict[
         return await _grade_mcq(question, answer)
     elif q_type == 'calc':
         return await _grade_calc(question, answer)
-    elif q_type in ('journal', 'ledger', 'accounting_equation'):
+    elif modality == 'ledger' or q_type in ('journal', 'ledger', 'accounting_equation'):
         return await _grade_table(question, answer)
     elif q_type == 'table_wordbank':
         return await _grade_wordbank(question, answer)
+    elif q_type == 'diagram_select' or 'correct_edge' in question or modality == 'diagram':
+        return await _grade_diagram_select(question, answer)
+    elif modality in ('semantic', 'rubric') or q_type in ('rubric', 'essay') or 'key_concepts' in question:
+        return await _grade_rubric(question, answer)
+    elif q_type in ('stepwise', 'short_answer_with_steps', 'calculation') or question.get('marking_scheme'):
+        return await _grade_teacher_custom_stepwise(question, answer)
     elif q_type == 'typed':
         return await _grade_typed(question, answer)
 

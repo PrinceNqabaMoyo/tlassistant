@@ -27,6 +27,9 @@ export default function MessageBoardModal({
   isOpen = false,
   onClose = () => {},
   currentUser = null,
+  systemNotifications = [],
+  onMarkAllNotificationsRead = null,
+  onMarkNotificationRead = null,
 }) {
   const [messages, setMessages] = useState([]);
   const [activeTab, setActiveTab] = useState('inbox'); // 'inbox' | 'compose'
@@ -58,8 +61,42 @@ export default function MessageBoardModal({
     }
   }, [isOpen, currentUser, isTeacherOrAdmin]);
 
-  const handleMarkRead = (id) => {
-    studentStore.markMessageRead(id);
+  const combinedItems = React.useMemo(() => {
+    const sysItems = (systemNotifications || []).map((notif) => ({
+      id: notif.id,
+      sender: notif.source === 'system' ? 'Fundile System' : (notif.title || 'Fundile Notice'),
+      senderRole: 'Fundile Platform',
+      subject: notif.type === 'welcome' ? 'Platform Welcome' : (notif.title || 'System Notice'),
+      text: notif.message,
+      date: notif.createdAt?.toDate 
+        ? notif.createdAt.toDate().toLocaleDateString('en-ZA', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }) 
+        : 'Recent',
+      isRead: Boolean(notif.isRead),
+      isSystem: true,
+      deadline: null,
+    }));
+
+    return [...sysItems, ...messages];
+  }, [systemNotifications, messages]);
+
+  const unreadTotal = combinedItems.filter((m) => !m.isRead).length;
+
+  const handleMarkItemRead = (item) => {
+    if (item.isSystem) {
+      if (typeof onMarkNotificationRead === 'function') {
+        onMarkNotificationRead(item.id);
+      }
+    } else {
+      studentStore.markMessageRead(item.id);
+      refreshMessages();
+    }
+  };
+
+  const handleMarkAllRead = () => {
+    if (typeof onMarkAllNotificationsRead === 'function') {
+      onMarkAllNotificationsRead();
+    }
+    studentStore.markAllMessagesRead();
     refreshMessages();
   };
 
@@ -87,8 +124,6 @@ export default function MessageBoardModal({
 
   if (!isOpen) return null;
 
-  const unreadCount = messages.filter((m) => !m.isRead).length;
-
   return (
     <div 
       className="fixed inset-0 z-[130] flex items-center justify-center bg-black/60 backdrop-blur-xs p-3 sm:p-4 select-none animate-in fade-in duration-150"
@@ -103,9 +138,9 @@ export default function MessageBoardModal({
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-2xl bg-white/10 flex items-center justify-center border border-white/20 relative">
               <Bell className="w-5 h-5 text-[#FF9100]" />
-              {unreadCount > 0 && (
+              {unreadTotal > 0 && (
                 <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-rose-500 text-[10px] font-bold text-white flex items-center justify-center ring-2 ring-[#13519C]">
-                  {unreadCount}
+                  {unreadTotal}
                 </span>
               )}
             </div>
@@ -118,14 +153,25 @@ export default function MessageBoardModal({
               </p>
             </div>
           </div>
-          <button
-            type="button"
-            onClick={onClose}
-            className="p-1.5 rounded-full text-white/80 hover:text-white hover:bg-white/10 transition cursor-pointer"
-            title="Close"
-          >
-            <X className="w-5 h-5" />
-          </button>
+          <div className="flex items-center gap-3">
+            {unreadTotal > 0 && (
+              <button
+                type="button"
+                onClick={handleMarkAllRead}
+                className="text-[11px] font-bold text-blue-100 hover:text-white underline underline-offset-2 cursor-pointer transition"
+              >
+                Mark all read
+              </button>
+            )}
+            <button
+              type="button"
+              onClick={onClose}
+              className="p-1.5 rounded-full text-white/80 hover:text-white hover:bg-white/10 transition cursor-pointer"
+              title="Close"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          </div>
         </div>
 
         {/* Tab switcher if user is teacher or admin */}
@@ -140,7 +186,7 @@ export default function MessageBoardModal({
                   : 'text-slate-600 hover:text-slate-900'
               }`}
             >
-              Inbox Messages ({messages.length})
+              Inbox Messages ({combinedItems.length})
             </button>
             <button
               type="button"
@@ -232,51 +278,55 @@ export default function MessageBoardModal({
             </form>
           ) : (
             /* INBOX TAB */
-            messages.length === 0 ? (
+            combinedItems.length === 0 ? (
               <div className="py-12 text-center space-y-2">
                 <div className="w-12 h-12 rounded-full bg-slate-100 text-slate-400 mx-auto flex items-center justify-center">
                   <Bell className="w-6 h-6" />
                 </div>
                 <h4 className="text-sm font-bold text-slate-700">No Active Messages</h4>
                 <p className="text-xs text-slate-500 max-w-xs mx-auto">
-                  Your message board is up to date. Class task notices from teachers appear here.
+                  Your message board is up to date. Official notices and class task communications appear here.
                 </p>
               </div>
             ) : (
-              messages.map((msg) => (
+              combinedItems.map((item) => (
                 <div
-                  key={msg.id}
-                  onClick={() => handleMarkRead(msg.id)}
+                  key={item.id}
+                  onClick={() => handleMarkItemRead(item)}
                   className={`p-4 rounded-2xl border transition-all cursor-pointer relative space-y-2 ${
-                    msg.isRead
+                    item.isRead
                       ? 'bg-white border-slate-200/90 hover:border-slate-300'
                       : 'bg-blue-50/70 border-blue-200 shadow-xs ring-1 ring-blue-100'
                   }`}
                 >
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                      <span className="font-bold text-xs text-slate-900">{msg.sender}</span>
-                      <span className="px-2 py-0.5 rounded-full bg-blue-100 text-[#13519C] text-[10px] font-extrabold">
-                        {msg.subject}
+                      <span className="font-bold text-xs text-slate-900">{item.sender}</span>
+                      <span className={`px-2 py-0.5 rounded-full text-[10px] font-extrabold ${
+                        item.isSystem 
+                          ? 'bg-amber-100 text-amber-800' 
+                          : 'bg-blue-100 text-[#13519C]'
+                      }`}>
+                        {item.subject}
                       </span>
-                      {!msg.isRead && (
+                      {!item.isRead && (
                         <span className="w-2 h-2 rounded-full bg-rose-500 animate-pulse" />
                       )}
                     </div>
                     <span className="text-[10px] text-slate-400 font-medium">
-                      {msg.date}
+                      {item.date}
                     </span>
                   </div>
 
                   <p className="text-xs text-slate-700 leading-relaxed font-normal">
-                    {msg.text}
+                    {item.text}
                   </p>
 
-                  {msg.deadline && (
+                  {item.deadline && (
                     <div className="flex items-center justify-between pt-1 text-[10px] text-amber-800 border-t border-slate-100">
                       <span className="flex items-center gap-1 font-semibold">
                         <Clock className="w-3 h-3 text-amber-600" />
-                        <span>Deadline: {new Date(msg.deadline).toLocaleDateString('en-ZA', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}</span>
+                        <span>Deadline: {new Date(item.deadline).toLocaleDateString('en-ZA', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}</span>
                       </span>
                       <span className="text-slate-400">
                         Auto-deletes 3 days post-deadline

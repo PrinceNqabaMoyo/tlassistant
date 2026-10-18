@@ -41,6 +41,7 @@ export default function UserProfileModal({
   superAdminTier = 'standard',
   setSuperAdminTier = null,
   onOpenPersonaSwitcher = null,
+  onSelectGrade = null,
 }) {
   const [storeState, setStoreState] = useState(() => studentStore.getState());
   const [photoMode, setPhotoMode] = useState(null); // null | 'camera' | 'upload'
@@ -81,11 +82,24 @@ export default function UserProfileModal({
   // Sync form state on open
   useEffect(() => {
     if (isOpen) {
-      const state = studentStore.getState();
-      setName(state.studentName || currentUser?.name || 'Nqobile Dlamini');
-      setGrade(state.grade || currentUser?.grade || 10);
-      setSchool(state.school || currentUser?.schoolName || 'Westville High School');
-      setIsIndependent(Boolean(state.isIndependent || currentUser?.isIndependent));
+      const isSuperAdminUser = Boolean(currentUser?.isSuperAdmin || currentUser?.role === 'admin');
+      const isTeacherUser = currentUser?.role === 'teacher';
+      const isParentUser = currentUser?.role === 'parent';
+      const isSchoolAdminUser = currentUser?.role === 'school' || currentUser?.role === 'school_admin';
+      const isNonStudent = isSuperAdminUser || isTeacherUser || isParentUser || isSchoolAdminUser;
+
+      if (isNonStudent) {
+        setName(currentUser?.name || currentUser?.displayName || currentUser?.email || (isSuperAdminUser ? 'Platform Administrator' : 'User'));
+        setGrade(currentUser?.grade || 10);
+        setSchool(currentUser?.schoolName || (isSuperAdminUser ? 'Fundile Platform Administration' : ''));
+        setIsIndependent(false);
+      } else {
+        const state = studentStore.getState();
+        setName(currentUser?.name || currentUser?.displayName || state.studentName || 'Learner');
+        const isInd = Boolean(currentUser?.isIndependent ?? state.isIndependent);
+        setIsIndependent(isInd);
+        setSchool(isInd ? 'Independent Homeschool' : (currentUser?.schoolName || (state.school && state.school !== 'Independent Homeschool' && state.school !== 'Independent Account' ? state.school : 'Westville High School')));
+      }
       setPhotoMode(null);
       setCapturedPhoto(null);
       setShowAddParent(false);
@@ -210,12 +224,16 @@ export default function UserProfileModal({
   };
 
   const handleSaveProfileDetails = () => {
-    studentStore.updateProfileDetails({
-      studentName: name.trim(),
-      grade: Number(grade),
-      school: isIndependent ? 'Independent Account' : school.trim(),
-      isIndependent,
-    });
+    const isSuperAdminUser = Boolean(currentUser?.isSuperAdmin || currentUser?.role === 'admin');
+    const isNonStudent = isSuperAdminUser || currentUser?.role === 'teacher' || currentUser?.role === 'parent' || currentUser?.role === 'school';
+    if (!isNonStudent) {
+      studentStore.updateProfileDetails({
+        studentName: name.trim(),
+        grade: Number(grade),
+        school: isIndependent ? 'Independent Account' : school.trim(),
+        isIndependent,
+      });
+    }
     onClose();
   };
 
@@ -261,18 +279,18 @@ export default function UserProfileModal({
 
   return (
     <div 
-      className="fixed inset-0 z-[120] flex items-center justify-center bg-black/60 backdrop-blur-xs p-3 sm:p-4 select-none animate-in fade-in duration-150 overflow-y-auto"
+      className="fixed inset-0 z-[120] flex items-stretch justify-end bg-black/50 backdrop-blur-xs select-none animate-in fade-in duration-200 overflow-hidden"
       onClick={onClose}
     >
       <div 
-        className="w-full max-w-xl bg-white rounded-3xl border border-slate-200 shadow-2xl overflow-hidden flex flex-col max-h-[92vh] my-auto"
+        className="w-full md:max-w-md lg:max-w-lg bg-white h-full shadow-2xl border-l border-slate-200 flex flex-col overflow-hidden animate-in slide-in-from-right duration-200"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header Ribbon */}
         <div className="bg-[#13519C] text-white px-6 py-4 flex items-center justify-between shrink-0">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-2xl bg-white/10 flex items-center justify-center border border-white/20">
-              <GraduationCap className="w-6 h-6 text-[#FF9100]" />
+            <div className="w-10 h-10 rounded-2xl bg-white/10 flex items-center justify-center border border-white/20 p-2">
+              <img src="/fundile-favicon.svg" alt="Fundile" className="w-full h-full object-contain" />
             </div>
             <div>
               <h3 className="text-lg font-bold text-white leading-tight" style={{ fontFamily: 'Afacad, sans-serif' }}>
@@ -323,10 +341,18 @@ export default function UserProfileModal({
 
             <div className="flex-1 text-center sm:text-left space-y-1">
               <h4 className="font-bold text-slate-900 text-base" style={{ fontFamily: 'Afacad, sans-serif' }}>
-                {name || 'Learner Name'}
+                {name || currentUser?.name || 'User Profile'}
               </h4>
               <p className="text-xs text-slate-500 font-medium">
-                {isIndependent ? 'Independent Account' : school} • Grade {grade} • {phaseLabel}
+                {currentUser?.isSuperAdmin || currentUser?.role === 'admin' ? (
+                  <span className="text-amber-800 font-bold">{currentUser?.email || 'Platform Owner'} • Platform Super Administrator &amp; Clearance Desk</span>
+                ) : currentUser?.role === 'teacher' ? (
+                  <span>{currentUser?.email || ''} • Faculty Educator • {school || 'Westville High'}</span>
+                ) : currentUser?.role === 'parent' ? (
+                  <span>{currentUser?.email || ''} • Guardian Account</span>
+                ) : (
+                  <span>{isIndependent ? 'Independent Account' : school} • Grade {grade} • {phaseLabel}</span>
+                )}
               </p>
               <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2 pt-1">
                 <button
@@ -435,14 +461,52 @@ export default function UserProfileModal({
             </div>
           )}
 
-          {/* 2. Basic Profile Info */}
-          <div className="space-y-4">
-            <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500">
-              Personal Information
-            </h4>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <div>
-                <label className="block text-xs font-semibold text-slate-700 mb-1">Full Name</label>
+          {/* 2. Administrator Overview or Learner Basic Profile */}
+          {isSuperAdmin ? (
+            <div className="p-4 rounded-2xl bg-amber-50/60 border border-amber-200/90 space-y-3">
+              <h4 className="text-xs font-bold uppercase tracking-wider text-amber-900">
+                Super Admin Account Overview
+              </h4>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                <div>
+                  <span className="text-slate-500 font-semibold block mb-0.5">Administrator Name</span>
+                  <input
+                    type="text"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    className="w-full px-3 py-1.5 rounded-xl border border-slate-300 text-xs font-semibold focus:outline-hidden focus:ring-2 focus:ring-[#13519C]"
+                  />
+                </div>
+                <div>
+                  <span className="text-slate-500 font-semibold block mb-0.5">Registered Email</span>
+                  <div className="px-3 py-1.5 rounded-xl bg-slate-100 border border-slate-200 text-xs font-mono font-bold text-slate-800">
+                    {currentUser?.email || 'admin@fundile.co.za'}
+                  </div>
+                </div>
+                <div>
+                  <span className="text-slate-500 font-semibold block mb-0.5">Platform Clearance</span>
+                  <span className="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[11px] font-bold">
+                    ✓ Full System Governance &amp; Clearance Desk
+                  </span>
+                </div>
+                <div>
+                  <span className="text-slate-500 font-semibold block mb-0.5">Session Type</span>
+                  <span className="px-2 py-0.5 rounded-full bg-blue-100 text-[#13519C] text-[11px] font-bold">
+                    Authentic Platform Owner
+                  </span>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <>
+              {/* 2. Basic Profile Info */}
+              <div className="space-y-4">
+                <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500">
+                  Personal Information
+                </h4>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div>
+                    <label className="block text-xs font-semibold text-slate-700 mb-1">Full Name</label>
                 <input
                   type="text"
                   value={name}
@@ -652,6 +716,8 @@ export default function UserProfileModal({
               ))}
             </div>
           </div>
+          </>
+          )}
 
           {/* 5. Super Admin Switcher (Item 15 - Hidden inside Profile to keep UI clean) */}
           {isSuperAdmin && (
@@ -698,6 +764,103 @@ export default function UserProfileModal({
                         {item.label}
                       </button>
                     ))}
+                  </div>
+
+                  {/* Super Admin Learner Grade Quick-Switcher (Grades 7–12) */}
+                  <div className="pt-2 border-t border-amber-200/60">
+                    <span className="text-[10px] font-bold text-amber-900 uppercase tracking-wider block mb-1">
+                      Switch Learner Grade (Grades 7–12):
+                    </span>
+                    <div className="grid grid-cols-6 gap-1">
+                      {[7, 8, 9, 10, 11, 12].map((g) => {
+                        const isCurrent = Number(grade) === g;
+                        return (
+                          <button
+                            key={g}
+                            type="button"
+                            data-testid={`btn-admin-grade-${g}`}
+                            onClick={() => {
+                              setGrade(g);
+                              studentStore.setGrade(g);
+                              if (typeof onSelectGrade === 'function') {
+                                onSelectGrade(g);
+                              }
+                              if (superAdminMode !== 'student' && typeof setSuperAdminMode === 'function') {
+                                setSuperAdminMode('student');
+                              }
+                              if (onClose) onClose();
+                            }}
+                            className={`py-1.5 rounded-lg text-xs font-bold transition cursor-pointer text-center ${
+                              isCurrent
+                                ? 'bg-[#13519C] text-white shadow-xs'
+                                : 'bg-white text-slate-700 hover:bg-amber-100 border border-amber-200'
+                            }`}
+                          >
+                            Gr {g}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+
+                  {/* Super Admin Enrolment Type Switcher (Item 1) */}
+                  <div className="pt-2 border-t border-amber-200/60">
+                    <span className="text-[10px] font-bold text-amber-900 uppercase tracking-wider block mb-1">
+                      Learner Enrolment Path:
+                    </span>
+                    <div className="grid grid-cols-2 gap-1.5">
+                      <button
+                        type="button"
+                        data-testid="btn-admin-enrolment-institutional"
+                        onClick={() => {
+                          setIsIndependent(false);
+                          setSchool('Westville High School');
+                          studentStore.setEnrolmentType(false);
+                        }}
+                        className={`py-1.5 px-2 rounded-lg text-xs font-bold transition cursor-pointer text-center ${
+                          !isIndependent
+                            ? 'bg-[#13519C] text-white shadow-xs'
+                            : 'bg-white text-slate-700 hover:bg-amber-100 border border-amber-200'
+                        }`}
+                      >
+                        🏛️ Institutional (School)
+                      </button>
+                      <button
+                        type="button"
+                        data-testid="btn-admin-enrolment-independent"
+                        onClick={() => {
+                          setIsIndependent(true);
+                          setSchool('Independent Homeschool');
+                          studentStore.setEnrolmentType(true);
+                        }}
+                        className={`py-1.5 px-2 rounded-lg text-xs font-bold transition cursor-pointer text-center ${
+                          isIndependent
+                            ? 'bg-[#13519C] text-white shadow-xs'
+                            : 'bg-white text-slate-700 hover:bg-amber-100 border border-amber-200'
+                        }`}
+                      >
+                        🏡 Independent (Homeschool)
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Super Admin 1-Click Progression Reset (Item 7) */}
+                  <div className="pt-2 border-t border-amber-200/60">
+                    <button
+                      type="button"
+                      data-testid="btn-admin-reset-all-progress"
+                      onClick={() => {
+                        if (window.confirm('Reset all topic mastery, diagnostic statuses, and session progress back to 0% baseline?')) {
+                          studentStore.resetAllProgress();
+                          alert('All progressions and diagnostics reset to 0% baseline successfully.');
+                        }
+                      }}
+                      className="w-full py-2 px-3 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs shadow-xs transition cursor-pointer flex items-center justify-center gap-1.5"
+                      title="Reset all learner progress back to baseline 0% for testing"
+                    >
+                      <RotateCcw className="w-3.5 h-3.5" />
+                      <span>Reset All Progressions to Baseline (0%)</span>
+                    </button>
                   </div>
                 </div>
               )}
@@ -756,6 +919,7 @@ export default function UserProfileModal({
           {/* Prominent Log Out Button (Item 2) */}
           <button
             type="button"
+            data-testid="btn-user-sign-out"
             onClick={() => {
               onClose();
               if (typeof onLogout === 'function') {

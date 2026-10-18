@@ -49,14 +49,46 @@ MIXTURES_DATA = [
         "explanation": "Different dye pigments have different solubilities in the solvent and different affinities for the chromatography paper. More soluble pigments travel faster and further up the paper.",
         "apparatus": "Chromatography paper strip, capillary tube, beaker, solvent (water or ethanol), pencil baseline, watch glass cover.",
     },
+    {
+        "mixture": "Chalk powder (calcium carbonate), table salt, and water",
+        "methods": "Filtration followed by Solar / Thermal Evaporation",
+        "explanation": "Insoluble calcium carbonate chalk particles are caught on the filter paper; soluble table salt passes into the filtrate and crystallises upon gentle heating.",
+        "apparatus": "Glass funnel, fluted filter paper, beaker, evaporating basin, Bunsen burner.",
+    },
+    {
+        "mixture": "Kerosene (paraffin oil) and water",
+        "methods": "Separation via Separating Funnel (Density & Immiscibility)",
+        "explanation": "Kerosene is less dense than water and the two liquids are immiscible (do not mix). Water forms the lower layer and is drained through the stopcock first.",
+        "apparatus": "Separating funnel with PTFE stopcock, retort stand and ring clamp, receiving beaker.",
+    },
+    {
+        "mixture": "Copper(II) sulphate solution containing insoluble clay impurities",
+        "methods": "Gravity Filtration followed by Slow Crystallisation",
+        "explanation": "Suspended clay impurities are removed by filtration. The saturated blue filtrate is warmed and allowed to cool slowly to form large diamond-shaped copper sulphate crystals.",
+        "apparatus": "Conical flask, funnel, filter paper, crystallising dish, glass stirring rod.",
+    },
+    {
+        "mixture": "Coarse gravel, fine river sand, and dry sawdust",
+        "methods": "Sieving (particle size) followed by Flotation (density in water)",
+        "explanation": "Gravel is retained on a wire mesh sieve. Sawdust floats on water due to low density and is skimmed off, while dense sand sinks to the bottom.",
+        "apparatus": "Wire mesh sieve, water trough, skimming spatula, drying tray.",
+    },
+]
+
+SEPARATION_PROMPT_HOOKS = [
+    "A laboratory technician presents Grade 7 learners with an unseparated mixture containing:",
+    "In a physical science practical investigation, learners are tasked with purifying a sample of:",
+    "An environmental testing sample collected during a river survey contains:",
+    "To demonstrate industrial resource recovery principles, a teacher demonstrates separating:",
 ]
 
 
 def _gen_separating_mixtures_question(r: random.Random, mode: str = "compound") -> Dict[str, Any]:
     mix = r.choice(MIXTURES_DATA)
+    hook = r.choice(SEPARATION_PROMPT_HOOKS)
     
     prompt = (
-        f"A laboratory technician presents Grade 7 learners with an unseparated mixture containing: **{mix['mixture']}**.\n\n"
+        f"{hook} **{mix['mixture']}**.\n\n"
         f"1. Name the scientific separation technique(s) required to isolate the pure components from this mixture.\n"
         f"2. Explain the physical property difference (e.g. solubility, boiling point, magnetism, particle size) that makes this separation possible.\n"
         f"3. List THREE key pieces of laboratory apparatus required to carry out this separation safely.\n"

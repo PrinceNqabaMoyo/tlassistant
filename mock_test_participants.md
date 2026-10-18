@@ -10,19 +10,19 @@
 
 ## 1. Quick Participant Directory & Matrix
 
-| Set | Learner Name | Grade & Phase | Device Form Factor & Viewport | Sign-Up Email | Plan / Mode | Primary Subjects & Topics | Concurrent Stakeholders | Playwright Command |
-| :---: | :--- | :---: | :--- | :--- | :---: | :--- | :--- | :--- |
-| **Set 1** | **Lesedi Khumalo** | Gr 10 FET | **Desktop Installed App**<br>(Standalone Window 1024x768) | `lesedi.khumalo@fundile.test` | R349 Term Pass (EFT) | **Accounting:** Cash Receipts Journal (VAT 15%)<br>**Mathematics:** Euclidean Geometry & Algebra | **Super Admin:** Browser Web Cockpit | `npx playwright test e2e/set1_interactive_side_by_side.spec.js --headed` |
-| **Set 2** | **Ayanda Ndlovu** | Gr 7 Senior | **Mobile Installed App**<br>(Pixel 7 WebAPK Viewport 393x851) | `ayanda.ndlovu@fundile.test` | R349 Term Pass (EFT) | **Mathematics:** 3D Geometric Nets, Patterns & Division<br>**EMS:** Financial Literacy (Source Documents) | **Teacher:** Mrs. P. Khumalo (`MTH701` Browser)<br>**Parent:** Mr. S. Ndlovu (`PAR-7892` Mobile)<br>**Super Admin:** Browser Web Cockpit | `npx playwright test e2e/set2_ayanda_gr7.spec.js --headed` |
-| **Set 3** | **Bongani Sithole** | Gr 8 Senior | **Mobile Installed App**<br>(Pixel 7 WebAPK Viewport 393x851) | `bongani.sithole@fundile.test` | R149 Monthly (EFT) | **Mathematics:** Linear Equations & Negative Integers<br>**Natural Sciences:** Particle Matter & Density $\rho = \frac{m}{V}$ | **Teacher:** Mr. D. Naidoo (`SCI802` Browser)<br>**Parent:** Mrs. T. Sithole (Mobile)<br>**Super Admin:** Browser Web Cockpit | `npx playwright test e2e/set3_bongani_gr8.spec.js --headed` |
-| **Set 4** | **Zanele Mthembu** | Gr 9 Senior | **Mobile Installed App**<br>(Pixel 7 WebAPK Viewport 393x851) | `zanele.mthembu@fundile.test` | **14-Day Free Trial**<br>*(10% Sample)* | **EMS:** Accounting Equation ($A = O + L$)<br>**Natural Sciences:** Electric Circuits & Ohm's Law | **Teacher:** Mrs. V. Pillay (`EMS903` Browser)<br>**Super Admin:** Browser Web Cockpit | `npx playwright test e2e/set4_zanele_gr9.spec.js --headed` |
-| **Set 5** | **Siyabonga Cele** | Gr 10 FET | **Desktop Installed App**<br>(Standalone Window 1024x768) | `siyabonga.cele@fundile.test` | R149 Monthly (EFT) | **Business Studies:** Micro, Market & Macro Environments<br>**Maths Lit:** Municipal Tiered Water/Power Tariffs | **Super Admin:** Browser Web Cockpit | `npx playwright test e2e/set5_siyabonga_gr10.spec.js --headed` |
-| **Set 6** | **Ntsako Baloyi** | Gr 11 FET | **Desktop Installed App**<br>(Standalone Window 1024x768) | `ntsako.baloyi@fundile.test` | R349 Term Pass (EFT) | **Physical Sciences:** Newton's Laws & Incline Vectors<br>**Tech Maths:** Complex Numbers & Angular Velocity $\omega$ | **Teacher:** Dr. K. Mokoena (`PHY110` Browser)<br>**Super Admin:** Browser Web Cockpit | `npx playwright test e2e/set6_ntsako_gr11.spec.js --headed` |
-| **Set 7** | **Kelebogile Dlamini** | Gr 11 FET | **Desktop Installed App**<br>(Standalone Window 1024x768) | `kelebogile.dlamini@fundile.test` | R349 Term Pass (EFT) | **Life Sciences:** Photosynthesis, Respiration & ATP Yield<br>**Accounting:** Asset Disposal & Depreciation | **Parent:** Mrs. N. Dlamini (Mobile)<br>**Super Admin:** Browser Web Cockpit | `npx playwright test e2e/set7_kelebogile_gr11.spec.js --headed` |
-| **Set 8** | **Prince Mthembu** | Gr 12 Matric | **Desktop Installed App**<br>(Standalone Window 1024x768) | `prince.mthembu@fundile.test` | R999 Annual (EFT) | **Mathematics:** Differential Calculus First Principles [M][CA]<br>**Physical Sciences:** Chemical Equilibrium $K_c$ RICE Tables | **Principal:** Mr. V. Pillay (SASAMS Browser Cockpit)<br>**Super Admin:** Browser Web Cockpit | `npx playwright test e2e/set8_prince_gr12.spec.js --headed` |
-| **Set 9** | **Thabo Molefe** | Gr 12 Matric | **Desktop Installed App**<br>(Standalone Window 1024x768) | `thabo.molefe@fundile.test` | R349 Term Pass (EFT) | **Accounting:** Published Company Balance Sheet<br>**Business Studies:** King IV Code of Governance & CSR | **Teacher:** Mr. N. Sithole (`ACC12B` Browser)<br>**Super Admin:** Browser Web Cockpit | `npx playwright test e2e/set9_thabo_gr12.spec.js --headed` |
-| **Set 10** | **Lerato Khanyile** | Gr 12 Technical | **Desktop Installed App**<br>(Standalone Window 1024x768) | `lerato.khanyile@fundile.test` | R149 Monthly (EFT) | **Tech Maths:** Integral Calculus $\int [f(x)-g(x)]dx$<br>**Maths Lit:** SARS Progressive Tax Brackets (PAYE) | **Parent:** Mr. J. Khanyile (Mobile)<br>**Super Admin:** Browser Web Cockpit | `npx playwright test e2e/set10_lerato_gr12.spec.js --headed` |
-| **Set 11** | **Sibusiso Zulu** | Gr 12 -> 8 Regression | **Desktop Installed App**<br>(Standalone Window 1024x768) | `sibusiso.zulu@fundile.test` | Systemic License Sync | **Adaptive Descent:** Gr 12 Optimization $\to$ Gr 10 Trinomials $\to$ Gr 8 HCF Factorisation (5-Min SimuLearn Replay) | **Principal / HOD:** Mr. V. Pillay (Browser)<br>**Super Admin:** Browser Web Cockpit | `npx playwright test e2e/set11_sibusiso_regression.spec.js --headed` |
+| Set | Learner Name | Grade & Phase | Device & Viewport | Sign-Up Email | Plan / Mode | Primary Subjects & Topics | Parent Account (Linked) | Teacher Account (Class Code) | School Admin (SASAMS / Pacing) | Super Admin (EFT Clearance) | Playwright Command |
+| :---: | :--- | :---: | :--- | :--- | :---: | :--- | :--- | :--- | :--- | :--- | :--- |
+| **Set 1** | **Lesedi Khumalo** | Gr 10 FET | **Desktop PWA**<br>(1024x768) | `lesedi.khumalo@fundile.test` | R349 Term Pass (EFT) | **Accounting:** CRJ (VAT 15%)<br>**Mathematics:** Euclidean Geometry | **Linked: Yes**<br>Mrs. Nomsa Khumalo<br>(`nomsa.khumalo.parent@fundile.test`) | **Linked: Yes**<br>Mr. N. Sithole<br>Code: `ACC10A` | Dr. V. Naidoo<br>Term 1 ATP Pacing | Manual EFT Approval<br>(`btn-approve-payment-90d`) | `npx playwright test e2e/set1_interactive_side_by_side.spec.js --headed` |
+| **Set 2** | **Ayanda Ndlovu** | Gr 7 Senior | **Mobile WebAPK**<br>(Pixel 7 393x851) | `ayanda.ndlovu@fundile.test` | R349 Term Pass (EFT) | **Mathematics:** 3D Nets & Division<br>**EMS:** Source Documents | **Linked: Yes**<br>Mr. S. Ndlovu<br>(`sipho.ndlovu@guardianmail.co.za`) | **Linked: Yes**<br>Mrs. P. Khumalo<br>Code: `MTH701` | Senior Phase Foundation<br>ATP Diagnostics | Manual EFT Approval<br>(`btn-approve-payment-90d`) | `npx playwright test e2e/set2_ayanda_gr7.spec.js --headed` |
+| **Set 3** | **Bongani Sithole** | Gr 8 Senior | **Mobile WebAPK**<br>(Pixel 7 393x851) | `bongani.sithole@fundile.test` | R149 Monthly (EFT) | **Mathematics:** Linear Equations<br>**Natural Sciences:** Particle Matter & $\rho=\frac{m}{V}$ | **Linked: Yes**<br>Mrs. T. Sithole<br>(`thandiwe.sithole@guardianmail.co.za`) | **Linked: Yes**<br>Mr. D. Naidoo<br>Code: `SCI802` | Natural Sciences Lab<br>Practicals Pacing | Manual EFT Approval<br>(`btn-approve-payment-30d`) | `npx playwright test e2e/set3_bongani_gr8.spec.js --headed` |
+| **Set 4** | **Zanele Mthembu** | Gr 9 Senior | **Mobile WebAPK**<br>(Pixel 7 393x851) | `zanele.mthembu@fundile.test` | **14-Day Free Trial**<br>*(10% Sample)* | **EMS:** Accounting Equation ($A=O+L$)<br>**Natural Sciences:** Circuits & Ohm's Law | **Independent**<br>(Self-Directed Trial Exploration) | **Linked: Yes**<br>Mrs. V. Pillay<br>Code: `EMS903` | Senior Phase Exit<br>Subject Counseling | Trial Status Audit<br>(Zero Payment Gate) | `npx playwright test e2e/set4_zanele_gr9.spec.js --headed` |
+| **Set 5** | **Siyabonga Cele** | Gr 10 FET | **Desktop PWA**<br>(1024x768) | `siyabonga.cele@fundile.test` | R149 Monthly (EFT) | **Business Studies:** Environments<br>**Maths Lit:** Tiered Tariffs | **Independent**<br>(Homeschool Commercial Stream) | **Independent**<br>(Autonomous Self-Study) | Provincial Distance Candidate<br>Registration Sync | Manual EFT Approval<br>(`btn-approve-payment-30d`) | `npx playwright test e2e/set5_siyabonga_gr10.spec.js --headed` |
+| **Set 6** | **Ntsako Baloyi** | Gr 11 FET | **Desktop PWA**<br>(1024x768) | `ntsako.baloyi@fundile.test` | R349 Term Pass (EFT) | **Physical Sciences:** Newton's Laws<br>**Tech Maths:** Complex Numbers | **Independent**<br>(Senior Self-Directed FET) | **Linked: Yes**<br>Dr. K. Mokoena<br>Code: `PHY110` | STEM Stream Lab Safety<br>& Pacing Completion | Manual EFT Approval<br>(`btn-approve-payment-90d`) | `npx playwright test e2e/set6_ntsako_gr11.spec.js --headed` |
+| **Set 7** | **Kelebogile Dlamini** | Gr 11 FET | **Desktop PWA**<br>(1024x768) | `kelebogile.dlamini@fundile.test` | R349 Term Pass (EFT) | **Life Sciences:** Respiration<br>**Accounting:** Asset Disposal | **Linked: Yes**<br>Mrs. N. Dlamini<br>(`nomsa.dlamini@guardianmail.co.za`) | **Independent**<br>(Self-Paced Dual-Tutor) | FET Subject Stream<br>Balance & ATP Audit | Manual EFT Approval<br>(`btn-approve-payment-90d`) | `npx playwright test e2e/set7_kelebogile_gr11.spec.js --headed` |
+| **Set 8** | **Prince Mthembu** | Gr 12 Matric | **Desktop PWA**<br>(1024x768) | `prince.mthembu@fundile.test` | R999 Annual (EFT) | **Mathematics:** Calculus First Principles<br>**Physical Sciences:** Equilibrium $K_c$ | **Independent**<br>(Matric Distinction Candidate) | **Linked: Yes**<br>Mr. V. Pillay<br>Code: `MTH12A` | **Direct SASAMS Sync**<br>Mr. Vinay Pillay (Principal) | Manual EFT Approval<br>(`btn-approve-payment-365d`) | `npx playwright test e2e/set8_prince_gr12.spec.js --headed` |
+| **Set 9** | **Thabo Molefe** | Gr 12 Matric | **Desktop PWA**<br>(1024x768) | `thabo.molefe@fundile.test` | R349 Term Pass (EFT) | **Accounting:** Corporate Statements<br>**Business Studies:** King IV & CSR | **Linked: Yes**<br>Mr. P. Molefe<br>(`patrick.molefe@guardianmail.co.za`) | **Linked: Yes**<br>Mr. N. Sithole<br>Code: `ACC12B` | Senior Commerce Exam<br>Readiness Audit | Manual EFT Approval<br>(`btn-approve-payment-90d`) | `npx playwright test e2e/set9_thabo_gr12.spec.js --headed` |
+| **Set 10** | **Lerato Khanyile** | Gr 12 Technical | **Desktop PWA**<br>(1024x768) | `lerato.khanyile@fundile.test` | R149 Monthly (EFT) | **Tech Maths:** Integral Calculus<br>**Maths Lit:** SARS Tax Brackets | **Linked: Yes**<br>Mr. J. Khanyile<br>(`joshua.khanyile@guardianmail.co.za`) | **Independent**<br>(Vocational Trade Prep) | Technical Stream Trade<br>Apprenticeship Sync | Manual EFT Approval<br>(`btn-approve-payment-30d`) | `npx playwright test e2e/set10_lerato_gr12.spec.js --headed` |
+| **Set 11** | **Sibusiso Zulu** | Gr 12 -> 8 Regression | **Desktop PWA**<br>(1024x768) | `sibusiso.zulu@fundile.test` | Institutional Sync | **Adaptive Descent:** Calculus $\to$ Trinomials $\to$ HCF (SimuLearn) | **Linked: Yes**<br>Mrs. B. Zulu<br>(`bongiwe.zulu@guardianmail.co.za`) | **Linked: Yes**<br>Mr. V. Pillay<br>Code: `MTH12B` | **Systemic Remedial Broadcast**<br>Dr. V. Naidoo (Principal) | Institutional License<br>Sync Verification | `npx playwright test e2e/set11_sibusiso_regression.spec.js --headed` |
 
 ---
 
@@ -107,11 +107,21 @@ flowchart TD
   - *Modality:* Dynamic Euclidean Geometry Circle Gliders (`DiagramRenderer.jsx`) + SymPy KaTeX line-by-line derivation pad with South African comma decimals (`{,}`).
   - *Targeted Misconception:* `exterior_angle_inversion` (inverting cyclic quad exterior angle relation).
 
-#### D. Concurrent Stakeholders
-1. **Super Admin (You):**
-   - **Action:** Open Super Admin Cockpit $\to$ EFT Approvals Tab (`tab-admin-payments`).
-   - **Verification:** Inspect pending slip from Lesedi Khumalo ($R349$) $\to$ Click **`3 Mo (Term)`** button (`btn-approve-payment-90d`).
-   - **Result:** Paywall drops in real time via Firestore `onSnapshot`; problem surface renders instantly with pre-baked 3-tier hints.
+#### D. Stakeholder Accounts & Active Movements at Sign-Up
+1. **Parent Account & Movement:**
+   - **Account:** Mrs. Nomsa Khumalo (Mother) • `nomsa.khumalo.parent@fundile.test` • Mobile: `+27 82 555 1001`
+   - **Link Status:** Linked (`Yes`)
+   - **Active Movement at Sign-Up:** Lesedi clicks `[🔗 Link Parent]` on Today's Desk and generates 15-minute passcode `PAR-1001`. Mrs. Khumalo logs into the Parent Portal, enters the link code, and immediately views the **Sunday 18:00 Academic Pulse Preview** and **Household Mobile Data Savings Meter** confirming $< 2\text{ MB}$ total consumption ($R185$ saved vs streaming video tutoring).
+2. **Teacher Account & Movement:**
+   - **Account:** Mr. N. Sithole (Commerce & Accounting Educator) • `sithole.acc@westville.test`
+   - **Class Section:** Grade 10A Accounting • Join Code: `ACC10A`
+   - **Active Movement at Sign-Up:** Lesedi clicks `[🏫 Join Class]` on Today's Desk, types class code `ACC10A`, and submits. Mr. Sithole's Educator Cockpit immediately enrolls Lesedi, displaying her baseline status (`Diagnostic Active: CRJ VAT 15%`) on the interactive class roster.
+3. **School Admin / Principal Oversight:**
+   - **Account:** Dr. V. Naidoo / Mr. Vinay Pillay (Principal & HOD) • `admin@westville.test`
+   - **Active Movement:** School Admin monitors the Grade 10 Annual Teaching Plan (ATP) Curriculum Pacing Heatmap in `SchoolAdminView.jsx`, verifying that Class 10A is on track (Week 8 of 10) for Term 1 CRJ and Pythagoras requirements.
+4. **Super Admin Clearance Movement:**
+   - **Account:** Super Admin (`admin@fundile.co.za`) • Window 2
+   - **Active Movement:** Super Admin reviews the Access Bank EFT payment slip in the Payment Clearance Queue, clicks the orange `[ 3 Mo (Term) ]` approval button (`btn-approve-payment-90d`), and validates that the student's paywall drops in real time via Firestore `onSnapshot`.
 
 #### E. Playwright Execution Command
 ```bash
@@ -151,20 +161,21 @@ npm run test:set1
   - *Modality:* Document identification and transaction entry matching.
   - *Targeted Misconception:* `source_doc_receipt_vs_invoice`.
 
-#### D. Concurrent Stakeholders
-1. **Class Educator:**
-   - **Name:** Mrs. Patience Khumalo (Mathematics Educator, Westville High)
-   - **Class:** Grade 7C Mathematics
-   - **Join Code:** `MTH701`
-   - **Task Assigned:** 10-Mark Columnar Division & Geometric Nets Calibration.
-2. **Parent / Guardian:**
-   - **Name:** Mr. Sipho Ndlovu (Father)
-   - **WhatsApp / Mobile:** `+27 82 555 7892`
-   - **Email:** `sipho.ndlovu@guardianmail.co.za`
-   - **Linking Passcode:** Ephemeral 15-minute code `PAR-7892` generated by Ayanda.
-   - **Verification View:** In-app Sunday Academic Pulse preview confirming **1.4 MB cellular data consumption** (< 2 MB WebAPK vs 450 MB video tutoring) and recovered subtraction misconception card.
-3. **Super Admin (You):**
-   - **Action:** Manual approval of R349 Term Pass in Super Admin EFT desk.
+#### D. Stakeholder Accounts & Active Movements at Sign-Up
+1. **Parent Account & Movement:**
+   - **Account:** Mr. Sipho Ndlovu (Father) • `sipho.ndlovu@guardianmail.co.za` • Mobile: `+27 82 555 7892`
+   - **Link Status:** Linked (`Yes`)
+   - **Active Movement at Sign-Up:** Ayanda generates ephemeral 15-minute passcode `PAR-7892`. Mr. Ndlovu links account on mobile and verifies weekly cellular data consumption of **1.4 MB** (< 2 MB WebAPK vs 450 MB video tutoring) and recovered subtraction borrowing diagnostic fix.
+2. **Teacher Account & Movement:**
+   - **Account:** Mrs. Patience Khumalo (Mathematics Educator) • `pkhumalo@westville.test`
+   - **Class Section:** Grade 7C Mathematics • Join Code: `MTH701`
+   - **Active Movement at Sign-Up:** Ayanda inputs join code `MTH701`. Mrs. Khumalo's roster registers Ayanda and dispatches the 10-Mark Columnar Division & Geometric Nets calibration drill.
+3. **School Admin / Principal Oversight:**
+   - **Account:** Senior Phase Foundation HOD • `admin@westville.test`
+   - **Active Movement:** HOD reviews Senior Phase baseline diagnostic calibration across Grade 7 mathematics classes to ensure smooth transition from Intermediate Phase.
+4. **Super Admin Clearance Movement:**
+   - **Account:** Super Admin (`admin@fundile.co.za`) • Window 2
+   - **Active Movement:** Super Admin reviews Nedbank EFT POP slip in EFT Clearance Desk and approves R349 Term Pass (`btn-approve-payment-90d`).
 
 #### E. Playwright Execution Command
 ```bash
@@ -202,18 +213,21 @@ npm run test:set2
   - *Modality:* Particle arrangement schematics with mandatory SI unit normalization ($g/cm^3 \to kg/m^3$).
   - *Targeted Misconception:* `mass_volume_density_inversion`.
 
-#### D. Concurrent Stakeholders
-1. **Class Educator:**
-   - **Name:** Mr. David Naidoo (Natural Sciences Educator, Westville High)
-   - **Class:** Grade 8A Sciences
-   - **Join Code:** `SCI802`
-   - **Task Assigned:** 12-Mark Density & States of Matter Diagnostic.
-2. **Parent / Guardian:**
-   - **Name:** Mrs. Thandiwe Sithole (Mother)
-   - **WhatsApp / Mobile:** `+27 83 456 1290`
-   - **Email:** `thandiwe.sithole@guardianmail.co.za`
-3. **Super Admin (You):**
-   - **Action:** Manual approval of R149 Monthly Pass (`btn-approve-payment-30d`).
+#### D. Stakeholder Accounts & Active Movements at Sign-Up
+1. **Parent Account & Movement:**
+   - **Account:** Mrs. Thandiwe Sithole (Mother) • `thandiwe.sithole@guardianmail.co.za` • Mobile: `+27 83 456 1290`
+   - **Link Status:** Linked (`Yes`)
+   - **Active Movement at Sign-Up:** Bongani generates passcode `PAR-1290`. Mrs. Sithole connects on mobile to review Bongani's density formula ($\rho=m/V$) and negative integers mastery reports on the Sunday Academic Pulse.
+2. **Teacher Account & Movement:**
+   - **Account:** Mr. David Naidoo (Natural Sciences Educator) • `dnaidoo@westville.test`
+   - **Class Section:** Grade 8A Sciences • Join Code: `SCI802`
+   - **Active Movement at Sign-Up:** Bongani inputs class code `SCI802`. Mr. Naidoo's educator view enrolls Bongani and assigns the 12-Mark Density & States of Matter Diagnostic.
+3. **School Admin / Principal Oversight:**
+   - **Account:** Natural Sciences Department HOD • `admin@westville.test`
+   - **Active Movement:** HOD reviews lab practical equipment preparedness and Term 2 Matter & Materials curriculum pacing across Grade 8 science streams.
+4. **Super Admin Clearance Movement:**
+   - **Account:** Super Admin (`admin@fundile.co.za`) • Window 2
+   - **Active Movement:** Super Admin inspects First National Bank (FNB) EFT slip in EFT Clearance Desk and approves R149 Monthly Pass (`btn-approve-payment-30d`).
 
 #### E. Playwright Execution Command
 ```bash
@@ -251,14 +265,21 @@ npm run test:set3
   - *Modality:* Declarative SVG circuit schematics with switch, ammeter, and voltmeter gliders.
   - *Targeted Misconception:* `series_parallel_current_confusion` (assuming electric current splits in a series branch).
 
-#### D. Concurrent Stakeholders
-1. **Class Educator:**
-   - **Name:** Mrs. V. Pillay (EMS Educator, Westville High)
-   - **Class:** Grade 9A EMS
-   - **Join Code:** `EMS903`
-   - **Task Assigned:** Accounting Equation 15-Mark Transition Drill.
-2. **Super Admin (You):**
-   - **Oversight:** Inspects system analytics confirming zero payment barrier was encountered and trial countdown badge rendered with accurate days-remaining indicator.
+#### D. Stakeholder Accounts & Active Movements at Sign-Up
+1. **Parent Account & Movement:**
+   - **Account:** Independent / Self-Directed Exploration
+   - **Link Status:** Independent (`No`)
+   - **Active Movement at Sign-Up:** Zanele explores the platform independently during the 14-day free trial before inviting parent to select a paid term pass.
+2. **Teacher Account & Movement:**
+   - **Account:** Mrs. V. Pillay (EMS Educator) • `vpillay@westville.test`
+   - **Class Section:** Grade 9A EMS • Join Code: `EMS903`
+   - **Active Movement at Sign-Up:** Zanele inputs join code `EMS903`. Mrs. Pillay's roster registers Zanele and assigns the 15-Mark Accounting Equation Transition Drill.
+3. **School Admin / Principal Oversight:**
+   - **Account:** Senior Phase Subject Stream Counselor • `admin@westville.test`
+   - **Active Movement:** Counselor uses Grade 9 diagnostic baseline indicators to guide learner and parents regarding FET stream selection (Commerce vs Sciences).
+4. **Super Admin Clearance Movement:**
+   - **Account:** Super Admin (`admin@fundile.co.za`) • System Analytics
+   - **Active Movement:** Verifies that zero payment hurdle was encountered by the trial cohort and that trial countdown badge correctly displays in the header.
 
 #### E. Playwright Execution Command
 ```bash
@@ -296,9 +317,21 @@ npm run test:set4
   - *Modality:* Tiered municipal water & electricity step-rate bracket calculation table.
   - *Targeted Misconception:* `tariff_cumulative_bracket_slip` (applying the top tariff rate to the entire volume rather than tier-by-tier blocks).
 
-#### D. Concurrent Stakeholders
-1. **Super Admin (You):**
-   - **Action:** Manual approval of R149 Monthly Pass in Super Admin desk.
+#### D. Stakeholder Accounts & Active Movements at Sign-Up
+1. **Parent Account & Movement:**
+   - **Account:** Independent / Homeschool Commercial Stream
+   - **Link Status:** Independent (`No`)
+   - **Active Movement at Sign-Up:** Siyabonga operates as an independent commercial candidate preparing for national exams with self-managed billing.
+2. **Teacher Account & Movement:**
+   - **Account:** Independent Self-Study
+   - **Link Status:** Independent (`No`)
+   - **Active Movement at Sign-Up:** Siyabonga practices autonomously in Self-Study mode with zero school homework deadlines, utilizing BKT mastery recommendations.
+3. **School Admin / Principal Oversight:**
+   - **Account:** Provincial Distance Candidate Coordinator • `admin@westville.test`
+   - **Active Movement:** Coordinator monitors commercial syllabus completion and municipal tariff calculation records for external candidate verification.
+4. **Super Admin Clearance Movement:**
+   - **Account:** Super Admin (`admin@fundile.co.za`) • Window 2
+   - **Active Movement:** Super Admin reviews Nedbank EFT slip in EFT Clearance Desk and approves R149 Monthly Pass (`btn-approve-payment-30d`).
 
 #### E. Playwright Execution Command
 ```bash
@@ -336,14 +369,21 @@ npm run test:set5
   - *Modality:* Rectangular-to-polar Argand plane transformations with radian measures.
   - *Targeted Misconception:* `i_squared_positive_slip` (evaluating $i^2 = +1$).
 
-#### D. Concurrent Stakeholders
-1. **Class Educator:**
-   - **Name:** Dr. K. Mokoena (Physical Sciences Educator, Westville High)
-   - **Class:** Grade 11B Physical Sciences
-   - **Join Code:** `PHY110`
-   - **Task Assigned:** 15-Mark Inclined Plane Mechanics Drill.
-2. **Super Admin (You):**
-   - **Action:** Manual approval of R349 Term Pass in Super Admin desk.
+#### D. Stakeholder Accounts & Active Movements at Sign-Up
+1. **Parent Account & Movement:**
+   - **Account:** Independent / Senior FET Learner
+   - **Link Status:** Independent (`No`)
+   - **Active Movement at Sign-Up:** Ntsako manages own study schedule and technical mathematics revision independently.
+2. **Teacher Account & Movement:**
+   - **Account:** Dr. K. Mokoena (Physical Sciences Educator) • `kmokoena@westville.test`
+   - **Class Section:** Grade 11B Physical Sciences • Join Code: `PHY110`
+   - **Active Movement at Sign-Up:** Ntsako inputs join code `PHY110`. Dr. Mokoena's roster registers Ntsako and dispatches the 15-Mark Inclined Plane Mechanics Drill.
+3. **School Admin / Principal Oversight:**
+   - **Account:** STEM Department HOD • `admin@westville.test`
+   - **Active Movement:** HOD reviews lab safety protocols and curriculum completion rate across Grade 11 physical science streams.
+4. **Super Admin Clearance Movement:**
+   - **Account:** Super Admin (`admin@fundile.co.za`) • Window 2
+   - **Active Movement:** Super Admin inspects Standard Bank EFT slip and approves R349 Term Pass (`btn-approve-payment-90d`).
 
 #### E. Playwright Execution Command
 ```bash
@@ -381,14 +421,21 @@ npm run test:set6
   - *Modality:* 4-Column General Ledger Asset Disposal and Accumulated Depreciation statement.
   - *Targeted Misconception:* `depreciation_cost_vs_carrying_confusion`.
 
-#### D. Concurrent Stakeholders
-1. **Parent / Guardian:**
-   - **Name:** Mrs. Nomsa Dlamini (Mother)
-   - **WhatsApp / Mobile:** `+27 82 789 4412`
-   - **Email:** `nomsa.dlamini@guardianmail.co.za`
-   - **Parent View:** In-app weekly profile monitor displaying topic mastery ring and saved mobile data counter.
-2. **Super Admin (You):**
-   - **Action:** Manual approval of R349 Term Pass in Super Admin desk.
+#### D. Stakeholder Accounts & Active Movements at Sign-Up
+1. **Parent Account & Movement:**
+   - **Account:** Mrs. Nomsa Dlamini (Mother) • `nomsa.dlamini@guardianmail.co.za` • Mobile: `+27 82 789 4412`
+   - **Link Status:** Linked (`Yes`)
+   - **Active Movement at Sign-Up:** Kelebogile generates passcode `PAR-4412`. Mrs. Dlamini logs into the Parent Portal to monitor Kelebogile's mastery index in Life Sciences and Fixed Assets on the live dual-ring MasteryDial.
+2. **Teacher Account & Movement:**
+   - **Account:** Independent / Dual-Tutor Remediation Focus
+   - **Link Status:** Independent (`No`)
+   - **Active Movement at Sign-Up:** Kelebogile conducts self-directed practice for cellular respiration and reducing-balance depreciation with targeted 5-minute micro-drills.
+3. **School Admin / Principal Oversight:**
+   - **Account:** FET Curriculum Head • `admin@westville.test`
+   - **Active Movement:** Curriculum Head conducts subject combination balancing and Term 2 trial exam mark forecasting across Grade 11 commerce and bioscience streams.
+4. **Super Admin Clearance Movement:**
+   - **Account:** Super Admin (`admin@fundile.co.za`) • Window 2
+   - **Active Movement:** Super Admin reviews Capitec Bank EFT slip in EFT Clearance Desk and approves R349 Term Pass (`btn-approve-payment-90d`).
 
 #### E. Playwright Execution Command
 ```bash
@@ -426,14 +473,22 @@ npm run test:set7
   - *Modality:* 4-Row RICE (Ratio, Initial, Change, Equilibrium) concentration calculation matrix.
   - *Targeted Misconception:* `kc_solids_liquids_included` (erroneously including pure solids or pure liquid solvents into the $K_c$ fraction).
 
-#### D. Concurrent Stakeholders
-1. **School Administrator & Executive Headmaster:**
-   - **Name:** Dr. V. Naidoo / Mr. Vinay Pillay (Principal & HOD)
-   - **Role:** School Administrator (`school_admin`)
-   - **EMIS School Code:** `500124892`
-   - **Cockpit Action:** Reviews Grade 12 Calculus pacing heatmap $\to$ Exports formal test marks for South African Schools Administration and Management System (**SASAMS CSV**).
-2. **Super Admin (You):**
-   - **Action:** Manual approval of R999 Annual Distinction Pass (`btn-approve-payment-365d`).
+#### D. Stakeholder Accounts & Active Movements at Sign-Up
+1. **Parent Account & Movement:**
+   - **Account:** Independent / Senior Matriculant
+   - **Link Status:** Independent (`No`)
+   - **Active Movement at Sign-Up:** Prince manages matric study schedule independently for top engineering faculty entrance.
+2. **Teacher Account & Movement:**
+   - **Account:** Mr. Vinay Pillay (Senior Mathematics Educator) • `vpillay@westville.test`
+   - **Class Section:** Grade 12A Senior Mathematics • Join Code: `MTH12A`
+   - **Active Movement at Sign-Up:** Prince inputs join code `MTH12A`. Mr. Pillay's roster registers Prince and validates first principles calculus derivations with NSC consequential accuracy.
+3. **School Admin / Principal Oversight (Direct SASAMS Sync):**
+   - **Account:** Dr. V. Naidoo / Mr. Vinay Pillay (Principal & HOD) • `admin@westville.test`
+   - **School EMIS Code:** `500124892`
+   - **Active Movement:** Principal opens Term Mark Collation module in `SchoolAdminView.jsx` $\to$ Clicks **`[ 📥 Export to SASAMS (CSV) ]`** to download formal test marks formatted for the South African Schools Administration and Management System.
+4. **Super Admin Clearance Movement:**
+   - **Account:** Super Admin (`admin@fundile.co.za`) • Window 2
+   - **Active Movement:** Super Admin inspects Investec Private Bank EFT slip in EFT Clearance Desk and approves Annual Distinction Pass (`btn-approve-payment-365d`).
 
 #### E. Playwright Execution Command
 ```bash
@@ -471,14 +526,21 @@ npm run test:set8
   - *Modality:* Semantic Rubric evaluation matching King IV transparency, ethical leadership, and stakeholder inclusivity.
   - *Targeted Misconception:* `csr_vs_csi_concept_slip` (conflating internal operational CSR policies with external philanthropic CSI donations).
 
-#### D. Concurrent Stakeholders
-1. **Class Educator:**
-   - **Name:** Mr. N. Sithole (HOD: Commercial Studies & Accounting Educator)
-   - **Class:** Grade 12C Commerce
-   - **Join Code:** `ACC12B`
-   - **Task Assigned:** 20-Mark Published Balance Sheet & Retained Income Drill.
-2. **Super Admin (You):**
-   - **Action:** Manual approval of R349 Term Pass in Super Admin desk.
+#### D. Stakeholder Accounts & Active Movements at Sign-Up
+1. **Parent Account & Movement:**
+   - **Account:** Mr. Patrick Molefe (Father) • `patrick.molefe@guardianmail.co.za` • Mobile: `+27 82 123 9087`
+   - **Link Status:** Linked (`Yes`)
+   - **Active Movement at Sign-Up:** Thabo generates passcode `PAR-9087`. Mr. Molefe connects on mobile to review Thabo's mastery in Corporate Financial Statements and King IV Corporate Social Responsibility on the Sunday Academic Pulse.
+2. **Teacher Account & Movement:**
+   - **Account:** Mr. N. Sithole (HOD: Commercial Studies & Accounting Educator) • `sithole.acc@westville.test`
+   - **Class Section:** Grade 12C Commerce • Join Code: `ACC12B`
+   - **Active Movement at Sign-Up:** Thabo inputs join code `ACC12B`. Mr. Sithole's educator cockpit enrolls Thabo and dispatches the 20-Mark Published Balance Sheet & Retained Income Drill.
+3. **School Admin / Principal Oversight:**
+   - **Account:** Commercial Department HOD • `admin@westville.test`
+   - **Active Movement:** HOD reviews Grade 12 Commerce trial examination readiness and verifies corporate financial statement curriculum pacing.
+4. **Super Admin Clearance Movement:**
+   - **Account:** Super Admin (`admin@fundile.co.za`) • Window 2
+   - **Active Movement:** Super Admin reviews First National Bank (FNB) EFT slip in EFT Clearance Desk and approves R349 Term Pass (`btn-approve-payment-90d`).
 
 #### E. Playwright Execution Command
 ```bash
@@ -516,13 +578,21 @@ npm run test:set9
   - *Modality:* Multi-bracket progressive income tax calculation table.
   - *Targeted Misconception:* `sars_bracket_flat_tax_slip` (multiplying total gross taxable income by the top marginal rate without tiering).
 
-#### D. Concurrent Stakeholders
-1. **Parent / Guardian:**
-   - **Name:** Mr. Joshua Khanyile (Father)
-   - **WhatsApp / Mobile:** `+27 84 901 8823`
-   - **Email:** `joshua.khanyile@guardianmail.co.za`
-2. **Super Admin (You):**
-   - **Action:** Manual approval of R149 Monthly Pass in Super Admin desk.
+#### D. Stakeholder Accounts & Active Movements at Sign-Up
+1. **Parent Account & Movement:**
+   - **Account:** Mr. Joshua Khanyile (Father) • `joshua.khanyile@guardianmail.co.za` • Mobile: `+27 84 901 8823`
+   - **Link Status:** Linked (`Yes`)
+   - **Active Movement at Sign-Up:** Lerato generates passcode `PAR-8823`. Mr. Khanyile connects on mobile to review Lerato's progress in SARS Progressive Tax Brackets and indefinite integration on the Sunday Academic Pulse.
+2. **Teacher Account & Movement:**
+   - **Account:** Independent / Technical Trade Apprenticeship Pathway
+   - **Link Status:** Independent (`No`)
+   - **Active Movement at Sign-Up:** Lerato prepares independently for trade school and technical college certification.
+3. **School Admin / Principal Oversight:**
+   - **Account:** Technical Stream Vocational Coordinator • `admin@westville.test`
+   - **Active Movement:** Coordinator verifies vocational skills portfolio and technical diploma readiness across matriculants.
+4. **Super Admin Clearance Movement:**
+   - **Account:** Super Admin (`admin@fundile.co.za`) • Window 2
+   - **Active Movement:** Super Admin reviews Capitec Bank EFT slip in EFT Clearance Desk and approves R149 Monthly Pass (`btn-approve-payment-30d`).
 
 #### E. Playwright Execution Command
 ```bash
@@ -577,12 +647,21 @@ npm run test:set10
   - Cognitive Circuit Breaker to 5-Minute SimuLearn Worked Visual Example (`SimuLearnPlayer.jsx`).
   - Automated ascent back to Grade 12 Calculus upon mastering foundational micro-drills.
 
-#### D. Concurrent Stakeholders
-1. **School Administrator & HOD:**
-   - **Name:** Mr. Vinay Pillay (School Administrator)
-   - **Cockpit Action:** Spots the systemic factoring blocker flagged across 38 learners on the School Misconception Heatmap $\to$ Clicks **`[ Broadcast Remedial Drill ]`** in `SchoolAdminView.jsx` to dispatch the 5-minute micro-fix school-wide.
-2. **Super Admin (You):**
-   - **Oversight:** Validates that cross-grade regression preserved student psychological safety (zero punitive XP loss) and successfully repaired prerequisite foundations.
+#### D. Stakeholder Accounts & Active Movements at Sign-Up
+1. **Parent Account & Movement:**
+   - **Account:** Mrs. Bongiwe Zulu (Mother) • `bongiwe.zulu@guardianmail.co.za` • Mobile: `+27 83 234 5678`
+   - **Link Status:** Linked (`Yes`)
+   - **Active Movement at Sign-Up:** Sibusiso generates passcode `PAR-5678`. Mrs. Zulu connects via mobile; reassured by zero-punitive psychological safety (no loss of XP) as Sibusiso works through lower-grade foundational micro-drills.
+2. **Teacher Account & Movement:**
+   - **Account:** Mr. Vinay Pillay (Mathematics Educator) • `vpillay@westville.test`
+   - **Class Section:** Grade 12B Mathematics • Join Code: `MTH12B`
+   - **Active Movement at Sign-Up:** Sibusiso enters join code `MTH12B`. Mr. Pillay's roster displays Sibusiso in prerequisite recovery mode with real-time lineage visualization.
+3. **School Admin / Principal Oversight (Systemic Remedial Broadcast):**
+   - **Account:** Dr. V. Naidoo (Executive Headmaster) • `admin@westville.test`
+   - **Active Movement:** Principal spots the systemic factoring blocker flagged across 38 learners on the School Misconception Heatmap in `SchoolAdminView.jsx` $\to$ Clicks **`[ Broadcast Remedial Drill ]`** to dispatch an urgent 5-minute micro-fix across all Grade 12 math sections.
+4. **Super Admin Clearance Movement:**
+   - **Account:** Super Admin (`admin@fundile.co.za`) • System Settings
+   - **Active Movement:** Validates that institutional license synchronization provisioned immediate access without payment friction and monitors cross-grade regression telemetry.
 
 #### E. Playwright Execution Command
 ```bash

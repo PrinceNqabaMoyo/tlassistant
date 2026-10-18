@@ -171,7 +171,7 @@ export default function SocraticTutorDrawer({
           <MessageSquare className="w-3.5 h-3.5" />
           <span>Teach-Back Mode</span>
           <span className="bg-indigo-950 text-indigo-300 text-[10px] px-1.5 py-0.2 rounded-full border border-indigo-800">
-            +25 XP
+            Interactive
           </span>
         </button>
       </div>
@@ -261,7 +261,7 @@ export default function SocraticTutorDrawer({
                   </div>
                   {teachBackResult.xp_awarded > 0 && (
                     <span className="bg-emerald-900 text-emerald-300 border border-emerald-700 text-[10px] font-bold px-2 py-0.5 rounded-full">
-                      +{teachBackResult.xp_awarded} XP Awarded
+                      Verified Concept ✓
                     </span>
                   )}
                 </div>

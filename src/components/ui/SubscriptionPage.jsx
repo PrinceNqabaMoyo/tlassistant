@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowRight, CreditCard, Paperclip, ShieldCheck } from 'lucide-react';
+import { ArrowRight, CreditCard, Paperclip, ShieldCheck, Copy, Check } from 'lucide-react';
 import FundileLogo from './FundileLogo';
 import { EftUploadModal } from '../student/EftUploadModal';
 import DemandCaptureForm from './DemandCaptureForm';
@@ -17,6 +17,7 @@ const SubscriptionPage = ({
 }) => {
     const fileInputRef = React.useRef(null);
     const [isPopUploadRevealed, setIsPopUploadRevealed] = React.useState(false);
+    const [copyFeedback, setCopyFeedback] = React.useState('');
     const paymentReference = currentUser?.paymentReference || currentUser?.lastPaymentReference || 'FND-REF';
 
     const isTrialActive = Boolean(
@@ -102,7 +103,7 @@ const SubscriptionPage = ({
                             </p>
                         </div>
 
-                        <div className="rounded-[28px] border border-sky-100 bg-white p-6 shadow-lg shadow-sky-100/40">
+                        <div data-testid="plan-monthly-149" className="rounded-[28px] border border-sky-100 bg-white p-6 shadow-lg shadow-sky-100/40 cursor-pointer hover:border-blue-300 transition">
                             <p className="text-sm font-semibold uppercase tracking-[0.25em] text-[#2B7BD8]">Monthly Access</p>
                             <h2 className="mt-4 text-2xl font-semibold text-slate-950">R149 / month</h2>
                             <p className="mt-3 leading-7 text-slate-600">
@@ -114,17 +115,30 @@ const SubscriptionPage = ({
                             </div>
                         </div>
 
-                        <div className="rounded-[28px] border-2 border-[#13519C] bg-white p-6 shadow-lg shadow-blue-900/10">
+                        <div data-testid="plan-term-pass-349" className="rounded-[28px] border-2 border-[#13519C] bg-white p-6 shadow-lg shadow-blue-900/10 cursor-pointer hover:border-amber-400 transition">
                             <div className="flex items-center justify-between">
-                                <p className="text-sm font-semibold uppercase tracking-[0.25em] text-[#FF9100]">Term &amp; Annual Passes</p>
+                                <p className="text-sm font-semibold uppercase tracking-[0.25em] text-[#FF9100]">Term Pass</p>
                                 <span className="rounded-full bg-amber-100 px-2.5 py-0.5 text-xs font-bold text-[#FF9100]">Best Value</span>
                             </div>
-                            <h2 className="mt-4 text-2xl font-semibold text-slate-950">R349 / Term or R999 / Year</h2>
+                            <h2 className="mt-4 text-2xl font-semibold text-slate-950">R349 / Term</h2>
                             <p className="mt-3 leading-7 text-slate-600">
-                                R349 per 3-month school term (save R98) or R999 for full 12-month academic year (save R789, ~R83/mo).
+                                R349 per 3-month school term (save R98, ~R116/mo).
                             </p>
                             <div className="mt-5 flex flex-wrap gap-3 text-sm font-semibold">
                                 <span className="rounded-full bg-amber-100 px-3 py-1 text-amber-800">Term Pass: ~R116/mo</span>
+                            </div>
+                        </div>
+
+                        <div data-testid="plan-annual-pass-999" className="rounded-[28px] border border-sky-100 bg-white p-6 shadow-lg shadow-sky-100/40 cursor-pointer hover:border-emerald-400 transition">
+                            <div className="flex items-center justify-between">
+                                <p className="text-sm font-semibold uppercase tracking-[0.25em] text-emerald-600">Annual Pass</p>
+                                <span className="rounded-full bg-emerald-100 px-2.5 py-0.5 text-xs font-bold text-emerald-700">Distinction</span>
+                            </div>
+                            <h2 className="mt-4 text-2xl font-semibold text-slate-950">R999 / Year</h2>
+                            <p className="mt-3 leading-7 text-slate-600">
+                                Full 12-month academic year (save R789, ~R83/mo).
+                            </p>
+                            <div className="mt-5 flex flex-wrap gap-3 text-sm font-semibold">
                                 <span className="rounded-full bg-emerald-100 px-3 py-1 text-emerald-800">Annual Pass: ~R83/mo</span>
                             </div>
                         </div>
@@ -171,9 +185,38 @@ const SubscriptionPage = ({
                                 <p className="mt-4 text-sm leading-7 text-slate-600">
                                     Use this exact reference in the EFT narration or transfer description so the proof of payment can be matched to your Fundile account quickly.
                                 </p>
-                                <p className="mt-4 break-all rounded-2xl bg-white px-4 py-3 font-mono text-sm font-semibold text-slate-900 shadow-sm">
-                                    {paymentReference}
-                                </p>
+                                <div className="mt-4 flex items-center justify-between gap-3 rounded-2xl bg-white px-4 py-3 shadow-sm border border-slate-100">
+                                    <span className="break-all font-mono text-sm font-semibold text-slate-900 select-all">
+                                        {paymentReference}
+                                    </span>
+                                    <button
+                                        type="button"
+                                        data-testid="btn-copy-bank-ref"
+                                        onClick={async () => {
+                                            try {
+                                                await navigator.clipboard.writeText(paymentReference);
+                                                setCopyFeedback('Copied!');
+                                                setTimeout(() => setCopyFeedback(''), 2000);
+                                            } catch (e) {
+                                                console.error('Failed to copy reference:', e);
+                                            }
+                                        }}
+                                        className="shrink-0 inline-flex items-center gap-1.5 rounded-xl bg-blue-50 hover:bg-blue-100 text-[#13519C] px-3 py-1.5 text-xs font-semibold transition cursor-pointer"
+                                        title="Copy payment reference"
+                                    >
+                                        {copyFeedback ? (
+                                            <>
+                                                <Check className="h-3.5 w-3.5 text-emerald-600" />
+                                                <span className="text-emerald-700 font-bold">Copied!</span>
+                                            </>
+                                        ) : (
+                                            <>
+                                                <Copy className="h-3.5 w-3.5" />
+                                                <span>Copy</span>
+                                            </>
+                                        )}
+                                    </button>
+                                </div>
                             </div>
                         )}
                     </section>
@@ -220,6 +263,7 @@ const SubscriptionPage = ({
                                         ) : (
                                             <button
                                                 type="button"
+                                                data-testid="btn-choose-pop"
                                                 onClick={handleChoosePop}
                                                 className="inline-flex items-center justify-center gap-2 rounded-2xl bg-[#FF9100] px-6 py-4 text-base font-semibold text-white shadow-[0_16px_50px_rgba(255,145,0,0.25)] transition hover:bg-[#f58200]"
                                             >
@@ -229,6 +273,7 @@ const SubscriptionPage = ({
                                         )}
                                         <button
                                             type="button"
+                                            data-testid="btn-back-to-dashboard"
                                             onClick={onNavigateApp || onNavigateHome}
                                             className="inline-flex items-center justify-center rounded-2xl border border-slate-200 bg-white px-6 py-4 text-base font-semibold text-slate-700 transition hover:border-slate-300 hover:bg-slate-50"
                                         >

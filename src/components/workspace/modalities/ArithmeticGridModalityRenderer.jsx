@@ -41,13 +41,38 @@ export default function ArithmeticGridModalityRenderer({
     const [quotientInput, setQuotientInput] = useState('');
     const [remainderInput, setRemainderInput] = useState('0');
     const [showSteps, setShowSteps] = useState(false);
+    const [revealedModel, setRevealedModel] = useState(false);
+    const [savedLearnerInput, setSavedLearnerInput] = useState(null);
 
     // Reset when question changes
     useEffect(() => {
         setQuotientInput('');
         setRemainderInput('0');
         setShowSteps(false);
+        setRevealedModel(false);
+        setSavedLearnerInput(null);
     }, [question.id]);
+
+    const handleToggleRevealModel = () => {
+        if (!revealedModel) {
+            setSavedLearnerInput({
+                quotient: quotientInput,
+                remainder: remainderInput,
+                showSteps: showSteps,
+            });
+            setQuotientInput(String(expectedQuotient));
+            setRemainderInput(String(expectedRemainder));
+            setShowSteps(true);
+            setRevealedModel(true);
+        } else {
+            if (savedLearnerInput) {
+                setQuotientInput(savedLearnerInput.quotient || '');
+                setRemainderInput(savedLearnerInput.remainder || '0');
+                setShowSteps(Boolean(savedLearnerInput.showSteps));
+            }
+            setRevealedModel(false);
+        }
+    };
 
     const handleSubmit = (e) => {
         if (e) e.preventDefault();
@@ -66,6 +91,23 @@ export default function ArithmeticGridModalityRenderer({
 
     return (
         <div className="space-y-5 font-sans" data-testid="arithmetic-grid-workspace">
+            {/* Model Solution Active Banner */}
+            {revealedModel && (
+                <div data-testid="banner-arithmetic-model-active" className="p-2.5 rounded-xl bg-amber-50 border border-amber-300 text-xs text-amber-900 flex items-center justify-between shadow-2xs font-sans">
+                    <div className="flex items-center gap-2">
+                        <span className="font-bold">📖 Model Quotient Displayed:</span>
+                        <span>Studying expected long division steps. Click &quot;Restore My Answer&quot; to continue.</span>
+                    </div>
+                    <button
+                        type="button"
+                        onClick={handleToggleRevealModel}
+                        className="text-amber-800 font-bold underline cursor-pointer text-xs shrink-0 ml-2"
+                    >
+                        Restore My Answer
+                    </button>
+                </div>
+            )}
+
             {/* Top Algorithmic Layout */}
             <div className="bg-white border border-slate-200/90 rounded-2xl p-5 shadow-xs">
                 <div className="flex flex-wrap items-center justify-between gap-3 mb-4 pb-3 border-b border-slate-100">
@@ -139,11 +181,13 @@ export default function ArithmeticGridModalityRenderer({
                                 onChange={(e) => setQuotientInput(e.target.value)}
                                 placeholder="e.g. 169"
                                 className={`w-full px-4 py-2.5 rounded-xl border-2 font-mono text-base font-bold text-slate-900 focus:outline-none transition ${
-                                    hasError
-                                        ? 'border-rose-400 bg-rose-50/50 focus:border-rose-500'
-                                        : isCorrect
-                                        ? 'border-emerald-500 bg-emerald-50/40 focus:border-emerald-600'
-                                        : 'border-slate-300 focus:border-[#13519C] bg-white'
+                                    revealedModel
+                                        ? 'border-amber-400 bg-amber-50/90 text-amber-950 ring-1 ring-amber-300'
+                                        : hasError
+                                            ? 'border-rose-400 bg-rose-50/50 focus:border-rose-500'
+                                            : isCorrect
+                                                ? 'border-emerald-500 bg-emerald-50/40 focus:border-emerald-600'
+                                                : 'border-slate-300 focus:border-[#13519C] bg-white'
                                 }`}
                                 autoFocus
                             />
@@ -158,9 +202,15 @@ export default function ArithmeticGridModalityRenderer({
                                 type="text"
                                 data-testid="input-remainder"
                                 value={remainderInput}
-                                onChange={(e) => setRemainderInput(e.target.value)}
+                                onChange={(e) => {
+                                    if (!revealedModel) setRemainderInput(e.target.value);
+                                }}
                                 placeholder="0"
-                                className="w-full px-4 py-2.5 rounded-xl border-2 border-slate-300 focus:border-[#13519C] font-mono text-base font-bold text-slate-900 focus:outline-none bg-white transition"
+                                className={`w-full px-4 py-2.5 rounded-xl border-2 font-mono text-base font-bold text-slate-900 focus:outline-none transition ${
+                                    revealedModel
+                                        ? 'border-amber-400 bg-amber-50/90 text-amber-950 ring-1 ring-amber-300'
+                                        : 'border-slate-300 focus:border-[#13519C] bg-white'
+                                }`}
                             />
                         </div>
                     </div>
@@ -201,17 +251,23 @@ export default function ArithmeticGridModalityRenderer({
                     )}
 
                     {/* Action Bar */}
-                    <div className="pt-2 flex items-center justify-between">
-                        <button
-                            type="button"
-                            onClick={() => {
-                                setQuotientInput(String(expectedQuotient));
-                                setRemainderInput(String(expectedRemainder));
-                            }}
-                            className="text-xs font-semibold text-slate-500 hover:text-slate-800 underline cursor-pointer"
-                        >
-                            Fill Correct ({expectedQuotient})
-                        </button>
+                    <div className="pt-2 flex flex-wrap items-center justify-between gap-2">
+                        <div>
+                            {Boolean(result) && (
+                                <button
+                                    type="button"
+                                    data-testid="btn-reveal-arithmetic-model"
+                                    onClick={handleToggleRevealModel}
+                                    className={`px-3.5 py-2 rounded-xl text-xs font-bold transition shadow-xs cursor-pointer flex items-center gap-1.5 font-sans ${
+                                        revealedModel
+                                            ? 'bg-amber-600 hover:bg-amber-700 text-white'
+                                            : 'bg-white text-[#13519C] border border-[#13519C]/40 hover:bg-blue-50'
+                                    }`}
+                                >
+                                    <span>{revealedModel ? '↩ Restore My Answer' : '👁️ Show Model Answer'}</span>
+                                </button>
+                            )}
+                        </div>
 
                         <button
                             type="submit"

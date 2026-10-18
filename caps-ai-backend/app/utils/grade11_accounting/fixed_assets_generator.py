@@ -555,23 +555,91 @@ Prepare the Asset Disposal account in the General Ledger.
 
 
 def _make_fixed_assets_ethics_internal_control_typed(*, r: random.Random, mode: str) -> Dict[str, Any]:
-    # Mirrors Q11.2 / ethics-style response.
-    business = r.choice(["Makume Stores", "Malusi's Delivery Services"])
-    prompt = f"""{business}
+    # Mirrors NSC Grade 11 & 12 Fixed Assets Internal Control & Ethics
+    businesses = [
+        "Makume Stores", "Malusi's Delivery Services", "Kutlwano Logistics",
+        "Soweto Wholesale Traders", "Zululand Timber Mills", "Durban Coast Enterprises",
+        "Polokwane Fresh Produce", "Cape Craft Furnishings"
+    ]
+    business = r.choice(businesses)
+    archetype_idx = r.randint(0, 5)
+
+    if archetype_idx == 0:
+        prompt = f"""{business}
 
 #### REQUIRED:
 Explain the consequences of an owner/partner disposing of a fixed asset without proper authorisation (ethical issue).
 
 #### INFORMATION:
 A partner took a delivery vehicle for personal use and disposed of it without informing the other partners."""
+        sample = (
+            "It is unethical to dispose of partnership assets without consent of the other partner(s).\n"
+            "The partner may be required to repay the difference between fair value and the amount paid.\n"
+            "The loss can be charged against the partner's current account.\n"
+            "The partner could face legal action and will be held accountable for losses suffered by the partnership."
+        )
+    elif archetype_idx == 1:
+        prompt = f"""{business}
 
-    sample = (
-        "It is unethical to dispose of partnership assets without consent of the other partner(s).\n"
-        "The partner may be required to repay the difference between fair value and the amount paid.\n"
-        "The loss can be charged against the partner's current account.\n"
-        "The partner could face legal action and will be held accountable for losses suffered by the partnership."
-    )
-    return _make_typed(prompt=prompt, sample_answer=sample, mode=mode, archetype_key="g11_fixed_assets_ethics_typed")
+#### REQUIRED:
+State TWO internal control measures that the management of {business} should implement to prevent the theft or unauthorised use of fixed assets.
+
+#### INFORMATION:
+An internal audit revealed that two laptops and a portable generator recorded in the Fixed Asset Register could not be physically located on the business premises."""
+        sample = (
+            "1. Conduct regular physical asset counts (asset verification) and reconcile with the Fixed Asset Register.\n"
+            "2. Fasten physical barcodes/RFID tags to all assets and require security check-out logs when assets leave the premises."
+        )
+    elif archetype_idx == 2:
+        prompt = f"""{business}
+
+#### REQUIRED:
+Explain why it is unethical and a violation of GAAP principles to record the major overhaul of a delivery vehicle engine as 'Repairs and Maintenance' instead of capitalising it to the Vehicle account.
+
+#### INFORMATION:
+The managing partner instructed the accountant to write off a R65 000 engine overhaul as repairs in the current financial year to reduce the business net profit and pay less tax."""
+        sample = (
+            "A major engine overhaul extends the useful operating life of the vehicle and enhances its capacity, so GAAP requires it to be capitalised as part of the asset cost.\n"
+            "Expensing it immediately violates the matching principle, understates net profit, and constitutes tax evasion, which is illegal and unethical."
+        )
+    elif archetype_idx == 3:
+        prompt = f"""{business}
+
+#### REQUIRED:
+Explain the financial risk to {business} if tangible assets are insured only at their depreciated carrying value rather than their current replacement value.
+
+#### INFORMATION:
+A delivery van purchased 4 years ago for R350 000 has a current book value of R80 000. It was insured for R80 000 and was recently written off in a flood."""
+        sample = (
+            "Insuring at carrying value means the insurance payout (R80 000) will be far below the cost of purchasing a replacement vehicle today (replacement value).\n"
+            "The business will suffer severe cash flow strain or may be unable to replace vital operating infrastructure."
+        )
+    elif archetype_idx == 4:
+        prompt = f"""{business}
+
+#### REQUIRED:
+Comment on the ethics of selling a fully depreciated delivery vehicle to the managing partner's son for R5 000 without offering it on public tender or obtaining a market valuation.
+
+#### INFORMATION:
+A delivery truck with a carrying value of R1 (fully depreciated) but an estimated market trade-in value of R45 000 was sold to the partner's son for R5 000."""
+        sample = (
+            "This is a conflict of interest and breach of fiduciary duty by the managing partner.\n"
+            "Assets should be sold at fair market value via transparent bidding to maximize recovery for the business and protect other partners'/shareholders' interests."
+        )
+    else:
+        prompt = f"""{business}
+
+#### REQUIRED:
+Explain why {business} must maintain a detailed Fixed Asset Register for each individual tangible asset rather than only maintaining total figures in the General Ledger.
+
+#### INFORMATION:
+The external auditor noted that {business} records bulk purchases of equipment directly in the General Ledger without recording serial numbers, locations, or individual depreciation."""
+        sample = (
+            "A Fixed Asset Register enables physical identification, tracks individual depreciation and carrying value, and prevents ghost assets and unrecorded theft.\n"
+            "It is required by GAAP to calculate accurate profit or loss when an individual asset is sold or scrapped."
+        )
+
+    return _make_typed(prompt=prompt, sample_answer=sample, mode=mode, archetype_key=f"g11_fixed_assets_ethics_{archetype_idx}")
 
 
 def _straight_line_dep(*, cost: float, rate_pct: float, months: int) -> float:

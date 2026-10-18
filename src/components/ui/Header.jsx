@@ -5,6 +5,7 @@ import FundileLogo from './FundileLogo';
 import InstallAppModal from './InstallAppModal';
 import UserProfileModal from '../profile/UserProfileModal';
 import MessageBoardModal from '../notifications/MessageBoardModal';
+import OfflineStatusBadge from '../navigation/OfflineStatusBadge';
 import studentStore from '../../services/studentStore';
 import { isStandaloneApp } from '../../hooks/useCoreState';
 
@@ -91,9 +92,15 @@ const Header = ({
       return 0;
     }
   }, [showMessageBoard]);
-  const unreadNotificationCount = studentNotifications.filter((notification) => !notification.isRead).length;
-  const systemNoticeCount = pendingAssignments.length > 0 ? 1 : 0;
-  const unreadCount = unreadNotificationCount + systemNoticeCount + unreadMessageCount;
+  const unreadNotificationCount = (studentNotifications || []).filter((notification) => !notification.isRead).length;
+  const unreadCount = unreadNotificationCount + unreadMessageCount;
+
+  const handleOpenMessageBoard = () => {
+    setShowMessageBoard(true);
+    if (typeof onMarkAllNotificationsRead === 'function') {
+      onMarkAllNotificationsRead();
+    }
+  };
 
   const isStandalone = isStandaloneApp();
   const hasActiveSubscription = Boolean(
@@ -123,8 +130,8 @@ const Header = ({
   };
 
   return (
-    <header className="bg-[#13519C] shadow-md sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <header className="bg-[#13519C] shadow-md sticky top-0 z-50 w-full overflow-x-hidden">
+      <div className="w-full px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center space-x-3 shrink-0">
             {!isStandalone && typeof onNavigateHome === 'function' ? (
@@ -134,10 +141,10 @@ const Header = ({
                 className="cursor-pointer focus:outline-hidden transition hover:opacity-90 active:scale-98 text-left"
                 title="Fundile Home - Back to Landing Page"
               >
-                <FundileLogo className="h-28 w-28 sm:h-48 sm:w-48 text-white" wordmarkColor="white" />
+                <FundileLogo className="h-9 w-auto sm:h-11 text-white" wordmarkColor="white" />
               </button>
             ) : (
-              <FundileLogo className="h-28 w-28 sm:h-48 sm:w-48 text-white" wordmarkColor="white" />
+              <FundileLogo className="h-9 w-auto sm:h-11 text-white" wordmarkColor="white" />
             )}
           </div>
 
@@ -194,12 +201,15 @@ const Header = ({
               </button>
             )}
 
+            {/* Offline Telemetry & Load-Shedding Resilience Badge */}
+            <OfflineStatusBadge />
+
             {/* Install App Button (if NOT running as installed Standalone app) */}
             {!isStandalone && (
               <button
                 type="button"
                 onClick={() => setShowInstallModal(true)}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/15 hover:bg-white/25 text-white text-xs font-bold transition border border-white/20 cursor-pointer shrink-0"
+                className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/15 hover:bg-white/25 text-white text-xs font-bold transition border border-white/20 cursor-pointer shrink-0"
                 title="Install Fundile App on Phone or PC"
               >
                 <Smartphone className="w-3.5 h-3.5" />
@@ -212,7 +222,7 @@ const Header = ({
               <button
                 type="button"
                 onClick={onOpenPersonaSwitcher}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-500/20 hover:bg-amber-500/35 text-amber-200 text-xs font-bold transition border border-amber-400/40 cursor-pointer shrink-0 shadow-xs"
+                className="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-500/20 hover:bg-amber-500/35 text-amber-200 text-xs font-bold transition border border-amber-400/40 cursor-pointer shrink-0 shadow-xs"
                 title="Super Admin Mock School Testing: Switch between mock students, teachers, and parents"
               >
                 <Users className="w-3.5 h-3.5 text-amber-300" />
@@ -237,6 +247,7 @@ const Header = ({
                   return (
                     <button
                       type="button"
+                      data-testid="btn-user-profile"
                       onClick={() => setShowProfileModal(true)}
                       className="group relative h-9 w-9 sm:h-10 sm:w-10 rounded-full ring-2 ring-white/40 hover:ring-[#FF9100] transition-all overflow-hidden flex items-center justify-center bg-white/20 text-white font-bold text-xs sm:text-sm shrink-0 cursor-pointer shadow-inner"
                       title="View & Edit Profile"
@@ -255,8 +266,9 @@ const Header = ({
 
                 <button
                   type="button"
+                  data-testid="btn-user-profile-name"
                   onClick={() => setShowProfileModal(true)}
-                  className="text-white hover:text-blue-100 font-medium hidden md:inline text-xs sm:text-sm cursor-pointer transition"
+                  className="min-h-[36px] flex items-center px-2 rounded-lg text-white hover:text-blue-100 hover:bg-white/10 font-medium hidden md:inline text-xs sm:text-sm cursor-pointer transition"
                   style={{ fontFamily: 'Afacad, sans-serif' }}
                 >
                   Welcome, {currentUser.name} ({currentUser.role})
@@ -265,8 +277,9 @@ const Header = ({
                 <div className="relative">
                   <button
                     type="button"
-                    onClick={() => setShowMessageBoard(true)}
-                    className="p-2 rounded-full hover:bg-white/20 text-white relative cursor-pointer"
+                    data-testid="btn-notifications-bell"
+                    onClick={handleOpenMessageBoard}
+                    className="h-9 w-9 flex items-center justify-center rounded-full hover:bg-white/20 text-white relative cursor-pointer"
                     title="Message Board & Communications"
                   >
                     <Bell className="h-5 w-5" />
@@ -278,7 +291,12 @@ const Header = ({
                   </button>
                 </div>
 
-                <button onClick={() => setShowLogoutConfirm(true)} className="flex items-center space-x-2 bg-white/20 hover:bg-white/30 text-white rounded-full p-2" title="Logout">
+                <button
+                  data-testid="btn-open-logout-modal"
+                  onClick={() => setShowLogoutConfirm(true)}
+                  className="h-9 w-9 flex items-center justify-center bg-white/20 hover:bg-white/30 text-white rounded-full transition cursor-pointer"
+                  title="Logout"
+                >
                   <LogOut className="h-5 w-5" />
                 </button>
               </>
@@ -337,6 +355,7 @@ const Header = ({
                 Cancel
               </button>
               <button
+                data-testid="btn-confirm-logout"
                 onClick={() => {
                   setShowLogoutConfirm(false);
                   if (onLogout) onLogout();
@@ -367,12 +386,17 @@ const Header = ({
         superAdminTier={superAdminTier}
         setSuperAdminTier={setSuperAdminTier}
         onOpenPersonaSwitcher={onOpenPersonaSwitcher}
+        onSelectGrade={(g) => studentStore.setGrade(g)}
       />
 
       {/* Mount MessageBoardModal */}
       {showMessageBoard && (
         <MessageBoardModal
+          isOpen={showMessageBoard}
           currentUser={currentUser}
+          systemNotifications={studentNotifications}
+          onMarkAllNotificationsRead={onMarkAllNotificationsRead}
+          onMarkNotificationRead={onMarkNotificationRead}
           onClose={() => setShowMessageBoard(false)}
         />
       )}

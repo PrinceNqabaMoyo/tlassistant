@@ -936,6 +936,62 @@ def delete_expired_solved_problems():
 
 
 
+# --- Super Admin Clearance Desk: Secure Signed URL POP Preview ---
+@app.route('/api/payments/pop-view-url', methods=['POST'])
+def get_pop_view_url():
+    """Generates a secure 15-minute signed URL for Super Admin to review an uploaded Proof of Payment PDF."""
+    try:
+        auth_header = request.headers.get('Authorization', '')
+        if not auth_header.startswith('Bearer '):
+            return jsonify({'success': False, 'error': 'Missing or invalid Authorization header'}), 401
+
+        id_token = auth_header.split('Bearer ', 1)[1].strip()
+        try:
+            from app.utils.firebase_admin_client import verify_firebase_id_token, get_storage_bucket
+            decoded_token = verify_firebase_id_token(id_token)
+        except Exception as auth_err:
+            return jsonify({'success': False, 'error': f'Invalid auth token: {str(auth_err)}'}), 401
+
+        user_email = (decoded_token.get('email') or '').lower().strip()
+        user_uid = decoded_token.get('uid')
+        owner_emails = {'princenqaba@gmail.com', 'princenqabamoyo@outlook.com'}
+
+        is_owner = user_email in owner_emails or user_uid == 'yUHv5COBcCdOFy6brXnOoBhfaTc2'
+        if not is_owner:
+            if firestore_db:
+                user_snap = firestore_db.collection('users').document(user_uid).get()
+                if user_snap.exists:
+                    user_data = user_snap.to_dict()
+                    if user_data.get('isSuperAdmin') or user_data.get('isOwner') or user_data.get('role') == 'admin':
+                        is_owner = True
+
+        if not is_owner:
+            return jsonify({'success': False, 'error': 'Forbidden: Only Super Administrator can review POP documents.'}), 403
+
+        data = request.get_json(silent=True) or {}
+        storage_path = data.get('storagePath')
+        if not storage_path:
+            return jsonify({'success': False, 'error': 'storagePath is required'}), 400
+
+        signed_url = None
+        try:
+            bucket = get_storage_bucket()
+            blob = bucket.blob(storage_path)
+            signed_url = blob.generate_signed_url(expiration=datetime.timedelta(minutes=15), method='GET')
+        except Exception as storage_err:
+            signed_url = None
+
+        if not signed_url:
+            import urllib.parse
+            signed_url = f"/api/payments/pop-download?path={urllib.parse.quote(storage_path)}"
+
+        return jsonify({'success': True, 'url': signed_url, 'expiresInSeconds': 900}), 200
+
+    except Exception as e:
+        print(f"Error preparing POP preview URL: {e}")
+        return jsonify({'success': False, 'error': f'Failed to generate POP view link: {str(e)}'}), 500
+
+
 # --- Main Execution ---
 if __name__ == '__main__':
     initialize_agent()

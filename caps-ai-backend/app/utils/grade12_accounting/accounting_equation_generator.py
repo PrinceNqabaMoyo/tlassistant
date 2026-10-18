@@ -149,7 +149,7 @@ def _generate_transactions(r: random.Random) -> List[Dict[str, Any]]:
     return txns
 
 
-def _build_equation_table(txns_subset: List[Dict[str, Any]], title: str, qid_prefix: str, mode_name: str) -> Dict[str, Any]:
+def _build_equation_table(txns_subset: List[Dict[str, Any]], title: str, qid_prefix: str, mode_name: str, r: Optional[random.Random] = None) -> Dict[str, Any]:
     headers = ["No.", "Transaction", "Account Debited", "Account Credited", "Assets (A)", "Owner's Equity (OE)", "Liabilities (L)"]
     rows = []
     correct_map = {}
@@ -177,18 +177,27 @@ def _build_equation_table(txns_subset: List[Dict[str, Any]], title: str, qid_pre
 
     total_marks = len(txns_subset) * 2
 
-    prompt = (
-        f"**{title}**\n\n"
-        f"Analyse the transactions below according to the South African Accounting Equation (**A = OE + L**).\n"
-        f"For each transaction:\n"
-        f"1. State the **Account Debited** and **Account Credited** in the General Ledger.\n"
-        f"2. Indicate the monetary effect on **Assets**, **Owner's Equity**, and **Liabilities** (use + for increase, - for decrease, and 0 for no effect).\n"
-        f"Ensure that the equation balances for each row: **ΔA = ΔOE + ΔL**."
+    biz = generate_sa_enterprise(r) if r else None
+    biz_header = f" — {biz['business_name']} ({biz['owner_name']})" if biz else ""
+    prompt_lines = [
+        f"**{title}{biz_header}**\n",
+        f"Analyse the transactions below according to the South African Accounting Equation (**A = OE + L**).\n",
+        "**Transactions:**",
+    ]
+    for rix, t in enumerate(txns_subset):
+        prompt_lines.append(f"{rix + 1}. {t['desc']}")
+    prompt_lines.append(
+        "\n**Required:**\n"
+        "1. State the **Account Debited** and **Account Credited** in the General Ledger.\n"
+        "2. Indicate the monetary effect on **Assets**, **Owner's Equity**, and **Liabilities** (use + for increase, - for decrease, and 0 for no effect).\n"
+        "Ensure that the equation balances for each row: **ΔA = ΔOE + ΔL**."
     )
+    prompt = "\n".join(prompt_lines)
 
     return {
         "id": _make_id(qid_prefix),
         "question_type": "tabular_fill",
+        "prompt": prompt,
         "question_text": prompt,
         "correct_answer": correct_map,
         "sample_answer": f"Row 1: Dr {txns_subset[0]['dr']}, Cr {txns_subset[0]['cr']}, A: {txns_subset[0]['a_eff']}, OE: {txns_subset[0]['oe_eff']}, L: {txns_subset[0]['l_eff']}",
@@ -219,17 +228,17 @@ def _build_equation_table(txns_subset: List[Dict[str, Any]], title: str, qid_pre
 # --------------------------------------------------------------------------- #
 def _build_cash_drill(r: random.Random) -> Dict[str, Any]:
     txns = [t for t in _generate_transactions(r) if t["category"] == "cash"]
-    return _build_equation_table(txns, "Cash Transactions Analysis", "acct_eq_cash", "elementary_cash_transactions")
+    return _build_equation_table(txns, "Cash Transactions Analysis", "acct_eq_cash", "elementary_cash_transactions", r)
 
 
 def _build_credit_drill(r: random.Random) -> Dict[str, Any]:
     txns = [t for t in _generate_transactions(r) if t["category"] == "credit"]
-    return _build_equation_table(txns, "Credit Transactions Analysis", "acct_eq_credit", "elementary_credit_transactions")
+    return _build_equation_table(txns, "Credit Transactions Analysis", "acct_eq_credit", "elementary_credit_transactions", r)
 
 
 def _build_adjustment_drill(r: random.Random) -> Dict[str, Any]:
     txns = [t for t in _generate_transactions(r) if t["category"] == "adjustment"]
-    return _build_equation_table(txns, "Year-End Adjustments Equation Analysis", "acct_eq_adj", "elementary_adjustment_transactions")
+    return _build_equation_table(txns, "Year-End Adjustments Equation Analysis", "acct_eq_adj", "elementary_adjustment_transactions", r)
 
 
 # --------------------------------------------------------------------------- #
@@ -238,7 +247,7 @@ def _build_adjustment_drill(r: random.Random) -> Dict[str, Any]:
 def _build_compound(r: random.Random) -> List[Dict[str, Any]]:
     all_txns = _generate_transactions(r)
     # Pick 6 diverse transactions
-    return [_build_equation_table(all_txns, "Comprehensive Accounting Equation Analysis (Exam Standard)", "acct_eq_compound", "compound")]
+    return [_build_equation_table(all_txns, "Comprehensive Accounting Equation Analysis (Exam Standard)", "acct_eq_compound", "compound", r)]
 
 
 # --------------------------------------------------------------------------- #

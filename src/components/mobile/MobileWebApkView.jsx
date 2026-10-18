@@ -11,59 +11,39 @@ import {
   Compass,
   WifiOff,
   Flame,
-  Zap
+  Zap,
+  LogOut
 } from 'lucide-react';
 import studentStore, { getTimeGreeting } from '../../services/studentStore';
 import MessageBoardModal from '../notifications/MessageBoardModal';
 import { getSubjectTheme, BRAND } from '../../theme/subjectPalette';
 import UniversalWorkspace from '../workspace/UniversalWorkspace';
+import FundileLogo from '../ui/FundileLogo';
+import { ALL_FET_PHASE_SUBJECTS, ALL_SENIOR_PHASE_SUBJECTS } from '../curriculum/SubjectManagerModal';
 
-/**
- * MobileWebApkView
- * Authentic Android WebAPK Mobile Experience with Bidirectional Parity.
- * 
- * Architectural Invariants:
- * 1. Subtle Wave Header Ribbon:
- *    - Deep brand blue gradient (#13519C to #0f4280) with gold graduation cap badge.
- *    - Afacad typography: "Fundile", subtitle "Learn • Practice • Progress".
- *    - Notification bell with red dot and student avatar calling onOpenProfilePhoto.
- *    - Organic subtle SVG wave path (h-5 text-slate-50) smoothly blending into the canvas.
- * 2. Student Greeting & Compact Metrics:
- *    - Eliminates redundant 4-metric summary bar to save ~110px vertical height.
- *    - Compact greeting card with student name (defaulting to Prince), grade, streak, XP, and Link Parent.
- * 3. Today's Desk: Two Sticky Non-Scrolling Sections with Tucking Boundary:
- *    - Section 1: Upcoming Tasks (sticky header, Accounting & Mathematics cards tucking under).
- *    - Section 2: Self-Paced Mastery (sticky header, 4 BKT calibrated autonomous cards tucking under).
- *    - Offline WebAPK Cache Status Badge.
- * 4. Pinned Bottom Subject Navigation:
- *    - Permanently anchored 10-subject carousel (#mob-bottom-nav) with 44px min touch targets.
- *    - Content container flex-1 overflow-y-auto overscroll-contain; bottom nav is NEVER displaced.
- */
-
-const MOBILE_SUBJECTS = [
-  { id: 'desk', label: 'Desk', icon: '📋' },
-  { id: 'accounting', label: 'Accounting', icon: '📗' },
-  { id: 'maths', label: 'Maths', icon: '📘' },
-  { id: 'mathslit', label: 'Maths Lit', icon: '📊' },
-  { id: 'physics', label: 'Physics', icon: '📙' },
-  { id: 'business', label: 'Business', icon: '📕' },
-  { id: 'lifesci', label: 'Life Sciences', icon: '🔬' },
-  { id: 'techmaths', label: 'Tech Maths', icon: '📐' },
-  { id: 'ems', label: 'EMS', icon: '🪙' },
-  { id: 'natsci', label: 'Natural Sciences', icon: '🌱' },
-];
+const SUBJECT_ICONS = {
+  accounting: '📗',
+  mathematics: '📘',
+  physical_sciences: '📙',
+  life_sciences: '🔬',
+  business_studies: '📕',
+  technical_mathematics: '📐',
+  mathematical_literacy: '📊',
+  ems: '🪙',
+  natural_sciences: '🌱',
+};
 
 const normalizeTabId = (id) => {
   if (!id) return 'desk';
   const clean = String(id).toLowerCase().trim();
-  if (clean === 'maths' || clean === 'mathematics') return 'maths';
-  if (clean === 'mathslit' || clean === 'maths_lit' || clean === 'mathematical_literacy') return 'mathslit';
-  if (clean === 'physics' || clean === 'physical_sciences') return 'physics';
-  if (clean === 'business' || clean === 'business_studies') return 'business';
-  if (clean === 'lifesci' || clean === 'life_sciences') return 'lifesci';
-  if (clean === 'techmaths' || clean === 'technical_mathematics') return 'techmaths';
+  if (clean === 'maths' || clean === 'mathematics') return 'mathematics';
+  if (clean === 'mathslit' || clean === 'maths_lit' || clean === 'mathematical_literacy') return 'mathematical_literacy';
+  if (clean === 'physics' || clean === 'physical_sciences') return 'physical_sciences';
+  if (clean === 'business' || clean === 'business_studies') return 'business_studies';
+  if (clean === 'lifesci' || clean === 'life_sciences') return 'life_sciences';
+  if (clean === 'techmaths' || clean === 'technical_mathematics') return 'technical_mathematics';
   if (clean === 'ems') return 'ems';
-  if (clean === 'natsci' || clean === 'natural_sciences') return 'natsci';
+  if (clean === 'natsci' || clean === 'natural_sciences') return 'natural_sciences';
   if (clean === 'accounting') return 'accounting';
   return clean || 'desk';
 };
@@ -91,6 +71,8 @@ export default function MobileWebApkView({
   schoolName = 'Westville High School',
   streakDays = 5,
   xp = 1420,
+  enabledSubjects = null,
+  onOpenManageSubjects = null,
   // Bidirectional Parity Props:
   question = null,
   activeTopic = '',
@@ -105,10 +87,12 @@ export default function MobileWebApkView({
   onOpenLinkGuardian = () => {},
   onOpenJoinClassModal = () => {},
   onOpenPersonaSwitcher = null,
+  onLogout = () => {},
 }) {
   const [showHints, setShowHints] = useState(false);
   const [activeHintTier, setActiveHintTier] = useState(1);
   const [hasMarkedCurrent, setHasMarkedCurrent] = useState(false);
+  const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
 
   // Accounting live cell inputs
   const [ledgerInputs, setLedgerInputs] = useState({
@@ -144,8 +128,8 @@ export default function MobileWebApkView({
   const resolvedStudentName = studentName || storeState?.studentName || 'Prince Moyo';
   const rawFirst = resolvedStudentName ? resolvedStudentName.split(' ')[0] : 'Prince';
   const firstName = (rawFirst && rawFirst.toLowerCase() !== 'nqobile') ? rawFirst : 'Prince';
-  const formattedSchool = schoolName ? schoolName.replace(/School/i, '').trim() : 'Westville High';
   const isIndependent = Boolean(storeState?.isIndependent || storeState?.currentUser?.isIndependent);
+  const formattedSchool = isIndependent ? 'Independent Homeschool' : (schoolName ? schoolName.replace(/School/i, '').trim() : 'Westville High');
 
   const assignedTasks = useMemo(() => {
     if (isIndependent) return [];
@@ -176,14 +160,24 @@ export default function MobileWebApkView({
   }, [isIndependent, storeState?.currentUser?.assignedTasks]);
   const hasUnviewedTasks = assignedTasks.some(t => studentStore.isTaskUnviewed(t.id));
 
-  // Item 4: Bottom rail filtering based on School Work vs Self-Study
-  const displayedSubjects = useMemo(() => {
-    if (currentTab === 'desk' && activeMobileDeskSection === 'school_work') {
-      const taskSubjects = new Set(assignedTasks.map(t => normalizeTabId(t.subject)));
-      return MOBILE_SUBJECTS.filter(s => s.id === 'desk' || taskSubjects.has(s.id));
-    }
-    return MOBILE_SUBJECTS;
-  }, [currentTab, activeMobileDeskSection, assignedTasks]);
+  // Horizontal swipeable bottom subject rail: Strictly present student's enrolled phase subjects
+  const isSeniorPhase = Number(grade) <= 9;
+  const fullPhaseList = isSeniorPhase ? ALL_SENIOR_PHASE_SUBJECTS : ALL_FET_PHASE_SUBJECTS;
+  const enabledKeys = (enabledSubjects && enabledSubjects.length > 0)
+    ? enabledSubjects
+    : (storeState?.enabledSubjects || (isSeniorPhase ? ['mathematics', 'ems', 'natural_sciences'] : ['accounting', 'mathematics', 'physical_sciences', 'life_sciences']));
+
+  const enrolledPhaseSubjects = useMemo(() => {
+    return fullPhaseList
+      .filter((s) => !enabledKeys || enabledKeys.length === 0 || enabledKeys.includes(s.id))
+      .map((s) => ({
+        ...s,
+        label: s.short || s.name,
+        icon: SUBJECT_ICONS[s.id] || '📚',
+      }));
+  }, [fullPhaseList, enabledKeys]);
+
+  const displayedSubjects = enrolledPhaseSubjects;
 
   const currentSubData = studentStore.getSubject(currentTab) || {
     formativeMastery: 84,
@@ -262,220 +256,206 @@ export default function MobileWebApkView({
     <div className="h-[100dvh] max-h-[100dvh] flex flex-col overflow-hidden bg-white text-slate-800 font-sans select-none relative">
       
       {/* ───────────────────────────────────────────────────────────── */}
-      {/* 1. SUBTLE WAVE HEADER RIBBON                                   */}
-      {/* ───────────────────────────────────────────────────────────── */}
-      {!isLandscape && (
-        <header 
-          id="mob-wave-header-ribbon"
-          className="bg-gradient-to-b from-[#13519C] to-[#0f4280] text-white pt-[calc(0.75rem+env(safe-area-inset-top))] pb-5 px-4 shrink-0 overflow-hidden relative"
-        >
-          <div className="flex items-center justify-between relative z-10">
-            {/* Left: Fundile Brand Mark */}
-            <div className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-xl bg-white/10 border border-white/20 flex items-center justify-center shadow-xs shrink-0">
-                <GraduationCap className="w-5 h-5 text-[#FF9100]" />
-              </div>
-              <div className="flex flex-col">
-                <span 
-                  className="font-extrabold text-lg leading-tight tracking-tight text-white" 
-                  style={{ fontFamily: 'Afacad, sans-serif' }}
-                >
-                  Fundile
-                </span>
-                <span className="text-[10px] text-blue-200/90 font-medium leading-none truncate max-w-[190px]">
-                  {`Grade ${grade} • ${storeState?.phase || (grade >= 10 ? 'FET Phase' : 'Senior Phase')} • ${isIndependent ? 'Independent Account' : formattedSchool}`}
-                </span>
-              </div>
-            </div>
-
-            {/* Right: Actions (Notification Bell & Profile Avatar) */}
-            <div className="flex items-center gap-2">
-              <button
-                type="button"
-                onClick={() => setShowMessageBoard(true)}
-                className="relative p-1.5 rounded-full hover:bg-white/10 active:bg-white/20 text-white transition cursor-pointer flex items-center justify-center min-w-[36px] min-h-[36px]"
-                title="Message Board"
-                aria-label="Message Board"
-              >
-                <Bell className="w-4 h-4 text-blue-100" />
-                {(storeState?.messages?.some(m => !m.isRead) || hasUnviewedTasks) && (
-                  <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-rose-500 ring-2 ring-[#13519C] animate-pulse" />
-                )}
-              </button>
-
-              <button
-                type="button"
-                data-testid="btn-open-user-profile"
-                onClick={() => onOpenProfilePhoto && onOpenProfilePhoto()}
-                className="relative group w-8 h-8 rounded-full overflow-hidden ring-2 ring-white/60 hover:ring-[#FF9100] transition flex items-center justify-center bg-white text-[#13519C] font-extrabold text-xs shadow-xs cursor-pointer shrink-0"
-                title="Update Profile Photo"
-                aria-label="Profile Photo"
-              >
-                {userPhoto ? (
-                  <img src={userPhoto} alt={studentName} className="h-full w-full object-cover" />
-                ) : (
-                  <span>{firstName ? firstName.charAt(0) : 'P'}</span>
-                )}
-                <span className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center text-[10px] transition-opacity text-white">
-                  📸
-                </span>
-              </button>
-            </div>
-          </div>
-
-          {/* Organic Subtle SVG Wave Path smoothly transitioning into bg-slate-50 */}
-          <div className="absolute bottom-0 left-0 right-0 w-full overflow-hidden leading-none pointer-events-none">
-            <svg 
-              className="h-5 w-full text-slate-50 preserve-3d block" 
-              viewBox="0 0 1200 120" 
-              preserveAspectRatio="none"
-            >
-              <path 
-                d="M0,0 C180,45 420,55 600,32 C820,8 1020,42 1200,22 L1200,120 L0,120 Z" 
-                fill="currentColor"
-              />
-            </svg>
-          </div>
-        </header>
-      )}
-
-      {/* ───────────────────────────────────────────────────────────── */}
-      {/* 3. MOBILE SUB-HEADER (Interactive Topic Pill & 4-Stage Stepper)*/}
-      {/* ───────────────────────────────────────────────────────────── */}
-      {currentTab !== 'desk' && (
-        <div className="px-4 py-2 bg-slate-100 border-b border-slate-200 flex flex-wrap items-center justify-between gap-2 shrink-0">
-          {/* Interactive Topic Pill (Calls onOpenTopicScope / onSelectTopic) */}
-          <button
-            type="button"
-            onClick={() => {
-              if (typeof onOpenTopicScope === 'function') {
-                onOpenTopicScope();
-              } else if (typeof onSelectTopic === 'function') {
-                onSelectTopic(activeTopic || getDefaultTopicForSubject(currentTab));
-              }
-            }}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#13519C] hover:bg-[#0e3c73] text-white text-[11px] font-bold transition shadow-xs cursor-pointer min-h-[36px]"
-            title="Choose Topic & Exam Scope"
-            style={{ fontFamily: 'Afacad, sans-serif' }}
-          >
-            <span>Term 1 • {activeTopic || getDefaultTopicForSubject(currentTab)} ▾</span>
-          </button>
-
-          {/* Compact 4-Stage Progression Stepper */}
-          <div className="flex items-center gap-1 p-0.5 bg-white rounded-lg border border-slate-200 text-[10px] font-bold shadow-2xs">
-            {[
-              { id: 'diagnostic_required', label: '0. Diag' },
-              { id: 'scaffold', label: '1. Scaff' },
-              { id: 'practice', label: '2. Prac' },
-              { id: 'exam_ready', label: '3. Exam' },
-            ].map((stg) => {
-              const isCurrent = currentSubData.status === stg.id || 
-                (stg.id === 'diagnostic_required' && currentSubData.formativeMastery === 0) ||
-                (stg.id === 'scaffold' && currentSubData.formativeMastery > 0 && currentSubData.formativeMastery < 60) ||
-                (stg.id === 'practice' && currentSubData.formativeMastery >= 60 && currentSubData.formativeMastery < 80) ||
-                (stg.id === 'exam_ready' && currentSubData.formativeMastery >= 80);
-
-              return (
-                <span
-                  key={stg.id}
-                  className={`px-1.5 py-0.5 rounded-md transition ${
-                    isCurrent
-                      ? 'bg-[#13519C] text-white font-bold shadow-xs'
-                      : 'text-slate-500'
-                  }`}
-                >
-                  {stg.label}
-                </span>
-              );
-            })}
-          </div>
-        </div>
-      )}
-
-      {/* ───────────────────────────────────────────────────────────── */}
-      {/* 4. MOBILE INTERACTIVE CONTENT VIEWS                            */}
+      {/* MOBILE INTERACTIVE CONTENT SCROLL CONTAINER                   */}
       {/* ───────────────────────────────────────────────────────────── */}
       <div 
         ref={contentScrollRef}
-        className="flex-1 bg-slate-50 overflow-y-auto overscroll-contain pb-28"
+        className="flex-1 bg-slate-50 overflow-y-auto overscroll-contain pb-28 scroll-smooth"
       >
-        
+        {/* 1. SUBTLE WAVE HEADER RIBBON (Glides off screen smoothly on downward scroll) */}
+        {!isLandscape && (
+          <header 
+            id="mob-wave-header-ribbon"
+            className="bg-gradient-to-b from-[#13519C] to-[#0f4280] text-white px-4 pt-[calc(0.75rem+env(safe-area-inset-top))] pb-5 shrink-0 overflow-hidden relative shadow-xs"
+          >
+            <div className="flex items-center justify-between gap-2 relative z-10">
+              {/* Left: Fundile Brand Mark */}
+              <div className="flex items-center gap-2 min-w-0">
+                <FundileLogo className="h-6 sm:h-7 w-auto text-white shrink-0" wordmarkColor="white" />
+              </div>
+
+              {/* Right: Actions (Notification Bell, Sign Out & Profile Avatar) */}
+              <div className="flex items-center gap-1.5">
+                <button
+                  type="button"
+                  onClick={() => setShowMessageBoard(true)}
+                  className="relative p-1.5 rounded-full hover:bg-white/10 active:bg-white/20 text-white transition cursor-pointer flex items-center justify-center min-w-[36px] min-h-[36px]"
+                  title="Message Board"
+                  aria-label="Message Board"
+                >
+                  <Bell className="w-4 h-4 text-blue-100" />
+                  {(storeState?.messages?.some(m => !m.isRead) || hasUnviewedTasks) && (
+                    <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-rose-500 ring-2 ring-[#13519C] animate-pulse" />
+                  )}
+                </button>
+
+                <button
+                  type="button"
+                  data-testid="btn-open-logout-modal"
+                  onClick={() => setShowLogoutConfirm(true)}
+                  className="p-1.5 rounded-full hover:bg-white/10 active:bg-white/20 text-white transition cursor-pointer flex items-center justify-center min-w-[36px] min-h-[36px]"
+                  title="Sign Out"
+                  aria-label="Sign Out"
+                >
+                  <LogOut className="w-4 h-4 text-blue-100" />
+                </button>
+
+                {currentTab !== 'desk' && (
+                  <button
+                    type="button"
+                    data-testid="btn-open-user-profile"
+                    onClick={() => onOpenProfilePhoto && onOpenProfilePhoto()}
+                    className="relative group w-8 h-8 rounded-full overflow-hidden ring-2 ring-white/60 hover:ring-[#FF9100] transition flex items-center justify-center bg-white text-[#13519C] font-extrabold text-xs shadow-xs cursor-pointer shrink-0"
+                    title="Update Profile Photo"
+                    aria-label="Profile Photo"
+                  >
+                    {userPhoto ? (
+                      <img src={userPhoto} alt={studentName} className="h-full w-full object-cover" />
+                    ) : (
+                      <span>{firstName ? firstName.charAt(0) : 'P'}</span>
+                    )}
+                    <span className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center text-[10px] transition-opacity text-white">
+                      📸
+                    </span>
+                  </button>
+                )}
+              </div>
+            </div>
+
+            {/* Organic Subtle SVG Wave Path smoothly transitioning into bg-slate-50 */}
+            <div className="absolute bottom-0 left-0 right-0 w-full overflow-hidden leading-none pointer-events-none">
+              <svg 
+                className="h-5 w-full text-slate-50 preserve-3d block" 
+                viewBox="0 0 1200 120" 
+                preserveAspectRatio="none"
+              >
+                <path 
+                  d="M0,0 C180,45 420,55 600,32 C820,8 1020,42 1200,22 L1200,120 L0,120 Z" 
+                  fill="currentColor" 
+                />
+              </svg>
+            </div>
+          </header>
+        )}
+
+        {/* 2. MOBILE SUB-HEADER (Interactive Topic Pill & 4-Stage Stepper: Pins at top when working in subject) */}
+        {currentTab !== 'desk' && (
+          <div className={`sticky top-0 z-20 px-4 py-2 bg-slate-100/95 backdrop-blur-md border-b border-slate-200 flex flex-wrap items-center justify-between gap-2 shadow-xs transition-all duration-200 ${isLoadingQuestion ? 'opacity-70 pointer-events-none' : ''}`}>
+            {/* Interactive Topic Pill (Calls onOpenTopicScope / onSelectTopic) */}
+            <button
+              type="button"
+              disabled={isLoadingQuestion}
+              onClick={() => {
+                if (isLoadingQuestion) return;
+                if (typeof onOpenTopicScope === 'function') {
+                  onOpenTopicScope();
+                } else if (typeof onSelectTopic === 'function') {
+                  onSelectTopic(activeTopic || getDefaultTopicForSubject(currentTab));
+                }
+              }}
+              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#13519C] hover:bg-[#0e3c73] text-white text-[11px] font-bold transition shadow-xs cursor-pointer min-h-[36px] ${isLoadingQuestion ? 'opacity-60 pointer-events-none' : ''}`}
+              title="Choose Topic & Exam Scope"
+              style={{ fontFamily: 'Afacad, sans-serif' }}
+            >
+              <span>Term 1 • {activeTopic || getDefaultTopicForSubject(currentTab)} ▾</span>
+            </button>
+
+            {/* Compact 4-Stage Progression Stepper */}
+            <div className="flex items-center gap-1 p-0.5 bg-white rounded-lg border border-slate-200 text-[10px] font-bold shadow-2xs">
+              {[
+                { id: 'diagnostic_required', label: '0. Diag' },
+                { id: 'scaffold', label: '1. Scaff' },
+                { id: 'practice', label: '2. Prac' },
+                { id: 'exam_ready', label: '3. Exam' },
+              ].map((stg) => {
+                const isCurrent = currentSubData.status === stg.id || 
+                  (stg.id === 'diagnostic_required' && currentSubData.formativeMastery === 0) ||
+                  (stg.id === 'scaffold' && currentSubData.formativeMastery > 0 && currentSubData.formativeMastery < 60) ||
+                  (stg.id === 'practice' && currentSubData.formativeMastery >= 60 && currentSubData.formativeMastery < 80) ||
+                  (stg.id === 'exam_ready' && currentSubData.formativeMastery >= 80);
+
+                return (
+                  <span
+                    key={stg.id}
+                    className={`px-1.5 py-0.5 rounded-md transition ${
+                      isCurrent
+                        ? 'bg-[#13519C] text-white font-bold shadow-xs'
+                        : 'text-slate-500'
+                    }`}
+                  >
+                    {stg.label}
+                  </span>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
         {/* ==================== VIEW 1: TODAY'S DESK ==================== */}
         {currentTab === 'desk' && (
           <div id="mob-content-desk" className="p-4 space-y-4">
             
-            {/* Student Greeting Card (Eliminates redundant 4-metric bar to recover ~110px) */}
+            {/* Student Profile Card (Decluttered & Clean) */}
             <div className="bg-white p-3.5 rounded-2xl border border-slate-200/80 shadow-xs flex items-center justify-between gap-3">
-              <div className="flex items-center gap-2.5 min-w-0">
-                <div className="w-10 h-10 rounded-full bg-blue-100/90 text-[#13519C] flex items-center justify-center shrink-0 shadow-2xs">
-                  <GraduationCap className="w-5 h-5 text-[#13519C]" />
-                </div>
+              <div className="flex items-center gap-3 min-w-0">
+                <button
+                  type="button"
+                  data-testid="btn-open-user-profile"
+                  onClick={() => onOpenProfilePhoto && onOpenProfilePhoto()}
+                  className="w-11 h-11 rounded-full bg-[#13519C] text-white font-extrabold text-sm flex items-center justify-center shrink-0 shadow-2xs ring-2 ring-slate-100 hover:ring-[#FF9100] transition cursor-pointer"
+                  title="Profile & Settings"
+                >
+                  {userPhoto ? (
+                    <img src={userPhoto} alt={studentName} className="h-full w-full object-cover rounded-full" />
+                  ) : (
+                    <span>{firstName ? firstName.charAt(0).toUpperCase() : 'P'}</span>
+                  )}
+                </button>
                 <div className="min-w-0">
-                  <span className="text-[11px] font-medium text-slate-500 block leading-tight">
-                    {getTimeGreeting()},
-                  </span>
                   <h2 
                     className="text-base font-extrabold text-slate-900 leading-tight truncate" 
                     style={{ fontFamily: 'Afacad, sans-serif' }}
                   >
-                    {firstName}
+                    {resolvedStudentName}
                   </h2>
-                  <span className="text-[10px] text-slate-500 font-medium block leading-tight truncate">
-                    Grade {grade} • FET • {formattedSchool}
+                  <span className="text-[11px] text-slate-500 font-medium block leading-tight truncate mt-0.5">
+                    Grade {grade} • {formattedSchool}
                   </span>
                 </div>
               </div>
 
-              <div className="flex flex-col items-end gap-1.5 shrink-0">
-                <div className="flex items-center gap-1.5">
-                  <span 
-                    className="text-[10px] bg-amber-100 text-amber-900 border border-amber-300 font-extrabold px-2 py-0.5 rounded-full shadow-2xs flex items-center gap-1 cursor-help"
-                    title="Study Streak: Days in a row you have completed exercises on Fundile"
-                  >
-                    <span>🔥</span>
-                    <span>{effectiveStreak}d</span>
-                  </span>
-                  <span 
-                    className="text-[10px] bg-blue-50 text-[#13519C] border border-blue-200 font-extrabold px-2 py-0.5 rounded-full shadow-2xs flex items-center gap-1 cursor-help"
-                    title="Mastery XP: Experience points earned for verified concept and step accuracy"
-                  >
-                    <span>⚡</span>
-                    <span>{effectiveXp > 999 ? `${(effectiveXp / 1000).toFixed(1)}k` : effectiveXp} XP</span>
-                  </span>
-                </div>
-                <div className="flex items-center gap-1.5">
+              {/* Action Buttons: Join Class & Link Parent (+ Personas if dev/admin) */}
+              <div className="flex items-center gap-1.5 shrink-0">
+                <button
+                  type="button"
+                  data-testid="btn-open-join-class-modal"
+                  onClick={() => onOpenJoinClassModal && onOpenJoinClassModal()}
+                  className="px-2.5 py-1.5 rounded-xl bg-emerald-50 hover:bg-emerald-100 active:bg-emerald-200 text-emerald-800 text-xs font-extrabold border border-emerald-200 flex items-center gap-1 transition cursor-pointer shadow-2xs min-h-[34px]"
+                  title="Join Teacher's Class"
+                >
+                  <span>🏫</span>
+                  <span>Join Class</span>
+                </button>
+                <button
+                  type="button"
+                  data-testid="btn-open-link-guardian-modal"
+                  onClick={() => onOpenLinkGuardian && onOpenLinkGuardian()}
+                  className="px-2.5 py-1.5 rounded-xl bg-blue-50 hover:bg-blue-100 active:bg-blue-200 text-[#13519C] text-xs font-extrabold border border-blue-200 flex items-center gap-1 transition cursor-pointer shadow-2xs min-h-[34px]"
+                  title="Family & Guardian Link"
+                >
+                  <span>🔗</span>
+                  <span>Link Parent</span>
+                </button>
+                {onOpenPersonaSwitcher && (
                   <button
                     type="button"
-                    data-testid="btn-open-join-class-modal"
-                    onClick={() => onOpenJoinClassModal && onOpenJoinClassModal()}
-                    className="px-2 py-1 rounded-lg bg-emerald-50 hover:bg-emerald-100 active:bg-emerald-200 text-emerald-800 text-[10px] font-extrabold border border-emerald-200 flex items-center gap-1 transition cursor-pointer shadow-2xs min-h-[30px]"
-                    title="Join Teacher's Class"
+                    onClick={() => onOpenPersonaSwitcher()}
+                    className="p-1.5 rounded-xl bg-amber-50 hover:bg-amber-100 active:bg-amber-200 text-amber-900 text-xs font-extrabold border border-amber-200 flex items-center justify-center transition cursor-pointer shadow-2xs min-h-[34px] min-w-[34px]"
+                    title="Switch Persona (Test Students, Teachers, Parents)"
                   >
-                    <span>🏫</span>
-                    <span>Join Class</span>
+                    <span>👥</span>
                   </button>
-                  <button
-                    type="button"
-                    data-testid="btn-open-link-guardian-modal"
-                    onClick={() => onOpenLinkGuardian && onOpenLinkGuardian()}
-                    className="px-2 py-1 rounded-lg bg-blue-50 hover:bg-blue-100 active:bg-blue-200 text-[#13519C] text-[10px] font-extrabold border border-blue-200 flex items-center gap-1 transition cursor-pointer shadow-2xs min-h-[30px]"
-                    title="Family & Guardian Link"
-                  >
-                    <span>🔗</span>
-                    <span>Link Parent</span>
-                  </button>
-                  {onOpenPersonaSwitcher && (
-                    <button
-                      type="button"
-                      onClick={() => onOpenPersonaSwitcher()}
-                      className="px-2 py-1 rounded-lg bg-amber-50 hover:bg-amber-100 active:bg-amber-200 text-amber-900 text-[10px] font-extrabold border border-amber-200 flex items-center gap-1 transition cursor-pointer shadow-2xs min-h-[30px]"
-                      title="Switch Persona (Test Students, Teachers, Parents)"
-                    >
-                      <span>👥</span>
-                      <span>Personas</span>
-                    </button>
-                  )}
-                </div>
+                )}
               </div>
             </div>
 
@@ -483,6 +463,7 @@ export default function MobileWebApkView({
             <div className="flex items-center gap-2 p-1 bg-slate-200/80 rounded-2xl">
               <button
                 type="button"
+                data-testid="mob-mode-classwork"
                 onClick={() => setActiveMobileDeskSection('school_work')}
                 className={`flex-1 py-1.5 px-3 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
                   activeMobileDeskSection === 'school_work'
@@ -504,6 +485,7 @@ export default function MobileWebApkView({
 
               <button
                 type="button"
+                data-testid="mob-mode-self-paced"
                 onClick={() => setActiveMobileDeskSection('self_study')}
                 className={`flex-1 py-1.5 px-3 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
                   activeMobileDeskSection === 'self_study'
@@ -513,7 +495,7 @@ export default function MobileWebApkView({
               >
                 <span>📖 Self-Paced Learning</span>
                 <span className="px-1.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-extrabold">
-                  4 Active
+                  {enrolledPhaseSubjects.length} Active
                 </span>
               </button>
             </div>
@@ -669,12 +651,21 @@ export default function MobileWebApkView({
                       Self-Paced Learning
                     </h3>
                     <span className="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[11px] font-extrabold border border-emerald-200/80">
-                      4
+                      {enrolledPhaseSubjects.length}
                     </span>
                   </div>
-                  <span className="text-[10px] font-extrabold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
-                    BKT Calibrated
-                  </span>
+                  {onOpenManageSubjects && (
+                    <button
+                      type="button"
+                      data-testid="btn-mobile-manage-subjects"
+                      onClick={onOpenManageSubjects}
+                      className="text-[11px] font-extrabold text-emerald-800 bg-emerald-50 hover:bg-emerald-100 active:bg-emerald-200 px-2.5 py-1 rounded-full border border-emerald-300 transition cursor-pointer flex items-center gap-1 shadow-2xs"
+                      title="Add or remove self-paced curriculum subjects"
+                    >
+                      <span>⚙️</span>
+                      <span>Manage Subjects</span>
+                    </button>
+                  )}
                 </div>
 
                 {/* Mobile Pick Up Where You Left Off Card */}
@@ -694,9 +685,14 @@ export default function MobileWebApkView({
                         Active Session
                       </span>
                     </div>
-                    <p className="text-xs font-bold text-slate-900">
-                      {storeState.activeSession.topic}
-                    </p>
+                    <div className="text-xs">
+                      <span className="font-extrabold text-[#13519C] block text-sm" style={{ fontFamily: 'Afacad, sans-serif' }}>
+                        {enrolledPhaseSubjects.find(s => s.id === storeState.activeSession.subjectId)?.name || 'Subject'} • Grade {grade}
+                      </span>
+                      <p className="text-xs text-slate-700 font-medium mt-0.5">
+                        Current Topic: <strong className="text-slate-900 font-bold">{storeState.activeSession.topic}</strong>
+                      </p>
+                    </div>
                     <button
                       type="button"
                       onClick={() => onSelectTab(storeState.activeSession.subjectId)}
@@ -708,148 +704,85 @@ export default function MobileWebApkView({
                   </div>
                 )}
 
-              {/* 4 Autonomous Practice Cards */}
+              {/* Dynamic Enrolled Autonomous Practice Cards */}
               <div className="space-y-2.5">
-                {/* 1. Accounting */}
-                {(() => {
-                  const theme = getSubjectTheme('accounting');
-                  return (
-                    <div 
-                      className="bg-white p-3.5 rounded-2xl border border-slate-200/80 shadow-xs hover:shadow-sm transition"
-                      style={{ borderLeftWidth: '4px', borderLeftColor: theme.base }}
-                    >
-                      <div className="flex items-center justify-between text-[10px] font-bold mb-1">
-                        <span className="text-slate-500 font-semibold flex items-center gap-1">
-                          <span>📗</span>
-                          <span>Grade 10 Accounting</span>
-                        </span>
-                        <span 
-                          className="text-white px-2 py-0.5 rounded-full font-extrabold text-[9px] shadow-2xs"
-                          style={{ backgroundColor: theme.base }}
-                        >
-                          84% BKT
-                        </span>
-                      </div>
-                      <p className="text-xs font-bold text-slate-800" style={{ fontFamily: 'Afacad, sans-serif' }}>
-                        Cash Receipts Journal (VAT 15%)
-                      </p>
-                      <button
-                        type="button"
-                        onClick={() => onSelectTab('accounting')}
-                        className="mt-2.5 w-full py-2.5 text-white text-xs font-bold rounded-xl transition cursor-pointer shadow-xs min-h-[44px] flex items-center justify-center gap-1.5 hover:opacity-95 active:scale-98"
-                        style={{ backgroundColor: theme.base }}
-                      >
-                        <span>Resume Autonomous Drill →</span>
-                      </button>
-                    </div>
-                  );
-                })()}
+                {enrolledPhaseSubjects.map((sub) => {
+                  const theme = getSubjectTheme(sub.id);
+                  const subData = studentStore.getSubject(sub.id) || { formativeMastery: 0, status: 'diagnostic_required' };
+                  const isDiagnostic = subData.status === 'diagnostic_required';
+                  const mastery = subData.formativeMastery || 0;
+                  const defaultTopic = getDefaultTopicForSubject(sub.id);
 
-                {/* 2. Mathematics */}
-                {(() => {
-                  const theme = getSubjectTheme('mathematics');
                   return (
                     <div 
+                      key={sub.id}
+                      data-testid={`card-subject-${sub.id}`}
                       className="bg-white p-3.5 rounded-2xl border border-slate-200/80 shadow-xs hover:shadow-sm transition"
                       style={{ borderLeftWidth: '4px', borderLeftColor: theme.base }}
                     >
-                      <div className="flex items-center justify-between text-[10px] font-bold mb-1">
-                        <span className="text-slate-500 font-semibold flex items-center gap-1">
-                          <span>📘</span>
-                          <span>Grade 10 Mathematics</span>
-                        </span>
+                      <div className="flex items-center justify-between gap-2 mb-2">
+                        <div className="flex items-center gap-2.5 min-w-0">
+                          <span className="text-xl shrink-0 p-1.5 rounded-xl bg-slate-50 border border-slate-200/70 shadow-2xs">
+                            {sub.icon}
+                          </span>
+                          <div className="min-w-0">
+                            <h3 
+                              className="text-base font-extrabold text-slate-900 leading-tight truncate" 
+                              style={{ fontFamily: 'Afacad, sans-serif' }}
+                            >
+                              {sub.name}
+                            </h3>
+                            <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider block mt-0.5">
+                              Grade {grade}
+                            </span>
+                          </div>
+                        </div>
                         <span 
-                          className="text-white px-2 py-0.5 rounded-full font-extrabold text-[9px] shadow-2xs"
-                          style={{ backgroundColor: theme.base }}
+                          className="px-2.5 py-1 rounded-full font-extrabold text-[10px] shadow-2xs shrink-0"
+                          style={{
+                            backgroundColor: isDiagnostic ? theme.soft : theme.base,
+                            color: isDiagnostic ? theme.text : '#ffffff'
+                          }}
                         >
-                          82% BKT
+                          {isDiagnostic ? 'Diagnostic' : `${mastery}% Mastery`}
                         </span>
                       </div>
-                      <p className="text-xs font-bold text-slate-800" style={{ fontFamily: 'Afacad, sans-serif' }}>
-                        Algebraic Expressions &amp; Factorisation
-                      </p>
+                      <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-xs">
+                        <span className="text-[11px] text-slate-500 font-medium truncate">
+                          Current Topic: <strong className="text-slate-800 font-semibold">{defaultTopic}</strong>
+                        </span>
+                      </div>
                       <button
                         type="button"
-                        onClick={() => onSelectTab('maths')}
+                        data-testid={`btn-launch-${sub.id}`}
+                        onClick={() => onSelectTab(sub.id)}
                         className="mt-2.5 w-full py-2.5 text-white text-xs font-bold rounded-xl transition cursor-pointer shadow-xs min-h-[44px] flex items-center justify-center gap-1.5 hover:opacity-95 active:scale-98"
                         style={{ backgroundColor: theme.base }}
                       >
-                        <span>Resume Autonomous Drill →</span>
+                        <span>Launch Practice →</span>
                       </button>
                     </div>
                   );
-                })()}
-
-                {/* 3. Physical Sciences */}
-                {(() => {
-                  const theme = getSubjectTheme('physical_sciences');
-                  return (
-                    <div 
-                      className="bg-white p-3.5 rounded-2xl border border-slate-200/80 shadow-xs hover:shadow-sm transition"
-                      style={{ borderLeftWidth: '4px', borderLeftColor: theme.base }}
-                    >
-                      <div className="flex items-center justify-between text-[10px] font-bold mb-1">
-                        <span className="text-slate-500 font-semibold flex items-center gap-1">
-                          <span>📙</span>
-                          <span>Physical Sciences</span>
-                        </span>
-                        <span 
-                          className="text-white px-2 py-0.5 rounded-full font-extrabold text-[9px] shadow-2xs"
-                          style={{ backgroundColor: theme.base }}
-                        >
-                          78% BKT
-                        </span>
-                      </div>
-                      <p className="text-xs font-bold text-slate-800" style={{ fontFamily: 'Afacad, sans-serif' }}>
-                        Newton's Laws of Motion &amp; Vectors
-                      </p>
-                      <button
-                        type="button"
-                        onClick={() => onSelectTab('physics')}
-                        className="mt-2.5 w-full py-2.5 text-white text-xs font-bold rounded-xl transition cursor-pointer shadow-xs min-h-[44px] flex items-center justify-center gap-1.5 hover:opacity-95 active:scale-98"
-                        style={{ backgroundColor: theme.base }}
-                      >
-                        <span>Resume Autonomous Drill →</span>
-                      </button>
-                    </div>
-                  );
-                })()}
-
-                {/* 4. Business Studies */}
-                {(() => {
-                  const theme = getSubjectTheme('business_studies');
-                  return (
-                    <div 
-                      className="bg-white p-3.5 rounded-2xl border border-slate-200/80 shadow-xs hover:shadow-sm transition"
-                      style={{ borderLeftWidth: '4px', borderLeftColor: theme.base }}
-                    >
-                      <div className="flex items-center justify-between text-[10px] font-bold mb-1">
-                        <span className="text-slate-500 font-semibold flex items-center gap-1">
-                          <span>📕</span>
-                          <span>Business Studies</span>
-                        </span>
-                        <span 
-                          className="text-white px-2 py-0.5 rounded-full font-extrabold text-[9px] shadow-2xs"
-                          style={{ backgroundColor: theme.base }}
-                        >
-                          75% BKT
-                        </span>
-                      </div>
-                      <p className="text-xs font-bold text-slate-800" style={{ fontFamily: 'Afacad, sans-serif' }}>
-                        Micro, Market &amp; Macro Environments
-                      </p>
-                      <button
-                        type="button"
-                        onClick={() => onSelectTab('business')}
-                        className="mt-2.5 w-full py-2.5 text-white text-xs font-bold rounded-xl transition cursor-pointer shadow-xs min-h-[44px] flex items-center justify-center gap-1.5 hover:opacity-95 active:scale-98"
-                        style={{ backgroundColor: theme.base }}
-                      >
-                        <span>Resume Autonomous Drill →</span>
-                      </button>
-                    </div>
-                  );
-                })()}
+                })}
               </div>
+
+              {/* Ergonomic Manage Subjects Action Card */}
+              {onOpenManageSubjects && (
+                <button
+                  type="button"
+                  data-testid="btn-manage-enrolled-subjects-mobile"
+                  onClick={onOpenManageSubjects}
+                  className="w-full py-3 px-4 rounded-2xl bg-white border border-dashed border-emerald-300 hover:border-emerald-500 text-emerald-800 hover:bg-emerald-50/50 text-xs font-bold transition flex items-center justify-between shadow-2xs cursor-pointer group mt-2"
+                >
+                  <div className="flex items-center gap-2.5">
+                    <span className="text-base group-hover:rotate-45 transition-transform">⚙️</span>
+                    <span>Customize Enrolled Phase Subjects</span>
+                  </div>
+                  <span className="text-[11px] font-mono bg-emerald-100 text-emerald-800 px-2.5 py-0.5 rounded-lg font-extrabold">
+                    {enrolledPhaseSubjects.length} Active
+                  </span>
+                </button>
+              )}
             </section>
             )}
 
@@ -861,7 +794,7 @@ export default function MobileWebApkView({
                 </div>
                 <div>
                   <span className="text-[10px] font-extrabold uppercase text-purple-700 block tracking-wider">
-                    Offline WebAPK Cache
+                    Offline Storage Cache
                   </span>
                   <p className="text-[11px] font-semibold text-slate-700 leading-tight">
                     1.4 MB Total Data • Zero Video Buffering
@@ -915,9 +848,16 @@ export default function MobileWebApkView({
             <button
               key={sub.id}
               id={`mob-tab-${sub.id}`}
+              data-testid={`tab-${sub.id}`}
               ref={isActive ? activeBtnRef : null}
               type="button"
-              onClick={() => onSelectTab(sub.id)}
+              onClick={() => {
+                if (isActive && sub.id === 'desk') {
+                  contentScrollRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
+                } else {
+                  onSelectTab(sub.id);
+                }
+              }}
               className={`mob-nav-btn flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs transition shrink-0 whitespace-nowrap min-h-[44px] cursor-pointer font-bold ${
                 isActive
                   ? 'border-2 shadow-sm'
@@ -947,6 +887,41 @@ export default function MobileWebApkView({
         isOpen={showMessageBoard} 
         onClose={() => setShowMessageBoard(false)} 
       />
+
+      {/* Logout Confirmation Modal for Mobile */}
+      {showLogoutConfirm && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs">
+          <div className="bg-white rounded-2xl p-5 max-w-xs w-full shadow-2xl border border-slate-200 text-center space-y-4">
+            <div className="w-12 h-12 rounded-full bg-rose-100 text-rose-600 mx-auto flex items-center justify-center">
+              <LogOut className="w-6 h-6" />
+            </div>
+            <div>
+              <h3 className="text-base font-bold text-slate-900">Sign Out of Fundile?</h3>
+              <p className="text-xs text-slate-500 mt-1">Your learning progress and streak are saved safely.</p>
+            </div>
+            <div className="flex items-center gap-2 pt-2">
+              <button
+                type="button"
+                onClick={() => setShowLogoutConfirm(false)}
+                className="flex-1 py-2 px-3 rounded-xl border border-slate-200 text-xs font-semibold text-slate-700 hover:bg-slate-50 transition cursor-pointer"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                data-testid="btn-confirm-logout"
+                onClick={() => {
+                  setShowLogoutConfirm(false);
+                  if (typeof onLogout === 'function') onLogout();
+                }}
+                className="flex-1 py-2 px-3 rounded-xl bg-rose-600 hover:bg-rose-700 text-xs font-bold text-white shadow-xs cursor-pointer transition"
+              >
+                Sign Out
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
     </div>
   );

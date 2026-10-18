@@ -29,7 +29,7 @@ class Cache:
             
         try:
             redis_url = app.config.get('REDIS_URL', 'redis://localhost:6379/0')
-            self.redis_client = redis.from_url(redis_url)
+            self.redis_client = redis.from_url(redis_url, socket_connect_timeout=1, socket_timeout=1)
             # Test connection
             self.redis_client.ping()
             self.use_redis = True

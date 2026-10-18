@@ -1,200 +1,188 @@
+import fs from 'fs';
+import path from 'path';
+
+const projectRoot = process.cwd();
+const pauseBridgeFile = path.resolve(projectRoot, '.pause_signal.json');
+
 /**
- * Autopilot HUD & Virtual Cursor Overlay
- * Provides visual narration, realistic gliding cursor, live pause/resume controls,
- * and time-simulation countdowns for headed Playwright test runs.
- * Does NOT hijack the host OS mouse pointer; renders in-browser virtual cursor and controls.
+ * Visual Cursor & On-Demand Inspection Helpers for Playwright E2E Tests
+ * - Renders a sleek in-browser cursor pointer to visually follow actions.
+ * - Injects a non-intrusive [ ⏸️ Pause ] pill in the bottom-left corner.
+ * - Allows pausing on-demand via browser click OR PowerShell terminal ('p' + Enter).
+ * - Default execution: 100% continuous auto-run without mandatory gating.
  */
 
 export async function injectGlidingCursorAndHud(page) {
-  await page.evaluate(() => {
-    if (document.getElementById('autopilot-hud')) return;
+  try {
+    await page.evaluate(() => {
+      if (document.getElementById('virtual-cursor')) return;
 
-    window.__AUTOPILOT_PAUSED = false;
-
-    // Inject styles
-    const style = document.createElement('style');
-    style.id = 'autopilot-hud-styles';
-    style.innerHTML = `
-      #virtual-cursor {
-        position: fixed;
-        pointer-events: none;
-        z-index: 2147483647;
-        width: 28px;
-        height: 28px;
-        font-size: 22px;
-        top: 0;
-        left: 0;
-        transform: translate(20px, 20px);
-        transition: transform 0.45s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.2s;
-        filter: drop-shadow(0 3px 6px rgba(0,0,0,0.35));
-        user-select: none;
-      }
-      #virtual-cursor.clicking {
-        transform: scale(0.85);
-        filter: drop-shadow(0 1px 2px rgba(0,0,0,0.5));
-      }
-      #autopilot-hud {
-        position: fixed;
-        top: 14px;
-        left: 50%;
-        transform: translateX(-50%);
-        z-index: 2147483646;
-        background: rgba(15, 23, 42, 0.94);
-        backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px);
-        color: #f8fafc;
-        border: 1px solid rgba(255, 255, 255, 0.22);
-        border-radius: 9999px;
-        padding: 8px 18px;
-        font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-        font-size: 13px;
-        font-weight: 600;
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        box-shadow: 0 14px 34px -4px rgba(0, 0, 0, 0.5), 0 4px 8px -2px rgba(0,0,0,0.2);
-        user-select: none;
-        transition: all 0.3s ease;
-        max-width: 92vw;
-        white-space: nowrap;
-      }
-      #autopilot-hud .badge {
-        background: #FF9100;
-        color: #0b2545;
-        padding: 3px 10px;
-        border-radius: 12px;
-        font-size: 11px;
-        font-weight: 800;
-        letter-spacing: 0.04em;
-        text-transform: uppercase;
-      }
-      #autopilot-hud .message {
-        color: #e2e8f0;
-      }
-      #autopilot-hud .pulse {
-        display: inline-block;
-        width: 8px;
-        height: 8px;
-        background-color: #10B981;
-        border-radius: 50%;
-        box-shadow: 0 0 8px #10B981;
-        animation: hudPulse 1.5s infinite;
-      }
-      #autopilot-hud .pulse.paused {
-        background-color: #EF4444;
-        box-shadow: 0 0 8px #EF4444;
-        animation: none;
-      }
-      #autopilot-hud-pause-btn {
-        pointer-events: auto;
-        background: #334155;
-        border: 1px solid rgba(255, 255, 255, 0.25);
-        color: #f8fafc;
-        border-radius: 9999px;
-        padding: 3px 12px;
-        font-size: 11px;
-        font-weight: 700;
-        cursor: pointer;
-        transition: background 0.2s, transform 0.1s;
-        display: inline-flex;
-        align-items: center;
-        gap: 4px;
-      }
-      #autopilot-hud-pause-btn:hover {
-        background: #475569;
-        transform: scale(1.04);
-      }
-      #autopilot-hud-pause-btn.is-paused {
-        background: #DC2626;
-        color: #FFFFFF;
-        border-color: #EF4444;
-      }
-      @keyframes hudPulse {
-        0%, 100% { opacity: 1; transform: scale(1); }
-        50% { opacity: 0.4; transform: scale(0.85); }
-      }
-    `;
-    document.head.appendChild(style);
-
-    // Inject Virtual Cursor
-    const cursor = document.createElement('div');
-    cursor.id = 'virtual-cursor';
-    cursor.innerText = '🖱️';
-    document.body.appendChild(cursor);
-
-    // Inject HUD
-    const hud = document.createElement('div');
-    hud.id = 'autopilot-hud';
-    hud.innerHTML = `
-      <span class="pulse" id="autopilot-hud-pulse"></span>
-      <span class="badge" id="autopilot-hud-persona">AUTOPILOT</span>
-      <span class="message" id="autopilot-hud-message">Initializing autonomous user session...</span>
-      <button id="autopilot-hud-pause-btn" title="Click or press Spacebar to Pause/Resume">⏸ Pause</button>
-    `;
-    document.body.appendChild(hud);
-
-    // Toggle pause function
-    window.__toggleAutopilotPause = function () {
-      window.__AUTOPILOT_PAUSED = !window.__AUTOPILOT_PAUSED;
-      const btn = document.getElementById('autopilot-hud-pause-btn');
-      const pulse = document.getElementById('autopilot-hud-pulse');
-      if (btn) {
-        if (window.__AUTOPILOT_PAUSED) {
-          btn.innerText = '▶ Resume';
-          btn.classList.add('is-paused');
-          if (pulse) pulse.classList.add('paused');
-        } else {
-          btn.innerText = '⏸ Pause';
-          btn.classList.remove('is-paused');
-          if (pulse) pulse.classList.remove('paused');
+      // Inject cursor & HUD styles
+      const style = document.createElement('style');
+      style.id = 'autopilot-hud-styles';
+      style.innerHTML = `
+        #virtual-cursor {
+          position: fixed;
+          pointer-events: none;
+          z-index: 2147483647;
+          width: 26px;
+          height: 26px;
+          font-size: 20px;
+          top: 0;
+          left: 0;
+          transform: translate(20px, 20px);
+          transition: transform 0.25s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.15s;
+          filter: drop-shadow(0 2px 4px rgba(0,0,0,0.35));
+          user-select: none;
         }
-      }
-    };
+        #virtual-cursor.clicking {
+          transform: scale(0.85);
+          filter: drop-shadow(0 1px 2px rgba(0,0,0,0.5));
+        }
+        #fundile-pause-pill {
+          position: fixed;
+          bottom: 16px;
+          left: 16px;
+          z-index: 2147483640;
+          padding: 6px 14px;
+          border-radius: 9999px;
+          font-family: system-ui, -apple-system, sans-serif;
+          font-size: 11px;
+          font-weight: 700;
+          cursor: pointer;
+          border: 1px solid rgba(0,0,0,0.15);
+          background: rgba(15, 23, 42, 0.85);
+          color: #ffffff;
+          backdrop-filter: blur(8px);
+          box-shadow: 0 4px 12px rgba(0,0,0,0.18);
+          transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+          user-select: none;
+          display: flex;
+          align-items: center;
+          gap: 6px;
+        }
+        #fundile-pause-pill:hover {
+          transform: translateY(-1px);
+          background: rgba(15, 23, 42, 0.95);
+        }
+        #fundile-pause-pill.is-paused {
+          background: #d97706 !important;
+          border-color: #f59e0b !important;
+          box-shadow: 0 0 16px rgba(245, 158, 11, 0.6) !important;
+          animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+          0%, 100% { opacity: 1; transform: scale(1); }
+          50% { opacity: 0.88; transform: scale(1.02); }
+        }
+      `;
+      document.head.appendChild(style);
 
-    const pauseBtn = document.getElementById('autopilot-hud-pause-btn');
-    if (pauseBtn) {
-      pauseBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        window.__toggleAutopilotPause();
-      });
-    }
+      // Inject Virtual Cursor element
+      const cursor = document.createElement('div');
+      cursor.id = 'virtual-cursor';
+      cursor.innerText = '🖱️';
+      document.body.appendChild(cursor);
 
-    // Spacebar listener to toggle pause (when not inside input/textarea)
-    document.addEventListener('keydown', (e) => {
-      if (e.code === 'Space' && e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
-        e.preventDefault();
-        window.__toggleAutopilotPause();
+      // Inject On-Demand Pause/Resume Pill (Rule 0d-7: non-interactive margins bottom: 16px; left: 16px)
+      if (!document.getElementById('fundile-pause-pill')) {
+        const pill = document.createElement('button');
+        pill.id = 'fundile-pause-pill';
+        pill.type = 'button';
+        pill.innerText = '⏸️ Pause Autopilot';
+        pill.title = 'Click to pause autopilot and inspect this view. Click again to resume.';
+        pill.addEventListener('click', (e) => {
+          e.stopPropagation();
+          window.__FUNDILE_PAUSED__ = !window.__FUNDILE_PAUSED__;
+          if (window.__FUNDILE_PAUSED__) {
+            pill.innerText = '▶️ Resume Autopilot';
+            pill.classList.add('is-paused');
+          } else {
+            pill.innerText = '⏸️ Pause Autopilot';
+            pill.classList.remove('is-paused');
+          }
+        });
+        document.body.appendChild(pill);
       }
     });
-  });
+  } catch (e) {}
 }
 
 export async function waitIfPaused(page) {
+  if (!page || page.isClosed()) return;
+
+  let isPaused = false;
   try {
-    while (true) {
-      const isPaused = await page.evaluate(() => window.__AUTOPILOT_PAUSED).catch(() => false);
-      if (!isPaused) break;
-      await page.waitForTimeout(350);
+    isPaused = await page.evaluate(() => Boolean(window.__FUNDILE_PAUSED__)).catch(() => false);
+  } catch {}
+
+  if (!isPaused && fs.existsSync(pauseBridgeFile)) {
+    try {
+      const data = JSON.parse(fs.readFileSync(pauseBridgeFile, 'utf8') || '{}');
+      isPaused = data.status === 'pause';
+    } catch {}
+  }
+
+  if (!isPaused) return;
+
+  console.log('\n================================================================================');
+  console.log('⏸️  [PAUSED BY USER]');
+  console.log('   The test is paused for inspection.');
+  console.log('   👉 Click [▶️ Resume Autopilot] in the browser (or press Enter in PowerShell) to resume...');
+  console.log('================================================================================\n');
+
+  // Update browser pill to show active pause state
+  await page.evaluate(() => {
+    window.__FUNDILE_PAUSED__ = true;
+    const pill = document.getElementById('fundile-pause-pill');
+    if (pill) {
+      pill.innerText = '▶️ Resume Autopilot';
+      pill.classList.add('is-paused');
     }
-  } catch (e) {}
+  }).catch(() => {});
+
+  while (isPaused) {
+    await page.waitForTimeout(200);
+    if (page.isClosed()) break;
+    try {
+      const browserPaused = await page.evaluate(() => Boolean(window.__FUNDILE_PAUSED__)).catch(() => false);
+      let filePaused = false;
+      if (fs.existsSync(pauseBridgeFile)) {
+        const data = JSON.parse(fs.readFileSync(pauseBridgeFile, 'utf8') || '{}');
+        filePaused = data.status === 'pause';
+      }
+      isPaused = browserPaused || filePaused;
+    } catch {
+      break;
+    }
+  }
+
+  // Restore browser pill
+  await page.evaluate(() => {
+    window.__FUNDILE_PAUSED__ = false;
+    const pill = document.getElementById('fundile-pause-pill');
+    if (pill) {
+      pill.innerText = '⏸️ Pause Autopilot';
+      pill.classList.remove('is-paused');
+    }
+  }).catch(() => {});
+
+  try {
+    if (fs.existsSync(pauseBridgeFile)) fs.unlinkSync(pauseBridgeFile);
+  } catch {}
+
+  console.log('▶️ [RESUMED] Advancing to next action...\n');
 }
 
 export async function updateHud(page, persona, message) {
-  try {
-    await waitIfPaused(page);
-    await page.evaluate(({ persona, message }) => {
-      const pEl = document.getElementById('autopilot-hud-persona');
-      const mEl = document.getElementById('autopilot-hud-message');
-      if (pEl) pEl.innerText = persona;
-      if (mEl) mEl.innerText = message;
-    }, { persona, message });
-  } catch (e) {}
+  if (persona && message) {
+    console.log(`   [${persona}] ${message}`);
+  }
 }
 
 export async function glideCursorTo(page, selector) {
-  await waitIfPaused(page);
   try {
-    const loc = page.locator(selector).first();
+    const loc = typeof selector === 'string' ? page.locator(selector).first() : selector;
     const box = await loc.boundingBox();
     if (box) {
       const x = Math.round(box.x + box.width / 2);
@@ -205,44 +193,46 @@ export async function glideCursorTo(page, selector) {
           cursor.style.transform = `translate(${x}px, ${y}px)`;
         }
       }, { x, y });
-      await page.mouse.move(x, y, { steps: 5 });
+      await page.mouse.move(x, y, { steps: 3 });
     }
   } catch (e) {}
 }
 
 export async function glideAndClick(page, selector, { persona = 'AUTOPILOT', message = '' } = {}) {
   await waitIfPaused(page);
+
   if (message) {
     await updateHud(page, persona, message);
   }
-  const loc = page.locator(selector).first();
-  await loc.waitFor({ state: 'visible', timeout: 12000 });
-  await glideCursorTo(page, selector);
-  await waitIfPaused(page);
-  await page.waitForTimeout(200);
+  const loc = typeof selector === 'string' ? page.locator(selector).first() : selector;
+  await loc.waitFor({ state: 'visible', timeout: 15000 });
+  await glideCursorTo(page, loc);
+  await page.waitForTimeout(100);
 
-  // Click animation
+  // Click visual animation
   await page.evaluate(() => {
     const cursor = document.getElementById('virtual-cursor');
     if (cursor) cursor.classList.add('clicking');
-  });
+  }).catch(() => {});
+
   await loc.click();
-  await page.waitForTimeout(120);
+  await page.waitForTimeout(100);
+
   await page.evaluate(() => {
     const cursor = document.getElementById('virtual-cursor');
     if (cursor) cursor.classList.remove('clicking');
-  });
-  await waitIfPaused(page);
+  }).catch(() => {});
 }
 
-export async function typeRealistic(page, selector, text, { delayMs = 60, persona, message } = {}) {
+export async function typeRealistic(page, selector, text, { delayMs = 30, persona, message } = {}) {
   await waitIfPaused(page);
+
   if (message) {
     await updateHud(page, persona || 'AUTOPILOT', message);
   }
-  const loc = page.locator(selector).first();
-  await loc.waitFor({ state: 'visible', timeout: 10000 });
-  await glideCursorTo(page, selector);
+  const loc = typeof selector === 'string' ? page.locator(selector).first() : selector;
+  await loc.waitFor({ state: 'visible', timeout: 15000 });
+  await glideCursorTo(page, loc);
   await loc.click();
   await loc.fill('');
 
@@ -250,10 +240,10 @@ export async function typeRealistic(page, selector, text, { delayMs = 60, person
     await waitIfPaused(page);
     await page.keyboard.type(char, { delay: delayMs });
   }
-  await page.waitForTimeout(200);
+  await page.waitForTimeout(100);
 }
 
-export async function simulateStudyBreak(page, countdownSeconds = 60, simulatedMins = 20) {
+export async function simulateStudyBreak(page, countdownSeconds = 10, simulatedMins = 20) {
   console.log(`\n☕ [STUDY BREAK] Simulating ${simulatedMins}-minute study break (${countdownSeconds}s on-screen timer)...`);
   for (let rem = countdownSeconds; rem > 0; rem--) {
     await waitIfPaused(page);
@@ -265,5 +255,5 @@ export async function simulateStudyBreak(page, countdownSeconds = 60, simulatedM
     await page.waitForTimeout(1000);
   }
   await updateHud(page, '⚡ BREAK COMPLETE', 'Refreshed and ready for Subject 2!');
-  await page.waitForTimeout(1500);
+  await page.waitForTimeout(1000);
 }

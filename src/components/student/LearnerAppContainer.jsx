@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import DesktopCommandRail from '../navigation/DesktopCommandRail';
 import SubjectManagerModal from '../curriculum/SubjectManagerModal';
 import { SUBJECT_TABS_CONFIG } from '../navigation/subjectTabsConfig';
@@ -10,11 +10,14 @@ import UserProfileModal from '../profile/UserProfileModal';
 import TopicScopeModal from '../curriculum/TopicScopeModal';
 import LinkGuardianModal from '../family/LinkGuardianModal';
 import JoinClassModal from './JoinClassModal';
+import SubjectEnrollmentModal from './SubjectEnrollmentModal';
 import navigationHistoryService from '../../services/navigationHistoryService';
 import { buildApiUrl } from '../../utils/apiBaseUrl';
 import studentStore from '../../services/studentStore';
 import ErrorBoundary from '../ui/ErrorBoundary';
 import { getAuthenticDiagnosticQuestion } from '../../data/authenticDiagnosticBank';
+import OfflineStudyPackModal from './OfflineStudyPackModal';
+import offlineStorageService from '../../services/offlineStorageService';
 
 /**
  * LearnerAppContainer
@@ -63,31 +66,64 @@ export default function LearnerAppContainer({
   const [isRailCollapsed, setIsRailCollapsed] = useState(false);
   const [deskMode, setDeskMode] = useState('self_paced'); // 'self_paced' | 'classwork'
   const [activeReelSubjectId, setActiveReelSubjectId] = useState(() => savedSession?.subjectId || 'accounting');
-  const [enabledSubjects, setEnabledSubjects] = useState(() => {
-    try {
-      const saved = localStorage.getItem('fundile_enabled_subjects');
-      if (saved) return JSON.parse(saved);
-    } catch {}
-    return ['accounting', 'mathematics', 'technical_mathematics', 'mathematical_literacy', 'physical_sciences', 'life_sciences', 'business_studies'];
-  });
+  const [enabledSubjects, setEnabledSubjects] = useState(() => studentStore.getEnabledSubjects());
   const [showSubjectManagerModal, setShowSubjectManagerModal] = useState(false);
   const [showProfilePhotoModal, setShowProfilePhotoModal] = useState(false);
   const [showTopicModal, setShowTopicModal] = useState(false);
   const [showLinkGuardianModal, setShowLinkGuardianModal] = useState(false);
   const [showJoinClassModal, setShowJoinClassModal] = useState(false);
+  const [showSubjectEnrollmentModal, setShowSubjectEnrollmentModal] = useState(() => {
+    try {
+      return localStorage.getItem('fundile_pending_subject_enrollment') === 'true';
+    } catch {
+      return false;
+    }
+  });
   const [exitToast, setExitToast] = useState('');
+  const [consecutiveErrors, setConsecutiveErrors] = useState(0);
+  const [prerequisiteBanner, setPrerequisiteBanner] = useState(null);
+  const [showOfflinePackModal, setShowOfflinePackModal] = useState(false);
+  const [isOfflineWorkspace, setIsOfflineWorkspace] = useState(() => !offlineStorageService.isOnline());
+
+  useEffect(() => {
+    const handleOnline = () => {
+      setIsOfflineWorkspace(false);
+      offlineStorageService.flushOfflineQueue().then(res => {
+        if (res?.synced > 0) {
+          console.log(`[OfflineSync] Synced ${res.synced} offline attempts.`);
+        }
+      });
+    };
+    const handleOffline = () => {
+      setIsOfflineWorkspace(true);
+    };
+
+    window.addEventListener('online', handleOnline);
+    window.addEventListener('offline', handleOffline);
+
+    return () => {
+      window.removeEventListener('online', handleOnline);
+      window.removeEventListener('offline', handleOffline);
+    };
+  }, []);
 
   const [storeState, setStoreState] = useState(() => studentStore.getState());
   useEffect(() => {
     const unsub = studentStore.subscribe((newState) => {
       setStoreState({ ...newState });
+      if (newState.enabledSubjects && Array.isArray(newState.enabledSubjects)) {
+        setEnabledSubjects(newState.enabledSubjects);
+      }
     });
     return unsub;
   }, []);
 
   const studentName = currentUser?.name || currentUser?.displayName || storeState.studentName || 'Prince Moyo';
   const currentGrade = parseInt(String(currentUser?.grade || storeState.grade || '10').replace(/\D/g, ''), 10) || 10;
-  const schoolName = currentUser?.school || storeState.school || 'Westville High School';
+  const isIndependent = Boolean(currentUser?.isIndependent ?? storeState?.isIndependent);
+  const schoolName = isIndependent 
+    ? 'Independent Homeschool' 
+    : (currentUser?.school || currentUser?.schoolName || storeState.school || 'Westville High School');
 
   // Handle switching tabs (supporting both short mobile IDs and full desktop IDs)
   const handleSelectTab = useCallback((tabId, isFromPopstate = false, topicOverride = null) => {
@@ -159,26 +195,72 @@ export default function LearnerAppContainer({
     setQuestion({ ...q });
   }, []);
 
-  // Fetch / Generate a real question from caps-ai-backend
-  const fetchQuestion = useCallback(async (subjectId, topicName) => {
+  const lastFetchedKeyRef = useRef('');
+
+  // Fetch / Generate a real question from caps-ai-backend or offline pack
+  const fetchQuestion = useCallback(async (subjectId, topicName, force = false) => {
+    const key = `${subjectId}:${topicName || ''}:${currentGrade}`;
+    if (!force && lastFetchedKeyRef.current === key) {
+      return;
+    }
+    lastFetchedKeyRef.current = key;
     setIsGenerating(true);
     setResult(null);
+
+    // If device is offline, pull immediately from local 30-day offline study pack
+    if (typeof navigator !== 'undefined' && !navigator.onLine) {
+      try {
+        const offlineQ = await offlineStorageService.getNextOfflineQuestion(subjectId, currentGrade, 1);
+        if (offlineQ) {
+          setQuestion(offlineQ);
+          setIsOfflineWorkspace(true);
+          setIsGenerating(false);
+          return;
+        }
+      } catch (err) {
+        console.warn('Offline pack lookup failed:', err);
+      }
+      generateLocalFallback(subjectId, topicName);
+      setIsGenerating(false);
+      return;
+    }
+
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 15000);
+
     try {
       const url = buildApiUrl(`/api/generate?subject=${encodeURIComponent(subjectId)}&grade=${currentGrade}&topic=${encodeURIComponent(topicName || '')}&seed=${Date.now()}`);
-      const res = await fetch(url);
+      const res = await fetch(url, { signal: controller.signal });
       if (res.ok) {
         const data = await res.json();
         const extracted = Array.isArray(data?.questions) && data.questions.length > 0 
           ? data.questions[0] 
           : (data?.questions || data);
         setQuestion(extracted);
+        setIsOfflineWorkspace(false);
       } else {
-        generateLocalFallback(subjectId, topicName);
+        // Network non-OK: attempt offline pack before generic fallback
+        const offlineQ = await offlineStorageService.getNextOfflineQuestion(subjectId, currentGrade, 1);
+        if (offlineQ) {
+          setQuestion(offlineQ);
+          setIsOfflineWorkspace(true);
+        } else {
+          generateLocalFallback(subjectId, topicName);
+        }
       }
     } catch (err) {
-      console.warn('Backend unavailable, using local deterministic fallback', err);
+      console.warn('Backend unavailable or timed out, trying offline study pack', err?.message || err);
+      try {
+        const offlineQ = await offlineStorageService.getNextOfflineQuestion(subjectId, currentGrade, 1);
+        if (offlineQ) {
+          setQuestion(offlineQ);
+          setIsOfflineWorkspace(true);
+          return;
+        }
+      } catch (_) {}
       generateLocalFallback(subjectId, topicName);
     } finally {
+      clearTimeout(timeoutId);
       setIsGenerating(false);
     }
   }, [currentGrade, generateLocalFallback]);
@@ -193,11 +275,11 @@ export default function LearnerAppContainer({
       topic: newTopic,
       lastActiveTab: activeTab
     });
-    fetchQuestion(activeTab, newTopic);
+    fetchQuestion(activeTab, newTopic, true);
   }, [activeTab, activeReelSubjectId, fetchQuestion]);
 
   const handleNextQuestion = useCallback(() => {
-    fetchQuestion(activeTab, activeTopic);
+    fetchQuestion(activeTab, activeTopic, true);
   }, [activeTab, activeTopic, fetchQuestion]);
 
   // Jump from Today's Desk directly into a specific assignment
@@ -237,6 +319,16 @@ export default function LearnerAppContainer({
     }
   }, [activeTab, activeTopic, fetchQuestion]);
 
+  // Handle starting adaptive prerequisite micro-drill
+  const handleStartMicroDrill = useCallback((banner) => {
+    if (!banner) return;
+    const microTopic = banner.target_topic || 'Foundational Micro-Drill';
+    setActiveTopic(microTopic);
+    setPrerequisiteBanner(null);
+    setConsecutiveErrors(0);
+    fetchQuestion(activeTab, microTopic, true);
+  }, [activeTab, fetchQuestion]);
+
   // Handle checking answers
   const handleCheckAnswer = async (userAnswer) => {
     setIsChecking(true);
@@ -264,34 +356,107 @@ export default function LearnerAppContainer({
           totalMarks: markResult?.total || question?.marks || 5,
           xp: isPass ? 35 : 10,
         });
+
+        if (isPass) {
+          setConsecutiveErrors(0);
+          setPrerequisiteBanner(null);
+        } else {
+          setConsecutiveErrors((prev) => {
+            const next = prev + 1;
+            if (next >= 2) {
+              setPrerequisiteBanner({
+                target_grade: Math.max(8, currentGrade - 2),
+                target_topic: activeTab === 'mathematics' ? 'Factorising Trinomials & HCF' : 'VAT Net vs Gross Calculations',
+                target_subskill: activeTab === 'mathematics' ? 'common_factor_extraction' : 'net_vs_gross_calculation',
+                explanation: `Repeated difficulty detected in ${activeTopic || 'current topic'}. A 5-minute foundational micro-drill in Grade ${Math.max(8, currentGrade - 2)} is recommended to rebuild the prerequisite schema.`,
+              });
+            }
+            return next;
+          });
+        }
+        return markResult;
       } else {
-        // Fallback local check
+        // Server returned an error — do NOT auto-award marks
+        console.warn(`[Mark API] Non-OK response: ${res.status}`);
         setResult({
-          score: question?.marks || 5,
+          score: 0,
           total: question?.marks || 5,
-          percentage: 100,
-          feedback: 'All entries balanced correctly! Consequential accuracy verified.',
+          percentage: 0,
+          feedback: 'Could not verify your answer — the marking server returned an error. Please try again.',
+          verificationFailed: true,
         });
         studentStore.recordAttempt(activeTab, {
-          isCorrect: true,
-          score: question?.marks || 5,
+          isCorrect: false,
+          score: 0,
           totalMarks: question?.marks || 5,
-          xp: 35,
+          xp: 0,
+        });
+        setConsecutiveErrors((prev) => {
+          const next = prev + 1;
+          if (next >= 2) {
+            setPrerequisiteBanner({
+              target_grade: Math.max(8, currentGrade - 2),
+              target_topic: activeTab === 'mathematics' ? 'Factorising Trinomials & HCF' : 'VAT Net vs Gross Calculations',
+              target_subskill: activeTab === 'mathematics' ? 'common_factor_extraction' : 'net_vs_gross_calculation',
+              explanation: `Repeated difficulty detected in ${activeTopic || 'current topic'}. A 5-minute foundational micro-drill in Grade ${Math.max(8, currentGrade - 2)} is recommended to rebuild the prerequisite schema.`,
+            });
+          }
+          return next;
         });
       }
-    } catch {
-      setResult({
-        score: question?.marks || 5,
-        total: question?.marks || 5,
-        percentage: 100,
-        feedback: 'Calculations verified locally (Offline Mode).',
-      });
+    } catch (err) {
+      console.warn('[Mark API] Network error, checking offline validation:', err?.message || err);
+      // Offline fallback: Evaluate locally using pre-baked question data
+      let isCorrect = false;
+      const totalMarks = question?.marks || question?.marking_schema?.total_marks || 5;
+      let earnedScore = 0;
+
+      if (question?.correct_index !== undefined) {
+        isCorrect = Number(userAnswer) === Number(question.correct_index);
+        earnedScore = isCorrect ? totalMarks : 0;
+      } else if (question?.correct_answer) {
+        const uStr = String(userAnswer || '').trim().toLowerCase();
+        const cStr = String(question.correct_answer || '').trim().toLowerCase();
+        isCorrect = uStr.length > 0 && (uStr === cStr || cStr.includes(uStr));
+        earnedScore = isCorrect ? totalMarks : 0;
+      } else {
+        isCorrect = String(userAnswer || '').trim().length > 10;
+        earnedScore = isCorrect ? Math.round(totalMarks * 0.7) : 0;
+      }
+
+      const offlineResult = {
+        score: earnedScore,
+        total: totalMarks,
+        percentage: Math.round((earnedScore / totalMarks) * 100),
+        feedback: isCorrect 
+          ? '✓ Correct! Offline attempt recorded locally and queued for synchronization.' 
+          : 'Offline Review: Compare your working with the sample solution.',
+        isOfflineEvaluated: true,
+        sampleAnswer: question?.sample_answer || question?.correct_answer
+      };
+
+      setResult(offlineResult);
       studentStore.recordAttempt(activeTab, {
-        isCorrect: true,
-        score: question?.marks || 5,
-        totalMarks: question?.marks || 5,
-        xp: 35,
+        isCorrect,
+        score: earnedScore,
+        totalMarks,
+        xp: isCorrect ? 35 : 10,
       });
+
+      // Queue offline attempt for telemetry synchronization
+      offlineStorageService.queueOfflineAttempt({
+        studentId: currentUser?.uid || 'local_learner',
+        subject: activeTab,
+        grade: currentGrade,
+        topic: activeTopic,
+        questionId: question?.id,
+        score: earnedScore,
+        totalMarks,
+        isPass: isCorrect,
+        userAnswer
+      }).catch(qErr => console.warn('Failed to queue offline attempt:', qErr));
+
+      return offlineResult;
     } finally {
       setIsChecking(false);
     }
@@ -314,7 +479,19 @@ export default function LearnerAppContainer({
           if (subjId === 'desk') {
             handleSelectTab('desk');
           } else {
-            handleOpenSubjectFromDesk(subjId);
+            const normalized = 
+              subjId === 'maths' ? 'mathematics' :
+              subjId === 'mathslit' || subjId === 'maths_lit' ? 'mathematical_literacy' :
+              subjId === 'physics' ? 'physical_sciences' :
+              subjId === 'business' ? 'business_studies' :
+              subjId === 'lifesci' ? 'life_sciences' :
+              subjId === 'techmaths' ? 'technical_mathematics' :
+              subjId === 'natsci' ? 'natural_sciences' :
+              subjId;
+            setActiveReelSubjectId(normalized);
+            if (activeTab !== 'desk') {
+              handleSelectTab('desk');
+            }
           }
         }}
         activeDeskMode={deskMode}
@@ -330,7 +507,9 @@ export default function LearnerAppContainer({
         streakDays={storeState.streak || 5}
         xp={storeState.xp || 1420}
         enabledSubjects={enabledSubjects}
+        isIndependent={isIndependent}
         onOpenManageSubjects={() => setShowSubjectManagerModal(true)}
+        onOpenOfflinePacks={() => setShowOfflinePackModal(true)}
         isCollapsed={isRailCollapsed}
         onToggleCollapse={() => setIsRailCollapsed(!isRailCollapsed)}
       />
@@ -342,6 +521,7 @@ export default function LearnerAppContainer({
             grade={currentGrade}
             schoolName={schoolName}
             currentUser={currentUser}
+            isIndependent={isIndependent}
             activeMode={deskMode}
             onChangeActiveMode={setDeskMode}
             activeReelSubjectId={activeReelSubjectId}
@@ -349,25 +529,31 @@ export default function LearnerAppContainer({
             enabledSubjects={enabledSubjects}
             onOpenSubject={handleOpenSubjectFromDesk}
             onOpenJoinClassModal={() => setShowJoinClassModal(true)}
+            onOpenLinkGuardian={() => setShowLinkGuardianModal(true)}
+            onOpenOfflinePacks={() => setShowOfflinePackModal(true)}
           />
         ) : (
-          <div className="p-3 sm:p-6 space-y-3">
-            {/* Top Breadcrumb Navigation Bar back to Studio */}
-            <div className="flex items-center justify-between bg-white px-4 py-2.5 rounded-xl border border-slate-200/90 shadow-2xs text-xs">
-              <button
-                type="button"
-                onClick={() => handleSelectTab('desk')}
-                className="font-bold text-[#13519C] hover:text-[#0F4280] flex items-center gap-1.5 cursor-pointer hover:underline"
+          <div className="p-3 sm:p-5 space-y-3">
+            {isOfflineWorkspace && (
+              <div 
+                data-testid="banner-offline-mode"
+                className="bg-violet-50 border border-violet-200/90 text-violet-900 px-4 py-2.5 rounded-xl flex items-center justify-between text-xs animate-fadeIn shadow-2xs"
               >
-                <span>&larr; Return to Self-Paced Studio</span>
-              </button>
-              <div className="flex items-center gap-2 text-slate-500 font-medium">
-                <span>Phase Subject:</span>
-                <span className="font-bold" style={{ color: currentTabConfig.accentColor }}>
-                  {currentTabConfig.name}
-                </span>
+                <div className="flex items-center gap-2">
+                  <span className="w-2.5 h-2.5 rounded-full bg-violet-600 animate-pulse" />
+                  <span className="font-bold">Offline Study Pack Active:</span>
+                  <span>Practicing questions offline with pre-computed hints. Progress will sync when reconnected.</span>
+                </div>
+                <button
+                  type="button"
+                  data-testid="btn-manage-offline-banner"
+                  onClick={() => setShowOfflinePackModal(true)}
+                  className="font-bold text-violet-700 hover:text-violet-900 underline ml-2 cursor-pointer"
+                >
+                  Manage Packs &rarr;
+                </button>
               </div>
-            </div>
+            )}
 
             <UniversalWorkspace
               grade={currentGrade}
@@ -377,8 +563,10 @@ export default function LearnerAppContainer({
               isGenerating={isGenerating}
               isChecking={isChecking}
               onCheck={handleCheckAnswer}
-              onNext={() => fetchQuestion(activeTab, activeTopic)}
+              onNext={() => fetchQuestion(activeTab, activeTopic, true)}
               onSelectTopic={handleSelectTopic}
+              onStartMicroDrill={handleStartMicroDrill}
+              prerequisiteBanner={prerequisiteBanner}
               result={result}
               isEmbedded={true}
               formativeMastery={activeSubData.formativeMastery}
@@ -425,6 +613,12 @@ export default function LearnerAppContainer({
       setShowJoinClassModal(true);
     },
     onOpenPersonaSwitcher: (currentUser?.isSuperAdmin || isSandboxMode) ? onOpenPersonaSwitcher : null,
+    onLogout: onLogout || (() => {}),
+    enabledSubjects,
+    onOpenManageSubjects: () => {
+      navigationHistoryService.pushModal('manageSubjects');
+      setShowSubjectManagerModal(true);
+    },
   };
 
   const mobileContent = (
@@ -472,6 +666,7 @@ export default function LearnerAppContainer({
         superAdminTier={superAdminTier}
         setSuperAdminTier={setSuperAdminTier}
         onOpenPersonaSwitcher={onOpenPersonaSwitcher}
+        onSelectGrade={(g) => studentStore.setGrade(g)}
       />
 
       {/* Family / Guardian Linking Modal (15-Min Ephemeral Handshake) */}
@@ -492,11 +687,43 @@ export default function LearnerAppContainer({
         enabledSubjects={enabledSubjects}
         onSaveSubjects={(newSubjects) => {
           setEnabledSubjects(newSubjects);
-          try {
-            localStorage.setItem('fundile_enabled_subjects', JSON.stringify(newSubjects));
-          } catch {}
+          studentStore.setEnabledSubjects(newSubjects);
         }}
         currentGrade={currentGrade}
+      />
+
+      {/* Self-Service Subject & Teacher Enrollment Modal */}
+      <SubjectEnrollmentModal
+        isOpen={showSubjectEnrollmentModal}
+        onClose={() => {
+          setShowSubjectEnrollmentModal(false);
+          try {
+            localStorage.removeItem('fundile_pending_subject_enrollment');
+          } catch (_) {}
+        }}
+        currentUser={currentUser}
+        schoolName={currentUser?.schoolName || schoolName}
+        grade={currentGrade}
+        onEnrollmentComplete={() => {
+          setShowSubjectEnrollmentModal(false);
+          try {
+            localStorage.removeItem('fundile_pending_subject_enrollment');
+          } catch (_) {}
+        }}
+      />
+
+      {/* 30-Day Offline Study Pack Modal */}
+      <OfflineStudyPackModal
+        isOpen={showOfflinePackModal}
+        onClose={() => setShowOfflinePackModal(false)}
+        grade={currentGrade}
+        enabledSubjects={enabledSubjects}
+        studentId={currentUser?.uid || 'local_learner'}
+        onPackDownloaded={() => {
+          if (typeof navigator !== 'undefined' && !navigator.onLine) {
+            fetchQuestion(activeTab, activeTopic, true);
+          }
+        }}
       />
 
       {/* Android Hardware Back-Button Double-Tap Exit Toast */}
