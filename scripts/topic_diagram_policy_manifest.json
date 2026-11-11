@@ -1,0 +1,66 @@
+{
+  "_description": "Locked Topic-to-Diagram-Method Contract. Enforced mechanically by scripts/validate_topic_50_archetypes.py and .git/hooks/pre-commit so Gemini 3.8 Flash cannot substitute flat 2D polygons for Blender 3D solids or Campbell/OpenStax anatomical plates.",
+  "blender_3d_foundry_topics": [
+    {
+      "subject": "Mathematics",
+      "grades": ["7", "8", "9", "10", "11", "12"],
+      "topic_patterns": [
+        "geometry of 3d objects",
+        "surface area and volume of 3d objects",
+        "trigonometry (2d and 3d)"
+      ],
+      "min_blender_backed_subskills": 20,
+      "required_blender_script_dir": "scripts/blender",
+      "required_public_models_dir": "public/models",
+      "required_public_diagrams_dir": "public/diagrams"
+    },
+    {
+      "subject": "Technical Mathematics",
+      "grades": ["10", "11", "12"],
+      "topic_patterns": [
+        "mensuration",
+        "3d"
+      ],
+      "min_blender_backed_subskills": 15,
+      "required_blender_script_dir": "scripts/blender",
+      "required_public_models_dir": "public/models",
+      "required_public_diagrams_dir": "public/diagrams"
+    }
+  ],
+  "campbell_curated_plate_topics": [
+    {
+      "subject": "Natural Sciences",
+      "grades": ["7", "8", "9"],
+      "topic_patterns": [
+        "cells as the basic units of life",
+        "systems in the human body",
+        "human reproduction",
+        "circulatory and respiratory systems",
+        "digestive system"
+      ],
+      "min_curated_plate_subskills": 10,
+      "require_source_plate_provenance": true
+    },
+    {
+      "subject": "Life Sciences",
+      "grades": ["10", "11", "12"],
+      "topic_patterns": [
+        "plant and animal cells",
+        "cell division",
+        "mitosis",
+        "support and transport systems in plants",
+        "support systems in animals",
+        "transport systems in mammals",
+        "gaseous exchange",
+        "excretion in humans",
+        "meiosis",
+        "human reproduction",
+        "responding to the environment",
+        "human endocrine system",
+        "homeostasis in humans"
+      ],
+      "min_curated_plate_subskills": 12,
+      "require_source_plate_provenance": true
+    }
+  ]
+}

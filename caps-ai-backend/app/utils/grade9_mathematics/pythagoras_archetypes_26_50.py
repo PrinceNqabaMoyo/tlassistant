@@ -1382,11 +1382,11 @@ def arch_50_compound_multi_step_pythagoras_synthesis(rng: random.Random) -> Dict
     distance_saved = walk_around - d
 
     prompt = (
-        f"A rectangular sports field in Soweto is \\({l}\\text{{ m}}\\) long and \\({w}\\text{{ m}}\\) wide. "
-        f"Lerato wants to travel from one corner of the field to the diagonally opposite corner.\n\n"
+        f"A rectangular sports field in Soweto measures \\({l}\\text{{ m}}\\) by \\({w}\\text{{ m}}\\). "
+        f"Lerato travels from corner \\(A\\) to corner \\(C\\) directly across the diagonal path.\n\n"
         f"1. Calculate the length of the diagonal path across the field.\n"
-        f"2. How much walking distance does Lerato save by taking the diagonal path directly across the field "
-        f"instead of walking along the two outside edges?"
+        f"2. How much walking distance does Lerato save by walking directly across the diagonal path "
+        f"rather than following the two perimeter boundary edges?"
     )
     sol = (
         f"**Step 1: Calculate the diagonal distance across the field.**\n"

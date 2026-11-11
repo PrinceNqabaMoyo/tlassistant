@@ -1,0 +1,6 @@
+{
+  "scripts/validate_topic_50_archetypes.py": "af43d98aeff0caa8d672007c59168a917934355a6ba27ec5231493b04294d686",
+  "scripts/topic_diagram_policy_manifest.json": "d7db1cdfa6f27f6dad05546be5827be7b359c30530dcd9072c7d11fef0040523",
+  "scripts/audit_diagram_description_leak.py": "ab4ccd3fd393da8c377a2a52286b789f806813d6486c3ee4e36f029265aeff14",
+  "scripts/audit_heart_standard_plates.py": "07e2f9124552ce2f39270ca4d9cc9db20d13aa91121dd7126b9f4615d6dfa8ef"
+}
