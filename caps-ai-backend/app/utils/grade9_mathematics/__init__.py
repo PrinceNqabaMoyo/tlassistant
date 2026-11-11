@@ -39,6 +39,7 @@ from app.utils.grade9_mathematics.algebraic_equations_generator import (
 )
 from app.utils.grade9_mathematics.algebraic_equations_fractions_generator import (
     generate as generate_algebraic_equations_fractions,
+    generate_grade9_equations_fractions_question,
 )
 from app.utils.grade9_mathematics.fractions_generator import (
     generate as generate_fractions,
@@ -123,6 +124,7 @@ __all__ = [
     "generate_algebraic_equations",
     "generate_grade9_algebraic_equations_question",
     "generate_algebraic_equations_fractions",
+    "generate_grade9_equations_fractions_question",
     "generate_fractions",
     "generate_grade9_fractions_question",
     "generate_graphs",

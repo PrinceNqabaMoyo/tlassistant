@@ -1,380 +1,204 @@
-"""Grade 9 Mathematics - Graphs & Linear Functions (6-Pillar Generator).
-Grounded in:
-  - curriculum_docs/Mathematics_Gr9/Functions and relationships.md (Input/output, Cartesian representation)
-  - curriculum_docs_auto/Mathematics_Gr9/Term 2/02. Graphs.md (Chapter 15: Rates of change, gradient m, dual intercepts, y = mx + c)
+"""Grade 9 Mathematics - Graphs & Linear Functions Generator (50 Semantic Archetypes).
+=====================================================================================
+Grounded strictly in:
+  - CAPS Grade 9 Mathematics: Term 2 Topic 2: Graphs & Linear Functions
+  - curriculum_docs_auto/Mathematics_Gr9/Term 2/02. Graphs.md
+  - Chapter 15: Interpreting graphs, rates of change, gradient m, intercepts, y = mx + c,
+    parallel & perpendicular lines, points of intersection, real-world models
 
-Subskills:
-  1. graphs_gradient_calculation: Finding gradient m = (y2 - y1) / (x2 - x1) from coordinate pairs.
-  2. graphs_dual_intercept_method: Determining x-intercept (y=0) and y-intercept (x=0).
-  3. graphs_equation_from_graph: Determining y = mx + c from plotted lines and coordinates.
-  4. graphs_rate_of_change_context: Real-world gradient interpretation (speed, flow rate, cost per km).
-  5. graphs_plotting_and_quadrants: Reading coordinate landmarks and points on Cartesian plane.
+100% CAPS-aligned deterministic question generator.
+Zero LLM calls, zero token cost, 100% AST pure.
 """
 from __future__ import annotations
 
-import math
 import random
-from typing import Any, Dict, List, Optional
+from typing import Any, Callable, Dict, List, Optional, Tuple
 
-from app.utils.grade9_mathematics._math_common import make_id, rng
+from .graphs_archetypes_01_25 import (
+    arch_01_identify_linear_vs_non_linear_from_graph,
+    arch_02_identify_increasing_decreasing_constant_intervals,
+    arch_03_read_coordinates_from_cartesian_plane,
+    arch_04_determine_quadrant_of_point,
+    arch_05_distinguish_discrete_vs_continuous_graph,
+    arch_06_interpret_maximum_minimum_turning_points_context,
+    arch_07_interpret_constant_speed_from_distance_time_graph,
+    arch_08_calculate_gradient_positive_integer_from_points,
+    arch_09_calculate_gradient_negative_integer_from_points,
+    arch_10_calculate_gradient_fractional_slope_from_points,
+    arch_11_calculate_gradient_from_graph_slope_triangle,
+    arch_12_determine_gradient_horizontal_line_zero,
+    arch_13_determine_gradient_vertical_line_undefined,
+    arch_14_compare_steepness_of_two_lines,
+    arch_15_find_y_intercept_from_equation,
+    arch_16_find_x_intercept_from_equation,
+    arch_17_read_x_and_y_intercepts_from_graph,
+    arch_18_dual_intercept_method_sketch_matching,
+    arch_19_dual_intercept_equation_from_both_intercepts,
+    arch_20_convert_general_form_to_standard_form,
+    arch_21_equation_from_gradient_and_y_intercept,
+    arch_22_equation_from_gradient_and_point_positive_m,
+    arch_23_equation_from_gradient_and_point_negative_m,
+    arch_24_horizontal_line_equation_through_point,
+    arch_25_vertical_line_equation_through_point,
+)
+from .graphs_archetypes_26_50 import (
+    arch_26_equation_from_two_points_positive_slope,
+    arch_27_equation_from_two_points_negative_slope,
+    arch_28_equation_from_two_points_fractional_gradient,
+    arch_29_determine_equation_from_plotted_line_graph,
+    arch_30_point_lies_on_line_test_collinearity,
+    arch_31_find_missing_coordinate_on_line,
+    arch_32_find_distance_between_two_axis_intercepts,
+    arch_33_identify_parallel_lines_from_equations,
+    arch_34_equation_of_parallel_line_through_given_point,
+    arch_35_identify_perpendicular_lines_from_equations,
+    arch_36_determine_perpendicular_gradient,
+    arch_37_equation_of_perpendicular_line_through_given_point,
+    arch_38_parallel_and_perpendicular_geometric_classification,
+    arch_39_point_of_intersection_from_graph,
+    arch_40_solve_point_of_intersection_algebraically_integer,
+    arch_41_intersection_of_line_with_horizontal_or_vertical_line,
+    arch_42_area_of_triangle_formed_by_line_and_axes,
+    arch_43_rate_of_change_water_tank_filling,
+    arch_44_rate_of_change_water_tank_draining,
+    arch_45_distance_time_graph_average_speed_calculation,
+    arch_46_distance_time_graph_multi_stage_journey,
+    arch_47_cellphone_tariff_or_taxi_fare_comparison,
+    arch_48_business_break_even_income_vs_expenses,
+    arch_49_error_analysis_inverted_gradient_formula,
+    arch_50_compound_multi_step_graph_analysis,
+)
 
+ARCHETYPE_MAP: Dict[str, Callable[[random.Random], Dict[str, Any]]] = {
+    "01_identify_linear_vs_non_linear_from_graph": arch_01_identify_linear_vs_non_linear_from_graph,
+    "02_identify_increasing_decreasing_constant_intervals": arch_02_identify_increasing_decreasing_constant_intervals,
+    "03_read_coordinates_from_cartesian_plane": arch_03_read_coordinates_from_cartesian_plane,
+    "04_determine_quadrant_of_point": arch_04_determine_quadrant_of_point,
+    "05_distinguish_discrete_vs_continuous_graph": arch_05_distinguish_discrete_vs_continuous_graph,
+    "06_interpret_maximum_minimum_turning_points_context": arch_06_interpret_maximum_minimum_turning_points_context,
+    "07_interpret_constant_speed_from_distance_time_graph": arch_07_interpret_constant_speed_from_distance_time_graph,
+    "08_calculate_gradient_positive_integer_from_points": arch_08_calculate_gradient_positive_integer_from_points,
+    "09_calculate_gradient_negative_integer_from_points": arch_09_calculate_gradient_negative_integer_from_points,
+    "10_calculate_gradient_fractional_slope_from_points": arch_10_calculate_gradient_fractional_slope_from_points,
+    "11_calculate_gradient_from_graph_slope_triangle": arch_11_calculate_gradient_from_graph_slope_triangle,
+    "12_determine_gradient_horizontal_line_zero": arch_12_determine_gradient_horizontal_line_zero,
+    "13_determine_gradient_vertical_line_undefined": arch_13_determine_gradient_vertical_line_undefined,
+    "14_compare_steepness_of_two_lines": arch_14_compare_steepness_of_two_lines,
+    "15_find_y_intercept_from_equation": arch_15_find_y_intercept_from_equation,
+    "16_find_x_intercept_from_equation": arch_16_find_x_intercept_from_equation,
+    "17_read_x_and_y_intercepts_from_graph": arch_17_read_x_and_y_intercepts_from_graph,
+    "18_dual_intercept_method_sketch_matching": arch_18_dual_intercept_method_sketch_matching,
+    "19_dual_intercept_equation_from_both_intercepts": arch_19_dual_intercept_equation_from_both_intercepts,
+    "20_convert_general_form_to_standard_form": arch_20_convert_general_form_to_standard_form,
+    "21_equation_from_gradient_and_y_intercept": arch_21_equation_from_gradient_and_y_intercept,
+    "22_equation_from_gradient_and_point_positive_m": arch_22_equation_from_gradient_and_point_positive_m,
+    "23_equation_from_gradient_and_point_negative_m": arch_23_equation_from_gradient_and_point_negative_m,
+    "24_horizontal_line_equation_through_point": arch_24_horizontal_line_equation_through_point,
+    "25_vertical_line_equation_through_point": arch_25_vertical_line_equation_through_point,
+    "26_equation_from_two_points_positive_slope": arch_26_equation_from_two_points_positive_slope,
+    "27_equation_from_two_points_negative_slope": arch_27_equation_from_two_points_negative_slope,
+    "28_equation_from_two_points_fractional_gradient": arch_28_equation_from_two_points_fractional_gradient,
+    "29_determine_equation_from_plotted_line_graph": arch_29_determine_equation_from_plotted_line_graph,
+    "30_point_lies_on_line_test_collinearity": arch_30_point_lies_on_line_test_collinearity,
+    "31_find_missing_coordinate_on_line": arch_31_find_missing_coordinate_on_line,
+    "32_find_distance_between_two_axis_intercepts": arch_32_find_distance_between_two_axis_intercepts,
+    "33_identify_parallel_lines_from_equations": arch_33_identify_parallel_lines_from_equations,
+    "34_equation_of_parallel_line_through_given_point": arch_34_equation_of_parallel_line_through_given_point,
+    "35_identify_perpendicular_lines_from_equations": arch_35_identify_perpendicular_lines_from_equations,
+    "36_determine_perpendicular_gradient": arch_36_determine_perpendicular_gradient,
+    "37_equation_of_perpendicular_line_through_given_point": arch_37_equation_of_perpendicular_line_through_given_point,
+    "38_parallel_and_perpendicular_geometric_classification": arch_38_parallel_and_perpendicular_geometric_classification,
+    "39_point_of_intersection_from_graph": arch_39_point_of_intersection_from_graph,
+    "40_solve_point_of_intersection_algebraically_integer": arch_40_solve_point_of_intersection_algebraically_integer,
+    "41_intersection_of_line_with_horizontal_or_vertical_line": arch_41_intersection_of_line_with_horizontal_or_vertical_line,
+    "42_area_of_triangle_formed_by_line_and_axes": arch_42_area_of_triangle_formed_by_line_and_axes,
+    "43_rate_of_change_water_tank_filling": arch_43_rate_of_change_water_tank_filling,
+    "44_rate_of_change_water_tank_draining": arch_44_rate_of_change_water_tank_draining,
+    "45_distance_time_graph_average_speed_calculation": arch_45_distance_time_graph_average_speed_calculation,
+    "46_distance_time_graph_multi_stage_journey": arch_46_distance_time_graph_multi_stage_journey,
+    "47_cellphone_tariff_or_taxi_fare_comparison": arch_47_cellphone_tariff_or_taxi_fare_comparison,
+    "48_business_break_even_income_vs_expenses": arch_48_business_break_even_income_vs_expenses,
+    "49_error_analysis_inverted_gradient_formula": arch_49_error_analysis_inverted_gradient_formula,
+    "50_compound_multi_step_graph_analysis": arch_50_compound_multi_step_graph_analysis,
+}
 
-SUBSKILLS = [
-    "graphs_gradient_calculation",
-    "graphs_dual_intercept_method",
-    "graphs_equation_from_graph",
-    "graphs_rate_of_change_context",
-    "graphs_plotting_and_quadrants",
+SUBSKILLS: List[str] = list(ARCHETYPE_MAP.keys())
+ARCHETYPES: List[str] = SUBSKILLS
+ORDERED_SUBSKILLS: List[str] = SUBSKILLS
+
+SUBSKILLS_TUPLES: List[Tuple[str, str]] = [
+    (key, key[3:].replace("_", " ").title()) for key in SUBSKILLS
 ]
 
 
-def _gen_gradient_calc(r: random.Random) -> Dict[str, Any]:
-    # Two points A(x1, y1) and B(x2, y2)
-    x1 = r.randint(-4, 1)
-    x2 = x1 + r.choice([1, 2, 3, 4])
-    m_val = r.choice([-3, -2, -1, 1, 2, 3])
-    c_val = r.randint(-4, 4)
-    
-    y1 = m_val * x1 + c_val
-    y2 = m_val * x2 + c_val
-    
-    ans = str(m_val)
-    prompt = (
-        f"Calculate the **gradient ($m$)** of the straight line passing through the points "
-        f"**$A({x1};\\ {y1})$** and **$B({x2};\\ {y2})$**."
-    )
-
-    diagram_spec = {
-        "diagram_role": "context",
-        "kind": "function_graph",
-        "domain": [-6, 6],
-        "range": [-6, 6],
-        "curves": [
-            {
-                "family": "linear",
-                "params": {"m": m_val, "c": c_val},
-                "color": "#2563eb",
-                "label": f"y = {m_val}x + {c_val}",
-            }
-        ],
-        "landmarks": [
-            {"x": x1, "y": y1, "label": f"A({x1}; {y1})"},
-            {"x": x2, "y": y2, "label": f"B({x2}; {y2})"},
-        ],
-    }
-
-    derivation = (
-        f"**Step 1: State the gradient formula.**\n"
-        f"$$m = \\frac{{y_2 - y_1}}{{x_2 - x_1}}$$\n\n"
-        f"**Step 2: Substitute coordinate points $A({x1};\\ {y1})$ and $B({x2};\\ {y2})$.**\n"
-        f"$$m = \\frac{{{y2} - ({y1})}}{{{x2} - ({x1})}} = \\frac{{{y2 - y1}}}{{{x2 - x1}}} = {ans}$$\n\n"
-        f"**Step 3: Conclusion.**\n"
-        f"The gradient is **$m = {ans}$** (a {'positive' if m_val > 0 else 'negative'} slope)."
-    )
-
-    return {
-        "id": make_id("g9_grfgrad"),
-        "topic": "Graphs",
-        "subskill": "graphs_gradient_calculation",
-        "difficulty": "medium",
-        "question_type": "typed",
-        "prompt": prompt,
-        "correct_answer": ans,
-        "diagram_spec": diagram_spec,
-        "hints": [
-            "Use the standard gradient formula: m = (y2 - y1) / (x2 - x1).",
-            f"m = ({y2} - {y1}) / ({x2} - {x1}).",
-            f"m = {ans}.",
-        ],
-        "explanation": f"{derivation}\n\n**Correct Answer:** m = {ans} [2 marks]",
-        "mark_allocation": 2,
-    }
-
-
-def _gen_dual_intercept(r: random.Random) -> Dict[str, Any]:
-    # Line: y = mx + c with integer intercepts
-    m = r.choice([-3, -2, 2, 3])
-    x_int = r.choice([-4, -3, -2, 2, 3, 4])
-    # 0 = m(x_int) + c => c = -m * x_int
-    c = -m * x_int
-    
-    target = r.choice(["x_intercept", "y_intercept"])
-    sign_c = f"+ {c}" if c > 0 else f"- {abs(c)}"
-    eq_str = f"y = {m}x {sign_c}"
-
-    if target == "x_intercept":
-        ans = str(x_int)
-        prompt = f"Determine the **$x$-intercept** of the straight line with equation **${eq_str}$** (state the value of $x$ where $y = 0$)."
-        derivation = (
-            f"**Step 1: Set $y = 0$ to find the $x$-intercept.**\n"
-            f"$$0 = {m}x {sign_c}$$\n"
-            f"$$-{m}x = {c}$$\n"
-            f"$$x = \\frac{{{c}}}{{{-m}}} = {ans}$$\n\n"
-            f"**Step 2: Conclusion.**\n"
-            f"The $x$-intercept coordinate is $({ans};\\ 0)$."
-        )
+def generate_grade9_graphs_question(
+    seed: Optional[int] = None,
+    subskill: Optional[str] = None,
+    **kwargs: Any,
+) -> Dict[str, Any]:
+    """Generates a single Grade 9 Graphs & Linear Functions question."""
+    r = random.Random(seed)
+    if subskill and subskill in ARCHETYPE_MAP:
+        builder = ARCHETYPE_MAP[subskill]
+        chosen_subskill = subskill
+    elif subskill:
+        # Match by prefix or substring if requested
+        s_clean = str(subskill).strip()
+        matched = None
+        for k, b in ARCHETYPE_MAP.items():
+            if k.startswith(s_clean) or s_clean in k:
+                matched = (k, b)
+                break
+        if matched:
+            chosen_subskill, builder = matched
+        else:
+            chosen_subskill = r.choice(SUBSKILLS)
+            builder = ARCHETYPE_MAP[chosen_subskill]
     else:
-        ans = str(c)
-        prompt = f"Determine the **$y$-intercept** of the straight line with equation **${eq_str}$** (state the value of $y$ where $x = 0$)."
-        derivation = (
-            f"**Step 1: Set $x = 0$ to find the $y$-intercept.**\n"
-            f"$$y = {m}(0) {sign_c} = {ans}$$\n\n"
-            f"**Step 2: Conclusion.**\n"
-            f"The $y$-intercept coordinate is $(0;\\ {ans})$."
-        )
+        chosen_subskill = r.choice(SUBSKILLS)
+        builder = ARCHETYPE_MAP[chosen_subskill]
 
-    diagram_spec = {
-        "diagram_role": "context",
-        "kind": "function_graph",
-        "domain": [-6, 6],
-        "range": [-8, 8],
-        "curves": [
-            {
-                "family": "linear",
-                "params": {"m": m, "c": c},
-                "color": "#16a34a",
-                "label": eq_str,
-            }
-        ],
-        "landmarks": [
-            {"x": x_int, "y": 0, "label": f"({x_int}; 0)"},
-            {"x": 0, "y": c, "label": f"(0; {c})"},
-        ],
-    }
-
-    return {
-        "id": make_id("g9_grfint"),
-        "topic": "Graphs",
-        "subskill": "graphs_dual_intercept_method",
-        "difficulty": "medium",
-        "question_type": "typed",
-        "prompt": prompt,
-        "correct_answer": ans,
-        "diagram_spec": diagram_spec,
-        "hints": [
-            "For the x-intercept set y = 0 and solve for x. For the y-intercept set x = 0 and find y.",
-            f"Equation: {eq_str}.",
-            f"Answer: {ans}.",
-        ],
-        "explanation": f"{derivation}\n\n**Correct Answer:** {ans} [2 marks]",
-        "mark_allocation": 2,
-    }
+    q = builder(r)
+    q["subskill"] = chosen_subskill
+    q["grade"] = "9"
+    q["subject"] = "Mathematics"
+    q["topic"] = "Graphs"
+    q["term"] = 2
+    q.setdefault("caps_weight_percent", 12)
+    q.setdefault("suggested_duration_mins", 4)
+    q.setdefault("difficulty", "medium")
+    q.setdefault("mode", "compound")
+    if not q.get("prompt"):
+        q["prompt"] = q.get("question_text")
+    if not q.get("sample_answer"):
+        q["sample_answer"] = str(q.get("correct_answer"))
+    return q
 
 
-def _gen_equation_from_graph(r: random.Random) -> Dict[str, Any]:
-    # Given y-intercept (0, c) and another point (x1, y1)
-    m = r.choice([-3, -2, -1, 1, 2, 3])
-    c = r.choice([-4, -3, -2, 1, 2, 3, 4])
-    x1 = r.choice([1, 2, 3])
-    y1 = m * x1 + c
-
-    sign_c = f"+ {c}" if c > 0 else f"- {abs(c)}"
-    m_str = "x" if m == 1 else ("-x" if m == -1 else f"{m}x")
-    ans = f"{m_str}{sign_c}".replace(" ", "")
-
-    diagram_spec = {
-        "diagram_role": "context",
-        "kind": "function_graph",
-        "domain": [-5, 5],
-        "range": [-6, 6],
-        "curves": [
-            {
-                "family": "linear",
-                "params": {"m": m, "c": c},
-                "color": "#dc2626",
-                "label": "Line L",
-            }
-        ],
-        "landmarks": [
-            {"x": 0, "y": c, "label": f"(0; {c})"},
-            {"x": x1, "y": y1, "label": f"({x1}; {y1})"},
-        ],
-    }
-
-    prompt = (
-        f"A straight line graph passes through the $y$-intercept **$(0;\\ {c})$** and the point **$({x1};\\ {y1})$**.\n\n"
-        f"Determine the equation of the line in standard form **$y = mx + c$** (type the right-hand side expression in simplest form)."
-    )
-
-    derivation = (
-        f"**Step 1: Identify the $y$-intercept ($c$).**\n"
-        f"Since the line passes through $(0;\\ {c})$, the constant term is $c = {c}$.\n\n"
-        f"**Step 2: Calculate the gradient ($m$).**\n"
-        f"$$m = \\frac{{y_2 - y_1}}{{x_2 - x_1}} = \\frac{{{y1} - ({c})}}{{{x1} - 0}} = \\frac{{{y1 - c}}}{{{x1}}} = {m}$$\n\n"
-        f"**Step 3: State the equation.**\n"
-        f"$$y = {m_str} {sign_c}$$"
-    )
-
-    return {
-        "id": make_id("g9_grfeq"),
-        "topic": "Graphs",
-        "subskill": "graphs_equation_from_graph",
-        "difficulty": "medium",
-        "question_type": "typed",
-        "prompt": prompt,
-        "correct_answer": ans,
-        "diagram_spec": diagram_spec,
-        "hints": [
-            f"The y-intercept is at (0; {c}), so c = {c}.",
-            f"Find the gradient using m = ({y1} - {c}) / ({x1} - 0) = {m}.",
-            f"RHS expression: {ans}.",
-        ],
-        "explanation": f"{derivation}\n\n**Correct Answer:** {ans} [3 marks]",
-        "mark_allocation": 3,
-    }
-
-
-def _gen_rate_of_change_context(r: random.Random) -> Dict[str, Any]:
-    # e.g., Speed from distance-time graph
-    speed = r.choice([60, 75, 80, 90, 100])
-    hours = r.choice([2, 3, 4])
-    dist = speed * hours
-    
-    diagram_spec = {
-        "diagram_role": "context",
-        "kind": "function_graph",
-        "domain": [0, hours + 1],
-        "range": [0, dist + 40],
-        "curves": [
-            {
-                "family": "linear",
-                "params": {"m": speed, "c": 0},
-                "color": "#9333ea",
-                "label": "Distance (km) vs Time (h)",
-            }
-        ],
-        "landmarks": [
-            {"x": 0, "y": 0, "label": "Start (0; 0)"},
-            {"x": hours, "y": dist, "label": f"({hours}h; {dist}km)"},
-        ],
-    }
-
-    ans = str(speed)
-    prompt = (
-        f"A distance-time graph shows that a bus travels from rest and covers **{dist} km** in **{hours} hours** at a constant speed.\n\n"
-        f"Calculate the **rate of change (constant speed)** of the bus in **km/h**."
-    )
-
-    derivation = (
-        f"**Step 1: Identify that the gradient of a distance-time graph represents speed.**\n"
-        f"$$\\text{{Speed}} = \\text{{Gradient}} = \\frac{{\\Delta \\text{{Distance}}}}{{\\Delta \\text{{Time}}}}$$\n\n"
-        f"**Step 2: Calculate rate of change.**\n"
-        f"$$\\text{{Speed}} = \\frac{{{dist} \\text{{ km}}}}{{{hours} \\text{{ h}}}} = {ans} \\text{{ km/h}}$$"
-    )
-
-    return {
-        "id": make_id("g9_grfrate"),
-        "topic": "Graphs",
-        "subskill": "graphs_rate_of_change_context",
-        "difficulty": "medium",
-        "question_type": "typed",
-        "prompt": prompt,
-        "correct_answer": ans,
-        "diagram_spec": diagram_spec,
-        "hints": [
-            "In a distance-time graph, the gradient (slope) equals the speed.",
-            f"Divide distance ({dist} km) by time ({hours} h).",
-            f"Speed = {ans} km/h.",
-        ],
-        "explanation": f"{derivation}\n\n**Correct Answer:** {ans} [2 marks]",
-        "mark_allocation": 2,
-    }
-
-
-def _gen_plotting_quadrants(r: random.Random) -> Dict[str, Any]:
-    x = r.choice([-4, -3, -2, -1, 1, 2, 3, 4])
-    y = r.choice([-4, -3, -2, -1, 1, 2, 3, 4])
-    
-    if x > 0 and y > 0:
-        quad = "Quadrant 1"
-    elif x < 0 and y > 0:
-        quad = "Quadrant 2"
-    elif x < 0 and y < 0:
-        quad = "Quadrant 3"
-    else:
-        quad = "Quadrant 4"
-
-    opts = ["Quadrant 1", "Quadrant 2", "Quadrant 3", "Quadrant 4"]
-    ans = quad
-
-    diagram_spec = {
-        "diagram_role": "context",
-        "kind": "function_graph",
-        "domain": [-5, 5],
-        "range": [-5, 5],
-        "landmarks": [
-            {"x": x, "y": y, "label": f"P({x}; {y})"},
-        ],
-    }
-
-    prompt = f"In which quadrant of the Cartesian plane does the coordinate point **$P({x};\\ {y})$** lie?"
-
-    derivation = (
-        f"**Step 1: Check signs of coordinates.**\n"
-        f"- $x = {x}$ ({'positive' if x > 0 else 'negative'})\n"
-        f"- $y = {y}$ ({'positive' if y > 0 else 'negative'})\n\n"
-        f"**Step 2: Apply quadrant definitions.**\n"
-        f"- Quad 1: (+, +), Quad 2: (-, +), Quad 3: (-, -), Quad 4: (+, -)\n"
-        f"Therefore, $P({x};\\ {y})$ lies in **{ans}**."
-    )
-
-    return {
-        "id": make_id("g9_grfquad"),
-        "topic": "Graphs",
-        "subskill": "graphs_plotting_and_quadrants",
-        "difficulty": "easy",
-        "question_type": "mcq",
-        "prompt": prompt,
-        "options": opts,
-        "correct_answer": ans,
-        "diagram_spec": diagram_spec,
-        "hints": [
-            "Top-right is Quadrant 1 (+, +), Top-left is Quadrant 2 (-, +).",
-            "Bottom-left is Quadrant 3 (-, -), Bottom-right is Quadrant 4 (+, -).",
-            f"Point is in {ans}.",
-        ],
-        "explanation": f"{derivation}\n\n**Correct Answer:** {ans} [1 mark]",
-        "mark_allocation": 1,
-    }
-
-
-GENERATORS = {
-    "graphs_gradient_calculation": _gen_gradient_calc,
-    "graphs_dual_intercept_method": _gen_dual_intercept,
-    "graphs_equation_from_graph": _gen_equation_from_graph,
-    "graphs_rate_of_change_context": _gen_rate_of_change_context,
-    "graphs_plotting_and_quadrants": _gen_plotting_quadrants,
-}
+generate_grade9_linear_graphs_question = generate_grade9_graphs_question
+generate_grade9_functions_graphs_question = generate_grade9_graphs_question
 
 
 def generate(
-    subskill: str = "mixed",
-    difficulty: str = "medium",
-    count: int = 1,
     seed: Optional[int] = None,
+    subskill: Optional[str] = None,
+    difficulty: Optional[str] = None,
+    count: int = 1,
     **kwargs: Any,
 ) -> List[Dict[str, Any]]:
-    r = rng(seed)
-    results: List[Dict[str, Any]] = []
+    """6-Pillar Generator Contract entry point."""
+    r = random.Random(seed)
+    questions: List[Dict[str, Any]] = []
 
-    if subskill in GENERATORS:
-        for _ in range(count):
-            results.append(GENERATORS[subskill](r))
-        return results
+    if subskill and subskill in ARCHETYPE_MAP:
+        candidates = [subskill]
+    else:
+        candidates = SUBSKILLS
 
-    keys = list(GENERATORS.keys())
     for i in range(count):
-        chosen = keys[(i + r.randint(0, len(keys) - 1)) % len(keys)]
-        results.append(GENERATORS[chosen](r))
+        sub = candidates[i % len(candidates)] if len(candidates) > 1 else candidates[0]
+        sub_seed = r.randint(1, 1_000_000_000)
+        q = generate_grade9_graphs_question(seed=sub_seed, subskill=sub, **kwargs)
+        questions.append(q)
 
-    return results
-
-
-def generate_grade9_graphs_question(
-    subskill: str = "mixed",
-    difficulty: str = "medium",
-    seed: Optional[int] = None,
-    **kwargs: Any,
-) -> Dict[str, Any]:
-    res = generate(subskill=subskill, difficulty=difficulty, count=1, seed=seed, **kwargs)
-    return res[0] if res else {}
+    return questions

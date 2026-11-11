@@ -795,8 +795,8 @@ GRADE9_MATH_GENERATORS = {
     # Term 2 (6 topics)
     "grade9_math_algebraic_equations": g9_math_eq.generate,
     "grade9_math_algebraic_equations_fractions": g9_math_eq_frac.generate,
-    "grade9_math_fractions": _adapt_single_item_generator(g9_math_frac.generate_grade9_fractions_question),
-    "grade9_math_graphs": _adapt_single_item_generator(g9_math_graphs.generate_grade9_graphs_question),
+    "grade9_math_fractions": g9_math_frac.generate,
+    "grade9_math_graphs": g9_math_graphs.generate,
     "grade9_math_geometry_of_straight_lines": g9_math_str_lines.generate,
     "grade9_math_geometry_of_2d_shapes": g9_math_2d_shapes.generate,
 

@@ -1,249 +1,211 @@
-"""Grade 9 Mathematics - Algebraic Equations with Fractions and Quadratic Factorisation Generator.
-Covers:
-  - Linear equations with algebraic fractions (clearing denominators)
-  - Equations of the form (x + a)/b - (x - c)/d = k
-  - Quadratic equations solvable by factorisation: x^2 + bx + c = 0 -> (x - p)(x - q) = 0
-  - Quadratic equations with common factor: ax^2 + bx = 0 -> x(ax + b) = 0
+"""Grade 9 Mathematics - Equations 2 (Algebraic Equations with Fractions & Quadratics) Generator.
+Grounded strictly in:
+  - curriculum_docs_auto/Mathematics_Gr9/Term 2/01. Equations 2.md
+  - curriculum_docs/Mathematics_Gr9/Equations Studio.md
 
-Follows South African national curriculum specifications and the 6-Pillar Generator Contract.
-Strictly zero-LLM, deterministic execution.
+100% CAPS-aligned deterministic question generator (50 Semantic Archetypes).
+Zero LLM calls, zero token cost, 100% AST pure.
 """
 from __future__ import annotations
 
-import math
 import random
-from typing import Any, Dict, List, Optional
+from typing import Any, Callable, Dict, List, Optional
+
+from .equations_fractions_archetypes_01_25 import (
+    arch_01_fraction_linear_basic_monomial_denominator,
+    arch_02_fraction_linear_two_step_additive,
+    arch_03_fraction_linear_two_step_subtractive,
+    arch_04_fraction_linear_binomial_numerator_simple,
+    arch_05_fraction_linear_binomial_numerator_subtraction,
+    arch_06_fraction_linear_coefficient_binomial_numerator,
+    arch_07_fraction_linear_coefficient_negative_binomial,
+    arch_08_fraction_balance_scale_model_visual,
+    arch_09_fraction_linear_both_sides_monomial,
+    arch_10_fraction_linear_sum_two_fractions_same_denominator,
+    arch_11_fraction_linear_sum_two_fractions_lcd_coprime,
+    arch_12_fraction_linear_diff_two_fractions_lcd,
+    arch_13_fraction_linear_binomial_numerators_add_lcd,
+    arch_14_fraction_linear_binomial_numerators_sub_negative_distrib,
+    arch_15_fraction_linear_binomial_numerators_diff_lcd_multiple,
+    arch_16_fraction_linear_three_fractions_lcd,
+    arch_17_fraction_linear_constant_term_clearing,
+    arch_18_fraction_cross_multiplication_basic,
+    arch_19_fraction_cross_multiplication_coefficients,
+    arch_20_fraction_cross_multiplication_variable_denominator,
+    arch_21_fraction_cross_multiplication_both_variable_denominators,
+    arch_22_fraction_brackets_distributive_monomial,
+    arch_23_fraction_brackets_expanded_with_lcd,
+    arch_24_geometric_perimeter_fractional_side_svg,
+    arch_25_error_analysis_forgot_lcd_multiplication_on_rhs,
+)
+from .equations_fractions_archetypes_26_50 import (
+    arch_26_error_analysis_sign_error_distributing_negative_fraction,
+    arch_27_quadratic_zero_product_already_factorised,
+    arch_28_quadratic_zero_product_mixed_signs,
+    arch_29_quadratic_zero_product_with_leading_coefficient,
+    arch_30_quadratic_common_factor_monomial,
+    arch_31_quadratic_common_factor_with_coefficient,
+    arch_32_quadratic_common_factor_negative_leading,
+    arch_33_quadratic_difference_of_squares_basic,
+    arch_34_quadratic_difference_of_squares_with_coefficient,
+    arch_35_quadratic_difference_of_squares_common_factor_first,
+    arch_36_quadratic_trinomial_standard_both_positive,
+    arch_37_quadratic_trinomial_standard_both_negative,
+    arch_38_quadratic_trinomial_standard_opposite_signs,
+    arch_39_quadratic_trinomial_perfect_square,
+    arch_40_quadratic_rearrange_rhs_to_standard_form,
+    arch_41_quadratic_expand_brackets_then_factorise,
+    arch_42_quadratic_geometric_area_rectangle_svg,
+    arch_43_error_analysis_divided_by_variable_lost_zero_root,
+    arch_44_literal_equation_subject_linear_fraction_simple,
+    arch_45_literal_equation_subject_triangle_area_fraction,
+    arch_46_literal_equation_subject_temperature_conversion,
+    arch_47_literal_equation_subject_linear_rational_expression,
+    arch_48_word_problem_fractional_age_relation,
+    arch_49_word_problem_fractional_number_sum,
+    arch_50_word_problem_speed_distance_time_fractional,
+)
+
+ARCHETYPE_MAP: Dict[str, Callable[[random.Random], Dict[str, Any]]] = {
+    "01_fraction_linear_basic_monomial_denominator": arch_01_fraction_linear_basic_monomial_denominator,
+    "02_fraction_linear_two_step_additive": arch_02_fraction_linear_two_step_additive,
+    "03_fraction_linear_two_step_subtractive": arch_03_fraction_linear_two_step_subtractive,
+    "04_fraction_linear_binomial_numerator_simple": arch_04_fraction_linear_binomial_numerator_simple,
+    "05_fraction_linear_binomial_numerator_subtraction": arch_05_fraction_linear_binomial_numerator_subtraction,
+    "06_fraction_linear_coefficient_binomial_numerator": arch_06_fraction_linear_coefficient_binomial_numerator,
+    "07_fraction_linear_coefficient_negative_binomial": arch_07_fraction_linear_coefficient_negative_binomial,
+    "08_fraction_balance_scale_model_visual": arch_08_fraction_balance_scale_model_visual,
+    "09_fraction_linear_both_sides_monomial": arch_09_fraction_linear_both_sides_monomial,
+    "10_fraction_linear_sum_two_fractions_same_denominator": arch_10_fraction_linear_sum_two_fractions_same_denominator,
+    "11_fraction_linear_sum_two_fractions_lcd_coprime": arch_11_fraction_linear_sum_two_fractions_lcd_coprime,
+    "12_fraction_linear_diff_two_fractions_lcd": arch_12_fraction_linear_diff_two_fractions_lcd,
+    "13_fraction_linear_binomial_numerators_add_lcd": arch_13_fraction_linear_binomial_numerators_add_lcd,
+    "14_fraction_linear_binomial_numerators_sub_negative_distrib": arch_14_fraction_linear_binomial_numerators_sub_negative_distrib,
+    "15_fraction_linear_binomial_numerators_diff_lcd_multiple": arch_15_fraction_linear_binomial_numerators_diff_lcd_multiple,
+    "16_fraction_linear_three_fractions_lcd": arch_16_fraction_linear_three_fractions_lcd,
+    "17_fraction_linear_constant_term_clearing": arch_17_fraction_linear_constant_term_clearing,
+    "18_fraction_cross_multiplication_basic": arch_18_fraction_cross_multiplication_basic,
+    "19_fraction_cross_multiplication_coefficients": arch_19_fraction_cross_multiplication_coefficients,
+    "20_fraction_cross_multiplication_variable_denominator": arch_20_fraction_cross_multiplication_variable_denominator,
+    "21_fraction_cross_multiplication_both_variable_denominators": arch_21_fraction_cross_multiplication_both_variable_denominators,
+    "22_fraction_brackets_distributive_monomial": arch_22_fraction_brackets_distributive_monomial,
+    "23_fraction_brackets_expanded_with_lcd": arch_23_fraction_brackets_expanded_with_lcd,
+    "24_geometric_perimeter_fractional_side_svg": arch_24_geometric_perimeter_fractional_side_svg,
+    "25_error_analysis_forgot_lcd_multiplication_on_rhs": arch_25_error_analysis_forgot_lcd_multiplication_on_rhs,
+    "26_error_analysis_sign_error_distributing_negative_fraction": arch_26_error_analysis_sign_error_distributing_negative_fraction,
+    "27_quadratic_zero_product_already_factorised": arch_27_quadratic_zero_product_already_factorised,
+    "28_quadratic_zero_product_mixed_signs": arch_28_quadratic_zero_product_mixed_signs,
+    "29_quadratic_zero_product_with_leading_coefficient": arch_29_quadratic_zero_product_with_leading_coefficient,
+    "30_quadratic_common_factor_monomial": arch_30_quadratic_common_factor_monomial,
+    "31_quadratic_common_factor_with_coefficient": arch_31_quadratic_common_factor_with_coefficient,
+    "32_quadratic_common_factor_negative_leading": arch_32_quadratic_common_factor_negative_leading,
+    "33_quadratic_difference_of_squares_basic": arch_33_quadratic_difference_of_squares_basic,
+    "34_quadratic_difference_of_squares_with_coefficient": arch_34_quadratic_difference_of_squares_with_coefficient,
+    "35_quadratic_difference_of_squares_common_factor_first": arch_35_quadratic_difference_of_squares_common_factor_first,
+    "36_quadratic_trinomial_standard_both_positive": arch_36_quadratic_trinomial_standard_both_positive,
+    "37_quadratic_trinomial_standard_both_negative": arch_37_quadratic_trinomial_standard_both_negative,
+    "38_quadratic_trinomial_standard_opposite_signs": arch_38_quadratic_trinomial_standard_opposite_signs,
+    "39_quadratic_trinomial_perfect_square": arch_39_quadratic_trinomial_perfect_square,
+    "40_quadratic_rearrange_rhs_to_standard_form": arch_40_quadratic_rearrange_rhs_to_standard_form,
+    "41_quadratic_expand_brackets_then_factorise": arch_41_quadratic_expand_brackets_then_factorise,
+    "42_quadratic_geometric_area_rectangle_svg": arch_42_quadratic_geometric_area_rectangle_svg,
+    "43_error_analysis_divided_by_variable_lost_zero_root": arch_43_error_analysis_divided_by_variable_lost_zero_root,
+    "44_literal_equation_subject_linear_fraction_simple": arch_44_literal_equation_subject_linear_fraction_simple,
+    "45_literal_equation_subject_triangle_area_fraction": arch_45_literal_equation_subject_triangle_area_fraction,
+    "46_literal_equation_subject_temperature_conversion": arch_46_literal_equation_subject_temperature_conversion,
+    "47_literal_equation_subject_linear_rational_expression": arch_47_literal_equation_subject_linear_rational_expression,
+    "48_word_problem_fractional_age_relation": arch_48_word_problem_fractional_age_relation,
+    "49_word_problem_fractional_number_sum": arch_49_word_problem_fractional_number_sum,
+    "50_word_problem_speed_distance_time_fractional": arch_50_word_problem_speed_distance_time_fractional,
+}
+
+SUBSKILLS: List[str] = list(ARCHETYPE_MAP.keys())
+ARCHETYPES: List[str] = SUBSKILLS
+ORDERED_SUBSKILLS: List[str] = SUBSKILLS
 
 
-def _rng(seed: Optional[int] = None) -> random.Random:
-    r = random.Random()
-    if seed is not None:
-        r.seed(int(seed))
-    return r
-
-
-def generate_grade9_equations_question(
+def generate_grade9_equations_fractions_question(
     seed: Optional[int] = None,
-    difficulty: str = "medium",
-    mode: str = "compound",
+    subskill: Optional[str] = None,
+    **kwargs: Any,
 ) -> Dict[str, Any]:
-    r = _rng(seed)
-    subskill = mode if mode.startswith("elementary_") else "equations_fractions_quadratics"
-
-    archetype = r.choice(["fraction_linear_lcd", "fraction_simple_cross", "quadratic_trinomial", "quadratic_common_factor"])
-    if subskill == "elementary_lcd":
-        archetype = "fraction_simple_cross"
-    elif subskill == "elementary_zero_product":
-        archetype = "quadratic_common_factor"
-
-    if archetype == "fraction_simple_cross":
-        a = r.choice([2, 3, 4, 5, 7])
-        b = r.choice([2, 3, 4, 5])
-        c = r.choice([2, 3, 4, 6])
-        sign = r.choice(["+", "-"])
-        const_term = a if sign == "+" else -a
-        sol = b * c - const_term
-
-        expr_str = rf"\frac{{x {sign} {a}}}{{{b}}} = {c}"
-        prompt = f"Solve for \\(x\\):\n$${expr_str}$$"
-        sample_answer = rf"\frac{{x {sign} {a}}}{{{b}}} = {c} \implies x {sign} {a} = {b * c} \implies x = {sol}"
-
-        return {
-            "id": f"g9_eq_frac_cross_{random.randint(100000, 999999)}",
-            "subject": "mathematics",
-            "grade": "grade-9",
-            "topic": "Algebraic Equations",
-            "subskill": "equations_fraction_cross",
-            "learning_objective_id": "g9_eq_fraction_cross",
-            "archetype": "fraction_simple_cross",
-            "prompt": prompt,
-            "sample_answer": sample_answer,
-            "correct_value": str(sol),
-            "marks": 2,
-            "marking_schema": {
-                "total_marks": 2,
-                "marking_points": [
-                    {"id": "mp_1", "desc": "Multiplying through by denominator", "marks": 1, "editable": True},
-                    {"id": "mp_2", "desc": "Correct final value of x", "marks": 1, "editable": True},
-                ],
-                "deductions": [{"rule": "sign_error", "penalty": 1}],
-                "carry_forward_rule": "consequential_accuracy",
-            },
-            "hints": {
-                "tier_1": "Clear the fraction first by multiplying both sides by the denominator.",
-                "tier_2": rf"Multiply both sides by ${b}$: $x {sign} {a} = {b * c}$.",
-                "tier_3": rf"Transpose ${a}$: $x = {b * c} {'-' if sign == '+' else '+'} {a} = {sol}$.",
-            },
-            "misconception_tags": ["forgot_multiply_rhs", "sign_error_on_transposition"],
-            "term": 2,
-            "caps_weight_percent": 15,
-            "suggested_duration_mins": 2,
-            "mode": mode,
-            "difficulty": "easy",
-        }
-
-    elif archetype == "fraction_linear_lcd":
-        d1, d2, lcd, m1, m2 = 2, 3, 6, 3, 2
-        a, b = 1, 2
-        rhs_val = r.choice([2, 3, 4])
-        # 3(x + 1) - 2(x - 2) = 6*rhs => x + 3 + 4 = 6*rhs => x + 7 = 6*rhs
-        sol = 6 * rhs_val - 7
-
-        expr_str = rf"\frac{{x + {a}}}{{{d1}}} - \frac{{x - {b}}}{{{d2}}} = {rhs_val}"
-        prompt = f"Solve for \\(x\\) by finding the Lowest Common Denominator (LCD):\n$${expr_str}$$"
-        sample_answer = (
-            f"$$\\text{{LCD}} = {lcd}$$\n\n"
-            f"$${m1}(x + {a}) - {m2}(x - {b}) = {lcd * rhs_val}$$\n\n"
-            f"$${m1}x + {m1 * a} - {m2}x + {m2 * b} = {lcd * rhs_val}$$\n\n"
-            f"$$x + {m1 * a + m2 * b} = {lcd * rhs_val}$$\n\n"
-            f"$$x = {sol}$$"
-        )
-
-        return {
-            "id": f"g9_eq_frac_lcd_{random.randint(100000, 999999)}",
-            "subject": "mathematics",
-            "grade": "grade-9",
-            "topic": "Algebraic Equations",
-            "subskill": "equations_fractions_lcd",
-            "learning_objective_id": "g9_eq_fractions_lcd",
-            "archetype": "fraction_linear_lcd",
-            "prompt": prompt,
-            "sample_answer": sample_answer,
-            "correct_value": str(sol),
-            "marks": 4,
-            "marking_schema": {
-                "total_marks": 4,
-                "marking_points": [
-                    {"id": "mp_1", "desc": f"Correct LCD = {lcd} and multiplying every term", "marks": 1, "editable": True},
-                    {"id": "mp_2", "desc": "Accurate distribution of negative bracket -(x - 2)", "marks": 1, "editable": True},
-                    {"id": "mp_3", "desc": "Grouping and combining like terms", "marks": 1, "editable": True},
-                    {"id": "mp_4", "desc": "Final accurate answer for x", "marks": 1, "editable": True},
-                ],
-                "deductions": [{"rule": "sign_error_distributing_negative", "penalty": 1}],
-                "carry_forward_rule": "consequential_accuracy",
-            },
-            "hints": {
-                "tier_1": f"Identify the Lowest Common Denominator of the fractions, which is ${lcd}$.",
-                "tier_2": rf"Multiply every single term across both sides by ${lcd}$: ${m1}(x + {a}) - {m2}(x - {b}) = {lcd * rhs_val}$.",
-                "tier_3": rf"Distribute carefully: ${m1}x + {m1*a} - {m2}x + {m2*b} = {lcd*rhs_val}$. Group like terms to get $x = {sol}$.",
-            },
-            "misconception_tags": ["sign_error_distributing_negative", "forgot_multiply_rhs", "common_denominator_error"],
-            "term": 2,
-            "caps_weight_percent": 15,
-            "suggested_duration_mins": 4,
-            "mode": mode,
-            "difficulty": "medium",
-        }
-
-    elif archetype == "quadratic_trinomial":
-        p = r.choice([2, 3, 4, 5])
-        q = r.choice([1, 2, 3, 6])
-        b_coeff = -(p + q)
-        c_const = p * q
-
-        prompt = f"Solve for \\(x\\) by factorising:\n$$x^2 {b_coeff}x + {c_const} = 0$$"
-        sample_answer = rf"x^2 {b_coeff}x + {c_const} = 0 \implies (x - {p})(x - {q}) = 0 \implies x = {p} \text{{ or }} x = {q}"
-
-        return {
-            "id": f"g9_eq_quad_trinomial_{random.randint(100000, 999999)}",
-            "subject": "mathematics",
-            "grade": "grade-9",
-            "topic": "Algebraic Equations",
-            "subskill": "quadratic_equations_factorisation",
-            "learning_objective_id": "g9_eq_quad_factorise",
-            "archetype": "quadratic_trinomial",
-            "prompt": prompt,
-            "sample_answer": sample_answer,
-            "correct_value": f"x = {p} or x = {q}",
-            "marks": 3,
-            "marking_schema": {
-                "total_marks": 3,
-                "marking_points": [
-                    {"id": "mp_1", "desc": f"Factorising into two binomials (x - {p})(x - {q}) = 0", "marks": 1, "editable": True},
-                    {"id": "mp_2", "desc": "Applying the Zero Product Property", "marks": 1, "editable": True},
-                    {"id": "mp_3", "desc": f"Both correct solutions x = {p} and x = {q}", "marks": 1, "editable": True},
-                ],
-                "deductions": [{"rule": "omitted_second_root", "penalty": 1}],
-                "carry_forward_rule": "consequential_accuracy",
-            },
-            "hints": {
-                "tier_1": f"Find two numbers that multiply to $+{c_const}$ and add together to give ${b_coeff}$.",
-                "tier_2": rf"The factors are $-{p}$ and $-{q}$. Write as $(x - {p})(x - {q}) = 0$.",
-                "tier_3": rf"Set each bracket to zero: $x - {p} = 0 \implies x = {p}$, or $x - {q} = 0 \implies x = {q}$.",
-            },
-            "misconception_tags": ["factor_pair_sign_inversion", "omitted_second_root", "sign_error_on_root"],
-            "term": 2,
-            "caps_weight_percent": 15,
-            "suggested_duration_mins": 3,
-            "mode": mode,
-            "difficulty": "medium",
-        }
-
+    """Generates a single Grade 9 Equations 2 (fractions & quadratics) question."""
+    r = random.Random(seed)
+    if subskill and subskill in ARCHETYPE_MAP:
+        chosen_subskill = subskill
+        builder = ARCHETYPE_MAP[subskill]
     else:
-        # ax^2 + bx = 0 -> x(ax + b) = 0
-        a_val = r.choice([2, 3, 5])
-        b_val = r.choice([4, 6, 9, 10, 15])
-        gcd_val = math.gcd(a_val, b_val)
-        a_val //= gcd_val
-        b_val //= gcd_val
-        if a_val == 1:
-            a_val = 2
-            b_val = 6
+        chosen_subskill = r.choice(SUBSKILLS)
+        builder = ARCHETYPE_MAP[chosen_subskill]
 
-        prompt = f"Solve for \\(x\\):\n$${a_val}x^2 + {b_val}x = 0$$"
-        root2_str = f"-{b_val}/{a_val}" if a_val != 1 else str(-b_val)
-        sample_answer = rf"{a_val}x^2 + {b_val}x = 0 \implies x({a_val}x + {b_val}) = 0 \implies x = 0 \text{{ or }} x = -\frac{{{b_val}}}{{{a_val}}}"
+    q = builder(r)
+    q["subskill"] = chosen_subskill
+    q["grade"] = "9"
+    q["subject"] = "Mathematics"
+    q["topic"] = "Equations 2"
+    q["term"] = 2
+    q["learning_objective_id"] = f"g9_eq_frac_{chosen_subskill}"
+    q["archetype"] = chosen_subskill
 
-        return {
-            "id": f"g9_eq_quad_common_{random.randint(100000, 999999)}",
-            "subject": "mathematics",
-            "grade": "grade-9",
-            "topic": "Algebraic Equations",
-            "subskill": "quadratic_equations_common_factor",
-            "learning_objective_id": "g9_eq_quad_common_factor",
-            "archetype": "quadratic_common_factor",
-            "prompt": prompt,
-            "sample_answer": sample_answer,
-            "correct_value": f"x = 0 or x = {root2_str}",
-            "marks": 3,
-            "marking_schema": {
-                "total_marks": 3,
-                "marking_points": [
-                    {"id": "mp_1", "desc": f"Extracting common factor x({a_val}x + {b_val}) = 0", "marks": 1, "editable": True},
-                    {"id": "mp_2", "desc": "First solution x = 0", "marks": 1, "editable": True},
-                    {"id": "mp_3", "desc": f"Second solution x = -{b_val}/{a_val}", "marks": 1, "editable": True},
-                ],
-                "deductions": [{"rule": "divided_by_x_and_lost_zero_root", "penalty": 1}],
-                "carry_forward_rule": "consequential_accuracy",
-            },
-            "hints": {
-                "tier_1": "Never divide across by x! That removes the valid root x = 0. Extract x as a common factor instead.",
-                "tier_2": rf"Factor out $x$: $x({a_val}x + {b_val}) = 0$.",
-                "tier_3": rf"Set each factor to zero: $x = 0$ or ${a_val}x = -{b_val} \implies x = -\frac{{{b_val}}}{{{a_val}}}$.",
-            },
-            "misconception_tags": ["divided_by_x_and_lost_zero_root", "omitted_zero_root", "sign_error"],
-            "term": 2,
-            "caps_weight_percent": 15,
-            "suggested_duration_mins": 3,
-            "mode": mode,
-            "difficulty": "medium",
-        }
+    # Sync prompt and question text
+    if "question_text" in q and "prompt" not in q:
+        q["prompt"] = q["question_text"]
+    elif "prompt" in q and "question_text" not in q:
+        q["question_text"] = q["prompt"]
+
+    # Sync answer aliases
+    if "correct_answer" in q:
+        q["correct_value"] = q["correct_answer"]
+        q["expected_answer"] = q["correct_answer"]
+    elif "correct_value" in q:
+        q["correct_answer"] = q["correct_value"]
+        q["expected_answer"] = q["correct_value"]
+
+    # Worked solution from hints or marking schema
+    hints = q.get("hints", [])
+    if hints and "sample_answer" not in q:
+        q["sample_answer"] = hints[-1]
+    if hints and "worked_solution" not in q:
+        q["worked_solution"] = "\n".join(hints)
+
+    schema = q.get("marking_schema")
+    if isinstance(schema, list) and "marks" not in q:
+        q["marks"] = sum(p.get("marks", 1) for p in schema if isinstance(p, dict)) or 2
+    elif "marks" not in q:
+        q["marks"] = 2
+
+    q.setdefault("caps_weight_percent", 15)
+    q.setdefault("suggested_duration_mins", 3)
+    q.setdefault("mode", "compound")
+    q.setdefault("difficulty", "medium")
+
+    return q
+
+
+# Canonical generator aliases
+generate_grade9_equations_question = generate_grade9_equations_fractions_question
 
 
 def generate(
-    count: int = 1,
     seed: Optional[int] = None,
-    difficulty: str = "medium",
-    mode: str = "compound",
-    subskill: str = "mixed",
+    subskill: Optional[str] = None,
+    difficulty: Optional[str] = None,
+    count: int = 1,
     **kwargs: Any,
 ) -> List[Dict[str, Any]]:
-    base_seed = seed if seed is not None else 42
-    return [
-        generate_grade9_equations_question(
-            seed=base_seed + i,
-            difficulty=difficulty,
-            mode=mode,
-        )
-        for i in range(count)
-    ]
+    """6-Pillar Generator Contract entry point."""
+    r = random.Random(seed)
+    questions: List[Dict[str, Any]] = []
+
+    if subskill and subskill in ARCHETYPE_MAP:
+        candidates = [subskill]
+    else:
+        candidates = SUBSKILLS
+
+    for i in range(count):
+        sub = candidates[i % len(candidates)] if len(candidates) > 1 else candidates[0]
+        sub_seed = r.randint(1, 1_000_000_000)
+        q = generate_grade9_equations_fractions_question(seed=sub_seed, subskill=sub, **kwargs)
+        questions.append(q)
+
+    return questions
