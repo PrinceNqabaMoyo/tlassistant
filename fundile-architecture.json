@@ -3,7 +3,7 @@
     "app": "Fundile",
     "tagline": "Adaptive learning aligned with South African National Curriculum Standards for Grades 7–12",
     "lastUpdated": "2026-11-11",
-    "version": "0.9.32",
+    "version": "0.9.33",
     "maintainedBy": "owner",
     "updateProtocol": "Update this file when a layer, service, route, data model, or external dependency is added or its build status changes. Do NOT update for internal function changes or bug fixes.",
     "agentInstruction": "Read this file at session start to understand the full system. Do not ask the owner to explain the architecture — it is here. Cross-reference planning documents for detail on planned items."
@@ -340,7 +340,7 @@
         ],
         "status": "built",
         "topics_count": 24,
-        "note": "All 24 Grade 9 Mathematics topics across Terms 1 to 4 aligned 100% with South African National Curriculum Standards. Topics 1 to 12 (Whole numbers, Integers, Decimals, Exponents, Patterns, Functions, Expressions 1 & 2, Equations 1 & 2, Fractions, Graphs) verified to have >=50 distinct semantic archetypes each (600 total subskills), 0 synthetic shims, and high seed entropy."
+        "note": "All 24 Grade 9 Mathematics topics across Terms 1 to 4 aligned 100% with South African National Curriculum Standards. Topics 1 to 15 (Whole numbers, Integers, Decimals, Exponents, Patterns, Functions, Expressions 1 & 2, Equations 1 & 2, Fractions, Graphs, Geometry of straight lines, Geometry of 2D shapes, Construction of geometric figures) verified to have >=50 distinct semantic archetypes each (750 total subskills), 0 synthetic shims, and high seed entropy."
       },
       {
         "subject": "Mathematics",

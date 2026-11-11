@@ -1,391 +1,203 @@
-"""Grade 9 Mathematics — Construction of Geometric Figures Generator (Deterministic 6-Pillar Contract).
+"""Grade 9 Mathematics - Construction of Geometric Figures Generator (50 Semantic Archetypes).
+=============================================================================================
+Grounded strictly in:
+  - CAPS Grade 9 Mathematics: Term 3 Topic: Construction of geometric figures
+  - curriculum_docs_auto/Mathematics_Gr9/Term 3/01. Construction of geometric figures.md
+  - Chapter 4: Compass and straightedge constructions, angle bisection, perpendicular
+    bisectors, special angle constructions (30°, 45°, 60°, 75°, 90°, 105°, 120°, 135°),
+    triangle constructions (SSS, SAS, ASA, RHS), quadrilateral constructions,
+    triangle centers (circumcentre, incentre, centroid, orthocentre), circle tangents,
+    scale drawings, bearings, and diagnostic error analysis.
 
-Curriculum Alignment:
-- Grade 9 Term 3: Construction of geometric figures
-- South African National Curriculum Standards (Senior Phase Mathematics)
-- Compass and straight-edge constructions:
-  * Angle bisector calculations & algebraic properties
-  * Perpendicular bisector properties & equidistant points
-  * Special construction angles (60°, 30°, 90°, 45°) and combination angles (75°, 105°, 135°)
-  * Triangle construction conditions & Triangle Inequality Theorem (a + b > c)
-  * Naming geometric centres (circumcentre from perpendicular bisectors, incentre from angle bisectors)
-
-6 Pillars:
-- Deterministic seed generation with zero LLM authority
-- Directed solution graph with dependency tracking
-- Adaptive deconstruction (atomic elementary sub-drills on error)
-- Rich 3-tier hints (Conceptual, Procedural with construction rule, Concrete Step-by-Step with actual numbers)
-- Misconception-targeted error taxonomy
-- Native DiagramRenderer specs
+100% CAPS-aligned deterministic question generator.
+Zero LLM calls, zero token cost, 100% AST pure.
 """
 from __future__ import annotations
 
-import math
 import random
-import uuid
-from typing import Any, Dict, List, Optional
+from typing import Any, Callable, Dict, List, Optional, Tuple
 
-from app.utils.grade9_mathematics._math_common import rng
+from .construction_archetypes_01_25 import (
+    arch_01_angle_classification_and_measurement,
+    arch_02_angle_bisector_concept_and_definition,
+    arch_03_angle_bisector_algebraic_equation,
+    arch_04_identify_angle_bisector_compass_arcs,
+    arch_05_bisect_obtuse_or_reflex_angle,
+    arch_06_adjacent_supplementary_angle_bisectors_perpendicular,
+    arch_07_angle_trisection_vs_bisection_concepts,
+    arch_08_perpendicular_bisector_definition_and_midpoint,
+    arch_09_perpendicular_bisector_equidistance_property,
+    arch_10_perpendicular_bisector_compass_radius_condition,
+    arch_11_perpendicular_line_through_point_on_line,
+    arch_12_perpendicular_line_from_external_point_to_line,
+    arch_13_shortest_distance_from_point_to_line,
+    arch_14_equidistant_locus_of_two_parallel_lines,
+    arch_15_construct_60_degree_angle_equilateral_triangle,
+    arch_16_construct_30_degree_angle_by_bisecting_60,
+    arch_17_construct_90_degree_angle_perpendicular,
+    arch_18_construct_45_degree_angle_by_bisecting_90,
+    arch_19_construct_15_degree_angle_by_bisecting_30,
+    arch_20_construct_75_degree_angle_combination,
+    arch_21_construct_105_degree_angle_combination,
+    arch_22_construct_120_and_135_degree_angles,
+    arch_23_triangle_inequality_theorem_validity,
+    arch_24_triangle_inequality_range_of_third_side,
+    arch_25_construct_triangle_sss_three_sides,
+)
+from .construction_archetypes_26_50 import (
+    arch_26_construct_triangle_sas_two_sides_included_angle,
+    arch_27_construct_triangle_asa_two_angles_one_side,
+    arch_28_construct_right_angled_triangle_rhs,
+    arch_29_construct_equilateral_triangle_given_side,
+    arch_30_construct_square_given_side_length,
+    arch_31_construct_rectangle_given_length_and_breadth,
+    arch_32_construct_parallelogram_given_two_sides_and_angle,
+    arch_33_construct_rhombus_given_side_and_diagonal,
+    arch_34_construct_regular_hexagon_inscribed_in_circle,
+    arch_35_circumcentre_and_circumscribed_circle,
+    arch_36_incentre_and_inscribed_circle,
+    arch_37_centroid_intersection_of_medians,
+    arch_38_orthocentre_intersection_of_altitudes,
+    arch_39_circumcentre_location_acute_right_obtuse,
+    arch_40_tangent_to_a_circle_perpendicular_to_radius,
+    arch_41_tangents_from_external_point_equal_length,
+    arch_42_common_chord_of_two_intersecting_circles,
+    arch_43_scale_drawing_triangle_actual_distance,
+    arch_44_three_figure_bearing_construction,
+    arch_45_compass_radius_error_non_intersecting_arcs,
+    arch_46_error_analysis_protractor_inner_vs_outer_scale,
+    arch_47_error_analysis_ambiguous_triangle_ssa_not_congruent,
+    arch_48_dividing_line_segment_into_n_equal_parts,
+    arch_49_geometric_locus_equidistant_from_two_intersecting_lines,
+    arch_50_compound_multi_step_geometric_construction_synthesis,
+)
 
-TOPIC = "grade9_math_construction_of_geometric_figures"
-LO = "math9_construction_geometric_figures"
+ARCHETYPE_MAP: Dict[str, Callable[[random.Random], Dict[str, Any]]] = {
+    "01_angle_classification_and_measurement": arch_01_angle_classification_and_measurement,
+    "02_angle_bisector_concept_and_definition": arch_02_angle_bisector_concept_and_definition,
+    "03_angle_bisector_algebraic_equation": arch_03_angle_bisector_algebraic_equation,
+    "04_identify_angle_bisector_compass_arcs": arch_04_identify_angle_bisector_compass_arcs,
+    "05_bisect_obtuse_or_reflex_angle": arch_05_bisect_obtuse_or_reflex_angle,
+    "06_adjacent_supplementary_angle_bisectors_perpendicular": arch_06_adjacent_supplementary_angle_bisectors_perpendicular,
+    "07_angle_trisection_vs_bisection_concepts": arch_07_angle_trisection_vs_bisection_concepts,
+    "08_perpendicular_bisector_definition_and_midpoint": arch_08_perpendicular_bisector_definition_and_midpoint,
+    "09_perpendicular_bisector_equidistance_property": arch_09_perpendicular_bisector_equidistance_property,
+    "10_perpendicular_bisector_compass_radius_condition": arch_10_perpendicular_bisector_compass_radius_condition,
+    "11_perpendicular_line_through_point_on_line": arch_11_perpendicular_line_through_point_on_line,
+    "12_perpendicular_line_from_external_point_to_line": arch_12_perpendicular_line_from_external_point_to_line,
+    "13_shortest_distance_from_point_to_line": arch_13_shortest_distance_from_point_to_line,
+    "14_equidistant_locus_of_two_parallel_lines": arch_14_equidistant_locus_of_two_parallel_lines,
+    "15_construct_60_degree_angle_equilateral_triangle": arch_15_construct_60_degree_angle_equilateral_triangle,
+    "16_construct_30_degree_angle_by_bisecting_60": arch_16_construct_30_degree_angle_by_bisecting_60,
+    "17_construct_90_degree_angle_perpendicular": arch_17_construct_90_degree_angle_perpendicular,
+    "18_construct_45_degree_angle_by_bisecting_90": arch_18_construct_45_degree_angle_by_bisecting_90,
+    "19_construct_15_degree_angle_by_bisecting_30": arch_19_construct_15_degree_angle_by_bisecting_30,
+    "20_construct_75_degree_angle_combination": arch_20_construct_75_degree_angle_combination,
+    "21_construct_105_degree_angle_combination": arch_21_construct_105_degree_angle_combination,
+    "22_construct_120_and_135_degree_angles": arch_22_construct_120_and_135_degree_angles,
+    "23_triangle_inequality_theorem_validity": arch_23_triangle_inequality_theorem_validity,
+    "24_triangle_inequality_range_of_third_side": arch_24_triangle_inequality_range_of_third_side,
+    "25_construct_triangle_sss_three_sides": arch_25_construct_triangle_sss_three_sides,
+    "26_construct_triangle_sas_two_sides_included_angle": arch_26_construct_triangle_sas_two_sides_included_angle,
+    "27_construct_triangle_asa_two_angles_one_side": arch_27_construct_triangle_asa_two_angles_one_side,
+    "28_construct_right_angled_triangle_rhs": arch_28_construct_right_angled_triangle_rhs,
+    "29_construct_equilateral_triangle_given_side": arch_29_construct_equilateral_triangle_given_side,
+    "30_construct_square_given_side_length": arch_30_construct_square_given_side_length,
+    "31_construct_rectangle_given_length_and_breadth": arch_31_construct_rectangle_given_length_and_breadth,
+    "32_construct_parallelogram_given_two_sides_and_angle": arch_32_construct_parallelogram_given_two_sides_and_angle,
+    "33_construct_rhombus_given_side_and_diagonal": arch_33_construct_rhombus_given_side_and_diagonal,
+    "34_construct_regular_hexagon_inscribed_in_circle": arch_34_construct_regular_hexagon_inscribed_in_circle,
+    "35_circumcentre_and_circumscribed_circle": arch_35_circumcentre_and_circumscribed_circle,
+    "36_incentre_and_inscribed_circle": arch_36_incentre_and_inscribed_circle,
+    "37_centroid_intersection_of_medians": arch_37_centroid_intersection_of_medians,
+    "38_orthocentre_intersection_of_altitudes": arch_38_orthocentre_intersection_of_altitudes,
+    "39_circumcentre_location_acute_right_obtuse": arch_39_circumcentre_location_acute_right_obtuse,
+    "40_tangent_to_a_circle_perpendicular_to_radius": arch_40_tangent_to_a_circle_perpendicular_to_radius,
+    "41_tangents_from_external_point_equal_length": arch_41_tangents_from_external_point_equal_length,
+    "42_common_chord_of_two_intersecting_circles": arch_42_common_chord_of_two_intersecting_circles,
+    "43_scale_drawing_triangle_actual_distance": arch_43_scale_drawing_triangle_actual_distance,
+    "44_three_figure_bearing_construction": arch_44_three_figure_bearing_construction,
+    "45_compass_radius_error_non_intersecting_arcs": arch_45_compass_radius_error_non_intersecting_arcs,
+    "46_error_analysis_protractor_inner_vs_outer_scale": arch_46_error_analysis_protractor_inner_vs_outer_scale,
+    "47_error_analysis_ambiguous_triangle_ssa_not_congruent": arch_47_error_analysis_ambiguous_triangle_ssa_not_congruent,
+    "48_dividing_line_segment_into_n_equal_parts": arch_48_dividing_line_segment_into_n_equal_parts,
+    "49_geometric_locus_equidistant_from_two_intersecting_lines": arch_49_geometric_locus_equidistant_from_two_intersecting_lines,
+    "50_compound_multi_step_geometric_construction_synthesis": arch_50_compound_multi_step_geometric_construction_synthesis,
+}
+
+SUBSKILLS: List[str] = list(ARCHETYPE_MAP.keys())
+ARCHETYPES: List[str] = SUBSKILLS
+ORDERED_SUBSKILLS: List[str] = SUBSKILLS
+
+SUBSKILLS_TUPLES: List[Tuple[str, str]] = [
+    (key, key[3:].replace("_", " ").title()) for key in SUBSKILLS
+]
 
 
 def generate_grade9_construction_question(
     seed: Optional[int] = None,
-    difficulty: str = "medium",
-    mode: str = "compound",
     subskill: Optional[str] = None,
     **kwargs: Any,
 ) -> Dict[str, Any]:
-    r = rng(seed)
-
-    archetype_choices = [
-        "triangle_inequality",
-        "angle_bisector_algebra",
-        "special_construction_angles",
-        "perpendicular_bisector_property",
-    ]
-
-    selected_subskill = subskill or mode
-    if selected_subskill in archetype_choices:
-        archetype = selected_subskill
-    else:
-        archetype = r.choice(archetype_choices)
-
-    qid = f"g9_construct_{seed or r.randint(1000, 9999)}_{uuid.uuid4().hex[:6]}"
-
-    if archetype == "triangle_inequality":
-        # Can a triangle be constructed with side lengths a, b, c?
-        # Triangle Inequality Theorem: a + b > c for all three pairs.
-        is_valid = r.choice([True, False])
-        if is_valid:
-            a = r.randint(5, 12)
-            b = r.randint(5, 12)
-            # c must be between |a-b|+1 and a+b-1
-            min_c = abs(a - b) + 1
-            max_c = a + b - 1
-            c = r.randint(min_c, max_c)
-            # Sort for clean display
-            sides = sorted([a, b, c])
-            s1, s2, s3 = sides
-            ans_str = "Yes"
-            explanation = (
-                f"Check the two shorter sides: ${s1} + {s2} = {s1 + s2}$. "
-                f"Since ${s1 + s2} > {s3}$, the sum of the two shorter sides is strictly greater than the longest side. "
-                f"Therefore, a triangle CAN be constructed."
-            )
+    """Generates a single Grade 9 Construction of Geometric Figures question."""
+    r = random.Random(seed)
+    if subskill and subskill in ARCHETYPE_MAP:
+        builder = ARCHETYPE_MAP[subskill]
+        chosen_subskill = subskill
+    elif subskill:
+        # Match by prefix or substring if requested
+        s_clean = str(subskill).strip()
+        matched = None
+        for k, b in ARCHETYPE_MAP.items():
+            if k.startswith(s_clean) or s_clean in k:
+                matched = (k, b)
+                break
+        if matched:
+            chosen_subskill, builder = matched
         else:
-            s1 = r.randint(3, 7)
-            s2 = r.randint(3, 7)
-            # c is >= s1 + s2
-            s3 = s1 + s2 + r.choice([0, 1, 2, 3])
-            ans_str = "No"
-            explanation = (
-                f"Check the two shorter sides: ${s1} + {s2} = {s1 + s2}$. "
-                f"Since ${s1 + s2} \\le {s3}$, the two shorter sides cannot meet to form a vertex. "
-                f"Therefore, a triangle CANNOT be constructed."
-            )
-
-        question_text = (
-            f"A learner attempts to construct a triangle with side lengths "
-            f"${s1}\\text{{ cm}}$, ${s2}\\text{{ cm}}$, and ${s3}\\text{{ cm}}$ using a ruler and a pair of compasses.\n\n"
-            f"1. Is it geometrically possible to construct this triangle? (State 'Yes' or 'No').\n"
-            f"2. Justify your answer using the Triangle Inequality Theorem."
-        )
-
-        steps = [
-            {"id": "S1", "statement": f"Identify the two shorter sides: ${s1}\\text{{ cm}}$ and ${s2}\\text{{ cm}}$", "reason": "order sides", "deps": []},
-            {"id": "S2", "statement": f"Calculate sum of two shorter sides: ${s1} + {s2} = {s1 + s2}\\text{{ cm}}$", "reason": "arithmetic", "deps": ["S1"]},
-            {"id": "S3", "statement": f"Compare with longest side ${s3}\\text{{ cm}}$: ${s1 + s2} {'>' if is_valid else '\\le'} {s3}$", "reason": "Triangle Inequality Theorem", "deps": ["S2"]},
-            {"id": "S4", "statement": f"Conclusion: {ans_str}", "reason": "constructibility criterion", "deps": ["S3"]},
-        ]
-
-        hints = [
-            "The Triangle Inequality Theorem states that the sum of the lengths of any two sides of a triangle must be strictly greater than the third side.",
-            f"Add the two shorter sides together: ${s1} + {s2} = {s1 + s2}\\text{{ cm}}$. Compare this sum to the longest side ${s3}\\text{{ cm}}$.",
-            f"If the sum is greater than {s3}, the arcs will intersect and the answer is 'Yes'. If the sum is less than or equal to {s3}, the arcs will never meet and the answer is 'No'.",
-        ]
-
-        error_tax = [
-            {
-                "id": "err_equality_sufficient",
-                "tag": "misconception_degenerate_triangle",
-                "condition": f"Claimed Yes when {s1} + {s2} == {s3}",
-                "feedback": "When the sum of the two shorter sides equals the third side, the three points form a flat line segment, not a triangle. The sum must be strictly greater.",
-            },
-        ]
-
-        sample_answer = (
-            f"1. {ans_str}\n"
-            f"2. {explanation}"
-        )
-
-        diagram_spec = {
-            "diagram_role": "context",
-            "kind": "triangle",
-            "caption": f"Side lengths: {s1} cm, {s2} cm, {s3} cm",
-            "points": {"A": [0, 0], "B": [s3 / 2, 2], "C": [s3, 0]},
-            "vertices": ["A", "B", "C"],
-            "side_labels": {"AB": f"{s1} cm", "BC": f"{s2} cm", "AC": f"{s3} cm"},
-        }
-
-        correct_ans = ans_str
-        subskill_id = "triangle_inequality"
-        reason_code = "Triangle Inequality Theorem (a + b > c)"
-        marks = 3
-
-    elif archetype == "angle_bisector_algebra":
-        # Compass construction: Angle bisector cuts angle ABC into two equal halves.
-        # Ray BD bisects angle ABC. Angle ABD = ax + b, Angle DBC = total / 2.
-        half_ang = r.randint(25, 55)
-        total_ang = 2 * half_ang
-        x_val = r.randint(10, 25)
-        a_coeff = r.randint(2, 3)
-        b_const = half_ang - a_coeff * x_val
-        expr_half = f"{a_coeff}x + {b_const}" if b_const >= 0 else f"{a_coeff}x - {abs(b_const)}"
-
-        question_text = (
-            f"Ray $BD$ is constructed using a compass and straight edge to bisect angle $A\\hat{{B}}C$.\n\n"
-            f"Given that the total angle $A\\hat{{B}}C = {total_ang}^\\circ$ and $A\\hat{{B}}D = {expr_half}^\\circ$:\n"
-            f"1. State the geometric definition and effect of an angle bisector.\n"
-            f"2. Calculate the value of $x$."
-        )
-
-        steps = [
-            {"id": "S1", "statement": f"$A\\hat{{B}}D = \\frac{{1}}{{2}} A\\hat{{B}}C$", "reason": "BD bisects \u2220ABC", "deps": []},
-            {"id": "S2", "statement": f"${expr_half} = \\frac{{{total_ang}}}{{2}} = {half_ang}^\\circ$", "reason": "substitute given values", "deps": ["S1"]},
-            {"id": "S3", "statement": f"${a_coeff}x = {half_ang - b_const} \\implies x = {x_val}$", "reason": "solve linear equation", "deps": ["S2"]},
-        ]
-
-        hints = [
-            "An angle bisector is a line or ray that divides an angle into two congruent (equal) angles.",
-            f"Since $BD$ bisects $A\\hat{{B}}C$, each half equals half of {total_ang}°, so $A\\hat{{B}}D = {half_ang}^\\circ$.",
-            f"Equate: ${expr_half} = {half_ang}$. Subtract {b_const} and divide by {a_coeff} to find $x = {x_val}$.",
-        ]
-
-        error_tax = [
-            {
-                "id": "err_bisector_adds_to_total",
-                "tag": "misconception_bisector_vs_complementary",
-                "condition": f"Set {expr_half} = {total_ang}",
-                "feedback": "The bisector divides the total angle in half. The half angle must equal total / 2, not the full total angle.",
-            },
-        ]
-
-        sample_answer = (
-            f"1. An angle bisector divides an angle into two exactly equal halves.\n"
-            f"   $A\\hat{{B}}D = \\frac{{1}}{{2}} A\\hat{{B}}C = \\frac{{{total_ang}^\\circ}}{{2}} = {half_ang}^\\circ$\n\n"
-            f"2. ${expr_half} = {half_ang}$\n"
-            f"   ${a_coeff}x = {half_ang - b_const}$\n"
-            f"   $x = {x_val}$"
-        )
-
-        diagram_spec = {
-            "diagram_role": "context",
-            "kind": "angle_diagram",
-            "caption": f"Angle ABC = {total_ang}° bisected by ray BD",
-            "lines": [
-                {"from": [0, 0], "to": [4, 0], "label": "BC"},
-                {"from": [0, 0], "to": [2.5, 3.5], "label": "BA"},
-                {"from": [0, 0], "to": [3.5, 2], "label": "BD"},
-            ],
-            "angles": [
-                {"vertex": [0, 0], "label": f"{expr_half}°", "radius": 0.9},
-                {"vertex": [0, 0], "label": f"{half_ang}°", "radius": 1.4},
-            ],
-        }
-
-        correct_ans = str(x_val)
-        subskill_id = "angle_bisector_algebra"
-        reason_code = "definition of angle bisector"
-        marks = 3
-
-    elif archetype == "special_construction_angles":
-        # How to construct 45°, 30°, 75°, 105°, 135° using compass & ruler
-        target_angle = r.choice([30, 45, 75, 105, 135])
-        if target_angle == 30:
-            construction_recipe = "Construct an equilateral triangle (or 60° angle), then construct the angle bisector of the 60° angle (60° / 2 = 30°)."
-        elif target_angle == 45:
-            construction_recipe = "Construct a perpendicular line (90° angle), then bisect the 90° angle (90° / 2 = 45°)."
-        elif target_angle == 75:
-            construction_recipe = "Construct a 60° angle and a 90° angle on the same vertex. The angle between them is 30°. Bisect this 30° angle to get 15°, and add 60° + 15° = 75°."
-        elif target_angle == 105:
-            construction_recipe = "Construct a 90° angle and a 120° angle on the same vertex. Bisect the 30° angle between them to get 15°, giving 90° + 15° = 105°."
-        else:  # 135
-            construction_recipe = "Construct a 90° angle, then bisect the adjacent supplementary 90° angle on the straight line (90° + 45° = 135°)."
-
-        question_text = (
-            f"A Grade 9 learner needs to construct an angle of exactly ${target_angle}^\\circ$ "
-            f"using ONLY a pair of compasses and a straight edge (ruler), without using a protractor.\n\n"
-            f"Explain clearly, in numbered sequential steps, how this angle of ${target_angle}^\\circ$ "
-            f"can be constructed."
-        )
-
-        steps = [
-            {"id": "S1", "statement": f"Identify base special angle (60° or 90°)", "reason": "standard compass arc construction", "deps": []},
-            {"id": "S2", "statement": f"Apply angle bisection to obtain required increment", "reason": "compass angle bisector", "deps": ["S1"]},
-            {"id": "S3", "statement": f"Combine components: target ${target_angle}^\\circ$", "reason": "angle addition", "deps": ["S2"]},
-        ]
-
-        hints = [
-            "Remember that with a compass, you can directly construct 60° (using equal radius arcs from an equilateral triangle) and 90° (perpendicular bisector of a line segment).",
-            f"To get {target_angle}°, think about how {target_angle}° relates to 60°, 90°, or 180°, and how angle bisectors divide angles in half.",
-            f"Procedure for {target_angle}°: {construction_recipe}",
-        ]
-
-        error_tax = [
-            {
-                "id": "err_use_protractor",
-                "tag": "misconception_tool_violation",
-                "condition": "Used a protractor to measure the angle",
-                "feedback": "Geometric construction strictly requires a ruler (straight edge) and compass only. Using a protractor is drawing, not constructing.",
-            },
-        ]
-
-        sample_answer = (
-            f"Step-by-step compass construction for ${target_angle}^\\circ$:\n"
-            f"{construction_recipe}"
-        )
-
-        diagram_spec = {
-            "diagram_role": "context",
-            "kind": "angle_diagram",
-            "caption": f"Ruler & compass construction of {target_angle}°",
-            "lines": [
-                {"from": [0, 0], "to": [4, 0], "label": "Base arm"},
-                {"from": [0, 0], "to": [4 * math.cos(math.radians(target_angle)), 4 * math.sin(math.radians(target_angle))], "label": f"{target_angle}° arm"},
-            ],
-            "angles": [{"vertex": [0, 0], "label": f"{target_angle}°", "radius": 1.2}],
-        }
-
-        correct_ans = f"{target_angle}°"
-        subskill_id = "special_construction_angles"
-        reason_code = "ruler & compass construction"
-        marks = 3
-
+            chosen_subskill = r.choice(SUBSKILLS)
+            builder = ARCHETYPE_MAP[chosen_subskill]
     else:
-        # perpendicular_bisector_property
-        # Perpendicular bisector of AB. Any point P on the bisector satisfies PA = PB.
-        # If PA = 3x - 4 and PB = 2x + 6, find x and PA.
-        x_val = r.randint(5, 15)
-        a_coeff = r.randint(3, 4)
-        c_coeff = 2
-        d_const = r.randint(5, 15)
-        b_const = (a_coeff - c_coeff) * x_val - d_const
-        pa_len = a_coeff * x_val - b_const
+        chosen_subskill = r.choice(SUBSKILLS)
+        builder = ARCHETYPE_MAP[chosen_subskill]
 
-        question_text = (
-            f"Line $XY$ is the perpendicular bisector of line segment $AB$.\n\n"
-            f"Point $P$ lies anywhere on line $XY$. The distances from $P$ to the endpoints are given as:\n"
-            f"$PA = {a_coeff}x - {b_const}\\text{{ cm}}$ and $PB = {c_coeff}x + {d_const}\\text{{ cm}}$.\n\n"
-            f"1. What is the geometric relationship between $PA$ and $PB$?\n"
-            f"2. Calculate the value of $x$ and the length of $PA$."
-        )
-
-        steps = [
-            {"id": "S1", "statement": f"$PA = PB$", "reason": "P lies on perp bisector of AB", "deps": []},
-            {"id": "S2", "statement": f"${a_coeff}x - {b_const} = {c_coeff}x + {d_const}$", "reason": "equate equidistant segments", "deps": ["S1"]},
-            {"id": "S3", "statement": f"${a_coeff - c_coeff}x = {d_const + b_const} \\implies x = {x_val}$", "reason": "solve for x", "deps": ["S2"]},
-            {"id": "S4", "statement": f"$PA = {a_coeff}({x_val}) - {b_const} = {pa_len}\\text{{ cm}}$", "reason": "calculate length", "deps": ["S3"]},
-        ]
-
-        hints = [
-            "Any point lying on the perpendicular bisector of a line segment is equidistant from the two endpoints of the segment.",
-            f"Therefore, $PA = PB$. Set up the equation: ${a_coeff}x - {b_const} = {c_coeff}x + {d_const}$.",
-            f"Rearrange: ${a_coeff - c_coeff}x = {d_const + b_const}$, giving $x = {x_val}$. Then $PA = {a_coeff}({x_val}) - {b_const} = {pa_len}\\text{{ cm}}$.",
-        ]
-
-        error_tax = [
-            {
-                "id": "err_perp_bisector_confused",
-                "tag": "misconception_bisector_endpoints",
-                "condition": "Assumed PA and PB sum to 180 or length of AB",
-                "feedback": "Points on a perpendicular bisector are equidistant from the endpoints: PA = PB.",
-            },
-        ]
-
-        sample_answer = (
-            f"1. $PA = PB$ (Any point on the perpendicular bisector of a segment is equidistant from its endpoints).\n"
-            f"2. ${a_coeff}x - {b_const} = {c_coeff}x + {d_const}$\n"
-            f"   ${a_coeff - c_coeff}x = {d_const + b_const}$\n"
-            f"   $x = {x_val}$\n"
-            f"   $PA = {a_coeff}({x_val}) - {b_const} = {pa_len}\\text{{ cm}}$"
-        )
-
-        diagram_spec = {
-            "diagram_role": "context",
-            "kind": "triangle",
-            "caption": "P on perpendicular bisector of AB (PA = PB)",
-            "points": {"A": [-3, 0], "B": [3, 0], "P": [0, 4], "M": [0, 0]},
-            "vertices": ["A", "B", "P"],
-            "equal_sides": [["PA", "PB"]],
-            "side_labels": {"PA": f"{pa_len} cm", "PB": f"{pa_len} cm"},
-            "right_angle_at": "M",
-        }
-
-        correct_ans = str(x_val)
-        subskill_id = "perpendicular_bisector_property"
-        reason_code = "equidistant from endpoints on perp bisector"
-        marks = 4
-
-    q = {
-        "id": qid,
-        "subject": "Mathematics",
-        "grade": 9,
-        "topic": TOPIC,
-        "subskill": subskill_id,
-        "learning_objective_id": LO,
-        "mode": mode,
-        "difficulty": difficulty,
-        "question_type": "free_response",
-        "answer_mode": "free_response",
-        "prompt": question_text,
-        "question": question_text,
-        "prompt_latex": question_text,
-        "answer_latex": correct_ans,
-        "correct_answer": correct_ans,
-        "sample_answer": sample_answer,
-        "worked_solution": sample_answer,
-        "canonical_solution": sample_answer,
-        "marking_schema": [
-            {"criterion": f"Correct geometric theorem/property [{reason_code}]", "marks": 1},
-            {"criterion": f"Correct calculation and answer {correct_ans}", "marks": marks - 1},
-        ],
-        "marks": marks,
-        "hints": hints,
-        "hint_sections": {
-            "concept": hints[0],
-            "rules": hints[1],
-            "step_by_step": hints[2],
-        },
-        "misconception_tags": [m["tag"] for m in error_tax],
-        "diagnostic_tags": [f"diag_{subskill_id}"],
-        "keywords": ["construction", "compass", "ruler", "bisector", "triangle inequality", "perpendicular"],
-        "term": 3,
-        "caps_weight_percent": 8.0,
-        "suggested_duration_mins": 5,
-        "minimum_mastery_score": 75,
-        "diagram_spec": diagram_spec,
-        "modality": "math",
-        "seed": seed,
-        "solution_graph": {
-            "goal": "Solve geometric construction problem",
-            "steps": steps,
-        },
-        "metadata": {
-            "diagram_spec": diagram_spec,
-            "answer_value": correct_ans,
-            "reason_code": reason_code,
-        },
-    }
+    q = builder(r)
+    q["subskill"] = chosen_subskill
+    q["grade"] = "9"
+    q["subject"] = "Mathematics"
+    q["topic"] = "Construction of geometric figures"
+    q["term"] = 3
+    q.setdefault("caps_weight_percent", 10)
+    q.setdefault("suggested_duration_mins", 4)
+    q.setdefault("difficulty", "medium")
+    q.setdefault("mode", "compound")
+    if not q.get("prompt"):
+        q["prompt"] = q.get("question_text")
+    if not q.get("sample_answer"):
+        q["sample_answer"] = str(q.get("correct_answer"))
     return q
 
 
-def generate(seed: Optional[int] = None, count: int = 1, **kwargs: Any) -> Dict[str, Any]:
-    r = rng(seed)
-    questions = []
-    for _ in range(count):
+def generate(
+    seed: Optional[int] = None,
+    subskill: Optional[str] = None,
+    difficulty: Optional[str] = None,
+    count: int = 1,
+    **kwargs: Any,
+) -> List[Dict[str, Any]]:
+    """6-Pillar Generator Contract entry point."""
+    r = random.Random(seed)
+    questions: List[Dict[str, Any]] = []
+
+    if subskill and subskill in ARCHETYPE_MAP:
+        candidates = [subskill]
+    else:
+        candidates = SUBSKILLS
+
+    for i in range(count):
+        sub = candidates[i % len(candidates)] if len(candidates) > 1 else candidates[0]
         sub_seed = r.randint(1, 1_000_000_000)
-        questions.append(generate_grade9_construction_question(seed=sub_seed, **kwargs))
-    return {"questions": questions}
+        q = generate_grade9_construction_question(seed=sub_seed, subskill=sub, **kwargs)
+        questions.append(q)
+
+    return questions
