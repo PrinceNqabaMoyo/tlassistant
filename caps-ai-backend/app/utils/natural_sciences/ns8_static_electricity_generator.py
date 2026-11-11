@@ -1,284 +1,157 @@
-"""Natural Sciences Grade 8 Term 3: Static Electricity Generator.
-
-Strictly grounded in curriculum_docs_auto/NaturalSciences_Gr8/Syllabus.md.
-Covers:
-- electrostatic_friction_electron_transfer: Friction causes electron transfer; protons/neutrons remain stationary in nuclei.
-- laws_of_electrostatic_attraction_repulsion: Like charges repel, opposite charges attract, charged rods attract neutral paper.
-- electrostatic_discharge_and_lightning: Sudden spark discharge, lightning formation between cloud and ground.
-- materials_triboelectric_charging: Perspex, plastic rods, wool, silk, fur charging behaviors.
-- electrostatic_hazards_and_grounding: Fuel tanker grounding, earthing, avoiding electronic component damage.
-
-Strictly complies with the 6-Pillar Generator Contract.
+"""Grade 8 Natural Sciences: Term 3 - Static Electricity Generator (50 Semantic Archetypes).
+100% Aligned with South African National Curriculum Standards.
+Grounded directly in curriculum_docs_auto/NaturalSciences_Gr8/Term 3/01. Static electricity.md.
 """
-
 from __future__ import annotations
 
 import random
 from typing import Any, Dict, List, Optional
 
+from .ns8_static_electricity_archetypes_01_25 import (
+    arch_01_atomic_structure_and_electrical_charges,
+    arch_02_concept_of_neutral_uncharged_matter,
+    arch_03_mechanism_of_charging_by_friction_triboelectric,
+    arch_04_movement_of_electrons_versus_immobile_protons,
+    arch_05_perspex_rod_rubbed_with_cloth_electron_transfer,
+    arch_06_polythene_rod_rubbed_with_wool_electron_transfer,
+    arch_07_identifying_positive_charge_from_electron_deficit,
+    arch_08_identifying_negative_charge_from_electron_excess,
+    arch_09_fundamental_law_of_charges_attraction_repulsion,
+    arch_10_suspended_charged_rods_interaction,
+    arch_11_charged_balloon_sticking_to_neutral_wall_induction,
+    arch_12_charged_plastic_comb_attracting_paper_scraps,
+    arch_13_bending_thin_stream_of_water_with_charged_rod,
+    arch_14_electrostatic_induction_mechanism_in_neutral_objects,
+    arch_15_gold_leaf_electroscope_structure_and_operation,
+    arch_16_detecting_charge_using_an_electroscope,
+    arch_17_electroscope_leaf_divergence_angle_and_charge_magnitude,
+    arch_18_van_de_graaff_generator_belt_and_dome_mechanism,
+    arch_19_hair_standing_on_end_van_de_graaff_demonstration,
+    arch_20_standing_on_insulating_stool_during_van_de_graaff,
+    arch_21_concept_of_earthing_or_grounding_a_conductor,
+    arch_22_earthing_a_negatively_charged_body_electron_flow,
+    arch_23_earthing_a_positively_charged_body_electron_flow,
+    arch_24_electrostatic_shock_from_car_door_or_shopping_trolley,
+    arch_25_crackling_and_sparks_when_removing_woollen_jersey,
+)
+from .ns8_static_electricity_archetypes_26_50 import (
+    arch_26_charge_separation_in_thunderclouds,
+    arch_27_lightning_as_giant_electrostatic_discharge,
+    arch_28_thunder_as_acoustic_shockwave_of_heated_air,
+    arch_29_function_and_design_of_lightning_conductor_rods,
+    arch_30_lightning_safety_precautions_outdoors,
+    arch_31_lightning_safety_precautions_indoors,
+    arch_32_faraday_cage_effect_safety_inside_metal_car,
+    arch_33_electrostatic_precipitators_in_smokestacks,
+    arch_34_electrostatic_spray_painting_efficiency,
+    arch_35_photocopier_laser_printer_toner_attraction,
+    arch_36_fuel_tanker_earthing_grounding_safety,
+    arch_37_aircraft_refuelling_static_bonding_clamp,
+    arch_38_anti_static_wrist_straps_in_electronics_repair,
+    arch_39_static_cling_in_clothes_dryers,
+    arch_40_triboelectric_series_ranking_charge_tendency,
+    arch_41_calculating_net_charge_from_protons_and_electrons,
+    arch_42_predicting_interaction_between_multiple_charged_spheres,
+    arch_43_charging_by_contact_conduction_between_spheres,
+    arch_44_separating_two_neutral_spheres_in_presence_of_charged_rod,
+    arch_45_misconception_positive_protons_move_during_charging,
+    arch_46_misconception_neutral_objects_have_no_charges_at_all,
+    arch_47_misconception_static_electricity_is_a_different_kind_of_energy,
+    arch_48_misconception_lightning_never_strikes_the_same_place_twice,
+    arch_49_investigating_factors_affecting_static_charge_strength,
+    arch_50_static_electricity_comprehensive_diagnostic_evaluation,
+)
 
-SUBSKILLS = [
-    "electrostatic_friction_electron_transfer",
-    "laws_of_electrostatic_attraction_repulsion",
-    "electrostatic_discharge_and_lightning",
-    "materials_triboelectric_charging",
-    "electrostatic_hazards_and_grounding",
-]
+ARCHETYPE_BUILDERS: Dict[str, Any] = {
+    "01_atomic_structure_and_electrical_charges": arch_01_atomic_structure_and_electrical_charges,
+    "02_concept_of_neutral_uncharged_matter": arch_02_concept_of_neutral_uncharged_matter,
+    "03_mechanism_of_charging_by_friction_triboelectric": arch_03_mechanism_of_charging_by_friction_triboelectric,
+    "04_movement_of_electrons_versus_immobile_protons": arch_04_movement_of_electrons_versus_immobile_protons,
+    "05_perspex_rod_rubbed_with_cloth_electron_transfer": arch_05_perspex_rod_rubbed_with_cloth_electron_transfer,
+    "06_polythene_rod_rubbed_with_wool_electron_transfer": arch_06_polythene_rod_rubbed_with_wool_electron_transfer,
+    "07_identifying_positive_charge_from_electron_deficit": arch_07_identifying_positive_charge_from_electron_deficit,
+    "08_identifying_negative_charge_from_electron_excess": arch_08_identifying_negative_charge_from_electron_excess,
+    "09_fundamental_law_of_charges_attraction_repulsion": arch_09_fundamental_law_of_charges_attraction_repulsion,
+    "10_suspended_charged_rods_interaction": arch_10_suspended_charged_rods_interaction,
+    "11_charged_balloon_sticking_to_neutral_wall_induction": arch_11_charged_balloon_sticking_to_neutral_wall_induction,
+    "12_charged_plastic_comb_attracting_paper_scraps": arch_12_charged_plastic_comb_attracting_paper_scraps,
+    "13_bending_thin_stream_of_water_with_charged_rod": arch_13_bending_thin_stream_of_water_with_charged_rod,
+    "14_electrostatic_induction_mechanism_in_neutral_objects": arch_14_electrostatic_induction_mechanism_in_neutral_objects,
+    "15_gold_leaf_electroscope_structure_and_operation": arch_15_gold_leaf_electroscope_structure_and_operation,
+    "16_detecting_charge_using_an_electroscope": arch_16_detecting_charge_using_an_electroscope,
+    "17_electroscope_leaf_divergence_angle_and_charge_magnitude": arch_17_electroscope_leaf_divergence_angle_and_charge_magnitude,
+    "18_van_de_graaff_generator_belt_and_dome_mechanism": arch_18_van_de_graaff_generator_belt_and_dome_mechanism,
+    "19_hair_standing_on_end_van_de_graaff_demonstration": arch_19_hair_standing_on_end_van_de_graaff_demonstration,
+    "20_standing_on_insulating_stool_during_van_de_graaff": arch_20_standing_on_insulating_stool_during_van_de_graaff,
+    "21_concept_of_earthing_or_grounding_a_conductor": arch_21_concept_of_earthing_or_grounding_a_conductor,
+    "22_earthing_a_negatively_charged_body_electron_flow": arch_22_earthing_a_negatively_charged_body_electron_flow,
+    "23_earthing_a_positively_charged_body_electron_flow": arch_23_earthing_a_positively_charged_body_electron_flow,
+    "24_electrostatic_shock_from_car_door_or_shopping_trolley": arch_24_electrostatic_shock_from_car_door_or_shopping_trolley,
+    "25_crackling_and_sparks_when_removing_woollen_jersey": arch_25_crackling_and_sparks_when_removing_woollen_jersey,
+    "26_charge_separation_in_thunderclouds": arch_26_charge_separation_in_thunderclouds,
+    "27_lightning_as_giant_electrostatic_discharge": arch_27_lightning_as_giant_electrostatic_discharge,
+    "28_thunder_as_acoustic_shockwave_of_heated_air": arch_28_thunder_as_acoustic_shockwave_of_heated_air,
+    "29_function_and_design_of_lightning_conductor_rods": arch_29_function_and_design_of_lightning_conductor_rods,
+    "30_lightning_safety_precautions_outdoors": arch_30_lightning_safety_precautions_outdoors,
+    "31_lightning_safety_precautions_indoors": arch_31_lightning_safety_precautions_indoors,
+    "32_faraday_cage_effect_safety_inside_metal_car": arch_32_faraday_cage_effect_safety_inside_metal_car,
+    "33_electrostatic_precipitators_in_smokestacks": arch_33_electrostatic_precipitators_in_smokestacks,
+    "34_electrostatic_spray_painting_efficiency": arch_34_electrostatic_spray_painting_efficiency,
+    "35_photocopier_laser_printer_toner_attraction": arch_35_photocopier_laser_printer_toner_attraction,
+    "36_fuel_tanker_earthing_grounding_safety": arch_36_fuel_tanker_earthing_grounding_safety,
+    "37_aircraft_refuelling_static_bonding_clamp": arch_37_aircraft_refuelling_static_bonding_clamp,
+    "38_anti_static_wrist_straps_in_electronics_repair": arch_38_anti_static_wrist_straps_in_electronics_repair,
+    "39_static_cling_in_clothes_dryers": arch_39_static_cling_in_clothes_dryers,
+    "40_triboelectric_series_ranking_charge_tendency": arch_40_triboelectric_series_ranking_charge_tendency,
+    "41_calculating_net_charge_from_protons_and_electrons": arch_41_calculating_net_charge_from_protons_and_electrons,
+    "42_predicting_interaction_between_multiple_charged_spheres": arch_42_predicting_interaction_between_multiple_charged_spheres,
+    "43_charging_by_contact_conduction_between_spheres": arch_43_charging_by_contact_conduction_between_spheres,
+    "44_separating_two_neutral_spheres_in_presence_of_charged_rod": arch_44_separating_two_neutral_spheres_in_presence_of_charged_rod,
+    "45_misconception_positive_protons_move_during_charging": arch_45_misconception_positive_protons_move_during_charging,
+    "46_misconception_neutral_objects_have_no_charges_at_all": arch_46_misconception_neutral_objects_have_no_charges_at_all,
+    "47_misconception_static_electricity_is_a_different_kind_of_energy": arch_47_misconception_static_electricity_is_a_different_kind_of_energy,
+    "48_misconception_lightning_never_strikes_the_same_place_twice": arch_48_misconception_lightning_never_strikes_the_same_place_twice,
+    "49_investigating_factors_affecting_static_charge_strength": arch_49_investigating_factors_affecting_static_charge_strength,
+    "50_static_electricity_comprehensive_diagnostic_evaluation": arch_50_static_electricity_comprehensive_diagnostic_evaluation,
+}
 
-
-def _make_id(prefix: str, seed: Optional[int], idx: int) -> str:
-    s_val = seed if seed is not None else random.randint(1000, 9999)
-    return f"{prefix}_{s_val}_{idx}"
-
-
-def _build_electron_transfer(rng: random.Random, seed: Optional[int], idx: int) -> Dict[str, Any]:
-    pairs = [
-        ("a neutral plastic ruler with a dry woolen cloth", "wool onto the plastic ruler", "plastic ruler", "Negative", "woolen cloth", "Positive"),
-        ("a glass rod with a piece of natural silk", "glass rod onto the silk", "glass rod", "Positive", "silk cloth", "Negative"),
-        ("an inflated rubber balloon against human hair", "hair onto the balloon", "balloon", "Negative", "hair", "Positive")
-    ]
-    rub_text, trans_text, item1, charge1, item2, charge2 = rng.choice(pairs)
-    prompt = (
-        f"A learner vigorously rubs {rub_text}. During this friction, electrons are transferred from the {trans_text}.\n\n"
-        f"1. What is the resulting electrical charge on the {item1}? (Positive or Negative)\n"
-        f"2. What is the resulting electrical charge on the {item2}?\n"
-        f"3. Explain why only electrons are transferred during friction while positive protons remain stationary inside the atom."
-    )
-    sample_answer = (
-        "1. Plastic ruler: Negative charge (it gained excess electrons).\n"
-        "2. Woolen cloth: Positive charge (it lost electrons, leaving excess protons).\n"
-        "3. Electrons are loosely held in the outer electron shells and can easily be rubbed off by friction. Protons are bound tightly inside the central atomic nucleus by immense nuclear forces and cannot move."
-    )
-    sol = (
-        "Marking Rubric (3 marks total):\n"
-        "1. Ruler charge: Negative [1 mark].\n"
-        "2. Cloth charge: Positive [1 mark].\n"
-        "3. Scientific mechanism: Outer electrons are mobile and transferred by friction, while protons are tightly bound in the nucleus by strong nuclear forces [1 mark]."
-    )
-    return {
-        "id": _make_id("ns8_static_trans", seed, idx),
-        "question_type": "paragraph",
-        "prompt": prompt,
-        "sample_answer": sample_answer,
-        "worked_solution": sol,
-        "canonical_solution": sol,
-        "explanation": sol,
-        "marks": 3,
-        "total_marks": 3,
-        "subskill": "electrostatic_friction_electron_transfer",
-        "question_family_id": "electrostatic_friction_electron_transfer",
-        "curriculum_reference": "Natural Sciences Gr8 Term 3 > Static Electricity > Friction and electron transfer",
-        "hints": {
-            "tier_1": "Gaining electrons gives a negative charge; losing electrons gives a positive charge.",
-            "tier_2": "Protons never move during rubbing; only electrons transfer.",
-            "tier_3": "Ruler is negative, cloth is positive."
-        },
-        "misconception_tags": ["protons_transfer_during_friction_misconception"]
-    }
-
-
-def _build_attraction_repulsion(rng: random.Random, seed: Optional[int], idx: int) -> Dict[str, Any]:
-    scenarios = [
-        ("Two negatively charged balloons suspended on nylon threads brought close to each other", "They repel each other (push away) because like charges repel"),
-        ("A negatively charged balloon brought close to a positively charged perspex rod", "They attract each other (pull together) because opposite charges attract"),
-        ("A negatively charged plastic comb brought close to tiny uncharged pieces of tissue paper", "The comb attracts the neutral paper because it induces opposite charges on the paper's nearest surface (polarization)")
-    ]
-    situation, outcome = rng.choice(scenarios)
-    prompt = (
-        f"In an electrostatics experiment, a science student sets up the following arrangement:\n"
-        f"*{situation}*\n\n"
-        f"Predict and explain the observable electrostatic interaction according to the Fundamental Law of Charges."
-    )
-    correct_ans = outcome
-    distractors = [
-        "The objects violently spark and instantly lose all mass",
-        "The objects remain completely stationary with zero force between them",
-        "The objects demagnetize and transform into conductors"
-    ]
-    options = [correct_ans] + distractors
-    rng.shuffle(options)
-    sol = (
-        f"Step 1: State the Law of Electrostatics:\n"
-        f"1. Like charges repel.\n"
-        f"2. Opposite charges attract.\n"
-        f"3. Charged objects attract neutral objects by charge polarization.\n\n"
-        f"Step 2: Conclusion:\n"
-        f"{outcome}."
-    )
-    return {
-        "id": _make_id("ns8_static_law", seed, idx),
-        "question_type": "mcq",
-        "prompt": prompt,
-        "options": options,
-        "correct_answer": correct_ans,
-        "sample_answer": correct_ans,
-        "worked_solution": sol,
-        "canonical_solution": sol,
-        "explanation": sol,
-        "marks": 2,
-        "total_marks": 2,
-        "subskill": "laws_of_electrostatic_attraction_repulsion",
-        "question_family_id": "laws_of_electrostatic_attraction_repulsion",
-        "curriculum_reference": "Natural Sciences Gr8 Term 3 > Static Electricity > Attraction and repulsion",
-        "hints": {
-            "tier_1": "Like charges (positive-positive or negative-negative) push apart; opposites pull together.",
-            "tier_2": "Neutral objects are attracted to charged objects through induced polarization.",
-            "tier_3": f"The answer is {correct_ans}."
-        },
-        "misconception_tags": ["neutral_objects_repel_charged_objects_misconception"]
-    }
+SUBSKILLS: List[str] = list(ARCHETYPE_BUILDERS.keys())
 
 
-def _build_discharge_lightning(rng: random.Random, seed: Optional[int], idx: int) -> Dict[str, Any]:
-    loc = rng.choice(["Gauteng Highveld", "Drakensberg mountain escarpment", "Free State plains", "Mpumalanga highveld region"])
-    prompt = (
-        f"During severe summer thunderstorms across the {loc} in South Africa, static electricity discharges as dramatic lightning strikes.\n\n"
-        "1. Explain how friction within thunderclouds causes the separation and accumulation of electric charge.\n"
-        "2. Explain what occurs during an electrostatic discharge (lightning stroke) between a cloud and the ground.\n"
-        "3. Name the protective metal device installed on roofs and high buildings to safely conduct lightning strikes into the earth."
-    )
-    sample_answer = (
-        "1. Rising warm air currents cause turbulent collisions between hail, ice crystals, and water droplets. Friction strips electrons, leaving the top of the cloud positively charged and the base negatively charged.\n"
-        "2. When the potential difference becomes massive, air ionizes and a giant stream of electrons surges through the ionized air channel to the positively charged earth, creating a brilliant light spark and thunder.\n"
-        "3. A lightning conductor / lightning rod connected to an earthing cable."
-    )
-    sol = (
-        "Marking Rubric (3 marks total):\n"
-        "1. Charge separation in clouds: Friction between colliding ice/water particles in updrafts [1 mark].\n"
-        "2. Discharge mechanism: Massive flow of electrons through ionized air channel between cloud and ground [1 mark].\n"
-        "3. Protection: Lightning conductor / rod earthed into the ground [1 mark]."
-    )
-    return {
-        "id": _make_id("ns8_lightning", seed, idx),
-        "question_type": "paragraph",
-        "prompt": prompt,
-        "sample_answer": sample_answer,
-        "worked_solution": sol,
-        "canonical_solution": sol,
-        "explanation": sol,
-        "marks": 3,
-        "total_marks": 3,
-        "subskill": "electrostatic_discharge_and_lightning",
-        "question_family_id": "electrostatic_discharge_and_lightning",
-        "curriculum_reference": "Natural Sciences Gr8 Term 3 > Static Electricity > Lightning and electrostatic discharge",
-        "hints": {
-            "tier_1": "Colliding particles in clouds create huge static charges.",
-            "tier_2": "Lightning is a giant spark of electrons discharging to earth.",
-            "tier_3": "A lightning rod protects buildings."
-        },
-        "misconception_tags": ["lightning_is_magnetic_energy_misconception"]
-    }
+def generate_question(
+    subskill: Optional[str] = None,
+    seed: Optional[int] = None,
+) -> Dict[str, Any]:
+    rng = random.Random(seed) if seed is not None else random.Random()
+    if subskill is None or subskill not in ARCHETYPE_BUILDERS:
+        subskill = rng.choice(SUBSKILLS)
+    builder = ARCHETYPE_BUILDERS[subskill]
+    return builder(rng)
 
 
-def _build_triboelectric_charging(rng: random.Random, seed: Optional[int], idx: int) -> Dict[str, Any]:
-    materials = [
-        {"rod": "a Perspex rod", "cloth": "a silk cloth", "rod_charge": "Positive", "reason": "Perspex readily loses electrons to the silk"},
-        {"rod": "a polythene (plastic) rod", "cloth": "a woolen cloth", "rod_charge": "Negative", "reason": "Plastic has a strong affinity for electrons and gains them from the wool"}
-    ]
-    m = rng.choice(materials)
-    prompt = (
-        f"A physics teacher demonstrates triboelectric charging by rubbing **{m['rod']}** with **{m['cloth']}**.\n\n"
-        f"What electrical charge does the rod acquire, and why?"
-    )
-    correct_ans = f"Acquires a {m['rod_charge']} charge because {m['reason']}"
-    distractors = [
-        f"Acquires a neutral charge because protons flow through the air into the cloth",
-        f"Acquires an alternating current voltage that continuously flips polarity",
-        f"Destroys all atoms on the surface to produce pure neutron particles"
-    ]
-    options = [correct_ans] + distractors
-    rng.shuffle(options)
-    sol = (
-        f"Step 1: Identify triboelectric properties:\n"
-        f"When rubbing {m['rod']} with {m['cloth']}, {m['reason']}.\n\n"
-        f"Step 2: Conclusion:\n"
-        f"{correct_ans}."
-    )
-    return {
-        "id": _make_id("ns8_tribo", seed, idx),
-        "question_type": "mcq",
-        "prompt": prompt,
-        "options": options,
-        "correct_answer": correct_ans,
-        "sample_answer": correct_ans,
-        "worked_solution": sol,
-        "canonical_solution": sol,
-        "explanation": sol,
-        "marks": 2,
-        "total_marks": 2,
-        "subskill": "materials_triboelectric_charging",
-        "question_family_id": "materials_triboelectric_charging",
-        "curriculum_reference": "Natural Sciences Gr8 Term 3 > Static Electricity > Triboelectric series",
-        "hints": {
-            "tier_1": "Perspex becomes positive when rubbed with silk; polythene becomes negative when rubbed with wool.",
-            "tier_2": "Remember that gaining electrons makes an object negative.",
-            "tier_3": f"The answer is {correct_ans}."
-        },
-        "misconception_tags": ["friction_creates_new_charges_misconception"]
-    }
+def generate(
+    subskill: Optional[str] = None,
+    count: int = 1,
+    seed: Optional[int] = None,
+    **kwargs: Any,
+) -> List[Dict[str, Any]]:
+    rng = random.Random(seed) if seed is not None else random.Random()
+    questions: List[Dict[str, Any]] = []
 
+    target = str(subskill or "").strip().lower()
+    chosen_sub: Optional[str] = None
+    if target in ARCHETYPE_BUILDERS:
+        chosen_sub = target
+    else:
+        for k in ARCHETYPE_BUILDERS:
+            if target and (target in k.lower() or k.lower() in target):
+                chosen_sub = k
+                break
 
-def _build_hazards_grounding(rng: random.Random, seed: Optional[int], idx: int) -> Dict[str, Any]:
-    loc = rng.choice(["When commercial aircraft are refueled at OR Tambo International Airport", "When bulk petrol tankers offload fuel at a Durban distribution depot", "When industrial road tankers transfer combustible hydrocarbons in Sasolburg"])
-    prompt = (
-        f"{loc}, a heavy copper grounding wire is always clamped from the vehicle's metal chassis to an earthing spike in the ground.\n\n"
-        "1. Explain why fuel flowing through rubber hoses generates dangerous static electricity.\n"
-        "2. Explain the catastrophic safety hazard if static electricity accumulates without being discharged.\n"
-        "3. Explain scientifically how the grounding cable prevents this hazard."
-    )
-    sample_answer = (
-        "1. Friction between the rapidly flowing fuel and the inner walls of the pipe/tank strips electrons and accumulates static electrical charge.\n"
-        "2. An unexpected electrostatic spark discharge could ignite flammable fuel vapors, causing a massive explosion and fire.\n"
-        "3. The copper grounding cable provides a safe low-resistance conducting pathway that allows accumulated electrons to flow harmlessly into the earth, preventing any spark from forming."
-    )
-    sol = (
-        "Marking Rubric (3 marks total):\n"
-        "1. Charge cause: Friction between moving liquid fuel and pipe walls [1 mark].\n"
-        "2. Explosion hazard: Static spark igniting volatile hydrocarbon vapor [1 mark].\n"
-        "3. Grounding function: Provides low-resistance pathway to dissipate charge safely into the earth [1 mark]."
-    )
-    return {
-        "id": _make_id("ns8_grounding", seed, idx),
-        "question_type": "paragraph",
-        "prompt": prompt,
-        "sample_answer": sample_answer,
-        "worked_solution": sol,
-        "canonical_solution": sol,
-        "explanation": sol,
-        "marks": 3,
-        "total_marks": 3,
-        "subskill": "electrostatic_hazards_and_grounding",
-        "question_family_id": "electrostatic_hazards_and_grounding",
-        "curriculum_reference": "Natural Sciences Gr8 Term 3 > Static Electricity > Grounding and safety",
-        "hints": {
-            "tier_1": "Flowing fuel rubs against pipes creating friction charge.",
-            "tier_2": "Sparks near petrol vapors cause fire or explosion.",
-            "tier_3": "Earthing conducts excess electrons safely away to the ground."
-        },
-        "misconception_tags": ["grounding_insulates_fuel_misconception"]
-    }
+    for i in range(count):
+        active = chosen_sub if chosen_sub else SUBSKILLS[(i + (seed or 0)) % len(SUBSKILLS)]
+        builder = ARCHETYPE_BUILDERS[active]
+        q = builder(rng)
+        questions.append(q)
 
-
-def generate(archetype: Optional[str] = None, seed: Optional[int] = None, count: int = 1, **kwargs) -> List[Dict[str, Any]]:
-    rng = random.Random(seed)
-    results = []
-    for idx in range(count):
-        target = archetype or rng.choice(SUBSKILLS)
-        if target == "electrostatic_friction_electron_transfer":
-            item = _build_electron_transfer(rng, seed, idx)
-        elif target == "laws_of_electrostatic_attraction_repulsion":
-            item = _build_attraction_repulsion(rng, seed, idx)
-        elif target == "electrostatic_discharge_and_lightning":
-            item = _build_discharge_lightning(rng, seed, idx)
-        elif target == "materials_triboelectric_charging":
-            item = _build_triboelectric_charging(rng, seed, idx)
-        elif target == "electrostatic_hazards_and_grounding":
-            item = _build_hazards_grounding(rng, seed, idx)
-        else:
-            item = _build_electron_transfer(rng, seed, idx)
-        results.append(item)
-    return results
-
-
-def get_archetypes() -> List[str]:
-    return list(SUBSKILLS)
+    return questions

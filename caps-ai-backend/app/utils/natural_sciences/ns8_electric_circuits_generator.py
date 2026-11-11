@@ -1,172 +1,157 @@
-"""Natural Sciences Grade 8 Term 3: Electric Circuits Generator.
-
-Strictly grounded in curriculum_docs_auto/NaturalSciences_Gr8/Term 3/01. Energy transfer in electrical systems.md.
-Covers:
-- Circuit components, standard circuit symbols, and conductor pathways.
-- Series circuits: Current constancy (I_T = I_1 = I_2), voltage division (V_T = V_1 + V_2), and bulb dimming effects.
-- Parallel circuits: Branch current division (I_T = I_1 + I_2), equal potential difference (V_T = V_1 = V_2), and independent branch operation.
-- Correct connection rules: Ammeter in series (negligible resistance) vs Voltmeter in parallel (high resistance).
-- Short circuits, safety fuses, and domestic wiring logic.
-- Diagram integration via 3-layer anti-leak circuit schematic plate.
-
-Strictly complies with the 6-Pillar Generator Contract.
+"""Grade 8 Natural Sciences: Term 3 - Series and Parallel Circuits Generator (50 Semantic Archetypes).
+100% Aligned with South African National Curriculum Standards.
+Grounded directly in curriculum_docs_auto/NaturalSciences_Gr8/Term 3/03. Series and parallel circuits.md.
 """
-
 from __future__ import annotations
-
-SUBSKILLS = [
-    "circuit_components",
-    "meter_connection_rules",
-    "parallel_vs_series_behavior",
-    "series_parallel_calculations",
-    "short_circuits_safety"
-]
 
 import random
 from typing import Any, Dict, List, Optional
 
-from app.utils.natural_sciences.natural_sciences_builders import build_electric_circuit_ns_question
+from .ns8_electric_circuits_archetypes_01_25 import (
+    arch_01_definition_and_structure_of_series_circuit,
+    arch_02_current_constancy_at_all_points_in_series_circuit,
+    arch_03_effect_of_adding_resistors_in_series_on_total_resistance,
+    arch_04_effect_of_adding_bulbs_in_series_on_brightness_and_current,
+    arch_05_ammeter_connection_in_series_and_low_internal_resistance,
+    arch_06_effect_of_adding_cells_in_series_on_current_and_voltage,
+    arch_07_broken_component_or_open_switch_consequence_in_series,
+    arch_08_delocalised_electrons_instantaneous_conduction_in_circuit,
+    arch_09_definition_and_branch_structure_of_parallel_circuit,
+    arch_10_current_division_across_branches_in_parallel_circuit,
+    arch_11_sum_of_branch_currents_equals_total_main_current,
+    arch_12_effect_of_adding_resistors_in_parallel_on_total_resistance,
+    arch_13_doorway_school_hall_analogy_for_parallel_resistance_decrease,
+    arch_14_brightness_of_identical_bulbs_in_parallel_branches,
+    arch_15_independent_operation_of_parallel_branches_when_one_fails,
+    arch_16_effect_of_adding_cells_in_parallel_on_voltage_and_current,
+    arch_17_longevity_and_capacity_of_cells_connected_in_parallel,
+    arch_18_switch_placement_in_main_circuit_versus_parallel_branch,
+    arch_19_domestic_household_wiring_rationale_for_parallel_circuits,
+    arch_20_comparing_battery_drain_rate_in_series_versus_parallel,
+    arch_21_ranking_bulb_brightness_in_series_versus_parallel_configurations,
+    arch_22_calculating_branch_currents_from_total_and_other_branches,
+    arch_23_calculating_total_current_from_identical_parallel_branches,
+    arch_24_relative_resistance_of_copper_aluminium_zinc_nichrome_wires,
+    arch_25_investigating_qualitative_resistance_using_bulb_brightness,
+)
+from .ns8_electric_circuits_archetypes_26_50 import (
+    arch_26_why_copper_is_used_for_electrical_connecting_wires,
+    arch_27_why_nichrome_is_used_in_electric_heaters_and_toasters,
+    arch_28_definition_and_examples_of_circuit_output_devices,
+    arch_29_structure_and_operating_principle_of_led_diodes,
+    arch_30_comparing_led_efficiency_versus_filament_incandescent_bulbs,
+    arch_31_interpreting_sankey_diagram_for_incandescent_filament_bulb,
+    arch_32_interpreting_sankey_diagram_for_high_efficiency_led_bulb,
+    arch_33_calculating_electrical_device_percentage_efficiency_from_sankey,
+    arch_34_calculating_wasted_heat_energy_from_input_and_useful_light,
+    arch_35_history_electricity_amber_triboelectric_to_william_gilbert,
+    arch_36_history_electricity_benjamin_franklin_lightning_kite_discovery,
+    arch_37_history_electricity_volta_first_chemical_cell_and_galvani,
+    arch_38_history_electricity_andre_marie_ampere_electrodynamics,
+    arch_39_history_electricity_georg_ohm_relationship_voltage_current,
+    arch_40_history_electricity_michael_faraday_electromagnetic_induction,
+    arch_41_history_electricity_edison_dc_versus_tesla_ac_generators,
+    arch_42_short_circuits_mechanism_and_extreme_current_overheating_danger,
+    arch_43_fuses_and_circuit_breakers_overcurrent_protection_mechanism,
+    arch_44_misconception_electric_current_gets_used_up_by_bulbs,
+    arch_45_misconception_current_is_greater_before_a_bulb_than_after,
+    arch_46_misconception_adding_resistors_in_parallel_increases_resistance,
+    arch_47_misconception_connecting_cells_in_parallel_multiplies_voltage,
+    arch_48_misconception_electrons_originate_only_from_the_battery_chemical,
+    arch_49_experimental_design_variables_in_series_parallel_investigations,
+    arch_50_electric_circuits_comprehensive_diagnostic_evaluation,
+)
+
+ARCHETYPE_BUILDERS: Dict[str, Any] = {
+    "01_definition_and_structure_of_series_circuit": arch_01_definition_and_structure_of_series_circuit,
+    "02_current_constancy_at_all_points_in_series_circuit": arch_02_current_constancy_at_all_points_in_series_circuit,
+    "03_effect_of_adding_resistors_in_series_on_total_resistance": arch_03_effect_of_adding_resistors_in_series_on_total_resistance,
+    "04_effect_of_adding_bulbs_in_series_on_brightness_and_current": arch_04_effect_of_adding_bulbs_in_series_on_brightness_and_current,
+    "05_ammeter_connection_in_series_and_low_internal_resistance": arch_05_ammeter_connection_in_series_and_low_internal_resistance,
+    "06_effect_of_adding_cells_in_series_on_current_and_voltage": arch_06_effect_of_adding_cells_in_series_on_current_and_voltage,
+    "07_broken_component_or_open_switch_consequence_in_series": arch_07_broken_component_or_open_switch_consequence_in_series,
+    "08_delocalised_electrons_instantaneous_conduction_in_circuit": arch_08_delocalised_electrons_instantaneous_conduction_in_circuit,
+    "09_definition_and_branch_structure_of_parallel_circuit": arch_09_definition_and_branch_structure_of_parallel_circuit,
+    "10_current_division_across_branches_in_parallel_circuit": arch_10_current_division_across_branches_in_parallel_circuit,
+    "11_sum_of_branch_currents_equals_total_main_current": arch_11_sum_of_branch_currents_equals_total_main_current,
+    "12_effect_of_adding_resistors_in_parallel_on_total_resistance": arch_12_effect_of_adding_resistors_in_parallel_on_total_resistance,
+    "13_doorway_school_hall_analogy_for_parallel_resistance_decrease": arch_13_doorway_school_hall_analogy_for_parallel_resistance_decrease,
+    "14_brightness_of_identical_bulbs_in_parallel_branches": arch_14_brightness_of_identical_bulbs_in_parallel_branches,
+    "15_independent_operation_of_parallel_branches_when_one_fails": arch_15_independent_operation_of_parallel_branches_when_one_fails,
+    "16_effect_of_adding_cells_in_parallel_on_voltage_and_current": arch_16_effect_of_adding_cells_in_parallel_on_voltage_and_current,
+    "17_longevity_and_capacity_of_cells_connected_in_parallel": arch_17_longevity_and_capacity_of_cells_connected_in_parallel,
+    "18_switch_placement_in_main_circuit_versus_parallel_branch": arch_18_switch_placement_in_main_circuit_versus_parallel_branch,
+    "19_domestic_household_wiring_rationale_for_parallel_circuits": arch_19_domestic_household_wiring_rationale_for_parallel_circuits,
+    "20_comparing_battery_drain_rate_in_series_versus_parallel": arch_20_comparing_battery_drain_rate_in_series_versus_parallel,
+    "21_ranking_bulb_brightness_in_series_versus_parallel_configurations": arch_21_ranking_bulb_brightness_in_series_versus_parallel_configurations,
+    "22_calculating_branch_currents_from_total_and_other_branches": arch_22_calculating_branch_currents_from_total_and_other_branches,
+    "23_calculating_total_current_from_identical_parallel_branches": arch_23_calculating_total_current_from_identical_parallel_branches,
+    "24_relative_resistance_of_copper_aluminium_zinc_nichrome_wires": arch_24_relative_resistance_of_copper_aluminium_zinc_nichrome_wires,
+    "25_investigating_qualitative_resistance_using_bulb_brightness": arch_25_investigating_qualitative_resistance_using_bulb_brightness,
+    "26_why_copper_is_used_for_electrical_connecting_wires": arch_26_why_copper_is_used_for_electrical_connecting_wires,
+    "27_why_nichrome_is_used_in_electric_heaters_and_toasters": arch_27_why_nichrome_is_used_in_electric_heaters_and_toasters,
+    "28_definition_and_examples_of_circuit_output_devices": arch_28_definition_and_examples_of_circuit_output_devices,
+    "29_structure_and_operating_principle_of_led_diodes": arch_29_structure_and_operating_principle_of_led_diodes,
+    "30_comparing_led_efficiency_versus_filament_incandescent_bulbs": arch_30_comparing_led_efficiency_versus_filament_incandescent_bulbs,
+    "31_interpreting_sankey_diagram_for_incandescent_filament_bulb": arch_31_interpreting_sankey_diagram_for_incandescent_filament_bulb,
+    "32_interpreting_sankey_diagram_for_high_efficiency_led_bulb": arch_32_interpreting_sankey_diagram_for_high_efficiency_led_bulb,
+    "33_calculating_electrical_device_percentage_efficiency_from_sankey": arch_33_calculating_electrical_device_percentage_efficiency_from_sankey,
+    "34_calculating_wasted_heat_energy_from_input_and_useful_light": arch_34_calculating_wasted_heat_energy_from_input_and_useful_light,
+    "35_history_electricity_amber_triboelectric_to_william_gilbert": arch_35_history_electricity_amber_triboelectric_to_william_gilbert,
+    "36_history_electricity_benjamin_franklin_lightning_kite_discovery": arch_36_history_electricity_benjamin_franklin_lightning_kite_discovery,
+    "37_history_electricity_volta_first_chemical_cell_and_galvani": arch_37_history_electricity_volta_first_chemical_cell_and_galvani,
+    "38_history_electricity_andre_marie_ampere_electrodynamics": arch_38_history_electricity_andre_marie_ampere_electrodynamics,
+    "39_history_electricity_georg_ohm_relationship_voltage_current": arch_39_history_electricity_georg_ohm_relationship_voltage_current,
+    "40_history_electricity_michael_faraday_electromagnetic_induction": arch_40_history_electricity_michael_faraday_electromagnetic_induction,
+    "41_history_electricity_edison_dc_versus_tesla_ac_generators": arch_41_history_electricity_edison_dc_versus_tesla_ac_generators,
+    "42_short_circuits_mechanism_and_extreme_current_overheating_danger": arch_42_short_circuits_mechanism_and_extreme_current_overheating_danger,
+    "43_fuses_and_circuit_breakers_overcurrent_protection_mechanism": arch_43_fuses_and_circuit_breakers_overcurrent_protection_mechanism,
+    "44_misconception_electric_current_gets_used_up_by_bulbs": arch_44_misconception_electric_current_gets_used_up_by_bulbs,
+    "45_misconception_current_is_greater_before_a_bulb_than_after": arch_45_misconception_current_is_greater_before_a_bulb_than_after,
+    "46_misconception_adding_resistors_in_parallel_increases_resistance": arch_46_misconception_adding_resistors_in_parallel_increases_resistance,
+    "47_misconception_connecting_cells_in_parallel_multiplies_voltage": arch_47_misconception_connecting_cells_in_parallel_multiplies_voltage,
+    "48_misconception_electrons_originate_only_from_the_battery_chemical": arch_48_misconception_electrons_originate_only_from_the_battery_chemical,
+    "49_experimental_design_variables_in_series_parallel_investigations": arch_49_experimental_design_variables_in_series_parallel_investigations,
+    "50_electric_circuits_comprehensive_diagnostic_evaluation": arch_50_electric_circuits_comprehensive_diagnostic_evaluation,
+}
+
+SUBSKILLS: List[str] = list(ARCHETYPE_BUILDERS.keys())
 
 
-def _fmt_sa(val: float | int, decimals: int = 1) -> str:
-    if isinstance(val, int) or val == int(val):
-        return str(int(val))
-    s = f"{val:.{decimals}f}".rstrip("0").rstrip(".")
-    return s.replace(".", ",")
-
-
-def _make_id(prefix: str, seed: Optional[int], idx: int) -> str:
-    s_val = seed if seed is not None else random.randint(1000, 9999)
-    return f"{prefix}_{s_val}_{idx}"
-
-
-def _generate_series_parallel_rules(r: random.Random, seed: Optional[int], idx: int, mode: str) -> Dict[str, Any]:
-    """Qualitative and basic quantitative series vs parallel circuit analysis."""
-    v_total = r.choice([6, 9, 12])
-    v_branch1 = round(v_total / 2, 1)
-    i_total = r.choice([0.6, 1.2, 2.0, 3.0])
-    i_branch1 = round(i_total / 2, 1)
-    qid = _make_id("ns8_circuits_rules", seed, idx)
-
-    if mode == "elementary_meter_rules":
-        prompt = (
-            "Meters are used in electrical circuits to measure electrical quantities.\n\n"
-            "1. Name the meter used to measure electric current and state how it must be connected in a circuit (series or parallel).\n"
-            "2. Name the meter used to measure potential difference (voltage) and state how it must be connected in a circuit.\n"
-            "3. Explain what happens if an ammeter is accidentally connected in parallel across a bulb."
-        )
-        ans_str = (
-            "1. Ammeter, connected in series; "
-            "2. Voltmeter, connected in parallel; "
-            "3. Ammeter has near-zero resistance, so it causes a short circuit, bypassing the bulb and drawing excessive current."
-        )
-        memo = (
-            "1. Ammeter: Connected in **series** [1].\n"
-            "2. Voltmeter: Connected in **parallel** [1].\n"
-            "3. Short circuit consequence [2]: An ammeter has extremely low (near zero) internal resistance [1]. "
-            "Connecting it in parallel provides an effortless bypass path (short circuit) that diverts current away from the bulb and can blow a fuse or damage the meter [1]."
-        )
-        hints = {
-            "tier_1": "Current flows through an ammeter in series. Voltage is measured across a component in parallel.",
-            "tier_2": "Ammeter = series (low resistance). Voltmeter = parallel (high resistance). Putting ammeter in parallel shorts the bulb.",
-            "tier_3": "1. Ammeter in series. 2. Voltmeter in parallel. 3. Causes a short circuit because ammeter has almost zero resistance.",
-        }
-        marks = 4
-        misconceptions = ["ammeter_voltmeter_connection_inversion", "short_circuit_concept_missing"]
-    else:
-        # Full compound question: Series vs Parallel comparisons
-        prompt = (
-            f"An electrical circuit contains a ${_fmt_sa(v_total)}\\text{{ V}}$ battery and two identical light bulbs.\n\n"
-            f"1. In **Circuit A**, the two bulbs are connected in **series**.\n"
-            f"   a) What is the voltage across each individual bulb?\n"
-            f"   b) Explain what happens to the remaining bulb if one bulb's filament burns out.\n"
-            f"2. In **Circuit B**, the two identical bulbs are connected in **parallel** across the same ${_fmt_sa(v_total)}\\text{{ V}}$ battery.\n"
-            f"   a) What is the voltage across each individual bulb in Circuit B?\n"
-            f"   b) Compare the brightness of the bulbs in Circuit B to those in Circuit A.\n"
-            f"3. State ONE reason why home lighting circuits are wired in parallel rather than in series."
-        )
-        ans_str = (
-            f"1. a) {_fmt_sa(v_branch1)} V; b) The other bulb goes out because the circuit loop is broken; "
-            f"2. a) {_fmt_sa(v_total)} V; b) Bulbs in Circuit B are significantly brighter than in Circuit A; "
-            f"3. Each appliance receives full mains voltage (230V) and can be turned on/off independently without affecting other appliances."
-        )
-        memo = (
-            f"1. Series Circuit A [2]:\n"
-            f"   a) Voltage divides equally across identical series loads: $V = \\frac{{{v_total}\\text{{ V}}}}{{2}} = {_fmt_sa(v_branch1)}\\text{{ V}}$ [1].\n"
-            f"   b) If one bulb blows, the physical conducting loop is broken, halting current flow so the other bulb goes out [1].\n"
-            f"2. Parallel Circuit B [3]:\n"
-            f"   a) Potential difference across every parallel branch equals total supply voltage: ${_fmt_sa(v_total)}\\text{{ V}}$ [1].\n"
-            f"   b) Bulbs in Circuit B shine **brighter** than Circuit A [1] because they receive the full supply voltage (${_fmt_sa(v_total)}\\text{{ V}}$ vs ${_fmt_sa(v_branch1)}\\text{{ V}}$) and draw greater current [1].\n"
-            f"3. Domestic parallel wiring rationale (any 1) [2]:\n"
-            f"   - Each light or appliance receives the full mains potential difference (230 V) [2].\n"
-            f"   - Appliances can be operated independently with their own switch; if one bulb blows, all others remain lit [2]."
-        )
-        hints = {
-            "tier_1": "In series, voltage splits (V/2). In parallel, every branch gets full battery voltage. Full voltage = brighter light.",
-            "tier_2": f"Series: {v_total}/2 = {v_branch1} V per bulb. Parallel: full {v_total} V per bulb. Parallel bulbs are brighter and work independently.",
-            "tier_3": f"1. a) {v_branch1} V; b) other bulb turns off. 2. a) {v_total} V; b) Parallel is brighter. 3. Independent operation / full voltage.",
-        }
-        marks = 7
-        misconceptions = ["parallel_voltage_division_error", "series_current_drop_misconception", "bulb_brightness_misunderstanding"]
-
-    return {
-        "id": qid,
-        "question_id": qid,
-        "term": 3,
-        "caps_weight_percent": 18,
-        "suggested_duration_mins": 8,
-        "mode": mode,
-        "question_type": "short_answer",
-        "question": prompt,
-        "question_text": prompt,
-        "correct_answer": ans_str,
-        "sample_answer": ans_str,
-        "worked_solution": memo,
-        "explanation": memo,
-        "marks": marks,
-        "curriculum_reference": "Natural Sciences Gr8 Term 3 > Energy Transfer in Electrical Systems > Electric circuits",
-        "hints": hints,
-        "misconception_tags": misconceptions,
-        "marking_schema": {
-            "total_marks": marks,
-            "marking_points": [
-                {"id": "mp_1", "desc": "Series voltage division and circuit break effect", "marks": 2, "editable": True},
-                {"id": "mp_2", "desc": "Parallel branch voltage and brightness comparison", "marks": 3, "editable": True},
-                {"id": "mp_3", "desc": "Domestic parallel installation rationale", "marks": 2, "editable": True},
-            ],
-            "deductions": [],
-            "carry_forward_rule": "consequential_accuracy",
-        },
-    }
+def generate_question(
+    subskill: Optional[str] = None,
+    seed: Optional[int] = None,
+) -> Dict[str, Any]:
+    rng = random.Random(seed) if seed is not None else random.Random()
+    if subskill is None or subskill not in ARCHETYPE_BUILDERS:
+        subskill = rng.choice(SUBSKILLS)
+    builder = ARCHETYPE_BUILDERS[subskill]
+    return builder(rng)
 
 
 def generate(
-    subskill: str = "mixed",
-    difficulty: str = "medium",
+    subskill: Optional[str] = None,
     count: int = 1,
     seed: Optional[int] = None,
-    mode: str = "compound",
     **kwargs: Any,
 ) -> List[Dict[str, Any]]:
-    """Master entry point for Grade 8 Electric Circuits."""
-    r = random.Random(seed) if seed is not None else random.Random()
+    rng = random.Random(seed) if seed is not None else random.Random()
     questions: List[Dict[str, Any]] = []
 
+    target = str(subskill or "").strip().lower()
+    chosen_sub: Optional[str] = None
+    if target in ARCHETYPE_BUILDERS:
+        chosen_sub = target
+    else:
+        for k in ARCHETYPE_BUILDERS:
+            if target and (target in k.lower() or k.lower() in target):
+                chosen_sub = k
+                break
+
     for i in range(count):
-        sub_seed = r.randint(1, 1_000_000_000)
-        sub_r = random.Random(sub_seed)
-
-        if subskill in ("circuit_schematic", "meter_connection"):
-            q = build_electric_circuit_ns_question(sub_seed, grade=8, mode=mode)
-        elif subskill in ("series_parallel_rules", "domestic_circuits") or mode == "elementary_meter_rules":
-            q = _generate_series_parallel_rules(sub_r, sub_seed, i, mode)
-        else:
-            # Alternating between circuit diagram schematic and series/parallel rules
-            if i % 2 == 0:
-                q = build_electric_circuit_ns_question(sub_seed, grade=8, mode=mode)
-            else:
-                q = _generate_series_parallel_rules(sub_r, sub_seed, i, mode)
-
+        active = chosen_sub if chosen_sub else SUBSKILLS[(i + (seed or 0)) % len(SUBSKILLS)]
+        builder = ARCHETYPE_BUILDERS[active]
+        q = builder(rng)
         questions.append(q)
 
     return questions

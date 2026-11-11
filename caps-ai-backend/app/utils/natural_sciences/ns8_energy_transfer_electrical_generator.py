@@ -1,297 +1,157 @@
-"""Natural Sciences Grade 8 Term 3: Energy Transfer in Electrical Systems Generator.
-
-Strictly grounded in curriculum_docs_auto/NaturalSciences_Gr8/Syllabus.md.
-Covers:
-- circuit_components_and_conduction_path: Cells/batteries, closed circuit pathways, electron flow, standard symbols.
-- resistance_and_heating_effects: Resistance concept, filament bulbs, nichrome wire in kettles and stoves.
-- short_circuits_and_fuse_safety: Short circuit dynamics (path of least resistance), fuse melting mechanism, circuit breakers.
-- magnetic_effect_and_electromagnets: Magnetic field around conductors, making an electromagnet, electric bells and cranes.
-- chemical_effect_electrolysis_applications: Electrolysis of CuCl2, electroplating silver/copper onto cutlery, metal refining.
-
-Strictly complies with the 6-Pillar Generator Contract.
+"""Grade 8 Natural Sciences: Term 3 - Energy Transfer in Electrical Systems Generator (50 Semantic Archetypes).
+100% Aligned with South African National Curriculum Standards.
+Grounded directly in curriculum_docs_auto/NaturalSciences_Gr8/Term 3/01. Energy transfer in electrical systems.md.
 """
-
 from __future__ import annotations
 
 import random
 from typing import Any, Dict, List, Optional
 
+from .ns8_energy_transfer_electrical_archetypes_01_25 import (
+    arch_01_definition_of_electric_current_and_amperes,
+    arch_02_role_of_delocalised_electrons_in_metals,
+    arch_03_conventional_current_versus_electron_flow,
+    arch_04_requirements_for_a_complete_closed_circuit,
+    arch_05_identifying_circuit_symbols_cell_battery_switch,
+    arch_06_identifying_circuit_symbols_bulb_resistor_meters,
+    arch_07_distinguishing_single_cell_from_multi_cell_battery,
+    arch_08_chemical_energy_conversion_inside_cells,
+    arch_09_environmental_dangers_of_disposing_batteries,
+    arch_10_definition_and_nature_of_electrical_resistance,
+    arch_11_four_factors_affecting_wire_resistance_overview,
+    arch_12_effect_of_wire_length_on_resistance,
+    arch_13_effect_of_wire_thickness_cross_section_on_resistance,
+    arch_14_effect_of_wire_material_copper_versus_nichrome,
+    arch_15_effect_of_temperature_on_metallic_resistance,
+    arch_16_anatomy_and_operation_of_incandescent_bulb,
+    arch_17_function_of_argon_gas_inside_light_bulb,
+    arch_18_nichrome_heating_element_in_appliances_kettle_toaster,
+    arch_19_heating_effect_of_electric_current_joule_heating,
+    arch_20_function_and_operation_of_an_electric_fuse,
+    arch_21_selecting_correct_fuse_rating_for_appliance,
+    arch_22_circuit_breakers_versus_disposable_fuses,
+    arch_23_definition_and_dangers_of_a_short_circuit,
+    arch_24_three_pin_plug_wiring_colour_codes_south_africa,
+    arch_25_function_of_the_earth_wire_for_metal_appliances,
+)
+from .ns8_energy_transfer_electrical_archetypes_26_50 import (
+    arch_26_magnetic_effect_of_an_electric_current_oersted,
+    arch_27_shape_of_magnetic_field_around_straight_wire,
+    arch_28_right_hand_grip_rule_for_wire_magnetic_field,
+    arch_29_magnetic_field_pattern_of_a_solenoid_coil,
+    arch_30_structure_and_definition_of_an_electromagnet,
+    arch_31_role_of_soft_iron_core_in_electromagnet,
+    arch_32_factors_affecting_electromagnet_strength_turns,
+    arch_33_factors_affecting_electromagnet_strength_current,
+    arch_34_comparing_permanent_magnets_and_electromagnets,
+    arch_35_application_of_electromagnet_in_scrap_metal_crane,
+    arch_36_operation_of_an_electric_bell_or_buzzer,
+    arch_37_operation_of_an_electromagnetic_relay_switch,
+    arch_38_chemical_effect_of_electric_current_definition,
+    arch_39_electrolysis_of_water_into_hydrogen_and_oxygen,
+    arch_40_identifying_gases_produced_at_cathode_and_anode,
+    arch_41_concept_and_purpose_of_electroplating,
+    arch_42_anode_cathode_and_electrolyte_in_copper_plating,
+    arch_43_electroplating_jewellery_gold_and_silver,
+    arch_44_industrial_electro_refining_of_blister_copper,
+    arch_45_ammeter_series_connection_and_low_internal_resistance,
+    arch_46_voltmeter_parallel_connection_and_high_internal_resistance,
+    arch_47_misconception_electrons_are_consumed_in_circuit,
+    arch_48_misconception_current_slows_down_after_passing_resistor,
+    arch_49_misconception_battery_stores_actual_electrons,
+    arch_50_energy_transfer_electrical_systems_comprehensive_diagnostic,
+)
 
-SUBSKILLS = [
-    "circuit_components_and_conduction_path",
-    "resistance_and_heating_effects",
-    "short_circuits_and_fuse_safety",
-    "magnetic_effect_and_electromagnets",
-    "chemical_effect_electrolysis_applications",
-]
+ARCHETYPE_BUILDERS: Dict[str, Any] = {
+    "01_definition_of_electric_current_and_amperes": arch_01_definition_of_electric_current_and_amperes,
+    "02_role_of_delocalised_electrons_in_metals": arch_02_role_of_delocalised_electrons_in_metals,
+    "03_conventional_current_versus_electron_flow": arch_03_conventional_current_versus_electron_flow,
+    "04_requirements_for_a_complete_closed_circuit": arch_04_requirements_for_a_complete_closed_circuit,
+    "05_identifying_circuit_symbols_cell_battery_switch": arch_05_identifying_circuit_symbols_cell_battery_switch,
+    "06_identifying_circuit_symbols_bulb_resistor_meters": arch_06_identifying_circuit_symbols_bulb_resistor_meters,
+    "07_distinguishing_single_cell_from_multi_cell_battery": arch_07_distinguishing_single_cell_from_multi_cell_battery,
+    "08_chemical_energy_conversion_inside_cells": arch_08_chemical_energy_conversion_inside_cells,
+    "09_environmental_dangers_of_disposing_batteries": arch_09_environmental_dangers_of_disposing_batteries,
+    "10_definition_and_nature_of_electrical_resistance": arch_10_definition_and_nature_of_electrical_resistance,
+    "11_four_factors_affecting_wire_resistance_overview": arch_11_four_factors_affecting_wire_resistance_overview,
+    "12_effect_of_wire_length_on_resistance": arch_12_effect_of_wire_length_on_resistance,
+    "13_effect_of_wire_thickness_cross_section_on_resistance": arch_13_effect_of_wire_thickness_cross_section_on_resistance,
+    "14_effect_of_wire_material_copper_versus_nichrome": arch_14_effect_of_wire_material_copper_versus_nichrome,
+    "15_effect_of_temperature_on_metallic_resistance": arch_15_effect_of_temperature_on_metallic_resistance,
+    "16_anatomy_and_operation_of_incandescent_bulb": arch_16_anatomy_and_operation_of_incandescent_bulb,
+    "17_function_of_argon_gas_inside_light_bulb": arch_17_function_of_argon_gas_inside_light_bulb,
+    "18_nichrome_heating_element_in_appliances_kettle_toaster": arch_18_nichrome_heating_element_in_appliances_kettle_toaster,
+    "19_heating_effect_of_electric_current_joule_heating": arch_19_heating_effect_of_electric_current_joule_heating,
+    "20_function_and_operation_of_an_electric_fuse": arch_20_function_and_operation_of_an_electric_fuse,
+    "21_selecting_correct_fuse_rating_for_appliance": arch_21_selecting_correct_fuse_rating_for_appliance,
+    "22_circuit_breakers_versus_disposable_fuses": arch_22_circuit_breakers_versus_disposable_fuses,
+    "23_definition_and_dangers_of_a_short_circuit": arch_23_definition_and_dangers_of_a_short_circuit,
+    "24_three_pin_plug_wiring_colour_codes_south_africa": arch_24_three_pin_plug_wiring_colour_codes_south_africa,
+    "25_function_of_the_earth_wire_for_metal_appliances": arch_25_function_of_the_earth_wire_for_metal_appliances,
+    "26_magnetic_effect_of_an_electric_current_oersted": arch_26_magnetic_effect_of_an_electric_current_oersted,
+    "27_shape_of_magnetic_field_around_straight_wire": arch_27_shape_of_magnetic_field_around_straight_wire,
+    "28_right_hand_grip_rule_for_wire_magnetic_field": arch_28_right_hand_grip_rule_for_wire_magnetic_field,
+    "29_magnetic_field_pattern_of_a_solenoid_coil": arch_29_magnetic_field_pattern_of_a_solenoid_coil,
+    "30_structure_and_definition_of_an_electromagnet": arch_30_structure_and_definition_of_an_electromagnet,
+    "31_role_of_soft_iron_core_in_electromagnet": arch_31_role_of_soft_iron_core_in_electromagnet,
+    "32_factors_affecting_electromagnet_strength_turns": arch_32_factors_affecting_electromagnet_strength_turns,
+    "33_factors_affecting_electromagnet_strength_current": arch_33_factors_affecting_electromagnet_strength_current,
+    "34_comparing_permanent_magnets_and_electromagnets": arch_34_comparing_permanent_magnets_and_electromagnets,
+    "35_application_of_electromagnet_in_scrap_metal_crane": arch_35_application_of_electromagnet_in_scrap_metal_crane,
+    "36_operation_of_an_electric_bell_or_buzzer": arch_36_operation_of_an_electric_bell_or_buzzer,
+    "37_operation_of_an_electromagnetic_relay_switch": arch_37_operation_of_an_electromagnetic_relay_switch,
+    "38_chemical_effect_of_electric_current_definition": arch_38_chemical_effect_of_electric_current_definition,
+    "39_electrolysis_of_water_into_hydrogen_and_oxygen": arch_39_electrolysis_of_water_into_hydrogen_and_oxygen,
+    "40_identifying_gases_produced_at_cathode_and_anode": arch_40_identifying_gases_produced_at_cathode_and_anode,
+    "41_concept_and_purpose_of_electroplating": arch_41_concept_and_purpose_of_electroplating,
+    "42_anode_cathode_and_electrolyte_in_copper_plating": arch_42_anode_cathode_and_electrolyte_in_copper_plating,
+    "43_electroplating_jewellery_gold_and_silver": arch_43_electroplating_jewellery_gold_and_silver,
+    "44_industrial_electro_refining_of_blister_copper": arch_44_industrial_electro_refining_of_blister_copper,
+    "45_ammeter_series_connection_and_low_internal_resistance": arch_45_ammeter_series_connection_and_low_internal_resistance,
+    "46_voltmeter_parallel_connection_and_high_internal_resistance": arch_46_voltmeter_parallel_connection_and_high_internal_resistance,
+    "47_misconception_electrons_are_consumed_in_circuit": arch_47_misconception_electrons_are_consumed_in_circuit,
+    "48_misconception_current_slows_down_after_passing_resistor": arch_48_misconception_current_slows_down_after_passing_resistor,
+    "49_misconception_battery_stores_actual_electrons": arch_49_misconception_battery_stores_actual_electrons,
+    "50_energy_transfer_electrical_systems_comprehensive_diagnostic": arch_50_energy_transfer_electrical_systems_comprehensive_diagnostic,
+}
 
-
-def _make_id(prefix: str, seed: Optional[int], idx: int) -> str:
-    s_val = seed if seed is not None else random.randint(1000, 9999)
-    return f"{prefix}_{s_val}_{idx}"
-
-
-def _build_circuit_components(rng: random.Random, seed: Optional[int], idx: int) -> Dict[str, Any]:
-    components = [
-        {"name": "Electric cell / battery", "function": "Stores chemical potential energy and converts it into electrical potential energy to push charges", "symbol": "Long parallel line (positive) and shorter thicker line (negative)"},
-        {"name": "Switch", "function": "Provides a controllable break in the circuit to safely open (stop current) or close (allow current) the conducting pathway", "symbol": "Two circles connected by a hinged lever line"},
-        {"name": "Resistor", "function": "Opposes or limits the flow of electric charge, converting electrical energy into heat or light", "symbol": "A simple open rectangle or zigzag line"}
-    ]
-    c = rng.choice(components)
-    prompt = (
-        f"In electric circuit diagrams, standard symbols represent functional components.\n\n"
-        f"Which electrical component has the primary function of *{c['function']}*?"
-    )
-    correct_ans = c["name"]
-    distractors = [x["name"] for x in components if x["name"] != correct_ans]
-    distractors.append("Voltmeter connected in series")
-    options = [correct_ans] + distractors[:3]
-    rng.shuffle(options)
-    sol = (
-        f"Step 1: Analyze component function:\n"
-        f"{c['function']}.\n\n"
-        f"Step 2: Match:\n"
-        f"This corresponds to the **{correct_ans}**."
-    )
-    return {
-        "id": _make_id("ns8_circ_comp", seed, idx),
-        "question_type": "mcq",
-        "prompt": prompt,
-        "options": options,
-        "correct_answer": correct_ans,
-        "sample_answer": correct_ans,
-        "worked_solution": sol,
-        "canonical_solution": sol,
-        "explanation": sol,
-        "marks": 2,
-        "total_marks": 2,
-        "subskill": "circuit_components_and_conduction_path",
-        "question_family_id": "circuit_components_and_conduction_path",
-        "curriculum_reference": "Natural Sciences Gr8 Term 3 > Energy Transfer in Electrical Systems > Circuit components",
-        "hints": {
-            "tier_1": "Recall the main parts of an electric circuit: source of energy, conductor, switch, load.",
-            "tier_2": "Batteries supply energy; switches open/close paths; resistors oppose current.",
-            "tier_3": f"The component is {correct_ans}."
-        },
-        "misconception_tags": ["open_switch_allows_current_misconception"]
-    }
-
-
-def _build_resistance_heating(rng: random.Random, seed: Optional[int], idx: int) -> Dict[str, Any]:
-    appliances = [
-        ("an electric kettle heating water", "nichrome wire coil", "high electrical resistance causes moving electrons to collide with metal lattice ions, generating thermal heat"),
-        ("a tungsten filament incandescent light bulb", "coiled thin tungsten filament", "extremely high resistance causes the fine wire to glow white-hot, emitting radiant heat and visible light"),
-        ("a domestic geyser heating element", "corrosion-resistant alloy element", "electrical energy is converted into thermal heat energy through high resistance")
-    ]
-    device, material, mechanism = rng.choice(appliances)
-    prompt = (
-        f"Domestic heating appliances make use of the heating effect of an electric current.\n\n"
-        f"Consider **{device}**:\n"
-        f"1. Name a high-resistance metal alloy or element commonly used in its construction ({material}).\n"
-        f"2. Explain scientifically how high electrical resistance converts electrical energy into heat at a microscopic level.\n"
-        f"3. State what energy transformation takes place in this appliance."
-    )
-    sample_answer = (
-        f"1. Material: Nichrome wire (an alloy of nickel and chromium) / Tungsten.\n"
-        f"2. Mechanism: {mechanism}.\n"
-        "3. Energy conversion: Electrical energy -> Thermal heat energy (and light energy)."
-    )
-    sol = (
-        "Marking Rubric (3 marks total):\n"
-        "1. Conductor material: Nichrome / Tungsten [1 mark].\n"
-        "2. Microscopic mechanism: Collision of flowing electrons with metal atoms/lattice ions transforms kinetic energy into heat vibrations [1 mark].\n"
-        "3. Energy conversion: Electrical energy transformed into thermal energy [1 mark]."
-    )
-    return {
-        "id": _make_id("ns8_heat_effect", seed, idx),
-        "question_type": "paragraph",
-        "diagram_spec": {
-            "image_type": "geyser_heating_element",
-            "master": "geyser_heating_element",
-            "diagram_id": "geyser_heating_element",
-            "view": "textbook",
-            "diagram_role": "context",
-            "allowViewSwitch": False,
-            "pins": [],
-        },
-        "prompt": prompt,
-        "sample_answer": sample_answer,
-        "worked_solution": sol,
-        "canonical_solution": sol,
-        "explanation": sol,
-        "marks": 3,
-        "total_marks": 3,
-        "subskill": "resistance_and_heating_effects",
-        "question_family_id": "resistance_and_heating_effects",
-        "curriculum_reference": "Natural Sciences Gr8 Term 3 > Energy Transfer in Electrical Systems > Heating effect of current",
-        "hints": {
-            "tier_1": "Resistance is friction for electric current.",
-            "tier_2": "Colliding electrons make metal atoms vibrate faster, producing heat.",
-            "tier_3": "Electrical energy becomes thermal energy; nichrome is the common element material."
-        },
-        "misconception_tags": ["electrons_are_consumed_in_resistor_misconception"]
-    }
+SUBSKILLS: List[str] = list(ARCHETYPE_BUILDERS.keys())
 
 
-def _build_short_circuits_fuses(rng: random.Random, seed: Optional[int], idx: int) -> Dict[str, Any]:
-    appliances = [
-        "In a domestic kitchen, an old electric kettle has a frayed cord, allowing the bare live and neutral copper conductors to touch directly.",
-        "In a school woodwork workshop, a handheld power drill cord is pinched under a metal bench, causing live and neutral wires to make contact.",
-        "In a residential lounge, an overloaded extension lead gets damaged, causing internal live and neutral wires to short-circuit before reaching the television."
-    ]
-    chosen_app = rng.choice(appliances)
-    prompt = (
-        f"{chosen_app}\n\n"
-        f"1. What is the technical term for this dangerous electrical fault?\n"
-        f"2. Explain why this fault causes the current in the circuit to surge to an extremely high, dangerous level.\n"
-        f"3. Explain how a safety **fuse** protects the home from an electrical fire when this fault occurs."
-    )
-    sample_answer = (
-        "1. Short circuit.\n"
-        "2. When wires touch directly, current bypasses the high-resistance appliance. Because resistance drops to almost zero, current surges to an extremely high level (I = V / R).\n"
-        "3. The fuse contains a thin wire with a low melting point. The massive current generates intense heat that rapidly melts the fuse wire, breaking the circuit and instantly cutting off power before wires overheat and ignite a fire."
-    )
-    sol = (
-        "Marking Rubric (4 marks total):\n"
-        "1. Term: Short circuit [1 mark].\n"
-        "2. Mechanism: Current takes the path of near-zero resistance, causing current to surge dangerously [1 mark].\n"
-        "3. Fuse function: Thin wire heats up and melts (blows) [1 mark].\n"
-        "4. Fire prevention: Breaks the circuit, cutting off current and preventing wire combustion [1 mark]."
-    )
-    return {
-        "id": _make_id("ns8_fuse_safety", seed, idx),
-        "question_type": "paragraph",
-        "prompt": prompt,
-        "sample_answer": sample_answer,
-        "worked_solution": sol,
-        "canonical_solution": sol,
-        "explanation": sol,
-        "marks": 4,
-        "total_marks": 4,
-        "subskill": "short_circuits_and_fuse_safety",
-        "question_family_id": "short_circuits_and_fuse_safety",
-        "curriculum_reference": "Natural Sciences Gr8 Term 3 > Energy Transfer in Electrical Systems > Short circuits and fuses",
-        "hints": {
-            "tier_1": "Bypassing the load is a short circuit.",
-            "tier_2": "Near zero resistance leads to huge current and extreme heat.",
-            "tier_3": "The fuse wire melts to break the circuit and stop the fire."
-        },
-        "misconception_tags": ["fuse_generates_more_electricity_misconception"]
-    }
+def generate_question(
+    subskill: Optional[str] = None,
+    seed: Optional[int] = None,
+) -> Dict[str, Any]:
+    rng = random.Random(seed) if seed is not None else random.Random()
+    if subskill is None or subskill not in ARCHETYPE_BUILDERS:
+        subskill = rng.choice(SUBSKILLS)
+    builder = ARCHETYPE_BUILDERS[subskill]
+    return builder(rng)
 
 
-def _build_magnetic_electromagnets(rng: random.Random, seed: Optional[int], idx: int) -> Dict[str, Any]:
-    turns = rng.choice([30, 50, 75, 100])
-    volts = rng.choice([3, 6, 9])
-    core = rng.choice(["an iron nail", "a soft iron bolt", "a solid steel rod"])
-    prompt = (
-        f"A student wraps {turns} turns of insulated copper wire around {core} and connects the wire ends to a {volts} V DC battery pack and switch.\n\n"
-        f"1. What temporary magnetic device has the student constructed?\n"
-        f"2. What observable magnetic effect occurs when the switch is closed and paper clips are brought near the core?\n"
-        f"3. State two ways the student can increase the magnetic strength of this device."
-    )
-    sample_answer = (
-        "1. An electromagnet.\n"
-        "2. The iron nail becomes magnetized and attracts the steel paper clips.\n"
-        "3. Two ways to increase strength:\n"
-        "- Increase the number of wire coils/turns around the nail.\n"
-        "- Increase the electric current (e.g. by adding more cells in series)."
-    )
-    sol = (
-        "Marking Rubric (4 marks total):\n"
-        "1. Device name: Electromagnet [1 mark].\n"
-        "2. Observation: Nail attracts magnetic paper clips [1 mark].\n"
-        "3. Strengthening method 1: Increase the number of coil turns [1 mark].\n"
-        "4. Strengthening method 2: Increase the electrical current / voltage (add more cells) [1 mark]."
-    )
-    return {
-        "id": _make_id("ns8_electromagnet", seed, idx),
-        "question_type": "paragraph",
-        "prompt": prompt,
-        "sample_answer": sample_answer,
-        "worked_solution": sol,
-        "canonical_solution": sol,
-        "explanation": sol,
-        "marks": 4,
-        "total_marks": 4,
-        "subskill": "magnetic_effect_and_electromagnets",
-        "question_family_id": "magnetic_effect_and_electromagnets",
-        "curriculum_reference": "Natural Sciences Gr8 Term 3 > Energy Transfer in Electrical Systems > Electromagnets",
-        "hints": {
-            "tier_1": "A coil around iron connected to a battery is an electromagnet.",
-            "tier_2": "Closing the switch creates a magnetic field that picks up iron clips.",
-            "tier_3": "Add more turns or more cells to make it stronger."
-        },
-        "misconception_tags": ["electromagnet_stays_magnetic_permanently_misconception"]
-    }
+def generate(
+    subskill: Optional[str] = None,
+    count: int = 1,
+    seed: Optional[int] = None,
+    **kwargs: Any,
+) -> List[Dict[str, Any]]:
+    rng = random.Random(seed) if seed is not None else random.Random()
+    questions: List[Dict[str, Any]] = []
 
+    target = str(subskill or "").strip().lower()
+    chosen_sub: Optional[str] = None
+    if target in ARCHETYPE_BUILDERS:
+        chosen_sub = target
+    else:
+        for k in ARCHETYPE_BUILDERS:
+            if target and (target in k.lower() or k.lower() in target):
+                chosen_sub = k
+                break
 
-def _build_chemical_electrolysis_app(rng: random.Random, seed: Optional[int], idx: int) -> Dict[str, Any]:
-    items = [
-        ("steel cutlery with a thin layer of pure silver", "silver", "cutlery"),
-        ("brass car door handles with a protective layer of shiny chromium", "chromium", "door handles"),
-        ("iron screws and bolts with a corrosion-resistant coating of pure zinc", "zinc", "fasteners")
-    ]
-    plating_text, metal, obj = rng.choice(items)
-    prompt = (
-        f"In commercial manufacturing, the chemical effect of an electric current is used for **electroplating** {plating_text}.\n\n"
-        f"1. Explain how an electric current is used in electroplating.\n"
-        f"2. State at which electrode (cathode or anode) the {obj} to be coated must be connected.\n"
-        f"3. Give two reasons why everyday metal objects are electroplated."
-    )
-    sample_answer = (
-        "1. Current passes through an electrolyte solution containing metal ions, causing metal ions to gain electrons and deposit as a solid thin layer on the object.\n"
-        "2. The object to be plated must be connected to the negative electrode (cathode).\n"
-        "3. Two reasons: To prevent corrosion/rusting, and to improve aesthetic appearance (make it shiny/decorative)."
-    )
-    sol = (
-        "Marking Rubric (3 marks total):\n"
-        "1. Electroplating process: Metal deposition via electrical current passing through electrolyte [1 mark].\n"
-        "2. Electrode: Negative cathode [1 mark].\n"
-        "3. Reasons: Corrosion protection and decorative/aesthetic value [1 mark]."
-    )
-    return {
-        "id": _make_id("ns8_electroplate", seed, idx),
-        "question_type": "paragraph",
-        "prompt": prompt,
-        "sample_answer": sample_answer,
-        "worked_solution": sol,
-        "canonical_solution": sol,
-        "explanation": sol,
-        "marks": 3,
-        "total_marks": 3,
-        "subskill": "chemical_effect_electrolysis_applications",
-        "question_family_id": "chemical_effect_electrolysis_applications",
-        "curriculum_reference": "Natural Sciences Gr8 Term 3 > Energy Transfer in Electrical Systems > Electrolysis and electroplating",
-        "hints": {
-            "tier_1": "Electroplating coats one metal onto another using electricity.",
-            "tier_2": "Cations move to the negative cathode.",
-            "tier_3": "It prevents rust and looks attractive."
-        },
-        "misconception_tags": ["electroplating_melts_metal_misconception"]
-    }
+    for i in range(count):
+        active = chosen_sub if chosen_sub else SUBSKILLS[(i + (seed or 0)) % len(SUBSKILLS)]
+        builder = ARCHETYPE_BUILDERS[active]
+        q = builder(rng)
+        questions.append(q)
 
-
-def generate(archetype: Optional[str] = None, seed: Optional[int] = None, count: int = 1, **kwargs) -> List[Dict[str, Any]]:
-    rng = random.Random(seed)
-    results = []
-    for idx in range(count):
-        target = archetype or rng.choice(SUBSKILLS)
-        if target == "circuit_components_and_conduction_path":
-            item = _build_circuit_components(rng, seed, idx)
-        elif target == "resistance_and_heating_effects":
-            item = _build_resistance_heating(rng, seed, idx)
-        elif target == "short_circuits_and_fuse_safety":
-            item = _build_short_circuits_fuses(rng, seed, idx)
-        elif target == "magnetic_effect_and_electromagnets":
-            item = _build_magnetic_electromagnets(rng, seed, idx)
-        elif target == "chemical_effect_electrolysis_applications":
-            item = _build_chemical_electrolysis_app(rng, seed, idx)
-        else:
-            item = _build_circuit_components(rng, seed, idx)
-        results.append(item)
-    return results
-
-
-def get_archetypes() -> List[str]:
-    return list(SUBSKILLS)
+    return questions

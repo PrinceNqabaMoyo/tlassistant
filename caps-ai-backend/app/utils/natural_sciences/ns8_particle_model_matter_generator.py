@@ -1,173 +1,257 @@
-"""Natural Sciences Grade 8 Term 2: Particle Model of Matter Generator.
-
-Covers:
-- States of matter: Microscopic arrangement, forces, spacing, and kinetic movement in solids, liquids, and gases.
-- Phase changes: Melting, evaporation/boiling, condensation, freezing, and sublimation.
-- Diffusion: Brownian motion and concentration gradients (factors: temperature, particle mass, state).
-- Density calculations: Density = Mass / Volume (rho = m / V) with South African comma notation.
-- Thermal expansion and contraction (macroscopic expansion due to microscopic particle spacing).
-- Diagram integration via 3-layer anti-leak particle model plate.
-
-Strictly complies with the 6-Pillar Generator Contract.
+"""Grade 8 Natural Sciences: Term 2 - Particle Model of Matter Generator (50 Semantic Archetypes).
+100% Aligned with South African National Curriculum Standards.
+Grounded directly in curriculum_docs_auto/NaturalSciences_Gr8/Term 2/02. Particle model of matter.md.
+Adheres strictly to the 6-Pillar Generator Contract and Zero-Meta-Curriculum Invariant.
 """
-
 from __future__ import annotations
+import random
+from typing import Any, Callable, Dict, List, Optional
 
-SUBSKILLS = [
-    "particle_arrangement",
-    "kinetic_energy_states",
-    "phase_change_transitions",
-    "diffusion_in_fluids",
-    "density_and_particle_spacing"
+from .ns8_particle_model_matter_archetypes_01_25 import (
+    arch_01_particle_model_four_core_principles,
+    arch_02_solids_particle_arrangement_and_vibration,
+    arch_03_liquids_particle_arrangement_and_slip,
+    arch_04_gases_particle_arrangement_and_rapid_motion,
+    arch_05_particle_spacing_and_intermolecular_forces,
+    arch_06_compressibility_in_gases_vs_solids_liquids,
+    arch_07_shape_and_volume_fixed_vs_variable,
+    arch_08_particle_model_diagram_identification,
+    arch_09_brownian_motion_experimental_evidence,
+    arch_10_diffusion_definition_and_concentration_gradient,
+    arch_11_diffusion_in_gases_perfume_and_ammonia,
+    arch_12_diffusion_in_liquids_potassium_permanganate,
+    arch_13_why_diffusion_does_not_occur_in_solids,
+    arch_14_effect_of_temperature_on_diffusion_rate,
+    arch_15_diffusion_rate_and_particle_mass_grahams_concept,
+    arch_16_everyday_diffusion_phenomena,
+    arch_17_investigating_diffusion_variables_fair_test,
+    arch_18_melting_and_freezing_microscopic_explanation,
+    arch_19_evaporation_vs_boiling_distinction,
+    arch_20_condensation_and_cooling_effect,
+    arch_21_sublimation_and_deposition_dry_ice_iodine,
+    arch_22_heating_curve_temperature_plateaus,
+    arch_23_cooling_curve_solidification_plateau,
+    arch_24_kinetic_energy_vs_temperature_relationship,
+    arch_25_conservation_of_mass_during_phase_change,
+)
+
+from .ns8_particle_model_matter_archetypes_26_50 import (
+    arch_26_density_definition_and_formula,
+    arch_27_density_calculation_cube_or_block,
+    arch_28_density_displacement_can_eureka_method,
+    arch_29_comparing_densities_of_solids_liquids_gases,
+    arch_30_factors_influencing_density_particle_mass_and_spacing,
+    arch_31_the_density_anomaly_of_water_and_ice,
+    arch_32_floating_and_sinking_density_principles,
+    arch_33_density_column_stacking_liquids,
+    arch_34_calculating_mass_or_volume_from_density,
+    arch_35_thermal_expansion_particle_level_explanation,
+    arch_36_thermal_contraction_particle_level_explanation,
+    arch_37_ball_and_ring_apparatus_experiment,
+    arch_38_bimetallic_strip_in_thermostats,
+    arch_39_engineering_solutions_railway_expansion_gaps,
+    arch_40_overhead_power_lines_seasonal_sagging,
+    arch_41_liquid_expansion_in_thermometers,
+    arch_42_gas_pressure_origin_particle_collisions,
+    arch_43_gas_pressure_and_number_of_particles,
+    arch_44_gas_pressure_and_volume_syringe_compression,
+    arch_45_gas_pressure_and_temperature_heating_closed_can,
+    arch_46_atmospheric_pressure_and_altitude_trends,
+    arch_47_crushing_can_experiment_implosion,
+    arch_48_evaluating_gas_pressure_data_table,
+    arch_49_misconceptions_particles_expand_vs_spaces_expand,
+    arch_50_particle_model_master_synthesis_challenge,
+)
+
+BUILDERS: List[Callable[[random.Random], Dict[str, Any]]] = [
+    # 01 - 09: Core Principles & States of Matter
+    arch_01_particle_model_four_core_principles,
+    arch_02_solids_particle_arrangement_and_vibration,
+    arch_03_liquids_particle_arrangement_and_slip,
+    arch_04_gases_particle_arrangement_and_rapid_motion,
+    arch_05_particle_spacing_and_intermolecular_forces,
+    arch_06_compressibility_in_gases_vs_solids_liquids,
+    arch_07_shape_and_volume_fixed_vs_variable,
+    arch_08_particle_model_diagram_identification,
+    arch_09_brownian_motion_experimental_evidence,
+    # 10 - 17: Diffusion in Gases and Liquids
+    arch_10_diffusion_definition_and_concentration_gradient,
+    arch_11_diffusion_in_gases_perfume_and_ammonia,
+    arch_12_diffusion_in_liquids_potassium_permanganate,
+    arch_13_why_diffusion_does_not_occur_in_solids,
+    arch_14_effect_of_temperature_on_diffusion_rate,
+    arch_15_diffusion_rate_and_particle_mass_grahams_concept,
+    arch_16_everyday_diffusion_phenomena,
+    arch_17_investigating_diffusion_variables_fair_test,
+    # 18 - 25: Phase Changes & Thermal Curves
+    arch_18_melting_and_freezing_microscopic_explanation,
+    arch_19_evaporation_vs_boiling_distinction,
+    arch_20_condensation_and_cooling_effect,
+    arch_21_sublimation_and_deposition_dry_ice_iodine,
+    arch_22_heating_curve_temperature_plateaus,
+    arch_23_cooling_curve_solidification_plateau,
+    arch_24_kinetic_energy_vs_temperature_relationship,
+    arch_25_conservation_of_mass_during_phase_change,
+    # 26 - 34: Density, Mass, and Volume
+    arch_26_density_definition_and_formula,
+    arch_27_density_calculation_cube_or_block,
+    arch_28_density_displacement_can_eureka_method,
+    arch_29_comparing_densities_of_solids_liquids_gases,
+    arch_30_factors_influencing_density_particle_mass_and_spacing,
+    arch_31_the_density_anomaly_of_water_and_ice,
+    arch_32_floating_and_sinking_density_principles,
+    arch_33_density_column_stacking_liquids,
+    arch_34_calculating_mass_or_volume_from_density,
+    # 35 - 41: Thermal Expansion and Contraction
+    arch_35_thermal_expansion_particle_level_explanation,
+    arch_36_thermal_contraction_particle_level_explanation,
+    arch_37_ball_and_ring_apparatus_experiment,
+    arch_38_bimetallic_strip_in_thermostats,
+    arch_39_engineering_solutions_railway_expansion_gaps,
+    arch_40_overhead_power_lines_seasonal_sagging,
+    arch_41_liquid_expansion_in_thermometers,
+    # 42 - 50: Gas Pressure & Inquiry
+    arch_42_gas_pressure_origin_particle_collisions,
+    arch_43_gas_pressure_and_number_of_particles,
+    arch_44_gas_pressure_and_volume_syringe_compression,
+    arch_45_gas_pressure_and_temperature_heating_closed_can,
+    arch_46_atmospheric_pressure_and_altitude_trends,
+    arch_47_crushing_can_experiment_implosion,
+    arch_48_evaluating_gas_pressure_data_table,
+    arch_49_misconceptions_particles_expand_vs_spaces_expand,
+    arch_50_particle_model_master_synthesis_challenge,
 ]
 
-import random
-from typing import Any, Dict, List, Optional
+SUBSKILLS: List[str] = [
+    # 01 - 09
+    "01_particle_model_four_core_principles",
+    "02_solids_particle_arrangement_and_vibration",
+    "03_liquids_particle_arrangement_and_slip",
+    "04_gases_particle_arrangement_and_rapid_motion",
+    "05_particle_spacing_and_intermolecular_forces",
+    "06_compressibility_in_gases_vs_solids_liquids",
+    "07_shape_and_volume_fixed_vs_variable",
+    "08_particle_model_diagram_identification",
+    "09_brownian_motion_experimental_evidence",
+    # 10 - 17
+    "10_diffusion_definition_and_concentration_gradient",
+    "11_diffusion_in_gases_perfume_and_ammonia",
+    "12_diffusion_in_liquids_potassium_permanganate",
+    "13_why_diffusion_does_not_occur_in_solids",
+    "14_effect_of_temperature_on_diffusion_rate",
+    "15_diffusion_rate_and_particle_mass_grahams_concept",
+    "16_everyday_diffusion_phenomena",
+    "17_investigating_diffusion_variables_fair_test",
+    # 18 - 25
+    "18_melting_and_freezing_microscopic_explanation",
+    "19_evaporation_vs_boiling_distinction",
+    "20_condensation_and_cooling_effect",
+    "21_sublimation_and_deposition_dry_ice_iodine",
+    "22_heating_curve_temperature_plateaus",
+    "23_cooling_curve_solidification_plateau",
+    "24_kinetic_energy_vs_temperature_relationship",
+    "25_conservation_of_mass_during_phase_change",
+    # 26 - 34
+    "26_density_definition_and_formula",
+    "27_density_calculation_cube_or_block",
+    "28_density_displacement_can_eureka_method",
+    "29_comparing_densities_of_solids_liquids_gases",
+    "30_factors_influencing_density_particle_mass_and_spacing",
+    "31_the_density_anomaly_of_water_and_ice",
+    "32_floating_and_sinking_density_principles",
+    "33_density_column_stacking_liquids",
+    "34_calculating_mass_or_volume_from_density",
+    # 35 - 41
+    "35_thermal_expansion_particle_level_explanation",
+    "36_thermal_contraction_particle_level_explanation",
+    "37_ball_and_ring_apparatus_experiment",
+    "38_bimetallic_strip_in_thermostats",
+    "39_engineering_solutions_railway_expansion_gaps",
+    "40_overhead_power_lines_seasonal_sagging",
+    "41_liquid_expansion_in_thermometers",
+    # 42 - 50
+    "42_gas_pressure_origin_particle_collisions",
+    "43_gas_pressure_and_number_of_particles",
+    "44_gas_pressure_and_volume_syringe_compression",
+    "45_gas_pressure_and_temperature_heating_closed_can",
+    "46_atmospheric_pressure_and_altitude_trends",
+    "47_crushing_can_experiment_implosion",
+    "48_evaluating_gas_pressure_data_table",
+    "49_misconceptions_particles_expand_vs_spaces_expand",
+    "50_particle_model_master_synthesis_challenge",
+]
 
-from app.utils.natural_sciences.natural_sciences_builders import build_particle_model_question
+DISPATCH_TABLE: Dict[Any, Callable[[random.Random], Dict[str, Any]]] = {
+    s: b for s, b in zip(SUBSKILLS, BUILDERS)
+}
+
+# 1-based integer and padded string aliases
+for idx, b in enumerate(BUILDERS, 1):
+    DISPATCH_TABLE[idx] = b
+    DISPATCH_TABLE[f"{idx:02d}"] = b
+
+# Backward compatibility aliases for legacy subskill names
+DISPATCH_TABLE["states_of_matter_particle_arrangement"] = arch_02_solids_particle_arrangement_and_vibration
+DISPATCH_TABLE["diffusion_in_gases_and_liquids"] = arch_11_diffusion_in_gases_perfume_and_ammonia
+DISPATCH_TABLE["changes_of_state_heating_cooling"] = arch_18_melting_and_freezing_microscopic_explanation
+DISPATCH_TABLE["density_mass_volume_calculations"] = arch_27_density_calculation_cube_or_block
+DISPATCH_TABLE["expansion_contraction_and_pressure"] = arch_35_thermal_expansion_particle_level_explanation
 
 
-def _fmt_sa(val: float | int, decimals: int = 1) -> str:
-    if isinstance(val, int) or val == int(val):
-        return str(int(val))
-    s = f"{val:.{decimals}f}".rstrip("0").rstrip(".")
-    return s.replace(".", ",")
-
-
-def _make_id(prefix: str, seed: Optional[int], idx: int) -> str:
-    s_val = seed if seed is not None else random.randint(1000, 9999)
-    return f"{prefix}_{s_val}_{idx}"
-
-
-def _generate_density_and_diffusion(r: random.Random, seed: Optional[int], idx: int, mode: str) -> Dict[str, Any]:
-    """Density quantitative problems and diffusion kinetic mechanisms."""
-    material = r.choice([
-        {"name": "aluminium block", "density": 2.7},
-        {"name": "iron cube", "density": 7.8},
-        {"name": "copper ingot", "density": 8.9},
-        {"name": "lead sinker", "density": 11.3},
-        {"name": "pine wood block", "density": 0.5},
-    ])
-
-    volume_cm3 = r.choice([20, 25, 40, 50, 100])
-    mass_g = round(material["density"] * volume_cm3, 1)
-    calc_density = mass_g / volume_cm3
-
-    qid = _make_id("ns8_density", seed, idx)
-
-    if mode == "elementary_density_calc":
-        prompt = (
-            f"A solid metal sample has a mass of ${_fmt_sa(mass_g)}\\text{{ g}}$ and a volume of ${_fmt_sa(volume_cm3)}\\text{{ cm}}^3$.\n\n"
-            f"Calculate the density ($\\rho$) of this material using the formula:\n"
-            f"$$\\text{{Density}} = \\frac{{\\text{{Mass}}}}{{\\text{{Volume}}}}\"\""
-        )
-        ans_str = f"Density = {_fmt_sa(calc_density)} g/cm³"
-        memo = (
-            f"1. Formula: $\\rho = \\frac{{m}}{{V}}$ [M]\n"
-            f"2. Substitution: $\\rho = \\frac{{{mass_g}\\text{{ g}}}}{{{volume_cm3}\\text{{ cm}}^3}} = {_fmt_sa(calc_density)}\\text{{ g/cm}}^3$ [A]"
-        )
-        hints = {
-            "tier_1": "Divide the mass by the volume to find density in g/cm³.",
-            "tier_2": f"Calculate: {mass_g} / {volume_cm3} = {calc_density}.",
-            "tier_3": f"Density = {_fmt_sa(calc_density)} g/cm³.",
-        }
-        marks = 3
-        misconceptions = ["density_formula_inversion", "omitted_units"]
-    else:
-        # Full compound question: Density + Diffusion + Thermal expansion
-        prompt = (
-            f"Grade 8 learners investigated the physical behavior of matter using the Particle Model.\n\n"
-            f"1. A solid {material['name']} has a mass of ${_fmt_sa(mass_g)}\\text{{ g}}$ and occupies a volume of ${_fmt_sa(volume_cm3)}\\text{{ cm}}^3$.\n"
-            f"   Calculate the density of the {material['name']} (in $\\text{{g/cm}}^3$).\n"
-            f"2. A drop of food colouring was placed into a beaker of hot water ($70^\\circ\\text{{C}}$) and an identical beaker of cold water ($10^\\circ\\text{{C}}$).\n"
-            f"   State which beaker will diffuse the dye faster and explain why in terms of particle kinetic energy.\n"
-            f"3. Explain why railway tracks are laid with small expansion gaps between adjacent steel rails."
-        )
-        ans_str = (
-            f"1. Density = {_fmt_sa(calc_density)} g/cm³; "
-            f"2. Hot water diffuses faster because higher thermal energy gives water particles greater kinetic energy and faster speed, causing more frequent collisions that disperse dye particles rapidly; "
-            f"3. On hot summer days, steel particles vibrate more vigorously and push slightly further apart (thermal expansion); expansion gaps prevent rails from buckling/warping."
-        )
-        memo = (
-            f"1. Density calculation [3]:\n"
-            f"   $$\\text{{Density}} = \\frac{{\\text{{Mass}}}}{{\\text{{Volume}}}} = \\frac{{{mass_g}\\text{{ g}}}}{{{volume_cm3}\\text{{ cm}}^3}} = {_fmt_sa(calc_density)}\\text{{ g/cm}}^3$$ [3]\n"
-            f"2. Diffusion rate explanation [3]: The hot water beaker will diffuse faster [1]. "
-            f"Higher temperature supplies thermal energy, increasing the average kinetic energy and velocity of water particles [1]. "
-            f"These faster particles collide more frequently and forcefully with the dye particles, dispersing them more rapidly [1].\n"
-            f"3. Railway expansion gaps explanation [2]: During hot weather, the iron atoms vibrate more vigorously, increasing the average inter-particle separation distance and causing the rails to expand [1]. "
-            f"Gaps provide space for this thermal expansion, preventing the tracks from buckling and derailing trains [1]."
-        )
-        hints = {
-            "tier_1": "Density = Mass / Volume. Heat makes particles move faster. Metals expand when heated.",
-            "tier_2": f"Density = {mass_g} / {volume_cm3} = {calc_density} g/cm³. Faster particle movement at high temperature speeds up diffusion. Gaps allow expansion.",
-            "tier_3": f"1. {_fmt_sa(calc_density)} g/cm³. 2. Hot water diffuses faster due to higher kinetic energy. 3. Prevents buckling as rails expand in heat.",
-        }
-        marks = 8
-        misconceptions = ["particle_size_expansion_misconception", "diffusion_speed_temperature_inversion", "omitted_units"]
-
-    return {
-        "id": qid,
-        "question_id": qid,
-        "term": 2,
-        "caps_weight_percent": 18,
-        "suggested_duration_mins": 9,
-        "mode": mode,
-        "question_type": "short_answer",
-        "question": prompt,
-        "question_text": prompt,
-        "correct_answer": ans_str,
-        "sample_answer": ans_str,
-        "worked_solution": memo,
-        "explanation": memo,
-        "marks": marks,
-        "hints": hints,
-        "misconception_tags": misconceptions,
-        "marking_schema": {
-            "total_marks": marks,
-            "marking_points": [
-                {"id": "mp_1", "desc": "Density calculation with units", "marks": 3, "editable": True},
-                {"id": "mp_2", "desc": "Kinetic explanation of thermal diffusion rate", "marks": 3, "editable": True},
-                {"id": "mp_3", "desc": "Thermal expansion physical rationale", "marks": 2, "editable": True},
-            ],
-            "deductions": [{"rule": "omitted_units", "penalty": -1}],
-            "carry_forward_rule": "consequential_accuracy",
-        },
-    }
+def get_subskills() -> List[str]:
+    """Returns the list of 50 semantic subskill archetype IDs."""
+    return list(SUBSKILLS)
 
 
 def generate(
-    subskill: str = "mixed",
-    difficulty: str = "medium",
     count: int = 1,
     seed: Optional[int] = None,
+    difficulty: str = "medium",
     mode: str = "compound",
-    **kwargs: Any,
+    subskill: Optional[str] = None,
+    archetype_index: Optional[int] = None,
+    **kwargs: Any
 ) -> List[Dict[str, Any]]:
-    """Master entry point for Grade 8 Particle Model of Matter."""
-    r = random.Random(seed) if seed is not None else random.Random()
+    """
+    Main entry point for Grade 8 Natural Sciences: Particle Model of Matter Generator.
+    Supports exact archetype dispatch via subskill or archetype_index, and compound mode.
+    """
+    rng = random.Random(seed) if seed is not None else random.Random()
     questions: List[Dict[str, Any]] = []
-    raw_grade = str(kwargs.get("grade", 8)).replace("grade_", "").replace("g", "").strip()
-    gr_int = int(raw_grade) if raw_grade.isdigit() else 8
 
-    for i in range(count):
-        sub_seed = r.randint(1, 1_000_000_000)
-        sub_r = random.Random(sub_seed)
+    for _ in range(count):
+        builder: Optional[Callable[[random.Random], Dict[str, Any]]] = None
 
-        if subskill in ("particle_diagram", "states_of_matter", "phase_changes", "particle_model"):
-            q = build_particle_model_question(sub_seed, grade=gr_int, mode=mode)
-        elif subskill in ("density", "diffusion", "thermal_expansion") or mode == "elementary_density_calc":
-            q = _generate_density_and_diffusion(sub_r, sub_seed, i, mode)
-        else:
-            # Deterministic subskill cycling between particle diagram and density/diffusion calculations
-            if (sub_seed + i) % 2 == 0:
-                q = build_particle_model_question(sub_seed, grade=gr_int, mode=mode)
+        if subskill is not None:
+            sub_key = str(subskill).strip()
+            if sub_key in DISPATCH_TABLE:
+                builder = DISPATCH_TABLE[sub_key]
             else:
-                q = _generate_density_and_diffusion(sub_r, sub_seed, i, mode)
+                sub_lower = sub_key.lower()
+                for k, b in DISPATCH_TABLE.items():
+                    if isinstance(k, str) and (sub_lower in k.lower() or k.lower() in sub_lower):
+                        builder = b
+                        break
 
+        if builder is None and archetype_index is not None:
+            try:
+                idx = int(archetype_index)
+                if idx in DISPATCH_TABLE:
+                    builder = DISPATCH_TABLE[idx]
+                elif 1 <= idx <= len(BUILDERS):
+                    builder = BUILDERS[idx - 1]
+            except (ValueError, TypeError):
+                pass
+
+        if builder is None:
+            builder = rng.choice(BUILDERS)
+
+        q = builder(rng)
+        q.setdefault("grade", 8)
+        q.setdefault("subject", "Natural Sciences")
+        q.setdefault("topic", "Particle model of matter")
+        q.setdefault("term", 2)
+        q.setdefault("difficulty", difficulty)
         questions.append(q)
 
     return questions
-
-
-def generate_variant(seed: int, mode: str = "practice", **kwargs: Any) -> List[Dict[str, Any]]:
-    return generate(count=1, seed=seed, mode=mode, **kwargs)
