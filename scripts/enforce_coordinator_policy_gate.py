@@ -126,8 +126,9 @@ def validate_staged_generators() -> bool:
             if target_grade is not None and entry_grade != target_grade:
                 continue
             gen_key = str(entry.get("generator_key") or entry.get("generator_file") or "")
+            clean_gen_key = re.sub(r"^(?:grade\d+_[a-z0-9]+_|ns\d+_|ls\d+_|gr\d+_|phys\d+_)", "", gen_key)
             matched = False
-            if stem and (stem in gen_key or gen_key in stem):
+            if stem and (stem == clean_gen_key or stem == gen_key):
                 matched = True
             elif stem == "measurement_3d" and ("surface_area" in gen_key or "measurement" in gen_key):
                 matched = True
