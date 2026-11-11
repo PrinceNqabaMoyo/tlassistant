@@ -788,12 +788,12 @@ GRADE9_MATH_GENERATORS = {
     "grade9_math_decimal_fractions": g9_math_dec.generate,
     "grade9_math_exponents": g9_math_exp.generate,
     "grade9_math_patterns": g9_math_pat.generate,
-    "grade9_math_functions": _adapt_single_item_generator(g9_math_func.generate_grade9_functions_relationships_question),
-    "grade9_math_algebraic_expressions": _adapt_single_item_generator(g9_math_expr.generate_grade9_algebraic_expressions_question),
+    "grade9_math_functions": g9_math_func.generate,
+    "grade9_math_algebraic_expressions": g9_math_expr.generate,
     "grade9_math_factorisation": g9_math_fact.generate,
 
     # Term 2 (6 topics)
-    "grade9_math_algebraic_equations": _adapt_single_item_generator(g9_math_eq.generate_grade9_algebraic_equations_question),
+    "grade9_math_algebraic_equations": g9_math_eq.generate,
     "grade9_math_algebraic_equations_fractions": g9_math_eq_frac.generate,
     "grade9_math_fractions": _adapt_single_item_generator(g9_math_frac.generate_grade9_fractions_question),
     "grade9_math_graphs": _adapt_single_item_generator(g9_math_graphs.generate_grade9_graphs_question),

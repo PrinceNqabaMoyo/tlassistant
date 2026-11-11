@@ -1,387 +1,175 @@
-"""Grade 9 Mathematics - Algebraic Expressions 1 (Language, Expansion & Simplification).
-Grounded in:
-  - curriculum_docs/Mathematics_Gr9/Algebraic Expressions Studio.md (Grade 8 to 9 leap: binomial products, squares of binomials, division)
-  - curriculum_docs_auto/Mathematics_Gr9/Term 1/06. Algebraic expressions 1.md (Chapter 13: Constants, variables, like terms, FOIL)
+"""Grade 9 Mathematics - Algebraic Expressions 1 Generator (50 Semantic Archetypes).
+Grounded strictly in:
+  curriculum_docs_auto/Mathematics_Gr9/Term 1/06. Algebraic expressions 1.md
+  curriculum_docs/Mathematics_Gr9/Algebraic Expressions Studio.md
 
-Subskills:
-  1. expressions_language_and_substitution: Degree, coefficients, constant term, substitution.
-  2. expressions_add_sub_like_terms: Adding and subtracting polynomials with like terms.
-  3. expressions_distributive_monomial: Multiplying monomial by polynomial.
-  4. expressions_binomial_product: Binomial x binomial expansion using FOIL.
-  5. expressions_square_of_binomial: Squaring binomials (ax ± b)^2.
-  6. expressions_divide_by_monomial: Dividing polynomial by a monomial.
+100% CAPS-aligned deterministic question generator.
+Zero LLM calls, zero token cost, 100% AST pure.
 """
 from __future__ import annotations
 
-import math
 import random
-from typing import Any, Dict, List, Optional
+from typing import Any, Callable, Dict, List, Optional
 
-from app.utils.grade9_mathematics._math_common import make_id, rng
+from .algebraic_expressions_archetypes_01_25 import (
+    arch_01_identify_variable_in_given_expression,
+    arch_02_identify_constant_term_in_polynomial,
+    arch_03_identify_coefficient_of_linear_term,
+    arch_04_identify_coefficient_of_squared_term,
+    arch_05_determine_degree_of_univariate_polynomial,
+    arch_06_classify_expression_as_monomial_binomial_trinomial,
+    arch_07_count_number_of_terms_separated_by_plus_minus,
+    arch_08_evaluate_linear_expression_positive_integer_substitution,
+    arch_09_evaluate_linear_expression_negative_integer_substitution,
+    arch_10_evaluate_quadratic_expression_negative_substitution,
+    arch_11_evaluate_expression_with_fractional_substitution,
+    arch_12_verbal_description_to_algebraic_expression_basic,
+    arch_13_verbal_description_to_algebraic_expression_nested_brackets,
+    arch_14_distinguish_bracketed_product_from_unbracketed_addition,
+    arch_15_flow_diagram_to_algebraic_expression_derivation,
+    arch_16_algebraic_expression_to_flow_diagram_derivation,
+    arch_17_substitute_into_geometric_perimeter_formula,
+    arch_18_substitute_into_geometric_area_formula,
+    arch_19_identify_and_group_like_terms_single_variable,
+    arch_20_identify_and_group_like_terms_two_variables,
+    arch_21_add_polynomials_combining_like_terms,
+    arch_22_subtract_polynomials_distributing_negative_sign,
+    arch_23_simplify_polynomial_with_descending_powers_standard_form,
+    arch_24_distributive_law_monomial_times_binomial_positive,
+    arch_25_distributive_law_monomial_times_binomial_negative_monomial,
+)
+from .algebraic_expressions_archetypes_26_50 import (
+    arch_26_distributive_law_monomial_times_trinomial,
+    arch_27_distributive_law_variable_monomial_times_binomial,
+    arch_28_expand_and_simplify_two_bracketed_expressions_sum,
+    arch_29_expand_and_simplify_two_bracketed_expressions_difference,
+    arch_30_binomial_product_positive_terms_foil,
+    arch_31_binomial_product_mixed_signs_foil,
+    arch_32_binomial_product_both_negative_signs_foil,
+    arch_33_binomial_product_leading_coefficients_greater_than_one,
+    arch_34_square_of_binomial_sum_ax_plus_b_squared,
+    arch_35_square_of_binomial_difference_ax_minus_b_squared,
+    arch_36_product_of_sum_and_difference_difference_of_two_squares,
+    arch_37_expand_and_simplify_binomial_product_minus_squared_binomial,
+    arch_38_divide_monomial_by_monomial_integer_coefficients,
+    arch_39_divide_monomial_by_monomial_fractional_reduction,
+    arch_40_divide_binomial_by_integer_constant,
+    arch_41_divide_binomial_by_monomial_single_variable,
+    arch_42_divide_trinomial_by_monomial_single_variable,
+    arch_43_divide_polynomial_by_monomial_two_variables,
+    arch_44_simplify_quotient_with_bracket_in_numerator,
+    arch_45_square_root_of_monomial_with_even_exponents,
+    arch_46_cube_root_of_monomial_with_multiples_of_three_exponents,
+    arch_47_error_analysis_diagnosing_squared_binomial_middle_term_omission,
+    arch_48_error_analysis_diagnosing_sign_error_in_subtraction_of_polynomial,
+    arch_49_geometric_application_area_of_rectangle_with_binomial_dimensions,
+    arch_50_compound_multi_step_algebraic_expansion_and_evaluation_challenge,
+)
 
-
-SUBSKILLS = [
-    "expressions_language_and_substitution",
-    "expressions_add_sub_like_terms",
-    "expressions_distributive_monomial",
-    "expressions_binomial_product",
-    "expressions_square_of_binomial",
-    "expressions_divide_by_monomial",
-]
-
-
-def _gen_language_substitution(r: random.Random) -> Dict[str, Any]:
-    # e.g., for 4x^3 - 7x^2 + 5x - 9: coefficient of x^2, constant term, degree, evaluate at x = -2
-    a = r.choice([2, 3, 4, 5])
-    b = r.choice([-7, -6, -5, -4, 4, 6])
-    c = r.choice([-9, -8, -5, 5, 8, 12])
-    x_val = r.choice([-2, -1, 2])
-    
-    sign_b = f"- {abs(b)}" if b < 0 else f"+ {b}"
-    sign_c = f"- {abs(c)}" if c < 0 else f"+ {c}"
-    expr_str = f"{a}x^2 {sign_b}x {sign_c}"
-    
-    val = (a * (x_val**2)) + (b * x_val) + c
-    ans = str(val)
-
-    prompt = (
-        f"Consider the algebraic expression:\n$${expr_str}$$\n\n"
-        f"Evaluate the numerical value of the expression when **$x = {x_val}$**."
-    )
-
-    derivation = (
-        f"**Step 1: Substitute $x = {x_val}$ into each variable term (use brackets for negatives).**\n"
-        f"$$\\text{{Value}} = {a}({x_val})^2 {sign_b}({x_val}) {sign_c}$$\n\n"
-        f"**Step 2: Evaluate powers first.**\n"
-        f"$$({x_val})^2 = {x_val**2}$$\n"
-        f"$$\\text{{Value}} = {a}({x_val**2}) {sign_b}({x_val}) {sign_c}$$\n\n"
-        f"**Step 3: Perform multiplication and combine terms.**\n"
-        f"$$= {a * (x_val**2)} + ({b * x_val}) {sign_c} = {ans}$$"
-    )
-
-    return {
-        "id": make_id("g9_algsub"),
-        "topic": "Algebraic expressions 1",
-        "subskill": "expressions_language_and_substitution",
-        "difficulty": "medium",
-        "question_type": "typed",
-        "prompt": prompt,
-        "correct_answer": ans,
-        "hints": [
-            f"Replace every x with ({x_val}).",
-            f"Calculate the square first: ({x_val})^2 = {x_val**2}.",
-            f"The final evaluated value is {ans}.",
-        ],
-        "explanation": f"{derivation}\n\n**Correct Answer:** {ans} [2 marks]",
-        "mark_allocation": 2,
-    }
-
-
-def _gen_add_sub_like_terms(r: random.Random) -> Dict[str, Any]:
-    a1 = r.randint(2, 5)
-    b1 = r.randint(-6, 6)
-    c1 = r.randint(-9, 9)
-    
-    a2 = r.randint(1, 4)
-    b2 = r.randint(-5, 5)
-    c2 = r.randint(-8, 8)
-    
-    sign_b1 = f"- {abs(b1)}" if b1 < 0 else f"+ {b1}"
-    sign_c1 = f"- {abs(c1)}" if c1 < 0 else f"+ {c1}"
-    p1 = f"{a1}x^2 {sign_b1}x {sign_c1}"
-    
-    sign_b2 = f"- {abs(b2)}" if b2 < 0 else f"+ {b2}"
-    sign_c2 = f"- {abs(c2)}" if c2 < 0 else f"+ {c2}"
-    p2 = f"{a2}x^2 {sign_b2}x {sign_c2}"
-
-    # Subtract p2 from p1
-    net_a = a1 - a2
-    net_b = b1 - b2
-    net_c = c1 - c2
-
-    res_parts = []
-    if net_a == 1:
-        res_parts.append("x^2")
-    elif net_a == -1:
-        res_parts.append("-x^2")
-    elif net_a != 0:
-        res_parts.append(f"{net_a}x^2")
-        
-    if net_b > 0:
-        res_parts.append(f"+{net_b}x" if res_parts else f"{net_b}x")
-    elif net_b < 0:
-        res_parts.append(f"-{abs(net_b)}x")
-        
-    if net_c > 0:
-        res_parts.append(f"+{net_c}" if res_parts else f"{net_c}")
-    elif net_c < 0:
-        res_parts.append(f"-{abs(net_c)}")
-
-    ans = "".join(res_parts) or "0"
-
-    prompt = f"Simplify the following by subtracting the polynomials:\n$$({p1}) - ({p2})$$"
-
-    derivation = (
-        f"**Step 1: Distribute the negative sign across the second bracket.**\n"
-        f"$$= {p1} - {a2}x^2 {-b2:+d}x {-c2:+d}$$\n\n"
-        f"**Step 2: Group like terms together.**\n"
-        f"$$= ({a1} - {a2})x^2 + ({b1} - ({b2}))x + ({c1} - ({c2}))$$\n\n"
-        f"**Step 3: Combine like terms.**\n"
-        f"$$= {ans}$$"
-    )
-
-    return {
-        "id": make_id("g9_algsubpoly"),
-        "topic": "Algebraic expressions 1",
-        "subskill": "expressions_add_sub_like_terms",
-        "difficulty": "medium",
-        "question_type": "typed",
-        "prompt": prompt,
-        "correct_answer": ans,
-        "hints": [
-            "Be careful with the negative sign before the second bracket: change the sign of each term inside.",
-            "Group like terms: x^2 terms, x terms, and constant terms.",
-            f"The simplified expression is {ans}.",
-        ],
-        "explanation": f"{derivation}\n\n**Correct Answer:** {ans} [3 marks]",
-        "mark_allocation": 3,
-    }
-
-
-def _gen_distributive_monomial(r: random.Random) -> Dict[str, Any]:
-    m = r.choice([-4, -3, -2, 2, 3, 4])
-    a = r.randint(2, 5)
-    b = r.choice([-5, -4, -3, 3, 4, 5])
-    c = r.choice([-6, -4, 4, 6])
-    
-    sign_b = f"- {abs(b)}" if b < 0 else f"+ {b}"
-    sign_c = f"- {abs(c)}" if c < 0 else f"+ {c}"
-    inner = f"{a}x^2 {sign_b}x {sign_c}"
-    
-    term1 = m * a
-    term2 = m * b
-    term3 = m * c
-
-    sign_t2 = f"+{term2}" if term2 > 0 else f"-{abs(term2)}"
-    sign_t3 = f"+{term3}" if term3 > 0 else f"-{abs(term3)}"
-    ans = f"{term1}x^3{sign_t2}x^2{sign_t3}x"
-
-    prompt = f"Expand and simplify using the distributive property:\n$${m}x({inner})$$"
-
-    derivation = (
-        f"**Step 1: Multiply the monomial by each term inside the bracket.**\n"
-        f"$$({m}x) \\cdot ({a}x^2) + ({m}x) \\cdot ({b}x) + ({m}x) \\cdot ({c})$$\n\n"
-        f"**Step 2: Apply exponent product law ($x \\cdot x^2 = x^3$, $x \\cdot x = x^2$).**\n"
-        f"$$= {term1}x^3 {sign_t2}x^2 {sign_t3}x = {ans}$$"
-    )
-
-    return {
-        "id": make_id("g9_algdist"),
-        "topic": "Algebraic expressions 1",
-        "subskill": "expressions_distributive_monomial",
-        "difficulty": "medium",
-        "question_type": "typed",
-        "prompt": prompt,
-        "correct_answer": ans,
-        "hints": [
-            f"Multiply {m}x by each of the 3 terms inside the bracket.",
-            "Remember: x * x^2 = x^3 and watch out for signs (+ / -).",
-            f"Expanded form: {ans}.",
-        ],
-        "explanation": f"{derivation}\n\n**Correct Answer:** {ans} [3 marks]",
-        "mark_allocation": 3,
-    }
-
-
-def _gen_binomial_product(r: random.Random) -> Dict[str, Any]:
-    # (ax + b)(cx + d)
-    a = r.choice([1, 2, 3])
-    b = r.choice([-5, -4, -3, -2, 2, 3, 4, 5])
-    c = r.choice([1, 2, 3])
-    d = r.choice([-5, -4, -3, -2, 2, 3, 4, 5])
-    
-    a_str = "x" if a == 1 else f"{a}x"
-    c_str = "x" if c == 1 else f"{c}x"
-    b_str = f"- {abs(b)}" if b < 0 else f"+ {b}"
-    d_str = f"- {abs(d)}" if d < 0 else f"+ {d}"
-
-    # FOIL: F = ac x^2, O = ad x, I = bc x, L = bd
-    f_coeff = a * c
-    mid_coeff = (a * d) + (b * c)
-    l_coeff = b * d
-
-    f_str = "x^2" if f_coeff == 1 else f"{f_coeff}x^2"
-    mid_str = f"+{mid_coeff}x" if mid_coeff > 0 else (f"-{abs(mid_coeff)}x" if mid_coeff < 0 else "")
-    l_str = f"+{l_coeff}" if l_coeff > 0 else f"-{abs(l_coeff)}"
-    ans = f"{f_str}{mid_str}{l_str}"
-
-    prompt = f"Expand and simplify the product of two binomials:\n$$({a_str} {b_str})({c_str} {d_str})$$"
-
-    derivation = (
-        f"**Step 1: Apply FOIL method (First, Outer, Inner, Last).**\n"
-        f"- **First:** $({a_str})({c_str}) = {f_str}$\n"
-        f"- **Outer:** $({a_str})({d}) = {a * d}x$\n"
-        f"- **Inner:** $({b})({c_str}) = {b * c}x$\n"
-        f"- **Last:** $({b})({d}) = {l_coeff}$\n\n"
-        f"**Step 2: Combine middle like terms.**\n"
-        f"$${a * d}x + ({b * c}x) = {mid_coeff}x$$\n\n"
-        f"**Step 3: State expanded form.**\n"
-        f"$$= {ans}$$"
-    )
-
-    return {
-        "id": make_id("g9_algfoil"),
-        "topic": "Algebraic expressions 1",
-        "subskill": "expressions_binomial_product",
-        "difficulty": "medium",
-        "question_type": "typed",
-        "prompt": prompt,
-        "correct_answer": ans,
-        "hints": [
-            "Use FOIL: First terms, Outer terms, Inner terms, Last terms.",
-            f"First: {f_str}, Middle sum: ({a*d} + {b*c})x, Last: {l_coeff}.",
-            f"Expanded form is {ans}.",
-        ],
-        "explanation": f"{derivation}\n\n**Correct Answer:** {ans} [3 marks]",
-        "mark_allocation": 3,
-    }
-
-
-def _gen_square_of_binomial(r: random.Random) -> Dict[str, Any]:
-    # (ax ± b)^2 = a^2 x^2 ± 2ab x + b^2
-    a = r.choice([1, 2, 3, 4])
-    b = r.choice([2, 3, 4, 5])
-    op = r.choice(["+", "-"])
-    
-    a_str = "x" if a == 1 else f"{a}x"
-    expr = f"({a_str} {op} {b})^2"
-
-    term1 = a ** 2
-    term2 = 2 * a * b
-    term3 = b ** 2
-
-    t1_str = "x^2" if term1 == 1 else f"{term1}x^2"
-    sign_t2 = f"+{term2}" if op == "+" else f"-{term2}"
-    ans = f"{t1_str}{sign_t2}x+{term3}"
-
-    prompt = f"Expand and simplify the square of the binomial:\n$${expr}$$"
-
-    derivation = (
-        f"**Step 1: Write as the product of two identical binomials.**\n"
-        f"$${expr} = ({a_str} {op} {b})({a_str} {op} {b})$$\n\n"
-        f"**Step 2: Apply the binomial square rule: $(A \\pm B)^2 = A^2 \\pm 2AB + B^2$.**\n"
-        f"- $A^2 = ({a_str})^2 = {t1_str}$\n"
-        f"- $2AB = 2({a_str})({b}) = {term2}x$\n"
-        f"- $B^2 = ({b})^2 = {term3}$\n\n"
-        f"**Step 3: Combine.**\n"
-        f"$$= {ans}$$"
-    )
-
-    return {
-        "id": make_id("g9_algbinsq"),
-        "topic": "Algebraic expressions 1",
-        "subskill": "expressions_square_of_binomial",
-        "difficulty": "medium",
-        "question_type": "typed",
-        "prompt": prompt,
-        "correct_answer": ans,
-        "hints": [
-            "Remember: (A ± B)^2 = A^2 ± 2AB + B^2.",
-            f"Square the first term: {t1_str}. Double the product: {sign_t2}x. Square the last term: +{term3}.",
-            f"The expanded expression is {ans}.",
-        ],
-        "explanation": f"{derivation}\n\n**Correct Answer:** {ans} [3 marks]",
-        "mark_allocation": 3,
-    }
-
-
-def _gen_divide_by_monomial(r: random.Random) -> Dict[str, Any]:
-    divisor_coeff = r.choice([2, 3, 4, 5])
-    t1_c = divisor_coeff * r.choice([2, 3, 4])
-    t2_c = divisor_coeff * r.choice([-5, -4, -3, 3, 4])
-    t3_c = divisor_coeff * r.choice([-6, -4, 2, 4, 6])
-
-    sign_t2 = f"- {abs(t2_c)}" if t2_c < 0 else f"+ {t2_c}"
-    sign_t3 = f"- {abs(t3_c)}" if t3_c < 0 else f"+ {t3_c}"
-    num_str = f"{t1_c}x^3 {sign_t2}x^2 {sign_t3}x"
-    den_str = f"{divisor_coeff}x"
-
-    q1 = t1_c // divisor_coeff
-    q2 = t2_c // divisor_coeff
-    q3 = t3_c // divisor_coeff
-
-    q1_str = "x^2" if q1 == 1 else f"{q1}x^2"
-    q2_str = f"+{q2}x" if q2 > 0 else f"-{abs(q2)}x"
-    q3_str = f"+{q3}" if q3 > 0 else f"-{abs(q3)}"
-    ans = f"{q1_str}{q2_str}{q3_str}"
-
-    prompt = f"Simplify by dividing the polynomial by the monomial:\n$$\\frac{{{num_str}}}{{{den_str}}}$$"
-
-    derivation = (
-        f"**Step 1: Divide each term in the numerator separately by the denominator.**\n"
-        f"$$= \\frac{{{t1_c}x^3}}{{{den_str}}} + \\frac{{{t2_c}x^2}}{{{den_str}}} + \\frac{{{t3_c}x}}{{{den_str}}}$$\n\n"
-        f"**Step 2: Simplify each term using exponent quotient law.**\n"
-        f"$$\\frac{{{t1_c}x^3}}{{{divisor_coeff}x}} = {q1_str}, \\quad \\frac{{{t2_c}x^2}}{{{divisor_coeff}x}} = {q2_str}, \\quad \\frac{{{t3_c}x}}{{{divisor_coeff}x}} = {q3_str}$$\n\n"
-        f"**Step 3: Combine.**\n"
-        f"$$= {ans}$$"
-    )
-
-    return {
-        "id": make_id("g9_algdiv"),
-        "topic": "Algebraic expressions 1",
-        "subskill": "expressions_divide_by_monomial",
-        "difficulty": "medium",
-        "question_type": "typed",
-        "prompt": prompt,
-        "correct_answer": ans,
-        "hints": [
-            f"Divide each term in the numerator by {den_str}.",
-            "Subtract exponents: x^3/x = x^2, x^2/x = x, x/x = 1.",
-            f"The quotient is {ans}.",
-        ],
-        "explanation": f"{derivation}\n\n**Correct Answer:** {ans} [3 marks]",
-        "mark_allocation": 3,
-    }
-
-
-GENERATORS = {
-    "expressions_language_and_substitution": _gen_language_substitution,
-    "expressions_add_sub_like_terms": _gen_add_sub_like_terms,
-    "expressions_distributive_monomial": _gen_distributive_monomial,
-    "expressions_binomial_product": _gen_binomial_product,
-    "expressions_square_of_binomial": _gen_square_of_binomial,
-    "expressions_divide_by_monomial": _gen_divide_by_monomial,
+ARCHETYPE_MAP: Dict[str, Callable[[random.Random], Dict[str, Any]]] = {
+    "01_identify_variable_in_given_expression": arch_01_identify_variable_in_given_expression,
+    "02_identify_constant_term_in_polynomial": arch_02_identify_constant_term_in_polynomial,
+    "03_identify_coefficient_of_linear_term": arch_03_identify_coefficient_of_linear_term,
+    "04_identify_coefficient_of_squared_term": arch_04_identify_coefficient_of_squared_term,
+    "05_determine_degree_of_univariate_polynomial": arch_05_determine_degree_of_univariate_polynomial,
+    "06_classify_expression_as_monomial_binomial_trinomial": arch_06_classify_expression_as_monomial_binomial_trinomial,
+    "07_count_number_of_terms_separated_by_plus_minus": arch_07_count_number_of_terms_separated_by_plus_minus,
+    "08_evaluate_linear_expression_positive_integer_substitution": arch_08_evaluate_linear_expression_positive_integer_substitution,
+    "09_evaluate_linear_expression_negative_integer_substitution": arch_09_evaluate_linear_expression_negative_integer_substitution,
+    "10_evaluate_quadratic_expression_negative_substitution": arch_10_evaluate_quadratic_expression_negative_substitution,
+    "11_evaluate_expression_with_fractional_substitution": arch_11_evaluate_expression_with_fractional_substitution,
+    "12_verbal_description_to_algebraic_expression_basic": arch_12_verbal_description_to_algebraic_expression_basic,
+    "13_verbal_description_to_algebraic_expression_nested_brackets": arch_13_verbal_description_to_algebraic_expression_nested_brackets,
+    "14_distinguish_bracketed_product_from_unbracketed_addition": arch_14_distinguish_bracketed_product_from_unbracketed_addition,
+    "15_flow_diagram_to_algebraic_expression_derivation": arch_15_flow_diagram_to_algebraic_expression_derivation,
+    "16_algebraic_expression_to_flow_diagram_derivation": arch_16_algebraic_expression_to_flow_diagram_derivation,
+    "17_substitute_into_geometric_perimeter_formula": arch_17_substitute_into_geometric_perimeter_formula,
+    "18_substitute_into_geometric_area_formula": arch_18_substitute_into_geometric_area_formula,
+    "19_identify_and_group_like_terms_single_variable": arch_19_identify_and_group_like_terms_single_variable,
+    "20_identify_and_group_like_terms_two_variables": arch_20_identify_and_group_like_terms_two_variables,
+    "21_add_polynomials_combining_like_terms": arch_21_add_polynomials_combining_like_terms,
+    "22_subtract_polynomials_distributing_negative_sign": arch_22_subtract_polynomials_distributing_negative_sign,
+    "23_simplify_polynomial_with_descending_powers_standard_form": arch_23_simplify_polynomial_with_descending_powers_standard_form,
+    "24_distributive_law_monomial_times_binomial_positive": arch_24_distributive_law_monomial_times_binomial_positive,
+    "25_distributive_law_monomial_times_binomial_negative_monomial": arch_25_distributive_law_monomial_times_binomial_negative_monomial,
+    "26_distributive_law_monomial_times_trinomial": arch_26_distributive_law_monomial_times_trinomial,
+    "27_distributive_law_variable_monomial_times_binomial": arch_27_distributive_law_variable_monomial_times_binomial,
+    "28_expand_and_simplify_two_bracketed_expressions_sum": arch_28_expand_and_simplify_two_bracketed_expressions_sum,
+    "29_expand_and_simplify_two_bracketed_expressions_difference": arch_29_expand_and_simplify_two_bracketed_expressions_difference,
+    "30_binomial_product_positive_terms_foil": arch_30_binomial_product_positive_terms_foil,
+    "31_binomial_product_mixed_signs_foil": arch_31_binomial_product_mixed_signs_foil,
+    "32_binomial_product_both_negative_signs_foil": arch_32_binomial_product_both_negative_signs_foil,
+    "33_binomial_product_leading_coefficients_greater_than_one": arch_33_binomial_product_leading_coefficients_greater_than_one,
+    "34_square_of_binomial_sum_ax_plus_b_squared": arch_34_square_of_binomial_sum_ax_plus_b_squared,
+    "35_square_of_binomial_difference_ax_minus_b_squared": arch_35_square_of_binomial_difference_ax_minus_b_squared,
+    "36_product_of_sum_and_difference_difference_of_two_squares": arch_36_product_of_sum_and_difference_difference_of_two_squares,
+    "37_expand_and_simplify_binomial_product_minus_squared_binomial": arch_37_expand_and_simplify_binomial_product_minus_squared_binomial,
+    "38_divide_monomial_by_monomial_integer_coefficients": arch_38_divide_monomial_by_monomial_integer_coefficients,
+    "39_divide_monomial_by_monomial_fractional_reduction": arch_39_divide_monomial_by_monomial_fractional_reduction,
+    "40_divide_binomial_by_integer_constant": arch_40_divide_binomial_by_integer_constant,
+    "41_divide_binomial_by_monomial_single_variable": arch_41_divide_binomial_by_monomial_single_variable,
+    "42_divide_trinomial_by_monomial_single_variable": arch_42_divide_trinomial_by_monomial_single_variable,
+    "43_divide_polynomial_by_monomial_two_variables": arch_43_divide_polynomial_by_monomial_two_variables,
+    "44_simplify_quotient_with_bracket_in_numerator": arch_44_simplify_quotient_with_bracket_in_numerator,
+    "45_square_root_of_monomial_with_even_exponents": arch_45_square_root_of_monomial_with_even_exponents,
+    "46_cube_root_of_monomial_with_multiples_of_three_exponents": arch_46_cube_root_of_monomial_with_multiples_of_three_exponents,
+    "47_error_analysis_diagnosing_squared_binomial_middle_term_omission": arch_47_error_analysis_diagnosing_squared_binomial_middle_term_omission,
+    "48_error_analysis_diagnosing_sign_error_in_subtraction_of_polynomial": arch_48_error_analysis_diagnosing_sign_error_in_subtraction_of_polynomial,
+    "49_geometric_application_area_of_rectangle_with_binomial_dimensions": arch_49_geometric_application_area_of_rectangle_with_binomial_dimensions,
+    "50_compound_multi_step_algebraic_expansion_and_evaluation_challenge": arch_50_compound_multi_step_algebraic_expansion_and_evaluation_challenge,
 }
 
-
-def generate(
-    subskill: str = "mixed",
-    difficulty: str = "medium",
-    count: int = 1,
-    seed: Optional[int] = None,
-    **kwargs: Any,
-) -> List[Dict[str, Any]]:
-    r = rng(seed)
-    results: List[Dict[str, Any]] = []
-
-    if subskill in GENERATORS:
-        for _ in range(count):
-            results.append(GENERATORS[subskill](r))
-        return results
-
-    keys = list(GENERATORS.keys())
-    for i in range(count):
-        chosen = keys[(i + r.randint(0, len(keys) - 1)) % len(keys)]
-        results.append(GENERATORS[chosen](r))
-
-    return results
+SUBSKILLS: List[str] = list(ARCHETYPE_MAP.keys())
+ARCHETYPES: List[str] = SUBSKILLS
+ORDERED_SUBSKILLS: List[str] = SUBSKILLS
 
 
 def generate_grade9_algebraic_expressions_question(
-    subskill: str = "mixed",
-    difficulty: str = "medium",
     seed: Optional[int] = None,
+    subskill: Optional[str] = None,
     **kwargs: Any,
 ) -> Dict[str, Any]:
-    res = generate(subskill=subskill, difficulty=difficulty, count=1, seed=seed, **kwargs)
-    return res[0] if res else {}
+    """Generates a single Grade 9 Algebraic Expressions question."""
+    r = random.Random(seed)
+    if subskill and subskill in ARCHETYPE_MAP:
+        builder = ARCHETYPE_MAP[subskill]
+        chosen_subskill = subskill
+    else:
+        chosen_subskill = r.choice(SUBSKILLS)
+        builder = ARCHETYPE_MAP[chosen_subskill]
+
+    q = builder(r)
+    q["subskill"] = chosen_subskill
+    q["grade"] = "9"
+    q["subject"] = "Mathematics"
+    q["topic"] = "Algebraic expressions 1"
+    q["term"] = 1
+    return q
+
+
+generate_grade9_expressions_question = generate_grade9_algebraic_expressions_question
+
+
+def generate(
+    seed: Optional[int] = None,
+    subskill: Optional[str] = None,
+    difficulty: Optional[str] = None,
+    count: int = 1,
+    **kwargs: Any,
+) -> List[Dict[str, Any]]:
+    """6-Pillar Generator Contract entry point."""
+    r = random.Random(seed)
+    questions: List[Dict[str, Any]] = []
+
+    if subskill and subskill in ARCHETYPE_MAP:
+        candidates = [subskill]
+    else:
+        candidates = SUBSKILLS
+
+    for i in range(count):
+        sub = candidates[i % len(candidates)] if len(candidates) > 1 else candidates[0]
+        sub_seed = r.randint(1, 1_000_000_000)
+        q = generate_grade9_algebraic_expressions_question(seed=sub_seed, subskill=sub, **kwargs)
+        questions.append(q)
+
+    return questions
