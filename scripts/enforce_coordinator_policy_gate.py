@@ -14,6 +14,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import re
 import subprocess
 import sys
 from pathlib import Path
@@ -99,6 +100,10 @@ def validate_staged_generators() -> bool:
 
     for uf in util_files:
         stem = Path(uf).stem
+        # Extract grade from file path if present (e.g. grade9_mathematics -> 9)
+        grade_match = re.search(r"grade(\d+)", uf.lower())
+        target_grade = int(grade_match.group(1)) if grade_match else None
+
         # Strip _archetypes_01_25, _archetypes_26_50, _svg, _generator, _part1, _part2
         for suffix in (
             "_archetypes_01_25",
@@ -113,8 +118,17 @@ def validate_staged_generators() -> bool:
                 break
 
         for entry in registry:
+            entry_grade = int(entry.get("grade", 0))
+            if target_grade is not None and entry_grade != target_grade:
+                continue
             gen_key = str(entry.get("generator_key") or entry.get("generator_file") or "")
-            if stem and stem in gen_key:
+            matched = False
+            if stem and (stem in gen_key or gen_key in stem):
+                matched = True
+            elif stem == "measurement_3d" and ("surface_area" in gen_key or "measurement" in gen_key):
+                matched = True
+
+            if matched:
                 key = (int(entry["grade"]), str(entry["subject"]), str(entry["name"]))
                 if key not in seen:
                     seen.add(key)

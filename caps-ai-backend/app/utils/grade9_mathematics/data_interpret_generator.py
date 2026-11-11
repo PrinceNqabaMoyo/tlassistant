@@ -1,304 +1,197 @@
-"""Grade 9 Mathematics — Interpret, Analyse & Report Data Generator (Deterministic 6-Pillar Contract).
+"""Grade 9 Mathematics - Interpret, Analyse and Report on Data Generator (50 Semantic Archetypes).
+=============================================================================================
+Grounded strictly in:
+  - CAPS Grade 9 Mathematics: Term 4 Topic: Interpret analyse and report on data
+  - curriculum_docs_auto/Mathematics_Gr9/Term 4/
+  - Sampling methods, representative vs biased samples (convenience, voluntary response, small n).
+  - Questionnaire design: leading questions, loaded language.
+  - Detecting misleading data presentations: truncated axes, non-uniform scales, 2D/3D pictogram distortions, omitted baselines.
+  - Comparing data sets: mean, median, mode, range, consistency, impact of outliers, bimodal distributions.
+  - Transformations of data: adding a constant, multiplying by a constant.
+  - Drawing conclusions: correlation vs causation, confounding variables, extrapolation risks.
+  - Formal reporting and synthesis of recommendations.
 
-Curriculum Alignment:
-- Grade 9 Term 4: Interpret, analyse and report on data
-- South African National Curriculum Standards (Senior Phase Mathematics)
-- Critical statistical literacy:
-  * Misleading graphs: truncated vertical axes (broken axes), irregular intervals, 3D volume distortion
-  * Comparative dataset analysis: comparing two groups via mean, median, and range
-  * Choosing appropriate summary statistics in skewed distributions or datasets with outliers
-  * Sampling bias, representative vs biased samples, and drawing valid population inferences
-
-6 Pillars:
-- Deterministic seed generation with zero LLM authority
-- Directed solution graph with dependency tracking
-- Adaptive deconstruction (atomic elementary sub-drills on error)
-- Rich 3-tier hints (Conceptual, Procedural with statistical reasoning, Concrete Step-by-Step with actual numbers)
-- Misconception-targeted error taxonomy
-- Native DiagramRenderer specs
+100% CAPS-aligned deterministic question generator.
+Zero LLM calls, zero token cost, 100% AST pure.
 """
 from __future__ import annotations
 
-import math
 import random
-import uuid
-from typing import Any, Dict, List, Optional
+from typing import Any, Callable, Dict, List, Optional
 
-from app.utils.grade9_mathematics._math_common import rng
+from .data_interpret_archetypes_01_25 import (
+    arch_01_identify_sampling_bias_convenience_sample,
+    arch_02_identify_sampling_bias_voluntary_response,
+    arch_03_identify_sampling_bias_sample_size_too_small,
+    arch_04_evaluate_leading_question_in_survey,
+    arch_05_distinguish_between_population_and_sample,
+    arch_06_detect_truncated_vertical_axis_in_bar_display,
+    arch_07_calculate_actual_vs_visual_ratio_truncated_axis,
+    arch_08_detect_non_uniform_axis_scaling,
+    arch_09_detect_pictogram_area_volume_distortion,
+    arch_10_detect_omitted_baseline_or_scale_distortion,
+    arch_11_compare_two_groups_using_mean,
+    arch_12_compare_two_groups_using_median,
+    arch_13_compare_two_groups_using_range,
+    arch_14_analyse_effect_of_high_outlier_on_mean,
+    arch_15_analyse_effect_of_low_outlier_on_mean,
+    arch_16_resistance_of_median_to_extreme_outliers,
+    arch_17_choose_appropriate_measure_for_skewed_income,
+    arch_18_choose_appropriate_measure_for_symmetric_test_scores,
+    arch_19_determine_mode_importance_for_inventory_ordering,
+    arch_20_critique_graph_with_missing_sample_size,
+    arch_21_critique_claim_confusing_correlation_with_causation,
+    arch_22_interpret_trend_and_predict_next_period,
+    arch_23_compare_spread_consistency_between_two_athletes,
+    arch_24_compare_pass_rates_between_two_classes,
+    arch_25_identify_modal_category_from_survey_summary,
+)
+from .data_interpret_archetypes_26_50 import (
+    arch_26_evaluate_representativeness_of_school_tuckshop_sample,
+    arch_27_evaluate_representativeness_of_online_poll,
+    arch_28_detect_suppression_of_negative_data_in_report,
+    arch_29_calculate_percentage_increase_misleadingly_reported,
+    arch_30_absolute_vs_relative_change_interpretation,
+    arch_31_distinguish_between_continuous_trend_and_extrapolation_risk,
+    arch_32_identify_confounding_variable_in_health_claim,
+    arch_33_compare_bimodal_distribution_interpretations,
+    arch_34_assess_impact_of_changing_class_intervals_on_histogram_shape,
+    arch_35_compare_two_teams_performance_using_median_and_range,
+    arch_36_evaluate_conclusion_drawn_from_biased_phone_survey,
+    arch_37_identify_circular_reasoning_or_unsubstantiated_claim,
+    arch_38_interpret_effect_of_doubling_sample_size_on_reliability,
+    arch_39_critique_marketing_claim_based_on_9_out_of_10_dentists,
+    arch_40_identify_omission_of_non_respondents_non_response_bias,
+    arch_41_recalculate_mean_after_removing_data_entry_error,
+    arch_42_recalculate_median_after_adding_new_learner_score,
+    arch_43_determine_effect_on_mean_when_all_scores_increase_by_constant,
+    arch_44_determine_effect_on_range_when_all_scores_increase_by_constant,
+    arch_45_determine_effect_on_mean_when_all_scores_multiplied_by_factor,
+    arch_46_compare_variability_between_two_weather_stations,
+    arch_47_draw_reasoned_conclusion_from_customer_feedback_table,
+    arch_48_recommend_policy_decision_based_on_bimodal_transport_survey,
+    arch_49_summarise_key_findings_for_formal_statistical_report,
+    arch_50_compound_multi_stage_data_interpretation_and_reporting_synthesis,
+)
 
-TOPIC = "grade9_math_data_interpret"
-LO = "math9_data_interpret"
+DISPATCH_TABLE: Dict[str, Callable[[random.Random], Dict[str, Any]]] = {
+    "01_identify_sampling_bias_convenience_sample": arch_01_identify_sampling_bias_convenience_sample,
+    "02_identify_sampling_bias_voluntary_response": arch_02_identify_sampling_bias_voluntary_response,
+    "03_identify_sampling_bias_sample_size_too_small": arch_03_identify_sampling_bias_sample_size_too_small,
+    "04_evaluate_leading_question_in_survey": arch_04_evaluate_leading_question_in_survey,
+    "05_distinguish_between_population_and_sample": arch_05_distinguish_between_population_and_sample,
+    "06_detect_truncated_vertical_axis_in_bar_display": arch_06_detect_truncated_vertical_axis_in_bar_display,
+    "07_calculate_actual_vs_visual_ratio_truncated_axis": arch_07_calculate_actual_vs_visual_ratio_truncated_axis,
+    "08_detect_non_uniform_axis_scaling": arch_08_detect_non_uniform_axis_scaling,
+    "09_detect_pictogram_area_volume_distortion": arch_09_detect_pictogram_area_volume_distortion,
+    "10_detect_omitted_baseline_or_scale_distortion": arch_10_detect_omitted_baseline_or_scale_distortion,
+    "11_compare_two_groups_using_mean": arch_11_compare_two_groups_using_mean,
+    "12_compare_two_groups_using_median": arch_12_compare_two_groups_using_median,
+    "13_compare_two_groups_using_range": arch_13_compare_two_groups_using_range,
+    "14_analyse_effect_of_high_outlier_on_mean": arch_14_analyse_effect_of_high_outlier_on_mean,
+    "15_analyse_effect_of_low_outlier_on_mean": arch_15_analyse_effect_of_low_outlier_on_mean,
+    "16_resistance_of_median_to_extreme_outliers": arch_16_resistance_of_median_to_extreme_outliers,
+    "17_choose_appropriate_measure_for_skewed_income": arch_17_choose_appropriate_measure_for_skewed_income,
+    "18_choose_appropriate_measure_for_symmetric_test_scores": arch_18_choose_appropriate_measure_for_symmetric_test_scores,
+    "19_determine_mode_importance_for_inventory_ordering": arch_19_determine_mode_importance_for_inventory_ordering,
+    "20_critique_graph_with_missing_sample_size": arch_20_critique_graph_with_missing_sample_size,
+    "21_critique_claim_confusing_correlation_with_causation": arch_21_critique_claim_confusing_correlation_with_causation,
+    "22_interpret_trend_and_predict_next_period": arch_22_interpret_trend_and_predict_next_period,
+    "23_compare_spread_consistency_between_two_athletes": arch_23_compare_spread_consistency_between_two_athletes,
+    "24_compare_pass_rates_between_two_classes": arch_24_compare_pass_rates_between_two_classes,
+    "25_identify_modal_category_from_survey_summary": arch_25_identify_modal_category_from_survey_summary,
+    "26_evaluate_representativeness_of_school_tuckshop_sample": arch_26_evaluate_representativeness_of_school_tuckshop_sample,
+    "27_evaluate_representativeness_of_online_poll": arch_27_evaluate_representativeness_of_online_poll,
+    "28_detect_suppression_of_negative_data_in_report": arch_28_detect_suppression_of_negative_data_in_report,
+    "29_calculate_percentage_increase_misleadingly_reported": arch_29_calculate_percentage_increase_misleadingly_reported,
+    "30_absolute_vs_relative_change_interpretation": arch_30_absolute_vs_relative_change_interpretation,
+    "31_distinguish_between_continuous_trend_and_extrapolation_risk": arch_31_distinguish_between_continuous_trend_and_extrapolation_risk,
+    "32_identify_confounding_variable_in_health_claim": arch_32_identify_confounding_variable_in_health_claim,
+    "33_compare_bimodal_distribution_interpretations": arch_33_compare_bimodal_distribution_interpretations,
+    "34_assess_impact_of_changing_class_intervals_on_histogram_shape": arch_34_assess_impact_of_changing_class_intervals_on_histogram_shape,
+    "35_compare_two_teams_performance_using_median_and_range": arch_35_compare_two_teams_performance_using_median_and_range,
+    "36_evaluate_conclusion_drawn_from_biased_phone_survey": arch_36_evaluate_conclusion_drawn_from_biased_phone_survey,
+    "37_identify_circular_reasoning_or_unsubstantiated_claim": arch_37_identify_circular_reasoning_or_unsubstantiated_claim,
+    "38_interpret_effect_of_doubling_sample_size_on_reliability": arch_38_interpret_effect_of_doubling_sample_size_on_reliability,
+    "39_critique_marketing_claim_based_on_9_out_of_10_dentists": arch_39_critique_marketing_claim_based_on_9_out_of_10_dentists,
+    "40_identify_omission_of_non_respondents_non_response_bias": arch_40_identify_omission_of_non_respondents_non_response_bias,
+    "41_recalculate_mean_after_removing_data_entry_error": arch_41_recalculate_mean_after_removing_data_entry_error,
+    "42_recalculate_median_after_adding_new_learner_score": arch_42_recalculate_median_after_adding_new_learner_score,
+    "43_determine_effect_on_mean_when_all_scores_increase_by_constant": arch_43_determine_effect_on_mean_when_all_scores_increase_by_constant,
+    "44_determine_effect_on_range_when_all_scores_increase_by_constant": arch_44_determine_effect_on_range_when_all_scores_increase_by_constant,
+    "45_determine_effect_on_mean_when_all_scores_multiplied_by_factor": arch_45_determine_effect_on_mean_when_all_scores_multiplied_by_factor,
+    "46_compare_variability_between_two_weather_stations": arch_46_compare_variability_between_two_weather_stations,
+    "47_draw_reasoned_conclusion_from_customer_feedback_table": arch_47_draw_reasoned_conclusion_from_customer_feedback_table,
+    "48_recommend_policy_decision_based_on_bimodal_transport_survey": arch_48_recommend_policy_decision_based_on_bimodal_transport_survey,
+    "49_summarise_key_findings_for_formal_statistical_report": arch_49_summarise_key_findings_for_formal_statistical_report,
+    "50_compound_multi_stage_data_interpretation_and_reporting_synthesis": arch_50_compound_multi_stage_data_interpretation_and_reporting_synthesis,
+}
+
+SUBSKILLS: List[str] = list(DISPATCH_TABLE.keys())
+
+
+def get_subskills() -> List[str]:
+    return list(SUBSKILLS)
 
 
 def generate_grade9_data_interpret_question(
     seed: Optional[int] = None,
-    difficulty: str = "medium",
-    mode: str = "compound",
     subskill: Optional[str] = None,
+    archetype_index: Optional[int] = None,
+    mode: str = "compound",
     **kwargs: Any,
 ) -> Dict[str, Any]:
-    r = rng(seed)
+    r = random.Random(seed)
 
-    archetype_choices = [
-        "misleading_graph_critique",
-        "comparative_dataset_analysis",
-        "sampling_bias_evaluation",
-    ]
+    selected_subskill = subskill
+    if not selected_subskill or selected_subskill not in DISPATCH_TABLE:
+        if archetype_index is not None and 0 <= archetype_index < len(SUBSKILLS):
+            selected_subskill = SUBSKILLS[archetype_index]
+        elif mode.startswith("elementary_"):
+            target_stem = mode.replace("elementary_", "")
+            candidates = [s for s in SUBSKILLS if target_stem in s]
+            selected_subskill = candidates[0] if candidates else r.choice(SUBSKILLS)
+        else:
+            selected_subskill = r.choice(SUBSKILLS)
 
-    selected_subskill = subskill or mode
-    if selected_subskill in archetype_choices:
-        archetype = selected_subskill
-    else:
-        archetype = r.choice(archetype_choices)
+    builder = DISPATCH_TABLE[selected_subskill]
+    q = builder(r)
 
-    qid = f"g9_dataint_{seed or r.randint(1000, 9999)}_{uuid.uuid4().hex[:6]}"
+    # 6-Pillar Metadata Enforcements
+    q.setdefault("topic", "Interpret analyse and report on data")
+    q.setdefault("subject", "Mathematics")
+    q.setdefault("grade", "9")
+    q.setdefault("term", 4)
+    q.setdefault("caps_weight_percent", 5.0)
+    q.setdefault("suggested_duration_mins", 3)
+    q.setdefault("difficulty", "medium")
+    q.setdefault("subskill", selected_subskill)
+    q.setdefault("archetype", selected_subskill)
+    q.setdefault("interactive", False)
 
-    if archetype == "misleading_graph_critique":
-        # Classic CAPS question: A company claims Product A is vastly superior to Product B.
-        # Graph y-axis starts at 90 instead of 0. Product A = 95%, Product B = 91%.
-        # The bar for A looks 5 times taller than the bar for B!
-        val_a = r.randint(94, 98)
-        val_b = r.randint(89, 93)
-        diff = val_a - val_b
-        axis_start = r.randint(85, 88)
-        
-        visual_height_a = val_a - axis_start
-        visual_height_b = val_b - axis_start
-        ratio = round(visual_height_a / visual_height_b, 1)
-
-        question_text = (
-            f"An advertisement displays a bar graph comparing the customer satisfaction rates of "
-            f"Company X ({val_a}%) and Company Y ({val_b}%).\n\n"
-            f"On the graph, the vertical percentage axis starts at ${axis_start}\\%$ instead of $0\\%$.\n"
-            f"Consequently, the bar for Company X appears **{ratio} times as tall** as the bar for Company Y!\n\n"
-            f"1. Explain why this graph is visually misleading and dishonest.\n"
-            f"2. What is the actual numerical difference in satisfaction between the two companies?\n"
-            f"3. How should the graph be redrawn so that it presents the data fairly and accurately?"
-        )
-
-        steps = [
-            {"id": "S1", "statement": f"Misleading reason: The vertical axis is truncated (starts at {axis_start}% instead of 0%), exaggerating the visual difference between {val_a}% and {val_b}%.", "reason": "truncated axis distortion", "deps": []},
-            {"id": "S2", "statement": f"Actual difference: ${val_a}\\% - {val_b}\\% = {diff}\\%$", "reason": "arithmetic subtraction", "deps": []},
-            {"id": "S3", "statement": "Redrawing recommendation: The vertical axis must start at 0% with uniform scaling up to 100%.", "reason": "honest visualization standard", "deps": ["S1"]},
-        ]
-
-        hints = [
-            "Look at the vertical scale: when an axis starts above zero (a truncated or broken axis), small differences appear huge.",
-            f"The actual difference is only {val_a}% - {val_b}% = {diff}%, but visually Company X looks {ratio} times taller.",
-            "To correct the distortion, the vertical axis should always start at 0% with equal spacing up to 100%.",
-        ]
-
-        error_tax = [
-            {
-                "id": "err_accepted_visual_ratio",
-                "tag": "misconception_visual_distortion_acceptance",
-                "condition": f"Claimed Company X is {ratio} times better",
-                "feedback": "Company X is NOT {ratio} times better. A difference of only {diff}% is magnified by truncating the vertical axis.",
-            },
-        ]
-
-        sample_answer = (
-            f"1. **Why it is misleading:** The vertical axis has been truncated to start at ${axis_start}\\%$ instead of $0\\%$. This artificially exaggerates a small ${diff}\\%$ difference, making Company X appear {ratio} times better than Company Y when in reality both have very similar satisfaction ratings above {val_b}%.\n"
-            f"2. Actual difference $= {val_a}\\% - {val_b}\\% = {diff}\\%$\n"
-            f"3. **Fair representation:** The vertical percentage axis should start at $0\\%$ with a uniform scale running from $0\\%$ to $100\\%$."
-        )
-
-        diagram_spec = {
-            "diagram_role": "context",
-            "kind": "statistics_box_and_ogive",
-            "caption": f"Misleading truncated bar graph (axis starting at {axis_start}%)",
-        }
-
-        correct_ans = f"Truncated axis starting at {axis_start}%; Actual diff = {diff}%"
-        subskill_id = "misleading_graph_critique"
-        reason_code = "misleading graph analysis (truncated axis)"
-        marks = 3
-
-    elif archetype == "comparative_dataset_analysis":
-        # Comparing two classes: Class A and Class B in an exam
-        # Class A has mean 65, range 15 (consistent). Class B has mean 65, range 45 (wide spread).
-        mean_score = r.randint(60, 72)
-        range_a = r.randint(12, 18)
-        range_b = r.randint(38, 52)
-
-        question_text = (
-            f"Two Grade 9 classes wrote the same Mathematics exam out of $100$.\n\n"
-            f"- **Class 9A:** Mean score = ${mean_score}\\%$; Range = ${range_a}\\%$.\n"
-            f"- **Class 9B:** Mean score = ${mean_score}\\%$; Range = ${range_b}\\%$.\n\n"
-            f"1. Compare the overall central performance of the two classes.\n"
-            f"2. Compare the consistency (spread) of the learners' marks between the two classes.\n"
-            f"3. Which class would be easier for a teacher to pace instruction for, and why?"
-        )
-
-        steps = [
-            {"id": "S1", "statement": f"Central performance: Both classes have identical mean performance (${mean_score}\\%$).", "reason": "compare means", "deps": []},
-            {"id": "S2", "statement": f"Spread / Consistency: Class 9A is far more consistent (range = {range_a}%) than Class 9B (range = {range_b}%).", "reason": "compare ranges", "deps": []},
-            {"id": "S3", "statement": f"Class 9A is easier to pace because the learners perform at a similar level (low spread of {range_a}%).", "reason": "educational inference", "deps": ["S1", "S2"]},
-        ]
-
-        hints = [
-            f"Notice that both classes have the exact same average mark of {mean_score}%.",
-            f"Look at the range (spread): Class 9A has a small range ({range_a}%), meaning marks are clustered together. Class 9B has a huge range ({range_b}%), meaning some scored very low and some very high.",
-            "A class with a small range is more homogeneous (consistent) and easier to teach at a uniform pace.",
-        ]
-
-        error_tax = [
-            {
-                "id": "err_claimed_higher_mean",
-                "tag": "misconception_mean_comparison",
-                "condition": "Claimed one class had higher performance despite equal means",
-                "feedback": "Both classes have identical mean scores (both are {mean_score}%). The difference lies entirely in the spread (consistency).",
-            },
-        ]
-
-        sample_answer = (
-            f"1. **Central performance:** Both classes performed at the same average level on the exam, as both have an identical mean score of ${mean_score}\\%$.\n"
-            f"2. **Consistency / Spread:** Class 9A has a much smaller range (${range_a}\\%$) compared to Class 9B (${range_b}\\%$). This means Class 9A learners' marks are clustered closely together, indicating far greater consistency in performance.\n"
-            f"3. **Pacing instruction:** **Class 9A** would be easier to pace because the learners are at similar ability levels. In Class 9B, with a wide spread of ${range_b}\\%$, the teacher must cater simultaneously to struggling learners and very advanced learners."
-        )
-
-        diagram_spec = {
-            "diagram_role": "context",
-            "kind": "statistics_box_and_ogive",
-            "caption": f"Comparative distributions (Class 9A range={range_a}%, Class 9B range={range_b}%)",
-        }
-
-        correct_ans = f"Same mean ({mean_score}%); Class 9A more consistent (range {range_a}% vs {range_b}%)"
-        subskill_id = "comparative_dataset_analysis"
-        reason_code = "comparative dataset evaluation (mean and range)"
-        marks = 3
-
-    else:
-        # sampling_bias_evaluation: Evaluating sampling methods
-        scenarios = [
-            {
-                "topic": "School tuck-shop menu preferences",
-                "method": "Interviewing only the first 10 learners standing in line at the tuck-shop on Monday morning.",
-                "biased": True,
-                "reason": "This is a convenience sample of current tuck-shop customers. It excludes learners who do not use the tuck-shop because they dislike the current menu or cannot afford it.",
-                "fair_method": "Use a stratified random sample: select random learner names from every register class across all grades.",
-            },
-            {
-                "topic": "Average amount of time Grade 9 teenagers spend playing video games",
-                "method": "Handing out questionnaires to members of the school Gaming and Computer Club.",
-                "biased": True,
-                "reason": "This sample is severely biased because members of a gaming club naturally spend much more time gaming than the average Grade 9 student population.",
-                "fair_method": "Select a random sample of Grade 9 learners using student administrative ID numbers in a lottery or random number generator.",
-            },
-            {
-                "topic": "Predicting the winner of a national soccer final between Team A and Team B",
-                "method": "Polling spectators entering the home stadium of Team A.",
-                "biased": True,
-                "reason": "The sample is geographically and emotionally biased towards Team A's supporters, so it will vastly overestimate support for Team A.",
-                "fair_method": "Conduct an unbiased telephone or online survey across all provinces with a nationally representative random sample.",
-            },
-        ]
-        s_data = r.choice(scenarios)
-
-        question_text = (
-            f"A researcher wanted to investigate: **{s_data['topic']}**.\n\n"
-            f"The sampling method used was:\n"
-            f"\"{s_data['method']}\"\n\n"
-            f"1. Is this sample representative or biased? Give a clear reason.\n"
-            f"2. How does this sampling method affect the validity of the conclusions drawn?\n"
-            f"3. Propose an improved, fair sampling method that would yield valid results."
-        )
-
-        steps = [
-            {"id": "S1", "statement": "Sample is Biased: " + s_data["reason"], "reason": "sampling bias identification", "deps": []},
-            {"id": "S2", "statement": "Validity: Conclusions cannot be generalized to the broader population because the sample does not fairly represent all viewpoints.", "reason": "external validity principle", "deps": ["S1"]},
-            {"id": "S3", "statement": "Improved method: " + s_data["fair_method"], "reason": "random sampling design", "deps": []},
-        ]
-
-        hints = [
-            "A sample is biased if some members of the population have a greater chance of being selected than others.",
-            f"Consider who is included and who is excluded: {s_data['reason']}.",
-            f"An unbiased sample uses random selection where every member of the population has an equal chance of being chosen: {s_data['fair_method']}.",
-        ]
-
-        error_tax = [
-            {
-                "id": "err_claimed_unbiased",
-                "tag": "misconception_convenience_sample_validity",
-                "condition": "Claimed convenience sample is unbiased because it is easy",
-                "feedback": "Convenience sampling is almost always biased because it selects an unrepresentative subgroup of people.",
-            },
-        ]
-
-        sample_answer = (
-            f"1. **Biased.** {s_data['reason']}\n"
-            f"2. **Validity:** The conclusions will be invalid and skewed. They cannot be generalised to the entire target population because the sample systematically over-represents a specific sub-group.\n"
-            f"3. **Improved method:** {s_data['fair_method']}"
-        )
-
-        diagram_spec = {
-            "diagram_role": "context",
-            "kind": "statistics_box_and_ogive",
-            "caption": f"Sampling Bias Analysis: {s_data['topic']}",
-        }
-
-        correct_ans = "Biased; Cannot generalise; Random sampling needed"
-        subskill_id = "sampling_bias_evaluation"
-        reason_code = "sampling methodology and bias"
-        marks = 3
-
-    q = {
-        "id": qid,
-        "subject": "Mathematics",
-        "grade": 9,
-        "topic": TOPIC,
-        "subskill": subskill_id,
-        "learning_objective_id": LO,
-        "mode": mode,
-        "difficulty": difficulty,
-        "question_type": "free_response",
-        "answer_mode": "free_response",
-        "prompt": question_text,
-        "question": question_text,
-        "prompt_latex": question_text,
-        "answer_latex": correct_ans,
-        "correct_answer": correct_ans,
-        "sample_answer": sample_answer,
-        "worked_solution": sample_answer,
-        "canonical_solution": sample_answer,
-        "marking_schema": [
-            {"criterion": f"Correct critical analysis [{reason_code}]", "marks": 1},
-            {"criterion": f"Valid statistical reasoning and conclusions {correct_ans}", "marks": marks - 1},
-        ],
-        "marks": marks,
-        "hints": hints,
-        "hint_sections": {
-            "concept": hints[0],
-            "rules": hints[1],
-            "step_by_step": hints[2],
-        },
-        "misconception_tags": [m["tag"] for m in error_tax],
-        "diagnostic_tags": [f"diag_{subskill_id}"],
-        "keywords": ["data interpretation", "misleading graphs", "bias", "sampling", "range", "mean", "median", "consistency"],
-        "term": 4,
-        "caps_weight_percent": 8.0,
-        "suggested_duration_mins": 5,
-        "minimum_mastery_score": 75,
-        "diagram_spec": diagram_spec,
-        "modality": "math",
-        "seed": seed,
-        "solution_graph": {
-            "goal": "Critique and interpret statistical data and representations",
-            "steps": steps,
-        },
-        "metadata": {
-            "diagram_spec": diagram_spec,
-            "answer_value": correct_ans,
-            "reason_code": reason_code,
-        },
-    }
     return q
 
 
-def generate(seed: Optional[int] = None, count: int = 1, **kwargs: Any) -> Dict[str, Any]:
-    r = rng(seed)
-    questions = []
-    for _ in range(count):
-        sub_seed = r.randint(1, 1_000_000_000)
-        questions.append(generate_grade9_data_interpret_question(seed=sub_seed, **kwargs))
-    return {"questions": questions}
+def generate(
+    seed: Optional[int] = None,
+    subskill: Optional[str] = None,
+    archetype_index: Optional[int] = None,
+    mode: str = "compound",
+    count: int = 1,
+    **kwargs: Any,
+) -> List[Dict[str, Any]] | Dict[str, Any]:
+    if count == 1:
+        return generate_grade9_data_interpret_question(
+            seed=seed, subskill=subskill, archetype_index=archetype_index, mode=mode, **kwargs
+        )
+    base_seed = seed if seed is not None else random.randint(100, 999999)
+    out: List[Dict[str, Any]] = []
+    for i in range(count):
+        sub_seed = base_seed + i * 37
+        sub = subskill if subskill else (SUBSKILLS[i % len(SUBSKILLS)] if archetype_index is None else None)
+        out.append(
+            generate_grade9_data_interpret_question(
+                seed=sub_seed, subskill=sub, archetype_index=archetype_index, mode=mode, **kwargs
+            )
+        )
+    return out

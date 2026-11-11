@@ -340,7 +340,8 @@
         ],
         "status": "built",
         "topics_count": 24,
-        "note": "All 24 Grade 9 Mathematics topics across Terms 1 to 4 aligned 100% with South African National Curriculum Standards. Topics 1 to 18 (Whole numbers, Integers, Decimals, Exponents, Patterns, Functions, Expressions 1 & 2, Equations 1 & 2, Fractions, Graphs, Geometry of straight lines, Geometry of 2D shapes, Construction, Transformations, Pythagoras, Area & Perimeter) verified to have >=50 distinct semantic archetypes each (900 total subskills), 0 synthetic shims, and high seed entropy. Terms 1, 2, and 3 are 100% COMPLETE."
+        "note": "All 24 Grade 9 Mathematics topics across Terms 1 to 4 aligned 100% with South African National Curriculum Standards. All 24 topics verified to have >=50 distinct semantic archetypes each (1 200 total subskills), 0 synthetic shims, 0 diagram leaks, and high seed entropy. Terms 1, 2, 3, and 4 are 100% COMPLETE (Batch 4 PASS).",
+        "archetypes_count": 1200
       },
       {
         "subject": "Mathematics",
@@ -3716,7 +3717,7 @@
       "sizeKB": 12.4
     }
   ],
-  "lastUpdated": "2026-11-10T12:12:24.296372+00:00",
+  "lastUpdated": "2026-11-11T14:34:55.421512+00:00",
   "version": "0.9.30",
   "diagramArchetypesCatalog": {
     "totalDiagramMasters": 47,
