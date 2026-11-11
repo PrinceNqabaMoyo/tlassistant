@@ -10,6 +10,7 @@ export default function MathModalityRenderer({
     isChecking,
     showDynamicScaffold,
     onToggleScaffold,
+    hideStimulusDiagram = false,
 }) {
     if (!question) return null;
 
@@ -74,6 +75,7 @@ export default function MathModalityRenderer({
                 onCheck={onCheck}
                 result={result}
                 busy={isChecking}
+                hideStimulusDiagram={hideStimulusDiagram}
             />
         </div>
     );

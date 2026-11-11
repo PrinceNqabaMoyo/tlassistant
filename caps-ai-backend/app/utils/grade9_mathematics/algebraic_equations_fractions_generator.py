@@ -5,7 +5,7 @@ Covers:
   - Quadratic equations solvable by factorisation: x^2 + bx + c = 0 -> (x - p)(x - q) = 0
   - Quadratic equations with common factor: ax^2 + bx = 0 -> x(ax + b) = 0
 
-Follows South African CAPS curriculum specifications and the 6-Pillar Generator Contract.
+Follows South African national curriculum specifications and the 6-Pillar Generator Contract.
 Strictly zero-LLM, deterministic execution.
 """
 from __future__ import annotations
@@ -92,11 +92,11 @@ def generate_grade9_equations_question(
         expr_str = rf"\frac{{x + {a}}}{{{d1}}} - \frac{{x - {b}}}{{{d2}}} = {rhs_val}"
         prompt = f"Solve for \\(x\\) by finding the Lowest Common Denominator (LCD):\n$${expr_str}$$"
         sample_answer = (
-            rf"\text{{LCD}} = {lcd}\\\ "
-            rf"{m1}(x + {a}) - {m2}(x - {b}) = {lcd * rhs_val}\\\ "
-            rf"{m1}x + {m1 * a} - {m2}x + {m2 * b} = {lcd * rhs_val}\\\ "
-            rf"x + {m1 * a + m2 * b} = {lcd * rhs_val}\\\ "
-            rf"x = {sol}"
+            f"$$\\text{{LCD}} = {lcd}$$\n\n"
+            f"$${m1}(x + {a}) - {m2}(x - {b}) = {lcd * rhs_val}$$\n\n"
+            f"$${m1}x + {m1 * a} - {m2}x + {m2 * b} = {lcd * rhs_val}$$\n\n"
+            f"$$x + {m1 * a + m2 * b} = {lcd * rhs_val}$$\n\n"
+            f"$$x = {sol}$$"
         )
 
         return {
@@ -235,6 +235,8 @@ def generate(
     seed: Optional[int] = None,
     difficulty: str = "medium",
     mode: str = "compound",
+    subskill: str = "mixed",
+    **kwargs: Any,
 ) -> List[Dict[str, Any]]:
     base_seed = seed if seed is not None else 42
     return [

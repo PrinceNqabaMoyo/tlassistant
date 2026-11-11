@@ -86,7 +86,8 @@ def _roles_vs_responsibilities_drill(rng: random.Random, mode: str = "scaffold")
         "id": f"ems9_union_roles_resp_{rng.randint(1000, 9999)}",
         "title": "Trade Union Roles vs Responsibilities",
         "question_type": "table_completion",
-        "prompt": "Distinguish between the **Roles** (functions/powers) and **Responsibilities** (duties/obligations) of South African trade unions in the workplace.",
+        "modality": "ledger",
+        "prompt": f"In {rng.choice(['the South African mining and energy sector', 'commercial retail and transport logistics', 'heavy manufacturing and assembly industries', 'public education and healthcare services'])}, distinguish between the **Roles** (functions/powers) and **Responsibilities** (duties/obligations) of trade unions in the workplace.",
         "headers": headers,
         "rows": rows,
         "correct_map": correct_map,
@@ -122,7 +123,10 @@ def _roles_vs_responsibilities_drill(rng: random.Random, mode: str = "scaffold")
 def _concept_pool(rng: random.Random) -> List[Dict[str, Any]]:
     return [
         _with_metadata({
+            'id': f'ems9_tu_def_{rng.randint(1000, 9999)}',
             'title': 'Trade Union Definition',
+            'question_type': 'mcq',
+            'modality': 'math',
             'prompt': 'What is the main purpose of a trade union?',
             'options': [
                 'To make profits for business owners',
@@ -136,7 +140,10 @@ def _concept_pool(rng: random.Random) -> List[Dict[str, Any]]:
             'hint_sections': {'1_nudge': 'Trade unions represent employees against employer exploitation.'},
         }, subskill='concepts', learning_objective_id='lo_trade_union_purpose', question_family_id='trade_union_definition'),
         _with_metadata({
+            'id': f'ems9_tu_cosatu_{rng.randint(1000, 9999)}',
             'title': 'COSATU Federation',
+            'question_type': 'mcq',
+            'modality': 'math',
             'prompt': 'What does the acronym COSATU stand for in South African labour history?',
             'options': [
                 'Congress of South African Trade Unions',
@@ -150,7 +157,10 @@ def _concept_pool(rng: random.Random) -> List[Dict[str, Any]]:
             'hint_sections': {'1_nudge': 'It starts with Congress and represents South African Trade Unions.'},
         }, subskill='concepts', learning_objective_id='lo_cosatu', question_family_id='cosatu_name'),
         _with_metadata({
+            'id': f'ems9_tu_ccma_{rng.randint(1000, 9999)}',
             'title': 'CCMA in Dispute Resolution',
+            'question_type': 'mcq',
+            'modality': 'math',
             'prompt': 'What is the role of the CCMA (Commission for Conciliation, Mediation and Arbitration)?',
             'options': [
                 'To manage the finances of trade unions',
@@ -164,7 +174,10 @@ def _concept_pool(rng: random.Random) -> List[Dict[str, Any]]:
             'hint_sections': {'1_nudge': 'CCMA is an independent third party that mediates labour disputes.'},
         }, subskill='concepts', learning_objective_id='lo_ccma', question_family_id='ccma_dispute_resolution'),
         _with_metadata({
+            'id': f'ems9_tu_s23_{rng.randint(1000, 9999)}',
             'title': 'Freedom of Association (Section 23)',
+            'question_type': 'mcq',
+            'modality': 'math',
             'prompt': 'Which constitutional right is protected under Section 23 of the South African Constitution regarding labour relations?',
             'options': [
                 'Every worker has the right to form and join a trade union, and to participate in lawful union activities and strikes.',
@@ -178,7 +191,10 @@ def _concept_pool(rng: random.Random) -> List[Dict[str, Any]]:
             'hint_sections': {'1_nudge': 'Section 23 protects the democratic right to join a union and strike.'},
         }, subskill='concepts', learning_objective_id='lo_section23_rights', question_family_id='section23_constitution'),
         _with_metadata({
+            'id': f'ems9_tu_strike_{rng.randint(1000, 9999)}',
             'title': 'Protected vs Unprotected Strikes',
+            'question_type': 'mcq',
+            'modality': 'math',
             'prompt': 'What makes a worker strike in South Africa legally PROTECTED under the Labour Relations Act (LRA)?',
             'options': [
                 'The dispute was referred to the CCMA, a certificate of non-resolution was issued, and 48 hours written notice was given to the employer.',
@@ -192,7 +208,10 @@ def _concept_pool(rng: random.Random) -> List[Dict[str, Any]]:
             'hint_sections': {'1_nudge': 'Protected strikes must follow CCMA dispute referral and notice rules.'},
         }, subskill='concepts', learning_objective_id='lo_protected_strikes', question_family_id='protected_strikes_lra'),
         _with_metadata({
+            'id': f'ems9_tu_forum_{rng.randint(1000, 9999)}',
             'title': 'Collective Bargaining Forums',
+            'question_type': 'mcq',
+            'modality': 'math',
             'prompt': 'What is the primary function of a Bargaining Council in South African industrial sectors?',
             'options': [
                 'To bring registered trade unions and employer organizations together to negotiate collective agreements on wages and working conditions across an entire industry.',
@@ -211,7 +230,10 @@ def _concept_pool(rng: random.Random) -> List[Dict[str, Any]]:
 def _discussion_pool(rng: random.Random) -> List[Dict[str, Any]]:
     return [
         _with_metadata({
+            'id': f'ems9_tu_roles_{rng.randint(1000, 9999)}',
             'title': 'Roles of Trade Unions',
+            'question_type': 'typed',
+            'modality': 'semantic',
             'prompt': 'Discuss three roles and responsibilities of trade unions in South Africa. (6 marks)',
             'marks': 6,
             'marking_points': [
@@ -225,7 +247,10 @@ def _discussion_pool(rng: random.Random) -> List[Dict[str, Any]]:
             'hint_sections': {'1_nudge': 'Mention collective bargaining, dispute support, and worker protection.'},
         }, subskill='discussion', learning_objective_id='lo_union_roles', question_family_id='union_roles_essay'),
         _with_metadata({
+            'id': f'ems9_tu_growth_{rng.randint(1000, 9999)}',
             'title': 'Sustainable Economic Growth',
+            'question_type': 'typed',
+            'modality': 'semantic',
             'prompt': 'Explain how trade unions contribute to sustainable economic growth and development in South Africa. (6 marks)',
             'marks': 6,
             'marking_points': [
@@ -265,8 +290,8 @@ def generate(
 
     if count == 1 and seed is not None:
         selected = [pool[int(seed) % len(pool)]]
-    elif count < len(selected):
-        selected = rng.sample(selected, count)
+    elif count < len(pool):
+        selected = rng.sample(pool, count)
     else:
         selected = pool
     return selected

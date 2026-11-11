@@ -124,14 +124,18 @@ def get_topic_meta(topic: str, grade: str | int = "10", subject: str = "Mathemat
     if direct:
         return direct
 
-    # 2. Fuzzy substring match within subject and grade
+    # 2. Check if topic is directly a generator key in _BY_KEY_LOOKUP
+    if topic in _BY_KEY_LOOKUP:
+        return _BY_KEY_LOOKUP[topic]
+
+    # 3. Fuzzy substring match within subject and grade
     candidates = _BY_SUBJECT_GRADE.get((subj, gr), [])
     for c in candidates:
         c_name = _normalize_topic_name(c["name"])
         if topic_norm in c_name or c_name in topic_norm:
             return c
 
-    # 3. Check generator key mapping
+    # 4. Check generator key mapping
     from .generator_registry import resolve_generator_key
     resolved_key = resolve_generator_key(topic, grade=gr, subject=subj)
     if resolved_key and resolved_key in _BY_KEY_LOOKUP:

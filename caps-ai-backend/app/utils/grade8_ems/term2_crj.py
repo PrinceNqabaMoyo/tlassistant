@@ -116,11 +116,25 @@ def _crj_table_pool(rng, mode="scaffold"):
     # In scaffold mode, we typically want them to fill out everything
     editable_cols = [0, 1, 2, 3, 4, 5, 6, 7]
 
+    memo_lines = ["**Cash Receipts Journal Memorandum (Cell-by-Cell Solution)** [24 marks]:\n"]
+    for r_idx, tx in enumerate(transactions):
+        memo_lines.append(f"**Transaction {r_idx + 1} ({tx.split(':')[0]}):** {tx.split(': ', 1)[-1]}")
+        for c_idx, h in enumerate(headers):
+            key = f"{r_idx}_{c_idx}"
+            val = correct_map.get(key, "")
+            hint = cell_hints.get(key, "")
+            if val:
+                memo_lines.append(f"- **{h}**: `{val}`" + (f" ({hint})" if hint else ""))
+            else:
+                memo_lines.append(f"- **{h}**: `[Leave blank]` (No entry required)")
+        memo_lines.append("")
+    worked_sol = "\n".join(memo_lines)
+
     item = {
         "id": f"ems_crj_{random.randint(1000, 9999)}",
         "topic": "Cash Receipts Journal",
         "question_type": "journal",
-        "prompt": f"Use the following transactions to complete the Cash Receipts Journal of {business_name} for {month}. Leave cells blank if they do not require an entry.",
+        "prompt": f"Use the following transactions to complete the Cash Receipts Journal of {business_name} for {month}. Leave cells blank if they do not require an entry.\n\nTransactions:\n" + "\n".join(f"- {tx}" for tx in transactions),
         "journal": {
             "journal_type": "crj",
             "headers": headers,
@@ -131,8 +145,24 @@ def _crj_table_pool(rng, mode="scaffold"):
         "cell_hints": cell_hints,
         'transactions': transactions,
         'marks': 24, # 3 rows * 8 columns
-        'sample_answer': 'See completed table',
-        'ideal_answer': 'See completed table',
+        'sample_answer': (
+            "Complete Cash Receipts Journal with columns Doc No, Day, Details, Analysis of Receipts, "
+            "Bank, Current Income, Sundry Amount, and Sundry Details correctly balanced and cross-checked."
+        ),
+        'ideal_answer': (
+            "Complete Cash Receipts Journal with columns Doc No, Day, Details, Analysis of Receipts, "
+            "Bank, Current Income, Sundry Amount, and Sundry Details correctly balanced and cross-checked."
+        ),
+        'worked_solution': worked_sol,
+        'canonical_solution': {
+            'steps': [
+                "Step 1: Enter document numbers and days from source documents (Rec 01, CRR 1, Rec 02).",
+                "Step 2: Record cash receipts in Analysis of Receipts, or directly in Bank for electronic deposits.",
+                "Step 3: Allocate service receipts to Current Income and other receipts (capital/rent) to Sundry Accounts.",
+                "Step 4: Cross-balance each line: Total Bank column must equal Current Income plus Sundry Accounts."
+            ],
+            'final_answer': 'Complete and balanced Cash Receipts Journal'
+        },
         'marking_points': ['Correctly recorded doc numbers, details, and allocated amounts to Bank and correct analysis columns.'],
         'hint_sections': {
             '1_nudge': 'The CRJ is used to record all money RECEIVED by the business.',

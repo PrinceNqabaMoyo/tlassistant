@@ -985,29 +985,31 @@ _GENERATORS = [
     _gen_return_on_partner_equity,
     _gen_interest_rate_backcalc,
     _gen_salary_increase_pct,
-    _gen_asset_disposal,
     _gen_liquidity_commentary,
     _gen_partnership_concepts_mcq,
-    _gen_internal_control_assets,
     _gen_loan_eligibility,
 ]
 
 
 def generate_questions(
-    *,
+    count: int = 1,
     subskill: str = "mixed",
     difficulty: str = "easy",
     question_type: str = "mixed",
-    count: int = 1,
     seed: Optional[int] = None,
     mode: str = "",
+    **kwargs,
 ) -> List[Dict[str, Any]]:
     r = _rng(seed)
     questions: List[Dict[str, Any]] = []
+    pool = _GENERATORS
+    if mode != "exam":
+        pool = [g for g in _GENERATORS if g.__name__ not in ("_gen_liquidity_commentary", "_gen_loan_eligibility")]
 
     for _ in range(count):
-        gen = r.choice(_GENERATORS)
+        gen = r.choice(pool)
         q = gen(r)
+        q["subskill"] = gen.__name__.lstrip("_")
         q["difficulty"] = difficulty
         q["mode"] = mode
         questions.append(q)

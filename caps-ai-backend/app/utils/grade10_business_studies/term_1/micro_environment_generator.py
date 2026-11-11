@@ -13,7 +13,16 @@ from __future__ import annotations
 
 from typing import Any, Callable, Dict, List
 
-from .._bs_common import build_generate, make_mcq, make_typed, pick_scenario
+from .._bs_common import (
+    build_generate,
+    make_mcq,
+    make_typed,
+    make_wordbank,
+    make_matching,
+    make_crossword,
+    make_essay,
+    pick_scenario,
+)
 
 PREFIX = "g10bs_micro"
 VAID = "micro_environment"
@@ -168,6 +177,133 @@ def _concepts(r) -> List[Callable[[], Dict[str, Any]]]:
             explanation="There are eight business functions: general management, purchasing, production, marketing, public relations, human resources, administration and financial.",
             visual_aid_key=VAID,
         ),
+        lambda: make_mcq(
+            prefix=PREFIX,
+            prompt="Dress code together with the shared values, beliefs and norms of employees describes a business's …",
+            options=["organisational structure", "organisational culture", "mission statement", "code of conduct"],
+            correct_index=1,
+            explanation="Organisational culture is 'how things are done' — the shared values, beliefs, norms and dress code of employees and management.",
+            visual_aid_key=VAID,
+        ),
+        lambda: make_mcq(
+            prefix=PREFIX,
+            prompt="Laptops, computer software, websites and patents are grouped under which organisational resource?",
+            options=["human", "physical", "financial", "technological"],
+            correct_index=3,
+            explanation="Technological resources are intangible items such as software licences, patents, websites and computer equipment.",
+            visual_aid_key=VAID,
+        ),
+        lambda: make_mcq(
+            prefix=PREFIX,
+            prompt="A bank overdraft, credit cards and short-term loans form part of a business's … resources.",
+            options=["financial", "physical", "human", "technological"],
+            correct_index=0,
+            explanation="Financial resources are the capital the business owns or borrows, including overdrafts, credit cards and loans.",
+            visual_aid_key=VAID,
+        ),
+        lambda: make_mcq(
+            prefix=PREFIX,
+            prompt="The set of people who make up the workforce of a business are its … resources.",
+            options=["human resources", "physical resources", "financial resources", "technological resources"],
+            correct_index=0,
+            explanation="Human resources are the people who make up the workforce of the business.",
+            visual_aid_key=VAID,
+        ),
+        lambda: make_mcq(
+            prefix=PREFIX,
+            prompt="Which level of management consists of the CEO and directors and sets long-term strategy?",
+            options=["Lower-level", "Middle-level", "Top-level", "Supervisory"],
+            correct_index=2,
+            explanation="Top-level management (CEO and directors) develops long-term strategic plans and determines the vision and mission.",
+            visual_aid_key=VAID,
+        ),
+        lambda: make_mcq(
+            prefix=PREFIX,
+            prompt="Foremen, supervisors and team leaders who take short-term operational decisions are … management.",
+            options=["top-level", "middle-level", "lower-level", "strategic"],
+            correct_index=2,
+            explanation="Lower-level management (foremen, supervisors, team leaders) takes short-term operational decisions.",
+            visual_aid_key=VAID,
+        ),
+        lambda: make_mcq(
+            prefix=PREFIX,
+            prompt="The ability of an individual to inspire, influence or motivate subordinates toward business goals is …",
+            options=["management", "leadership", "administration", "control"],
+            correct_index=1,
+            explanation="Leadership is the ability to inspire, influence or motivate subordinates to achieve the goals and objectives of the business.",
+            visual_aid_key=VAID,
+        ),
+        lambda: make_mcq(
+            prefix=PREFIX,
+            prompt="Which business function undertakes market research to determine the real needs of the target market?",
+            options=["production", "purchasing", "marketing", "administration"],
+            correct_index=2,
+            explanation="The marketing function conducts market research to determine the needs of the target market and promotes the goods and services.",
+            visual_aid_key=VAID,
+        ),
+        lambda: make_mcq(
+            prefix=PREFIX,
+            prompt="A STAKEHOLDER is best defined as …",
+            options=[
+                "only the shareholders who own the business",
+                "any party that has an interest in the business and can affect or be affected by it",
+                "the government department that issues licences",
+                "the manager in charge of human resources",
+            ],
+            correct_index=1,
+            explanation="A stakeholder is any party with an interest in the company that can affect or be affected by the business, e.g. employees, customers, suppliers and shareholders.",
+            visual_aid_key=VAID,
+        ),
+        lambda: make_mcq(
+            prefix=PREFIX,
+            prompt="Businesses that adopt the latest technology gain a … over rivals that struggle with it.",
+            options=["monopoly", "competitive advantage", "licensing fee", "trade barrier"],
+            correct_index=1,
+            explanation="A competitive advantage is a factor that allows a business to produce goods or services better or cheaper than its rivals.",
+            visual_aid_key=VAID,
+        ),
+        lambda: make_mcq(
+            prefix=PREFIX,
+            prompt="In the concentric-circle model of the business environment, the INNERMOST circle is the …",
+            options=["macro environment", "market environment", "micro environment", "global environment"],
+            correct_index=2,
+            explanation="The micro (internal) environment is the innermost circle, followed by the market environment and then the outermost macro environment.",
+            visual_aid_key=VAID,
+        ),
+        lambda: make_mcq(
+            prefix=PREFIX,
+            prompt="Objectives differ from goals because objectives are …",
+            options=[
+                "the long-term dreams of the business",
+                "the short-term steps describing how goals will be achieved",
+                "synonymous with the vision statement",
+                "set only by external stakeholders",
+            ],
+            correct_index=1,
+            explanation="Goals are long-term plans; objectives are the short-term steps that describe how those goals will be achieved.",
+            visual_aid_key=VAID,
+        ),
+        lambda: make_mcq(
+            prefix=PREFIX,
+            prompt="Which of the following is NOT a component of the micro environment?",
+            options=["Organisational culture", "The eight business functions", "Suppliers and competitors", "Organisational resources"],
+            correct_index=2,
+            explanation="Suppliers and competitors belong to the MARKET environment, not the internal micro environment.",
+            visual_aid_key=VAID,
+        ),
+        lambda: make_mcq(
+            prefix=PREFIX,
+            prompt="The human resources function is responsible for …",
+            options=[
+                "processing raw materials into finished goods",
+                "attracting new employees and providing education and training",
+                "collecting and storing data and information",
+                "determining the financial needs of the business",
+            ],
+            correct_index=1,
+            explanation="The human resources function attracts new employees into the business and manages them through education and training.",
+            visual_aid_key=VAID,
+        ),
     ]
 
 
@@ -283,10 +419,238 @@ def _discussion(r) -> List[Callable[[], Dict[str, Any]]]:
     ]
 
 
+def _application(r) -> List[Callable[[], Dict[str, Any]]]:
+    """Scenario/application questions (MCQ + short typed) based on the
+    Sarah's Bakery and Mzobe Traders activities in the CAPS curriculum."""
+    return [
+        lambda: make_mcq(
+            prefix=PREFIX,
+            prompt="Sarah's Bakery took out a loan from FastBank to cover start-up costs. Which organisational resource does this represent?",
+            options=["human resources", "physical resources", "financial resources", "technological resources"],
+            correct_index=2,
+            explanation="A loan from a bank is a financial resource — the capital the business borrows from a financial institution.",
+            visual_aid_key=VAID,
+        ),
+        lambda: make_mcq(
+            prefix=PREFIX,
+            prompt="Sarah's Bakery uses an ONLINE ORDERING SYSTEM to make ordering easier for customers. This is an example of which resource?",
+            options=["technological", "physical", "human", "financial"],
+            correct_index=0,
+            explanation="An online ordering system / website is a technological (intangible) resource.",
+            visual_aid_key=VAID,
+        ),
+        lambda: make_mcq(
+            prefix=PREFIX,
+            prompt="Sarah bought a small BUILDING for baking and packaging. The building is a … resource.",
+            options=["financial", "physical", "human", "technological"],
+            correct_index=1,
+            explanation="Buildings, machinery and vehicles are tangible physical resources.",
+            visual_aid_key=VAID,
+        ),
+        lambda: make_mcq(
+            prefix=PREFIX,
+            prompt="Mzobe Traders used an effective RECRUITMENT method to attract the best candidates. Which business function did this apply?",
+            options=["administration", "financial", "human resources", "public relations"],
+            correct_index=2,
+            explanation="Recruitment and selection of candidates is the human resources function.",
+            visual_aid_key=VAID,
+        ),
+        lambda: make_mcq(
+            prefix=PREFIX,
+            prompt="Mr Masina, the CEO, included the vision and mission statement in his speech. Which function does a CEO belong to?",
+            options=["general management", "marketing", "purchasing", "production"],
+            correct_index=0,
+            explanation="The CEO is top-level general management, which sets the vision, mission and direction of the business.",
+            visual_aid_key=VAID,
+        ),
+        lambda: make_typed(
+            prefix=PREFIX,
+            prompt="Read the Sarah's Bakery scenario and identify THREE organisational resources used by SB. Motivate each by quoting from the scenario. (9)",
+            marking_points=[
+                "Human resources — 'Sarah employed five employees to help her'.",
+                "Physical resources — 'She bought a small building where she does all her baking and packaging'.",
+                "Financial resources — 'Sarah had to take out a loan from FastBank to cover the cost of setting up her business'.",
+                "Technological resources — 'She uses an online ordering system to make ordering easier for her customers'.",
+                "Each resource correctly named with a supporting quote earns marks.",
+            ],
+            sample_answer="SB uses human resources ('Sarah employed five employees to help her'); physical resources ('She bought a small building where she does all her baking and packaging'); financial resources ('Sarah had to take out a loan from FastBank'); and technological resources ('She uses an online ordering system'). Any three of these, each quoted from the scenario, are correct.",
+            marks=9,
+            visual_aid_key=VAID,
+        ),
+        lambda: make_typed(
+            prefix=PREFIX,
+            prompt="Formulate a suitable VISION and MISSION statement for a cell-phone provider. (4)",
+            marking_points=[
+                "Vision states what the business wants to achieve in the future (long term).",
+                "Mission explains why the business exists and what it provides/produces.",
+                "Statements are realistic and relevant to a cell-phone provider.",
+            ],
+            sample_answer="Vision: 'To be the most loved mobile network connecting every South African home and business.' Mission: 'We provide affordable, reliable voice and data services and innovative mobile solutions that keep our customers connected.'",
+            marks=4,
+            visual_aid_key=VAID,
+        ),
+    ]
+
+
+def _wordbank(r) -> List[Callable[[], Dict[str, Any]]]:
+    """Word-bank items built from the micro-environment key concepts."""
+    return [
+        lambda: make_wordbank(
+            prefix=PREFIX,
+            prompt="Choose the correct words from the bank to complete the key-concept definitions.",
+            pool=["vision", "mission", "goals", "objectives", "culture"],
+            blanks=["1", "2", "3", "4"],
+            correct_map={"1": "vision", "2": "mission", "3": "goals", "4": "objectives"},
+            text_parts=[
+                "The ",
+                " is what the business wants to achieve in the long term (its dream). The ",
+                " statement describes what the business provides and why it exists. The ",
+                " are the long-term plans of the business, while the ",
+                " describe the short-term steps to achieve them.",
+            ],
+            explanation="Vision = long-term dream; Mission = why the business exists; Goals = long-term plans; Objectives = short-term steps.",
+            marks=4,
+            visual_aid_key=VAID,
+        ),
+        lambda: make_wordbank(
+            prefix=PREFIX,
+            prompt="Complete the sentence about the four groups of organisational resources.",
+            pool=["human", "physical", "financial", "technological", "emotional"],
+            blanks=["1", "2", "3", "4"],
+            correct_map={"1": "human", "2": "physical", "3": "financial", "4": "technological"},
+            text_parts=[
+                "The four main groups of organisational resources are ",
+                " resources (the workforce), ",
+                " resources (tangible assets), ",
+                " resources (capital and funds) and ",
+                " resources (software and patents).",
+            ],
+            explanation="The four resource groups are human, physical, financial and technological; 'emotional' is the distractor.",
+            marks=4,
+            visual_aid_key=VAID,
+        ),
+    ]
+
+
+def _matching(r) -> List[Callable[[], Dict[str, Any]]]:
+    """Matching columns linking micro-environment terms to their descriptions."""
+    return [
+        lambda: make_matching(
+            prefix=PREFIX,
+            prompt="Match each TERM in Column A with its correct DESCRIPTION in Column B.",
+            column_a=["Vision", "Mission statement", "Organogram", "Organisational culture", "Stakeholder"],
+            column_b=[
+                "Any party that has an interest in and can affect or be affected by the business",
+                "What the business wants to achieve in the long term",
+                "Diagram showing levels of authority and how departments are organised",
+                "Describes what the business provides and why it exists",
+                "The shared values, beliefs and norms — 'how things are done'",
+            ],
+            correct_pairs={
+                "Vision": "What the business wants to achieve in the long term",
+                "Mission statement": "Describes what the business provides and why it exists",
+                "Organogram": "Diagram showing levels of authority and how departments are organised",
+                "Organisational culture": "The shared values, beliefs and norms — 'how things are done'",
+                "Stakeholder": "Any party that has an interest in and can affect or be affected by the business",
+            },
+            explanation="Each internal component has a distinct definition; match by the key defining words.",
+            marks=5,
+            visual_aid_key=VAID,
+        ),
+        lambda: make_matching(
+            prefix=PREFIX,
+            prompt="Match each BUSINESS FUNCTION with what it is responsible for.",
+            column_a=["Production", "Purchasing", "Marketing", "Public relations", "Administration"],
+            column_b=[
+                "Collecting, processing and storing data and information",
+                "Changing/processing raw materials into finished products",
+                "Creating a good public image and communicating with stakeholders",
+                "Buying the resources the business needs to produce",
+                "Undertaking market research and promoting goods and services",
+            ],
+            correct_pairs={
+                "Production": "Changing/processing raw materials into finished products",
+                "Purchasing": "Buying the resources the business needs to produce",
+                "Marketing": "Undertaking market research and promoting goods and services",
+                "Public relations": "Creating a good public image and communicating with stakeholders",
+                "Administration": "Collecting, processing and storing data and information",
+            },
+            explanation="Each of the eight business functions has a specific role; match function to role.",
+            marks=5,
+            visual_aid_key=VAID,
+        ),
+    ]
+
+
+def _crossword(r) -> List[Callable[[], Dict[str, Any]]]:
+    """Crossword using the key vocabulary from the micro-environment activity."""
+    return [
+        lambda: make_crossword(
+            prefix=PREFIX,
+            prompt="Read each clue and enter the correct business term.",
+            words=["VISION", "VALUES", "MANAGEMENT", "LEADERSHIP", "OBJECTIVES", "ORGANOGRAM", "CULTURE"],
+            clues={
+                "VISION": "What the business wants to achieve in the long term — its dream",
+                "VALUES": "The morals shared by the employees in an organisation",
+                "MANAGEMENT": "The process of planning, organising, leading and controlling",
+                "LEADERSHIP": "The ability to inspire and motivate people to achieve goals",
+                "OBJECTIVES": "Short-term steps that describe how goals will be achieved",
+                "ORGANOGRAM": "The hierarchical structure diagram of the business",
+                "CULTURE": "The beliefs, values and norms of a group of people",
+            },
+            grid_size=15,
+            explanation="These terms are the key concepts of the components of the micro environment.",
+            marks=7,
+            visual_aid_key=VAID,
+        ),
+    ]
+
+
+def _essay(r) -> List[Callable[[], Dict[str, Any]]]:
+    """Long-form essay questions aligned to the topic's learning objectives."""
+    return [
+        lambda: make_essay(
+            prefix=PREFIX,
+            prompt="Discuss the six components of the micro (internal) environment of a business and explain why each is important. (20)",
+            rubric=[
+                {"criterion": "Introduction", "marks": 3, "description": "Define the micro environment and state that the business has full control over it."},
+                {"criterion": "Components", "marks": 10, "description": "Name and describe at least four components: vision/mission/goals/objectives, organisational culture, resources, management & leadership, structure and the eight functions."},
+                {"criterion": "Importance", "marks": 4, "description": "Explain why each component contributes to business success."},
+                {"criterion": "Conclusion", "marks": 3, "description": "Summarise how the components work together as the internal operating system."},
+            ],
+            sample_answer="The micro environment is everything inside the business over which it has full control. Its components are the vision, mission, goals and objectives (the direction of the business); organisational culture (shared values and norms that turn employees into ambassadors); organisational resources (human, physical, financial and technological); management and leadership (planning/organising and inspiring); the organisational structure/organogram (levels of authority); and the eight business functions. Each component guides decisions, coordinates work and supports productivity, so together they act as the internal operating system that determines whether the business achieves its goals.",
+            marks=20,
+            min_words=150,
+            max_words=350,
+            visual_aid_key=VAID,
+        ),
+        lambda: make_essay(
+            prefix=PREFIX,
+            prompt="'A business can only succeed if its eight functions work together as a team.' Discuss this statement with reference to the eight business functions. (20)",
+            rubric=[
+                {"criterion": "Introduction", "marks": 3, "description": "Define business functions and list the eight of them."},
+                {"criterion": "Roles", "marks": 8, "description": "Describe the role of at least five functions (general management, purchasing, production, marketing, public relations, human resources, administration, financial)."},
+                {"criterion": "Interrelationship", "marks": 6, "description": "Explain how general management coordinates the others and how a failure in one function (e.g. marketing) affects the whole business."},
+                {"criterion": "Conclusion", "marks": 3, "description": "Conclude on the importance of coordination for achieving objectives."},
+            ],
+            sample_answer="The eight business functions — general management, purchasing, production, marketing, public relations, human resources, administration and financial — are interrelated and work as a team. General management coordinates the other seven. Purchasing buys resources, production transforms them, and marketing sells to the customer, while financial and administration handle funds and information. If marketing fails to attract the target market, the profit objective is not realised even if the other functions perform well, which shows that success depends on how effectively the functions are coordinated and managed.",
+            marks=20,
+            min_words=150,
+            max_words=350,
+            visual_aid_key=VAID,
+        ),
+    ]
+
+
 def _pools(r):
     return {
         "concepts": _concepts(r),
         "discussion": _discussion(r),
+        "application": _application(r),
+        "word_bank": _wordbank(r),
+        "matching": _matching(r),
+        "crossword": _crossword(r),
+        "essay": _essay(r),
     }
 
 

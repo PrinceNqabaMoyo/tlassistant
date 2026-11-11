@@ -1,0 +1,97 @@
+{
+  "diagram": "solar_system_earth_space",
+  "view": "textbook",
+  "viewBox": "0 0 600 480",
+  "anchors": {
+    "the_sun": {
+      "name": "The Sun (Central Star)",
+      "anchor": [146, 240],
+      "default_box": [60, 85],
+      "side": "left",
+      "grades": ["g7", "g8", "g9"],
+      "acceptable": ["Sun", "The Sun", "Central star"],
+      "description": "Main-sequence star at the centre of the Solar System whose immense gravitational pull holds all planets, moons, and asteroids in elliptical orbits and provides radiant energy."
+    },
+    "mercury": {
+      "name": "Mercury (1st Rocky Planet)",
+      "anchor": [176, 213],
+      "default_box": [60, 155],
+      "side": "left",
+      "grades": ["g7", "g8", "g9"],
+      "acceptable": ["Mercury"],
+      "description": "Smallest terrestrial planet closest to the Sun with almost no atmosphere and extreme surface temperature variations."
+    },
+    "earth": {
+      "name": "Earth (3rd Terrestrial Planet)",
+      "anchor": [236, 210],
+      "default_box": [60, 225],
+      "side": "left",
+      "grades": ["g7", "g8", "g9"],
+      "acceptable": ["Earth", "Planet Earth"],
+      "description": "Third terrestrial planet from the Sun located in the habitable zone, sustaining liquid surface water, an oxygen-rich atmosphere, and life."
+    },
+    "venus": {
+      "name": "Venus (2nd Rocky Planet)",
+      "anchor": [194, 274],
+      "default_box": [60, 310],
+      "side": "left",
+      "grades": ["g7", "g8", "g9"],
+      "acceptable": ["Venus"],
+      "description": "Second terrestrial planet from the Sun with a dense carbon dioxide atmosphere that traps heat via a runaway greenhouse effect."
+    },
+    "mars": {
+      "name": "Mars (4th Rocky Planet)",
+      "anchor": [264, 280],
+      "default_box": [60, 395],
+      "side": "left",
+      "grades": ["g7", "g8", "g9"],
+      "acceptable": ["Mars", "Red Planet"],
+      "description": "Fourth terrestrial planet from the Sun with an iron-oxide-rich dusty surface, polar ice caps, and a thin carbon dioxide atmosphere."
+    },
+    "asteroid_belt": {
+      "name": "Asteroid Belt",
+      "anchor": [277, 179],
+      "default_box": [540, 85],
+      "side": "right",
+      "grades": ["g8", "g9"],
+      "acceptable": ["Asteroid belt", "Main asteroid belt", "Asteroids"],
+      "description": "Circumstellar disc of irregular rocky and metallic bodies orbiting between the inner terrestrial planet Mars and the outer gas giant Jupiter."
+    },
+    "jupiter": {
+      "name": "Jupiter (Largest Gas Giant)",
+      "anchor": [329, 201],
+      "default_box": [540, 160],
+      "side": "right",
+      "grades": ["g7", "g8", "g9"],
+      "acceptable": ["Jupiter"],
+      "description": "Fifth planet from the Sun and largest gas giant in the Solar System, composed primarily of hydrogen and helium with prominent banded cloud belts."
+    },
+    "uranus": {
+      "name": "Uranus (7th Ice Giant)",
+      "anchor": [422, 216],
+      "default_box": [540, 235],
+      "side": "right",
+      "grades": ["g8", "g9"],
+      "acceptable": ["Uranus"],
+      "description": "Seventh planet from the Sun; an ice giant whose methane-rich upper atmosphere gives it a pale cyan colour and whose axis of rotation is tilted sideways."
+    },
+    "neptune": {
+      "name": "Neptune (8th Outermost Ice Giant)",
+      "anchor": [458, 260],
+      "default_box": [540, 315],
+      "side": "right",
+      "grades": ["g8", "g9"],
+      "acceptable": ["Neptune"],
+      "description": "Eighth and furthest known planet from the Sun; a cold, deep-blue ice giant with supersonic atmospheric winds."
+    },
+    "saturn": {
+      "name": "Saturn (Ringed Gas Giant)",
+      "anchor": [376, 282],
+      "default_box": [540, 395],
+      "side": "right",
+      "grades": ["g7", "g8", "g9"],
+      "acceptable": ["Saturn"],
+      "description": "Sixth planet from the Sun; a large gas giant distinguished by its extensive, bright concentric ring system made of ice and rock particles."
+    }
+  }
+}

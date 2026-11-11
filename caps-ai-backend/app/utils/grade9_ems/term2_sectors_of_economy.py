@@ -52,6 +52,7 @@ def _mcq_question(rng, item, mode="scaffold"):
         'id': f"g9_ems_mcq_{rng.randint(1000, 999999)}",
         'title': item.get('title', 'Concept check'),
         'question_type': 'mcq',
+        'modality': 'math',
         'prompt': item['prompt'],
         'options': item['options'],
         'correct_index': str(item['correct_index']),
@@ -74,6 +75,7 @@ def _typed_question(rng, item, mode="scaffold"):
         'id': f"g9_ems_typed_{rng.randint(1000, 999999)}",
         'title': item.get('title', 'Written response'),
         'question_type': 'typed',
+        'modality': 'semantic',
         'prompt': item['prompt'],
         'marks': item['marks'],
         'marking_points': item['marking_points'],
@@ -175,7 +177,18 @@ def _discussion_pool(rng):
         
         _with_metadata({
             'title': 'Interdependence of Sectors',
-            'prompt': "Explain how the three sectors of the economy are interdependent. Use a practical example to illustrate your answer. (4 marks)",
+            'diagram_role': 'context',
+            'diagram_spec': {
+                'kind': 'production_chain',
+                'role': 'context',
+                'diagram_role': 'context',
+                'raw': 'Raw Cotton & Natural Fibres',
+                'primary': 'Primary Sector: Farming / Agriculture',
+                'secondary': 'Secondary Sector: Textile Spinning Factory',
+                'tertiary': 'Tertiary Sector: Fashion Retail Store',
+                'product': 'Finished Garment / Clothing',
+            },
+            'prompt': "Refer to the Production Chain diagram shown. Explain how the three sectors of the economy are interdependent in the creation and sale of finished goods. Use a practical example to illustrate your answer. (4 marks)",
             'marks': 4,
             'marking_points': [
                 "The primary sector provides raw materials to the secondary sector.",

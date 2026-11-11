@@ -166,7 +166,7 @@ def make_dj_single_row_question(*, r: random.Random, difficulty: str = "easy", m
 
 def make_dj_activity_question(*, r: random.Random, difficulty: str, mode: str, variant_style: str = "activity") -> Dict[str, Any]:
     business = r.choice([
-        "Lonely Traders",
+        "Khumalo Traders",
         "Ubuntu Traders",
         "Mzanzi Mart",
         "Cape Corner Stores",

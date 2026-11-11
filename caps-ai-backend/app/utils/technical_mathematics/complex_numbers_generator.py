@@ -21,7 +21,7 @@ def _fmt_sa(val: float | int, places: int = 1) -> str:
     if isinstance(val, int) or (isinstance(val, float) and val.is_integer()):
         return str(int(val))
     s = f"{val:.{places}f}".rstrip("0").rstrip(".")
-    return s.replace(".", "{,}")
+    return s.replace(".", ",")
 
 
 # --------------------------------------------------------------------------- #
@@ -64,6 +64,8 @@ def _build_modulus_drill(r: random.Random) -> Dict[str, Any]:
         "id": f"tech_cplx_mod_{r.randint(100000, 999999)}",
         "question_id": f"tech_cplx_mod_{r.randint(100000, 999999)}",
         "topic": "technical_mathematics_complex_numbers",
+        "diagram_spec": {
+        "diagram_role": "context","kind": "argand_diagram", "a": a, "b": b},
         "subskill": "complex_modulus_elementary",
         "learning_objective_id": "techmath_complex_modulus",
         "prompt": prompt,
@@ -140,6 +142,8 @@ def _build_argument_drill(r: random.Random) -> Dict[str, Any]:
         "id": f"tech_cplx_arg_{r.randint(100000, 999999)}",
         "question_id": f"tech_cplx_arg_{r.randint(100000, 999999)}",
         "topic": "technical_mathematics_complex_numbers",
+        "diagram_spec": {
+        "diagram_role": "context","kind": "argand_diagram", "a": a, "b": b},
         "subskill": "complex_argument_elementary",
         "learning_objective_id": "techmath_complex_argument",
         "prompt": prompt,
@@ -210,6 +214,8 @@ def _build_polar_conversion_drill(r: random.Random) -> Dict[str, Any]:
         "id": f"tech_cplx_pol_{r.randint(100000, 999999)}",
         "question_id": f"tech_cplx_pol_{r.randint(100000, 999999)}",
         "topic": "technical_mathematics_complex_numbers",
+        "diagram_spec": {
+        "diagram_role": "context","kind": "argand_diagram", "a": a, "b": b},
         "subskill": "polar_form_elementary",
         "learning_objective_id": "techmath_polar_conversion",
         "prompt": prompt,
@@ -318,16 +324,43 @@ def _build_compound_polar_operations(r: random.Random) -> Dict[str, Any]:
         "tier_3": f"Polar result: ${r_res}\\operatorname{{cis}}({theta_res}^\\circ)$. Rectangular: ${rect_str}$. Quadrant: {quad}.",
     }
 
+    sub_parts = [
+        {
+            "id": "part_1",
+            "label": "1. Result in polar form r cis(θ)",
+            "expected_answer": f"{r_res}cis({theta_res})",
+            "answer_latex": rf"{r_res}\operatorname{{cis}}({theta_res}^\circ)",
+            "marks": 3
+        },
+        {
+            "id": "part_2",
+            "label": "2. Rectangular form a + bi",
+            "expected_answer": rect_str,
+            "answer_latex": rect_str,
+            "marks": 3
+        },
+        {
+            "id": "part_3",
+            "label": "3. Quadrant in Argand plane",
+            "expected_answer": str(quad),
+            "answer_latex": str(quad),
+            "marks": 2
+        }
+    ]
+
     return {
         "id": f"tech_cplx_comp_{r.randint(100000, 999999)}",
         "question_id": f"tech_cplx_comp_{r.randint(100000, 999999)}",
         "topic": "technical_mathematics_complex_numbers",
+        "diagram_spec": {
+        "diagram_role": "context","kind": "argand_diagram", "a": a_val, "b": b_val},
         "subskill": "complex_polar_operations_compound",
         "learning_objective_id": "techmath_polar_operations",
         "prompt": prompt,
         "prompt_latex": prompt,
         "answer_latex": ans_latex,
         "sample_answer": sample_answer,
+        "sub_parts": sub_parts,
         "marking_schema": marking_schema,
         "hints": hints,
         "misconception_tags": [

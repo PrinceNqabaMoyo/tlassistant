@@ -673,9 +673,56 @@ def _make_control_accounts_analysis_typed(
     return _st_make_control_accounts_analysis_typed(r=r, difficulty=difficulty, variant=variant, business=business)
 
 
-def generate_questions(*, r: random.Random, n: int, subskill: str = "", difficulty: str = "", mode: str = "", variant: str = "") -> List[Dict[str, Any]]:
-    out_list = _generate_questions_internal(r=r, n=n, subskill=subskill, difficulty=difficulty, mode=mode, variant=variant)
-    return _phase3_apply_generation_postprocessing(out_list)
+SUBSKILLS = [
+    "crj",
+    "cpj",
+    "pcj",
+    "dj",
+    "daj",
+    "cj",
+    "caj",
+    "gj",
+    "general_ledger",
+    "debtors_ledger",
+    "creditors_ledger",
+    "trial_balance",
+    "equation",
+]
+
+def generate_questions(
+    *,
+    r: Optional[random.Random] = None,
+    n: Optional[int] = None,
+    count: int = 1,
+    seed: Optional[int] = None,
+    subskill: str = "",
+    difficulty: str = "",
+    mode: str = "",
+    variant: str = "",
+    question_type: str = "",
+    **kwargs: Any,
+) -> List[Dict[str, Any]]:
+    if r is None:
+        r = random.Random(int(seed)) if seed is not None else random.Random()
+    total_n = int(n if n is not None else (count or 1))
+    req_sub = str(subskill or "").strip().lower()
+    if req_sub in ("", "mixed", "all", "unknown", "none"):
+        chosen_sub = r.choice(SUBSKILLS)
+    else:
+        chosen_sub = req_sub
+    out_list = _generate_questions_internal(
+        r=r,
+        n=total_n,
+        subskill=chosen_sub,
+        difficulty=difficulty or "medium",
+        mode=mode,
+        variant=variant or question_type,
+    )
+    processed = _phase3_apply_generation_postprocessing(out_list)
+    for q in processed:
+        if isinstance(q, dict) and not q.get("subskill"):
+            q["subskill"] = chosen_sub
+    return processed
 
 def _generate_questions_internal(*, r: random.Random, n: int, subskill: str = "", difficulty: str = "", mode: str = "", variant: str = "") -> List[Dict[str, Any]]:
     subskill_norm = str(subskill or "").strip().lower()

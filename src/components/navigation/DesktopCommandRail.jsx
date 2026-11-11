@@ -48,7 +48,8 @@ export default function DesktopCommandRail({
   const fullPhaseList = isSeniorPhase ? ALL_SENIOR_PHASE_SUBJECTS : ALL_FET_PHASE_SUBJECTS;
   
   // Filter by enabled subjects
-  const enrolledSubjects = fullPhaseList.filter(s => enabledSubjects.includes(s.id));
+  const matchedSubjects = fullPhaseList.filter(s => enabledSubjects.includes(s.id));
+  const enrolledSubjects = matchedSubjects.length > 0 ? matchedSubjects : fullPhaseList.slice(0, 4);
   const activeCount = enrolledSubjects.length;
   const totalCount = fullPhaseList.length;
 

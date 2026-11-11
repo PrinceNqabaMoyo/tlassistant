@@ -1,0 +1,248 @@
+{
+  "master": "human_ear",
+  "view": "coronal_auditory_section",
+  "viewBox": "0 0 600 480",
+  "anchors": {
+    "pinna": {
+      "name": "Pinna / Auricle",
+      "synonyms": [
+        "pinna",
+        "auricle",
+        "outer ear flap"
+      ],
+      "anchor": [
+        135,
+        165
+      ],
+      "default_box": [
+        60,
+        100
+      ],
+      "side": "left",
+      "grades": [
+        "g9",
+        "g12"
+      ],
+      "description": "Cartilaginous flap of the outer ear that collects airborne sound pressure waves and directs them into the external auditory canal."
+    },
+    "auditory_canal": {
+      "name": "External Auditory Canal (Meatus)",
+      "synonyms": [
+        "auditory canal",
+        "external auditory meatus",
+        "ear canal",
+        "meatus"
+      ],
+      "anchor": [
+        235,
+        275
+      ],
+      "default_box": [
+        60,
+        180
+      ],
+      "side": "left",
+      "grades": [
+        "g9",
+        "g12"
+      ],
+      "description": "Tube leading from pinna to tympanic membrane; secretes cerumen (wax) to trap dust and foreign particles and lubricate the canal."
+    },
+    "tympanic_membrane": {
+      "name": "Tympanic Membrane (Eardrum)",
+      "synonyms": [
+        "tympanic membrane",
+        "eardrum",
+        "tympanum"
+      ],
+      "anchor": [
+        315,
+        290
+      ],
+      "default_box": [
+        60,
+        260
+      ],
+      "side": "left",
+      "grades": [
+        "g9",
+        "g12"
+      ],
+      "description": "Taut, thin fibrous membrane separating the outer and middle ear that vibrates in mechanical resonance with incoming sound waves."
+    },
+    "eustachian_tube": {
+      "name": "Eustachian Tube",
+      "synonyms": [
+        "eustachian tube",
+        "auditory tube",
+        "pharyngotympanic tube"
+      ],
+      "anchor": [
+        395,
+        320
+      ],
+      "default_box": [
+        60,
+        340
+      ],
+      "side": "left",
+      "grades": [
+        "g9",
+        "g12"
+      ],
+      "description": "Air-filled duct connecting middle ear cavity to nasopharynx, equalizing atmospheric pressure on both sides of the tympanic membrane."
+    },
+    "malleus": {
+      "name": "Malleus (Hammer)",
+      "synonyms": [
+        "malleus",
+        "hammer"
+      ],
+      "anchor": [
+        312,
+        225
+      ],
+      "default_box": [
+        60,
+        410
+      ],
+      "side": "left",
+      "grades": [
+        "g9",
+        "g12"
+      ],
+      "description": "First auditory ossicle attached to tympanic membrane; transmits sound vibrations directly onto the body of the incus."
+    },
+    "incus": {
+      "name": "Incus (Anvil)",
+      "synonyms": [
+        "incus",
+        "anvil"
+      ],
+      "anchor": [
+        330,
+        225
+      ],
+      "default_box": [
+        540,
+        100
+      ],
+      "side": "right",
+      "grades": [
+        "g9",
+        "g12"
+      ],
+      "description": "Intermediate ossicle acting as a mechanical lever linking vibrations from malleus to stapes with amplified mechanical force."
+    },
+    "stapes": {
+      "name": "Stapes (Stirrup)",
+      "synonyms": [
+        "stapes",
+        "stirrup"
+      ],
+      "anchor": [
+        365,
+        240
+      ],
+      "default_box": [
+        540,
+        160
+      ],
+      "side": "right",
+      "grades": [
+        "g9",
+        "g12"
+      ],
+      "description": "Smallest ossicle whose footplate vibrates against the membrane of the oval window, converting air vibrations into fluid pressure waves."
+    },
+    "auditory_ossicles": {
+      "name": "Auditory Ossicles (Malleus, Incus, Stapes)",
+      "synonyms": [
+        "ossicles",
+        "auditory ossicles",
+        "malleus incus stapes",
+        "middle ear bones"
+      ],
+      "anchor": [
+        325,
+        232
+      ],
+      "default_box": [
+        540,
+        220
+      ],
+      "side": "left",
+      "grades": [
+        "g9",
+        "g12"
+      ],
+      "description": "Three miniature middle ear bones (malleus, incus, stapes) that mechanically amplify vibrations from tympanic membrane to oval window."
+    },
+    "semicircular_canals": {
+      "name": "Semicircular Canals (Dynamic Balance)",
+      "synonyms": [
+        "semicircular canals",
+        "semicircular canal",
+        "canals"
+      ],
+      "anchor": [
+        395,
+        160
+      ],
+      "default_box": [
+        540,
+        115
+      ],
+      "side": "right",
+      "grades": [
+        "g9",
+        "g12"
+      ],
+      "description": "Three fluid-filled orthogonal bony loops containing cristae in swollen ampullae that detect rotational and angular head acceleration."
+    },
+    "cochlea": {
+      "name": "Cochlea (Organ of Corti)",
+      "synonyms": [
+        "cochlea",
+        "organ of corti",
+        "spiral organ"
+      ],
+      "anchor": [
+        395,
+        265
+      ],
+      "default_box": [
+        540,
+        365
+      ],
+      "side": "right",
+      "grades": [
+        "g9",
+        "g12"
+      ],
+      "description": "Spiral snail-shell bony chamber containing perilymph, endolymph, and sensory hair cells of the Organ of Corti that transduce vibrations to nerve impulses."
+    },
+    "auditory_nerve": {
+      "name": "Auditory Nerve (Vestibulocochlear Nerve)",
+      "synonyms": [
+        "auditory nerve",
+        "vestibulocochlear nerve",
+        "cranial nerve viii"
+      ],
+      "anchor": [
+        450,
+        228
+      ],
+      "default_box": [
+        540,
+        175
+      ],
+      "side": "right",
+      "grades": [
+        "g9",
+        "g12"
+      ],
+      "description": "Transmits acoustic sensory information from organ of Corti and equilibrium information from semicircular canals to temporal lobe of cerebral cortex."
+    }
+  }
+}

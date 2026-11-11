@@ -7,6 +7,8 @@ Covers official CAPS Examination standards (Paper 2 — 35 to 40 marks):
 - Theorem: Tangent-chord theorem (tan chord theorem)
 Supports full compound exam questions and atomic elementary sub-drills for adaptive deconstruction.
 """
+
+# Diagram contract: all diagrams emitted specify diagram_role: "context" | "identify"
 from __future__ import annotations
 
 import math

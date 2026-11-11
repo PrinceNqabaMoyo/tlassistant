@@ -97,7 +97,22 @@ def generate_monohybrid_cross(r: random.Random, mode: str = "scaffold") -> Dict[
         "sample_answer": sample_answer,
         "ideal_answer": f"Phenotypic ratio: {cross['pheno_ratio']}; Probability: {cross['rec_pct']}%",
         "marks": 6,
-        "misconception_tags": ["confuses_phenotype_genotype", "dominant_recessive_inversion", "incorrect_gamete_separation"],
+        "modality": "punnett_square",
+        "punnett_spec": {
+            "p1_label": f"{cross['p1'].capitalize()} ({p1_geno})",
+            "p2_label": f"{cross['p2'].capitalize()} ({p2_geno})",
+            "p1_gametes": [p1_geno[0], p1_geno[1]],
+            "p2_gametes": [p2_geno[0], p2_geno[1]],
+            "expected_cells": [
+                p1_geno[0] + p2_geno[0],
+                p1_geno[0] + p2_geno[1],
+                p1_geno[1] + p2_geno[0],
+                p1_geno[1] + p2_geno[1]
+            ],
+            "phenotype_ratio": cross["pheno_ratio"],
+            "trait": trait_info["trait"]
+        },
+        "expected_answer": f"{cross['rec_pct']}%",
         "marking_schema": {
             "total_marks": 6,
             "marking_points": [

@@ -18,6 +18,8 @@ from app.utils.grade11_business_studies.term_3 import citizenship_responsibiliti
 from app.utils.grade11_business_studies.term_3 import business_plan_transformation_generator
 from app.utils.grade11_business_studies.term_3 import start_business_venture_generator
 from app.utils.grade11_business_studies.term_3 import presentation_of_information_generator
+from app.utils.grade11_business_studies.term_3 import human_resources_function_generator
+from app.utils.grade11_business_studies.term_4 import team_dynamics_generator
 from app.utils.grade11_business_studies._bs_curriculum import (
     get_g11_topic_sections,
 )
@@ -44,6 +46,9 @@ GENERATORS = {
     'grade11_bs_business_plan_transformation': business_plan_transformation_generator,
     'grade11_bs_start_business_venture': start_business_venture_generator,
     'grade11_bs_presentation_of_information': presentation_of_information_generator,
+    'grade11_bs_human_resources_function': human_resources_function_generator,
+    'grade11_bs_team_dynamics': team_dynamics_generator,
+    'grade11_bs_challenges_of_business_environments': the_challenges_of_the_business_environments_generator,
 }
 
 
@@ -61,16 +66,16 @@ def generate_questions(topic, subskill, difficulty, count=1, config=None):
                 subskill = pool_key
                 break
 
-    # Map new format keys to legacy subskill pools generators understand.
-    # Generators currently have: concepts (MCQ), application (scenario/typed),
-    # discussion (essay). New format keys are normalised here.
+    # Map frontend format keys to the generator subskill pools. Generators now
+    # emit real word_bank / matching_columns / crossword / essay payloads, so
+    # these are passed through instead of being collapsed to MCQ.
     _FORMAT_TO_SUBSKILL = {
         'mcq': 'concepts',
-        'word_bank': 'concepts',
-        'matching_columns': 'concepts',
-        'crossword': 'concepts',
         'typed': 'application',
-        'essay': 'discussion',
+        'word_bank': 'word_bank',
+        'matching_columns': 'matching',
+        'crossword': 'crossword',
+        'essay': 'essay',
     }
     subskill = _FORMAT_TO_SUBSKILL.get(subskill, subskill)
 
@@ -78,8 +83,8 @@ def generate_questions(topic, subskill, difficulty, count=1, config=None):
         raise ValueError(f'No generator found for topic: {topic}')
     generator = GENERATORS[topic]
     if hasattr(generator, 'generate'):
-        return generator.generate(subskill=subskill, difficulty=difficulty, count=count, **config)
-    return generator(subskill=subskill, difficulty=difficulty, count=count, **config)
+        return generator.generate(subskill=subskill, difficulty=difficulty, count=count, topic=topic, **{k: v for k, v in config.items() if k != 'topic'})
+    return generator(subskill=subskill, difficulty=difficulty, count=count, topic=topic, **{k: v for k, v in config.items() if k != 'topic'})
 
 
 def _normalize_text(value):

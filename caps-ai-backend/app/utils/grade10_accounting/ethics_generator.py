@@ -59,20 +59,30 @@ def _make_table_wordbank(
     correct_map: Dict[str, Dict[str, str]],
     guidelines: Optional[List[str]] = None,
 ) -> Dict[str, Any]:
+    id_to_label = {str(w.get("id")): str(w.get("label")) for w in (word_bank or []) if isinstance(w, dict)}
+    clean_headers = [h for h in headers[:3] if h]
+    if len(clean_headers) < 3:
+        clean_headers = ["No.", "Description", "Ethical Term"]
+    norm_rows: List[List[str]] = []
+    flat_map: Dict[str, str] = {}
+    for r_idx, row in enumerate(rows):
+        row_cells = [str(row[0]) if len(row) > 0 else str(r_idx + 1), str(row[1]) if len(row) > 1 else "", f"{{r{r_idx}_c2}}"]
+        norm_rows.append(row_cells)
+        row_map = correct_map.get(str(r_idx), {})
+        tok_id = str(row_map.get("2") or "") if isinstance(row_map, dict) else str(row_map)
+        flat_map[f"r{r_idx}_c2"] = id_to_label.get(tok_id, tok_id)
+    bank_labels = " | ".join(f"`{w.get('label')}`" for w in (word_bank or []) if isinstance(w, dict) and w.get("label"))
+    full_prompt = f"{prompt}\n\n**Term Bank:** {bank_labels}" if bank_labels else prompt
     return {
-        "id": _make_id("acct10_ethics_table_wordbank"),
-        "question_type": "table_wordbank",
-        "prompt": prompt,
-        "table": {
-            "headers": headers,
-            "rows": rows,
-        },
-        "word_bank": word_bank,
-        "correct_map": correct_map,
+        "id": _make_id("acct10_ethics_table_fill"),
+        "question_type": "table_fill",
+        "prompt": full_prompt,
+        "question_text": full_prompt,
+        "headers": clean_headers,
+        "rows": norm_rows,
+        "correct_map": flat_map,
         "guidelines": guidelines or [],
-        "expected_answer_type": "table_wordbank",
-        "marks": len(rows) * 2,
-        "visual_aid_key": "ethics_matching",
+        "marks": len(norm_rows) * 2,
     }
 
 
@@ -269,23 +279,51 @@ def generate_questions(
         )
     )
 
+    concepts_pool = [{**q, "subskill": "code_of_ethics_concepts"} for q in concepts_pool if q.get("question_type") != "typed"]
+    principles_pool = [{**q, "subskill": "ethical_principles_application"} for q in principles_pool if q.get("question_type") != "typed"]
+    leadership_pool = [{**q, "subskill": "ethical_leadership_and_integrity"} for q in leadership_pool if q.get("question_type") != "typed"]
+    principles_matching_pool = [{**q, "subskill": "ethical_principles_matching"} for q in principles_matching_pool]
+    terminology_matching_pool = [{**q, "subskill": "ethics_terminology_matching"} for q in terminology_matching_pool]
+
     all_pools = {
         "concepts": concepts_pool,
         "code_of_ethics": concepts_pool,
+        "code_of_ethics_concepts": concepts_pool,
         "principles": principles_pool,
+        "ethical_principles_application": principles_pool,
         "leadership": leadership_pool,
+        "ethical_leadership_and_integrity": leadership_pool,
         "principles_matching": principles_matching_pool,
+        "ethical_principles_matching": principles_matching_pool,
         "terminology_matching": terminology_matching_pool,
+        "ethics_terminology_matching": terminology_matching_pool,
         "mixed": concepts_pool + principles_pool + leadership_pool + principles_matching_pool + terminology_matching_pool,
         "ethics": concepts_pool + principles_pool + leadership_pool + principles_matching_pool + terminology_matching_pool,
     }
+
+    sub_pools = [p for p in (concepts_pool, principles_pool, leadership_pool, principles_matching_pool, terminology_matching_pool) if p]
+    if subskill_norm in ("mixed", "ethics", "all", "") and sub_pools:
+        questions: List[Dict[str, Any]] = []
+        for _ in range(n):
+            chosen_pool = r.choice(sub_pools)
+            questions.append(r.choice(chosen_pool))
+        return questions
 
     pool = all_pools.get(subskill_norm, all_pools["mixed"])
     if not pool:
         pool = all_pools["mixed"]
 
-    questions: List[Dict[str, Any]] = []
+    questions = []
     for _ in range(n):
         questions.append(r.choice(pool))
 
     return questions
+
+
+SUBSKILLS = [
+    "code_of_ethics_concepts",
+    "ethical_principles_application",
+    "ethical_leadership_and_integrity",
+    "ethical_principles_matching",
+    "ethics_terminology_matching",
+]

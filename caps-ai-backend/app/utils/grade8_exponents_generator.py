@@ -1,3 +1,18 @@
+"""Grade 8 Mathematics — Exponents Generator.
+Grounded in: curriculum_docs_auto/Mathematics_Gr8/Term 1/03. Exponents.md
+
+Covers CAPS subskills:
+  1. write_exponential_form: Expressing repeated factors in exponential notation.
+  2. calculate_power: Evaluating powers of natural numbers and integers.
+  3. square_or_cube_root: Finding square roots and cube roots of perfect powers.
+  4. negative_base_parentheses: Calculating (-a)^n vs -a^n.
+  5. product_of_powers: Applying product law of exponents a^m * a^n = a^(m+n).
+  6. quotient_of_powers: Applying quotient law a^m / a^n = a^(m-n).
+  7. power_of_a_power: Applying power of a power (a^m)^n = a^(m*n).
+  8. power_of_a_product: Applying (ab)^n = a^n * b^n.
+  9. zero_exponent: Applying zero exponent rule a^0 = 1 (a != 0).
+  10. scientific_notation: Converting between ordinary and scientific notation.
+"""
 import random
 import time
 import math
@@ -277,7 +292,7 @@ def _gen_power_of_a_product(rng: random.Random, difficulty: str, qtype: str) -> 
     exp = rng.randint(2, 5) if difficulty != 'hard' else rng.randint(3, 7)
     prompt = f"Write as a product of powers: ({a}×{b})^{exp}"
     correct = f"{a}^{exp} × {b}^{exp}"
-    explanation = f"(a×b)^m = a^m × b^m."
+    explanation = f"Power of a product law: apply exponent {exp} to each factor inside brackets: ({a}×{b})^{exp} = {a}^{exp} × {b}^{exp}."
 
     if qtype == 'mcq':
         options = [correct, f"{a}^{exp} + {b}^{exp}", f"{(a*b)}^{exp}", f"{a}^{exp + 1} × {b}^{exp}"]

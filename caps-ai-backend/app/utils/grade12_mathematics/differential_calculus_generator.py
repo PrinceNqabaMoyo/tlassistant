@@ -452,17 +452,23 @@ def _build_cubic_compound(r, difficulty: str) -> Dict[str, Any]:
         ),
         step(
             from_latex=f"f''(x) = {to_latex(f_double_prime)} = 0",
-            to_latex_str=f"x = {to_latex(x_infl)} \\implies \\text{{Point of inflection at }} ({to_latex(x_infl)}; {to_latex(y_infl)})",
+            to_latex_str=f"x = {to_latex(x_infl)} \\implies \\text{{Point of inflection }} I({to_latex(x_infl)}; {to_latex(y_infl)})",
             op="find point of inflection where f''(x) = 0",
             rule="concavity change",
+        ),
+        step(
+            from_latex=f"f''(x) > 0 \\implies {to_latex(f_double_prime)} > 0",
+            to_latex_str=f"x > {to_latex(x_infl)}",
+            op="solve f''(x) > 0 for upward concavity",
+            rule="second derivative concavity test",
         ),
     ]
 
     canonical = solution_graph(
-        goal="determine stationary points and point of inflection of cubic function",
+        goal="determine stationary points, point of inflection, and concavity of cubic function",
         steps=steps,
         final_expr=f_prime,
-        final_latex=f"({r1}; {y1}) \\text{{ and }} ({r2}; {y2}); \\text{{ Inflection: }} ({to_latex(x_infl)}; {to_latex(y_infl)})",
+        final_latex=f"A({r1}; {y1}), B({r2}; {y2}); \\text{{ Inflection }} I({to_latex(x_infl)}; {to_latex(y_infl)}); \\text{{ Concave up: }} x > {to_latex(x_infl)}",
     )
 
     marking_schema = {
@@ -488,6 +494,22 @@ def _build_cubic_compound(r, difficulty: str) -> Dict[str, Any]:
         prefix="calc_cubic",
         topic=TOPIC,
         subskill="cubic_curve_analysis",
+        diagram_spec={
+            "kind": "function_graph",
+            "family": "cubic",
+            "a": 1,
+            "b": int(b),
+            "c": int(c),
+            "d": int(d),
+            "domain": [-5, 5],
+            "range": [-16, 16],
+            "features": {
+                "stationary_points": [[float(r1), float(y1)], [float(r2), float(y2)]],
+                "inflection_point": [float(x_infl), float(y_infl)],
+                "y_intercept": [0, float(d)],
+            },
+            "caption": "Cubic curve f(x) showing stationary points and point of inflection",
+        },
         learning_objective_id=f"{LO}_cubic_analysis",
         prompt=(
             f"Given the cubic function $f(x) = {to_latex(fx)}$:\n\n"
@@ -557,3 +579,5 @@ def generate(
         questions.append(q)
 
     return {"questions": questions}
+
+# diagram_role: context (math / ems declarative context visualization)

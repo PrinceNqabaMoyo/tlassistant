@@ -33,14 +33,28 @@ def _round_money(x: float) -> float:
 VAT_RATE = 0.15  # 15% standard rate
 
 
+SUBSKILLS = [
+    "vat_concepts_and_rates",
+    "vat_inclusive_calculations",
+    "vat_exclusive_and_sars_calculations",
+    "vat_classification_table",
+    "vat_evasion_vs_avoidance_ethics",
+]
+
+
 def _normalize_subskill(subskill: str) -> str:
     key = str(subskill or "mixed").strip().lower()
     mapping = {
         "vat": "mixed",
         "vat_concepts": "concepts",
+        "vat_concepts_and_rates": "concepts",
         "vat_calculations": "calculations",
+        "vat_inclusive_calculations": "calculations",
+        "vat_exclusive_and_sars_calculations": "calculations",
         "vat_classification": "classification",
+        "vat_classification_table": "classification",
         "vat_ethics": "ethics",
+        "vat_evasion_vs_avoidance_ethics": "ethics",
     }
     return mapping.get(key, key or "mixed")
 
@@ -145,6 +159,9 @@ def _validate_question(question: Dict[str, Any]) -> Dict[str, Any]:
         _expect(bool(formula_hint or working_formula), "VAT calc question must provide a formula hint or working formula.")
         return q
 
+    if question_type in ("table_fill", "journal", "ledger"):
+        return q
+
     if question_type == "table_wordbank":
         table = q.get("table") if isinstance(q.get("table"), dict) else {}
         headers = table.get("headers") if isinstance(table.get("headers"), list) else []
@@ -235,7 +252,7 @@ def _assign_recommended_difficulties(pool: List[Dict[str, Any]], *, family: str)
             else:
                 levels = ["easy", "medium"]
         elif family_norm == "classification":
-            if question_type == "table_wordbank":
+            if question_type in ("table_wordbank", "table_fill", "journal", "ledger"):
                 levels = ["easy", "medium"]
             elif question_type == "typed" or "input vat as a deduction" in prompt or "correctly compares zero-rated and exempt" in prompt:
                 levels = ["medium", "hard"]
@@ -264,6 +281,7 @@ def _select_mixed_questions_balanced(
         name for name in ["concepts", "calculations", "classification", "ethics"]
         if pools_by_subskill.get(name)
     ]
+    r.shuffle(ordered_subskills)
     if not ordered_subskills:
         return []
 
@@ -1272,10 +1290,10 @@ def generate_questions(
     n = max(1, min(int(count), 20))
     subskill_norm = _normalize_subskill(subskill)
 
-    concepts_pool = _assign_recommended_difficulties(_gen_concepts(r), family="concepts")
-    calc_pool = _assign_recommended_difficulties(_gen_calculations(r), family="calculations")
-    classification_pool = _assign_recommended_difficulties(_gen_classification(r), family="classification")
-    ethics_pool = _assign_recommended_difficulties(_gen_ethics(r), family="ethics")
+    concepts_pool = [{**q, "_vat_subskill": "vat_concepts_and_rates"} for q in _assign_recommended_difficulties(_gen_concepts(r), family="concepts") if str(q.get("question_type") or "") != "true_false"]
+    calc_pool = [{**q, "_vat_subskill": ("vat_inclusive_calculations" if "including" in str(q.get("prompt", "")).lower() else "vat_exclusive_and_sars_calculations")} for q in _assign_recommended_difficulties(_gen_calculations(r), family="calculations")]
+    classification_pool = [{**q, "_vat_subskill": "vat_classification_table"} for q in _assign_recommended_difficulties(_gen_classification(r), family="classification") if str(q.get("question_type") or "") != "true_false"]
+    ethics_pool = [{**q, "_vat_subskill": "vat_evasion_vs_avoidance_ethics"} for q in _assign_recommended_difficulties(_gen_ethics(r), family="ethics")]
 
     all_pools = {
         "concepts": concepts_pool,
@@ -1311,7 +1329,7 @@ def generate_questions(
     for q in selected_questions:
         q_copy = _validate_question(q)
         q_copy["difficulty"] = difficulty
-        q_copy["subskill"] = subskill_norm
+        q_copy["subskill"] = q_copy.pop("_vat_subskill", None) or (subskill_norm if subskill_norm != "mixed" else "vat_calculations")
         out.append(q_copy)
 
     return out

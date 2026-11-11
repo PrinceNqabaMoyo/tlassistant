@@ -1,0 +1,70 @@
+{
+  "diagram": "geyser_heating_element",
+  "view": "textbook",
+  "viewBox": "0 0 600 480",
+  "anchors": {
+    "heating_element": {
+      "name": "Coiled Electric Heating Element",
+      "anchor": [300, 380],
+      "default_box": [540, 380],
+      "side": "right",
+      "grades": ["g8", "g9", "g10"],
+      "acceptable": ["Heating element", "Resistor element", "Copper heating coil", "Electric element"],
+      "description": "High-resistance nichrome/copper immersion element that converts electrical energy into thermal energy via Joule heating (P = I^2 * R)."
+    },
+    "thermostat_sensor": {
+      "name": "Thermostat & Bimetallic Sensor Probe",
+      "anchor": [330, 335],
+      "default_box": [540, 335],
+      "side": "right",
+      "grades": ["g8", "g9", "g10"],
+      "acceptable": ["Thermostat", "Thermostat sensor", "Bimetallic strip", "Temperature sensor probe"],
+      "description": "Temperature regulator containing a bimetallic strip that bends to break electrical contact when water reaches the preset cut-off temperature (e.g. 65 °C)."
+    },
+    "cold_water_inlet": {
+      "name": "Cold Water Inlet Pipe with Dip Tube",
+      "anchor": [205, 410],
+      "default_box": [60, 410],
+      "side": "left",
+      "grades": ["g8", "g9", "g10"],
+      "acceptable": ["Cold water inlet", "Dip tube", "Cold water pipe", "Inlet pipe"],
+      "description": "Inlet pipe with a long vertical dip tube delivering cold, dense water directly to the bottom of the cylinder near the heating element."
+    },
+    "hot_water_outlet": {
+      "name": "Hot Water Outlet Pipe",
+      "anchor": [395, 75],
+      "default_box": [540, 75],
+      "side": "right",
+      "grades": ["g8", "g9", "g10"],
+      "acceptable": ["Hot water outlet", "Hot water pipe", "Outlet pipe"],
+      "description": "Outlet drawing less dense, buoyant heated water from the very top of the cylinder for distribution throughout the domestic plumbing system."
+    },
+    "sacrificial_anode": {
+      "name": "Sacrificial Magnesium Anode Rod",
+      "anchor": [260, 240],
+      "default_box": [60, 240],
+      "side": "left",
+      "grades": ["g9", "g10"],
+      "acceptable": ["Sacrificial anode", "Magnesium anode rod", "Anode rod", "Sacrificial metal"],
+      "description": "Highly reactive magnesium metal rod that preferentially oxidises (corrodes) to electrochemically protect the inner steel tank from rusting."
+    },
+    "insulation_casing": {
+      "name": "Polyurethane Foam Thermal Insulation",
+      "anchor": [140, 240],
+      "default_box": [60, 160],
+      "side": "left",
+      "grades": ["g8", "g9", "g10"],
+      "acceptable": ["Thermal insulation", "Polyurethane foam", "Insulating casing", "Insulation layer"],
+      "description": "Dense, non-conductive polyurethane foam layer minimizing conduction and radiation heat loss to the surrounding roof space."
+    },
+    "safety_relief_valve": {
+      "name": "Temperature & Pressure (T&P) Safety Valve",
+      "anchor": [445, 140],
+      "default_box": [540, 140],
+      "side": "right",
+      "grades": ["g8", "g9", "g10"],
+      "acceptable": ["Safety relief valve", "Temperature and pressure valve", "Pressure valve", "T&P valve"],
+      "description": "Mechanical safety valve that automatically discharges water if internal pressure exceeds 400-600 kPa or temperature exceeds 95 °C to prevent tank rupture."
+    }
+  }
+}

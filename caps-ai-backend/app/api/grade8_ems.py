@@ -10,11 +10,13 @@ from app.utils.grade8_ems import (
     term1_gov_and_society,
     term1_accounting_basics,
     term1_source_documents,
+    term1_general_ledger,
     term2_markets_and_production,
     term2_crj,
     term2_accounting_cycle,
     term3_cpj_and_crj,
     term3_ownership,
+    term3_management,
 )
 from app.utils.grade8_ems._ems_curriculum import get_g8_topic_sections, get_g8_section_for_topic
 
@@ -32,12 +34,17 @@ GENERATORS = {
     'grade8_ems_markets_and_production': term2_markets_and_production.generate,
     'grade8_ems_markets': term2_markets_and_production.generate,
     'grade8_ems_factors_of_production': term2_markets_and_production.generate,
+    'grade8_ems_general_ledger': term1_general_ledger.generate,
     'grade8_ems_crj': term2_crj.generate,
+    'grade8_ems_cash_receipts_journal': term2_crj.generate,
+    'grade8_ems_cash_payments_journal': term3_cpj_and_crj.generate,
     'grade8_ems_accounting_cycle': term2_accounting_cycle.generate,
     # Term 3
     'grade8_ems_cpj_and_crj': term3_cpj_and_crj.generate,
     'grade8_ems_ownership': term3_ownership.generate,
     'grade8_ems_forms_of_ownership': term3_ownership.generate,
+    'grade8_ems_management': term3_management.generate,
+    'grade8_ems_levels_and_functions_of_management': term3_management.generate,
 }
 
 def generate_questions(topic, subskill, difficulty, count=1, mode='scaffold', config=None):

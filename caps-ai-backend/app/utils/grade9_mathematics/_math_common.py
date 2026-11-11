@@ -82,6 +82,37 @@ def solution_graph(
     }
 
 
+
+def _clean_spec_strings(obj: Any) -> Any:
+    if isinstance(obj, str):
+        return obj.replace("{,}", ",")
+    if isinstance(obj, list):
+        return [_clean_spec_strings(x) for x in obj]
+    if isinstance(obj, dict):
+        return {k: _clean_spec_strings(v) for k, v in obj.items()}
+    return obj
+
+
+def _format_canonical_steps(canonical_solution: Optional[Dict[str, Any]], sample_answer: str, answer_latex: str) -> str:
+    base = (sample_answer or answer_latex or "").replace("{,}", ",")
+    steps = (canonical_solution or {}).get("steps") or []
+    if not steps:
+        return base
+    step_lines = []
+    for idx, st in enumerate(steps, 1):
+        op = st.get("op") or st.get("rule") or f"Step {idx}"
+        fl = (st.get("from_latex") or "").replace("{,}", ",")
+        tl = (st.get("to_latex") or "").replace("{,}", ",")
+        if fl and tl:
+            step_lines.append(f"Step {idx} ({op}): ${fl} \\Rightarrow {tl}$")
+        elif tl:
+            step_lines.append(f"Step {idx} ({op}): ${tl}$")
+    steps_block = "\n".join(step_lines)
+    if base and base not in steps_block:
+        return f"{steps_block}\n\n{base}"
+    return steps_block
+
+
 def make_math_question(
     *,
     prefix: str,
@@ -125,7 +156,8 @@ def make_math_question(
         "prompt_latex": prompt_latex,
         "answer_latex": answer_latex,
         "answer_sympy": answer_sympy,
-        "sample_answer": sample_answer or answer_latex,
+        "sample_answer": _format_canonical_steps(canonical_solution, sample_answer, answer_latex),
+        "worked_solution": _format_canonical_steps(canonical_solution, sample_answer, answer_latex),
         "canonical_solution": canonical_solution or {},
         "marking_schema": marking_schema,
         "marks": total_marks,
@@ -143,5 +175,8 @@ def make_math_question(
         "minimum_mastery_score": minimum_mastery_score,
     }
     if diagram_spec is not None:
-        q["diagram_spec"] = diagram_spec
+        if isinstance(diagram_spec, dict) and "diagram_role" not in diagram_spec:
+            diagram_spec["diagram_role"] = "identify" if q.get("question_type") == "diagram_select" else "context"
+        q["diagram_spec"] = _clean_spec_strings(diagram_spec)
+        q["modality"] = "diagram"
     return q

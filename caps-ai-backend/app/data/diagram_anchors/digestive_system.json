@@ -1,0 +1,180 @@
+{
+  "master": "digestive_system",
+  "view": "coronal_alimentary_canal",
+  "viewBox": "0 0 600 480",
+  "anchors": {
+    "mouth": {
+      "name": "Mouth & Oral Cavity",
+      "synonyms": [
+        "mouth",
+        "oral cavity",
+        "buccal cavity"
+      ],
+      "anchor": [
+        280,
+        125
+      ],
+      "default_box": [
+        60,
+        40
+      ],
+      "side": "left",
+      "grades": [
+        "g9",
+        "g11"
+      ],
+      "description": "Site of ingestion, mechanical chewing (mastication), and chemical digestion of starch by salivary amylase."
+    },
+    "esophagus": {
+      "name": "Esophagus (Gullet)",
+      "synonyms": [
+        "esophagus",
+        "oesophagus",
+        "gullet"
+      ],
+      "anchor": [
+        298,
+        210
+      ],
+      "default_box": [
+        60,
+        110
+      ],
+      "side": "left",
+      "grades": [
+        "g9",
+        "g11"
+      ],
+      "description": "Muscular tube that transports bolus from pharynx to stomach via rhythmic waves of peristalsis."
+    },
+    "liver": {
+      "name": "Liver",
+      "synonyms": [
+        "liver",
+        "hepar"
+      ],
+      "anchor": [
+        265,
+        265
+      ],
+      "default_box": [
+        60,
+        180
+      ],
+      "side": "left",
+      "grades": [
+        "g9",
+        "g11"
+      ],
+      "description": "Large metabolic organ producing bile salts that emulsify lipids; deaminates excess amino acids and stores glycogen."
+    },
+    "stomach": {
+      "name": "Stomach",
+      "synonyms": [
+        "stomach",
+        "gaster"
+      ],
+      "anchor": [
+        328,
+        272
+      ],
+      "default_box": [
+        540,
+        180
+      ],
+      "side": "right",
+      "grades": [
+        "g9",
+        "g11"
+      ],
+      "description": "Muscular J-shaped sac churning food into chyme; secretes gastric juice (hydrochloric acid and pepsin) for protein digestion."
+    },
+    "pancreas": {
+      "name": "Pancreas",
+      "synonyms": [
+        "pancreas"
+      ],
+      "anchor": [
+        298,
+        300
+      ],
+      "default_box": [
+        540,
+        240
+      ],
+      "side": "right",
+      "grades": [
+        "g9",
+        "g11"
+      ],
+      "description": "Accessory glandular organ secreting pancreatic juice (trypsin, amylase, lipase, and sodium bicarbonate) into duodenum."
+    },
+    "small_intestine": {
+      "name": "Small Intestine (Ileum)",
+      "synonyms": [
+        "small intestine",
+        "ileum",
+        "jejunum",
+        "duodenum"
+      ],
+      "anchor": [
+        298,
+        355
+      ],
+      "default_box": [
+        60,
+        310
+      ],
+      "side": "left",
+      "grades": [
+        "g9",
+        "g11"
+      ],
+      "description": "Primary site of terminal chemical digestion and nutrient absorption; internal wall lined with microscopic villi."
+    },
+    "large_intestine": {
+      "name": "Large Intestine (Colon)",
+      "synonyms": [
+        "large intestine",
+        "colon",
+        "bowel"
+      ],
+      "anchor": [
+        252,
+        345
+      ],
+      "default_box": [
+        60,
+        380
+      ],
+      "side": "left",
+      "grades": [
+        "g9",
+        "g11"
+      ],
+      "description": "Reabsorbs water, mineral salts, and vitamins from indigestible residue, compacting waste into feces."
+    },
+    "rectum": {
+      "name": "Rectum & Anus",
+      "synonyms": [
+        "rectum",
+        "anus",
+        "rectum and anus"
+      ],
+      "anchor": [
+        298,
+        405
+      ],
+      "default_box": [
+        540,
+        420
+      ],
+      "side": "right",
+      "grades": [
+        "g9",
+        "g11"
+      ],
+      "description": "Terminal chamber storing feces prior to controlled defecation (egestion) through the anal sphincter."
+    }
+  }
+}

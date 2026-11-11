@@ -1,0 +1,164 @@
+{
+  "diagram": "ac_dc_generator_motor_apparatus",
+  "view": "textbook",
+  "viewBox": "0 0 600 480",
+  "anchors": {
+    "north_magnetic_pole": {
+      "name": "North Pole Magnet (Field Pole)",
+      "anchor": [
+        125,
+        175
+      ],
+      "default_box": [
+        60,
+        115
+      ],
+      "side": "left",
+      "grades": [
+        "g9",
+        "g12"
+      ],
+      "acceptable": [
+        "North pole",
+        "Permanent magnet",
+        "Field magnet",
+        "N pole"
+      ],
+      "description": "Permanent magnet pole providing a uniform magnetic field B directed from North to South across the rotating coil."
+    },
+    "rotating_armature_coil": {
+      "name": "Rotating Rectangular Armature Coil",
+      "anchor": [
+        235,
+        140
+      ],
+      "default_box": [
+        60,
+        65
+      ],
+      "side": "left",
+      "grades": [
+        "g9",
+        "g12"
+      ],
+      "acceptable": [
+        "Armature coil",
+        "Rotating coil",
+        "Conductor loop",
+        "Solenoid coil"
+      ],
+      "description": "Conducting copper loop rotated mechanically inside the magnetic field to experience a changing magnetic flux ΔΦ and induced emf."
+    },
+    "carbon_brush": {
+      "name": "Stationary Carbon Brush",
+      "anchor": [
+        258,
+        292
+      ],
+      "default_box": [
+        60,
+        305
+      ],
+      "side": "left",
+      "grades": [
+        "g12"
+      ],
+      "acceptable": [
+        "Carbon brush",
+        "Brush",
+        "Graphite brush",
+        "Sliding contact brush"
+      ],
+      "description": "Spring-loaded stationary graphite block that maintains sliding electrical contact between the rotating slip rings and external circuit."
+    },
+    "south_magnetic_pole": {
+      "name": "South Pole Magnet (Field Pole)",
+      "anchor": [
+        470,
+        175
+      ],
+      "default_box": [
+        540,
+        75
+      ],
+      "side": "right",
+      "grades": [
+        "g9",
+        "g12"
+      ],
+      "acceptable": [
+        "South pole",
+        "Permanent magnet",
+        "Field magnet",
+        "S pole"
+      ],
+      "description": "Opposite permanent magnet pole toward which magnetic field lines are directed."
+    },
+    "magnetic_field_lines": {
+      "name": "Uniform Magnetic Field Lines (B)",
+      "anchor": [
+        300,
+        155
+      ],
+      "default_box": [
+        540,
+        195
+      ],
+      "side": "right",
+      "grades": [
+        "g9",
+        "g12"
+      ],
+      "acceptable": [
+        "Magnetic field lines",
+        "Magnetic flux",
+        "Magnetic field"
+      ],
+      "description": "Parallel magnetic field lines running from North to South that are cut by the rotating armature conductors."
+    },
+    "slip_rings": {
+      "name": "Metal Slip Rings (AC Commutation)",
+      "anchor": [
+        312,
+        282
+      ],
+      "default_box": [
+        540,
+        295
+      ],
+      "side": "right",
+      "grades": [
+        "g12"
+      ],
+      "acceptable": [
+        "Slip rings",
+        "Two continuous slip rings",
+        "AC slip rings"
+      ],
+      "description": "Two continuous concentric metal rings attached to the coil ends that allow alternating current (AC) to flow to the external circuit."
+    },
+    "galvanometer_voltmeter": {
+      "name": "Center-Zero Galvanometer / AC Meter",
+      "anchor": [
+        300,
+        408
+      ],
+      "default_box": [
+        540,
+        405
+      ],
+      "side": "right",
+      "grades": [
+        "g9",
+        "g12"
+      ],
+      "acceptable": [
+        "Galvanometer",
+        "Voltmeter",
+        "Ammeter",
+        "AC meter"
+      ],
+      "description": "Sensitive electrical meter in the external circuit whose pointer deflects in alternating directions as AC emf is induced."
+    }
+  }
+}

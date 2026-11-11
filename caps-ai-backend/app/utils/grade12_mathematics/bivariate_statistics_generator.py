@@ -3,6 +3,8 @@ Covers official CAPS Examination standards (NSC Paper 2, Question 1: 15–20 mar
 Supports full 8-mark compound exam questions and atomic 3-mark elementary sub-drills for adaptive deconstruction.
 Zero-LLM: 100% deterministic SymPy calculations with South African comma decimals ({,}) and JSXGraph diagram specs.
 """
+
+# Diagram contract: all diagrams emitted specify diagram_role: "context" | "identify"
 from __future__ import annotations
 
 import math

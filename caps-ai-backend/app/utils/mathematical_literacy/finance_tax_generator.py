@@ -18,8 +18,8 @@ def _rng(seed: Optional[int] = None) -> random.Random:
 def _fmt_sa(val: float | int, places: int = 2) -> str:
     if isinstance(val, int) or (isinstance(val, float) and val.is_integer()):
         return str(int(val))
-    s = f"{val:.{places}f}"
-    return s.replace(".", "{,}")
+    s = f"{val:.{places}f}".rstrip("0").rstrip(".")
+    return s.replace(".", ",")
 
 
 # Official CAPS South African Personal Income Tax Brackets (Annual)
@@ -107,6 +107,11 @@ def _build_taxable_income_drill(r: random.Random) -> Dict[str, Any]:
         "prompt_latex": prompt,
         "answer_latex": ans_latex,
         "sample_answer": sample_answer,
+        "sub_parts": [
+            {"id": "part_1", "label": f"{name}'s annual gross salary", "marks": 1, "expected_answer": f"R{annual_gross:,}".replace(",", " ")},
+            {"id": "part_2", "label": f"{name}'s annual pension fund contribution", "marks": 1, "expected_answer": f"R{int(annual_pension):,}".replace(",", " ")},
+            {"id": "part_3", "label": f"{name}'s annual taxable income", "marks": 1, "expected_answer": f"R{int(taxable_income):,}".replace(",", " ")},
+        ],
         "marking_schema": marking_schema,
         "hints": hints,
         "misconception_tags": ["forgot_to_multiply_by_12", "added_pension_to_taxable_income"],
@@ -184,6 +189,11 @@ def _build_tax_bracket_drill(r: random.Random) -> Dict[str, Any]:
         "prompt_latex": prompt,
         "answer_latex": ans_latex,
         "sample_answer": sample_answer,
+        "sub_parts": [
+            {"id": "part_1", "label": "Applicable tax bracket", "marks": 1, "expected_answer": f"R{bracket['min']:,} to R{bracket['max']:,}".replace(",", " ")},
+            {"id": "part_2", "label": "Taxable amount above the bracket threshold", "marks": 1, "expected_answer": f"R{over_amount:,}".replace(",", " ")},
+            {"id": "part_3", "label": "Total tax before rebates", "marks": 1, "expected_answer": f"R{tax_before_rebate:,.2f}".replace(",", " ")},
+        ],
         "marking_schema": marking_schema,
         "hints": hints,
         "misconception_tags": ["taxed_entire_amount_at_marginal_rate", "selected_wrong_tax_bracket"],
@@ -247,7 +257,8 @@ def _build_compound_tax(r: random.Random) -> Dict[str, Any]:
         f"3. Total applicable annual tax rebates based on age.\n"
         f"4. Total annual medical scheme fees tax credit.\n"
         f"5. Total annual net income tax payable.\n"
-        f"6. Monthly PAYE deduction and net monthly take-home salary."
+        f"6. Monthly PAYE deduction.\n"
+        f"7. Net monthly take-home salary."
     ).replace(",", " ")
 
     sample_answer = (
@@ -262,8 +273,9 @@ def _build_compound_tax(r: random.Random) -> Dict[str, Any]:
         f"   Annual credit = $\\text{{R}}{monthly_med_credit:,.2f} \\times 12 = \\text{{R}}{annual_med_credit:,.2f}$\n\n"
         f"5. Annual Net Tax Payable:\n"
         f"   $\\text{{R}}{tax_before_rebate:,.2f} - \\text{{R}}{rebate:,.2f} - \\text{{R}}{annual_med_credit:,.2f} = \\text{{R}}{annual_tax_payable:,.2f}$\n\n"
-        f"6. Monthly PAYE and Take-Home:\n"
-        f"   Monthly PAYE = $\\text{{R}}{annual_tax_payable:,.2f} \\div 12 = \\text{{R}}{monthly_paye:,.2f}$\n"
+        f"6. Monthly PAYE deduction:\n"
+        f"   Monthly PAYE = $\\text{{R}}{annual_tax_payable:,.2f} \\div 12 = \\text{{R}}{monthly_paye:,.2f}$\n\n"
+        f"7. Net monthly take-home salary:\n"
         f"   Net Salary = $\\text{{R}}{monthly_salary:,} - \\text{{R}}{monthly_paye:,.2f} = \\text{{R}}{net_monthly_salary:,.2f}$"
     ).replace(",", " ")
 
@@ -272,6 +284,16 @@ def _build_compound_tax(r: random.Random) -> Dict[str, Any]:
         rf"\text{{Monthly PAYE}} = \text{{R}}{monthly_paye:,.2f}, \quad "
         rf"\text{{Net Salary}} = \text{{R}}{net_monthly_salary:,.2f}"
     ).replace(",", " ")
+
+    sub_parts = [
+        {"id": "part_1", "label": f"{name}'s annual gross salary", "marks": 1, "expected_answer": f"R{annual_salary:,}".replace(",", " ")},
+        {"id": "part_2", "label": "Total tax before rebates using the SARS tax tables", "marks": 2, "expected_answer": f"R{tax_before_rebate:,.2f}".replace(",", " ")},
+        {"id": "part_3", "label": "Total applicable annual tax rebates based on age", "marks": 1, "expected_answer": f"R{rebate:,.2f}".replace(",", " ")},
+        {"id": "part_4", "label": "Total annual medical scheme fees tax credit", "marks": 1, "expected_answer": f"R{annual_med_credit:,.2f}".replace(",", " ")},
+        {"id": "part_5", "label": "Total annual net income tax payable", "marks": 1, "expected_answer": f"R{annual_tax_payable:,.2f}".replace(",", " ")},
+        {"id": "part_6", "label": "Monthly PAYE deduction", "marks": 1, "expected_answer": f"R{monthly_paye:,.2f}".replace(",", " ")},
+        {"id": "part_7", "label": "Net monthly take-home salary", "marks": 1, "expected_answer": f"R{net_monthly_salary:,.2f}".replace(",", " ")},
+    ]
 
     marking_schema = {
         "total_marks": 8,
@@ -304,6 +326,7 @@ def _build_compound_tax(r: random.Random) -> Dict[str, Any]:
         "prompt_latex": prompt,
         "answer_latex": ans_latex,
         "sample_answer": sample_answer,
+        "sub_parts": sub_parts,
         "marking_schema": marking_schema,
         "hints": hints,
         "misconception_tags": [

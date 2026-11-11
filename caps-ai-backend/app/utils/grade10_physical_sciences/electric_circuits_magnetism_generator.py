@@ -27,7 +27,7 @@ def _fmt_sa(val: float | int, places: int = 2) -> str:
     if isinstance(val, int) or (isinstance(val, float) and val.is_integer()):
         return str(int(val))
     s = f"{val:.{places}f}".rstrip("0").rstrip(".")
-    return s.replace(".", "{{,}}")
+    return s.replace(".", "{,}")
 
 
 E_CHARGE = 1.6e-19
@@ -131,7 +131,27 @@ def _build_circuit_drill(r: random.Random) -> Dict[str, Any]:
         "type": "compound",
         "prompt": prompt,
         "correct_answer": f"Rs={rs} Ohm, I={_fmt_sa(current)} A, V1={_fmt_sa(v1)} V, Q={_fmt_sa(q_tot)} C, W={_fmt_sa(w_tot)} J",
-        "worked_solution": sol,
+        "modality": "circuit",
+        "circuit_spec": {
+            "type": "series",
+            "voltage": v_batt,
+            "components": [
+                {"type": "battery", "voltage": v_batt, "label": f"{_fmt_sa(v_batt)} V"},
+                {"type": "switch", "state": "closed"},
+                {"type": "ammeter", "label": "A", "reading": current},
+                {"type": "resistor", "id": "R1", "resistance": r1, "label": f"R₁ ({r1} Ω)"},
+                {"type": "resistor", "id": "R2", "resistance": r2, "label": f"R₂ ({r2} Ω)"},
+                {"type": "voltmeter", "id": "V1", "label": f"V₁ ({_fmt_sa(v1)} V)"}
+            ]
+        },
+        "sub_parts": [
+            {"id": "part_1", "label": "1. Equivalent resistance (Rs)", "marks": 1, "expected_answer": f"{rs}"},
+            {"id": "part_2", "label": "2. Ammeter reading (I)", "marks": 2, "expected_answer": f"{_fmt_sa(current)}"},
+            {"id": "part_3", "label": "3. Potential difference (V1)", "marks": 1, "expected_answer": f"{_fmt_sa(v1)}"},
+            {"id": "part_4", "label": "4. Total charge (Q)", "marks": 1, "expected_answer": f"{_fmt_sa(q_tot)}"},
+            {"id": "part_5", "label": "5. Work done (W)", "marks": 1, "expected_answer": f"{_fmt_sa(w_tot)}"}
+        ],
+        "expected_answer": f"Rs={rs} Ohm, I={_fmt_sa(current)} A, V1={_fmt_sa(v1)} V, Q={_fmt_sa(q_tot)} C, W={_fmt_sa(w_tot)} J",
         "marking_schema": {
             "total_marks": 6,
             "marking_points": [
@@ -160,13 +180,12 @@ def _build_circuit_drill(r: random.Random) -> Dict[str, Any]:
 def generate(seed: Optional[int] = None, mode: str = "compound", **kwargs) -> Dict[str, Any]:
     """Main generator entrypoint adhering to 6-pillar contract."""
     r = _rng(seed)
-    if mode == "elementary_charge":
+    topic_str = str(kwargs.get("topic") or "").lower()
+    subskill_str = str(kwargs.get("subskill") or "").lower()
+
+    if mode == "elementary_charge" or "charge" in subskill_str or "electrostat" in topic_str:
         return _build_charge_drill(r)
-    elif mode == "elementary_circuit":
+    elif mode == "elementary_circuit" or "circuit" in subskill_str or "circuit" in topic_str:
         return _build_circuit_drill(r)
     else:
-        choice = r.choice(["charge", "circuit"])
-        if choice == "charge":
-            return _build_charge_drill(r)
-        else:
-            return _build_circuit_drill(r)
+        return _build_circuit_drill(r)

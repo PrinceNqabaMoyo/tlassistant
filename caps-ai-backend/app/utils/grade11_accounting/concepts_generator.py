@@ -28,10 +28,9 @@ def _make_mcq(*, prompt: str, options: List[str], correct_index: int, explanatio
         "options": options,
         "correct_index": int(correct_index),
         "expected_answer_type": "mcq",
+        "explanation": explanation,
         "guidelines": [explanation],
     }
-    if str(mode or "").strip().lower() == "scaffold":
-        out["explanation"] = explanation
     return out
 
 
@@ -41,10 +40,10 @@ def _make_typed(*, prompt: str, sample_answer: str, mode: str) -> Dict[str, Any]
         "question_type": "typed",
         "prompt": prompt,
         "expected_answer_type": "text",
+        "sample_answer": sample_answer,
+        "expected_answer": sample_answer,
         "guidelines": [f"Sample expected answer: {sample_answer}"],
     }
-    if str(mode or "").strip().lower() == "scaffold":
-        out["sample_answer"] = sample_answer
     return out
 
 

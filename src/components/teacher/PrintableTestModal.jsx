@@ -13,8 +13,14 @@ export default function PrintableTestModal({
 }) {
   const [activeTab, setActiveTab] = useState('paper'); // 'paper' | 'memo'
   const [copied, setCopied] = useState(false);
+  const [boxHeights, setBoxHeights] = useState({});
 
   if (!isOpen) return null;
+
+  const getBoxHeight = (qIdx, marks = 5) => {
+    if (boxHeights[qIdx]) return boxHeights[qIdx];
+    return Math.max(96, Math.min(280, (Number(marks) || 4) * 28));
+  };
 
   const totalMarks = questions.reduce((sum, q) => {
     const marks = q.marks || (q.marking_scheme ? q.marking_scheme.reduce((s, p) => s + (p.marks || 1), 0) : 5);
@@ -39,15 +45,26 @@ export default function PrintableTestModal({
           </div>`
         : '';
 
+      const boxH = getBoxHeight(idx, q.marks);
+      const lineCount = Math.max(3, Math.floor((boxH - 28) / 26));
+      const dashedLinesHtml = Array.from({ length: lineCount })
+        .map(() => `<div style="border-bottom: 1px dashed #cbd5e1; height: 26px;"></div>`)
+        .join('');
+
+      const qPromptText = String(q.question_text || q.prompt || q.text || 'Solve the following problem.');
+      const isGraphOrConstruction = /\b(draw|plot|construct|sketch|bar graph|histogram|cartesian|grid)\b/i.test(qPromptText);
+      const graphGridHtml = isGraphOrConstruction
+        ? `<div style="margin-top: 8px; height: 140px; border: 1px solid #94a3b8; background-image: linear-gradient(to right, #e2e8f0 1px, transparent 1px), linear-gradient(to bottom, #e2e8f0 1px, transparent 1px); background-size: 18px 18px; border-radius: 4px;"></div>`
+        : '';
+
       const workingBox = (q.options && q.options.length > 0)
         ? `<div style="border: 1px dashed #cbd5e0; border-radius: 4px; padding: 6px 12px; font-size: 9pt; color: #4a5568; background: #f7fafc; margin-top: 6px;">
             Learner Selected Choice: &nbsp; <strong>[ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ]</strong>
           </div>`
-        : `<div style="border: 1px solid #e2e8f0; border-radius: 4px; padding: 10px; min-height: 120px;">
-            <div style="font-size: 8pt; color: #a0aec0; margin-bottom: 8px;">Working Space:</div>
-            <div style="border-bottom: 1px dashed #edf2f7; height: 26px;"></div>
-            <div style="border-bottom: 1px dashed #edf2f7; height: 26px;"></div>
-            <div style="border-bottom: 1px dashed #edf2f7; height: 26px;"></div>
+        : `<div style="border: 1px solid #cbd5e0; border-radius: 4px; padding: 10px; min-height: ${boxH}px;">
+            <div style="font-size: 8pt; color: #64748b; margin-bottom: 6px;">Working &amp; Answer Space:</div>
+            ${dashedLinesHtml}
+            ${graphGridHtml}
           </div>`;
 
       return `
@@ -56,7 +73,7 @@ export default function PrintableTestModal({
             <span>QUESTION ${idx + 1} ${q.question_type === 'mcq' ? '(Diagnostic MCQ)' : ''}</span>
             <span>[${q.marks || 5} marks]</span>
           </div>
-          <p style="margin: 0 0 12px 0;">${q.question_text || q.text || 'Solve the following problem.'}</p>
+          <p style="margin: 0 0 12px 0; white-space: pre-line;">${qPromptText}</p>
           ${optionsBlock}
           ${workingBox}
         </div>
@@ -312,11 +329,45 @@ export default function PrintableTestModal({
                         </div>
                       </div>
                     ) : (
-                      <div className="border border-slate-200 rounded p-3 min-h-[90px] bg-slate-50/50">
-                        <div className="text-[10px] text-slate-400 mb-2">Working Space:</div>
-                        <div className="border-b border-dashed border-slate-200 h-6"></div>
-                        <div className="border-b border-dashed border-slate-200 h-6"></div>
-                        <div className="border-b border-dashed border-slate-200 h-6"></div>
+                      <div
+                        data-testid={`printable-working-box-${idx}`}
+                        style={{
+                          height: `${getBoxHeight(idx, q.marks)}px`,
+                          resize: 'vertical',
+                          overflow: 'auto',
+                        }}
+                        onMouseUp={(e) => {
+                          const newH = e.currentTarget.offsetHeight;
+                          if (newH && newH !== boxHeights[idx]) {
+                            setBoxHeights((prev) => ({ ...prev, [idx]: newH }));
+                          }
+                        }}
+                        className="border border-slate-300 rounded p-3 min-h-[72px] max-h-[480px] bg-slate-50/50 relative group"
+                      >
+                        <div className="flex items-center justify-between text-[10px] text-slate-400 mb-2">
+                          <span>Working Space (Drag bottom-right corner or use + / − to resize for printing):</span>
+                          <span className="inline-flex items-center gap-1">
+                            <button
+                              type="button"
+                              onClick={() => setBoxHeights((prev) => ({ ...prev, [idx]: Math.max(72, getBoxHeight(idx, q.marks) - 28) }))}
+                              className="px-1.5 py-0.5 rounded bg-slate-200 hover:bg-slate-300 text-slate-700 font-mono font-bold cursor-pointer"
+                              title="Reduce answer space height"
+                            >
+                              −
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => setBoxHeights((prev) => ({ ...prev, [idx]: Math.min(480, getBoxHeight(idx, q.marks) + 28) }))}
+                              className="px-1.5 py-0.5 rounded bg-slate-200 hover:bg-slate-300 text-slate-700 font-mono font-bold cursor-pointer"
+                              title="Increase answer space height"
+                            >
+                              +
+                            </button>
+                          </span>
+                        </div>
+                        {Array.from({ length: Math.max(2, Math.floor((getBoxHeight(idx, q.marks) - 36) / 24)) }).map((_, lIdx) => (
+                          <div key={lIdx} className="border-b border-dashed border-slate-200 h-6"></div>
+                        ))}
                       </div>
                     )}
                   </div>

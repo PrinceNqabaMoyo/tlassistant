@@ -42,6 +42,7 @@ export default function UserProfileModal({
   setSuperAdminTier = null,
   onOpenPersonaSwitcher = null,
   onSelectGrade = null,
+  onOpenArchetypeWorkbench = null,
 }) {
   const [storeState, setStoreState] = useState(() => studentStore.getState());
   const [photoMode, setPhotoMode] = useState(null); // null | 'camera' | 'upload'
@@ -765,6 +766,21 @@ export default function UserProfileModal({
                       </button>
                     ))}
                   </div>
+
+                  {onOpenArchetypeWorkbench && (
+                    <button
+                      type="button"
+                      data-testid="btn-profile-archetype-workbench"
+                      onClick={() => {
+                        onOpenArchetypeWorkbench();
+                        if (onClose) onClose();
+                      }}
+                      className="w-full mt-2.5 py-2 px-3 bg-purple-700 hover:bg-purple-800 text-white rounded-xl text-xs font-bold transition flex items-center justify-center gap-2 shadow-xs cursor-pointer"
+                    >
+                      <Sparkles className="w-3.5 h-3.5 text-amber-300 animate-pulse" />
+                      <span>Open Archetype & Diagram Vetting Workbench</span>
+                    </button>
+                  )}
 
                   {/* Super Admin Learner Grade Quick-Switcher (Grades 7–12) */}
                   <div className="pt-2 border-t border-amber-200/60">

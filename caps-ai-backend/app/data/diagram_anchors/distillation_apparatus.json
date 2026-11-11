@@ -1,0 +1,97 @@
+{
+  "diagram": "distillation_apparatus",
+  "view": "textbook",
+  "viewBox": "0 0 600 480",
+  "anchors": {
+    "thermometer": {
+      "name": "Thermometer",
+      "anchor": [219, 130],
+      "default_box": [60, 85],
+      "side": "left",
+      "grades": ["g7", "g10"],
+      "acceptable": ["Thermometer", "Laboratory thermometer"],
+      "description": "Measures the boiling point temperature of the vapour entering the condenser to identify the pure liquid fraction distilling over."
+    },
+    "distillation_flask": {
+      "name": "Round-Bottomed Distillation Flask",
+      "anchor": [195, 225],
+      "default_box": [60, 165],
+      "side": "left",
+      "grades": ["g7", "g10"],
+      "acceptable": ["Distillation flask", "Round-bottomed flask", "Round bottom flask", "Boiling flask"],
+      "description": "Heat-resistant borosilicate glass flask holding the liquid mixture being heated to boiling."
+    },
+    "boiling_solution": {
+      "name": "Liquid Mixture / Solution",
+      "anchor": [219, 262],
+      "default_box": [60, 245],
+      "side": "left",
+      "grades": ["g7", "g10"],
+      "acceptable": ["Solution", "Liquid mixture", "Mixture", "Salt water", "Impure liquid"],
+      "description": "Homogeneous liquid mixture containing components with different boiling points undergoing selective vaporisation."
+    },
+    "tripod_and_gauze": {
+      "name": "Tripod Stand and Wire Gauze",
+      "anchor": [192, 293],
+      "default_box": [60, 325],
+      "side": "left",
+      "grades": ["g7", "g10"],
+      "acceptable": ["Tripod stand and wire gauze", "Wire gauze", "Tripod stand", "Tripod"],
+      "description": "Supports the distillation flask above the flame and distributes heat evenly across the glass base."
+    },
+    "bunsen_burner": {
+      "name": "Bunsen Burner (Heat Source)",
+      "anchor": [219, 345],
+      "default_box": [60, 405],
+      "side": "left",
+      "grades": ["g7", "g10"],
+      "acceptable": ["Bunsen burner", "Heat source", "Burner", "Spirit burner"],
+      "description": "Supplies thermal energy to heat the more volatile liquid component to its boiling point so it vaporises."
+    },
+    "cooling_water_out": {
+      "name": "Cooling Water Outlet",
+      "anchor": [307, 192],
+      "default_box": [540, 95],
+      "side": "right",
+      "grades": ["g7", "g10"],
+      "acceptable": ["Water out", "Cooling water outlet", "Warm water out", "Water outlet"],
+      "description": "Upper outlet where warmed cooling water exits the condenser jacket toward the sink."
+    },
+    "liebig_condenser": {
+      "name": "Liebig Condenser",
+      "anchor": [338, 228],
+      "default_box": [540, 180],
+      "side": "right",
+      "grades": ["g7", "g10"],
+      "acceptable": ["Liebig condenser", "Condenser", "Water condenser"],
+      "description": "Double-walled glass tube surrounded by a cold water jacket that cools hot vapour back into liquid state (condensation)."
+    },
+    "cooling_water_in": {
+      "name": "Cold Water Inlet",
+      "anchor": [404, 272],
+      "default_box": [540, 265],
+      "side": "right",
+      "grades": ["g7", "g10"],
+      "acceptable": ["Water in", "Cold water in", "Cooling water inlet", "Water inlet"],
+      "description": "Lower inlet where cold tap water enters at the bottom of the jacket to maintain counter-current cooling and keep the jacket completely full."
+    },
+    "receiving_flask": {
+      "name": "Conical Receiving Flask",
+      "anchor": [480, 342],
+      "default_box": [540, 345],
+      "side": "right",
+      "grades": ["g7", "g10"],
+      "acceptable": ["Receiving flask", "Conical flask", "Erlenmeyer flask", "Collection flask", "Beaker"],
+      "description": "Clean vessel positioned at the condenser outlet to collect the condensed pure liquid."
+    },
+    "purified_distillate": {
+      "name": "Purified Distillate (Pure Water)",
+      "anchor": [467, 385],
+      "default_box": [540, 420],
+      "side": "right",
+      "grades": ["g7", "g10"],
+      "acceptable": ["Distillate", "Pure liquid", "Purified water", "Pure water", "Condensed liquid"],
+      "description": "The purified liquid collected after vaporisation and condensation."
+    }
+  }
+}

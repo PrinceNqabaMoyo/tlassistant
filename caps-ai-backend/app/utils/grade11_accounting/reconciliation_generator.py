@@ -823,33 +823,125 @@ def generate_questions(
     subskill_norm = str(subskill or "mixed").strip().lower()
     qtype_norm = str(question_type or "mixed").strip().lower()
 
-    builders: List[Any] = [
-        lambda: _make_bank_reconciliation_statement(r=r, difficulty=difficulty, mode=mode),
-        lambda: _make_bank_reconciliation_full_workflow_bundle(r=r, difficulty=difficulty, mode=mode),
-        lambda: _make_creditors_reconciliation_plus_minus(r=r, difficulty=difficulty, mode=mode),
-        lambda: _make_bank_recon_classification_matrix(r=r, difficulty=difficulty, mode=mode),
-        lambda: _make_creditors_reconciliation_statement_and_control_bundle(r=r, difficulty=difficulty, mode=mode),
-        lambda: _make_bank_internal_control_typed(r=r, mode=mode),
+    from app.utils.grade11_accounting.controlled_test_generator import (
+        _make_bank_ledger_taccount,
+        _make_crj_cpj_adjustments,
+        _make_crj_format,
+    )
+
+    def _tag(fn, name):
+        def _w():
+            q = fn()
+            q["subskill"] = name
+            return q
+        return _w
+
+    def _make_debtors_recon_table():
+        list_tot = r.randint(42, 78) * 1000
+        inv_omitted = r.randint(3, 8) * 1000
+        cn_omitted = r.randint(1, 3) * 1000
+        final_bal = list_tot + inv_omitted - cn_omitted
+        return {
+            "question_type": "table_fill",
+            "subskill": "debtors_list_reconciliation_table",
+            "question_text": (
+                f"Reconcile the **Debtors List** total of **R{list_tot:,}** after discovering an omitted credit sales invoice "
+                f"of **R{inv_omitted:,}** and an omitted credit note of **R{cn_omitted:,}**."
+            ),
+            "headers": ["Debtors List Reconciliation Item", "Amount (R)"],
+            "rows": [
+                ["Preliminary total of Debtors List", f"R{list_tot:,}"],
+                ["Add: Credit sales invoice omitted from individual debtor's account", "{r1_c1}"],
+                ["Less: Credit note for allowance omitted from debtor's account", f"(R{cn_omitted:,})"],
+                ["Reconciled Debtors List Total", "{r3_c1}"],
+            ],
+            "correct_map": {"r1_c1": inv_omitted, "r3_c1": final_bal},
+            "marks": 4,
+            "worked_solution": f"Reconciled Debtors List = `R{list_tot:,} + R{inv_omitted:,} - R{cn_omitted:,} = R{final_bal:,}`.",
+        }
+
+    def _make_creditors_error_matrix():
+        inv_over = r.randint(1800, 4500)
+        disc_omitted = r.randint(600, 1500)
+        return {
+            "question_type": "table_fill",
+            "subskill": "creditors_statement_error_treatment",
+            "question_text": "Indicate where each discrepancy between the Creditors Ledger and Supplier Statement must be corrected (**Creditors Ledger** or **Creditors Reconciliation Statement**).",
+            "headers": ["Discrepancy Identified", "Amount (R)", "Where Corrected (Creditors Ledger / Creditors Reconciliation Statement)"],
+            "rows": [
+                ["Invoice correctly recorded by supplier but overcast in our books", f"R{inv_over:,}", "{r0_c2}"],
+                ["Settlement discount agreed to by supplier but omitted on supplier's statement", f"R{disc_omitted:,}", "{r1_c2}"],
+                ["Goods returned by us on the last day of the month not yet on supplier's statement", "R2,400", "{r2_c2}"],
+            ],
+            "correct_map": {
+                "r0_c2": "Creditors Ledger",
+                "r1_c2": "Creditors Reconciliation Statement",
+                "r2_c2": "Creditors Reconciliation Statement",
+            },
+            "marks": 6,
+            "worked_solution": "Errors made in our own books are corrected in the **Creditors Ledger**; omissions or errors made by the supplier on their statement are adjusted on the **Creditors Reconciliation Statement**.",
+        }
+
+    def _make_recon_internal_control_table():
+        stale_chq = r.randint(4500, 9500)
+        eft_fraud = r.randint(3200, 7200)
+        return {
+            "question_type": "table_fill",
+            "subskill": "reconciliation_internal_control_actions",
+            "question_text": "Complete the reconciliation internal control table by matching each reconciling item to its correct accounting action.",
+            "headers": ["Reconciling Item", "Amount (R)", "Correct Accounting Action (Cancel in CRJ / Record in CPJ / Keep on Bank Recon Statement)"],
+            "rows": [
+                ["Stale payment / cheque older than 6 months originally issued to creditor", f"R{stale_chq:,}", "{r0_c2}"],
+                ["Bank charges and debit order insurance appearing only on Bank Statement", f"R{eft_fraud:,}", "{r1_c2}"],
+                ["Deposit made on 28 February appearing on Bank Statement on 2 March", "R14,500", "{r2_c2}"],
+            ],
+            "correct_map": {
+                "r0_c2": "Cancel in CRJ",
+                "r1_c2": "Record in CPJ",
+                "r2_c2": "Keep on Bank Recon Statement",
+            },
+            "marks": 6,
+            "worked_solution": "Stale cheques are cancelled in the CRJ; bank charges/debit orders are recorded in the CPJ; outstanding deposits at month-end remain on the Bank Reconciliation Statement.",
+        }
+
+    bank_builders = [
+        _tag(lambda: _make_bank_reconciliation_statement(r=r, difficulty=difficulty, mode=mode), "bank_reconciliation_statement"),
+        _tag(lambda: _make_bank_reconciliation_full_workflow_bundle(r=r, difficulty=difficulty, mode=mode), "bank_reconciliation_workflow"),
+        _tag(lambda: _make_bank_recon_classification_matrix(r=r, difficulty=difficulty, mode=mode), "bank_recon_classification_matrix"),
+        _tag(lambda: _make_bank_ledger_taccount(r=r, difficulty=difficulty, mode=mode), "bank_general_ledger_taccount"),
+        _tag(lambda: _make_crj_cpj_adjustments(r=r, difficulty=difficulty, mode=mode), "crj_cpj_supplementary_entries"),
+    ]
+    if mode == "exam":
+        bank_builders.append(_tag(lambda: _make_bank_internal_control_typed(r=r, mode=mode), "bank_internal_control"))
+
+    cred_builders = [
+        _tag(lambda: _make_creditors_reconciliation_plus_minus(r=r, difficulty=difficulty, mode=mode), "creditors_reconciliation_plus_minus"),
+        _tag(lambda: _make_creditors_reconciliation_statement_and_control_bundle(r=r, difficulty=difficulty, mode=mode), "creditors_recon_and_ledger_workflow"),
+        _make_debtors_recon_table,
+        _make_creditors_error_matrix,
+        _make_recon_internal_control_table,
     ]
 
-    # Subskill routing
     if subskill_norm in {"bank", "bank-recon", "bank_recon", "bank_reconciliation", "brs"}:
-        builders = [builders[0], builders[1], builders[3], builders[5]]
+        builders = bank_builders
     elif subskill_norm in {"creditors", "creditors-recon", "creditors_recon", "creditors_reconciliation"}:
-        builders = [builders[2], builders[4]]
-    elif subskill_norm in {"classification", "matrix", "analyse", "analysis"}:
-        builders = [builders[3]]
-    elif subskill_norm in {"control", "internal-control", "internal_control", "ethics"}:
-        builders = [builders[5]]
+        builders = cred_builders
+    else:
+        builders = bank_builders + cred_builders
 
     out: List[Dict[str, Any]] = []
     for _ in range(n):
         q = r.choice(builders)()
-        if qtype_norm != "mixed" and str(q.get("question_type") or "").strip().lower() != qtype_norm:
-            # Retry once; if still mismatch, keep anyway.
-            q2 = r.choice(builders)()
-            if str(q2.get("question_type") or "").strip().lower() == qtype_norm:
-                q = q2
         out.append(q)
 
     return out
+
+
+def generate_bank_reconciliation_questions(**kwargs) -> List[Dict[str, Any]]:
+    clean = {k: v for k, v in kwargs.items() if k != "subskill"}
+    return generate_questions(subskill="bank", **clean)
+
+
+def generate_creditors_reconciliation_questions(**kwargs) -> List[Dict[str, Any]]:
+    clean = {k: v for k, v in kwargs.items() if k != "subskill"}
+    return generate_questions(subskill="creditors", **clean)

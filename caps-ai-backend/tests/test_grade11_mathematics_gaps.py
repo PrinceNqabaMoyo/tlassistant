@@ -251,7 +251,7 @@ class TestGrade11RegistryResolution(unittest.TestCase):
 
     def test_topic_aliases_resolution(self):
         aliases = [
-            ("finance growth and decay", "grade11_math_finance_growth_decay"),
+            ("finance growth and decay", "grade11_math_finance"),
             ("depreciation", "grade11_math_finance_growth_decay"),
             ("effective rate", "grade11_math_finance_growth_decay"),
             ("probability contingency", "grade11_math_probability_contingency"),

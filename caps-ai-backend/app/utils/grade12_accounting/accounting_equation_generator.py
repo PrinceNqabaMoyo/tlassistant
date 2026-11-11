@@ -1,282 +1,276 @@
-"""Fundile Learning — Grades 10, 11 & 12 Accounting: The Accounting Equation (A = OE + L) Generator.
-NSC Accounting Paper 1 & Paper 2 Standard (10-15 marks).
-100% deterministic zero-LLM question generator conforming to the 6-Pillar Contract.
-
-Archetypes sourced from curriculum_docs_auto/Accounting_Gr12/The accounting equation.md:
-- Dual-entry transaction analysis:
-  * Account Debited & Account Credited
-  * Effect on Assets (A): amount and sign (+, -, 0)
-  * Effect on Owner's Equity (OE): amount and sign (+, -, 0)
-  * Effect on Liabilities (L): amount and sign (+, -, 0)
-- Mathematical integrity check: Delta(A) == Delta(OE) + Delta(L) for every transaction
-- Complex transaction coverage:
-  * Sales at mark-up (recording both Selling Price and Cost of Sales)
-  * Credit purchases and settlement with discount received
-  * Debtors collection with discount allowed
-  * Year-end depreciation & bad debts written off
-  * Drawings of merchandise (cost price)
-  * Capital contributions and loan repayments with interest
-
-Supports compound (12 marks) and elementary sub-drills:
-- elementary_cash_transactions (4 marks)
-- elementary_credit_transactions (4 marks)
-- elementary_adjustment_transactions (4 marks)
 """
-from __future__ import annotations
-
+Grade 12 Accounting: The Accounting Equation for Companies (A = OE + L)
+Strictly aligned with South African National Curriculum Standards for Grade 12 Accounting.
+100% Public and Private Company entities (Ltd / (Pty) Ltd) — Share Capital, Share Buybacks,
+SARS (Income Tax), Interim & Final Dividends, Directors' & Audit Fees, and Company Adjustments.
+"""
 import random
-import uuid
 from typing import Any, Dict, List, Optional
 
-from ..sa_naming_engine import generate_sa_enterprise
+SUBSKILLS = [
+    "share_issue_and_capital_aol",
+    "share_repurchase_buyback_aol",
+    "provisional_and_final_income_tax_aol",
+    "interim_and_final_dividends_aol",
+    "directors_and_audit_fees_accruals_aol",
+]
+
+COMPANIES = [
+    "Protea Holdings Ltd",
+    "Highveld Logistics Ltd",
+    "Ubuntu Pharmaceuticals Ltd",
+    "Zululand Industrials Ltd",
+]
 
 
-def _rng(seed: Optional[int]) -> random.Random:
-    r = random.Random()
-    r.seed(int(seed) if seed is not None else None)
-    return r
-
-
-def _fmt(val: float | int) -> str:
-    rounded = int(round(val))
-    return f"{rounded:,}".replace(",", " ")
-
-
-def _make_id(prefix: str) -> str:
-    return f"{prefix}_{uuid.uuid4().hex[:12]}"
-
-
-# --------------------------------------------------------------------------- #
-# Transaction Builders
-# --------------------------------------------------------------------------- #
-def _generate_transactions(r: random.Random) -> List[Dict[str, Any]]:
-    txns = []
-
-    # 1. Capital contribution
-    cap_amt = r.randint(5, 20) * 10000
-    txns.append({
-        "desc": f"The owner contributed R{_fmt(cap_amt)} as additional capital, deposited directly into the business bank account.",
-        "dr": "Bank",
-        "cr": "Capital",
-        "a_eff": f"+{cap_amt}",
-        "oe_eff": f"+{cap_amt}",
-        "l_eff": "0",
-        "a_val": cap_amt,
-        "oe_val": cap_amt,
-        "l_val": 0,
-        "category": "cash",
-    })
-
-    # 2. Cash sales & Cost of sales
-    sp = r.randint(15, 50) * 1000
-    markup = r.choice([25, 50, 100])
-    cp = int(sp * 100 / (100 + markup))
-    txns.append({
-        "desc": f"Cash sales of merchandise for R{_fmt(sp)}. The business applies a mark-up of {markup}% on cost (Cost of sales: R{_fmt(cp)}).",
-        "dr": "Bank / Cost of sales",
-        "cr": "Sales / Trading stock",
-        "a_eff": f"+{sp - cp}",
-        "oe_eff": f"+{sp - cp}",
-        "l_eff": "0",
-        "a_val": sp - cp,
-        "oe_val": sp - cp,
-        "l_val": 0,
-        "category": "cash",
-    })
-
-    # 3. Purchased equipment on credit
-    equip_amt = r.randint(20, 80) * 1000
-    txns.append({
-        "desc": f"Purchased office equipment on credit from Waltons for R{_fmt(equip_amt)}.",
-        "dr": "Equipment",
-        "cr": "Creditors control",
-        "a_eff": f"+{equip_amt}",
-        "oe_eff": "0",
-        "l_eff": f"+{equip_amt}",
-        "a_val": equip_amt,
-        "oe_val": 0,
-        "l_val": equip_amt,
-        "category": "credit",
-    })
-
-    # 4. Paid creditor with discount
-    cred_total = r.randint(10, 30) * 1000
-    disc = r.randint(5, 15) * 100
-    pay_amt = cred_total - disc
-    txns.append({
-        "desc": f"Paid creditor in full settlement of their R{_fmt(cred_total)} account by EFT for R{_fmt(pay_amt)}, receiving R{_fmt(disc)} discount.",
-        "dr": "Creditors control",
-        "cr": "Bank & Discount received",
-        "a_eff": f"-{pay_amt}",
-        "oe_eff": f"+{disc}",
-        "l_eff": f"-{cred_total}",
-        "a_val": -pay_amt,
-        "oe_val": disc,
-        "l_val": -cred_total,
-        "category": "credit",
-    })
-
-    # 5. Depreciation adjustment
-    dep_amt = r.randint(3, 15) * 1000
-    txns.append({
-        "desc": f"Provide for depreciation on vehicles for the financial year, R{_fmt(dep_amt)}.",
-        "dr": "Depreciation",
-        "cr": "Accumulated depreciation on vehicles",
-        "a_eff": f"-{dep_amt}",
-        "oe_eff": f"-{dep_amt}",
-        "l_eff": "0",
-        "a_val": -dep_amt,
-        "oe_val": -dep_amt,
-        "l_val": 0,
-        "category": "adjustment",
-    })
-
-    # 6. Bad debt written off
-    bad_amt = r.randint(12, 45) * 100
-    txns.append({
-        "desc": f"Debtor J. Smith was declared insolvent. Write off his balance of R{_fmt(bad_amt)} as irrecoverable.",
-        "dr": "Bad debts",
-        "cr": "Debtors control",
-        "a_eff": f"-{bad_amt}",
-        "oe_eff": f"-{bad_amt}",
-        "l_eff": "0",
-        "a_val": -bad_amt,
-        "oe_val": -bad_amt,
-        "l_val": 0,
-        "category": "adjustment",
-    })
-
-    return txns
-
-
-def _build_equation_table(txns_subset: List[Dict[str, Any]], title: str, qid_prefix: str, mode_name: str, r: Optional[random.Random] = None) -> Dict[str, Any]:
-    headers = ["No.", "Transaction", "Account Debited", "Account Credited", "Assets (A)", "Owner's Equity (OE)", "Liabilities (L)"]
-    rows = []
-    correct_map = {}
-    marking_points = []
-
-    for rix, t in enumerate(txns_subset):
-        row = [
-            {"coordinate": f"t0_r{rix}_c0", "value": str(rix + 1), "type": "given", "editable": False},
-            {"coordinate": f"t0_r{rix}_c1", "value": t["desc"], "type": "given", "editable": False},
-            {"coordinate": f"t0_r{rix}_c2", "value": t["dr"], "type": "required", "editable": True},
-            {"coordinate": f"t0_r{rix}_c3", "value": t["cr"], "type": "required", "editable": True},
-            {"coordinate": f"t0_r{rix}_c4", "value": t["a_eff"], "type": "required", "editable": True},
-            {"coordinate": f"t0_r{rix}_c5", "value": t["oe_eff"], "type": "required", "editable": True},
-            {"coordinate": f"t0_r{rix}_c6", "value": t["l_eff"], "type": "required", "editable": True},
-        ]
-        rows.append(row)
-        correct_map[f"t0_r{rix}_c2"] = t["dr"]
-        correct_map[f"t0_r{rix}_c3"] = t["cr"]
-        correct_map[f"t0_r{rix}_c4"] = t["a_eff"]
-        correct_map[f"t0_r{rix}_c5"] = t["oe_eff"]
-        correct_map[f"t0_r{rix}_c6"] = t["l_eff"]
-
-        marking_points.append({"id": f"mp_{rix+1}_accounts", "desc": f"Txn {rix+1}: Accounts debited & credited", "marks": 1, "editable": True})
-        marking_points.append({"id": f"mp_{rix+1}_equation", "desc": f"Txn {rix+1}: Effect on A = OE + L", "marks": 1, "editable": True})
-
-    total_marks = len(txns_subset) * 2
-
-    biz = generate_sa_enterprise(r) if r else None
-    biz_header = f" — {biz['business_name']} ({biz['owner_name']})" if biz else ""
-    prompt_lines = [
-        f"**{title}{biz_header}**\n",
-        f"Analyse the transactions below according to the South African Accounting Equation (**A = OE + L**).\n",
-        "**Transactions:**",
+def _make_hints(t1: str, t2: str, t3: str) -> List[Dict[str, str]]:
+    return [
+        {"tier": 1, "title": "Conceptual Nudge", "content": t1},
+        {"tier": 2, "title": "Procedural Step", "content": t2},
+        {"tier": 3, "title": "Full Worked Example", "content": t3},
     ]
-    for rix, t in enumerate(txns_subset):
-        prompt_lines.append(f"{rix + 1}. {t['desc']}")
-    prompt_lines.append(
-        "\n**Required:**\n"
-        "1. State the **Account Debited** and **Account Credited** in the General Ledger.\n"
-        "2. Indicate the monetary effect on **Assets**, **Owner's Equity**, and **Liabilities** (use + for increase, - for decrease, and 0 for no effect).\n"
-        "Ensure that the equation balances for each row: **ΔA = ΔOE + ΔL**."
-    )
-    prompt = "\n".join(prompt_lines)
 
+
+def _gen_share_issue_aol(r: random.Random) -> Dict[str, Any]:
+    co = r.choice(COMPANIES)
+    shares = r.choice([100000, 150000, 200000])
+    issue_price = r.choice([8, 10, 12])
+    tot_issue = shares * issue_price
+    equip_shares = r.randint(150, 300) * 1000
+
+    headers = ["Company Transaction", "Account Debited", "Account Credited", "Assets (A)", "Shareholders' Equity (OE)", "Liabilities (L)"]
+    rows = [
+        [f"Issued {shares:,} new ordinary shares at R{issue_price} each for cash", "Bank", "{r0_c2}", "{r0_c3}", f"+{tot_issue}", "0"],
+        [f"Issued ordinary shares worth R{equip_shares:,} to acquire new factory machinery", "{r1_c1}", "Ordinary Share Capital", f"+{equip_shares}", "{r1_c4}", "0"],
+    ]
+    correct_map = {
+        "r0_c2": "Ordinary Share Capital",
+        "r0_c3": f"+{tot_issue}",
+        "r1_c1": "Equipment",
+        "r1_c4": f"+{equip_shares}",
+    }
+    worked = (
+        f"**Company Share Issue on the Accounting Equation ({co})**\n\n"
+        f"- **Cash share issue (`{shares:,} × R{issue_price} = R{tot_issue:,}`)**: Debit **Bank** (`Assets +{tot_issue}`), Credit **Ordinary Share Capital** (`Equity +{tot_issue}`).\n"
+        f"- **Shares issued for equipment (`R{equip_shares:,}`)**: Debit **Equipment** (`Assets +{equip_shares}`), Credit **Ordinary Share Capital** (`Equity +{equip_shares}`)."
+    )
     return {
-        "id": _make_id(qid_prefix),
-        "question_type": "tabular_fill",
-        "prompt": prompt,
-        "question_text": prompt,
-        "correct_answer": correct_map,
-        "sample_answer": f"Row 1: Dr {txns_subset[0]['dr']}, Cr {txns_subset[0]['cr']}, A: {txns_subset[0]['a_eff']}, OE: {txns_subset[0]['oe_eff']}, L: {txns_subset[0]['l_eff']}",
-        "table_schema": {"headers": headers, "rows": rows},
-        "marks": total_marks,
-        "term": 1,
-        "caps_weight_percent": 15,
-        "suggested_duration_mins": max(4, int(total_marks * 1.5)),
-        "learning_objective_id": "acct_accounting_equation",
-        "mode": mode_name,
-        "misconception_tags": ["debit_credit_inversion", "equation_imbalance", "confused_assets_with_liabilities"],
-        "marking_schema": {
-            "total_marks": total_marks,
-            "marking_points": marking_points,
-            "deductions": [{"rule": "must_be_empty_filled", "penalty": -1}],
-            "carry_forward_rule": "consequential_accuracy",
-        },
-        "hints": {
-            "tier_1": "Dead Clic: Debit Expenses & Assets, Credit Liabilities, Income, Capital.",
-            "tier_2": "Always check that the row balances: Change in Assets must equal Change in Owner's Equity plus Change in Liabilities.",
-            "tier_3": f"First row: Dr {txns_subset[0]['dr']}, Cr {txns_subset[0]['cr']}, A: {txns_subset[0]['a_eff']}, OE: {txns_subset[0]['oe_eff']}, L: {txns_subset[0]['l_eff']}.",
-        },
+        "question_type": "table_fill",
+        "subskill": "share_issue_and_capital_aol",
+        "question_text": f"Complete the Accounting Equation analysis for the share issue transactions of **{co}** (include `+` or `-` signs).",
+        "headers": headers,
+        "rows": rows,
+        "correct_map": correct_map,
+        "marks": 6,
+        "worked_solution": worked,
+        "canonical_solution": worked,
+        "hints": _make_hints(
+            "Issuing ordinary shares increases both Company Assets (Bank or Equipment) and Shareholders' Equity (Ordinary Share Capital).",
+            "Enter Ordinary Share Capital in Row 1 and Equipment in Row 2, with `+` signs before the Rand amounts.",
+            worked,
+        ),
     }
 
 
-# --------------------------------------------------------------------------- #
-# Sub-drills
-# --------------------------------------------------------------------------- #
-def _build_cash_drill(r: random.Random) -> Dict[str, Any]:
-    txns = [t for t in _generate_transactions(r) if t["category"] == "cash"]
-    return _build_equation_table(txns, "Cash Transactions Analysis", "acct_eq_cash", "elementary_cash_transactions", r)
+def _gen_share_buyback_aol(r: random.Random) -> Dict[str, Any]:
+    co = r.choice(COMPANIES)
+    rep_shares = r.choice([20000, 30000, 40000])
+    avg_price = r.choice([6, 8, 10])
+    buyback_price = avg_price + r.choice([2, 3])
+    osc_part = rep_shares * avg_price
+    ri_part = rep_shares * (buyback_price - avg_price)
+    tot_bank = osc_part + ri_part
+
+    headers = ["Share Buyback Component", "Account Debited", "Account Credited", "Assets (A)", "Shareholders' Equity (OE)", "Liabilities (L)"]
+    rows = [
+        [f"Repurchased {rep_shares:,} shares: Average issue price portion (R{avg_price} per share)", "{r0_c1}", "Bank", f"-{osc_part}", "{r0_c4}", "0"],
+        [f"Repurchased {rep_shares:,} shares: Premium above average price (R{buyback_price - avg_price} per share)", "{r1_c1}", "Bank", f"-{ri_part}", f"-{ri_part}", "0"],
+        [f"Combined net effect of buying back {rep_shares:,} shares at R{buyback_price} each", "OSC & Retained Income", "Bank", "{r2_c3}", "{r2_c4}", "0"],
+    ]
+    correct_map = {
+        "r0_c1": "Ordinary Share Capital",
+        "r0_c4": f"-{osc_part}",
+        "r1_c1": "Retained Income",
+        "r2_c3": f"-{tot_bank}",
+        "r2_c4": f"-{tot_bank}",
+    }
+    worked = (
+        f"**Share Repurchase (Buyback) on the Accounting Equation ({co})**\n\n"
+        f"- **Average Issue Price Portion (`{rep_shares:,} × R{avg_price} = R{osc_part:,}`)**: Debit **Ordinary Share Capital** (`Equity -{osc_part}`), Credit **Bank** (`Assets -{osc_part}`).\n"
+        f"- **Amount Above Average Price (`{rep_shares:,} × R{buyback_price - avg_price} = R{ri_part:,}`)**: Debit **Retained Income** (`Equity -{ri_part}`), Credit **Bank** (`Assets -{ri_part}`).\n"
+        f"- **Total Effect**: `Assets -{tot_bank}`, `Shareholders' Equity -{tot_bank}`."
+    )
+    return {
+        "question_type": "table_fill",
+        "subskill": "share_repurchase_buyback_aol",
+        "question_text": (
+            f"**{co}** repurchased **{rep_shares:,} ordinary shares** at **R{buyback_price} per share** by EFT "
+            f"(the average issue price was **R{avg_price} per share**). Complete the Accounting Equation analysis."
+        ),
+        "headers": headers,
+        "rows": rows,
+        "correct_map": correct_map,
+        "marks": 6,
+        "worked_solution": worked,
+        "canonical_solution": worked,
+        "hints": _make_hints(
+            "In a share buyback, Ordinary Share Capital is reduced by the average issue price per share, and Retained Income is reduced by the amount paid above average price.",
+            "Enter Ordinary Share Capital for Row 1, Retained Income for Row 2, and `-` followed by the total cash paid in Row 3.",
+            worked,
+        ),
+    }
 
 
-def _build_credit_drill(r: random.Random) -> Dict[str, Any]:
-    txns = [t for t in _generate_transactions(r) if t["category"] == "credit"]
-    return _build_equation_table(txns, "Credit Transactions Analysis", "acct_eq_credit", "elementary_credit_transactions", r)
+def _gen_income_tax_aol(r: random.Random) -> Dict[str, Any]:
+    co = r.choice(COMPANIES)
+    prov_tax = r.randint(180, 280) * 1000
+    annual_tax = prov_tax * 2 + r.randint(20, 45) * 1000
+
+    headers = ["Company Tax Transaction", "Account Debited", "Account Credited", "Assets (A)", "Shareholders' Equity (OE)", "Liabilities (L)"]
+    rows = [
+        [f"Paid first provisional income tax of R{prov_tax:,} to SARS by EFT", "{r0_c1}", "Bank", f"-{prov_tax}", "0", f"-{prov_tax}"],
+        [f"Recorded total annual income tax assessment of R{annual_tax:,} at year-end", "{r1_c1}", "SARS: Income Tax", "0", "{r1_c4}", "{r1_c5}"],
+    ]
+    correct_map = {
+        "r0_c1": "SARS: Income Tax",
+        "r1_c1": "Income Tax",
+        "r1_c4": f"-{annual_tax}",
+        "r1_c5": f"+{annual_tax}",
+    }
+    worked = (
+        f"**Provisional & Annual Income Tax ({co})**\n\n"
+        f"- **Provisional tax payment (`R{prov_tax:,}`)**: Debit **SARS: Income Tax**, Credit **Bank** (`Assets -{prov_tax}`, `Liabilities -{prov_tax}`).\n"
+        f"- **Annual tax assessment (`R{annual_tax:,}`)**: Debit **Income Tax** (`Equity -{annual_tax}`), Credit **SARS: Income Tax** (`Liabilities +{annual_tax}`)."
+    )
+    return {
+        "question_type": "table_fill",
+        "subskill": "provisional_and_final_income_tax_aol",
+        "question_text": f"Complete the Accounting Equation analysis for the income tax transactions of **{co}**.",
+        "headers": headers,
+        "rows": rows,
+        "correct_map": correct_map,
+        "marks": 6,
+        "worked_solution": worked,
+        "canonical_solution": worked,
+        "hints": _make_hints(
+            "Paying SARS reduces Bank and reduces the SARS liability (`SARS: Income Tax`); recording the annual tax assessment increases the `Income Tax` expense (reducing Equity) and increases the `SARS: Income Tax` liability.",
+            "Distinguish carefully between the nominal expense account (`Income Tax`) and the balance sheet liability account (`SARS: Income Tax`).",
+            worked,
+        ),
+    }
 
 
-def _build_adjustment_drill(r: random.Random) -> Dict[str, Any]:
-    txns = [t for t in _generate_transactions(r) if t["category"] == "adjustment"]
-    return _build_equation_table(txns, "Year-End Adjustments Equation Analysis", "acct_eq_adj", "elementary_adjustment_transactions", r)
+def _gen_dividends_aol(r: random.Random) -> Dict[str, Any]:
+    co = r.choice(COMPANIES)
+    interim_div = r.randint(120, 200) * 1000
+    final_div = r.randint(160, 260) * 1000
+
+    headers = ["Dividend Transaction", "Account Debited", "Account Credited", "Assets (A)", "Shareholders' Equity (OE)", "Liabilities (L)"]
+    rows = [
+        [f"Paid interim dividends of R{interim_div:,} to shareholders via EFT", "Dividends on Ordinary Shares", "Bank", "{r0_c3}", "{r0_c4}", "0"],
+        [f"Declared final dividends of R{final_div:,} at year-end (to be paid next year)", "Dividends on Ordinary Shares", "{r1_c2}", "0", f"-{final_div}", "{r1_c5}"],
+    ]
+    correct_map = {
+        "r0_c3": f"-{interim_div}",
+        "r0_c4": f"-{interim_div}",
+        "r1_c2": "Shareholders for Dividends",
+        "r1_c5": f"+{final_div}",
+    }
+    worked = (
+        f"**Interim vs Final Dividends on the Accounting Equation ({co})**\n\n"
+        f"- **Interim dividend paid (`R{interim_div:,}`)**: Debit **Dividends on Ordinary Shares** (`Equity -{interim_div}`), Credit **Bank** (`Assets -{interim_div}`).\n"
+        f"- **Final dividend declared (`R{final_div:,}`)**: Debit **Dividends on Ordinary Shares** (`Equity -{final_div}`), Credit **Shareholders for Dividends** (`Liabilities +{final_div}`)."
+    )
+    return {
+        "question_type": "table_fill",
+        "subskill": "interim_and_final_dividends_aol",
+        "question_text": f"Analyse the interim and final dividend transactions of **{co}** on the Accounting Equation.",
+        "headers": headers,
+        "rows": rows,
+        "correct_map": correct_map,
+        "marks": 6,
+        "worked_solution": worked,
+        "canonical_solution": worked,
+        "hints": _make_hints(
+            "Interim dividends are paid immediately out of Bank (`Assets -`), whereas Final dividends declared at year-end create a current liability (`Shareholders for Dividends`).",
+            "Include `+` or `-` signs before the Rand amounts.",
+            worked,
+        ),
+    }
 
 
-# --------------------------------------------------------------------------- #
-# COMPOUND: Full Exam Equation Question (12 marks)
-# --------------------------------------------------------------------------- #
-def _build_compound(r: random.Random) -> List[Dict[str, Any]]:
-    all_txns = _generate_transactions(r)
-    # Pick 6 diverse transactions
-    return [_build_equation_table(all_txns, "Comprehensive Accounting Equation Analysis (Exam Standard)", "acct_eq_compound", "compound", r)]
+def _gen_directors_and_audit_fees_aol(r: random.Random) -> Dict[str, Any]:
+    co = r.choice(COMPANIES)
+    dir_fee = r.randint(45, 85) * 1000
+    audit_fee = r.randint(25, 55) * 1000
+
+    headers = ["Company Adjustment", "Account Debited", "Account Credited", "Assets (A)", "Shareholders' Equity (OE)", "Liabilities (L)"]
+    rows = [
+        [f"Directors' fees of R{dir_fee:,} for February are still unpaid at year-end", "{r0_c1}", "Accrued Expenses", "0", "{r0_c4}", f"+{dir_fee}"],
+        [f"Paid external auditors R{audit_fee:,} by EFT for the annual statutory audit", "{r1_c1}", "Bank", f"-{audit_fee}", f"-{audit_fee}", "{r1_c5}"],
+    ]
+    correct_map = {
+        "r0_c1": "Directors' Fees",
+        "r0_c4": f"-{dir_fee}",
+        "r1_c1": "Audit Fees",
+        "r1_c5": "0",
+    }
+    worked = (
+        f"**Directors' Fees & Audit Fees ({co})**\n\n"
+        f"- **Accrued Directors' Fees (`R{dir_fee:,}`)**: Debit **Directors' Fees** (`Equity -{dir_fee}`), Credit **Accrued Expenses** (`Liabilities +{dir_fee}`).\n"
+        f"- **Audit Fees Paid (`R{audit_fee:,}`)**: Debit **Audit Fees** (`Equity -{audit_fee}`), Credit **Bank** (`Assets -{audit_fee}`, `Liabilities 0`)."
+    )
+    return {
+        "question_type": "table_fill",
+        "subskill": "directors_and_audit_fees_accruals_aol",
+        "question_text": f"Complete the Accounting Equation table for **{co}**.",
+        "headers": headers,
+        "rows": rows,
+        "correct_map": correct_map,
+        "marks": 6,
+        "worked_solution": worked,
+        "canonical_solution": worked,
+        "hints": _make_hints(
+            "Directors' Fees and Audit Fees are company operating expenses that reduce Shareholders' Equity.",
+            "Enter Directors' Fees and `-{dir_fee}` in Row 1, and Audit Fees and `0` in Row 2.",
+            worked,
+        ),
+    }
 
 
-# --------------------------------------------------------------------------- #
-# PUBLIC API
-# --------------------------------------------------------------------------- #
+_BUILDERS = {
+    "share_issue_and_capital_aol": _gen_share_issue_aol,
+    "share_repurchase_buyback_aol": _gen_share_buyback_aol,
+    "provisional_and_final_income_tax_aol": _gen_income_tax_aol,
+    "interim_and_final_dividends_aol": _gen_dividends_aol,
+    "directors_and_audit_fees_accruals_aol": _gen_directors_and_audit_fees_aol,
+}
+
+
 def generate(
     seed: Optional[int] = None,
     count: int = 1,
     mode: str = "compound",
-    subskill: str = "mixed",
+    subskill: Optional[str] = None,
     difficulty: str = "medium",
     **kwargs,
 ) -> List[Dict[str, Any]]:
-    r = _rng(seed)
-    questions: List[Dict[str, Any]] = []
-
-    builders = {
-        "elementary_cash_transactions": _build_cash_drill,
-        "elementary_credit_transactions": _build_credit_drill,
-        "elementary_adjustment_transactions": _build_adjustment_drill,
-    }
-
+    r = random.Random(seed)
+    out: List[Dict[str, Any]] = []
     for _ in range(count):
-        sub_r = _rng(r.randint(1, 1_000_000_000))
-        if mode == "compound":
-            questions.extend(_build_compound(sub_r))
-        elif mode in builders:
-            questions.append(builders[mode](sub_r))
-        else:
-            questions.extend(_build_compound(sub_r))
+        chosen = subskill if (subskill and subskill in _BUILDERS) else r.choice(SUBSKILLS)
+        q = _BUILDERS[chosen](r)
+        q["subskill"] = chosen
+        q["topic"] = "The accounting equation"
+        q["grade"] = "12"
+        out.append(q)
+    return out
 
-    return questions
+
+def generate_questions(
+    count: int = 1,
+    subskill: Optional[str] = None,
+    seed: Optional[int] = None,
+    **kwargs,
+) -> List[Dict[str, Any]]:
+    return generate(seed=seed, count=count, subskill=subskill, **kwargs)

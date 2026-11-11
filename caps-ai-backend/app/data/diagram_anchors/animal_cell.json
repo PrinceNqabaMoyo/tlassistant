@@ -1,0 +1,228 @@
+{
+  "master": "animal_cell",
+  "view": "eukaryotic_animal_ultrastructure",
+  "viewBox": "0 0 600 480",
+  "anchors": {
+    "plasma_membrane": {
+      "name": "Plasma Membrane (Cell Membrane)",
+      "synonyms": [
+        "plasma membrane",
+        "cell membrane",
+        "plasmalemma"
+      ],
+      "anchor": [
+        180,
+        148
+      ],
+      "default_box": [
+        60,
+        90
+      ],
+      "side": "left",
+      "grades": [
+        "g7",
+        "g9",
+        "g10"
+      ],
+      "description": "Flexible outer phospholipid bilayer with embedded receptor proteins controlling nutrient entry and waste elimination without a rigid cell wall."
+    },
+    "golgi_apparatus": {
+      "name": "Golgi Apparatus (Packaging Cisternae)",
+      "synonyms": [
+        "golgi apparatus",
+        "golgi body",
+        "golgi complex"
+      ],
+      "anchor": [
+        235,
+        300
+      ],
+      "default_box": [
+        60,
+        170
+      ],
+      "side": "left",
+      "grades": [
+        "g10"
+      ],
+      "description": "Stacks of flattened saccules and budding transport vesicles that chemically modify, glycosylate, and package secretory proteins."
+    },
+    "endoplasmic_reticulum": {
+      "name": "Endoplasmic Reticulum (Rough & Smooth)",
+      "synonyms": [
+        "endoplasmic reticulum",
+        "er",
+        "rough endoplasmic reticulum",
+        "smooth er"
+      ],
+      "anchor": [
+        395,
+        245
+      ],
+      "default_box": [
+        60,
+        250
+      ],
+      "side": "right",
+      "grades": [
+        "g10"
+      ],
+      "description": "Continuous network of folded cisternae; Rough ER is coated with ribosomes for export protein synthesis, while Smooth ER synthesizes steroids and lipids."
+    },
+    "cytoplasm": {
+      "name": "Cytoplasm (Cytosol)",
+      "synonyms": [
+        "cytoplasm",
+        "cytosol",
+        "intracellular fluid"
+      ],
+      "anchor": [
+        190,
+        258
+      ],
+      "default_box": [
+        60,
+        330
+      ],
+      "side": "left",
+      "grades": [
+        "g7",
+        "g9",
+        "g10"
+      ],
+      "description": "Gel-like cytoplasmic matrix containing metabolic enzymes, soluble proteins, and cytoskeletal filaments maintaining cellular shape."
+    },
+    "centrosome_centrioles": {
+      "name": "Centrosome with Centrioles",
+      "synonyms": [
+        "centrosome",
+        "centrioles",
+        "centrosome with centrioles",
+        "centriole"
+      ],
+      "anchor": [
+        216,
+        232
+      ],
+      "default_box": [
+        60,
+        410
+      ],
+      "side": "left",
+      "grades": [
+        "g10"
+      ],
+      "description": "Pair of perpendicular microtubule barrels that organize the mitotic spindle apparatus during animal cell division."
+    },
+    "nucleus": {
+      "name": "Nucleus (Chromatin & Double Envelope)",
+      "synonyms": [
+        "nucleus",
+        "nuclear envelope",
+        "chromatin"
+      ],
+      "anchor": [
+        335,
+        165
+      ],
+      "default_box": [
+        540,
+        90
+      ],
+      "side": "right",
+      "grades": [
+        "g7",
+        "g9",
+        "g10"
+      ],
+      "description": "Double-membraned organelle perforated with nuclear pores containing chromosomal DNA and controlling cellular gene transcription."
+    },
+    "nucleolus": {
+      "name": "Nucleolus",
+      "synonyms": [
+        "nucleolus"
+      ],
+      "anchor": [
+        325,
+        212
+      ],
+      "default_box": [
+        540,
+        160
+      ],
+      "side": "right",
+      "grades": [
+        "g10"
+      ],
+      "description": "Dense non-membrane enclosed region within the nucleoplasm responsible for transcribing ribosomal RNA and assembling ribosomal subunits."
+    },
+    "lysosome": {
+      "name": "Lysosome (Digestive Hydrolases)",
+      "synonyms": [
+        "lysosome",
+        "suicide bag",
+        "lytic vacuole"
+      ],
+      "anchor": [
+        400,
+        174
+      ],
+      "default_box": [
+        540,
+        240
+      ],
+      "side": "right",
+      "grades": [
+        "g10"
+      ],
+      "description": "Membrane-bound spherical vesicle filled with hydrolytic digestive enzymes that break down worn-out organelles, debris, and foreign particles."
+    },
+    "mitochondrion": {
+      "name": "Mitochondrion (ATP Powerhouse)",
+      "synonyms": [
+        "mitochondrion",
+        "mitochondria",
+        "cristae"
+      ],
+      "anchor": [
+        442,
+        260
+      ],
+      "default_box": [
+        540,
+        310
+      ],
+      "side": "right",
+      "grades": [
+        "g7",
+        "g9",
+        "g10"
+      ],
+      "description": "Rod-shaped double-membrane organelle that carries out the Krebs cycle and oxidative phosphorylation to produce cellular ATP."
+    },
+    "small_vacuoles": {
+      "name": "Small Temporary Vacuoles / Vesicles",
+      "synonyms": [
+        "vacuoles",
+        "vesicles",
+        "small vacuoles",
+        "pinocytic vesicles"
+      ],
+      "anchor": [
+        190,
+        184
+      ],
+      "default_box": [
+        540,
+        390
+      ],
+      "side": "left",
+      "grades": [
+        "g7",
+        "g9",
+        "g10"
+      ],
+      "description": "Small, transient fluid vesicles used for storage, endocytosis, and exocytosis, contrasting with the huge permanent vacuole of plant cells."
+    }
+  }
+}

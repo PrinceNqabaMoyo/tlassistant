@@ -362,13 +362,33 @@ def _gen_acid_base_question(r: random.Random, mode: str = "compound") -> Dict[st
 
 def generate(seed: Optional[int] = None, grade: int = 8, mode: str = "compound", archetype: Optional[str] = None) -> Dict[str, Any]:
     """Generates a fully formed 6-pillar Natural Sciences Matter & Materials question."""
+    from app.utils.natural_sciences.natural_sciences_builders import (
+        build_atomic_bohr_ns_question,
+        build_chemical_bonding_ns_question,
+        build_gas_evolution_ns_question,
+    )
+
     r = rng(seed)
-    
+    s_val = seed if seed is not None else r.randint(1000, 999999)
+
+    if archetype in ("atomic_bohr_structure", "bohr_atom"):
+        return build_atomic_bohr_ns_question(seed=s_val, grade=grade, mode=mode)
+    if archetype in ("chemical_bonding_molecules", "chemical_bonding"):
+        return build_chemical_bonding_ns_question(seed=s_val, grade=grade, mode=mode)
+    if archetype in ("gas_evolution_rate_apparatus", "gas_evolution"):
+        return build_gas_evolution_ns_question(seed=s_val, grade=grade, mode=mode)
+
     if archetype == "separation" or (archetype is None and grade == 7):
         return _gen_separating_mixtures_question(r, mode=mode)
     elif archetype == "atomic_structure" or (archetype is None and grade == 8):
+        if s_val % 2 == 0:
+            return build_atomic_bohr_ns_question(seed=s_val, grade=grade, mode=mode)
         return _gen_atomic_structure_question(r, mode=mode)
     elif archetype == "acid_base" or (archetype is None and grade == 9):
+        if s_val % 3 == 0:
+            return build_gas_evolution_ns_question(seed=s_val, grade=grade, mode=mode)
+        elif s_val % 3 == 1:
+            return build_chemical_bonding_ns_question(seed=s_val, grade=grade, mode=mode)
         return _gen_acid_base_question(r, mode=mode)
     else:
         choice = r.choice(["separation", "atomic_structure", "acid_base"])

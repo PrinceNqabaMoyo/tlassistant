@@ -1,6 +1,6 @@
 """
 Curriculum Validation System
-Ensures all quiz questions align with Grade 7 CAPS curriculum requirements
+Ensures all quiz questions align with Grade 7 national curriculum requirements
 """
 
 from typing import Dict, List, Any, Tuple
@@ -9,7 +9,7 @@ from dataclasses import dataclass
 from .quiz_models import QuizQuestion, DifficultyLevel, QuestionType, ShapeType
 
 class CurriculumArea(Enum):
-    """Grade 7 CAPS curriculum areas for geometry"""
+    """Grade 7 national curriculum areas for geometry"""
     PROPERTIES_2D_SHAPES = "Properties of 2D Shapes"
     CALCULATIONS_2D_SHAPES = "Calculations involving 2D Shapes"
     SIMILARITY_CONGRUENCY = "Similarity and Congruency"
@@ -36,7 +36,7 @@ class CurriculumValidation:
 
 class CurriculumValidator:
     """
-    Validates quiz questions against Grade 7 CAPS curriculum requirements
+    Validates quiz questions against Grade 7 national curriculum requirements
     """
     
     def __init__(self):
@@ -45,7 +45,7 @@ class CurriculumValidator:
         self.metric_units = self._initialize_metric_units()
     
     def _initialize_curriculum_requirements(self) -> Dict[CurriculumArea, Dict[str, Any]]:
-        """Initialize Grade 7 CAPS curriculum requirements"""
+        """Initialize Grade 7 national curriculum requirements"""
         return {
             CurriculumArea.PROPERTIES_2D_SHAPES: {
                 'required_concepts': [

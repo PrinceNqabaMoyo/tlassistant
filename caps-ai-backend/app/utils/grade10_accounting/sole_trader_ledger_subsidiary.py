@@ -150,7 +150,7 @@ def make_creditors_ledger_posting_question(
     difficulty: str = "easy",
     mode: str = "",
 ) -> Dict[str, Any]:
-    business = r.choice(["Lonely Traders", "Khumalo Traders", "Mokoena Stores"])
+    business = _pick_business_name(r=r)
     month = r.choice(["January", "February", "March", "April", "May", "June"])
     creditor = r.choice(["Marang Suppliers", "RN Wholesalers", "Sam Distributors", "MZ Suppliers"])
     diff = str(difficulty or "easy").strip().lower()

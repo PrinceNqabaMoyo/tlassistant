@@ -1,0 +1,14 @@
+paths= ['03. Acids and bases.md']
+sidecar= False sidecar_len= 0
+src_norm_len= 68622
+
+raw contains 'NH3 accepts a proton': True
+
+raw contains 'accepts a proton. It is a': True
+src contains 'nh3accepts': True
+src contains 'acceptsaproton': True
+
+RAW window : ' - NH3(g) + H⁺ (aq) _→_ NH⁺ 4^(aq) \n\n - NH3 accepts a proton. It is a _proton acceptor_ and is therefore the **base** . \n\n2. CH3COOH(aq) + H2O( _ℓ_ ) _→_ H3O⁺ (aq) + CH3COO^_−_ (aq'
+NORM window: 'nh3ghaqnh4aqnh3acceptsaprotonitisaprotonacceptorandisthereforethebase2ch3coohaqh2oh3oaqch3cooaq'
+
+_clean only on that window: 'NH3(g) + H⁺ (aq) → NH⁺ 4^(aq) - NH3 accepts a proton. It is a proton acceptor and is therefore the base . 2. CH3COOH(aq) + H2O( ℓ ) → H3O⁺ (aq) + CH3COO^− (aq'

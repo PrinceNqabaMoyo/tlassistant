@@ -28,7 +28,7 @@ def _with_metadata(
     enriched.update({
         'topic_id': TOPIC_ID,
         'subtopic_id': SUBTOPIC_ID,
-        'subskill': subskill,
+        'subskill': question_family_id or subskill,
         'learning_objective_id': learning_objective_id,
         'concept_id': concept_id,
         'concept_group': concept_group,
@@ -45,59 +45,13 @@ def _with_metadata(
         enriched['minimum_mastery_score'] = minimum_mastery_score
     return enriched
 
-def _mcq_question(rng, item, mode="scaffold"):
-    mode_norm = str(mode or "").strip().lower()
-    correct_option = item['options'][item['correct_index']]
-    
-    question = {
-        'id': f"g7_ems_mcq_{rng.randint(1000, 999999)}",
-        'title': item.get('title', 'Concept check'),
-        'question_type': 'mcq',
-        'prompt': item['prompt'],
-        'options': item['options'],
-        'correct_index': str(item['correct_index']),
-        'explanation': item['explanation'],
-        'marks': item.get('marks', 1),
-        'sample_answer': correct_option,
-        'ideal_answer': correct_option,
-        'marking_points': [correct_option],
-        **{k: v for k, v in item.items() if k not in ['prompt', 'options', 'correct_index', 'explanation', 'title', 'marks', 'hint_sections', 'guidelines', 'teaching_note']}
-    }
-    
-    if mode_norm == "scaffold":
-        if 'hint_sections' in item: question['hint_sections'] = item['hint_sections']
-        if 'guidelines' in item: question['guidelines'] = item['guidelines']
-        if 'teaching_note' in item: question['teaching_note'] = item.get('teaching_note', item['explanation'])
-        
-    return question
-
-def _typed_question(rng, item, mode="scaffold"):
-    mode_norm = str(mode or "").strip().lower()
-    question = {
-        'id': f"g7_ems_typed_{rng.randint(1000, 999999)}",
-        'title': item.get('title', 'Written response'),
-        'question_type': 'typed',
-        'prompt': item['prompt'],
-        'marks': item['marks'],
-        'marking_points': item['marking_points'],
-        'sample_answer': item['sample_answer'],
-        'ideal_answer': item.get('ideal_answer', item['sample_answer']),
-        **{k: v for k, v in item.items() if k not in ['prompt', 'marks', 'marking_points', 'sample_answer', 'ideal_answer', 'hint_sections', 'guidelines', 'teaching_note', 'title']}
-    }
-    
-    if mode_norm == "scaffold":
-        if 'hint_sections' in item: question['hint_sections'] = item['hint_sections']
-        if 'guidelines' in item: question['guidelines'] = item['guidelines']
-        if 'teaching_note' in item: question['teaching_note'] = item.get('teaching_note', '')
-        
-    return question
-
 def _concept_pool(rng):
     """MCQ concepts for term 3."""
+    scenario = get_ems_scenario(rng)
     return [
         _with_metadata({
             'title': 'Defining the Poverty Line',
-            'prompt': "What does the 'poverty line' refer to?",
+            'prompt': f"In assessing household conditions across {scenario['area']}, what does the 'poverty line' refer to?",
             'options': [
                 "The physical boundary between wealthy suburbs and poor townships.", 
                 "The minimum income needed to provide for basic needs, often considered as US$1 a day.", 
@@ -118,7 +72,7 @@ def _concept_pool(rng):
         
         _with_metadata({
             'title': 'Defining an Entrepreneur',
-            'prompt': "Which statement BEST describes an entrepreneur?",
+            'prompt': f"{scenario['entrepreneur']} operates a venture in {scenario['area']}. Which statement BEST describes an entrepreneur?",
             'options': [
                 "A person who identifies a business opportunity, takes calculated financial risks, and organizes resources to make a profit",
                 "A person who is employed by the government to manage municipal water pipes",
@@ -138,7 +92,7 @@ def _concept_pool(rng):
         }, subskill='concepts', learning_objective_id='lo_def_entrepreneur', question_family_id='def_entrepreneur', concept_id='entrepreneur_concept', concept_group='entrepreneurship', misconception_tags=['confuses_entrepreneur_with_employee'], diagnostic_tags=['definition']),
         _with_metadata({
             'title': 'Characteristics of an Entrepreneur',
-            'prompt': "Which combination represents key personal characteristics of a successful entrepreneur?",
+            'prompt': f"When evaluating business leaders in {scenario['area']}, which combination represents key personal characteristics of a successful entrepreneur?",
             'options': [
                 "Perseverance, calculated risk-taking, creativity, and self-confidence",
                 "Fear of failure, unwillingness to adapt, and total dependence on luck",
@@ -158,7 +112,7 @@ def _concept_pool(rng):
         }, subskill='concepts', learning_objective_id='lo_entrepreneur_traits', question_family_id='entrepreneurial_traits', concept_id='traits', concept_group='entrepreneurship', misconception_tags=['assumes_luck_drives_business'], diagnostic_tags=['traits']),
         _with_metadata({
             'title': 'School Entrepreneur\'s Day Planning',
-            'prompt': "When Grade 7 learners organize a school Entrepreneur's Day, what is the FIRST crucial step in the planning process?",
+            'prompt': f"When Grade 7 learners in {scenario['area']} organize a school Entrepreneur's Day, what is the FIRST crucial step in the planning process?",
             'options': [
                 "Conducting market research to identify what products fellow learners need and want",
                 "Printing expensive colour banners before deciding what product to sell",
@@ -178,7 +132,7 @@ def _concept_pool(rng):
         }, subskill='concepts', learning_objective_id='lo_entrepreneurs_day', question_family_id='planning_entrepreneurs_day', concept_id='entrepreneurs_day', concept_group='starting_a_business', misconception_tags=['skips_market_research'], diagnostic_tags=['planning']),
         _with_metadata({
             'title': 'Needs vs Wants in Business Opportunities',
-            'prompt': "In business ideation, how can an entrepreneur turn a community's UNMET NEED into a viable business opportunity?",
+            'prompt': f"In {scenario['area']}, how can an entrepreneur turn a community's UNMET NEED into a viable business opportunity?",
             'options': [
                 "By providing a reliable, affordable service (such as mobile phone repairs or after-school transport) that solves the community's problem",
                 "By demanding that the municipal council ban all local competitors",
@@ -198,7 +152,7 @@ def _concept_pool(rng):
         }, subskill='concepts', learning_objective_id='lo_business_opportunities', question_family_id='needs_wants_opportunity', concept_id='opportunity_identification', concept_group='entrepreneurship', misconception_tags=['confuses_need_with_unviable_want'], diagnostic_tags=['commercial_opportunity']),
         _with_metadata({
             'title': 'SWOT Analysis Elements',
-            'prompt': "In a SWOT analysis, which elements represent INTERNAL factors that the entrepreneur can directly control?",
+            'prompt': f"When {scenario['entrepreneur']} conducts a SWOT analysis for a new venture in {scenario['area']}, which elements represent INTERNAL factors that the entrepreneur can directly control?",
             'options': [
                 "Strengths and Weaknesses",
                 "Opportunities and Threats",
@@ -218,7 +172,7 @@ def _concept_pool(rng):
         }, subskill='concepts', learning_objective_id='lo_swot_internal_external', question_family_id='swot_factors', concept_id='swot', concept_group='entrepreneurship', misconception_tags=['confuses_internal_with_external'], diagnostic_tags=['swot_analysis']),
         _with_metadata({
             'title': 'Fixed vs Variable Costs in Production',
-            'prompt': "If a student bakes muffins for Entrepreneur's Day, which cost is classified as a VARIABLE cost?",
+            'prompt': f"If {scenario['entrepreneur']} bakes {scenario['item_sold']} for an Entrepreneur's Day stall in {scenario['area']}, which cost is classified as a VARIABLE cost?",
             'options': [
                 "Flour, sugar, eggs, and paper baking cups",
                 "The fixed table rental fee paid to the school for the stall",
@@ -238,7 +192,7 @@ def _concept_pool(rng):
         }, subskill='concepts', learning_objective_id='lo_production_costs', question_family_id='variable_costs_production', concept_id='production_costs', concept_group='entrepreneurship', misconception_tags=['confuses_fixed_stall_fee_with_variable'], diagnostic_tags=['costing']),
         _with_metadata({
             'title': 'Calculating Business Profit',
-            'prompt': "An entrepreneur generates R1 500 in sales revenue from selling handcrafted beaded bracelets. The total production and stall expenses amounted to R950. What is the net profit earned?",
+            'prompt': f"{scenario['entrepreneur']} generates R1 500 in sales revenue from selling {scenario['item_sold']} in {scenario['area']}. The total production and stall expenses amounted to R950. What is the net profit earned?",
             'options': [
                 "R550 Net Profit (R1 500 - R950)",
                 "R2 450 Net Profit (R1 500 + R950)",
@@ -258,7 +212,7 @@ def _concept_pool(rng):
         }, subskill='concepts', learning_objective_id='lo_profit_formula', question_family_id='calculate_profit_simple', concept_id='profit_calc', concept_group='entrepreneurship', misconception_tags=['adds_expenses_to_revenue'], diagnostic_tags=['calculation', 'profit']),
         _with_metadata({
             'title': 'Advertising and Promotion',
-            'prompt': "Which promotional strategy is MOST cost-effective for a school Entrepreneur's Day stall?",
+            'prompt': f"For {scenario['entrepreneur']}'s school Entrepreneur's Day stall in {scenario['area']}, which promotional strategy is MOST cost-effective?",
             'options': [
                 "Creating colourful posters on school noticeboards, class announcements, and social media flyers",
                 "Purchasing a prime-time national television commercial",
@@ -280,12 +234,13 @@ def _concept_pool(rng):
 
 def _discussion_pool(rng):
     """Typed discussion questions."""
+    scenario = get_ems_scenario(rng)
     business = get_ems_scenario()
     
     return [
         _with_metadata({
             'title': 'Socio-economic Imbalances',
-            'prompt': "In your own words, explain what socio-economic imbalances are, and give examples. (2 marks)",
+            'prompt': f"In communities like {scenario['area']}, explain in your own words what socio-economic imbalances are, and give examples. (2 marks)",
             'marks': 2,
             'marking_points': [
                 "Imbalances in people's access to resources or opportunities.",
@@ -323,7 +278,7 @@ def _discussion_pool(rng):
         
         _with_metadata({
             'title': 'Entrepreneurial Characteristics',
-            'prompt': "Give three characteristics that a successful entrepreneur usually has, and briefly explain why each is important. (3 marks)",
+            'prompt': f"For an entrepreneur like {scenario['entrepreneur']} in {scenario['area']}, give three characteristics that a successful entrepreneur usually has, and briefly explain why each is important. (3 marks)",
             'marks': 3,
             'marking_points': [
                 "Risk-taker: Willing to start something new without knowing if it will succeed.",
@@ -344,7 +299,7 @@ def _discussion_pool(rng):
         
         _with_metadata({
             'title': 'SWOT Analysis Case Study',
-            'prompt': "Read the scenario and prepare a SWOT analysis for the business. Show ONE aspect under each element (Strengths, Weaknesses, Opportunities, Threats). (4 marks)\n\nScenario: Roger owns a small shop that specialises in buying and selling computer games. He is highly motivated and has a solid client base. However, Roger has no experience when it comes to accounting. The management of the shopping centre has offered Roger larger premises from where he can run his business. He has also been informed that a large retail chain store will soon be opening next door and will also be selling computer games at a discount.",
+            'prompt': f"Read the scenario and prepare a SWOT analysis for the business in {scenario['area']}. Show ONE aspect under each element (Strengths, Weaknesses, Opportunities, Threats). (4 marks)\n\nScenario: {scenario['entrepreneur']} owns a small shop in {scenario['area']} that specialises in selling {scenario['item_sold']}. {scenario['entrepreneur']} is highly motivated and has a solid client base. However, {scenario['entrepreneur']} has no experience in accounting. The management of the shopping centre has offered larger premises to expand the business. However, a large retail chain store will soon open next door selling at a discount.",
             'marks': 4,
             'marking_points': [
                 "Strength: Motivated / Solid client base",
@@ -363,24 +318,168 @@ def _discussion_pool(rng):
         }, subskill='discussion', learning_objective_id='lo_swot', question_family_id='swot_case_study_exam', concept_id='swot_analysis', concept_group='starting_a_business', misconception_tags=['confuses_internal_external_factors'], diagnostic_tags=['case_study', 'exam_style']),
     ]
 
-def generate(subskill="concepts", difficulty="medium", count=1, mode="scaffold", seed=None, **kwargs):
-    rng = _rng(seed)
+
+
+SUBSKILLS = ['def_poverty_line', 'def_entrepreneur', 'entrepreneurial_traits', 'planning_entrepreneurs_day', 'needs_wants_opportunity', 'swot_factors', 'variable_costs_production', 'calculate_profit_simple', 'promotional_channels', 'explain_imbalances', 'explain_goals', 'start_business_steps', 'swot_case_study_exam']
+
+
+
+SUBSKILLS = ['def_poverty_line', 'def_entrepreneur', 'entrepreneurial_traits', 'planning_entrepreneurs_day', 'needs_wants_opportunity', 'swot_factors', 'variable_costs_production', 'calculate_profit_simple', 'promotional_channels', 'explain_imbalances', 'explain_goals', 'start_business_steps', 'swot_case_study_exam']
+
+def _mcq_question(rng, item, mode="scaffold"):
+    mode_norm = str(mode or "").strip().lower()
+    correct_option = item['options'][item['correct_index']]
+    explanation = item.get('explanation') or f"The correct option is: {correct_option}."
+    sample_answer = correct_option
     
-    if subskill == "discussion":
-        pool = _discussion_pool(rng)
-        selected = [q for q in pool if difficulty in q.get('difficulties', ['medium'])]
-        if not selected: selected = pool
-        if count == 1 and seed is not None:
-            chosen = [selected[int(seed) % len(selected)]]
-        else:
-            chosen = rng.sample(selected, min(count, len(selected)))
-        return [_typed_question(rng, item, mode=mode) for item in chosen]
+    # 3-tier hints
+    if 'hints' in item:
+        hints = item['hints']
+    elif 'hint_sections' in item and len(item['hint_sections']) >= 3:
+        hints = {
+            'tier_1': item['hint_sections'][0]['text'],
+            'tier_2': item['hint_sections'][1]['text'],
+            'tier_3': item['hint_sections'][2]['text']
+        }
     else:
-        pool = _concept_pool(rng)
-        selected = [q for q in pool if difficulty in q.get('difficulties', ['medium'])]
-        if not selected: selected = pool
-        if count == 1 and seed is not None:
-            chosen = [selected[int(seed) % len(selected)]]
-        else:
-            chosen = rng.sample(selected, min(count, len(selected)))
-        return [_mcq_question(rng, item, mode=mode) for item in chosen]
+        hints = {
+            'tier_1': "Carefully review the economic definitions and scenarios presented.",
+            'tier_2': explanation,
+            'tier_3': f"The correct answer is: {correct_option}."
+        }
+
+    marks = item.get('marks', 2)
+    question = {
+        'id': f"g7_ems_mcq_{rng.randint(1000, 999999)}",
+        'title': item.get('title', 'Concept check'),
+        'question_type': 'mcq',
+        'prompt': item['prompt'],
+        'options': item['options'],
+        'correct_index': str(item['correct_index']),
+        'explanation': explanation,
+        'worked_solution': explanation,
+        'canonical_solution': explanation,
+        'solution': explanation,
+        'marks': marks,
+        'total_marks': marks,
+        'sample_answer': sample_answer,
+        'ideal_answer': sample_answer,
+        'correct_answer': sample_answer,
+        'marking_points': [correct_option],
+        'modality': 'math',
+        'solution_type': 'mcq',
+        'hints': hints,
+        'marking_schema': {
+            'total_marks': marks,
+            'marking_points': [
+                {'id': 'mp_1', 'desc': f"Correct option selection: {correct_option}", 'marks': marks, 'editable': True}
+            ]
+        },
+        **{k: v for k, v in item.items() if k not in ['prompt', 'options', 'correct_index', 'explanation', 'title', 'marks', 'hint_sections', 'guidelines', 'teaching_note', 'hints']}
+    }
+    if mode_norm == "scaffold":
+        if 'hint_sections' in item: question['hint_sections'] = item['hint_sections']
+        if 'guidelines' in item: question['guidelines'] = item['guidelines']
+        if 'teaching_note' in item: question['teaching_note'] = item.get('teaching_note', explanation)
+    return question
+
+def _typed_question(rng, item, mode="scaffold"):
+    mode_norm = str(mode or "").strip().lower()
+    memo = item.get('sample_answer') or item.get('explanation') or "\n".join(item.get('marking_points', []))
+    marks = item.get('marks', 3)
+    mps = item.get('marking_points', [memo])
+    
+    # 3-tier hints
+    if 'hints' in item:
+        hints = item['hints']
+    elif 'hint_sections' in item and len(item['hint_sections']) >= 3:
+        hints = {
+            'tier_1': item['hint_sections'][0]['text'],
+            'tier_2': item['hint_sections'][1]['text'],
+            'tier_3': item['hint_sections'][2]['text']
+        }
+    else:
+        hints = {
+            'tier_1': "Structure your answer clearly, addressing all parts of the question prompt.",
+            'tier_2': "Identify the core economic principles, definitions, or calculations required.",
+            'tier_3': f"Model solution points:\n{memo}"
+        }
+
+    question = {
+        'id': f"g7_ems_typed_{rng.randint(1000, 999999)}",
+        'title': item.get('title', 'Written response'),
+        'question_type': 'typed',
+        'prompt': item['prompt'],
+        'marks': marks,
+        'total_marks': marks,
+        'marking_points': mps,
+        'sample_answer': memo,
+        'ideal_answer': item.get('ideal_answer', memo),
+        'correct_answer': memo,
+        'explanation': memo,
+        'worked_solution': memo,
+        'canonical_solution': memo,
+        'solution': memo,
+        'modality': 'semantic',
+        'solution_type': 'marking_points',
+        'hints': hints,
+        'marking_schema': {
+            'total_marks': marks,
+            'marking_points': [
+                {'id': f"mp_{idx + 1}", 'desc': str(p), 'marks': 1, 'editable': True}
+                for idx, p in enumerate(mps)
+            ],
+            'carry_forward_rule': 'consequential_accuracy'
+        },
+        **{k: v for k, v in item.items() if k not in ['prompt', 'marks', 'marking_points', 'sample_answer', 'ideal_answer', 'hint_sections', 'guidelines', 'teaching_note', 'title', 'hints', 'explanation']}
+    }
+    if mode_norm == "scaffold":
+        if 'hint_sections' in item: question['hint_sections'] = item['hint_sections']
+        if 'guidelines' in item: question['guidelines'] = item['guidelines']
+        if 'teaching_note' in item: question['teaching_note'] = item.get('teaching_note', '')
+    return question
+
+def _get_all_pool_items(rng):
+    pool = []
+    import sys
+    mod = sys.modules[__name__]
+    for fn_name in ['_concept_pool', '_discussion_pool', '_build_sectors_questions', '_build_inputs_outputs_questions', '_build_productivity_questions', '_build_resources_questions', '_build_savings_pool']:
+        if hasattr(mod, fn_name):
+            try:
+                res = getattr(mod, fn_name)(rng)
+                if isinstance(res, list): pool.extend(res)
+                elif isinstance(res, dict): pool.extend(res.values())
+            except Exception:
+                pass
+    return pool
+
+def generate(subskill=None, difficulty="medium", count=1, mode="scaffold", seed=None, **kwargs):
+    rng = _rng(seed)
+    all_items = _get_all_pool_items(rng)
+    fam_map = {}
+    for it in all_items:
+        key = it.get('question_family_id') or it.get('subskill') or it.get('title')
+        if key and key not in fam_map:
+            fam_map[key] = it
+
+    target_sub = str(subskill or "").strip().lower()
+    if target_sub in fam_map:
+        item = fam_map[target_sub]
+        fn = _mcq_question if 'options' in item else _typed_question
+        return [fn(rng, item, mode=mode)]
+
+    # Substring / partial match on subskill
+    if target_sub and target_sub not in ("concepts", "discussion", "compound", "all", "mixed", "auto", "default", "none"):
+        for k, it in fam_map.items():
+            if target_sub in str(k).lower():
+                fn = _mcq_question if 'options' in it else _typed_question
+                return [fn(rng, it, mode=mode)]
+
+    # If count requested, generate count distinct questions cycling through SUBSKILLS
+    results = []
+    for i in range(count):
+        sub_key = SUBSKILLS[i % len(SUBSKILLS)]
+        item = fam_map.get(sub_key, all_items[i % len(all_items)])
+        fn = _mcq_question if 'options' in item else _typed_question
+        results.append(fn(rng, item, mode=mode))
+    return results

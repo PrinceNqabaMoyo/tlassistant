@@ -6,7 +6,7 @@ Covers:
   - Trading Stock Deficit / Surplus adjustments at financial year-end.
   - Recording adjustments in the General Journal (Debit Trading Stock Deficit, Credit Trading Stock).
 
-Follows South African CAPS curriculum specifications and the 6-Pillar Generator Contract.
+Follows South African national curriculum specifications and the 6-Pillar Generator Contract.
 Strictly zero-LLM, deterministic execution.
 """
 from __future__ import annotations

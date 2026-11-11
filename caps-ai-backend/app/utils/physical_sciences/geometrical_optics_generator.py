@@ -118,6 +118,17 @@ def _generate_gr11_snell_optics(r: random.Random, seed: Optional[int], idx: int,
 
     qid = _make_id("ps11_optics", seed, idx)
 
+    optics_spec = {
+        "medium_1": {"name": "Air", "refractive_index": 1.00},
+        "medium_2": {"name": med_name.title(), "refractive_index": n2},
+        "angle_incidence_deg": theta1_deg,
+        "angle_refraction_deg": round(theta2_deg, 1),
+        "critical_angle_deg": round(thetac_deg, 1),
+        "is_tir": False,
+        "normal_line": True,
+        "boundary_label": f"Air / {med_name.title()} Interface",
+    }
+
     if mode == "elementary_snell_law":
         prompt = (
             f"A ray of monochromatic light travels through air ($n_1 = 1{{,}}00$) and strikes the flat surface of a "
@@ -200,6 +211,10 @@ def _generate_gr11_snell_optics(r: random.Random, seed: Optional[int], idx: int,
         "suggested_duration_mins": 10,
         "mode": mode,
         "question_type": "short_answer",
+        "modality": "optics_ray",
+        "diagram_spec": {
+            "diagram_role": "context","kind": "ray_diagram", "optics": optics_spec},
+        "optics_spec": optics_spec,
         "question": prompt,
         "correct_answer": ans_str,
         "sample_answer": ans_str,
@@ -217,6 +232,133 @@ def _generate_gr11_snell_optics(r: random.Random, seed: Optional[int], idx: int,
                 {"id": "mp_4", "desc": "Total internal reflection conditions and verification", "marks": 3, "editable": True},
             ],
             "deductions": [{"rule": "omitted_units_degrees", "penalty": -1}],
+            "carry_forward_rule": "consequential_accuracy",
+        },
+    }
+
+
+
+
+def _generate_gr11_thin_lens_ray_tracing(r: random.Random, seed: Optional[int], idx: int, mode: str) -> Dict[str, Any]:
+    """Grade 11 Physical Sciences: Geometrical Optics thin lens equation, magnification, and 3-ray ray tracing."""
+    f = r.choice([10.0, 12.0, 15.0, 20.0])
+    
+    # 3 classic exam configurations for converging biconvex lens
+    case = r.choice(["beyond_2f", "between_f_and_2f", "at_2f"])
+    if case == "beyond_2f":
+        do = round(2.2 * f + r.choice([2.0, 4.0, 6.0]), 1)
+        ho = round(r.choice([3.0, 4.0, 5.0]), 1)
+    elif case == "between_f_and_2f":
+        do = round(1.4 * f + r.choice([1.0, 2.0]), 1)
+        ho = round(r.choice([2.5, 3.0, 4.0]), 1)
+    else:
+        do = round(2.0 * f, 1)
+        ho = round(r.choice([3.0, 4.0]), 1)
+
+    # 1/f = 1/do + 1/di => di = (f * do) / (do - f)
+    di = round((f * do) / (do - f), 1)
+    m = round(-di / do, 2)
+    hi = round(m * ho, 1)
+
+    if di > 0:
+        if abs(m) < 0.95:
+            nature = "Real, inverted, and diminished"
+        elif abs(m) > 1.05:
+            nature = "Real, inverted, and magnified"
+        else:
+            nature = "Real, inverted, and same size"
+    else:
+        nature = "Virtual, upright, and magnified"
+
+    qid = _make_id("ps11_lens", seed, idx)
+
+    optics_spec = {
+        "type": "thin_lens",
+        "lens_type": "converging",
+        "focal_length_cm": f,
+        "object_distance_cm": do,
+        "object_height_cm": ho,
+        "image_distance_cm": di,
+        "image_height_cm": hi,
+        "magnification": m,
+        "image_nature": nature,
+    }
+
+    prompt = (
+        f"An object of height **${_fmt_sa(ho)}\\text{{ cm}}$** is placed perpendicular to the principal axis at a distance "
+        f"of **${_fmt_sa(do)}\\text{{ cm}}$** in front of a thin converging (convex) lens with a focal length of **${_fmt_sa(f)}\\text{{ cm}}$**.\n\n"
+        f"1. Use the thin lens equation $\\frac{{1}}{{f}} = \\frac{{1}}{{d_o}} + \\frac{{1}}{{d_i}}$ to calculate the image distance ($d_i$).\n"
+        f"2. Calculate the linear magnification ($m$) and determine the height of the image ($h_i$).\n"
+        f"3. State the THREE characteristics of the image formed (nature, orientation, and size relative to the object).\n"
+        f"4. Describe the paths of the three standard principal rays used in geometric ray construction to locate the image."
+    )
+
+    ans_str = (
+        f"1. di = {_fmt_sa(di)} cm; "
+        f"2. m = {_fmt_sa(m)}, hi = {_fmt_sa(hi)} cm; "
+        f"3. {nature}; "
+        f"4. Ray 1: Parallel to axis refracts through F2; Ray 2: Passes through optical centre O undeviated; Ray 3: Through F1 refracts parallel to axis."
+    )
+
+    memo = (
+        f"1. Image distance [3]:\n"
+        f"   $$\\frac{{1}}{{f}} = \\frac{{1}}{{d_o}} + \\frac{{1}}{{d_i}} \\implies \\frac{{1}}{{{_fmt_sa(f)}}} = \\frac{{1}}{{{_fmt_sa(do)}}} + \\frac{{1}}{{d_i}}$$\n"
+        f"   $$\\frac{{1}}{{d_i}} = \\frac{{1}}{{{_fmt_sa(f)}}} - \\frac{{1}}{{{_fmt_sa(do)}}} = \\frac{{{_fmt_sa(do)} - {_fmt_sa(f)}}}{{{_fmt_sa(f)} \\times {_fmt_sa(do)}}}$$\n"
+        f"   $$d_i = \\frac{{{_fmt_sa(f)} \\times {_fmt_sa(do)}}}{{{_fmt_sa(do)} - {_fmt_sa(f)}}} = {_fmt_sa(di)}\\text{{ cm}}$$ [A]\n"
+        f"2. Magnification & Image height [2]:\n"
+        f"   $$m = -\\frac{{d_i}}{{d_o}} = -\\frac{{{_fmt_sa(di)}}}{{{_fmt_sa(do)}}} = {_fmt_sa(m)}$$ [M]\n"
+        f"   $$h_i = m \\times h_o = ({_fmt_sa(m)}) \\times {_fmt_sa(ho)} = {_fmt_sa(hi)}\\text{{ cm}}$$ [A]\n"
+        f"3. Image characteristics [3]: **{nature}** (positive $d_i$ indicates a real image formed on the opposite side of the lens; negative $m$ indicates an inverted image).\n"
+        f"4. Principal ray construction [3]:\n"
+        f"   - Ray 1 (Red): Incident parallel to the principal axis, refracts through the principal focus $F_2$.\n"
+        f"   - Ray 2 (Blue): Incident through the optical centre $O$, passes straight through without deviation.\n"
+        f"   - Ray 3 (Emerald): Incident through the front focus $F_1$, refracts parallel to the principal axis."
+    )
+
+    hints = {
+        "tier_1": "Recall the thin lens equation: $\\frac{1}{f} = \\frac{1}{d_o} + \\frac{1}{d_i}$. Solve for $\\frac{1}{d_i}$.",
+        "tier_2": f"Substitute: 1/{f} = 1/{do} + 1/di. Find common denominator. Then $m = -d_i / d_o$.",
+        "tier_3": f"1. di = {f}*{do} / ({do} - {f}) = {_fmt_sa(di)} cm. 2. m = {_fmt_sa(m)}, hi = {_fmt_sa(hi)} cm. 3. {nature}.",
+    }
+
+    marks = 11
+
+    return {
+        "id": qid,
+        "question_id": qid,
+        "term": 2,
+        "caps_weight_percent": 15,
+        "suggested_duration_mins": 8,
+        "mode": mode,
+        "question_type": "compound",
+        "modality": "optics_ray",
+        "diagram_spec": {
+            "diagram_role": "context","kind": "ray_diagram", "optics": optics_spec},
+        "optics_spec": optics_spec,
+        "question": prompt,
+        "prompt": prompt,
+        "correct_answer": ans_str,
+        "sample_answer": ans_str,
+        "worked_solution": memo,
+        "explanation": memo,
+        "marks": marks,
+        "sub_parts": [
+            {"part": "1", "label": "1. Image distance (di)", "prompt": "Calculate the image distance (di) in cm.", "expected_answer": _fmt_sa(di), "marks": 3},
+            {"part": "2", "label": "2. Magnification & Image height", "prompt": "Calculate linear magnification (m) and image height (hi).", "expected_answer": f"m = {_fmt_sa(m)}, hi = {_fmt_sa(hi)} cm", "marks": 2},
+            {"part": "3", "label": "3. Image characteristics", "prompt": "State the three characteristics of the image formed.", "expected_answer": nature, "marks": 3},
+            {"part": "4", "label": "4. Principal rays", "prompt": "Describe the three standard rays used to locate the image.", "expected_answer": "Ray 1 parallel->F2, Ray 2 through O undeviated, Ray 3 through F1->parallel", "marks": 3},
+        ],
+        "hints": hints,
+        "misconception_tags": ["lens_reciprocal_addition_error", "confused_real_and_virtual_image", "inverted_magnification_ratio"],
+        "marking_schema": {
+            "total_marks": marks,
+            "marking_points": [
+                {"id": "mp_1", "desc": "Thin lens equation formula and correct di calculation", "marks": 3, "editable": True},
+                {"id": "mp_2", "desc": "Magnification and image height calculation", "marks": 2, "editable": True},
+                {"id": "mp_3", "desc": "Three correct image characteristics (nature, orientation, size)", "marks": 3, "editable": True},
+                {"id": "mp_4", "desc": "Three standard principal ray rules described", "marks": 3, "editable": True},
+            ],
+            "deductions": [{"rule": "reciprocal_addition_error", "penalty": -1}],
             "carry_forward_rule": "consequential_accuracy",
         },
     }
@@ -243,8 +385,15 @@ def generate(
 
         if grade_num in ("7", "8") or subskill in ("visible_light", "spectrum", "reflection_gr8"):
             q = _generate_gr8_visible_light(sub_r, sub_seed, i, mode)
+        elif subskill in ("thin_lens", "lenses", "ray_tracing") or mode in ("elementary_thin_lens", "thin_lens"):
+            q = _generate_gr11_thin_lens_ray_tracing(sub_r, sub_seed, i, mode)
         else:
-            q = _generate_gr11_snell_optics(sub_r, sub_seed, i, mode)
+            # Alternating or mixed mode for Grade 11 Optics
+            s_val = (int(seed or 0) + i) if seed is not None else sub_r.randint(0, 10000)
+            if s_val % 2 == 1:
+                q = _generate_gr11_thin_lens_ray_tracing(sub_r, sub_seed, i, mode)
+            else:
+                q = _generate_gr11_snell_optics(sub_r, sub_seed, i, mode)
 
         questions.append(q)
 

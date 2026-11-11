@@ -266,9 +266,25 @@ def _gen_vat_calculations_question(r: random.Random, mode: str = "compound") -> 
     return {
         "id": _make_id("acct11_vat_calc"),
         "topic": "grade11_accounting_vat",
+        "question_type": "table_fill",
         "subskill": "vat_inclusive_exclusive_calculations",
         "learning_objective_id": "acct11_vat_calculations",
-        "prompt": prompt,
+        "prompt": (
+            f"The bookkeeper of {business} needs to complete the VAT reconciliation table for tax audit purposes. "
+            f"Complete the missing amounts in the table below (standard VAT rate = 15%)."
+        ),
+        "headers": ["Transaction / Invoice", "Exclusive Amount (100%)", "VAT Amount (15%)", "Inclusive Amount (115%)"],
+        "rows": [
+            ["1. Office Equipment", _fmt_money(excl_1), "{r0_c2}", _fmt_money(incl_1)],
+            ["2. Stock Purchase", "{r1_c1}", "{r1_c2}", _fmt_money(incl_2)],
+            ["3. Commercial Services", _fmt_money(excl_3), _fmt_money(vat_3), "{r2_c3}"],
+        ],
+        "correct_map": {
+            "r0_c2": vat_1,
+            "r1_c1": excl_2,
+            "r1_c2": vat_2,
+            "r2_c3": incl_3,
+        },
         "sample_answer": sample,
         "correct_answer": f"(A) {_fmt_money(vat_1)}, (B) {_fmt_money(excl_2)}, (C) {_fmt_money(vat_2)}, (D) {_fmt_money(incl_3)}",
         "marking_schema": schema,
@@ -370,6 +386,70 @@ def _gen_vat_classification_ethics_question(r: random.Random, mode: str = "compo
 # MAIN ENTRY POINT
 # ============================================================================
 
+def _gen_vat_inclusive_exclusive_table(r: random.Random) -> Dict[str, Any]:
+    excl_1 = r.choice([4000, 6000, 8000, 12000])
+    vat_1 = int(excl_1 * 0.15)
+    incl_1 = excl_1 + vat_1
+
+    excl_2 = r.choice([10000, 14000, 20000])
+    vat_2 = int(excl_2 * 0.15)
+    incl_2 = excl_2 + vat_2
+
+    return {
+        "question_type": "table_fill",
+        "subskill": "vat_inclusive_and_exclusive_schedule",
+        "question_text": "Complete the 15% VAT conversion table below.",
+        "headers": ["Transaction", "VAT Exclusive (R)", "VAT Amount (15%) (R)", "VAT Inclusive (R)"],
+        "rows": [
+            ["Credit sales invoice issued to customer", f"R{excl_1:,}", "{r0_c2}", "{r0_c3}"],
+            ["Equipment purchased from supplier (VAT inclusive)", "{r1_c1}", "{r1_c2}", f"R{incl_2:,}"],
+        ],
+        "correct_map": {
+            "r0_c2": vat_1,
+            "r0_c3": incl_1,
+            "r1_c1": excl_2,
+            "r1_c2": vat_2,
+        },
+        "marks": 4,
+        "worked_solution": (
+            f"- Row 1: VAT = `15% × R{excl_1:,} = R{vat_1:,}`; Inclusive = `R{incl_1:,}`.\n"
+            f"- Row 2: Exclusive = `R{incl_2:,} × (100/115) = R{excl_2:,}`; VAT = `R{vat_2:,}`."
+        ),
+    }
+
+
+def _gen_vat_control_ledger_table(r: random.Random) -> Dict[str, Any]:
+    open_cr = r.randint(8, 16) * 1000
+    out_cash = r.randint(18, 30) * 1000
+    out_cred = r.randint(12, 24) * 1000
+    in_purch = r.randint(15, 25) * 1000
+    in_bad = r.randint(1, 3) * 1000
+    tot_cr = open_cr + out_cash + out_cred
+    tot_dr = in_purch + in_bad
+    net_payable = tot_cr - tot_dr
+
+    return {
+        "question_type": "table_fill",
+        "subskill": "vat_control_taccount_schedule",
+        "question_text": "Complete the **VAT Control Account** summary schedule for the tax period.",
+        "headers": ["VAT Control Entry", "Effect on SARS Liability (Increase Cr / Decrease Dr)", "Amount (R)"],
+        "rows": [
+            ["Opening balance owing to SARS", "Increase Cr", f"R{open_cr:,}"],
+            ["Output VAT on cash and credit sales", "Increase Cr", f"R{out_cash + out_cred:,}"],
+            ["Total Credits (Output VAT + Opening Cr)", "Increase Cr", "{r2_c2}"],
+            ["Input VAT on purchases from VAT vendors", "Decrease Dr", f"R{in_purch:,}"],
+            ["VAT adjustment on bad debts written off", "Decrease Dr", f"R{in_bad:,}"],
+            ["Closing VAT Payable to SARS", "Net Credit Balance", "{r5_c2}"],
+        ],
+        "correct_map": {
+            "r2_c2": tot_cr,
+            "r5_c2": net_payable,
+        },
+        "marks": 4,
+        "worked_solution": f"Total Credits = `R{tot_cr:,}`; Total Debits = `R{tot_dr:,}`; Closing VAT Payable = `R{net_payable:,}`.",
+    }
+
+
 def generate(
     seed: Optional[int] = None,
     difficulty: str = "medium",
@@ -381,18 +461,18 @@ def generate(
     """Generates a fully formed 6-pillar Grade 11 Accounting Value Added Tax question."""
     r = _rng(seed)
 
-    if archetype == "control_account" or subskill in ["control_account", "vat_control"]:
-        return _gen_vat_control_account_question(r, mode=mode)
-    elif archetype == "calculations" or subskill in ["calculations", "vat_calculations"]:
-        return _gen_vat_calculations_question(r, mode=mode)
-    elif archetype == "ethics" or subskill in ["classification", "ethics", "vat_ethics"]:
-        return _gen_vat_classification_ethics_question(r, mode=mode)
+    choice = r.choice(["control", "calculations", "ethics", "schedule", "taccount"])
+    if choice == "control":
+        q = _gen_vat_control_account_question(r, mode=mode)
+        q["subskill"] = "vat_control_account_calculation"
+    elif choice == "calculations":
+        q = _gen_vat_calculations_question(r, mode=mode)
+        q["subskill"] = "vat_input_output_calculations"
+    elif choice == "ethics":
+        q = _gen_vat_classification_ethics_question(r, mode=mode)
+        q["subskill"] = "vat_categories_and_compliance"
+    elif choice == "schedule":
+        q = _gen_vat_inclusive_exclusive_table(r)
     else:
-        # Default distribution across all 3 archetypes
-        choice = r.choice(["control", "calculations", "ethics"])
-        if choice == "control":
-            return _gen_vat_control_account_question(r, mode=mode)
-        elif choice == "calculations":
-            return _gen_vat_calculations_question(r, mode=mode)
-        else:
-            return _gen_vat_classification_ethics_question(r, mode=mode)
+        q = _gen_vat_control_ledger_table(r)
+    return q

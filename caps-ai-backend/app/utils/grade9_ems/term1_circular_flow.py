@@ -48,10 +48,19 @@ def _with_metadata(
 def _mcq_question(rng, item, mode="scaffold"):
     mode_norm = str(mode or "").strip().lower()
     correct_option = item['options'][item['correct_index']]
+    diag = item.get('diagram_spec') or {
+        'kind': 'circular_flow',
+        'title': 'Two-Sector Economic Circular Flow (Households & Businesses)',
+        'role': 'context',
+        'diagram_role': 'context',
+    }
     question = {
         'id': f"g9_ems_mcq_{rng.randint(1000, 999999)}",
         'title': item.get('title', 'Concept check'),
         'question_type': 'mcq',
+        'modality': 'math',
+        'diagram_role': 'context',
+        'diagram_spec': diag,
         'prompt': item['prompt'],
         'options': item['options'],
         'correct_index': str(item['correct_index']),
@@ -60,7 +69,7 @@ def _mcq_question(rng, item, mode="scaffold"):
         'sample_answer': correct_option,
         'ideal_answer': correct_option,
         'marking_points': [correct_option],
-        **{k: v for k, v in item.items() if k not in ['prompt', 'options', 'correct_index', 'explanation', 'title', 'marks', 'hint_sections', 'guidelines', 'teaching_note']}
+        **{k: v for k, v in item.items() if k not in ['prompt', 'options', 'correct_index', 'explanation', 'title', 'marks', 'hint_sections', 'guidelines', 'teaching_note', 'diagram_spec', 'modality', 'diagram_role']}
     }
     if mode_norm == "scaffold":
         if 'hint_sections' in item: question['hint_sections'] = item['hint_sections']
@@ -70,16 +79,25 @@ def _mcq_question(rng, item, mode="scaffold"):
 
 def _typed_question(rng, item, mode="scaffold"):
     mode_norm = str(mode or "").strip().lower()
+    diag = item.get('diagram_spec') or {
+        'kind': 'circular_flow',
+        'title': 'Two-Sector Economic Circular Flow (Households & Businesses)',
+        'role': 'context',
+        'diagram_role': 'context',
+    }
     question = {
         'id': f"g9_ems_typed_{rng.randint(1000, 999999)}",
         'title': item.get('title', 'Written response'),
         'question_type': 'typed',
+        'modality': 'semantic',
+        'diagram_role': 'context',
+        'diagram_spec': diag,
         'prompt': item['prompt'],
         'marks': item['marks'],
         'marking_points': item['marking_points'],
         'sample_answer': item['sample_answer'],
         'ideal_answer': item.get('ideal_answer', item['sample_answer']),
-        **{k: v for k, v in item.items() if k not in ['prompt', 'marks', 'marking_points', 'sample_answer', 'ideal_answer', 'hint_sections', 'guidelines', 'teaching_note', 'title']}
+        **{k: v for k, v in item.items() if k not in ['prompt', 'marks', 'marking_points', 'sample_answer', 'ideal_answer', 'hint_sections', 'guidelines', 'teaching_note', 'title', 'diagram_spec', 'modality', 'diagram_role']}
     }
     if mode_norm == "scaffold":
         if 'hint_sections' in item: question['hint_sections'] = item['hint_sections']

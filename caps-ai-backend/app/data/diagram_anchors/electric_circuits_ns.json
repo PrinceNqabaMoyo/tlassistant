@@ -1,0 +1,79 @@
+{
+  "master": "electric_circuits_ns",
+  "view": "series_and_parallel_circuit_schematic",
+  "viewBox": "0 0 600 480",
+  "anchors": {
+    "chemical_cells": {
+      "name": "Chemical Battery (Cells in Series)",
+      "synonyms": ["battery", "cell", "power source", "emf source"],
+      "anchor": [300, 75],
+      "default_box": [60, 90],
+      "side": "left",
+      "grades": ["g8", "g9"],
+      "description": "Source of electromotive force (EMF); converts chemical potential energy into electrical energy to establish an electric potential gradient."
+    },
+    "switch_component": {
+      "name": "Control Switch",
+      "synonyms": ["switch", "knife switch", "key switch", "circuit breaker"],
+      "anchor": [180, 75],
+      "default_box": [60, 170],
+      "side": "left",
+      "grades": ["g8", "g9"],
+      "description": "Mechanical device used to close (complete) or open (break) the conducting loop, starting or halting the flow of charge."
+    },
+    "ammeter_series": {
+      "name": "Ammeter (Series Connection)",
+      "synonyms": ["ammeter", "current meter", "series ammeter"],
+      "anchor": [120, 240],
+      "default_box": [60, 260],
+      "side": "left",
+      "grades": ["g8", "g9"],
+      "description": "Instrument possessing near-zero internal resistance connected strictly in series to measure the rate of charge flow (current in Amperes)."
+    },
+    "junction_node_left": {
+      "name": "Branching Junction Node",
+      "synonyms": ["junction", "node", "branch point"],
+      "anchor": [200, 255],
+      "default_box": [60, 350],
+      "side": "left",
+      "grades": ["g8", "g9"],
+      "description": "Parallel division point where incoming total current splits into multiple independent path currents according to Kirchhoff's current law."
+    },
+    "load_resistor_1": {
+      "name": "Resistor 1 (Branch 1)",
+      "synonyms": ["resistor 1", "resistor", "load resistor 1", "fixed resistor 1", "parallel branch 1"],
+      "anchor": [300, 200],
+      "default_box": [540, 90],
+      "side": "right",
+      "grades": ["g8", "g9"],
+      "description": "First resistive load component; converts electrical energy into thermal energy, presenting a fixed electrical resistance (R₁) to charge flow."
+    },
+    "load_resistor_2": {
+      "name": "Resistor 2 (Branch 2)",
+      "synonyms": ["resistor 2", "resistor", "load resistor 2", "fixed resistor 2", "parallel branch 2"],
+      "anchor": [300, 310],
+      "default_box": [540, 170],
+      "side": "right",
+      "grades": ["g8", "g9"],
+      "description": "Second resistive load component connected across identical potential difference; presents fixed electrical resistance (R₂) allowing independent branch current."
+    },
+    "voltmeter_parallel": {
+      "name": "Voltmeter (Parallel Connection)",
+      "synonyms": ["voltmeter", "potential meter", "parallel voltmeter"],
+      "anchor": [300, 395],
+      "default_box": [540, 260],
+      "side": "right",
+      "grades": ["g8", "g9"],
+      "description": "Instrument possessing exceptionally high internal resistance connected across a component in parallel to measure potential difference in Volts."
+    },
+    "conducting_wires": {
+      "name": "Conducting Wires (Copper)",
+      "synonyms": ["wire", "conducting wire", "leads", "copper wire"],
+      "anchor": [480, 240],
+      "default_box": [540, 350],
+      "side": "right",
+      "grades": ["g8", "g9"],
+      "description": "Low-resistance metal pathways containing delocalized conduction electrons that drift through the lattice to transfer electrical energy."
+    }
+  }
+}

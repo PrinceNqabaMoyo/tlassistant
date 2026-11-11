@@ -141,7 +141,11 @@ def _subskill_compound_solve_n(rng: random.Random, difficulty: str, qtype: str) 
     )
 
     correct = f"{n:.2f}"
-    explanation = "Use A = P(1+i)^n. Then n = log(A/P) / log(1+i)."
+    explanation = (
+        f"Step 1: Write down the compound interest formula: A = P(1 + i)^n.\n"
+        f"Step 2: Substitute values: {_fmt_money(A)} = {_fmt_money(P)}(1 + {i})^n.\n"
+        f"Step 3: Solve for n using logarithms: n = log(A / P) / log(1 + i) = {correct} years."
+    )
 
     if qtype == "mcq":
         candidates = [f"{(n + 1):.2f}", f"{(n - 1):.2f}", f"{(math.log(A / P) / (1 + i)):.2f}"]
@@ -224,7 +228,11 @@ def _subskill_nominal_effective_convert(rng: random.Random, difficulty: str, qty
     )
 
     correct = f"{i_eff * 100:.2f}%"
-    explanation = "Use 1+i = (1 + i^(m)/m)^m. Then i = (1 + i^(m)/m)^m - 1."
+    explanation = (
+        f"Step 1: Use the nominal to effective rate formula: 1 + i_eff = (1 + i_nom / m)^m.\n"
+        f"Step 2: Substitute nominal rate {_pct(i_nom)} and compounding periods m = {m}: 1 + i_eff = (1 + {i_nom} / {m})^{m}.\n"
+        f"Step 3: Solve for effective annual rate: i_eff = {correct}."
+    )
 
     if qtype == "mcq":
         candidates = [
@@ -277,7 +285,11 @@ def _subskill_future_value_annuity(rng: random.Random, difficulty: str, qtype: s
     )
 
     correct = _fmt_money(F)
-    explanation = "Use F = x((1+i)^n - 1)/i (future value of an annuity-immediate)."
+    explanation = (
+        f"Step 1: Use the future value annuity formula: F = x[((1 + i)^n - 1) / i].\n"
+        f"Step 2: Substitute deposit x = {_fmt_money(x)}, interest rate i = {i}, and n = {n} periods.\n"
+        f"Step 3: Calculate: F = {_fmt_money(x)} * [((1 + {i})^{n} - 1) / {i}] = {correct}."
+    )
 
     if qtype == "mcq":
         candidates = [
@@ -330,7 +342,12 @@ def _subskill_payment_from_future_value(rng: random.Random, difficulty: str, qty
     )
 
     correct = _fmt_money(x)
-    explanation = "Use x = Fi / ((1+i)^n - 1)."
+    explanation = (
+        f"Step 1: Write down the future value annuity formula: F = x[((1 + i)^n - 1) / i].\n"
+        f"Step 2: Rearrange to solve for payment x: x = (F * i) / [((1 + i)^n - 1)].\n"
+        f"Step 3: Substitute F = {_fmt_money(F)}, i = {i}, and n = {n}:\n"
+        f"       x = ({_fmt_money(F)} * {i}) / [((1 + {i})^{n} - 1)] = {correct}."
+    )
 
     if qtype == "mcq":
         candidates = [

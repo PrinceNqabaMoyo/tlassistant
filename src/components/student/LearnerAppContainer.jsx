@@ -18,6 +18,7 @@ import ErrorBoundary from '../ui/ErrorBoundary';
 import { getAuthenticDiagnosticQuestion } from '../../data/authenticDiagnosticBank';
 import OfflineStudyPackModal from './OfflineStudyPackModal';
 import offlineStorageService from '../../services/offlineStorageService';
+import { gradeSemanticOffline, flushOfflineSemanticQueue } from '../../utils/offlineSemanticGrader';
 
 /**
  * LearnerAppContainer
@@ -91,6 +92,17 @@ export default function LearnerAppContainer({
       offlineStorageService.flushOfflineQueue().then(res => {
         if (res?.synced > 0) {
           console.log(`[OfflineSync] Synced ${res.synced} offline attempts.`);
+        }
+      });
+      flushOfflineSemanticQueue(buildApiUrl(''), (entry, llmRes) => {
+        if (llmRes && typeof llmRes.score === 'number' && llmRes.score > (entry.provisionalScore || 0)) {
+          const delta = llmRes.score - (entry.provisionalScore || 0);
+          studentStore.recordAttempt(activeTab, {
+            isCorrect: Boolean(llmRes.is_correct),
+            score: delta,
+            totalMarks: llmRes.max_score || entry.question?.marks || 4,
+            xp: 15,
+          });
         }
       });
     };
@@ -190,7 +202,31 @@ export default function LearnerAppContainer({
     };
   }, [activeTab, handleSelectTab]);
 
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      window.__FUNDILE_LOAD_QUESTION__ = (q, topicName) => {
+        if (topicName) {
+          lastFetchedKeyRef.current = '__LOADED_VIA_TEST_HOOK__';
+          setActiveTopic(topicName);
+        } else {
+          lastFetchedKeyRef.current = '__LOADED_VIA_TEST_HOOK__';
+        }
+        setQuestion(q);
+        setResult(null);
+        setIsGenerating(false);
+      };
+      window.__FUNDILE_SELECT_TAB__ = handleSelectTab;
+    }
+    return () => {
+      if (typeof window !== 'undefined') {
+        delete window.__FUNDILE_LOAD_QUESTION__;
+        delete window.__FUNDILE_SELECT_TAB__;
+      }
+    };
+  }, [activeTab, currentGrade, handleSelectTab]);
+
   const generateLocalFallback = useCallback((subjectId, topicName) => {
+    if (lastFetchedKeyRef.current === '__LOADED_VIA_TEST_HOOK__') return;
     const q = getAuthenticDiagnosticQuestion(subjectId);
     setQuestion({ ...q });
   }, []);
@@ -198,9 +234,16 @@ export default function LearnerAppContainer({
   const lastFetchedKeyRef = useRef('');
 
   // Fetch / Generate a real question from caps-ai-backend or offline pack
-  const fetchQuestion = useCallback(async (subjectId, topicName, force = false) => {
-    const key = `${subjectId}:${topicName || ''}:${currentGrade}`;
-    if (!force && lastFetchedKeyRef.current === key) {
+  const fetchQuestion = useCallback(async (subjectId, topicName, force = false, options = {}) => {
+    const subDataNow = studentStore.getSubject(subjectId);
+    const resolvedStage = options.stage || (
+      subDataNow.status === 'diagnostic_required' ? 'diagnostic' :
+      subDataNow.status === 'exam_ready' ? 'assessment' :
+      subDataNow.status === 'practice' ? 'practice' : 'scaffold'
+    );
+    const resolvedDiagStep = options.diagnosticStep || 1;
+    const key = `${subjectId}:${topicName || ''}:${currentGrade}:${resolvedStage}:${resolvedDiagStep}`;
+    if (!force && (lastFetchedKeyRef.current === key || lastFetchedKeyRef.current === '__LOADED_VIA_TEST_HOOK__')) {
       return;
     }
     lastFetchedKeyRef.current = key;
@@ -229,9 +272,14 @@ export default function LearnerAppContainer({
     const timeoutId = setTimeout(() => controller.abort(), 15000);
 
     try {
-      const url = buildApiUrl(`/api/generate?subject=${encodeURIComponent(subjectId)}&grade=${currentGrade}&topic=${encodeURIComponent(topicName || '')}&seed=${Date.now()}`);
+      const url = buildApiUrl(
+        `/api/generate?subject=${encodeURIComponent(subjectId)}&grade=${currentGrade}&topic=${encodeURIComponent(topicName || '')}&stage=${encodeURIComponent(resolvedStage)}&diagnostic_step=${encodeURIComponent(resolvedDiagStep)}&seed=${Date.now()}`
+      );
       const res = await fetch(url, { signal: controller.signal });
       if (res.ok) {
+        if (lastFetchedKeyRef.current === '__LOADED_VIA_TEST_HOOK__') {
+          return;
+        }
         const data = await res.json();
         const extracted = Array.isArray(data?.questions) && data.questions.length > 0 
           ? data.questions[0] 
@@ -239,6 +287,9 @@ export default function LearnerAppContainer({
         setQuestion(extracted);
         setIsOfflineWorkspace(false);
       } else {
+        if (lastFetchedKeyRef.current === '__LOADED_VIA_TEST_HOOK__') {
+          return;
+        }
         // Network non-OK: attempt offline pack before generic fallback
         const offlineQ = await offlineStorageService.getNextOfflineQuestion(subjectId, currentGrade, 1);
         if (offlineQ) {
@@ -278,8 +329,8 @@ export default function LearnerAppContainer({
     fetchQuestion(activeTab, newTopic, true);
   }, [activeTab, activeReelSubjectId, fetchQuestion]);
 
-  const handleNextQuestion = useCallback(() => {
-    fetchQuestion(activeTab, activeTopic, true);
+  const handleNextQuestion = useCallback((nextOptions = {}) => {
+    fetchQuestion(activeTab, activeTopic, true, nextOptions);
   }, [activeTab, activeTopic, fetchQuestion]);
 
   // Jump from Today's Desk directly into a specific assignment
@@ -322,12 +373,12 @@ export default function LearnerAppContainer({
   // Handle starting adaptive prerequisite micro-drill
   const handleStartMicroDrill = useCallback((banner) => {
     if (!banner) return;
-    const microTopic = banner.target_topic || 'Foundational Micro-Drill';
+    const microTopic = banner.target_topic || activeTopic || 'Foundational Micro-Drill';
     setActiveTopic(microTopic);
     setPrerequisiteBanner(null);
     setConsecutiveErrors(0);
-    fetchQuestion(activeTab, microTopic, true);
-  }, [activeTab, fetchQuestion]);
+    fetchQuestion(activeTab, microTopic, true, { stage: 'micro_drill' });
+  }, [activeTab, activeTopic, fetchQuestion]);
 
   // Handle checking answers
   const handleCheckAnswer = async (userAnswer) => {
@@ -349,26 +400,38 @@ export default function LearnerAppContainer({
       if (res.ok) {
         const markResult = await res.json();
         setResult(markResult);
-        const isPass = (markResult?.score ?? markResult?.percentage ?? 100) >= 50;
-        studentStore.recordAttempt(activeTab, {
-          isCorrect: isPass,
-          score: markResult?.score || question?.marks || 5,
-          totalMarks: markResult?.total || question?.marks || 5,
-          xp: isPass ? 35 : 10,
-        });
+        const maxMarks = markResult?.max_score ?? markResult?.total ?? question?.marks ?? 5;
+        const rawScore = typeof markResult?.score === 'number' ? markResult.score : 0;
+        const pct = typeof markResult?.percentage === 'number'
+          ? Math.round(markResult.percentage)
+          : (maxMarks > 0 ? Math.round((rawScore / maxMarks) * 100) : 0);
+        const isPass = Boolean(markResult?.is_correct) || pct >= 50;
+
+        const currentSubState = studentStore.getSubject(activeTab);
+        const inDiagnostic = currentSubState.status === 'diagnostic_required' && (currentSubState.questionsAttempted || 0) === 0;
+
+        if (!inDiagnostic) {
+          studentStore.recordAttempt(activeTab, {
+            isCorrect: isPass,
+            score: rawScore,
+            totalMarks: maxMarks,
+            xp: isPass ? 35 : 10,
+            misconceptionTag: markResult?.misconception_tag || null,
+          });
+        }
 
         if (isPass) {
           setConsecutiveErrors(0);
           setPrerequisiteBanner(null);
-        } else {
+        } else if (!inDiagnostic) {
           setConsecutiveErrors((prev) => {
             const next = prev + 1;
             if (next >= 2) {
               setPrerequisiteBanner({
-                target_grade: Math.max(8, currentGrade - 2),
-                target_topic: activeTab === 'mathematics' ? 'Factorising Trinomials & HCF' : 'VAT Net vs Gross Calculations',
-                target_subskill: activeTab === 'mathematics' ? 'common_factor_extraction' : 'net_vs_gross_calculation',
-                explanation: `Repeated difficulty detected in ${activeTopic || 'current topic'}. A 5-minute foundational micro-drill in Grade ${Math.max(8, currentGrade - 2)} is recommended to rebuild the prerequisite schema.`,
+                target_grade: Math.max(7, currentGrade - 1),
+                target_topic: activeTopic || (activeTab === 'mathematics' ? 'Factorising Trinomials & HCF' : 'VAT Net vs Gross Calculations'),
+                target_subskill: question?.subskill || (activeTab === 'mathematics' ? 'common_factor_extraction' : 'net_vs_gross_calculation'),
+                explanation: `Repeated difficulty detected in ${activeTopic || 'current topic'}. A 5-minute foundational micro-drill in Grade ${Math.max(7, currentGrade - 1)} is recommended to rebuild the prerequisite schema.`,
               });
             }
             return next;
@@ -411,17 +474,28 @@ export default function LearnerAppContainer({
       const totalMarks = question?.marks || question?.marking_schema?.total_marks || 5;
       let earnedScore = 0;
 
-      if (question?.correct_index !== undefined) {
+      if (question?.correct_index !== undefined && Array.isArray(question?.options) && question.options.length > 0) {
         isCorrect = Number(userAnswer) === Number(question.correct_index);
         earnedScore = isCorrect ? totalMarks : 0;
-      } else if (question?.correct_answer) {
+      } else if (
+        question?.modality === 'rubric' ||
+        question?.modality === 'semantic' ||
+        question?.solution_type === 'marking_points' ||
+        question?.marking_schema?.marking_points ||
+        question?.key_concepts
+      ) {
+        const semOffline = gradeSemanticOffline(question, userAnswer);
+        isCorrect = Boolean(semOffline.is_correct);
+        earnedScore = semOffline.score;
+      } else if (question?.correct_answer || question?.expected_answer) {
         const uStr = String(userAnswer || '').trim().toLowerCase();
-        const cStr = String(question.correct_answer || '').trim().toLowerCase();
+        const cStr = String(question.correct_answer || question.expected_answer || '').trim().toLowerCase();
         isCorrect = uStr.length > 0 && (uStr === cStr || cStr.includes(uStr));
         earnedScore = isCorrect ? totalMarks : 0;
       } else {
-        isCorrect = String(userAnswer || '').trim().length > 10;
-        earnedScore = isCorrect ? Math.round(totalMarks * 0.7) : 0;
+        const semOffline = gradeSemanticOffline(question, userAnswer);
+        isCorrect = Boolean(semOffline.is_correct);
+        earnedScore = semOffline.score;
       }
 
       const offlineResult = {
@@ -563,7 +637,7 @@ export default function LearnerAppContainer({
               isGenerating={isGenerating}
               isChecking={isChecking}
               onCheck={handleCheckAnswer}
-              onNext={() => fetchQuestion(activeTab, activeTopic, true)}
+              onNext={handleNextQuestion}
               onSelectTopic={handleSelectTopic}
               onStartMicroDrill={handleStartMicroDrill}
               prerequisiteBanner={prerequisiteBanner}
@@ -599,6 +673,8 @@ export default function LearnerAppContainer({
     },
     onCheckAnswer: handleCheckAnswer,
     onNextQuestion: handleNextQuestion,
+    onStartMicroDrill: handleStartMicroDrill,
+    prerequisiteBanner,
     result,
     onOpenProfilePhoto: () => {
       navigationHistoryService.pushModal('profilePhoto');

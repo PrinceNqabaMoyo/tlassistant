@@ -68,7 +68,7 @@ def _concept_pool(r: random.Random) -> List[Dict[str, Any]]:
         }, subskill='concepts', learning_objective_id=LO_TOOLS, question_family_id='gantt_chart_definition', concept_id='gantt_chart', concept_group='tools', misconception_tags=['confuses_gantt_with_wbs'], diagnostic_tags=['definition', 'tools']),
         with_metadata({
             'title': 'Work breakdown structure',
-            'prompt': 'A tool that divides the business plan into smaller project stages and shows exactly what must be done is a …',
+            'prompt': 'A tool that divides overall project work into smaller stages and shows exactly what must be done is a …',
             'options': ['timeline', 'work breakdown structure (WBS)', 'Gantt chart', 'budget'],
             'correct_index': 1,
             'explanation': 'A work breakdown structure (WBS) divides the business plan into smaller project stages and shows exactly what must be done.',

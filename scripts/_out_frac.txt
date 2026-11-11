@@ -1,0 +1,5 @@
+﻿'\\\\frac{R\\_x}' 1
+'\\\\frac{R\\_y}' 1
+---- samples ----
+01. Vectors in two dimensi   '\\\\frac{R\\_x}{R}$$$$R\\_x = R \\\\cos(\\\\theta)$$'
+01. Vectors in two dimensi   '\\\\frac{R\\_y}{R}$$$$R\\_y = R \\\\sin(\\\\theta)$$'

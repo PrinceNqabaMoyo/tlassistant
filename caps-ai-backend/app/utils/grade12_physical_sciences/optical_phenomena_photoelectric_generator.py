@@ -33,7 +33,7 @@ def _fmt_sa(val: float | int, places: int = 2) -> str:
     if isinstance(val, int) or (isinstance(val, float) and val.is_integer()):
         return str(int(val))
     s = f"{val:.{places}f}".rstrip("0").rstrip(".")
-    return s.replace(".", "{{,}}")
+    return s.replace(".", "{,}")
 
 
 METALS_DATA = [

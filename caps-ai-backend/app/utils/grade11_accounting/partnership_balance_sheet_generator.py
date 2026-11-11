@@ -1273,10 +1273,10 @@ def generate_questions(
 
     out: List[Dict[str, Any]] = []
     for _ in range(n):
-        q = r.choice(builders)()
-        if qtype_norm != "mixed" and str(q.get("question_type") or "").strip().lower() != qtype_norm:
-            # If filtered to a type that doesn't match, just ignore filter (most are journals anyway).
-            pass
+        idx = r.randrange(len(builders))
+        q = builders[idx]()
+        if not q.get("subskill"):
+            q["subskill"] = q.get("archetype_key") or f"partnership_bs_subskill_{idx}"
         out.append(q)
 
     return out

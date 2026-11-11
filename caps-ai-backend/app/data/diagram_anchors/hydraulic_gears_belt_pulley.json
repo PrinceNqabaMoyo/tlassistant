@@ -1,0 +1,168 @@
+{
+  "diagram": "hydraulic_gears_belt_pulley",
+  "view": "textbook",
+  "viewBox": "0 0 600 480",
+  "anchors": {
+    "driver_belt_pulley": {
+      "name": "Small Driver Pulley (High Angular Velocity ω₁)",
+      "anchor": [
+        98,
+        122
+      ],
+      "default_box": [
+        60,
+        75
+      ],
+      "side": "left",
+      "grades": [
+        "g9",
+        "g10",
+        "g11"
+      ],
+      "acceptable": [
+        "Driver pulley",
+        "Small pulley",
+        "Input pulley"
+      ],
+      "description": "Smaller pulley of radius r₁ rotating at higher angular speed ω₁ while sharing tangential belt speed v = r₁ω₁ = r₂ω₂."
+    },
+    "drive_belt": {
+      "name": "Endless Transmission Belt",
+      "anchor": [
+        155,
+        84
+      ],
+      "default_box": [
+        60,
+        165
+      ],
+      "side": "left",
+      "grades": [
+        "g10",
+        "g11"
+      ],
+      "acceptable": [
+        "Transmission belt",
+        "Drive belt",
+        "Pulley belt",
+        "V-belt"
+      ],
+      "description": "Taut flexible belt connecting the two pulleys so that both rims travel with equal linear tangential speed v."
+    },
+    "driven_belt_pulley": {
+      "name": "Large Driven Pulley (Radius r₂)",
+      "anchor": [
+        218,
+        122
+      ],
+      "default_box": [
+        60,
+        250
+      ],
+      "side": "left",
+      "grades": [
+        "g9",
+        "g10",
+        "g11"
+      ],
+      "acceptable": [
+        "Driven pulley",
+        "Large pulley",
+        "Output pulley"
+      ],
+      "description": "Larger pulley of radius r₂ that rotates at lower angular velocity ω₂ but delivers increased torque."
+    },
+    "meshing_spur_gears": {
+      "name": "Meshing Spur Gear Train (Pinion & Gear)",
+      "anchor": [
+        145,
+        336
+      ],
+      "default_box": [
+        60,
+        365
+      ],
+      "side": "left",
+      "grades": [
+        "g9",
+        "g10",
+        "g11"
+      ],
+      "acceptable": [
+        "Spur gears",
+        "Gear train",
+        "Pinion gear",
+        "Meshing gears"
+      ],
+      "description": "Interlocking toothed gears that reverse rotational direction and transmit angular motion according to N₁ω₁ = N₂ω₂."
+    },
+    "input_master_piston": {
+      "name": "Small Input Piston (Master Cylinder, Area A₁)",
+      "anchor": [
+        350,
+        224
+      ],
+      "default_box": [
+        540,
+        110
+      ],
+      "side": "right",
+      "grades": [
+        "g9",
+        "g11"
+      ],
+      "acceptable": [
+        "Input piston",
+        "Small piston",
+        "Master piston",
+        "Effort piston"
+      ],
+      "description": "Small cross-sectional area piston where an input effort force F₁ creates fluid pressure P = F₁ / A₁."
+    },
+    "output_slave_piston": {
+      "name": "Large Output Piston & Load (Slave Cylinder, Area A₂)",
+      "anchor": [
+        485,
+        240
+      ],
+      "default_box": [
+        540,
+        235
+      ],
+      "side": "right",
+      "grades": [
+        "g9",
+        "g11"
+      ],
+      "acceptable": [
+        "Output piston",
+        "Large piston",
+        "Slave piston",
+        "Load piston"
+      ],
+      "description": "Large cross-sectional area piston that multiplies upward output force F₂ = F₁(A₂ / A₁) to lift heavy loads."
+    },
+    "incompressible_hydraulic_fluid": {
+      "name": "Incompressible Hydraulic Fluid (Pascal's Principle)",
+      "anchor": [
+        485,
+        345
+      ],
+      "default_box": [
+        540,
+        365
+      ],
+      "side": "right",
+      "grades": [
+        "g9",
+        "g11"
+      ],
+      "acceptable": [
+        "Hydraulic fluid",
+        "Incompressible liquid",
+        "Hydraulic oil"
+      ],
+      "description": "Enclosed incompressible liquid that transmits applied pressure equally in all directions throughout the system."
+    }
+  }
+}

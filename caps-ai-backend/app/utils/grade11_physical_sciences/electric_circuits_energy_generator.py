@@ -78,8 +78,33 @@ def _build_network_drill(r: random.Random) -> Dict[str, Any]:
         "id": f"g11_ps_circ_net_{r.randint(10000, 99999)}",
         "type": "compound",
         "prompt": prompt,
-        "correct_answer": f"Rp={rp} Ohm, Rtot={r_tot} Ohm, Itot={_fmt_sa(total_current)} A, Vp={_fmt_sa(v_parallel)} V",
-        "worked_solution": sol,
+        "modality": "circuit",
+        "diagram_spec": {
+            "diagram_role": "context",
+            "kind": "circuit_diagram",
+            "voltage": v_total,
+            "rs": rs, "r1": r1, "r2": r2,
+        },
+        "circuit_spec": {
+            "type": "parallel",
+            "voltage": v_total,
+            "components": [
+                {"type": "battery", "voltage": v_total, "label": f"{_fmt_sa(v_total)} V"},
+                {"type": "switch", "state": "closed"},
+                {"type": "ammeter", "label": "A", "reading": total_current},
+                {"type": "resistor", "id": "Rs", "resistance": rs, "label": f"Rs ({rs} Ω)"},
+                {"type": "resistor", "id": "R1", "resistance": r1, "label": f"R₁ ({r1} Ω)"},
+                {"type": "resistor", "id": "R2", "resistance": r2, "label": f"R₂ ({r2} Ω)"}
+            ]
+        },
+        "sub_parts": [
+            {"id": "part_1", "label": "1. Parallel equivalent resistance (Rp)", "marks": 2, "expected_answer": f"{rp}"},
+            {"id": "part_2", "label": "2. Total equivalent resistance (Rtot)", "marks": 1, "expected_answer": f"{r_tot}"},
+            {"id": "part_3", "label": "3. Total circuit current (Itot)", "marks": 1, "expected_answer": f"{_fmt_sa(total_current)}"},
+            {"id": "part_4", "label": "4. Potential difference across parallel (Vp)", "marks": 1, "expected_answer": f"{_fmt_sa(v_parallel)}"},
+            {"id": "part_5", "label": "5. Current through R1 (I1)", "marks": 2, "expected_answer": f"{_fmt_sa(i_branch1)}"}
+        ],
+        "expected_answer": f"Rp={rp} Ohm, Rtot={r_tot} Ohm, Itot={_fmt_sa(total_current)} A, Vp={_fmt_sa(v_parallel)} V",
         "marking_schema": {
             "total_marks": 7,
             "marking_points": [

@@ -1,173 +1,250 @@
-"""Grade 8 Mathematics — Integers & Order of Operations (Deterministic 6-Pillar Generator).
-Authentic CAPS exam generator covering:
-- Addition and subtraction of signed integers with double negatives: a - (-b) = a + b.
-- Multiplication and division of integers (rules of signs).
-- Combined multi-operation expressions respecting BODMAS with powers: (-a)^2 vs -a^2.
-- Real-world applications (temperature variations, bank overdrafts, elevation).
-Zero-Meta-Curriculum Invariant strictly enforced.
+"""
+Grade 8 Mathematics - Integers Generator (50 Semantic Archetypes).
+100% CAPS-aligned deterministic question generator.
+Adheres strictly to the 6-Pillar Generator Contract and Zero-Meta-Curriculum Invariant.
+Grounded in curriculum_docs_auto/Mathematics_Gr8/Term 1/02. Integers.md.
 """
 from __future__ import annotations
-
 import random
-from typing import Any, Dict, List, Optional
+from typing import Any, Callable, Dict, List, Optional
+
+from .integers_archetypes_01_25 import (
+    arch_01_reading_winter_thermometer_subzero,
+    arch_02_temperature_rise_through_zero,
+    arch_03_temperature_drop_through_zero,
+    arch_04_diurnal_temperature_range_calculation,
+    arch_05_bank_overdraft_after_withdrawal,
+    arch_06_deposit_clearing_partial_debt,
+    arch_07_business_net_profit_and_loss_period,
+    arch_08_mine_shaft_elevation_below_surface,
+    arch_09_diver_depth_and_ascent,
+    arch_10_number_line_missing_integers,
+    arch_11_ordering_five_integers_ascending,
+    arch_12_ordering_five_integers_descending,
+    arch_13_comparing_integers_inequality_symbols,
+    arch_14_absolute_value_and_distance_from_zero,
+    arch_15_opposite_integers_reflection,
+    arch_16_midpoint_between_positive_and_negative_integer,
+    arch_17_consecutive_negative_integers,
+    arch_18_number_line_vector_jump_addition,
+    arch_19_number_line_vector_jump_subtraction,
+    arch_20_rational_and_integer_classification,
+    arch_21_addition_of_two_negative_integers,
+    arch_22_addition_of_positive_and_negative_integer,
+    arch_23_subtraction_of_positive_from_smaller_positive,
+    arch_24_subtraction_of_positive_from_negative,
+    arch_25_subtraction_of_negative_double_negative_rule,
+)
+
+from .integers_archetypes_26_50 import (
+    arch_26_subtraction_of_negative_from_negative,
+    arch_27_additive_inverse_zero_sum_property,
+    arch_28_multi_term_addition_subtraction_chain,
+    arch_29_multiplication_positive_by_negative,
+    arch_30_multiplication_negative_by_negative,
+    arch_31_product_of_three_signed_integers,
+    arch_32_product_of_four_signed_integers,
+    arch_33_division_negative_by_positive,
+    arch_34_division_positive_by_negative,
+    arch_35_division_negative_by_negative,
+    arch_36_combined_multiplication_and_division,
+    arch_37_square_of_negative_integer_in_parentheses,
+    arch_38_square_of_negative_integer_without_parentheses,
+    arch_39_cube_of_negative_integer,
+    arch_40_fourth_power_of_negative_integer,
+    arch_41_cube_root_of_negative_integer,
+    arch_42_square_root_of_negative_non_real_drill,
+    arch_43_sum_of_squares_and_cubes_with_negative_bases,
+    arch_44_difference_of_powers_with_negative_bases,
+    arch_45_bodmas_with_brackets_and_powers,
+    arch_46_bodmas_nested_brackets_and_fractions,
+    arch_47_distributive_property_over_negative_addition,
+    arch_48_solving_one_step_equation_with_negative_integers,
+    arch_49_solving_two_step_equation_with_negative_integers,
+    arch_50_two_step_equation_with_brackets_and_negatives,
+)
+
+BUILDERS: List[Callable[[random.Random], Dict[str, Any]]] = [
+    # 01 - 10
+    arch_01_reading_winter_thermometer_subzero,
+    arch_02_temperature_rise_through_zero,
+    arch_03_temperature_drop_through_zero,
+    arch_04_diurnal_temperature_range_calculation,
+    arch_05_bank_overdraft_after_withdrawal,
+    arch_06_deposit_clearing_partial_debt,
+    arch_07_business_net_profit_and_loss_period,
+    arch_08_mine_shaft_elevation_below_surface,
+    arch_09_diver_depth_and_ascent,
+    arch_10_number_line_missing_integers,
+    # 11 - 20
+    arch_11_ordering_five_integers_ascending,
+    arch_12_ordering_five_integers_descending,
+    arch_13_comparing_integers_inequality_symbols,
+    arch_14_absolute_value_and_distance_from_zero,
+    arch_15_opposite_integers_reflection,
+    arch_16_midpoint_between_positive_and_negative_integer,
+    arch_17_consecutive_negative_integers,
+    arch_18_number_line_vector_jump_addition,
+    arch_19_number_line_vector_jump_subtraction,
+    arch_20_rational_and_integer_classification,
+    # 21 - 28
+    arch_21_addition_of_two_negative_integers,
+    arch_22_addition_of_positive_and_negative_integer,
+    arch_23_subtraction_of_positive_from_smaller_positive,
+    arch_24_subtraction_of_positive_from_negative,
+    arch_25_subtraction_of_negative_double_negative_rule,
+    arch_26_subtraction_of_negative_from_negative,
+    arch_27_additive_inverse_zero_sum_property,
+    arch_28_multi_term_addition_subtraction_chain,
+    # 29 - 36
+    arch_29_multiplication_positive_by_negative,
+    arch_30_multiplication_negative_by_negative,
+    arch_31_product_of_three_signed_integers,
+    arch_32_product_of_four_signed_integers,
+    arch_33_division_negative_by_positive,
+    arch_34_division_positive_by_negative,
+    arch_35_division_negative_by_negative,
+    arch_36_combined_multiplication_and_division,
+    # 37 - 44
+    arch_37_square_of_negative_integer_in_parentheses,
+    arch_38_square_of_negative_integer_without_parentheses,
+    arch_39_cube_of_negative_integer,
+    arch_40_fourth_power_of_negative_integer,
+    arch_41_cube_root_of_negative_integer,
+    arch_42_square_root_of_negative_non_real_drill,
+    arch_43_sum_of_squares_and_cubes_with_negative_bases,
+    arch_44_difference_of_powers_with_negative_bases,
+    # 45 - 50
+    arch_45_bodmas_with_brackets_and_powers,
+    arch_46_bodmas_nested_brackets_and_fractions,
+    arch_47_distributive_property_over_negative_addition,
+    arch_48_solving_one_step_equation_with_negative_integers,
+    arch_49_solving_two_step_equation_with_negative_integers,
+    arch_50_two_step_equation_with_brackets_and_negatives,
+]
+
+SUBSKILLS: List[str] = [
+    # 01 - 10
+    "01_reading_winter_thermometer_subzero",
+    "02_temperature_rise_through_zero",
+    "03_temperature_drop_through_zero",
+    "04_diurnal_temperature_range_calculation",
+    "05_bank_overdraft_after_withdrawal",
+    "06_deposit_clearing_partial_debt",
+    "07_business_net_profit_and_loss_period",
+    "08_mine_shaft_elevation_below_surface",
+    "09_diver_depth_and_ascent",
+    "10_number_line_missing_integers",
+    # 11 - 20
+    "11_ordering_five_integers_ascending",
+    "12_ordering_five_integers_descending",
+    "13_comparing_integers_inequality_symbols",
+    "14_absolute_value_and_distance_from_zero",
+    "15_opposite_integers_reflection",
+    "16_midpoint_between_positive_and_negative_integer",
+    "17_consecutive_negative_integers",
+    "18_number_line_vector_jump_addition",
+    "19_number_line_vector_jump_subtraction",
+    "20_rational_and_integer_classification",
+    # 21 - 28
+    "21_addition_of_two_negative_integers",
+    "22_addition_of_positive_and_negative_integer",
+    "23_subtraction_of_positive_from_smaller_positive",
+    "24_subtraction_of_positive_from_negative",
+    "25_subtraction_of_negative_double_negative_rule",
+    "26_subtraction_of_negative_from_negative",
+    "27_additive_inverse_zero_sum_property",
+    "28_multi_term_addition_subtraction_chain",
+    # 29 - 36
+    "29_multiplication_positive_by_negative",
+    "30_multiplication_negative_by_negative",
+    "31_product_of_three_signed_integers",
+    "32_product_of_four_signed_integers",
+    "33_division_negative_by_positive",
+    "34_division_positive_by_negative",
+    "35_division_negative_by_negative",
+    "36_combined_multiplication_and_division",
+    # 37 - 44
+    "37_square_of_negative_integer_in_parentheses",
+    "38_square_of_negative_integer_without_parentheses",
+    "39_cube_of_negative_integer",
+    "40_fourth_power_of_negative_integer",
+    "41_cube_root_of_negative_integer",
+    "42_square_root_of_negative_non_real_drill",
+    "43_sum_of_squares_and_cubes_with_negative_bases",
+    "44_difference_of_powers_with_negative_bases",
+    # 45 - 50
+    "45_bodmas_with_brackets_and_powers",
+    "46_bodmas_nested_brackets_and_fractions",
+    "47_distributive_property_over_negative_addition",
+    "48_solving_one_step_equation_with_negative_integers",
+    "49_solving_two_step_equation_with_negative_integers",
+    "50_two_step_equation_with_brackets_and_negatives",
+]
+
+DISPATCH_TABLE: Dict[Any, Callable[[random.Random], Dict[str, Any]]] = {
+    s: b for s, b in zip(SUBSKILLS, BUILDERS)
+}
+
+# 1-based index aliases
+for idx, b in enumerate(BUILDERS, 1):
+    DISPATCH_TABLE[idx] = b
+    DISPATCH_TABLE[f"{idx:02d}"] = b
+
+# Backward compatibility aliases for legacy subskill names
+DISPATCH_TABLE["integers_bodmas_and_powers"] = arch_45_bodmas_with_brackets_and_powers
+DISPATCH_TABLE["real_world_temperature_context"] = arch_01_reading_winter_thermometer_subzero
+DISPATCH_TABLE["bank_overdraft_balance"] = arch_05_bank_overdraft_after_withdrawal
+DISPATCH_TABLE["elevation_depth_context"] = arch_08_mine_shaft_elevation_below_surface
+DISPATCH_TABLE["powers_negative_bases_comparison"] = arch_37_square_of_negative_integer_in_parentheses
 
 
-def _rng(seed: Optional[int] = None) -> random.Random:
-    r = random.Random()
-    if seed is not None:
-        r.seed(int(seed))
-    return r
+def get_subskills() -> List[str]:
+    return list(SUBSKILLS)
 
 
-TOPIC = "grade8_math_integers"
-LO = "g8_math_integers"
+def generate(
+    count: int = 1,
+    seed: Optional[int] = None,
+    difficulty: str = "medium",
+    mode: str = "compound",
+    subskill: Optional[str] = None,
+    archetype_index: Optional[int] = None,
+    **kwargs
+) -> List[Dict[str, Any]]:
+    rng = random.Random(seed) if seed is not None else random.Random()
+    questions: List[Dict[str, Any]] = []
 
+    for _ in range(count):
+        builder: Optional[Callable[[random.Random], Dict[str, Any]]] = None
 
-def generate_bodmas_integers(r: random.Random, mode: str = "compound") -> Dict[str, Any]:
-    a = r.randint(2, 6) * r.choice([-1, 1])
-    b = r.randint(2, 5)
-    c = r.randint(3, 8) * r.choice([-1, 1])
-    d = r.randint(2, 4)
-    
-    # Structure: (-b)^2 - a * c + (-d * b)
-    p_term = (-b)**2  # always positive
-    m_term = a * c
-    d_term = -d * b
-    
-    final_ans = p_term - m_term + d_term
-    
-    prompt = (
-        f"Evaluate the following integer expression step-by-step, showing all intermediate calculations:\n\n"
-        f"\\((-{{{b}}})^2 - ({a})({c}) + (-{d})({b})\\)\n\n"
-        f"1. Evaluate the exponent term: \\((-{{{b}}})^2\\).\n"
-        f"2. Evaluate the products: \\(({a})({c})\\) and \\((-{{{d}}})({b})\\).\n"
-        f"3. Simplify to find the final numerical value."
-    )
-    prompt_latex = (
-        rf"\text{{Evaluate: }} (-{b})^2 - ({a})({c}) + (-{d})({b})"
-    )
-    answer_latex = (
-        rf"(-{b})^2 = {p_term}" "\n"
-        rf"({a})({c}) = {m_term}, \quad (-{d})({b}) = {d_term}" "\n"
-        rf"\text{{Expression}} = {p_term} - ({m_term}) + ({d_term}) = {p_term - m_term} + ({d_term}) = {final_ans}"
-    )
-    sample_answer = (
-        f"Step 1: Exponent: (-{b})² = {p_term} (a negative base squared is positive).\n"
-        f"Step 2: Products: ({a})({c}) = {m_term} and (-{d})({b}) = {d_term}.\n"
-        f"Step 3: Substitute: {p_term} - ({m_term}) + ({d_term}) = {p_term - m_term} - {abs(d_term)} = {final_ans}."
-    )
-    schema = {
-        "total_marks": 4,
-        "marking_points": [
-            {"id": "mp1", "desc": f"Evaluate power term: (-{b})² = {p_term}", "marks": 1, "editable": True},
-            {"id": "mp2", "desc": f"Evaluate product ({a})({c}) = {m_term}", "marks": 1, "editable": True},
-            {"id": "mp3", "desc": f"Evaluate product (-{d})({b}) = {d_term}", "marks": 1, "editable": True},
-            {"id": "mp4", "desc": f"Correct final simplified integer: {final_ans}", "marks": 1, "editable": True},
-        ],
-        "deductions": [{"rule": "sign_error_multiplication", "penalty": 1}],
-        "carry_forward_rule": "consequential_accuracy",
-    }
-    hints = {
-        "tier_1": "Apply the BODMAS rule: evaluate powers (exponents) first, then multiplication, and finally addition/subtraction.",
-        "tier_2": "Remember: (-b)² is positive because a negative multiplied by a negative equals a positive. Subtracting a negative becomes addition.",
-        "tier_3": f"(-{b})² = {p_term}. ({a})({c}) = {m_term}. (-{d})({b}) = {d_term}. Then: {p_term} - ({m_term}) + ({d_term}) = {final_ans}.",
-    }
-    return {
-        "id": f"g8_int_bodmas_{random.randint(100000, 999999)}",
-        "topic": TOPIC,
-        "subskill": "integers_bodmas_and_powers",
-        "learning_objective_id": f"{LO}_bodmas_powers",
-        "prompt": prompt,
-        "prompt_latex": prompt_latex,
-        "answer_latex": answer_latex,
-        "sample_answer": sample_answer,
-        "marking_schema": schema,
-        "hints": hints,
-        "misconception_tags": ["negative_squared_sign_error", "subtraction_of_negative_confusion", "bodmas_precedence_violation"],
-        "keywords": ["integers", "bodmas", "negative numbers", "powers"],
-        "term": 1,
-        "caps_weight_percent": 15,
-        "suggested_duration_mins": 5,
-        "mode": mode,
-        "difficulty": "medium",
-        "marks": 4,
-    }
+        if subskill is not None:
+            sub_key = str(subskill).strip()
+            if sub_key in DISPATCH_TABLE:
+                builder = DISPATCH_TABLE[sub_key]
+            else:
+                sub_lower = sub_key.lower()
+                for k, b in DISPATCH_TABLE.items():
+                    if isinstance(k, str) and (sub_lower in k.lower() or k.lower() in sub_lower):
+                        builder = b
+                        break
 
+        if builder is None and archetype_index is not None:
+            idx = int(archetype_index)
+            if idx in DISPATCH_TABLE:
+                builder = DISPATCH_TABLE[idx]
+            elif 1 <= idx <= len(BUILDERS):
+                builder = BUILDERS[idx - 1]
 
-def generate_temperature_context(r: random.Random, mode: str = "compound") -> Dict[str, Any]:
-    city = r.choice(["Sutherland", "Underberg", "Bethlehem", "Barkly East"])
-    initial_temp = -r.randint(2, 8)  # e.g. -5 °C at 06:00
-    rise = r.randint(11, 18)         # rises by 14 °C by 14:00
-    noon_temp = initial_temp + rise
-    drop = r.randint(9, 15)          # drops by 12 °C by 22:00
-    night_temp = noon_temp - drop
-    
-    prompt = (
-        f"At 06:00 on a winter morning in {city}, the temperature recorded was \\({initial_temp}^\\circ\\text{{C}}\\).\n\n"
-        f"1. By 14:00, the temperature had increased by \\({rise}^\\circ\\text{{C}}\\). What was the afternoon temperature?\n"
-        f"2. Between 14:00 and 22:00, the temperature dropped by \\({drop}^\\circ\\text{{C}}\\). What was the night temperature?\n"
-        f"3. Calculate the overall difference between the maximum temperature and the minimum temperature recorded."
-    )
-    prompt_latex = (
-        rf"\text{{Temperature in {city}: }} T_1 = {initial_temp}^\circ\text{{C}} \xrightarrow{{+{rise}^\circ\text{{C}}}} T_2 \xrightarrow{{-{drop}^\circ\text{{C}}}} T_3"
-    )
-    answer_latex = (
-        rf"T_2 = {initial_temp} + {rise} = {noon_temp}^\circ\text{{C}}" "\n"
-        rf"T_3 = {noon_temp} - {drop} = {night_temp}^\circ\text{{C}}" "\n"
-        rf"\text{{Difference}} = {noon_temp} - ({initial_temp}) = {noon_temp} + {abs(initial_temp)} = {noon_temp - initial_temp}^\circ\text{{C}}"
-    )
-    sample_answer = (
-        f"1. Afternoon temperature: {initial_temp} + {rise} = {noon_temp} °C.\n"
-        f"2. Night temperature: {noon_temp} - {drop} = {night_temp} °C.\n"
-        f"3. Temperature range: Maximum ({noon_temp} °C) - Minimum ({initial_temp} °C) = {noon_temp} - ({initial_temp}) = {noon_temp - initial_temp} °C."
-    )
-    schema = {
-        "total_marks": 4,
-        "marking_points": [
-            {"id": "mp1", "desc": f"Calculate afternoon temperature ({noon_temp} °C)", "marks": 1, "editable": True},
-            {"id": "mp2", "desc": f"Calculate night temperature ({night_temp} °C)", "marks": 1, "editable": True},
-            {"id": "mp3", "desc": f"Set up range difference: {noon_temp} - ({initial_temp})", "marks": 1, "editable": True},
-            {"id": "mp4", "desc": f"Correct temperature range ({noon_temp - initial_temp} °C)", "marks": 1, "editable": True},
-        ],
-        "deductions": [],
-        "carry_forward_rule": "consequential_accuracy",
-    }
-    hints = {
-        "tier_1": "To find the temperature rise, add the positive value. To find the drop, subtract.",
-        "tier_2": "The difference between max and min is: Max - Min. Remember that subtracting a negative number is equivalent to adding.",
-        "tier_3": f"{initial_temp} + {rise} = {noon_temp} °C. {noon_temp} - {drop} = {night_temp} °C. Range = {noon_temp} - ({initial_temp}) = {noon_temp - initial_temp} °C.",
-    }
-    return {
-        "id": f"g8_int_temp_{random.randint(100000, 999999)}",
-        "topic": TOPIC,
-        "subskill": "real_world_integer_applications",
-        "learning_objective_id": f"{LO}_temperature_applications",
-        "prompt": prompt,
-        "prompt_latex": prompt_latex,
-        "answer_latex": answer_latex,
-        "sample_answer": sample_answer,
-        "marking_schema": schema,
-        "hints": hints,
-        "misconception_tags": ["subtracting_negative_subtraction_error", "confusing_absolute_value_with_net_difference"],
-        "keywords": ["integers", "temperature", "negative numbers", "word problem"],
-        "term": 1,
-        "caps_weight_percent": 15,
-        "suggested_duration_mins": 5,
-        "mode": mode,
-        "difficulty": "medium",
-        "marks": 4,
-    }
+        if builder is None:
+            builder = rng.choice(BUILDERS)
 
+        q = builder(rng)
+        q.setdefault("grade", 8)
+        q.setdefault("subject", "Mathematics")
+        q.setdefault("topic", "Integers")
+        q.setdefault("term", 1)
+        q.setdefault("difficulty", difficulty)
+        questions.append(q)
 
-def generate(seed: Optional[int] = None, mode: str = "compound", archetype: Optional[str] = None) -> Dict[str, Any]:
-    r = _rng(seed)
-    if archetype == "temperature":
-        return generate_temperature_context(r, mode=mode)
-    elif archetype == "bodmas":
-        return generate_bodmas_integers(r, mode=mode)
-    else:
-        choice = r.choice(["bodmas", "temperature"])
-        if choice == "bodmas":
-            return generate_bodmas_integers(r, mode=mode)
-        else:
-            return generate_temperature_context(r, mode=mode)
+    return questions

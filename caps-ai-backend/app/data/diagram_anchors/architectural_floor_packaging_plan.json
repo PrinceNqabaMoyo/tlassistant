@@ -1,0 +1,196 @@
+{
+  "diagram": "architectural_floor_packaging_plan",
+  "view": "textbook",
+  "viewBox": "0 0 600 480",
+  "anchors": {
+    "window_casement_symbol": {
+      "name": "Window Symbol (Exterior Wall Casement)",
+      "anchor": [
+        186,
+        68
+      ],
+      "default_box": [
+        60,
+        75
+      ],
+      "side": "left",
+      "grades": [
+        "g10",
+        "g11",
+        "g12"
+      ],
+      "acceptable": [
+        "Window",
+        "Window symbol",
+        "North window"
+      ],
+      "description": "Parallel lines set into an exterior wall gap indicating the position and width of a window opening on a floor plan."
+    },
+    "bedroom_zone": {
+      "name": "Bedroom (Double Bed Plan Symbol)",
+      "anchor": [
+        165,
+        145
+      ],
+      "default_box": [
+        60,
+        165
+      ],
+      "side": "left",
+      "grades": [
+        "g10",
+        "g11",
+        "g12"
+      ],
+      "acceptable": [
+        "Bedroom",
+        "Main bedroom",
+        "Double bed"
+      ],
+      "description": "North-west room on the floor plan identified by the overhead plan symbol of a double bed and pillows."
+    },
+    "interior_door_swing": {
+      "name": "Interior Hinged Door & Swing Arc",
+      "anchor": [
+        242,
+        204
+      ],
+      "default_box": [
+        60,
+        255
+      ],
+      "side": "left",
+      "grades": [
+        "g10",
+        "g11",
+        "g12"
+      ],
+      "acceptable": [
+        "Interior door",
+        "Door swing",
+        "Door symbol",
+        "Hinged door"
+      ],
+      "description": "Straight door leaf and quarter-circle arc showing the doorway opening and the direction in which the door swings."
+    },
+    "kitchen_fixtures": {
+      "name": "Kitchen Counter, Stove & Double Sink",
+      "anchor": [
+        130,
+        275
+      ],
+      "default_box": [
+        60,
+        355
+      ],
+      "side": "left",
+      "grades": [
+        "g10",
+        "g11",
+        "g12"
+      ],
+      "acceptable": [
+        "Kitchen",
+        "Stove",
+        "Four-plate stove",
+        "Kitchen counter"
+      ],
+      "description": "South-west room featuring L-shaped cabinetry, a 4-plate hob symbol, and a double-bowl sink along the south window."
+    },
+    "compass_north_rose": {
+      "name": "Compass Rose (North Point Indicator)",
+      "anchor": [
+        508,
+        118
+      ],
+      "default_box": [
+        540,
+        80
+      ],
+      "side": "right",
+      "grades": [
+        "g10",
+        "g11",
+        "g12"
+      ],
+      "acceptable": [
+        "Compass rose",
+        "North arrow",
+        "North point",
+        "Direction indicator"
+      ],
+      "description": "Directional symbol showing True North so cardinal orientations (N, S, E, W) and sunlight exposure of rooms can be determined."
+    },
+    "bathroom_fixtures": {
+      "name": "Bathroom (Bathtub & Toilet Fixtures)",
+      "anchor": [
+        390,
+        110
+      ],
+      "default_box": [
+        540,
+        185
+      ],
+      "side": "right",
+      "grades": [
+        "g10",
+        "g11",
+        "g12"
+      ],
+      "acceptable": [
+        "Bathroom",
+        "Bathtub",
+        "Bath"
+      ],
+      "description": "Tiled north-east room containing overhead architectural symbols for a bathtub and toilet."
+    },
+    "lounge_living_area": {
+      "name": "Living Room / Lounge (L-Sofa & Table)",
+      "anchor": [
+        395,
+        278
+      ],
+      "default_box": [
+        540,
+        295
+      ],
+      "side": "right",
+      "grades": [
+        "g10",
+        "g11",
+        "g12"
+      ],
+      "acceptable": [
+        "Lounge",
+        "Living room",
+        "Sitting room",
+        "Sofa"
+      ],
+      "description": "South-east living space accessed through the main exterior entry door."
+    },
+    "bar_scale": {
+      "name": "Graphic Bar Scale (Linear Scale)",
+      "anchor": [
+        285,
+        415
+      ],
+      "default_box": [
+        540,
+        415
+      ],
+      "side": "right",
+      "grades": [
+        "g10",
+        "g11",
+        "g12"
+      ],
+      "acceptable": [
+        "Bar scale",
+        "Linear scale",
+        "Graphic scale",
+        "Scale bar"
+      ],
+      "description": "Alternating black-and-white segmented bar scale used to convert measured plan lengths into real-world dimensions even if the plan is resized."
+    }
+  }
+}

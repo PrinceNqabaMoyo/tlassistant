@@ -1,0 +1,1781 @@
+{
+  "_meta": {
+    "title": "Authoritative Curriculum Diagram Registry",
+    "description": "Single source of truth for all diagrammatic question archetypes across South African National Curriculum Standards (Grades 7-12). Enforces 6-pillar contract, seed entropy, and renderer consumption.",
+    "schema_version": "1.0.0",
+    "last_updated": "2026-11-07"
+  },
+  "archetypes": [
+    {
+      "id": "ps11_fbd_incline",
+      "name": "Newtonian Inclined Plane Free-Body Diagram",
+      "subject": "Physical Sciences",
+      "grade": 11,
+      "term": 1,
+      "topic": "Vectors in two dimensions",
+      "source": "generated",
+      "spec_key": "fbd_spec",
+      "renderer": "FbdModalityRenderer",
+      "renderer_path": "src/components/workspace/modalities/FbdModalityRenderer.jsx",
+      "generator_file": "caps-ai-backend/app/utils/grade11_physical_sciences/vectors_newton_generator.py",
+      "required_fields": [
+        "mass_kg",
+        "angle_deg",
+        "forces"
+      ],
+      "evidence": [
+        "curriculum_docs_auto/PhysicalSciences_Gr11/Term 1/01. Vectors in two dimensions.md"
+      ],
+      "need_tier": "Essential",
+      "test_id": "fbd-canvas",
+      "status": "built"
+    },
+    {
+      "id": "ps10_circuit_schematic",
+      "name": "Direct Current Series and Parallel Circuit Schematic",
+      "subject": "Physical Sciences",
+      "grade": 10,
+      "term": 2,
+      "topic": "Electric circuits",
+      "source": "generated",
+      "spec_key": "circuit_spec",
+      "renderer": "CircuitModalityRenderer",
+      "renderer_path": "src/components/workspace/modalities/CircuitModalityRenderer.jsx",
+      "generator_file": "caps-ai-backend/app/utils/grade10_physical_sciences/electric_circuits_magnetism_generator.py",
+      "required_fields": [
+        "type",
+        "voltage",
+        "components"
+      ],
+      "evidence": [
+        "curriculum_docs_auto/PhysicalSciences_Gr10/Term 2/06. Electric circuits.md"
+      ],
+      "need_tier": "Essential",
+      "test_id": "circuit-schematic-canvas",
+      "status": "built"
+    },
+    {
+      "id": "math11_circle_geometry_subtended",
+      "name": "Circle Geometry Angle Subtended at Centre & Circumference",
+      "subject": "Mathematics",
+      "grade": 11,
+      "term": 3,
+      "topic": "Euclidean Geometry",
+      "source": "generated",
+      "spec_key": "diagram_spec",
+      "renderer": "DiagramModalityRenderer",
+      "renderer_path": "src/components/workspace/modalities/DiagramModalityRenderer.jsx",
+      "generator_file": "caps-ai-backend/app/utils/grade11_mathematics/circle_geometry_theorems_generator.py",
+      "required_fields": [
+        "kind",
+        "points",
+        "vertex_labels"
+      ],
+      "evidence": [
+        "curriculum_docs_auto/Mathematics_Gr11/Term 3/03. Euclidean geometry.md"
+      ],
+      "need_tier": "Essential",
+      "test_id": "diagram-canvas-container",
+      "status": "built"
+    },
+    {
+      "id": "math10_right_triangle_trig",
+      "name": "Right-Angled Triangle Trigonometric Ratio Construction",
+      "subject": "Mathematics",
+      "grade": 10,
+      "term": 1,
+      "topic": "Trigonometry",
+      "source": "generated",
+      "spec_key": "diagram_spec",
+      "renderer": "DiagramModalityRenderer",
+      "renderer_path": "src/components/workspace/modalities/DiagramModalityRenderer.jsx",
+      "generator_file": "caps-ai-backend/app/utils/grade10_mathematics/term_1/trigonometry_generator.py",
+      "required_fields": [
+        "kind",
+        "points",
+        "vertex_labels"
+      ],
+      "evidence": [
+        "curriculum_docs_auto/Mathematics_Gr10/Term 1/05. Trigonometry 1.md"
+      ],
+      "need_tier": "Essential",
+      "test_id": "diagram-canvas-container",
+      "status": "built"
+    },
+    {
+      "id": "ls12_punnett_monohybrid_cross",
+      "name": "Mendelian Monohybrid Cross Punnett Square",
+      "subject": "Life Sciences",
+      "grade": 12,
+      "term": 1,
+      "topic": "Genetics and inheritance",
+      "source": "generated",
+      "spec_key": "punnett_spec",
+      "renderer": "PunnettSquareModalityRenderer",
+      "renderer_path": "src/components/workspace/modalities/PunnettSquareModalityRenderer.jsx",
+      "generator_file": "caps-ai-backend/app/utils/life_sciences/genetics_generator.py",
+      "required_fields": [
+        "p1_label",
+        "p2_label",
+        "p1_gametes",
+        "p2_gametes",
+        "expected_cells",
+        "phenotype_ratio"
+      ],
+      "evidence": [
+        "curriculum_docs_auto/LifeSciences_Gr12/Term 1/04. Genetics and inheritance.md"
+      ],
+      "need_tier": "Essential",
+      "test_id": "punnett-square-canvas",
+      "status": "built"
+    },
+    {
+      "id": "ns9_plant_cell_cytology",
+      "name": "Plant Cell Ultrastructure Organelle Pin Labelling",
+      "subject": "Natural Sciences",
+      "grade": 9,
+      "term": 1,
+      "topic": "Cells as the basic units of life",
+      "source": "banked",
+      "spec_key": "diagram_spec",
+      "renderer": "BioDiagramModalityRenderer",
+      "renderer_path": "src/components/workspace/modalities/BioDiagramModalityRenderer.jsx",
+      "generator_file": "caps-ai-backend/app/utils/natural_sciences/ns9_cells_units_of_life_generator.py",
+      "required_fields": [
+        "image_type",
+        "pins",
+        "landmarks",
+        "viewBox"
+      ],
+      "evidence": [
+        "curriculum_docs_auto/NaturalSciences_Gr9/Term 1/01. Cells as the basic units of life.md"
+      ],
+      "need_tier": "Essential",
+      "test_id": "bio-diagram-canvas",
+      "status": "built"
+    },
+    {
+      "id": "ns9_animal_cell_cytology",
+      "name": "Animal Cell Ultrastructure Organelle Pin Labelling",
+      "subject": "Natural Sciences",
+      "grade": 9,
+      "term": 1,
+      "topic": "Cells as the basic units of life",
+      "source": "banked",
+      "spec_key": "diagram_spec",
+      "renderer": "BioDiagramModalityRenderer",
+      "renderer_path": "src/components/workspace/modalities/BioDiagramModalityRenderer.jsx",
+      "generator_file": "caps-ai-backend/app/utils/natural_sciences/ns9_cells_units_of_life_generator.py",
+      "required_fields": [
+        "image_type",
+        "pins",
+        "landmarks",
+        "viewBox"
+      ],
+      "evidence": [
+        "curriculum_docs_auto/NaturalSciences_Gr9/Term 1/01. Cells as the basic units of life.md"
+      ],
+      "need_tier": "Essential",
+      "test_id": "bio-diagram-canvas",
+      "status": "built"
+    },
+    {
+      "id": "ns9_male_reproductive_anatomy",
+      "name": "Human Male Reproductive System Anatomy & Copulation Labelling",
+      "subject": "Natural Sciences",
+      "grade": 9,
+      "term": 1,
+      "topic": "Human reproduction",
+      "source": "banked",
+      "spec_key": "diagram_spec",
+      "renderer": "BioDiagramModalityRenderer",
+      "renderer_path": "src/components/workspace/modalities/BioDiagramModalityRenderer.jsx",
+      "generator_file": "caps-ai-backend/app/utils/natural_sciences/ns9_human_reproduction_generator.py",
+      "required_fields": [
+        "image_type",
+        "pins",
+        "landmarks",
+        "viewBox"
+      ],
+      "evidence": [
+        "curriculum_docs_auto/NaturalSciences_Gr9/Term 1/03. Human reproduction.md"
+      ],
+      "need_tier": "Essential",
+      "test_id": "bio-diagram-canvas",
+      "status": "built"
+    },
+    {
+      "id": "ls12_male_reproductive_anatomy",
+      "name": "Human Male Reproductive System Anatomy & Spermatogenesis Labelling",
+      "subject": "Life Sciences",
+      "grade": 12,
+      "term": 2,
+      "topic": "Human Reproduction",
+      "source": "banked",
+      "spec_key": "diagram_spec",
+      "renderer": "BioDiagramModalityRenderer",
+      "renderer_path": "src/components/workspace/modalities/BioDiagramModalityRenderer.jsx",
+      "generator_file": "caps-ai-backend/app/utils/life_sciences/ls12_human_reproduction_generator.py",
+      "required_fields": [
+        "image_type",
+        "pins",
+        "landmarks",
+        "viewBox"
+      ],
+      "evidence": [
+        "curriculum_docs_auto/LifeSciences_Gr12/Term 2/01. Human Reproduction.md"
+      ],
+      "need_tier": "Essential",
+      "test_id": "bio-diagram-canvas",
+      "status": "built"
+    },
+    {
+      "id": "ls12_female_reproductive_anatomy",
+      "name": "Human Female Reproductive System Anatomy & Fertilisation Labelling",
+      "subject": "Life Sciences",
+      "grade": 12,
+      "term": 2,
+      "topic": "Human Reproduction",
+      "source": "banked",
+      "spec_key": "diagram_spec",
+      "renderer": "BioDiagramModalityRenderer",
+      "renderer_path": "src/components/workspace/modalities/BioDiagramModalityRenderer.jsx",
+      "generator_file": "caps-ai-backend/app/utils/life_sciences/ls12_human_reproduction_generator.py",
+      "required_fields": [
+        "image_type",
+        "pins",
+        "landmarks",
+        "viewBox"
+      ],
+      "evidence": [
+        "curriculum_docs_auto/LifeSciences_Gr12/Term 2/01. Human Reproduction.md"
+      ],
+      "need_tier": "Essential",
+      "test_id": "bio-diagram-canvas",
+      "status": "built"
+    },
+    {
+      "id": "math8_geometric_nets_3d",
+      "name": "Polyhedron Unfolded 2D Surface Geometric Net",
+      "subject": "Mathematics",
+      "grade": 8,
+      "term": 3,
+      "topic": "Geometry of 3D objects",
+      "source": "generated",
+      "spec_key": "diagram_spec",
+      "renderer": "DiagramModalityRenderer",
+      "renderer_path": "src/components/workspace/modalities/DiagramModalityRenderer.jsx",
+      "generator_file": "caps-ai-backend/app/utils/grade7_mathematics/geometric_nets_3d_generator.py",
+      "required_fields": [
+        "kind"
+      ],
+      "evidence": [
+        "curriculum_docs_auto/Mathematics_Gr8/Term 3/02. Geometry of 3D objects.md"
+      ],
+      "need_tier": "Essential",
+      "test_id": "diagram-canvas-container",
+      "status": "built"
+    },
+    {
+      "id": "ls11_human_nephron_anatomy",
+      "name": "Microscopic Human Nephron Ultrastructure & Ultrafiltration Labelling",
+      "subject": "Life Sciences",
+      "grade": 11,
+      "term": 3,
+      "topic": "Excretion in humans",
+      "source": "banked",
+      "spec_key": "diagram_spec",
+      "renderer": "BioDiagramModalityRenderer",
+      "renderer_path": "src/components/workspace/modalities/BioDiagramModalityRenderer.jsx",
+      "generator_file": "caps-ai-backend/app/utils/life_sciences/ls11_excretion_humans_generator.py",
+      "required_fields": [
+        "image_type",
+        "pins",
+        "landmarks",
+        "viewBox"
+      ],
+      "evidence": [
+        "curriculum_docs_auto/LifeSciences_Gr11/Term 3/02. Excretion in humans.md"
+      ],
+      "need_tier": "Essential",
+      "test_id": "bio-diagram-canvas",
+      "status": "built",
+      "approach": "3-Layer Architecture (Server JSON Anchors + Anti-Leak Tokens + Callouts)"
+    },
+    {
+      "id": "ns9_human_heart_anatomy",
+      "name": "Human Heart Internal Anatomy & Double Circulation Labelling",
+      "subject": "Natural Sciences",
+      "grade": 9,
+      "term": 1,
+      "topic": "Circulatory and respiratory systems",
+      "source": "banked",
+      "spec_key": "diagram_spec",
+      "renderer": "BioDiagramModalityRenderer",
+      "renderer_path": "src/components/workspace/modalities/BioDiagramModalityRenderer.jsx",
+      "generator_file": "caps-ai-backend/app/utils/natural_sciences/ns9_circulatory_respiratory_generator.py",
+      "required_fields": [
+        "image_type",
+        "pins",
+        "landmarks",
+        "viewBox"
+      ],
+      "evidence": [
+        "curriculum_docs_auto/NaturalSciences_Gr9/Term 1/04. Circulatory and respiratory systems.md"
+      ],
+      "need_tier": "Essential",
+      "test_id": "bio-diagram-canvas",
+      "status": "built",
+      "master_component": "heart",
+      "renderer_class": "anatomy_vector",
+      "view": "coronal_section",
+      "scale": "organ",
+      "grade_mask": "g9",
+      "asset": {
+        "file": "src/assets/diagrams/heart/heart_coronal.svg",
+        "source": "Servier Medical Art (CC-BY 4.0) / Wikimedia Commons",
+        "licence": "CC-BY 4.0",
+        "accuracy_review": "passed"
+      },
+      "subskill_builder": "caps-ai-backend/app/utils/life_sciences/heart_generator.py"
+    },
+    {
+      "id": "ps11_optics_refraction",
+      "name": "Snell's Law Light Refraction & Total Internal Reflection Ray Diagram",
+      "subject": "Physical Sciences",
+      "grade": 11,
+      "term": 2,
+      "topic": "Geometrical optics",
+      "source": "generated",
+      "spec_key": "optics_spec",
+      "renderer": "OpticsRayModalityRenderer",
+      "renderer_path": "src/components/workspace/modalities/OpticsRayModalityRenderer.jsx",
+      "generator_file": "caps-ai-backend/app/utils/physical_sciences/geometrical_optics_generator.py",
+      "required_fields": [
+        "medium_1",
+        "medium_2",
+        "angle_incidence_deg",
+        "angle_refraction_deg"
+      ],
+      "evidence": [
+        "curriculum_docs_auto/PhysicalSciences_Gr11/Term 2/02. Geometrical optics.md"
+      ],
+      "need_tier": "Essential",
+      "test_id": "optics-ray-canvas",
+      "status": "built"
+    },
+    {
+      "id": "ls12_human_eye_anatomy",
+      "name": "Human Eye Longitudinal Cross-Section Anatomy & Accommodation",
+      "subject": "Life Sciences",
+      "grade": 12,
+      "term": 2,
+      "topic": "Human responses to the environment",
+      "source": "banked",
+      "spec_key": "diagram_spec",
+      "renderer": "BioDiagramModalityRenderer",
+      "renderer_path": "src/components/workspace/modalities/BioDiagramModalityRenderer.jsx",
+      "generator_file": "caps-ai-backend/app/utils/life_sciences/ls12_responding_environment_humans_generator.py",
+      "required_fields": [
+        "image_type",
+        "pins",
+        "landmarks",
+        "viewBox"
+      ],
+      "evidence": [
+        "curriculum_docs_auto/LifeSciences_Gr12/Term 2/01. Human responses to the environment.md"
+      ],
+      "need_tier": "Essential",
+      "test_id": "bio-diagram-canvas",
+      "status": "built"
+    },
+    {
+      "id": "ps12_galvanic_cell_apparatus",
+      "name": "Galvanic Electrochemical Cell Apparatus & Electron Flow",
+      "subject": "Physical Sciences",
+      "grade": 12,
+      "term": 3,
+      "topic": "Electrochemical reactions",
+      "source": "banked",
+      "spec_key": "diagram_spec",
+      "renderer": "BioDiagramModalityRenderer",
+      "renderer_path": "src/components/workspace/modalities/BioDiagramModalityRenderer.jsx",
+      "generator_file": "caps-ai-backend/app/utils/physical_sciences/ps12_electrochemistry_galvanic_generator.py",
+      "required_fields": [
+        "image_type",
+        "pins",
+        "landmarks",
+        "viewBox"
+      ],
+      "evidence": [
+        "curriculum_docs_auto/PhysicalSciences_Gr12/Term 3/04. Electrochemical reactions.md"
+      ],
+      "need_tier": "Essential",
+      "test_id": "bio-diagram-canvas",
+      "status": "built"
+    },
+    {
+      "id": "ns9_human_digestive_anatomy",
+      "name": "Human Digestive System Organ Anatomy & Nutrient Absorption",
+      "subject": "Natural Sciences",
+      "grade": 9,
+      "term": 1,
+      "topic": "Digestive system",
+      "source": "banked",
+      "spec_key": "diagram_spec",
+      "renderer": "BioDiagramModalityRenderer",
+      "renderer_path": "src/components/workspace/modalities/BioDiagramModalityRenderer.jsx",
+      "generator_file": "caps-ai-backend/app/utils/natural_sciences/ns9_digestive_system_generator.py",
+      "required_fields": [
+        "image_type",
+        "pins",
+        "landmarks",
+        "viewBox"
+      ],
+      "evidence": [
+        "curriculum_docs_auto/NaturalSciences_Gr9/Term 1/02. Systems in the human body.md"
+      ],
+      "need_tier": "Essential",
+      "test_id": "bio-diagram-canvas",
+      "status": "built",
+      "approach": "3-Layer Architecture (Server JSON Anchors + Anti-Leak Tokens + Callouts)"
+    },
+    {
+      "id": "ps12_titration_apparatus",
+      "name": "Acid-Base Stoichiometric Titration Apparatus & Indicator Equivalence",
+      "subject": "Physical Sciences",
+      "grade": 12,
+      "term": 2,
+      "topic": "Acids and bases",
+      "source": "banked",
+      "spec_key": "diagram_spec",
+      "renderer": "BioDiagramModalityRenderer",
+      "renderer_path": "src/components/workspace/modalities/BioDiagramModalityRenderer.jsx",
+      "generator_file": "caps-ai-backend/app/utils/physical_sciences/ps11_acids_bases_stoichiometry_generator.py",
+      "required_fields": [
+        "image_type",
+        "pins",
+        "landmarks",
+        "viewBox"
+      ],
+      "evidence": [
+        "curriculum_docs_auto/PhysicalSciences_Gr12/Term 2/03. Acids and bases.md"
+      ],
+      "need_tier": "Essential",
+      "test_id": "bio-diagram-canvas",
+      "status": "built"
+    },
+    {
+      "id": "ls10_plant_leaf_anatomy",
+      "name": "Dicotyledonous Leaf Transverse Cross-Section & Stomatal Regulation",
+      "subject": "Life Sciences",
+      "grade": 10,
+      "term": 2,
+      "topic": "Support and transport systems in plants",
+      "source": "banked",
+      "spec_key": "diagram_spec",
+      "renderer": "BioDiagramModalityRenderer",
+      "renderer_path": "src/components/workspace/modalities/BioDiagramModalityRenderer.jsx",
+      "generator_file": "caps-ai-backend/app/utils/life_sciences/ls10_support_transport_plants_generator.py",
+      "required_fields": [
+        "image_type",
+        "pins",
+        "landmarks",
+        "viewBox"
+      ],
+      "evidence": [
+        "curriculum_docs_auto/LifeSciences_Gr10/Term 2/04. Support and transport systems in plants.md"
+      ],
+      "need_tier": "Essential",
+      "test_id": "bio-diagram-canvas",
+      "status": "built"
+    },
+    {
+      "id": "ps11_thin_lens_ray_tracing",
+      "name": "Geometrical Optics Thin Lens Principal Ray Tracing & Image Formation",
+      "subject": "Physical Sciences",
+      "grade": 11,
+      "term": 2,
+      "topic": "Geometrical optics",
+      "source": "generated",
+      "spec_key": "optics_spec",
+      "renderer": "OpticsRayModalityRenderer",
+      "renderer_path": "src/components/workspace/modalities/OpticsRayModalityRenderer.jsx",
+      "generator_file": "caps-ai-backend/app/utils/physical_sciences/geometrical_optics_generator.py",
+      "required_fields": [
+        "lens_type",
+        "focal_length_cm",
+        "object_distance_cm",
+        "image_distance_cm",
+        "image_nature"
+      ],
+      "evidence": [
+        "curriculum_docs_auto/PhysicalSciences_Gr11/Term 2/02. Geometrical optics.md"
+      ],
+      "need_tier": "Essential",
+      "test_id": "optics-ray-canvas",
+      "status": "built"
+    },
+    {
+      "id": "ls12_human_ear_anatomy",
+      "name": "Human Ear Longitudinal Section Anatomy & Hearing Transduction Schematic",
+      "subject": "Life Sciences",
+      "grade": 12,
+      "term": 2,
+      "topic": "Human responses to the environment",
+      "source": "banked",
+      "spec_key": "diagram_spec",
+      "renderer": "BioDiagramModalityRenderer",
+      "renderer_path": "src/components/workspace/modalities/BioDiagramModalityRenderer.jsx",
+      "generator_file": "caps-ai-backend/app/utils/life_sciences/ls12_responding_environment_humans_generator.py",
+      "required_fields": [
+        "image_type",
+        "pins",
+        "landmarks",
+        "viewBox"
+      ],
+      "evidence": [
+        "curriculum_docs_auto/LifeSciences_Gr12/Term 2/01. Human responses to the environment.md"
+      ],
+      "need_tier": "Essential",
+      "test_id": "human-ear-canvas",
+      "status": "built"
+    },
+    {
+      "id": "ls11_alveolus_gas_exchange",
+      "name": "Pulmonary Alveolus & Capillary Microscopic Gas Exchange Schematic",
+      "subject": "Life Sciences",
+      "grade": 11,
+      "term": 3,
+      "topic": "Gaseous exchange",
+      "source": "banked",
+      "spec_key": "diagram_spec",
+      "renderer": "BioDiagramModalityRenderer",
+      "renderer_path": "src/components/workspace/modalities/BioDiagramModalityRenderer.jsx",
+      "generator_file": "caps-ai-backend/app/utils/life_sciences/ls11_gaseous_exchange_generator.py",
+      "required_fields": [
+        "image_type",
+        "pins",
+        "landmarks",
+        "viewBox"
+      ],
+      "evidence": [
+        "curriculum_docs_auto/LifeSciences_Gr11/Term 3/01. Gaseous exchange.md"
+      ],
+      "need_tier": "Essential",
+      "test_id": "alveolus-gas-exchange-canvas",
+      "status": "built",
+      "approach": "3-Layer Architecture (Server JSON Anchors + Anti-Leak Tokens + Callouts)"
+    },
+    {
+      "id": "ls11_intestinal_villus_anatomy",
+      "name": "Intestinal Villus Longitudinal Section & Nutrient Absorption Schematic",
+      "subject": "Life Sciences",
+      "grade": 11,
+      "term": 2,
+      "topic": "Animal Nutrition",
+      "source": "banked",
+      "spec_key": "diagram_spec",
+      "renderer": "BioDiagramModalityRenderer",
+      "renderer_path": "src/components/workspace/modalities/BioDiagramModalityRenderer.jsx",
+      "generator_file": "caps-ai-backend/app/utils/life_sciences/ls11_animal_nutrition_generator.py",
+      "required_fields": [
+        "image_type",
+        "pins",
+        "landmarks",
+        "viewBox"
+      ],
+      "evidence": [
+        "curriculum_docs_auto/LifeSciences_Gr11/Term 2/02. Animal Nutrition.md"
+      ],
+      "need_tier": "Essential",
+      "test_id": "intestinal-villus-canvas",
+      "status": "built",
+      "approach": "3-Layer Architecture (Server JSON Anchors + Anti-Leak Tokens + Callouts)"
+    },
+    {
+      "id": "ls10_mitosis_stages",
+      "name": "Mitosis Four-Stage Somatic Division & Cytokinesis Schematic",
+      "subject": "Life Sciences",
+      "grade": 10,
+      "term": 1,
+      "topic": "Cell division",
+      "source": "banked",
+      "spec_key": "diagram_spec",
+      "renderer": "BioDiagramModalityRenderer",
+      "renderer_path": "src/components/workspace/modalities/BioDiagramModalityRenderer.jsx",
+      "generator_file": "caps-ai-backend/app/utils/life_sciences/ls10_cell_division_mitosis_generator.py",
+      "required_fields": [
+        "image_type",
+        "pins",
+        "landmarks",
+        "viewBox"
+      ],
+      "evidence": [
+        "curriculum_docs_auto/LifeSciences_Gr10/Term 1/02. Cell division.md"
+      ],
+      "need_tier": "Essential",
+      "test_id": "mitosis-stages-canvas",
+      "status": "built"
+    },
+    {
+      "id": "ls12_meiosis_crossing_over",
+      "name": "Meiosis Prophase I Synapsis & Chiasma Crossing Over Schematic",
+      "subject": "Life Sciences",
+      "grade": 12,
+      "term": 1,
+      "topic": "Meiosis",
+      "source": "banked",
+      "spec_key": "diagram_spec",
+      "renderer": "BioDiagramModalityRenderer",
+      "renderer_path": "src/components/workspace/modalities/BioDiagramModalityRenderer.jsx",
+      "generator_file": "caps-ai-backend/app/utils/life_sciences/ls12_meiosis_generator.py",
+      "required_fields": [
+        "image_type",
+        "pins",
+        "landmarks",
+        "viewBox"
+      ],
+      "evidence": [
+        "curriculum_docs_auto/LifeSciences_Gr12/Term 1/03. Meiosis.md"
+      ],
+      "need_tier": "Essential",
+      "test_id": "meiosis-crossing-over-canvas",
+      "status": "built"
+    },
+    {
+      "id": "ls12_endocrine_system_map",
+      "name": "Human Endocrine System Glandular Map & Chemical Coordination Schematic",
+      "subject": "Life Sciences",
+      "grade": 12,
+      "term": 2,
+      "topic": "The human endocrine system and homeostasis",
+      "source": "banked",
+      "spec_key": "diagram_spec",
+      "renderer": "BioDiagramModalityRenderer",
+      "renderer_path": "src/components/workspace/modalities/BioDiagramModalityRenderer.jsx",
+      "generator_file": "caps-ai-backend/app/utils/life_sciences/ls12_endocrine_homeostasis_generator.py",
+      "required_fields": [
+        "image_type",
+        "pins",
+        "landmarks",
+        "viewBox"
+      ],
+      "evidence": [
+        "curriculum_docs_auto/LifeSciences_Gr12/Term 2/04. The human endocrine system and homeostasis.md"
+      ],
+      "need_tier": "Essential",
+      "test_id": "endocrine-system-canvas",
+      "status": "built"
+    },
+    {
+      "id": "ns8_circuit_schematic",
+      "name": "Series and Parallel Direct Current Circuits Schematic",
+      "subject": "Natural Sciences",
+      "grade": 8,
+      "term": 3,
+      "topic": "Series and parallel circuits",
+      "source": "generated",
+      "spec_key": "circuit_spec",
+      "renderer": "CircuitModalityRenderer",
+      "renderer_path": "src/components/workspace/modalities/CircuitModalityRenderer.jsx",
+      "generator_file": "caps-ai-backend/app/utils/natural_sciences/electric_circuits_generator.py",
+      "required_fields": [
+        "type",
+        "voltage",
+        "components"
+      ],
+      "evidence": [
+        "curriculum_docs_auto/NaturalSciences_Gr8/Term 3/03. Series and parallel circuits.md"
+      ],
+      "need_tier": "Essential",
+      "test_id": "circuit-schematic-canvas",
+      "status": "built"
+    },
+    {
+      "id": "ns9_circuit_schematic",
+      "name": "Direct Current Circuit Analysis with Resistor Combinations",
+      "subject": "Natural Sciences",
+      "grade": 9,
+      "term": 3,
+      "topic": "Series and parallel circuits",
+      "source": "generated",
+      "spec_key": "circuit_spec",
+      "renderer": "CircuitModalityRenderer",
+      "renderer_path": "src/components/workspace/modalities/CircuitModalityRenderer.jsx",
+      "generator_file": "caps-ai-backend/app/utils/natural_sciences/electric_circuits_generator.py",
+      "required_fields": [
+        "type",
+        "voltage",
+        "components"
+      ],
+      "evidence": [
+        "curriculum_docs_auto/NaturalSciences_Gr9/Term 3/02. Series and parallel circuits.md"
+      ],
+      "need_tier": "Essential",
+      "test_id": "circuit-schematic-canvas",
+      "status": "built"
+    },
+    {
+      "id": "ps11_circuit_energy_network",
+      "name": "Series-Parallel Resistor Combination and Potential Divider Schematic",
+      "subject": "Physical Sciences",
+      "grade": 11,
+      "term": 3,
+      "topic": "Electric circuits",
+      "source": "generated",
+      "spec_key": "circuit_spec",
+      "renderer": "CircuitModalityRenderer",
+      "renderer_path": "src/components/workspace/modalities/CircuitModalityRenderer.jsx",
+      "generator_file": "caps-ai-backend/app/utils/grade11_physical_sciences/electric_circuits_energy_generator.py",
+      "required_fields": [
+        "type",
+        "voltage",
+        "components"
+      ],
+      "evidence": [
+        "curriculum_docs_auto/PhysicalSciences_Gr11/Term 3/01. Electric circuits.md"
+      ],
+      "need_tier": "Essential",
+      "test_id": "circuit-schematic-canvas",
+      "status": "built"
+    },
+    {
+      "id": "ps12_internal_resistance_circuit",
+      "name": "Battery Internal Resistance & Lost Volts Circuit Schematic",
+      "subject": "Physical Sciences",
+      "grade": 12,
+      "term": 3,
+      "topic": "Electric circuits",
+      "source": "generated",
+      "spec_key": "circuit_spec",
+      "renderer": "CircuitModalityRenderer",
+      "renderer_path": "src/components/workspace/modalities/CircuitModalityRenderer.jsx",
+      "generator_file": "caps-ai-backend/app/utils/grade12_physical_sciences/electrodynamics_circuits_generator.py",
+      "required_fields": [
+        "type",
+        "voltage",
+        "components"
+      ],
+      "evidence": [
+        "curriculum_docs_auto/PhysicalSciences_Gr12/Term 3/02. Electric circuits.md"
+      ],
+      "need_tier": "Essential",
+      "test_id": "circuit-schematic-canvas",
+      "status": "built"
+    },
+    {
+      "id": "ps10_transverse_waves",
+      "name": "Periodic Transverse Wave Anatomy & Sinusoidal Profile",
+      "subject": "Physical Sciences",
+      "grade": 10,
+      "term": 1,
+      "topic": "Transverse waves",
+      "source": "banked",
+      "spec_key": "diagram_spec",
+      "renderer": "BioDiagramModalityRenderer",
+      "renderer_path": "src/components/workspace/modalities/BioDiagramModalityRenderer.jsx",
+      "generator_file": "caps-ai-backend/app/utils/physical_sciences/ps10_waves_sound_light_generator.py",
+      "required_fields": [
+        "image_type",
+        "pins",
+        "landmarks",
+        "viewBox"
+      ],
+      "evidence": [
+        "curriculum_docs_auto/PhysicalSciences_Gr10/Term 1/08. Transverse waves.md"
+      ],
+      "need_tier": "Essential",
+      "test_id": "transverse-wave-canvas",
+      "status": "built"
+    },
+    {
+      "id": "ps11_newton_horizontal_friction",
+      "name": "Newtonian Horizontal Surface & Kinetic Friction Free-Body Diagram",
+      "subject": "Physical Sciences",
+      "grade": 11,
+      "term": 2,
+      "topic": "Newton's laws",
+      "source": "generated",
+      "spec_key": "fbd_spec",
+      "renderer": "FbdModalityRenderer",
+      "renderer_path": "src/components/workspace/modalities/FbdModalityRenderer.jsx",
+      "generator_file": "caps-ai-backend/app/utils/physical_sciences/mechanics_generator.py",
+      "required_fields": [
+        "mass_kg",
+        "angle_deg",
+        "forces"
+      ],
+      "evidence": [
+        "curriculum_docs_auto/PhysicalSciences_Gr11/Term 2/01. Newton's laws.md"
+      ],
+      "need_tier": "Essential",
+      "test_id": "fbd-canvas",
+      "status": "built"
+    },
+    {
+      "id": "ns9_forces_fbd",
+      "name": "Gravitational Weight & Normal Force Equilibrium Free-Body Diagram",
+      "subject": "Natural Sciences",
+      "grade": 9,
+      "term": 3,
+      "topic": "Forces",
+      "source": "generated",
+      "spec_key": "fbd_spec",
+      "renderer": "FbdModalityRenderer",
+      "renderer_path": "src/components/workspace/modalities/FbdModalityRenderer.jsx",
+      "generator_file": "caps-ai-backend/app/utils/natural_sciences/term3_energy_change_forces_generator.py",
+      "required_fields": [
+        "mass_kg",
+        "angle_deg",
+        "forces"
+      ],
+      "evidence": [
+        "curriculum_docs_auto/NaturalSciences_Gr9/Term 3/01. Forces.md"
+      ],
+      "need_tier": "Essential",
+      "test_id": "fbd-canvas",
+      "status": "built"
+    },
+    {
+      "id": "math9_congruence_similarity",
+      "name": "Triangles Congruence & Similarity 2D Geometry Proof",
+      "subject": "Mathematics",
+      "grade": 9,
+      "term": 2,
+      "topic": "Geometry of 2D shapes",
+      "source": "generated",
+      "spec_key": "diagram_spec",
+      "renderer": "DiagramModalityRenderer",
+      "renderer_path": "src/components/workspace/modalities/DiagramModalityRenderer.jsx",
+      "generator_file": "caps-ai-backend/app/utils/grade9_mathematics/congruence_similarity_generator.py",
+      "required_fields": [
+        "kind",
+        "points",
+        "vertices"
+      ],
+      "evidence": [
+        "curriculum_docs_auto/Mathematics_Gr9/Term 2/04. Geometry of 2D shapes.md"
+      ],
+      "need_tier": "Essential",
+      "test_id": "diagram-canvas-container",
+      "status": "built"
+    },
+    {
+      "id": "math10_euclidean_quadrilaterals",
+      "name": "Special Quadrilaterals & Parallelograms Euclidean Geometry Construction",
+      "subject": "Mathematics",
+      "grade": 10,
+      "term": 3,
+      "topic": "Euclidean geometry 1",
+      "source": "generated",
+      "spec_key": "diagram_spec",
+      "renderer": "DiagramModalityRenderer",
+      "renderer_path": "src/components/workspace/modalities/DiagramModalityRenderer.jsx",
+      "generator_file": "caps-ai-backend/app/utils/grade10_mathematics/term_2/euclidean_geometry_generator.py",
+      "required_fields": [
+        "kind",
+        "points",
+        "vertices"
+      ],
+      "evidence": [
+        "curriculum_docs_auto/Mathematics_Gr10/Term 3/04. Euclidean geometry 1.md"
+      ],
+      "need_tier": "Essential",
+      "test_id": "diagram-canvas-container",
+      "status": "built"
+    },
+    {
+      "id": "math10_midpoint_theorem",
+      "name": "Triangle Midpoint Theorem Euclidean Geometry Construction",
+      "subject": "Mathematics",
+      "grade": 10,
+      "term": 3,
+      "topic": "Euclidean geometry 2",
+      "source": "generated",
+      "spec_key": "diagram_spec",
+      "renderer": "DiagramModalityRenderer",
+      "renderer_path": "src/components/workspace/modalities/DiagramModalityRenderer.jsx",
+      "generator_file": "caps-ai-backend/app/utils/grade10_mathematics/term_2/euclidean_geometry_generator.py",
+      "required_fields": [
+        "kind",
+        "points",
+        "vertices"
+      ],
+      "evidence": [
+        "curriculum_docs_auto/Mathematics_Gr10/Term 3/04. Euclidean geometry 2.md"
+      ],
+      "need_tier": "Essential",
+      "test_id": "diagram-canvas-container",
+      "status": "built"
+    },
+    {
+      "id": "math12_circle_tangent_geometry",
+      "name": "Cartesian Circle and Perpendicular Tangent Line Geometry",
+      "subject": "Mathematics",
+      "grade": 12,
+      "term": 2,
+      "topic": "Analytical geometry",
+      "source": "generated",
+      "spec_key": "diagram_spec",
+      "renderer": "DiagramModalityRenderer",
+      "renderer_path": "src/components/workspace/modalities/DiagramModalityRenderer.jsx",
+      "generator_file": "caps-ai-backend/app/utils/grade12_mathematics/analytical_geometry_circles_generator.py",
+      "required_fields": [
+        "kind",
+        "points",
+        "vertex_labels"
+      ],
+      "evidence": [
+        "curriculum_docs_auto/Mathematics_Gr12/Term 2/02. Analytical geometry.md"
+      ],
+      "need_tier": "Essential",
+      "test_id": "diagram-canvas-container",
+      "status": "built"
+    },
+    {
+      "id": "ls10_plant_cell_cytology",
+      "name": "Plant & Animal Cell Organelle Ultrastructure Labelling",
+      "subject": "Life Sciences",
+      "grade": 10,
+      "term": 1,
+      "topic": "Cells the basic units of life",
+      "source": "banked",
+      "spec_key": "diagram_spec",
+      "renderer": "BioDiagramModalityRenderer",
+      "renderer_path": "src/components/workspace/modalities/BioDiagramModalityRenderer.jsx",
+      "generator_file": "caps-ai-backend/app/utils/life_sciences/ls10_plant_and_animal_cells_generator.py",
+      "required_fields": [
+        "image_type",
+        "pins",
+        "landmarks",
+        "viewBox"
+      ],
+      "evidence": [
+        "curriculum_docs_auto/LifeSciences_Gr10/Term 1/01. Cells the basic units of life.md"
+      ],
+      "need_tier": "Essential",
+      "test_id": "bio-diagram-canvas",
+      "status": "built"
+    },
+    {
+      "id": "math7_geometry_2d_triangles",
+      "name": "Triangle & Quadrilateral Interior Angles Construction",
+      "subject": "Mathematics",
+      "grade": 7,
+      "term": 1,
+      "topic": "Geometry of 2D shapes",
+      "source": "generated",
+      "spec_key": "diagram_spec",
+      "renderer": "DiagramModalityRenderer",
+      "renderer_path": "src/components/workspace/modalities/DiagramModalityRenderer.jsx",
+      "generator_file": "caps-ai-backend/app/utils/grade7_mathematics/geometry_2d_generator.py",
+      "required_fields": [
+        "kind",
+        "points",
+        "vertices"
+      ],
+      "evidence": [
+        "curriculum_docs_auto/Mathematics_Gr7/Term 1/04. Geometry of 2D shapes.md"
+      ],
+      "need_tier": "Essential",
+      "test_id": "diagram-canvas-container",
+      "status": "built"
+    },
+    {
+      "id": "math7_geometric_nets_3d",
+      "name": "Polyhedron Unfolded 2D Surface Geometric Net & Euler Analysis",
+      "subject": "Mathematics",
+      "grade": 7,
+      "term": 3,
+      "topic": "Geometry of 3D objects",
+      "source": "generated",
+      "spec_key": "diagram_spec",
+      "renderer": "DiagramModalityRenderer",
+      "renderer_path": "src/components/workspace/modalities/DiagramModalityRenderer.jsx",
+      "generator_file": "caps-ai-backend/app/utils/grade7_mathematics/geometric_nets_3d_generator.py",
+      "required_fields": [
+        "kind"
+      ],
+      "evidence": [
+        "curriculum_docs_auto/Mathematics_Gr7/Term 3/02. Geometry of 3D objects.md",
+        "curriculum_docs_auto/Mathematics_Gr7/Term 3/01. Surface area and volume of 3D objects.md"
+      ],
+      "need_tier": "Essential",
+      "test_id": "diagram-canvas-container",
+      "status": "built"
+    },
+    {
+      "id": "math8_geometry_2d_triangles_quads",
+      "name": "Triangles & Quadrilaterals Angles & Exterior Theorem Geometric Construction",
+      "subject": "Mathematics",
+      "grade": 8,
+      "term": 2,
+      "topic": "Geometry of 2D shapes",
+      "source": "generated",
+      "spec_key": "diagram_spec",
+      "renderer": "DiagramModalityRenderer",
+      "renderer_path": "src/components/workspace/modalities/DiagramModalityRenderer.jsx",
+      "generator_file": "caps-ai-backend/app/utils/grade8_mathematics/geometry_2d_shapes_generator.py",
+      "required_fields": [
+        "kind",
+        "points",
+        "vertices"
+      ],
+      "evidence": [
+        "curriculum_docs_auto/Mathematics_Gr8/Term 2/04. Geometry of 2D shapes.md"
+      ],
+      "need_tier": "Essential",
+      "test_id": "diagram-canvas-container",
+      "status": "built"
+    },
+    {
+      "id": "math9_geometric_nets_3d",
+      "name": "Cylinder & Right Prism Unfolded Surface Net & Capacity",
+      "subject": "Mathematics",
+      "grade": 9,
+      "term": 4,
+      "topic": "Geometry of 3D objects",
+      "source": "generated",
+      "spec_key": "diagram_spec",
+      "renderer": "DiagramModalityRenderer",
+      "renderer_path": "src/components/workspace/modalities/DiagramModalityRenderer.jsx",
+      "generator_file": "caps-ai-backend/app/utils/grade9_mathematics/measurement_3d_generator.py",
+      "required_fields": [
+        "kind"
+      ],
+      "evidence": [
+        "curriculum_docs_auto/Mathematics_Gr9/Term 4/01. Surface area volume and capacity of 3D objects.md"
+      ],
+      "need_tier": "Essential",
+      "test_id": "diagram-canvas-container",
+      "status": "built"
+    },
+    {
+      "id": "math10_analytical_geometry_line",
+      "name": "Cartesian Coordinate Plane Distance, Midpoint & Gradient Construction",
+      "subject": "Mathematics",
+      "grade": 10,
+      "term": 2,
+      "topic": "Analytical geometry",
+      "source": "generated",
+      "spec_key": "diagram_spec",
+      "renderer": "DiagramModalityRenderer",
+      "renderer_path": "src/components/workspace/modalities/DiagramModalityRenderer.jsx",
+      "generator_file": "caps-ai-backend/app/utils/grade10_mathematics/term_2/analytical_geometry_generator.py",
+      "required_fields": [
+        "kind",
+        "points",
+        "vertices"
+      ],
+      "evidence": [
+        "curriculum_docs_auto/Mathematics_Gr10/Term 2/02. Analytical geometry.md"
+      ],
+      "need_tier": "Essential",
+      "test_id": "diagram-canvas-container",
+      "status": "built"
+    },
+    {
+      "id": "math11_analytical_geometry_inclination",
+      "name": "Line Inclination Angle & Collinear Points Cartesian Geometry",
+      "subject": "Mathematics",
+      "grade": 11,
+      "term": 2,
+      "topic": "Analytical geometry",
+      "source": "generated",
+      "spec_key": "diagram_spec",
+      "renderer": "DiagramModalityRenderer",
+      "renderer_path": "src/components/workspace/modalities/DiagramModalityRenderer.jsx",
+      "generator_file": "caps-ai-backend/app/utils/grade10_mathematics/term_2/analytical_geometry_generator.py",
+      "required_fields": [
+        "kind",
+        "points",
+        "vertices"
+      ],
+      "evidence": [
+        "curriculum_docs_auto/Mathematics_Gr11/Term 2/02. Analytical geometry.md"
+      ],
+      "need_tier": "Essential",
+      "test_id": "diagram-canvas-container",
+      "status": "built"
+    },
+    {
+      "id": "ns9_resistance_circuit",
+      "name": "Ohm's Law & Resistor Network Potential Divider Circuit Analysis",
+      "subject": "Natural Sciences",
+      "grade": 9,
+      "term": 2,
+      "topic": "Resistance",
+      "source": "generated",
+      "spec_key": "circuit_spec",
+      "renderer": "CircuitModalityRenderer",
+      "renderer_path": "src/components/workspace/modalities/CircuitModalityRenderer.jsx",
+      "generator_file": "caps-ai-backend/app/utils/natural_sciences/electric_circuits_generator.py",
+      "required_fields": [
+        "type",
+        "voltage",
+        "components"
+      ],
+      "evidence": [
+        "curriculum_docs_auto/NaturalSciences_Gr9/Term 2/05. Resistance.md"
+      ],
+      "need_tier": "Essential",
+      "test_id": "circuit-schematic-canvas",
+      "status": "built"
+    },
+    {
+      "id": "ps10_vectors_fbd",
+      "name": "1D/2D Kinematic Vectors & Gravitational Normal Equilibrium Free-Body Diagram",
+      "subject": "Physical Sciences",
+      "grade": 10,
+      "term": 3,
+      "topic": "Vectors and scalars",
+      "source": "generated",
+      "spec_key": "fbd_spec",
+      "renderer": "FbdModalityRenderer",
+      "renderer_path": "src/components/workspace/modalities/FbdModalityRenderer.jsx",
+      "generator_file": "caps-ai-backend/app/utils/grade10_physical_sciences/motion_energy_generator.py",
+      "required_fields": [
+        "mass_kg",
+        "angle_deg",
+        "forces"
+      ],
+      "evidence": [
+        "curriculum_docs_auto/PhysicalSciences_Gr10/Term 3/03. Vectors and scalars.md"
+      ],
+      "need_tier": "Essential",
+      "test_id": "fbd-canvas",
+      "status": "built"
+    },
+    {
+      "id": "ps11_intermolecular_forces",
+      "name": "Molecular Geometry & Intermolecular Forces Boiling Point Comparison",
+      "subject": "Physical Sciences",
+      "grade": 11,
+      "term": 1,
+      "topic": "Intermolecular forces",
+      "source": "generated",
+      "spec_key": "diagram_spec",
+      "renderer": "OrganicChemistry3DViewer",
+      "renderer_path": "src/components/workspace/modalities/OrganicChemistry3DViewer.jsx",
+      "generator_file": "caps-ai-backend/app/utils/grade11_physical_sciences/chemical_bonding_intermolecular_generator.py",
+      "required_fields": [
+        "formula",
+        "name",
+        "imf"
+      ],
+      "evidence": [
+        "curriculum_docs_auto/PhysicalSciences_Gr11/Term 1/03. Intermolecular forces.md"
+      ],
+      "need_tier": "Essential",
+      "test_id": "organic-chem-canvas",
+      "status": "built"
+    },
+    {
+      "id": "ps11_wavefront_diffraction",
+      "name": "Huygens' Principle & Single Slit Wavefront Diffraction",
+      "subject": "Physical Sciences",
+      "grade": 11,
+      "term": 2,
+      "topic": "2D and 3D wavefronts",
+      "source": "generated",
+      "spec_key": "optics_spec",
+      "renderer": "OpticsRayModalityRenderer",
+      "renderer_path": "src/components/workspace/modalities/OpticsRayModalityRenderer.jsx",
+      "generator_file": "caps-ai-backend/app/utils/physical_sciences/geometrical_optics_generator.py",
+      "required_fields": [
+        "medium_1",
+        "angle_incidence_deg"
+      ],
+      "evidence": [
+        "curriculum_docs_auto/PhysicalSciences_Gr11/Term 2/03. 2D and 3D wavefronts.md"
+      ],
+      "need_tier": "Essential",
+      "test_id": "optics-ray-canvas",
+      "status": "built"
+    },
+    {
+      "id": "ps12_organic_molecules_3d",
+      "name": "Homologous Series & Structural Isomers 3D CPK Molecular Geometry",
+      "subject": "Physical Sciences",
+      "grade": 12,
+      "term": 1,
+      "topic": "Organic molecules",
+      "source": "generated",
+      "spec_key": "diagram_spec",
+      "renderer": "OrganicChemistry3DViewer",
+      "renderer_path": "src/components/workspace/modalities/OrganicChemistry3DViewer.jsx",
+      "generator_file": "caps-ai-backend/app/utils/grade12_physical_sciences/organic_chemistry_generator.py",
+      "required_fields": [
+        "formula",
+        "name",
+        "imf"
+      ],
+      "evidence": [
+        "curriculum_docs_auto/PhysicalSciences_Gr12/Term 1/04. Organic molecules.md"
+      ],
+      "need_tier": "Essential",
+      "test_id": "organic-chem-canvas",
+      "status": "built"
+    },
+    {
+      "id": "ps12_electrodynamics_generator_motor",
+      "name": "AC Generator Alternator & DC Motor Armature Electrodynamics",
+      "subject": "Physical Sciences",
+      "grade": 12,
+      "term": 3,
+      "topic": "Electrodynamics",
+      "source": "generated",
+      "spec_key": "diagram_spec",
+      "renderer": "ElectrodynamicsMotorViewer",
+      "renderer_path": "src/components/workspace/modalities/ElectrodynamicsMotorViewer.jsx",
+      "generator_file": "caps-ai-backend/app/utils/grade12_physical_sciences/electrodynamics_circuits_generator.py",
+      "required_fields": [
+        "mode"
+      ],
+      "evidence": [
+        "curriculum_docs_auto/PhysicalSciences_Gr12/Term 3/01. Electrodynamics.md"
+      ],
+      "need_tier": "Essential",
+      "test_id": "electrodynamics-canvas",
+      "status": "built"
+    },
+    {
+      "id": "tech10_analytical_geometry",
+      "name": "Technical Mathematics Cartesian Distance, Midpoint & Gradient Construction",
+      "subject": "Technical Mathematics",
+      "grade": 10,
+      "term": 2,
+      "topic": "Analytical Geometry",
+      "source": "generated",
+      "spec_key": "diagram_spec",
+      "renderer": "DiagramModalityRenderer",
+      "renderer_path": "src/components/workspace/modalities/DiagramModalityRenderer.jsx",
+      "generator_file": "caps-ai-backend/app/utils/grade10_mathematics/term_2/analytical_geometry_generator.py",
+      "required_fields": [
+        "kind",
+        "points",
+        "vertices"
+      ],
+      "evidence": [
+        "curriculum_docs_auto/TechnicalMathematics_Gr10/Term 2/02. Analytical Geometry.md"
+      ],
+      "need_tier": "Essential",
+      "test_id": "diagram-canvas-container",
+      "status": "built"
+    },
+    {
+      "id": "tech11_circles_angular_movement",
+      "name": "Technical Mathematics Circular Arc, Sector & Angular Velocity Construction",
+      "subject": "Technical Mathematics",
+      "grade": 11,
+      "term": 3,
+      "topic": "Circles angles and angular movement",
+      "source": "generated",
+      "spec_key": "diagram_spec",
+      "renderer": "DiagramModalityRenderer",
+      "renderer_path": "src/components/workspace/modalities/DiagramModalityRenderer.jsx",
+      "generator_file": "caps-ai-backend/app/utils/technical_mathematics/circles_angular_movement_generator.py",
+      "required_fields": [
+        "kind",
+        "points",
+        "vertex_labels"
+      ],
+      "evidence": [
+        "curriculum_docs_auto/TechnicalMathematics_Gr11/Term 3/01. Circles angles and angular movement.md"
+      ],
+      "need_tier": "Essential",
+      "test_id": "diagram-canvas-container",
+      "status": "built"
+    },
+    {
+      "id": "tech11_circle_geometry_tangent",
+      "name": "Technical Mathematics Circle Geometry Tangent & Chord Theorem Construction",
+      "subject": "Technical Mathematics",
+      "grade": 11,
+      "term": 3,
+      "topic": "Euclidean geometry",
+      "source": "generated",
+      "spec_key": "diagram_spec",
+      "renderer": "DiagramModalityRenderer",
+      "renderer_path": "src/components/workspace/modalities/DiagramModalityRenderer.jsx",
+      "generator_file": "caps-ai-backend/app/utils/grade11_mathematics/circle_geometry_theorems_generator.py",
+      "required_fields": [
+        "kind",
+        "points",
+        "vertex_labels"
+      ],
+      "evidence": [
+        "curriculum_docs_auto/TechnicalMathematics_Gr11/Term 3/03. Euclidean geometry.md"
+      ],
+      "need_tier": "Essential",
+      "test_id": "diagram-canvas-container",
+      "status": "built"
+    },
+    {
+      "id": "tech12_analytical_circles",
+      "name": "Technical Mathematics Cartesian Circle Tangents & Perpendicular Radii",
+      "subject": "Technical Mathematics",
+      "grade": 12,
+      "term": 2,
+      "topic": "Analytical geometry",
+      "source": "generated",
+      "spec_key": "diagram_spec",
+      "renderer": "DiagramModalityRenderer",
+      "renderer_path": "src/components/workspace/modalities/DiagramModalityRenderer.jsx",
+      "generator_file": "caps-ai-backend/app/utils/grade12_mathematics/analytical_geometry_circles_generator.py",
+      "required_fields": [
+        "kind",
+        "points",
+        "vertex_labels"
+      ],
+      "evidence": [
+        "curriculum_docs_auto/TechnicalMathematics_Gr12/Term 2/02. Analytical geometry.md"
+      ],
+      "need_tier": "Essential",
+      "test_id": "diagram-canvas-container",
+      "status": "built"
+    },
+    {
+      "id": "tech12_euclidean_proportionality",
+      "name": "Technical Mathematics Triangles Proportionality & Similarity Proof Construction",
+      "subject": "Technical Mathematics",
+      "grade": 12,
+      "term": 2,
+      "topic": "Euclidean Geometry Proportionality and similarity",
+      "source": "generated",
+      "spec_key": "diagram_spec",
+      "renderer": "DiagramModalityRenderer",
+      "renderer_path": "src/components/workspace/modalities/DiagramModalityRenderer.jsx",
+      "generator_file": "caps-ai-backend/app/utils/grade12_mathematics/analytical_geometry_circles_generator.py",
+      "required_fields": [
+        "kind",
+        "points",
+        "vertex_labels"
+      ],
+      "evidence": [
+        "curriculum_docs_auto/TechnicalMathematics_Gr12/Term 2/03. Euclidean Geometry Proportionality and similarity.md"
+      ],
+      "need_tier": "Essential",
+      "test_id": "diagram-canvas-container",
+      "status": "built"
+    },
+    {
+      "id": "tech11_analytical_geometry",
+      "name": "Technical Mathematics Straight Line Equation & Gradient Geometry",
+      "subject": "Technical Mathematics",
+      "grade": 11,
+      "term": 2,
+      "topic": "Analytical geometry",
+      "source": "generated",
+      "spec_key": "diagram_spec",
+      "renderer": "DiagramModalityRenderer",
+      "renderer_path": "src/components/workspace/modalities/DiagramModalityRenderer.jsx",
+      "generator_file": "caps-ai-backend/app/utils/grade10_mathematics/term_2/analytical_geometry_generator.py",
+      "required_fields": [
+        "kind",
+        "points",
+        "vertices"
+      ],
+      "evidence": [
+        "curriculum_docs_auto/TechnicalMathematics_Gr11/Term 2/02. Analytical geometry.md"
+      ],
+      "need_tier": "Essential",
+      "test_id": "diagram-canvas-container",
+      "status": "built"
+    },
+    {
+      "id": "ls10_heart_cardiac_cycle",
+      "name": "Human Heart Internal Anatomy, Cardiac Cycle & Valve Dynamics",
+      "subject": "Life Sciences",
+      "grade": 10,
+      "term": 2,
+      "topic": "Transport systems in animals",
+      "source": "banked",
+      "spec_key": "diagram_spec",
+      "renderer": "BioDiagramModalityRenderer",
+      "renderer_path": "src/components/workspace/modalities/BioDiagramModalityRenderer.jsx",
+      "generator_file": "caps-ai-backend/app/utils/life_sciences/ls10_transport_systems_animals_generator.py",
+      "master_component": "heart",
+      "renderer_class": "anatomy_vector",
+      "view": "coronal_section",
+      "scale": "organ",
+      "grade_mask": "g10",
+      "simulation_id": "cardiac_cycle",
+      "states": [
+        "atrial_systole",
+        "ventricular_systole",
+        "general_diastole"
+      ],
+      "required_fields": [
+        "image_type",
+        "pins",
+        "landmarks",
+        "state",
+        "viewBox"
+      ],
+      "evidence": [
+        "curriculum_docs_auto/LifeSciences_Gr10/Term 2/05. Transport systems in animals.md"
+      ],
+      "need_tier": "Essential",
+      "test_id": "bio-diagram-canvas",
+      "status": "built",
+      "asset": {
+        "file": "src/assets/diagrams/heart/heart_coronal.svg",
+        "source": "Servier Medical Art (CC-BY 4.0) / Wikimedia Commons",
+        "licence": "CC-BY 4.0",
+        "accuracy_review": "passed"
+      },
+      "subskill_builder": "caps-ai-backend/app/utils/life_sciences/heart_generator.py"
+    },
+    {
+      "id": "ps12_doppler_effect",
+      "name": "Doppler Effect Wavefront Propagation & Frequency Shift",
+      "subject": "Physical Sciences",
+      "grade": 12,
+      "term": 2,
+      "topic": "The Doppler effect",
+      "source": "banked",
+      "spec_key": "diagram_spec",
+      "renderer": "BioDiagramModalityRenderer",
+      "renderer_path": "src/components/workspace/modalities/BioDiagramModalityRenderer.jsx",
+      "generator_file": "caps-ai-backend/app/utils/physical_sciences/ps12_doppler_effect_generator.py",
+      "required_fields": [
+        "image_type",
+        "pins",
+        "landmarks",
+        "viewBox"
+      ],
+      "evidence": [
+        "curriculum_docs_auto/PhysicalSciences_Gr12/Term 2/04. The Doppler effect.md"
+      ],
+      "need_tier": "Essential",
+      "test_id": "bio-diagram-canvas",
+      "status": "built"
+    }
+  ],
+  "visual_aids": [
+    {
+      "id": "aid_periodic_table",
+      "name": "118-Element Interactive Periodic Table & Electron Shell Explorer",
+      "component_path": "src/components/workspace/visual_aids/PeriodicTableAid.jsx",
+      "test_id": "periodic-table-aid",
+      "category": "Chemistry & Matter",
+      "curriculum_reach": "Serves 18 topics across Natural Sciences (Gr 7-9) and Physical Sciences (Gr 10-12)",
+      "features": [
+        "118 elements grid",
+        "Bohr shells concentric SVG",
+        "Pauling electronegativity heatmap",
+        "spdf electron configurations",
+        "Valence electron tracker"
+      ],
+      "status": "built"
+    },
+    {
+      "id": "aid_unit_circle_trig",
+      "name": "Dynamic Cartesian Unit Circle & Simultaneous Waveform Generator",
+      "component_path": "src/components/workspace/visual_aids/UnitCircleTrigAid.jsx",
+      "test_id": "unit-circle-aid",
+      "category": "Mathematics & Waves",
+      "curriculum_reach": "Serves 14 topics across Mathematics (Gr 10-12) and Technical Mathematics (Gr 10-12)",
+      "features": [
+        "Angle theta slider 0-360 deg",
+        "Exact surd ratios table",
+        "ASTC quadrant rule indicators",
+        "Simultaneous sine & cosine waveform trace",
+        "Pythagorean identity verification"
+      ],
+      "status": "built"
+    },
+    {
+      "id": "aid_biomolecular_structure",
+      "name": "Biomolecular 3D Structure Viewer & Mol* Sidecar Integration",
+      "component_path": "src/components/workspace/visual_aids/BiomolecularStructureAid.jsx",
+      "test_id": "biomolecular-structure-aid",
+      "category": "Life Sciences & Genetics",
+      "curriculum_reach": "Serves 7 topics across Life Sciences (Gr 10-12) and Natural Sciences (Gr 9)",
+      "features": [
+        "B-DNA double helix preview",
+        "tRNA L-shaped tertiary fold",
+        "Hemoglobin tetramer",
+        "Lysozyme enzyme active site",
+        "One-click Mol* 3D Sidecar launch (sidecar://biomolecular-structure-viewer)"
+      ],
+      "status": "built"
+    },
+    {
+      "id": "aid_organic_chemistry_3d",
+      "name": "3D Organic Chemistry CPK Molecular Explorer",
+      "component_path": "src/components/workspace/modalities/OrganicChemistry3DViewer.jsx",
+      "test_id": "organic-chem-canvas",
+      "category": "Physical Sciences",
+      "curriculum_reach": "Serves Physical Sciences Gr 12 Organic Chemistry topics",
+      "features": [
+        "3D Three.js CPK molecular models",
+        "Rotatable conformations",
+        "Chain isomer comparisons",
+        "Intermolecular force annotations"
+      ],
+      "status": "built"
+    },
+    {
+      "id": "aid_electrodynamics_motor",
+      "name": "Electrodynamics Armature & Live Oscilloscope",
+      "component_path": "src/components/workspace/modalities/ElectrodynamicsMotorViewer.jsx",
+      "test_id": "electrodynamics-canvas",
+      "category": "Physical Sciences",
+      "curriculum_reach": "Serves Physical Sciences Gr 12 Electrodynamics topics",
+      "features": [
+        "Rotating 3D/2D armature",
+        "Magnetic flux linkage calculation",
+        "Live induced EMF oscilloscope",
+        "AC generator vs DC motor mode switcher"
+      ],
+      "status": "built"
+    },
+    {
+      "id": "aid_geometric_nets_3d",
+      "name": "3D Geometric Nets Polyhedron Folding Explorer",
+      "component_path": "src/components/workspace/modalities/GeometricNets3DViewer.jsx",
+      "test_id": "geometric-nets-canvas",
+      "category": "Mathematics",
+      "curriculum_reach": "Serves Mathematics Gr 7-9 and Technical Mathematics Gr 10 3D Geometry topics",
+      "features": [
+        "3D net folding/unfolding simulation",
+        "Cube, prisms, pyramids, octahedron, dodecahedron",
+        "Euler formula verification (F + V - E = 2)",
+        "Faces, vertices, edges counters"
+      ],
+      "status": "built"
+    },
+    {
+      "id": "aid_cardiovascular_atlas",
+      "name": "Human Heart & Cardiac Cycle Reference Atlas",
+      "component_path": "src/components/workspace/visual_aids/CardiovascularAtlasAid.jsx",
+      "test_id": "cardiovascular-atlas-aid",
+      "category": "Life & Natural Sciences",
+      "curriculum_reach": "Serves Natural Sciences Gr 9 (Circulatory & respiratory systems) and Life Sciences Gr 10 (Transport systems in animals)",
+      "features": [
+        "3D Textbook Coronal Cross-Section (unlabeled medical master)",
+        "Directional Blood Flow Vector Schematic (Wapcaplet CC-BY-SA)",
+        "2D Examination Ink-Stipple Line-Art",
+        "Interactive 3-phase Cardiac Cycle Explorer (Atrial Systole, Ventricular Systole Lubb, General Diastole Dubb)"
+      ],
+      "status": "built"
+    },
+    {
+      "id": "aid_atomic_bonding_lattice",
+      "name": "3D Atomic Structure, Chemical Bonding & Crystal Lattices Atlas",
+      "component_path": "src/components/workspace/visual_aids/AtomicBondingLatticeAtlasAid.jsx",
+      "test_id": "atomic-bonding-lattice-aid",
+      "category": "Chemistry & Matter",
+      "curriculum_reach": "Serves Natural Sciences (Gr 8-9) and Physical Sciences (Gr 10-12) Atomic Structure, Bonding & Intermolecular Forces",
+      "features": [
+        "3D Bohr shells vs s/p orbital clouds",
+        "3D NaCl ionic cubic lattice with water hydration dipole toggle",
+        "3D Diamond sp3 tetrahedral vs Graphite sp2 delocalised electron layers",
+        "3D Metallic Cu2+ lattice in a mobile electron sea",
+        "3D VSEPR molecular geometry & electronegativity dipole popovers"
+      ],
+      "status": "built"
+    },
+    {
+      "id": "aid_kinetic_matter_states",
+      "name": "3D Kinetic Theory of Matter, States & Ideal Gas Piston Explorer",
+      "component_path": "src/components/workspace/visual_aids/KineticMatterStatesAtlasAid.jsx",
+      "test_id": "kinetic-matter-states-aid",
+      "category": "Chemistry & Matter",
+      "curriculum_reach": "Serves Natural Sciences (Gr 7-8) and Physical Sciences (Gr 10-11) States of Matter, Heating Curves & Ideal Gases",
+      "features": [
+        "3D Solid lattice vibration, Liquid cluster flow, and Gas elastic collisions",
+        "Latent heat melting & boiling plateaus where bonds break at constant T",
+        "Movable 3D piston wall demonstrating Boyle Law P1V1 = P2V2",
+        "Synchronized 2D Heating Curve T(Q) and P-V isotherm chart"
+      ],
+      "status": "built"
+    },
+    {
+      "id": "aid_circuit_potential_atlas",
+      "name": "3D Electric Circuit Potential Landscape & Resistor Lattice Collision Lab",
+      "component_path": "src/components/workspace/visual_aids/CircuitPotentialAtlasAid.jsx",
+      "test_id": "circuit-potential-atlas-aid",
+      "category": "Physical & Natural Sciences",
+      "curriculum_reach": "Serves Natural Sciences (Gr 8-9) and Physical Sciences (Gr 10-12) Electric Circuits & Internal Resistance",
+      "features": [
+        "3D vertical voltage elevation y proportional to V(x)",
+        "Microscopic electron collisions & deceleration inside resistor lattice ions",
+        "Joule heating thermal glow P = I^2R and internal resistance lost volts (Ir)",
+        "Series vs Parallel branch current splitting and synchronized V(x) profile"
+      ],
+      "status": "built"
+    },
+    {
+      "id": "aid_newton_mechanics_atlas",
+      "name": "3D Inclined Plane & Free-Body Vector Resolution Explorer",
+      "component_path": "src/components/workspace/visual_aids/NewtonMechanicsAtlasAid.jsx",
+      "test_id": "newton-mechanics-atlas-aid",
+      "category": "Physical Sciences",
+      "curriculum_reach": "Serves Physical Sciences (Gr 11-12) Newton Laws, Vectors & Work-Energy-Power",
+      "features": [
+        "3D inclined plane with live trigonometric component decomposition (Fg|| = mg sin theta, Fg_perp = mg cos theta)",
+        "Interactive click/hover CalculationPopoverCard for every 3D force vector",
+        "Synchronized Force vs Incline Angle theta curves"
+      ],
+      "status": "built"
+    },
+    {
+      "id": "aid_kinematics_projectile_atlas",
+      "name": "3D Vertical Projectile Strobe & Doppler Wavefront Explorer",
+      "component_path": "src/components/workspace/visual_aids/KinematicsProjectileAtlasAid.jsx",
+      "test_id": "kinematics-projectile-atlas-aid",
+      "category": "Physical Sciences",
+      "curriculum_reach": "Serves Physical Sciences (Gr 10-12) Equations of Motion, Vertical Projectile Motion & Doppler Effect",
+      "features": [
+        "Stroboscopic 3D free-fall trajectory showing vy = 0 at apex while g = 9.8 m/s^2 downwards",
+        "3D Doppler compressed front wavefront rings vs stretched rear wavefronts",
+        "Synchronized velocity-time vy(t) and position-time y(t) graphs"
+      ],
+      "status": "built"
+    },
+    {
+      "id": "aid_electrochemistry_titration_atlas",
+      "name": "3D Galvanic Cell & Burette Acid-Base Titration Lab",
+      "component_path": "src/components/workspace/visual_aids/ElectrochemistryAndTitrationAtlasAid.jsx",
+      "test_id": "electrochemistry-titration-atlas-aid",
+      "category": "Physical Sciences",
+      "curriculum_reach": "Serves Physical Sciences (Gr 11-12) Electrochemistry, Redox & Acid-Base Titrations",
+      "features": [
+        "3D Zn-Cu galvanic cell with anode oxidation, cathode plating & KNO3 salt bridge migration",
+        "3D burette and conical flask titration with indicator colour shifts",
+        "Synchronized sigmoidal pH equivalence curve"
+      ],
+      "status": "built"
+    },
+    {
+      "id": "aid_trig_3d_elevation",
+      "name": "3D Trigonometry Height, Bearing & Plane Unfolder",
+      "component_path": "src/components/workspace/visual_aids/Trig3DElevationAtlasAid.jsx",
+      "test_id": "trig-3d-elevation-atlas-aid",
+      "category": "Mathematics",
+      "curriculum_reach": "Serves Mathematics & Technical Mathematics (Gr 11-12) 2D and 3D Trigonometry",
+      "features": [
+        "3D vertical right-angled elevation triangle hinged to horizontal bearing triangle",
+        "One-click Unfold Vertical Triangle Flat toggle exposing shared edge PA",
+        "Interactive Sine, Cosine, and Area Rule calculation popovers"
+      ],
+      "status": "built"
+    },
+    {
+      "id": "aid_calculus_first_principles",
+      "name": "3D Calculus Box Volume Optimization & Secant-to-Tangent Limit",
+      "component_path": "src/components/workspace/visual_aids/CalculusFirstPrinciplesAtlasAid.jsx",
+      "test_id": "calculus-first-principles-atlas-aid",
+      "category": "Mathematics",
+      "curriculum_reach": "Serves Mathematics & Technical Mathematics (Gr 12) Differential Calculus & Optimization",
+      "features": [
+        "3D folded open-top tray showing corner cut x maximizing volume where V(x) derivative = 0",
+        "First principles secant chord converging onto tangent gradient as h -> 0",
+        "Synchronized cubic volume curve V(x)"
+      ],
+      "status": "built"
+    },
+    {
+      "id": "aid_euclidean_circle_theorem",
+      "name": "3D-Layered Euclidean Circle Theorem Proof Unfolder",
+      "component_path": "src/components/workspace/visual_aids/EuclideanCircleTheoremAtlasAid.jsx",
+      "test_id": "euclidean-circle-theorem-atlas-aid",
+      "category": "Mathematics",
+      "curriculum_reach": "Serves Mathematics & Technical Mathematics (Gr 11-12) Euclidean Circle Geometry",
+      "features": [
+        "Explodes overlapping isosceles radius triangles (OA = OP = OB = r) into 3D elevation layers",
+        "Interactive Angle at Centre = 2x Angle at Circumference and Tan-Chord theorem derivations"
+      ],
+      "status": "built"
+    },
+    {
+      "id": "aid_digestive_peristalsis",
+      "name": "3D Digestive Tract Peristalsis Wave, Enzyme pH & Villus Absorption",
+      "component_path": "src/components/workspace/visual_aids/DigestivePeristalsisAtlasAid.jsx",
+      "test_id": "digestive-peristalsis-atlas-aid",
+      "category": "Life & Natural Sciences",
+      "curriculum_reach": "Serves Natural Sciences (Gr 9) Digestive System and Life Sciences (Gr 11) Animal Nutrition",
+      "features": [
+        "3D cutaway smooth muscle tube showing circular muscle constriction behind bolus & longitudinal relaxation ahead",
+        "Anti-gravity swallow tilt toggle proving peristalsis is an active muscular wave",
+        "Regional alimentary pH enzyme curves (Amylase pH 7, Pepsin pH 2, Lipase/Trypsin pH 8)",
+        "3D intestinal villus showing Lacteal lipid transport vs Hepatic Portal capillary absorption"
+      ],
+      "status": "built"
+    },
+    {
+      "id": "aid_human_eye_accommodation",
+      "name": "3D Human Eye Accommodation & Pupillary Reflex Explorer",
+      "component_path": "src/components/workspace/visual_aids/HumanEyeAccommodationAtlasAid.jsx",
+      "test_id": "human-eye-accommodation-atlas-aid",
+      "category": "Life Sciences",
+      "curriculum_reach": "Serves Life Sciences (Gr 12) Responding to the Environment: The Human Eye",
+      "features": [
+        "3D ciliary muscle ring contraction, suspensory ligament slackening & elastic lens convexity bulging",
+        "Interactive ray refraction focusing onto the retinal fovea from 6.0 m to 0.20 m",
+        "Antagonistic radial & circular iris muscles for bright vs dim light pupillary reflex"
+      ],
+      "status": "built"
+    },
+    {
+      "id": "aid_physiology_exchange",
+      "name": "3D Thoracic Breathing, Nephron Osmoregulation & Carrying Capacity",
+      "component_path": "src/components/workspace/visual_aids/PhysiologyExchangeAtlasAid.jsx",
+      "test_id": "physiology-exchange-atlas-aid",
+      "category": "Life & Natural Sciences",
+      "curriculum_reach": "Serves Life Sciences (Gr 11-12) Gaseous Exchange, Excretion & Population Ecology",
+      "features": [
+        "3D diaphragm flattening & ribcage expansion demonstrating Boyle Law inhalation",
+        "3D Nephron Loop of Henle counter-current multiplier & ADH collecting duct aquaporin permeability",
+        "3D habitat carrying capacity K and synchronized logistic S-curve"
+      ],
+      "status": "built"
+    },
+    {
+      "id": "aid_genetics_meiosis",
+      "name": "3D Meiosis Chiasmata Crossing-Over & Anaphase Non-Disjunction",
+      "component_path": "src/components/workspace/visual_aids/GeneticsMeiosisAtlasAid.jsx",
+      "test_id": "genetics-meiosis-atlas-aid",
+      "category": "Life Sciences",
+      "curriculum_reach": "Serves Life Sciences (Gr 12) Meiosis, Genetic Variation & Aneuploidy",
+      "features": [
+        "3D homologous bivalent synapsis and non-sister chromatid exchange at chiasmata",
+        "Metaphase I independent assortment (2^23 combinations)",
+        "Anaphase I normal disjunction vs non-disjunction (Trisomy 21 / Down Syndrome)"
+      ],
+      "status": "built"
+    },
+    {
+      "id": "aid_polynomial_functions_atlas",
+      "name": "Cartesian Functions & Polynomial Coefficient Lab",
+      "component_path": "src/components/workspace/visual_aids/PolynomialFunctionsAtlasAid.jsx",
+      "test_id": "polynomial-functions-atlas-aid",
+      "category": "Mathematics",
+      "curriculum_reach": "Serves Mathematics & Technical Mathematics (Gr 8-12) Linear, Quadratic, Hyperbolic, Exponential & Cubic Functions",
+      "features": [
+        "Dual-capacity Annotated Master Atlas + Live Coefficient Sliders (a, b, c, d / p, q)",
+        "Real-time drifting roots, stationary turning points f'(x)=0, point of inflection f''(x)=0, and asymptotes",
+        "Interactive derivative tangent scrubber at x0 with CalculationPopoverCard"
+      ],
+      "status": "built"
+    },
+    {
+      "id": "aid_number_patterns_growth",
+      "name": "Number Patterns & Quadratic Sequence Growth Explorer",
+      "component_path": "src/components/workspace/visual_aids/NumberPatternsGrowthAtlasAid.jsx",
+      "test_id": "number-patterns-growth-atlas-aid",
+      "category": "Mathematics",
+      "curriculum_reach": "Serves Mathematics (Gr 7-12) Linear and Quadratic Number Patterns & Sequences",
+      "features": [
+        "Dual-capacity Finite Difference Table Atlas (Delta_1 & Delta_2 = 2a) + Live Stage Scrubber (n = 1..10)",
+        "Visual decomposition of constant core vs growing perimeter in contrasting ink",
+        "Synchronized Cartesian sequence plot (n, Tn) with CalculationPopoverCard"
+      ],
+      "status": "built"
+    }
+  ]
+}

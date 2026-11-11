@@ -28,7 +28,7 @@ export default defineConfig({
   },
   // Spin up or reuse local Vite dev server on port 5173
   webServer: {
-    command: process.platform === 'win32' ? 'npm.cmd run dev' : 'npm run dev',
+    command: process.platform === 'win32' ? 'npx.cmd vite preview --port 5173 --host 127.0.0.1' : 'npx vite preview --port 5173 --host 127.0.0.1',
     url: 'http://127.0.0.1:5173',
     reuseExistingServer: true,
     timeout: 120000,

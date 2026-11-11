@@ -5,7 +5,7 @@ Covers:
   - Infinite Geometric Series (Convergence and Sum to Infinity): S_inf = a / (1 - r) for -1 < r < 1.
   - Sigma Notation evaluation: Sum_{k=1}^n (ak + b) and Sum_{k=1}^inf a * r^(k - 1).
 
-Follows South African CAPS curriculum specifications and the 6-Pillar Generator Contract.
+Follows South African national curriculum specifications and the 6-Pillar Generator Contract.
 Strictly zero-LLM, deterministic SymPy execution.
 """
 from __future__ import annotations

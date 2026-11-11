@@ -840,34 +840,29 @@ def generate_questions(
 
     pool: List[Dict[str, Any]] = []
 
-    # Each call generates deterministic content from r.
-    pool.append(_make_current_account_question(r=r, difficulty=difficulty, mode=mode))
-    pool.append(_make_appropriation_account_question(r=r, difficulty=difficulty, mode=mode))
-    pool.append(_make_capital_account_question(r=r, difficulty=difficulty, mode=mode))
-    pool.append(_make_partnership_full_bundle(r=r, difficulty=difficulty, mode=mode))
-    pool.append(_make_cash_journals_eft_update_question(r=r, difficulty=difficulty, mode=mode))
-    pool.append(_make_eft_advantages_typed(r=r, mode=mode))
-    pool.append(_make_eft_environment_changes_typed(r=r, mode=mode))
-    pool.append(_make_adjustments_effect_matrix(r=r, difficulty=difficulty, mode=mode))
+    q_curr = _make_current_account_question(r=r, difficulty=difficulty, mode=mode)
+    q_curr["subskill"] = "partners_current_account_ledger"
+    q_appr = _make_appropriation_account_question(r=r, difficulty=difficulty, mode=mode)
+    q_appr["subskill"] = "appropriation_account_ledger"
+    q_cap = _make_capital_account_question(r=r, difficulty=difficulty, mode=mode)
+    q_cap["subskill"] = "partners_capital_account_ledger"
+    q_full = _make_partnership_full_bundle(r=r, difficulty=difficulty, mode=mode)
+    q_full["subskill"] = "partnership_ledger_and_appropriation"
+    q_mat = _make_adjustments_effect_matrix(r=r, difficulty=difficulty, mode=mode)
+    q_mat["subskill"] = "partnership_year_end_adjustments_matrix"
+
+    pool = [q_curr, q_appr, q_cap, q_full, q_mat]
 
     if subskill_norm in {"current", "current_account", "partners_current"}:
-        pool = [pool[0]]
+        pool = [q_curr]
     elif subskill_norm in {"appropriation", "appropriation_account"}:
-        pool = [pool[1]]
+        pool = [q_appr]
     elif subskill_norm in {"capital", "capital_account"}:
-        pool = [pool[2]]
+        pool = [q_cap]
     elif subskill_norm in {"bundle", "workflow", "full"}:
-        pool = [pool[3]]
-    elif subskill_norm in {"cash", "cash-journals", "journals"}:
-        pool = [pool[4], pool[5], pool[6]]
-    elif subskill_norm in {"eft", "eft-journals", "eft_journals", "cash-eft"}:
-        pool = [pool[4]]
-    elif subskill_norm in {"eft-advantages", "eft_advantages"}:
-        pool = [pool[5]]
-    elif subskill_norm in {"eft-environment", "eft_environment", "eft-changes", "eft_changes"}:
-        pool = [pool[6]]
+        pool = [q_full]
     elif subskill_norm in {"adjustments", "equation", "matrix"}:
-        pool = [pool[7]]
+        pool = [q_mat]
 
     if qtype_norm != "mixed":
         pool = [q for q in pool if str(q.get("question_type") or "").strip().lower() == qtype_norm]

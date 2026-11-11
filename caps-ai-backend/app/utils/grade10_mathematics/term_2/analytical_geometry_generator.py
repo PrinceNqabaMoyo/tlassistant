@@ -98,6 +98,18 @@ def _build_distance_drill(r: random.Random) -> Dict[str, Any]:
     return {
         "question_id": make_id("dist"),
         "subskill": "distance_formula",
+        "modality": "diagram",
+        "diagram_spec": {
+        "diagram_role": "context",
+            "kind": "triangle",
+            "points": {
+                l1: [float(x1), float(y1)],
+                l2: [float(x2), float(y2)],
+                "C": [float(x2), float(y1)],
+            },
+            "vertices": [l1, l2, "C"],
+            "triangles": [[l1, l2, "C"]],
+        },
         "question_type": "math_short",
         "prompt": prompt,
         "prompt_latex": prompt,
@@ -177,6 +189,18 @@ def _build_midpoint_drill(r: random.Random) -> Dict[str, Any]:
     return {
         "question_id": make_id("mid"),
         "subskill": "midpoint_formula",
+        "modality": "diagram",
+        "diagram_spec": {
+        "diagram_role": "context",
+            "kind": "triangle",
+            "points": {
+                "P": [float(x1), float(y1)],
+                "Q": [float(x2), float(y2)],
+                "M": [float(x1 + x2) / 2.0, float(y1 + y2) / 2.0],
+            },
+            "vertices": ["P", "Q", "M"],
+            "triangles": [["P", "Q", "M"]],
+        },
         "question_type": "math_short",
         "prompt": prompt,
         "prompt_latex": prompt,
@@ -412,6 +436,18 @@ def _build_compound_drill(r: random.Random) -> Dict[str, Any]:
     return {
         "question_id": make_id("compound_geom"),
         "subskill": "compound_analytical_geometry",
+        "modality": "diagram",
+        "diagram_spec": {
+        "diagram_role": "context",
+            "kind": "triangle",
+            "points": {
+                "A": [float(x_a), float(y_a)],
+                "B": [float(x_b), float(y_b)],
+                "C": [float(x_c), float(y_c)],
+            },
+            "vertices": ["A", "B", "C"],
+            "triangles": [["A", "B", "C"]],
+        },
         "question_type": "math_steps",
         "prompt": prompt,
         "prompt_latex": prompt,

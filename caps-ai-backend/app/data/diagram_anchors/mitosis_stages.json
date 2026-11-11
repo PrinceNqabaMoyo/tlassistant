@@ -1,0 +1,159 @@
+{
+  "master": "mitosis_stages",
+  "view": "four_phase_somatic_division_grid",
+  "viewBox": "0 0 600 480",
+  "anchors": {
+    "prophase": {
+      "name": "Stage 1: Prophase",
+      "synonyms": [
+        "prophase",
+        "early prophase",
+        "late prophase",
+        "stage a",
+        "stage 1"
+      ],
+      "anchor": [
+        105,
+        250
+      ],
+      "default_box": [
+        60,
+        110
+      ],
+      "side": "left",
+      "grades": [
+        "g10"
+      ],
+      "description": "First phase of mitosis: replicated chromatin condenses into distinct double-chromatid chromosomes, centrioles migrate to poles, and the nuclear envelope disintegrates."
+    },
+    "metaphase": {
+      "name": "Stage 2: Metaphase",
+      "synonyms": [
+        "metaphase",
+        "stage b",
+        "stage 2"
+      ],
+      "anchor": [
+        260,
+        246
+      ],
+      "default_box": [
+        60,
+        230
+      ],
+      "side": "left",
+      "grades": [
+        "g10"
+      ],
+      "description": "Second phase of mitosis: chromosomes line up in single file along the equatorial metaphase plate, with spindle fibers attached to kinetochores."
+    },
+    "spindle_fibers": {
+      "name": "Spindle Fibers (Microtubules)",
+      "synonyms": [
+        "spindle fibers",
+        "spindle",
+        "mitotic spindle",
+        "microtubules"
+      ],
+      "anchor": [
+        235,
+        205
+      ],
+      "default_box": [
+        60,
+        360
+      ],
+      "side": "left",
+      "grades": [
+        "g10"
+      ],
+      "description": "Protein microtubule filaments that polymerize from centrosomes and attach to centromeres to mechanically maneuver and segregate chromosomes."
+    },
+    "anaphase": {
+      "name": "Stage 3: Anaphase",
+      "synonyms": [
+        "anaphase",
+        "stage c",
+        "stage 3"
+      ],
+      "anchor": [
+        365,
+        215
+      ],
+      "default_box": [
+        540,
+        110
+      ],
+      "side": "right",
+      "grades": [
+        "g10"
+      ],
+      "description": "Third phase of mitosis: centromeres split and contracting spindle fibers pull sister chromatids apart to opposite poles as V-shaped daughter chromosomes."
+    },
+    "centromere": {
+      "name": "Centromere (Kinetochore)",
+      "synonyms": [
+        "centromere",
+        "kinetochore",
+        "primary constriction"
+      ],
+      "anchor": [
+        212,
+        246
+      ],
+      "default_box": [
+        540,
+        220
+      ],
+      "side": "left",
+      "grades": [
+        "g10"
+      ],
+      "description": "Constricted chromosome region that binds sister chromatids together and serves as the attachment point for kinetochore spindle fibers."
+    },
+    "cleavage_furrow": {
+      "name": "Cleavage Furrow (Cytokinesis)",
+      "synonyms": [
+        "cleavage furrow",
+        "furrow",
+        "cytokinesis furrow"
+      ],
+      "anchor": [
+        495,
+        250
+      ],
+      "default_box": [
+        540,
+        310
+      ],
+      "side": "right",
+      "grades": [
+        "g10"
+      ],
+      "description": "Contractile ring of actin and myosin microfilaments that constricts the plasma membrane inward during animal cell cytokinesis."
+    },
+    "telophase_cytokinesis": {
+      "name": "Stage 4: Telophase & Cytokinesis",
+      "synonyms": [
+        "telophase",
+        "cytokinesis",
+        "telophase and cytokinesis",
+        "stage d",
+        "stage 4"
+      ],
+      "anchor": [
+        512,
+        305
+      ],
+      "default_box": [
+        540,
+        400
+      ],
+      "side": "right",
+      "grades": [
+        "g10"
+      ],
+      "description": "Final phase: daughter chromosomes reach opposite poles, nuclear envelopes reform, and a cleavage furrow pinches the cytoplasm into two genetically identical daughter cells."
+    }
+  }
+}

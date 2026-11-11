@@ -1,0 +1,132 @@
+"""Grade 7 Mathematics - Relationships Between Variables Generator (50 Semantic Archetypes).
+Grounded in CAPS: curriculum_docs_auto/Mathematics_Gr7/Term 2/03. Relationships between variables.md
+Focus: Constants vs variables, independent vs dependent, verbal/formula/table mappings, rate interpretations, and variable autopsies.
+"""
+from __future__ import annotations
+
+import random
+from typing import Any, Dict, List, Optional
+
+from .relationships_variables_archetypes_01_25 import (
+    arch_01_constant_vs_variable_definition_and_distinction,
+    arch_02_identify_constant_quantity_in_real_world_context,
+    arch_03_identify_variable_quantity_in_real_world_context,
+    arch_04_distinguish_constants_and_variables_in_school_context,
+    arch_05_distinguish_constants_and_variables_in_sports_context,
+    arch_06_independent_variable_concept_input,
+    arch_07_dependent_variable_concept_output,
+    arch_08_identifying_independent_and_dependent_in_car_travel,
+    arch_09_identifying_independent_and_dependent_in_shopping,
+    arch_10_identifying_independent_and_dependent_in_plant_growth,
+    arch_11_identifying_independent_and_dependent_in_mobile_data,
+    arch_12_identifying_independent_and_dependent_in_recipe_scaling,
+    arch_13_verbal_description_translate_to_formula_simple,
+    arch_14_verbal_description_translate_to_formula_two_step,
+    arch_15_verbal_description_translate_to_formula_brackets,
+    arch_16_formula_translate_to_verbal_description,
+    arch_17_table_of_variables_forward_evaluation_consecutive,
+    arch_18_table_of_variables_forward_evaluation_stepped,
+    arch_19_table_of_variables_forward_evaluation_large_input,
+    arch_20_table_of_variables_reverse_calculation_solve_input,
+    arch_21_table_of_variables_finding_the_rule_between_rows,
+    arch_22_table_of_variables_identifying_constant_ratio,
+    arch_23_match_verbal_table_flow_diagram_representations,
+    arch_24_match_pattern_of_tiles_to_variable_relationship,
+    arch_25_match_matchstick_pattern_to_variable_relationship,
+)
+from .relationships_variables_archetypes_26_50 import (
+    arch_26_relationship_formula_perimeter_of_rectangles,
+    arch_27_relationship_formula_cost_of_hiring_hall_fixed_plus_hourly,
+    arch_28_relationship_formula_water_consumption_billing,
+    arch_29_relationship_formula_electricity_units_and_cost,
+    arch_30_relationship_formula_distance_from_speed_and_time,
+    arch_31_relationship_formula_converting_temperature_celsius_fahrenheit_concept,
+    arch_32_relationship_formula_mass_and_volume_density_concept,
+    arch_33_variable_relationship_direct_proportion_multiplication_factor,
+    arch_34_variable_relationship_inverse_proportion_concept,
+    arch_35_variable_relationship_identifying_non_relationships,
+    arch_36_variable_relationship_evaluating_at_zero_starting_value,
+    arch_37_variable_relationship_determining_rate_of_change,
+    arch_38_variable_relationship_rate_of_change_units_interpretation,
+    arch_39_variable_relationship_positive_correlation_statement,
+    arch_40_variable_relationship_negative_correlation_statement,
+    arch_41_variable_relationship_finding_value_from_graph_story,
+    arch_42_variable_relationship_identifying_break_even_value,
+    arch_43_variable_relationship_comparing_rates_of_two_linear_models,
+    arch_44_variable_relationship_fractional_rate_per_unit,
+    arch_45_variable_relationship_decimal_rate_per_unit,
+    arch_46_variable_relationship_identifying_input_restrictions_domain,
+    arch_47_variable_relationship_identifying_output_restrictions_range,
+    arch_48_variable_relationship_detecting_misleading_assumed_causation,
+    arch_49_variable_relationship_algebraic_rearrangement_for_input,
+    arch_50_variable_relationship_comprehensive_three_phase_autopsy,
+)
+
+ARCHETYPE_BUILDERS = {
+    "01_constant_vs_variable_definition_and_distinction": arch_01_constant_vs_variable_definition_and_distinction,
+    "02_identify_constant_quantity_in_real_world_context": arch_02_identify_constant_quantity_in_real_world_context,
+    "03_identify_variable_quantity_in_real_world_context": arch_03_identify_variable_quantity_in_real_world_context,
+    "04_distinguish_constants_and_variables_in_school_context": arch_04_distinguish_constants_and_variables_in_school_context,
+    "05_distinguish_constants_and_variables_in_sports_context": arch_05_distinguish_constants_and_variables_in_sports_context,
+    "06_independent_variable_concept_input": arch_06_independent_variable_concept_input,
+    "07_dependent_variable_concept_output": arch_07_dependent_variable_concept_output,
+    "08_identifying_independent_and_dependent_in_car_travel": arch_08_identifying_independent_and_dependent_in_car_travel,
+    "09_identifying_independent_and_dependent_in_shopping": arch_09_identifying_independent_and_dependent_in_shopping,
+    "10_identifying_independent_and_dependent_in_plant_growth": arch_10_identifying_independent_and_dependent_in_plant_growth,
+    "11_identifying_independent_and_dependent_in_mobile_data": arch_11_identifying_independent_and_dependent_in_mobile_data,
+    "12_identifying_independent_and_dependent_in_recipe_scaling": arch_12_identifying_independent_and_dependent_in_recipe_scaling,
+    "13_verbal_description_translate_to_formula_simple": arch_13_verbal_description_translate_to_formula_simple,
+    "14_verbal_description_translate_to_formula_two_step": arch_14_verbal_description_translate_to_formula_two_step,
+    "15_verbal_description_translate_to_formula_brackets": arch_15_verbal_description_translate_to_formula_brackets,
+    "16_formula_translate_to_verbal_description": arch_16_formula_translate_to_verbal_description,
+    "17_table_of_variables_forward_evaluation_consecutive": arch_17_table_of_variables_forward_evaluation_consecutive,
+    "18_table_of_variables_forward_evaluation_stepped": arch_18_table_of_variables_forward_evaluation_stepped,
+    "19_table_of_variables_forward_evaluation_large_input": arch_19_table_of_variables_forward_evaluation_large_input,
+    "20_table_of_variables_reverse_calculation_solve_input": arch_20_table_of_variables_reverse_calculation_solve_input,
+    "21_table_of_variables_finding_the_rule_between_rows": arch_21_table_of_variables_finding_the_rule_between_rows,
+    "22_table_of_variables_identifying_constant_ratio": arch_22_table_of_variables_identifying_constant_ratio,
+    "23_match_verbal_table_flow_diagram_representations": arch_23_match_verbal_table_flow_diagram_representations,
+    "24_match_pattern_of_tiles_to_variable_relationship": arch_24_match_pattern_of_tiles_to_variable_relationship,
+    "25_match_matchstick_pattern_to_variable_relationship": arch_25_match_matchstick_pattern_to_variable_relationship,
+    "26_relationship_formula_perimeter_of_rectangles": arch_26_relationship_formula_perimeter_of_rectangles,
+    "27_relationship_formula_cost_of_hiring_hall_fixed_plus_hourly": arch_27_relationship_formula_cost_of_hiring_hall_fixed_plus_hourly,
+    "28_relationship_formula_water_consumption_billing": arch_28_relationship_formula_water_consumption_billing,
+    "29_relationship_formula_electricity_units_and_cost": arch_29_relationship_formula_electricity_units_and_cost,
+    "30_relationship_formula_distance_from_speed_and_time": arch_30_relationship_formula_distance_from_speed_and_time,
+    "31_relationship_formula_converting_temperature_celsius_fahrenheit_concept": arch_31_relationship_formula_converting_temperature_celsius_fahrenheit_concept,
+    "32_relationship_formula_mass_and_volume_density_concept": arch_32_relationship_formula_mass_and_volume_density_concept,
+    "33_variable_relationship_direct_proportion_multiplication_factor": arch_33_variable_relationship_direct_proportion_multiplication_factor,
+    "34_variable_relationship_inverse_proportion_concept": arch_34_variable_relationship_inverse_proportion_concept,
+    "35_variable_relationship_identifying_non_relationships": arch_35_variable_relationship_identifying_non_relationships,
+    "36_variable_relationship_evaluating_at_zero_starting_value": arch_36_variable_relationship_evaluating_at_zero_starting_value,
+    "37_variable_relationship_determining_rate_of_change": arch_37_variable_relationship_determining_rate_of_change,
+    "38_variable_relationship_rate_of_change_units_interpretation": arch_38_variable_relationship_rate_of_change_units_interpretation,
+    "39_variable_relationship_positive_correlation_statement": arch_39_variable_relationship_positive_correlation_statement,
+    "40_variable_relationship_negative_correlation_statement": arch_40_variable_relationship_negative_correlation_statement,
+    "41_variable_relationship_finding_value_from_graph_story": arch_41_variable_relationship_finding_value_from_graph_story,
+    "42_variable_relationship_identifying_break_even_value": arch_42_variable_relationship_identifying_break_even_value,
+    "43_variable_relationship_comparing_rates_of_two_linear_models": arch_43_variable_relationship_comparing_rates_of_two_linear_models,
+    "44_variable_relationship_fractional_rate_per_unit": arch_44_variable_relationship_fractional_rate_per_unit,
+    "45_variable_relationship_decimal_rate_per_unit": arch_45_variable_relationship_decimal_rate_per_unit,
+    "46_variable_relationship_identifying_input_restrictions_domain": arch_46_variable_relationship_identifying_input_restrictions_domain,
+    "47_variable_relationship_identifying_output_restrictions_range": arch_47_variable_relationship_identifying_output_restrictions_range,
+    "48_variable_relationship_detecting_misleading_assumed_causation": arch_48_variable_relationship_detecting_misleading_assumed_causation,
+    "49_variable_relationship_algebraic_rearrangement_for_input": arch_49_variable_relationship_algebraic_rearrangement_for_input,
+    "50_variable_relationship_comprehensive_three_phase_autopsy": arch_50_variable_relationship_comprehensive_three_phase_autopsy,
+}
+
+SUBSKILLS = list(ARCHETYPE_BUILDERS.keys())
+
+
+def generate_question(
+    subskill: Optional[str] = None,
+    seed: Optional[int] = None,
+) -> Dict[str, Any]:
+    rng = random.Random(seed) if seed is not None else random.Random()
+    if subskill is None or subskill not in ARCHETYPE_BUILDERS:
+        subskill = rng.choice(SUBSKILLS)
+    builder = ARCHETYPE_BUILDERS[subskill]
+    return builder(rng)
+
+
+generate = generate_question

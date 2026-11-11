@@ -1,5 +1,5 @@
 """Grade 10 & 11 Mathematics — Measurements: Surface Area, Volume & Dimensional Scaling (k-factor).
-Deterministic 6-Pillar Generator conforming to CAPS curriculum standards.
+Deterministic 6-Pillar Generator conforming to national curriculum standards.
 Reference curriculum: curriculum_docs_auto/Mathematics_Gr10/Term 4/01. Measurements.md
 
 Covers:

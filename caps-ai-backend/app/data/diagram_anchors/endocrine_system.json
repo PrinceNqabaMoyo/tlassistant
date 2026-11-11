@@ -1,0 +1,161 @@
+{
+  "master": "endocrine_system",
+  "view": "glandular_anatomic_map",
+  "viewBox": "0 0 600 480",
+  "anchors": {
+    "hypothalamus": {
+      "name": "Hypothalamus",
+      "synonyms": [
+        "hypothalamus",
+        "hypothalamic region"
+      ],
+      "anchor": [
+        282,
+        102
+      ],
+      "default_box": [
+        60,
+        90
+      ],
+      "side": "left",
+      "grades": [
+        "g9",
+        "g12"
+      ],
+      "description": "Region of the brain that integrates the nervous and endocrine systems, synthesizing ADH and neurosecretory releasing factors."
+    },
+    "pituitary_gland": {
+      "name": "Pituitary Gland (Hypophysis)",
+      "synonyms": [
+        "pituitary gland",
+        "pituitary",
+        "hypophysis",
+        "master gland"
+      ],
+      "anchor": [
+        309,
+        124
+      ],
+      "default_box": [
+        540,
+        90
+      ],
+      "side": "right",
+      "grades": [
+        "g9",
+        "g12"
+      ],
+      "description": "Small pea-sized master endocrine gland situated at the base of the brain producing TSH, GH, FSH, LH, ACTH, and storing ADH."
+    },
+    "thyroid_gland": {
+      "name": "Thyroid Gland",
+      "synonyms": [
+        "thyroid",
+        "thyroid gland"
+      ],
+      "anchor": [
+        280,
+        198
+      ],
+      "default_box": [
+        60,
+        180
+      ],
+      "side": "left",
+      "grades": [
+        "g9",
+        "g12"
+      ],
+      "description": "Butterfly-shaped endocrine gland wrapping around the trachea in the neck, secreting thyroxine to regulate basal metabolic rate."
+    },
+    "adrenal_glands": {
+      "name": "Adrenal Glands",
+      "synonyms": [
+        "adrenal glands",
+        "adrenals",
+        "adrenal gland",
+        "suprarenal glands"
+      ],
+      "anchor": [
+        176,
+        294
+      ],
+      "default_box": [
+        60,
+        270
+      ],
+      "side": "left",
+      "grades": [
+        "g9",
+        "g12"
+      ],
+      "description": "Pyramidal caps atop each kidney; cortex secretes aldosterone (sodium reabsorption) while medulla secretes adrenaline (fight or flight)."
+    },
+    "pancreas": {
+      "name": "Pancreas (Islets of Langerhans)",
+      "synonyms": [
+        "pancreas",
+        "islets of langerhans",
+        "pancreatic islets"
+      ],
+      "anchor": [
+        410,
+        300
+      ],
+      "default_box": [
+        540,
+        270
+      ],
+      "side": "right",
+      "grades": [
+        "g9",
+        "g12"
+      ],
+      "description": "Elongated gland behind stomach; endocrine Islets of Langerhans secrete insulin (beta cells) and glucagon (alpha cells) for blood glucose homeostasis."
+    },
+    "ovaries": {
+      "name": "Ovaries (Female Gonads)",
+      "synonyms": [
+        "ovaries",
+        "ovary",
+        "female gonads"
+      ],
+      "anchor": [
+        210,
+        350
+      ],
+      "default_box": [
+        60,
+        360
+      ],
+      "side": "left",
+      "grades": [
+        "g9",
+        "g12"
+      ],
+      "description": "Paired pelvic glands in females producing estrogen (endometrium thickening, puberty) and progesterone (maintains pregnancy)."
+    },
+    "testes": {
+      "name": "Testes (Male Gonads)",
+      "synonyms": [
+        "testes",
+        "testis",
+        "male gonads"
+      ],
+      "anchor": [
+        408,
+        392
+      ],
+      "default_box": [
+        540,
+        360
+      ],
+      "side": "right",
+      "grades": [
+        "g9",
+        "g12"
+      ],
+      "description": "Paired gonads inside the external scrotum secreting testosterone, which stimulates spermatogenesis and develops secondary male sexual traits."
+    }
+  }
+}

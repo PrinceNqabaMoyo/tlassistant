@@ -125,39 +125,36 @@ def _calc(prompt: str, correct_value: float, unit: str, formula: str, formula_hi
 
 
 def _wordbank(prompt: str, left_header: str, right_header: str, rows_data: List[Dict[str, Any]], guidelines: List[str]) -> Dict[str, Any]:
+    headers = ["Aspect", left_header, right_header]
     rows = []
-    word_bank: List[Dict[str, str]] = []
-    correct_map: Dict[str, Dict[str, str]] = {}
-    cell_teaching_map: Dict[str, Dict[str, str]] = {}
-    derivation_map: Dict[str, str] = {}
-    cell_hints: Dict[str, str] = {}
+    correct_map: Dict[str, str] = {}
+    phrases: List[str] = []
+    worked_lines: List[str] = []
 
     for idx, row in enumerate(rows_data):
-        left_id = f"w_{idx}_1"
-        right_id = f"w_{idx}_2"
-        rows.append([row["label"], "", ""])
-        word_bank.append({"id": left_id, "text": row["left"], "label": row["left"]})
-        word_bank.append({"id": right_id, "text": row["right"], "label": row["right"]})
-        correct_map[str(idx)] = {"1": left_id, "2": right_id}
-        cell_teaching_map[f"{idx}:1"] = row["left_hint"]
-        cell_teaching_map[f"{idx}:2"] = row["right_hint"]
-        derivation_map[f"{idx}:1"] = row["left_reason"]
-        derivation_map[f"{idx}:2"] = row["right_reason"]
-        cell_hints[f"{idx}:1"] = row["left_hint"]["what_to_enter"]
-        cell_hints[f"{idx}:2"] = row["right_hint"]["what_to_enter"]
+        rows.append([row["label"], f"{{r{idx}_c1}}", f"{{r{idx}_c2}}"])
+        correct_map[f"r{idx}_c1"] = row["left"]
+        correct_map[f"r{idx}_c2"] = row["right"]
+        phrases.extend([row["left"], row["right"]])
+        worked_lines.append(f"- **{row['label']}**: {left_header} = *{row['left']}* | {right_header} = *{row['right']}*")
+
+    phrase_list_str = " | ".join(f"`{p}`" for p in phrases)
+    full_prompt = f"{prompt}\n\n**Phrase Bank:** {phrase_list_str}"
+    worked_sol = "**Completed Comparison**\n\n" + "\n".join(worked_lines)
 
     return {
         "id": _make_id("acct10_indigenous_table_wordbank"),
-        "question_type": "table_wordbank",
-        "prompt": prompt,
-        "table": {"headers": ["Aspect", left_header, right_header], "rows": rows},
-        "word_bank": word_bank,
+        "question_type": "table_fill",
+        "prompt": full_prompt,
+        "question_text": full_prompt,
+        "headers": headers,
+        "rows": rows,
+        "table": {"headers": headers, "rows": rows},
         "correct_map": correct_map,
-        "cell_teaching_map": cell_teaching_map,
-        "derivation_map": derivation_map,
-        "cell_hints": cell_hints,
+        "worked_solution": worked_sol,
+        "canonical_solution": worked_sol,
         "guidelines": guidelines,
-        "expected_answer_type": "table_wordbank",
+        "expected_answer_type": "table_data",
     }
 
 
@@ -743,7 +740,7 @@ def _build_pools() -> Dict[str, List[Callable[[random.Random, str], Dict[str, An
     return {
         "informal_vs_formal": [_q_informal_characteristics, _q_informal_difference, _q_informal_wordbank, _q_compare_advantage, _q_compare_wordbank, _q_informal_credit_mcq],
         "resource_management": [_q_resource_stock, _q_resource_controls, _q_resource_table, _q_resource_capital, _q_resource_inventory_advantage, _q_resource_fixed_assets, _q_resource_daily_cycle, _q_resource_cash_management, _q_resource_wordbank],
-        "business_planning": [_q_planning_demand, _q_planning_points, _q_planning_table],
+        "business_planning": [_q_planning_demand, _q_informal_wordbank, _q_resource_wordbank],
         "pricing_and_markup": [_q_formula_mcq, _q_selling_price, _q_cost_price, _q_markup_amount, _q_pricing_wordbank, _q_pricing_explain, _q_pricing_external_factor],
         "labour_income_expenses": [_q_profit_loss, _q_labour_costs, _q_labour_expense_mcq, _q_labour_wordbank, _q_direct_indirect_explain, _q_calc_expenses_from_profit],
     }
@@ -806,8 +803,8 @@ def _validate_question(question: Dict[str, Any]) -> bool:
             table = question.get("table") or {}
             if not isinstance(table.get("headers"), list) or not isinstance(table.get("rows"), list):
                 return False
-        elif qtype == "table_wordbank":
-            if not question.get("word_bank") or not question.get("correct_map"):
+        elif qtype in ("table_wordbank", "table_fill"):
+            if not question.get("correct_map"):
                 return False
         else:
             return False
@@ -825,12 +822,12 @@ def _finalize(question: Dict[str, Any], subskill: str, difficulty: str) -> Optio
 
 
 def generate_questions(
-    *,
+    count: int = 1,
     subskill: str = "mixed",
     difficulty: str = "easy",
     question_type: str = "mixed",
-    count: int = 1,
     seed: Optional[int] = None,
+    **kwargs,
 ) -> List[Dict[str, Any]]:
     r = _rng(seed)
     resolved_subskill = _normalize_subskill(subskill)
@@ -848,6 +845,8 @@ def generate_questions(
 
     if resolved_question_type != "mixed":
         builders = [item for item in builders if _builder_question_type(item[1]) == resolved_question_type]
+    elif kwargs.get("mode") != "exam":
+        builders = [item for item in builders if _builder_question_type(item[1]) not in ("typed", "table")]
 
     if not builders:
         return []
@@ -859,7 +858,9 @@ def generate_questions(
 
     while len(generated) < requested_count and attempts < max_attempts:
         attempts += 1
-        actual_subskill, builder = r.choice(builders)
+        chosen_sub = r.choice(selected_subskills)
+        sub_builders = [item for item in builders if item[0] == chosen_sub] or builders
+        actual_subskill, builder = r.choice(sub_builders)
         try:
             q_raw = builder(r, resolved_difficulty)
             question = _finalize(q_raw, actual_subskill, resolved_difficulty)
@@ -877,7 +878,9 @@ def generate_questions(
     fallback_attempts = 0
     while len(generated) < requested_count and fallback_attempts < 20:
         fallback_attempts += 1
-        actual_subskill, builder = r.choice(builders)
+        chosen_sub = r.choice(selected_subskills)
+        sub_builders = [item for item in builders if item[0] == chosen_sub] or builders
+        actual_subskill, builder = r.choice(sub_builders)
         try:
             q_raw = builder(r, resolved_difficulty)
             question = _finalize(q_raw, actual_subskill, resolved_difficulty)

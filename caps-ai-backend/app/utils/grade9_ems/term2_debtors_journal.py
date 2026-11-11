@@ -21,43 +21,57 @@ def _generate_debtors_journal(rng, mode):
     
     transactions = []
     
-    # Credit Sales
-    cp1 = rng.randint(20, 80) * 100
-    sp1 = int(cp1 * (1 + markup_percentage / 100))
-    transactions.append(f"Day 12: Sold trading stock on credit to B. Buyer for R{sp1}. Issued invoice 101. Cost price was R{cp1}.")
+    # 4 Credit Sales
+    debtor_names = [("B. Buyer", "D1"), ("C. Customer", "D2"), ("D. Dealer", "D3"), ("B. Buyer", "D1")]
+    days = [5, 12, 19, 26]
+    data_rows = []
+    cell_hints = {}
     
-    cp2 = rng.randint(10, 50) * 100
-    sp2 = int(cp2 * (1 + markup_percentage / 100))
-    transactions.append(f"Day 18: Goods sold on credit to C. Customer, R{sp2}. Issued invoice 102. Cost price was R{cp2}.")
+    for idx, (d_name, d_fol) in enumerate(debtor_names):
+        inv_no = str(101 + idx)
+        day_str = str(days[idx])
+        cp = rng.randint(10 + idx * 5, 30 + idx * 10) * 100
+        sp = int(cp * (1 + markup_percentage / 100))
+        
+        transactions.append(f"Day {day_str}: Sold goods on credit to {d_name} for R{sp:,}. Issued duplicate invoice {inv_no}. The cost price was R{cp:,}.")
+        data_rows.append([inv_no, day_str, d_name, d_fol, str(sp), str(cp)])
+        
+        cell_hints[f"t0_r{idx}_c0"] = f"Invoice number is {inv_no}."
+        cell_hints[f"t0_r{idx}_c1"] = f"Day is {day_str}."
+        cell_hints[f"t0_r{idx}_c2"] = f"Debtor is {d_name}."
+        cell_hints[f"t0_r{idx}_c3"] = f"Debtors Ledger folio is {d_fol}."
+        cell_hints[f"t0_r{idx}_c4"] = f"Sales column: R{sp:,}."
+        cell_hints[f"t0_r{idx}_c5"] = f"Cost of Sales column: CP = SP x 100 / (100 + {markup_percentage}%) = R{cp:,}."
 
-    data_rows = [
-        ["101", "12", "B. Buyer", "D1", str(sp1), str(cp1)],
-        ["102", "18", "C. Customer", "D2", str(sp2), str(cp2)]
-    ]
-    
     correct_map = {}
     ui_rows = []
     for i, row in enumerate(data_rows):
         ui_row = []
         for j, val in enumerate(row):
-            correct_map[f"r{i}_c{j}"] = val
-            ui_row.append({"value": "", "cell_id": f"r{i}_c{j}", "editable": True})
+            coord = f"t0_r{i}_c{j}"
+            correct_map[coord] = val
+            ui_row.append({
+                "coordinate": coord,
+                "value": val if mode == "scaffold" else "",
+                "type": "required",
+                "editable": True
+            })
         ui_rows.append(ui_row)
 
     headers = ["Doc No", "Day", "Debtor", "Fol", "Sales", "Cost of Sales"]
     
-    cell_hints = {}
-    
-    # Hint for Row 1
-    cell_hints["r0_c4"] = f"Expectation: Sales Amount. Connection: Credit sales are recorded in the DJ. Selling price is R{sp1}."
-    cell_hints["r0_c5"] = f"Expectation: Cost of Sales. Connection: Original cost price of the goods sold is R{cp1}."
+    tot_sales = sum(int(r[4]) for r in data_rows)
+    tot_cos = sum(int(r[5]) for r in data_rows)
     
     item = {
         "id": f"ems9_dj_{rng.randint(1000, 9999)}",
         "topic": "Debtors Journal",
         "question_type": "journal",
-        "prompt": f"Complete the Debtors Journal for {business_name} for {month}. The business uses a fixed mark-up of {markup_percentage}% on cost.",
+        "modality": "ledger",
+        "prompt": f"Complete the **Debtors Journal** for **{business_name}** for {month}. The business applies a fixed mark-up of **{markup_percentage}% on cost**.",
         "transactions": transactions,
+        "headers": headers,
+        "rows": ui_rows,
         "journal": {
             "journal_type": "dj",
             "headers": headers,
@@ -66,17 +80,29 @@ def _generate_debtors_journal(rng, mode):
         "editable_cols": [0, 1, 2, 3, 4, 5],
         "correct_map": correct_map,
         "cell_hints": cell_hints,
-        "marks": 12,
-        "sample_answer": "See completed table",
-        "ideal_answer": "See completed table",
-        "marking_points": ["Correct doc numbers, correct Debtors, and correct split of Sales and Cost of Sales."],
+        "marks": 24,
+        "sample_answer": f"Total Sales: R{tot_sales:,}; Total Cost of Sales: R{tot_cos:,}. General Ledger posting: Dr Debtors Control R{tot_sales:,}, Cr Sales R{tot_sales:,}; Dr Cost of Sales R{tot_cos:,}, Cr Trading Stock R{tot_cos:,}.",
+        "ideal_answer": "Complete Debtors Journal table with accurate documentation, debtor allocations, sales values, and cost of sales calculations.",
+        "worked_solution": (
+            f"Step 1: Record duplicate invoice numbers (101 to 104) and dates.\n"
+            f"Step 2: Enter debtor names and ledger folios.\n"
+            f"Step 3: Record selling price in the Sales column.\n"
+            f"Step 4: Calculate Cost of Sales using formula: CP = SP x 100 / (100 + {markup_percentage}%).\n"
+            f"Step 5: Month-end totals: Total Sales = R{tot_sales:,}, Total Cost of Sales = R{tot_cos:,}."
+        ),
+        "marking_points": [
+            "Correct duplicate invoice numbers and dates.",
+            "Correct debtor names and folio references (D1, D2, D3).",
+            f"Sales column entries totaling R{tot_sales:,}.",
+            f"Cost of Sales column entries calculated at {markup_percentage}% mark-up, totaling R{tot_cos:,}."
+        ],
         "hint_sections": {
-            "1_nudge": "The Debtors Journal (DJ) is used for CREDIT sales only.",
-            "2_concept": "You must record both the selling price (Sales) and the cost price (Cost of Sales) for every transaction.",
-            "3_breakdown": "Make sure you do not put cash sales in here."
+            "1_nudge": "The Debtors Journal (DJ) is used for CREDIT sales of trading stock only.",
+            "2_concept": "Every credit sale requires two entries: one for the selling price (Sales) and one for the cost price (Cost of Sales).",
+            "3_breakdown": f"Markup formula: CP = SP x 100 / {100 + markup_percentage}. Total Sales = R{tot_sales:,}."
         },
-        "guidelines": ["Check that Sales and Cost of Sales are correctly identified."],
-        "teaching_note": "Learners often put cash sales in the DJ or mix up cost and selling price."
+        "guidelines": ["Check that both Sales and Cost of Sales columns are completed for each transaction."],
+        "teaching_note": "Learners often forget to calculate Cost of Sales or confuse Selling Price with Cost Price."
     }
     return [_with_metadata(item, subskill='dj', learning_objective_id='lo_dj', question_family_id='dj_table', concept_id='dj_posting', concept_group='journals', diagnostic_tags=['tabular', 'accounting'])]
 

@@ -9,12 +9,18 @@ from . import (
     term3_cpj_and_crj,
     term3_ownership,
     term3_management,
+    term1_government_generator,
+    term1_national_budget_generator,
+    term4_markets_generator,
+    term4_factors_of_production_generator,
 )
 from .assessment_generator import generate_assessment
 
 def generate_topic_questions(subtopic, subskill="concepts", difficulty="medium", count=1, mode="scaffold", seed=None, **kwargs):
     generators = {
         'term1_gov_and_society': term1_gov_and_society.generate,
+        'term1_government': term1_government_generator.generate,
+        'term1_national_budget': term1_national_budget_generator.generate,
         'term1_accounting_basics': term1_accounting_basics.generate,
         'term1_source_documents': term1_source_documents.generate,
         'term1_general_ledger': term1_general_ledger.generate,
@@ -24,6 +30,8 @@ def generate_topic_questions(subtopic, subskill="concepts", difficulty="medium",
         'term3_cpj_and_crj': term3_cpj_and_crj.generate,
         'term3_ownership': term3_ownership.generate,
         'term3_management': term3_management.generate,
+        'term4_markets': term4_markets_generator.generate,
+        'term4_factors_of_production': term4_factors_of_production_generator.generate,
     }
     
     if subtopic not in generators:

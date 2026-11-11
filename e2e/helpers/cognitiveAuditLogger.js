@@ -213,7 +213,55 @@ ${e.evaluation.cellResults ? `Cell Results: ${JSON.stringify(e.evaluation.cellRe
 </html>`;
 
   fs.writeFileSync(htmlPath, html, 'utf-8');
-  return { jsonPath, htmlPath, totalEntries: mergedEntries.length };
+
+  // 3. Also write test-results/cognitive-audit/cognitive_audit_telemetry.json and cognitive_audit_summary.md
+  const testResultsAuditDir = path.resolve(__dirname, '../../test-results/cognitive-audit');
+  if (!fs.existsSync(testResultsAuditDir)) {
+    fs.mkdirSync(testResultsAuditDir, { recursive: true });
+  }
+  const telemetryJsonPath = path.join(testResultsAuditDir, 'cognitive_audit_telemetry.json');
+  const summaryMdPath = path.join(testResultsAuditDir, 'cognitive_audit_summary.md');
+  fs.writeFileSync(telemetryJsonPath, JSON.stringify(mergedEntries, null, 2), 'utf-8');
+
+  const trackStats = {};
+  for (const e of mergedEntries) {
+    const key = `Grade ${e.grade} • ${e.subject}`;
+    if (!trackStats[key]) {
+      trackStats[key] = { generated: 0, evaluated: 0, correct: 0, partialOrDistractor: 0, topics: new Set() };
+    }
+    trackStats[key].topics.add(e.topic);
+    if (e.eventType === 'QUESTION_GENERATION') {
+      trackStats[key].generated += 1;
+    } else if (e.eventType === 'ANSWER_INPUT_AND_EVALUATION') {
+      trackStats[key].evaluated += 1;
+      if (e.evaluation?.isCorrect) {
+        trackStats[key].correct += 1;
+      } else {
+        trackStats[key].partialOrDistractor += 1;
+      }
+    }
+  }
+
+  const mdLines = [
+    '# Fundile Cognitive Engine & Curriculum Matrix Audit Summary',
+    '',
+    `- **Generated At**: ${new Date().toISOString()}`,
+    `- **Total Questions Generated & Audited**: ${totalGenerations}`,
+    `- **Total Evaluations Executed (Grading Triad + UI)**: ${totalEvaluations}`,
+    `- **Canonical 100% Evaluations Verified**: ${correctEvaluations}`,
+    '',
+    '## Subject-Grade Track Telemetry',
+    '',
+    '| Subject-Grade Track | Topics Audited | Questions Generated | Evaluations Run | Canonical 100% | Partial / Distractor Probes |',
+    '| :--- | :---: | :---: | :---: | :---: | :---: |',
+    ...Object.entries(trackStats).map(([track, st]) =>
+      `| ${track} | ${st.topics.size} | ${st.generated} | ${st.evaluated} | ${st.correct} | ${st.partialOrDistractor} |`
+    ),
+    ''
+  ];
+  fs.writeFileSync(summaryMdPath, mdLines.join('\n'), 'utf-8');
+
+  return { jsonPath, htmlPath, telemetryJsonPath, summaryMdPath, totalEntries: mergedEntries.length };
 }
 
 function escapeHtml(str) {

@@ -169,9 +169,13 @@ def _gen_rational_exponent_to_radical(rng: random.Random, difficulty: str, qtype
     n = int(_choice(rng, [2, 3, 4, 5]))
     m = int(_choice(rng, [1, 2, 3]))
 
-    prompt = f"Write as a radical: {a}^{m}/{n}"
+    prompt = f"Write as a radical: ${a}^{{{m}/{n}}}$"
     ans = f"{n}√({a}^{m})"
-    explanation = f"Use a^(m/n) = {n}√(a^m)."
+    explanation = (
+        f"Step 1: Apply the rational exponent definition $a^{{m/n}} = \\sqrt[n]{{a^m}}$. "
+        f"Here the base is ${a}$, the numerator (power) is $m = {m}$, and the denominator (root index) is $n = {n}.\n"
+        f"Step 2: Express in radical form: ${a}^{{{m}/{n}}} = \\sqrt[{n}]{{{a}^{{{m}}}}}$ (or {n}√({a}^{m}))."
+    )
 
     if qtype == 'mcq':
         options = _make_unique_options(rng, ans, [f"{m}√({a}^{n})", f"{n}√({a}^{n})", f"{n}√({a}^{m + 1})"])

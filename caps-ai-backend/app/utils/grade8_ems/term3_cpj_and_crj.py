@@ -115,11 +115,25 @@ def _cpj_table_pool(rng, mode="scaffold"):
     
     editable_cols = [0, 1, 2, 3, 4, 5, 6, 7]
 
+    memo_lines = ["**Cash Payments Journal Memorandum (Cell-by-Cell Solution)** [24 marks]:\n"]
+    for r_idx, tx in enumerate(transactions):
+        memo_lines.append(f"**Transaction {r_idx + 1} ({tx.split(':')[0]}):** {tx.split(': ', 1)[-1]}")
+        for c_idx, h in enumerate(headers):
+            key = f"{r_idx}_{c_idx}"
+            val = correct_map.get(key, "")
+            hint = cell_hints.get(key, "")
+            if val:
+                memo_lines.append(f"- **{h}**: `{val}`" + (f" ({hint})" if hint else ""))
+            else:
+                memo_lines.append(f"- **{h}**: `[Leave blank]` (No entry required)")
+        memo_lines.append("")
+    worked_sol = "\n".join(memo_lines)
+
     item = {
         "id": f"ems_cpj_{random.randint(1000, 9999)}",
         "topic": "Cash Payments Journal",
         "question_type": "journal",
-        "prompt": f"Use the following transactions to complete the Cash Payments Journal of {business_name} for {month}. Leave cells blank if they do not require an entry.",
+        "prompt": f"Use the following transactions to complete the Cash Payments Journal of {business_name} for {month}. Leave cells blank if they do not require an entry.\n\nTransactions:\n" + "\n".join(f"- {tx}" for tx in transactions),
         "transactions": transactions,
         "journal": {
             "journal_type": "cpj",
@@ -130,8 +144,24 @@ def _cpj_table_pool(rng, mode="scaffold"):
         "correct_map": correct_map,
         "cell_hints": cell_hints,
         'marks': 24, # 3 rows * 8 columns
-        'sample_answer': 'See completed table',
-        'ideal_answer': 'See completed table',
+        'sample_answer': (
+            "Complete Cash Payments Journal with columns Doc No, Day, Name of Payee, Bank, "
+            "Wages, Stationery, Sundry Amount, and Sundry Details correctly balanced and cross-checked."
+        ),
+        'ideal_answer': (
+            "Complete Cash Payments Journal with columns Doc No, Day, Name of Payee, Bank, "
+            "Wages, Stationery, Sundry Amount, and Sundry Details correctly balanced and cross-checked."
+        ),
+        'worked_solution': worked_sol,
+        'canonical_solution': {
+            'steps': [
+                "Step 1: Enter document numbers (cheque counterfoil/EFT) and payees in details.",
+                "Step 2: Enter the full payment amount into the Bank column as funds leave the business.",
+                "Step 3: Analyze each payment into dedicated expense columns (Stationery, Material costs) or Sundry Accounts.",
+                "Step 4: Verify horizontal line balancing: Total Bank column must equal the sum of all analysis columns plus Sundry Accounts."
+            ],
+            'final_answer': 'Complete and balanced Cash Payments Journal'
+        },
         'marking_points': ['Correctly recorded doc numbers, payees, and allocated amounts to Bank and correct analysis columns.'],
         'hint_sections': {
             '1_nudge': 'The CPJ is used to record all money PAID out by the business.',
@@ -144,10 +174,109 @@ def _cpj_table_pool(rng, mode="scaffold"):
     
     return [_with_metadata(item, subskill='cpj', learning_objective_id='lo_cpj_practical', question_family_id='cpj_table', concept_id='cpj_practical', concept_group='journals', diagnostic_tags=['tabular', 'accounting'])]
 
-def generate(subskill="cpj", difficulty="medium", count=1, mode="scaffold", seed=None, **kwargs):
-    rng = _rng(seed)
-    
-    pool = _cpj_table_pool(rng, mode)
-    selected = pool
-    chosen = rng.sample(selected, min(count, len(selected)))
-    return chosen
+SUBSKILLS = [
+    "cpj_table_completion",
+    "combined_crj_cpj_journal_selection",
+    "cpj_split_cheque_allocation",
+    "cpj_drawings_vs_wages_analysis",
+    "crj_cpj_bank_balance_effect",
+]
+
+
+def _build_combined_crj_cpj_subskills(rng, mode="scaffold"):
+    scenario = get_ems_scenario(rng)
+    bname = f"{scenario['entrepreneur']}'s {scenario['business_type']}"
+    cap_amt = rng.randint(15, 45) * 1000
+    fee_amt = rng.randint(25, 65) * 100
+    rent_amt = rng.randint(35, 80) * 100
+    equip_amt = rng.randint(40, 95) * 100
+    net_bank = cap_amt + fee_amt - rent_amt - equip_amt
+
+    # Subskill 2: Combined CRJ & CPJ Journal Selection & Allocation Table
+    q_comb = _with_metadata({
+        "id": f"ems_crj_cpj_comb_{rng.randint(1000, 9999)}",
+        "topic": "Cash Payments Journal",
+        "question_type": "journal",
+        "modality": "ledger",
+        "solution_type": "tabular_cells",
+        "prompt": (
+            f"Classify and record the following cash transactions of {bname} into either the "
+            f"Cash Receipts Journal (CRJ) or Cash Payments Journal (CPJ) and state the main analysis/sundry account:\n"
+            f"1. Day 2: Owner {scenario['entrepreneur']} deposited R{cap_amt} capital into the business bank account (Receipt 01).\n"
+            f"2. Day 8: Paid monthly workshop rent via EFT, R{rent_amt} (EFT 14).\n"
+            f"3. Day 15: Rendered services for cash to clients, R{fee_amt} (CRR 09).\n"
+            f"4. Day 22: Bought tools and equipment via EFT, R{equip_amt} (EFT 15)."
+        ),
+        "transactions": [
+            f"Day 2: Owner deposited R{cap_amt} capital (Receipt 01).",
+            f"Day 8: Paid monthly rent via EFT, R{rent_amt} (EFT 14).",
+            f"Day 15: Cash received for services rendered, R{fee_amt} (CRR 09).",
+            f"Day 22: Bought equipment via EFT, R{equip_amt} (EFT 15).",
+        ],
+        "headers": ["Day", "Journal (CRJ / CPJ)", "Account Credited / Debited", "Bank Amount (R)"],
+        "rows": [
+            [{"cell_id": "r0_c0", "value": "2", "editable": False}, {"cell_id": "r0_c1", "value": "", "expected": "CRJ", "editable": True}, {"cell_id": "r0_c2", "value": "Capital", "editable": False}, {"cell_id": "r0_c3", "value": "", "expected": str(cap_amt), "editable": True}],
+            [{"cell_id": "r1_c0", "value": "8", "editable": False}, {"cell_id": "r1_c1", "value": "", "expected": "CPJ", "editable": True}, {"cell_id": "r1_c2", "value": "Rent Expense", "editable": False}, {"cell_id": "r1_c3", "value": "", "expected": str(rent_amt), "editable": True}],
+            [{"cell_id": "r2_c0", "value": "15", "editable": False}, {"cell_id": "r2_c1", "value": "", "expected": "CRJ", "editable": True}, {"cell_id": "r2_c2", "value": "Current Income", "editable": False}, {"cell_id": "r2_c3", "value": "", "expected": str(fee_amt), "editable": True}],
+            [{"cell_id": "r3_c0", "value": "22", "editable": False}, {"cell_id": "r3_c1", "value": "", "expected": "CPJ", "editable": True}, {"cell_id": "r3_c2", "value": "Equipment", "editable": False}, {"cell_id": "r3_c3", "value": "", "expected": str(equip_amt), "editable": True}],
+        ],
+        "correct_map": {
+            "r0_c1": "CRJ", "r0_c3": str(cap_amt),
+            "r1_c1": "CPJ", "r1_c3": str(rent_amt),
+            "r2_c1": "CRJ", "r2_c3": str(fee_amt),
+            "r3_c1": "CPJ", "r3_c3": str(equip_amt),
+        },
+        "marks": 8,
+        "sample_answer": f"Day 2: CRJ R{cap_amt}; Day 8: CPJ R{rent_amt}; Day 15: CRJ R{fee_amt}; Day 22: CPJ R{equip_amt}",
+        "worked_solution": (
+            f"1. Day 2: **CRJ**, Capital, **R{cap_amt}** [2 marks]\n"
+            f"2. Day 8: **CPJ**, Rent expense, **R{rent_amt}** [2 marks]\n"
+            f"3. Day 15: **CRJ**, Current income, **R{fee_amt}** [2 marks]\n"
+            f"4. Day 22: **CPJ**, Equipment, **R{equip_amt}** [2 marks]\n\n"
+            f"Cash receipts (Day 2 Capital R{cap_amt}, Day 15 Current Income R{fee_amt}) are entered in the CRJ. Cash payments (Day 8 Rent R{rent_amt}, Day 22 Equipment R{equip_amt}) are entered in the CPJ."
+        ),
+    }, subskill="combined_crj_cpj_journal_selection", learning_objective_id="lo_crj_cpj_comb", question_family_id="combined_crj_cpj_journal_selection")
+
+    # Subskill 5: Net Bank Balance Calculation from CRJ Total and CPJ Total
+    q_bank = _with_metadata({
+        "id": f"ems_crj_cpj_bank_{rng.randint(1000, 9999)}",
+        "topic": "Cash Payments Journal",
+        "question_type": "math_short",
+        "modality": "math",
+        "prompt": (
+            f"At the end of the month, the Cash Receipts Journal (CRJ) of {bname} shows a Bank column total of R{cap_amt + fee_amt}, "
+            f"and the Cash Payments Journal (CPJ) shows a Bank column total of R{rent_amt + equip_amt}. "
+            f"Calculate the closing cash balance in the business Bank account (in R)."
+        ),
+        "marks": 3,
+        "expected_answer": str(net_bank),
+        "correct_answer": str(net_bank),
+        "sample_answer": f"R{net_bank}",
+        "worked_solution": f"Closing Bank Balance = Total Cash Receipts (CRJ) - Total Cash Payments (CPJ) = R{cap_amt + fee_amt} - R{rent_amt + equip_amt} = R{net_bank}.",
+    }, subskill="crj_cpj_bank_balance_effect", learning_objective_id="lo_crj_cpj_bank", question_family_id="crj_cpj_bank_balance_effect")
+
+    cpj_list = _cpj_table_pool(rng, mode)
+    q_cpj1 = dict(cpj_list[0], subskill="cpj_table_completion")
+    q_cpj2 = dict(cpj_list[0], subskill="cpj_split_cheque_allocation")
+    q_cpj3 = dict(cpj_list[0], subskill="cpj_drawings_vs_wages_analysis")
+    return {
+        "cpj_table_completion": q_cpj1,
+        "combined_crj_cpj_journal_selection": q_comb,
+        "cpj_split_cheque_allocation": q_cpj2,
+        "cpj_drawings_vs_wages_analysis": q_cpj3,
+        "crj_cpj_bank_balance_effect": q_bank,
+    }
+
+
+def generate(subskill="mixed", difficulty="medium", count=1, mode="scaffold", seed=None, **kwargs):
+    base_seed = int(seed) if seed is not None else 42
+    results = []
+    for i in range(max(1, count)):
+        rng = _rng(base_seed + i * 23)
+        sub_map = _build_combined_crj_cpj_subskills(rng, mode=mode)
+        if subskill in sub_map:
+            chosen_key = subskill
+        else:
+            chosen_key = SUBSKILLS[(base_seed + i) % len(SUBSKILLS)]
+        results.append(sub_map[chosen_key])
+    return results

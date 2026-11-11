@@ -1,0 +1,4230 @@
+{
+  "total_topics": 506,
+  "topics_with_diagram_annotations": 232,
+  "modality_distribution": {
+    "wave_optics": 33,
+    "jsxgraph_geometry": 58,
+    "free_body_diagram": 13,
+    "circuit": 48,
+    "biological_labeling": 49,
+    "punnett_square": 1,
+    "chemical_structure": 45,
+    "motion_graph": 2
+  },
+  "catalog": {
+    "Accounting_Gr10": {
+      "Syllabus": {
+        "file": "curriculum_docs_auto\\Accounting_Gr10\\Syllabus.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "01. Accounting principles": {
+        "file": "curriculum_docs_auto\\Accounting_Gr10\\Term 1\\01. Accounting principles.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "01. Financial Information and GAAP": {
+        "file": "curriculum_docs_auto\\Accounting_Gr10\\Term 1\\01. Financial Information and GAAP.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "01. Financial accounting of a sole trader": {
+        "file": "curriculum_docs_auto\\Accounting_Gr10\\Term 1\\01. Financial accounting of a sole trader.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "01. Managing Resources": {
+        "file": "curriculum_docs_auto\\Accounting_Gr10\\Term 1\\01. Managing Resources.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "01. Ethics": {
+        "file": "curriculum_docs_auto\\Accounting_Gr10\\Term 2\\01. Ethics.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "01. Internal control": {
+        "file": "curriculum_docs_auto\\Accounting_Gr10\\Term 2\\01. Internal control.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "01. Salaries and wages journal": {
+        "file": "curriculum_docs_auto\\Accounting_Gr10\\Term 2\\01. Salaries and wages journal.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "01. Valued Added Tax": {
+        "file": "curriculum_docs_auto\\Accounting_Gr10\\Term 2\\01. Valued Added Tax.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "01. Analysis and Interpretation of financial statements of a sole trader": {
+        "file": "curriculum_docs_auto\\Accounting_Gr10\\Term 3\\01. Analysis and Interpretation of financial statements of a sole trader.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "01. Cost accounting": {
+        "file": "curriculum_docs_auto\\Accounting_Gr10\\Term 3\\01. Cost accounting.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "01. Financial accounts and year end adjustments of a sole trader": {
+        "file": "curriculum_docs_auto\\Accounting_Gr10\\Term 3\\01. Financial accounts and year end adjustments of a sole trader.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "01. Financial statements of a sole trader": {
+        "file": "curriculum_docs_auto\\Accounting_Gr10\\Term 3\\01. Financial statements of a sole trader.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "01. Budgeting": {
+        "file": "curriculum_docs_auto\\Accounting_Gr10\\Term 4\\01. Budgeting.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "01. Difference between financial and managerial accounting": {
+        "file": "curriculum_docs_auto\\Accounting_Gr10\\Term 4\\01. Difference between financial and managerial accounting.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "01. Informal or indigenous bookkeeping systems": {
+        "file": "curriculum_docs_auto\\Accounting_Gr10\\Term 4\\01. Informal or indigenous bookkeeping systems.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      }
+    },
+    "Accounting_Gr11": {
+      "Syllabus": {
+        "file": "curriculum_docs_auto\\Accounting_Gr11\\Syllabus.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "wave_optics": 1
+        },
+        "primary_visual_modality": null
+      },
+      "01. Bank reconciliation": {
+        "file": "curriculum_docs_auto\\Accounting_Gr11\\Term 1\\01. Bank reconciliation.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "01. Calculations involving percentages": {
+        "file": "curriculum_docs_auto\\Accounting_Gr11\\Term 1\\01. Calculations involving percentages.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "01. Control accounts": {
+        "file": "curriculum_docs_auto\\Accounting_Gr11\\Term 1\\01. Control accounts.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "01. Debtors age analysis": {
+        "file": "curriculum_docs_auto\\Accounting_Gr11\\Term 1\\01. Debtors age analysis.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "01. Disposal of tangible assets": {
+        "file": "curriculum_docs_auto\\Accounting_Gr11\\Term 1\\01. Disposal of tangible assets.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "01. Fixed Tangible Assets": {
+        "file": "curriculum_docs_auto\\Accounting_Gr11\\Term 1\\01. Fixed Tangible Assets.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "01. Introduction to accounting": {
+        "file": "curriculum_docs_auto\\Accounting_Gr11\\Term 1\\01. Introduction to accounting.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "01. The accounting equation": {
+        "file": "curriculum_docs_auto\\Accounting_Gr11\\Term 1\\01. The accounting equation.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "01. Value added tax": {
+        "file": "curriculum_docs_auto\\Accounting_Gr11\\Term 1\\01. Value added tax.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "01. Analysis and Intepretation of financial statements": {
+        "file": "curriculum_docs_auto\\Accounting_Gr11\\Term 2\\01. Analysis and Intepretation of financial statements.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "01. Cash flow statement": {
+        "file": "curriculum_docs_auto\\Accounting_Gr11\\Term 2\\01. Cash flow statement.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "01. Ethics": {
+        "file": "curriculum_docs_auto\\Accounting_Gr11\\Term 2\\01. Ethics.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "01. Internal Control": {
+        "file": "curriculum_docs_auto\\Accounting_Gr11\\Term 2\\01. Internal Control.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "01. Partnerships Analysis of financial statements": {
+        "file": "curriculum_docs_auto\\Accounting_Gr11\\Term 2\\01. Partnerships Analysis of financial statements.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "01. Partnerships": {
+        "file": "curriculum_docs_auto\\Accounting_Gr11\\Term 2\\01. Partnerships.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "01. Budgeting": {
+        "file": "curriculum_docs_auto\\Accounting_Gr11\\Term 3\\01. Budgeting.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "01. Cash Budget Variance Analysis": {
+        "file": "curriculum_docs_auto\\Accounting_Gr11\\Term 3\\01. Cash Budget Variance Analysis.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "01. Cost accounting Manufacturing": {
+        "file": "curriculum_docs_auto\\Accounting_Gr11\\Term 3\\01. Cost accounting Manufacturing.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "01. Inventory systems": {
+        "file": "curriculum_docs_auto\\Accounting_Gr11\\Term 4\\01. Inventory systems.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "01. Non profit Organisations or Clubs": {
+        "file": "curriculum_docs_auto\\Accounting_Gr11\\Term 4\\01. Non profit Organisations or Clubs.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      }
+    },
+    "Accounting_Gr12": {
+      "Syllabus": {
+        "file": "curriculum_docs_auto\\Accounting_Gr12\\Syllabus.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "wave_optics": 1
+        },
+        "primary_visual_modality": null
+      },
+      "01. Basic concepts of accounting": {
+        "file": "curriculum_docs_auto\\Accounting_Gr12\\Term 1\\01. Basic concepts of accounting.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "01. Calculations involving percentages": {
+        "file": "curriculum_docs_auto\\Accounting_Gr12\\Term 1\\01. Calculations involving percentages.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "01. Companies": {
+        "file": "curriculum_docs_auto\\Accounting_Gr12\\Term 1\\01. Companies.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "wave_optics": 1
+        },
+        "primary_visual_modality": null
+      },
+      "01. Preliminary information": {
+        "file": "curriculum_docs_auto\\Accounting_Gr12\\Term 1\\01. Preliminary information.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "01. The accounting equation": {
+        "file": "curriculum_docs_auto\\Accounting_Gr12\\Term 1\\01. The accounting equation.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "01. Analysis and Intepretation of financial statements": {
+        "file": "curriculum_docs_auto\\Accounting_Gr12\\Term 2\\01. Analysis and Intepretation of financial statements.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "01. Bank reconciliation": {
+        "file": "curriculum_docs_auto\\Accounting_Gr12\\Term 2\\01. Bank reconciliation.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "01. Cash flow statement": {
+        "file": "curriculum_docs_auto\\Accounting_Gr12\\Term 2\\01. Cash flow statement.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "wave_optics": 1
+        },
+        "primary_visual_modality": null
+      },
+      "01. Control accounts": {
+        "file": "curriculum_docs_auto\\Accounting_Gr12\\Term 2\\01. Control accounts.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "01. Debtors age analysis": {
+        "file": "curriculum_docs_auto\\Accounting_Gr12\\Term 2\\01. Debtors age analysis.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "01. Reconciliations": {
+        "file": "curriculum_docs_auto\\Accounting_Gr12\\Term 2\\01. Reconciliations.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "01. Budgets": {
+        "file": "curriculum_docs_auto\\Accounting_Gr12\\Term 3\\01. Budgets.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "01. Cash Budget Variance Analysis": {
+        "file": "curriculum_docs_auto\\Accounting_Gr12\\Term 3\\01. Cash Budget Variance Analysis.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "01. Inventories": {
+        "file": "curriculum_docs_auto\\Accounting_Gr12\\Term 3\\01. Inventories.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "01. Manufacturing": {
+        "file": "curriculum_docs_auto\\Accounting_Gr12\\Term 3\\01. Manufacturing.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "01. Value added tax": {
+        "file": "curriculum_docs_auto\\Accounting_Gr12\\Term 3\\01. Value added tax.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "01. Disposal of tangible assets": {
+        "file": "curriculum_docs_auto\\Accounting_Gr12\\Term 4\\01. Disposal of tangible assets.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "01. Fixed Assets": {
+        "file": "curriculum_docs_auto\\Accounting_Gr12\\Term 4\\01. Fixed Assets.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      }
+    },
+    "BusinessStudies_Gr10": {
+      "Syllabus": {
+        "file": "curriculum_docs_auto\\BusinessStudies_Gr10\\Syllabus.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "wave_optics": 3
+        },
+        "primary_visual_modality": "wave_optics"
+      },
+      "01. Micro environment": {
+        "file": "curriculum_docs_auto\\BusinessStudies_Gr10\\Term 1\\01. Micro environment.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "02. The market environment": {
+        "file": "curriculum_docs_auto\\BusinessStudies_Gr10\\Term 1\\02. The market environment.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "03. The macro environment": {
+        "file": "curriculum_docs_auto\\BusinessStudies_Gr10\\Term 1\\03. The macro environment.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "04. The interrelationship of the micro market & macro environments": {
+        "file": "curriculum_docs_auto\\BusinessStudies_Gr10\\Term 1\\04. The interrelationship of the micro market & macro environments.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "05. Business sectors": {
+        "file": "curriculum_docs_auto\\BusinessStudies_Gr10\\Term 1\\05. Business sectors.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "01. Contemporary socio economic issues": {
+        "file": "curriculum_docs_auto\\BusinessStudies_Gr10\\Term 2\\01. Contemporary socio economic issues.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "02. Social responsibility": {
+        "file": "curriculum_docs_auto\\BusinessStudies_Gr10\\Term 2\\02. Social responsibility.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "free_body_diagram": 1
+        },
+        "primary_visual_modality": null
+      },
+      "03. Forms of ownership": {
+        "file": "curriculum_docs_auto\\BusinessStudies_Gr10\\Term 2\\03. Forms of ownership.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "04. Business opportunities & related factors": {
+        "file": "curriculum_docs_auto\\BusinessStudies_Gr10\\Term 2\\04. Business opportunities & related factors.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "05. Business location decisions": {
+        "file": "curriculum_docs_auto\\BusinessStudies_Gr10\\Term 2\\05. Business location decisions.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "01. Creative thinking and problem solving": {
+        "file": "curriculum_docs_auto\\BusinessStudies_Gr10\\Term 3\\01. Creative thinking and problem solving.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "02. Business functions & the activities of business": {
+        "file": "curriculum_docs_auto\\BusinessStudies_Gr10\\Term 3\\02. Business functions & the activities of business.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "03. The concept of quality": {
+        "file": "curriculum_docs_auto\\BusinessStudies_Gr10\\Term 3\\03. The concept of quality.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "01. Presentation of business information": {
+        "file": "curriculum_docs_auto\\BusinessStudies_Gr10\\Term 4\\01. Presentation of business information.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "02. Understanding business plans & implications": {
+        "file": "curriculum_docs_auto\\BusinessStudies_Gr10\\Term 4\\02. Understanding business plans & implications.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "03. Self management": {
+        "file": "curriculum_docs_auto\\BusinessStudies_Gr10\\Term 4\\03. Self management.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "free_body_diagram": 1,
+          "jsxgraph_geometry": 5
+        },
+        "primary_visual_modality": "jsxgraph_geometry"
+      },
+      "04. Relationships & team performance": {
+        "file": "curriculum_docs_auto\\BusinessStudies_Gr10\\Term 4\\04. Relationships & team performance.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "05. Contracts": {
+        "file": "curriculum_docs_auto\\BusinessStudies_Gr10\\Term 4\\05. Contracts.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "06. Entrepreneurial qualities": {
+        "file": "curriculum_docs_auto\\BusinessStudies_Gr10\\Term 4\\06. Entrepreneurial qualities.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      }
+    },
+    "BusinessStudies_Gr11": {
+      "Syllabus": {
+        "file": "curriculum_docs_auto\\BusinessStudies_Gr11\\Syllabus.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "wave_optics": 5
+        },
+        "primary_visual_modality": "wave_optics"
+      },
+      "01. Influencies on business environments": {
+        "file": "curriculum_docs_auto\\BusinessStudies_Gr11\\Term 1\\01. Influencies on business environments.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "02. The challenges of the business environments": {
+        "file": "curriculum_docs_auto\\BusinessStudies_Gr11\\Term 1\\02. The challenges of the business environments.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "free_body_diagram": 1
+        },
+        "primary_visual_modality": null
+      },
+      "03. Adapting to challenges in the business environment": {
+        "file": "curriculum_docs_auto\\BusinessStudies_Gr11\\Term 1\\03. Adapting to challenges in the business environment.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "04. Contemporary socio economic factors & businesses": {
+        "file": "curriculum_docs_auto\\BusinessStudies_Gr11\\Term 1\\04. Contemporary socio economic factors & businesses.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "05. Business sectors": {
+        "file": "curriculum_docs_auto\\BusinessStudies_Gr11\\Term 1\\05. Business sectors.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "01. Benefits of a company over other forms of ownership": {
+        "file": "curriculum_docs_auto\\BusinessStudies_Gr11\\Term 2\\01. Benefits of a company over other forms of ownership.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "02. Avenues of acquiring businesses": {
+        "file": "curriculum_docs_auto\\BusinessStudies_Gr11\\Term 2\\02. Avenues of acquiring businesses.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "03. Creative thinking & problem solving": {
+        "file": "curriculum_docs_auto\\BusinessStudies_Gr11\\Term 2\\03. Creative thinking & problem solving.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "04. Stress crisis & change management": {
+        "file": "curriculum_docs_auto\\BusinessStudies_Gr11\\Term 2\\04. Stress crisis & change management.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "free_body_diagram": 4
+        },
+        "primary_visual_modality": "free_body_diagram"
+      },
+      "05. Ethics and professionalism": {
+        "file": "curriculum_docs_auto\\BusinessStudies_Gr11\\Term 2\\05. Ethics and professionalism.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "01. Transformation of a business plan into an action plan": {
+        "file": "curriculum_docs_auto\\BusinessStudies_Gr11\\Term 3\\01. Transformation of a business plan into an action plan.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "02. A business venture based on a business plan": {
+        "file": "curriculum_docs_auto\\BusinessStudies_Gr11\\Term 3\\02. A business venture based on a business plan.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "03. Presentation of business information": {
+        "file": "curriculum_docs_auto\\BusinessStudies_Gr11\\Term 3\\03. Presentation of business information.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "wave_optics": 2
+        },
+        "primary_visual_modality": null
+      },
+      "04. Introduction to the human resources function": {
+        "file": "curriculum_docs_auto\\BusinessStudies_Gr11\\Term 3\\04. Introduction to the human resources function.md",
+        "diagram_context_count": 15,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "05. The marketing function": {
+        "file": "curriculum_docs_auto\\BusinessStudies_Gr11\\Term 3\\05. The marketing function.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "circuit": 3,
+          "free_body_diagram": 2
+        },
+        "primary_visual_modality": "circuit"
+      },
+      "06. The production function": {
+        "file": "curriculum_docs_auto\\BusinessStudies_Gr11\\Term 3\\06. The production function.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "01. Team dynamics & conflict management": {
+        "file": "curriculum_docs_auto\\BusinessStudies_Gr11\\Term 4\\01. Team dynamics & conflict management.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "wave_optics": 1
+        },
+        "primary_visual_modality": null
+      },
+      "02. Citizenship & responsibilities": {
+        "file": "curriculum_docs_auto\\BusinessStudies_Gr11\\Term 4\\02. Citizenship & responsibilities.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "03. Assessment of enterpreneural qualities in business": {
+        "file": "curriculum_docs_auto\\BusinessStudies_Gr11\\Term 4\\03. Assessment of enterpreneural qualities in business.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      }
+    },
+    "BusinessStudies_Gr12": {
+      "Syllabus": {
+        "file": "curriculum_docs_auto\\BusinessStudies_Gr12\\Syllabus.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "wave_optics": 7
+        },
+        "primary_visual_modality": "wave_optics"
+      },
+      "01. Impact of recent legislation on businesses": {
+        "file": "curriculum_docs_auto\\BusinessStudies_Gr12\\Term 1\\01. Impact of recent legislation on businesses.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "01. Social responsibility & corporate citizenship CSR & CSI": {
+        "file": "curriculum_docs_auto\\BusinessStudies_Gr12\\Term 1\\01. Social responsibility & corporate citizenship CSR & CSI.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "02. Human rights inclusivity & environmental issues": {
+        "file": "curriculum_docs_auto\\BusinessStudies_Gr12\\Term 1\\02. Human rights inclusivity & environmental issues.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "biological_labeling": 1
+        },
+        "primary_visual_modality": null
+      },
+      "03. Macro environment Business strategies": {
+        "file": "curriculum_docs_auto\\BusinessStudies_Gr12\\Term 1\\03. Macro environment Business strategies.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "04. Business sectors & their environments": {
+        "file": "curriculum_docs_auto\\BusinessStudies_Gr12\\Term 1\\04. Business sectors & their environments.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "01. Creative thinking & problem solving": {
+        "file": "curriculum_docs_auto\\BusinessStudies_Gr12\\Term 2\\01. Creative thinking & problem solving.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "02. Ethics and professionalism": {
+        "file": "curriculum_docs_auto\\BusinessStudies_Gr12\\Term 2\\02. Ethics and professionalism.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "03. Management & leadership": {
+        "file": "curriculum_docs_auto\\BusinessStudies_Gr12\\Term 2\\03. Management & leadership.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "free_body_diagram": 2,
+          "biological_labeling": 1
+        },
+        "primary_visual_modality": null
+      },
+      "04. Forms of ownership Success & failure in business": {
+        "file": "curriculum_docs_auto\\BusinessStudies_Gr12\\Term 2\\04. Forms of ownership Success & failure in business.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "free_body_diagram": 1
+        },
+        "primary_visual_modality": null
+      },
+      "05. Quality of performance": {
+        "file": "curriculum_docs_auto\\BusinessStudies_Gr12\\Term 2\\05. Quality of performance.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "01. Investments Insurance": {
+        "file": "curriculum_docs_auto\\BusinessStudies_Gr12\\Term 3\\01. Investments Insurance.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "02. Investement Securities": {
+        "file": "curriculum_docs_auto\\BusinessStudies_Gr12\\Term 3\\02. Investement Securities.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "03. Presentations & data responses": {
+        "file": "curriculum_docs_auto\\BusinessStudies_Gr12\\Term 3\\03. Presentations & data responses.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "wave_optics": 2
+        },
+        "primary_visual_modality": null
+      },
+      "04. The human resources function": {
+        "file": "curriculum_docs_auto\\BusinessStudies_Gr12\\Term 3\\04. The human resources function.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "01. Team perfomance assessment and conflict management": {
+        "file": "curriculum_docs_auto\\BusinessStudies_Gr12\\Term 4\\01. Team perfomance assessment and conflict management.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "wave_optics": 2
+        },
+        "primary_visual_modality": null
+      }
+    },
+    "EMS_Gr7": {
+      "Syllabus": {
+        "file": "curriculum_docs_auto\\EMS_Gr7\\Syllabus.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "biological_labeling": 1,
+          "wave_optics": 1
+        },
+        "primary_visual_modality": null
+      },
+      "01. History of money": {
+        "file": "curriculum_docs_auto\\EMS_Gr7\\Term 1\\01. History of money.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "02. Needs and Wants": {
+        "file": "curriculum_docs_auto\\EMS_Gr7\\Term 1\\02. Needs and Wants.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "free_body_diagram": 2
+        },
+        "primary_visual_modality": null
+      },
+      "03. Goods and Service": {
+        "file": "curriculum_docs_auto\\EMS_Gr7\\Term 1\\03. Goods and Service.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "01. Accounting concepts": {
+        "file": "curriculum_docs_auto\\EMS_Gr7\\Term 2\\01. Accounting concepts.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "02. Income and Expenses": {
+        "file": "curriculum_docs_auto\\EMS_Gr7\\Term 2\\02. Income and Expenses.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "03. Budgets": {
+        "file": "curriculum_docs_auto\\EMS_Gr7\\Term 2\\03. Budgets.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "01. Entrepreneur's Day": {
+        "file": "curriculum_docs_auto\\EMS_Gr7\\Term 3\\01. Entrepreneur's Day.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "01. The entrepreneur": {
+        "file": "curriculum_docs_auto\\EMS_Gr7\\Term 3\\01. The entrepreneur.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "02. Businesses": {
+        "file": "curriculum_docs_auto\\EMS_Gr7\\Term 3\\02. Businesses.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "free_body_diagram": 1
+        },
+        "primary_visual_modality": null
+      },
+      "03. Starting a business": {
+        "file": "curriculum_docs_auto\\EMS_Gr7\\Term 3\\03. Starting a business.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "03. The production process": {
+        "file": "curriculum_docs_auto\\EMS_Gr7\\Term 3\\03. The production process.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "free_body_diagram": 1
+        },
+        "primary_visual_modality": null
+      },
+      "01. Savings": {
+        "file": "curriculum_docs_auto\\EMS_Gr7\\Term 4\\01. Savings.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "02. Inequality and poverty": {
+        "file": "curriculum_docs_auto\\EMS_Gr7\\Term 4\\02. Inequality and poverty.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "free_body_diagram": 1
+        },
+        "primary_visual_modality": null
+      }
+    },
+    "EMS_Gr8": {
+      "Syllabus": {
+        "file": "curriculum_docs_auto\\EMS_Gr8\\Syllabus.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "wave_optics": 1
+        },
+        "primary_visual_modality": null
+      },
+      "01. General ledger and Trial balance of a service business": {
+        "file": "curriculum_docs_auto\\EMS_Gr8\\Term 1\\01. General ledger and Trial balance of a service business.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "01. Government": {
+        "file": "curriculum_docs_auto\\EMS_Gr8\\Term 1\\01. Government.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "02. The National Budget": {
+        "file": "curriculum_docs_auto\\EMS_Gr8\\Term 1\\02. The National Budget.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "01. Accounting concepts": {
+        "file": "curriculum_docs_auto\\EMS_Gr8\\Term 2\\01. Accounting concepts.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "01. the accounting cycle": {
+        "file": "curriculum_docs_auto\\EMS_Gr8\\Term 2\\01. the accounting cycle.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "free_body_diagram": 1
+        },
+        "primary_visual_modality": null
+      },
+      "02. Source documents": {
+        "file": "curriculum_docs_auto\\EMS_Gr8\\Term 2\\02. Source documents.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "free_body_diagram": 1
+        },
+        "primary_visual_modality": null
+      },
+      "03. Cash receipts journal for a services business 1": {
+        "file": "curriculum_docs_auto\\EMS_Gr8\\Term 2\\03. Cash receipts journal for a services business 1.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "03. Cash receipts journal for a services business 2": {
+        "file": "curriculum_docs_auto\\EMS_Gr8\\Term 2\\03. Cash receipts journal for a services business 2.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "04. Cash payments journal for a services business": {
+        "file": "curriculum_docs_auto\\EMS_Gr8\\Term 2\\04. Cash payments journal for a services business.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "01. Forms of ownership": {
+        "file": "curriculum_docs_auto\\EMS_Gr8\\Term 3\\01. Forms of ownership.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "02. Levels and functions of management": {
+        "file": "curriculum_docs_auto\\EMS_Gr8\\Term 3\\02. Levels and functions of management.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "02. The markets": {
+        "file": "curriculum_docs_auto\\EMS_Gr8\\Term 4\\02. The markets.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "free_body_diagram": 1
+        },
+        "primary_visual_modality": null
+      },
+      "03. Factors of production": {
+        "file": "curriculum_docs_auto\\EMS_Gr8\\Term 4\\03. Factors of production.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "free_body_diagram": 1
+        },
+        "primary_visual_modality": null
+      }
+    },
+    "EMS_Gr9": {
+      "Syllabus": {
+        "file": "curriculum_docs_auto\\EMS_Gr9\\Syllabus.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "wave_optics": 1
+        },
+        "primary_visual_modality": null
+      },
+      "01. Economic systems": {
+        "file": "curriculum_docs_auto\\EMS_Gr9\\Term 1\\01. Economic systems.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "free_body_diagram": 1
+        },
+        "primary_visual_modality": null
+      },
+      "01. Trade Unions": {
+        "file": "curriculum_docs_auto\\EMS_Gr9\\Term 1\\01. Trade Unions.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "02. The circular flow": {
+        "file": "curriculum_docs_auto\\EMS_Gr9\\Term 1\\02. The circular flow.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "wave_optics": 2
+        },
+        "primary_visual_modality": null
+      },
+      "03. The Price Theory": {
+        "file": "curriculum_docs_auto\\EMS_Gr9\\Term 1\\03. The Price Theory.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "free_body_diagram": 1
+        },
+        "primary_visual_modality": null
+      },
+      "01. Sectors of the economy": {
+        "file": "curriculum_docs_auto\\EMS_Gr9\\Term 2\\01. Sectors of the economy.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "free_body_diagram": 1
+        },
+        "primary_visual_modality": null
+      },
+      "02. Cash receipts journal and Cash payments journal (sole trader)": {
+        "file": "curriculum_docs_auto\\EMS_Gr9\\Term 2\\02. Cash receipts journal and Cash payments journal (sole trader).md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "03. General ledger and Trial balance (sole trader)": {
+        "file": "curriculum_docs_auto\\EMS_Gr9\\Term 2\\03. General ledger and Trial balance (sole trader).md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "01. Credit transactions (Creditors 1)": {
+        "file": "curriculum_docs_auto\\EMS_Gr9\\Term 3\\01. Credit transactions (Creditors 1).md",
+        "diagram_context_count": 0,
+        "scores": {
+          "free_body_diagram": 1
+        },
+        "primary_visual_modality": null
+      },
+      "01. Credit transactions (Creditors 2)": {
+        "file": "curriculum_docs_auto\\EMS_Gr9\\Term 3\\01. Credit transactions (Creditors 2).md",
+        "diagram_context_count": 0,
+        "scores": {
+          "free_body_diagram": 1
+        },
+        "primary_visual_modality": null
+      },
+      "01. Credit transactions (Debtors 1)": {
+        "file": "curriculum_docs_auto\\EMS_Gr9\\Term 3\\01. Credit transactions (Debtors 1).md",
+        "diagram_context_count": 0,
+        "scores": {
+          "free_body_diagram": 1
+        },
+        "primary_visual_modality": null
+      },
+      "01. Credit transactions (Debtors 2)": {
+        "file": "curriculum_docs_auto\\EMS_Gr9\\Term 3\\01. Credit transactions (Debtors 2).md",
+        "diagram_context_count": 0,
+        "scores": {
+          "free_body_diagram": 1,
+          "biological_labeling": 1,
+          "wave_optics": 1
+        },
+        "primary_visual_modality": null
+      },
+      "04. Business Plan": {
+        "file": "curriculum_docs_auto\\EMS_Gr9\\Term 4\\04. Business Plan.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "04. Functions of a business": {
+        "file": "curriculum_docs_auto\\EMS_Gr9\\Term 4\\04. Functions of a business.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "04. Transactions (Cash and Credit)": {
+        "file": "curriculum_docs_auto\\EMS_Gr9\\Term 4\\04. Transactions (Cash and Credit).md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      }
+    },
+    "LifeSciences_Gr10": {
+      "Syllabus": {
+        "file": "curriculum_docs_auto\\LifeSciences_Gr10\\Syllabus.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "free_body_diagram": 1,
+          "biological_labeling": 21
+        },
+        "primary_visual_modality": "biological_labeling"
+      },
+      "01. Cells the basic units of life": {
+        "file": "curriculum_docs_auto\\LifeSciences_Gr10\\Term 1\\01. Cells the basic units of life.md",
+        "diagram_context_count": 6,
+        "scores": {
+          "biological_labeling": 87
+        },
+        "primary_visual_modality": "biological_labeling"
+      },
+      "01. History of life on earth": {
+        "file": "curriculum_docs_auto\\LifeSciences_Gr10\\Term 1\\01. History of life on earth.md",
+        "diagram_context_count": 1,
+        "scores": {
+          "biological_labeling": 3
+        },
+        "primary_visual_modality": "biological_labeling"
+      },
+      "01. Introduction to life sciences": {
+        "file": "curriculum_docs_auto\\LifeSciences_Gr10\\Term 1\\01. Introduction to life sciences.md",
+        "diagram_context_count": 1,
+        "scores": {
+          "biological_labeling": 3
+        },
+        "primary_visual_modality": "biological_labeling"
+      },
+      "01. The chemistry of life": {
+        "file": "curriculum_docs_auto\\LifeSciences_Gr10\\Term 1\\01. The chemistry of life.md",
+        "diagram_context_count": 1,
+        "scores": {
+          "biological_labeling": 16
+        },
+        "primary_visual_modality": "biological_labeling"
+      },
+      "02. Cell division": {
+        "file": "curriculum_docs_auto\\LifeSciences_Gr10\\Term 1\\02. Cell division.md",
+        "diagram_context_count": 6,
+        "scores": {
+          "biological_labeling": 43
+        },
+        "primary_visual_modality": "biological_labeling"
+      },
+      "02. Plant and animal tissues": {
+        "file": "curriculum_docs_auto\\LifeSciences_Gr10\\Term 2\\02. Plant and animal tissues.md",
+        "diagram_context_count": 7,
+        "scores": {
+          "free_body_diagram": 1,
+          "biological_labeling": 52
+        },
+        "primary_visual_modality": "biological_labeling"
+      },
+      "04. Support and transport systems in plants": {
+        "file": "curriculum_docs_auto\\LifeSciences_Gr10\\Term 2\\04. Support and transport systems in plants.md",
+        "diagram_context_count": 4,
+        "scores": {
+          "biological_labeling": 26
+        },
+        "primary_visual_modality": "biological_labeling"
+      },
+      "05. Transport systems in animals": {
+        "file": "curriculum_docs_auto\\LifeSciences_Gr10\\Term 2\\05. Transport systems in animals.md",
+        "diagram_context_count": 1,
+        "scores": {
+          "circuit": 4,
+          "free_body_diagram": 19,
+          "biological_labeling": 314
+        },
+        "primary_visual_modality": "biological_labeling"
+      },
+      "05. support systems in animals": {
+        "file": "curriculum_docs_auto\\LifeSciences_Gr10\\Term 2\\05. support systems in animals.md",
+        "diagram_context_count": 1,
+        "scores": {
+          "biological_labeling": 6
+        },
+        "primary_visual_modality": "biological_labeling"
+      },
+      "01. Biospheres to ecosystems": {
+        "file": "curriculum_docs_auto\\LifeSciences_Gr10\\Term 3\\01. Biospheres to ecosystems.md",
+        "diagram_context_count": 1,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "02. Biodiversity and classification": {
+        "file": "curriculum_docs_auto\\LifeSciences_Gr10\\Term 3\\02. Biodiversity and classification.md",
+        "diagram_context_count": 1,
+        "scores": {
+          "biological_labeling": 22
+        },
+        "primary_visual_modality": "biological_labeling"
+      }
+    },
+    "LifeSciences_Gr11": {
+      "Syllabus": {
+        "file": "curriculum_docs_auto\\LifeSciences_Gr11\\Syllabus.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "biological_labeling": 7
+        },
+        "primary_visual_modality": "biological_labeling"
+      },
+      "01. Biodiversity and classification of microorganisms": {
+        "file": "curriculum_docs_auto\\LifeSciences_Gr11\\Term 1\\01. Biodiversity and classification of microorganisms.md",
+        "diagram_context_count": 1,
+        "scores": {
+          "biological_labeling": 7
+        },
+        "primary_visual_modality": "biological_labeling"
+      },
+      "02. Biodiversity of plants": {
+        "file": "curriculum_docs_auto\\LifeSciences_Gr11\\Term 1\\02. Biodiversity of plants.md",
+        "diagram_context_count": 3,
+        "scores": {
+          "biological_labeling": 42
+        },
+        "primary_visual_modality": "biological_labeling"
+      },
+      "03. Biodiversity of animals": {
+        "file": "curriculum_docs_auto\\LifeSciences_Gr11\\Term 1\\03. Biodiversity of animals.md",
+        "diagram_context_count": 3,
+        "scores": {
+          "biological_labeling": 20
+        },
+        "primary_visual_modality": "biological_labeling"
+      },
+      "01. Photosynthesis": {
+        "file": "curriculum_docs_auto\\LifeSciences_Gr11\\Term 2\\01. Photosynthesis.md",
+        "diagram_context_count": 2,
+        "scores": {
+          "biological_labeling": 25
+        },
+        "primary_visual_modality": "biological_labeling"
+      },
+      "02. Animal Nutrition": {
+        "file": "curriculum_docs_auto\\LifeSciences_Gr11\\Term 2\\02. Animal Nutrition.md",
+        "diagram_context_count": 2,
+        "scores": {
+          "free_body_diagram": 1,
+          "biological_labeling": 36
+        },
+        "primary_visual_modality": "biological_labeling"
+      },
+      "03. Cellular respiration": {
+        "file": "curriculum_docs_auto\\LifeSciences_Gr11\\Term 2\\03. Cellular respiration.md",
+        "diagram_context_count": 2,
+        "scores": {
+          "biological_labeling": 7
+        },
+        "primary_visual_modality": "biological_labeling"
+      },
+      "01. Gaseous exchange": {
+        "file": "curriculum_docs_auto\\LifeSciences_Gr11\\Term 3\\01. Gaseous exchange.md",
+        "diagram_context_count": 1,
+        "scores": {
+          "biological_labeling": 27
+        },
+        "primary_visual_modality": "biological_labeling"
+      },
+      "02. Excretion in humans": {
+        "file": "curriculum_docs_auto\\LifeSciences_Gr11\\Term 3\\02. Excretion in humans.md",
+        "diagram_context_count": 3,
+        "scores": {
+          "free_body_diagram": 5,
+          "biological_labeling": 45
+        },
+        "primary_visual_modality": "biological_labeling"
+      },
+      "03. Population ecology": {
+        "file": "curriculum_docs_auto\\LifeSciences_Gr11\\Term 3\\03. Population ecology.md",
+        "diagram_context_count": 3,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "04. Human impact on the environment": {
+        "file": "curriculum_docs_auto\\LifeSciences_Gr11\\Term 4\\04. Human impact on the environment.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "biological_labeling": 3
+        },
+        "primary_visual_modality": "biological_labeling"
+      }
+    },
+    "LifeSciences_Gr12": {
+      "Syllabus": {
+        "file": "curriculum_docs_auto\\LifeSciences_Gr12\\Syllabus.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "punnett_square": 12,
+          "biological_labeling": 22
+        },
+        "primary_visual_modality": "biological_labeling"
+      },
+      "01. DNA The code of life": {
+        "file": "curriculum_docs_auto\\LifeSciences_Gr12\\Term 1\\01. DNA The code of life.md",
+        "diagram_context_count": 3,
+        "scores": {
+          "biological_labeling": 66
+        },
+        "primary_visual_modality": "biological_labeling"
+      },
+      "03. Meiosis": {
+        "file": "curriculum_docs_auto\\LifeSciences_Gr12\\Term 1\\03. Meiosis.md",
+        "diagram_context_count": 5,
+        "scores": {
+          "punnett_square": 2,
+          "biological_labeling": 289
+        },
+        "primary_visual_modality": "biological_labeling"
+      },
+      "04. Genetics and inheritance": {
+        "file": "curriculum_docs_auto\\LifeSciences_Gr12\\Term 1\\04. Genetics and inheritance.md",
+        "diagram_context_count": 5,
+        "scores": {
+          "punnett_square": 297,
+          "biological_labeling": 160
+        },
+        "primary_visual_modality": "punnett_square"
+      },
+      "01. Human Reproduction": {
+        "file": "curriculum_docs_auto\\LifeSciences_Gr12\\Term 2\\01. Human Reproduction.md",
+        "diagram_context_count": 5,
+        "scores": {
+          "biological_labeling": 80
+        },
+        "primary_visual_modality": "biological_labeling"
+      },
+      "01. Human responses to the environment": {
+        "file": "curriculum_docs_auto\\LifeSciences_Gr12\\Term 2\\01. Human responses to the environment.md",
+        "diagram_context_count": 5,
+        "scores": {
+          "free_body_diagram": 5,
+          "biological_labeling": 55,
+          "wave_optics": 10
+        },
+        "primary_visual_modality": "biological_labeling"
+      },
+      "01. Reproductive strategies in vertebrates": {
+        "file": "curriculum_docs_auto\\LifeSciences_Gr12\\Term 2\\01. Reproductive strategies in vertebrates.md",
+        "diagram_context_count": 5,
+        "scores": {
+          "biological_labeling": 9
+        },
+        "primary_visual_modality": "biological_labeling"
+      },
+      "03. Plant responses to the environment": {
+        "file": "curriculum_docs_auto\\LifeSciences_Gr12\\Term 2\\03. Plant responses to the environment.md",
+        "diagram_context_count": 5,
+        "scores": {
+          "free_body_diagram": 1,
+          "biological_labeling": 10
+        },
+        "primary_visual_modality": "biological_labeling"
+      },
+      "04. The human endocrine system and homeostasis": {
+        "file": "curriculum_docs_auto\\LifeSciences_Gr12\\Term 2\\04. The human endocrine system and homeostasis.md",
+        "diagram_context_count": 5,
+        "scores": {
+          "free_body_diagram": 2,
+          "biological_labeling": 24
+        },
+        "primary_visual_modality": "biological_labeling"
+      },
+      "02. Evolution by natural selection": {
+        "file": "curriculum_docs_auto\\LifeSciences_Gr12\\Term 3\\02. Evolution by natural selection.md",
+        "diagram_context_count": 3,
+        "scores": {
+          "punnett_square": 4,
+          "biological_labeling": 7
+        },
+        "primary_visual_modality": "biological_labeling"
+      },
+      "03. Human evolution": {
+        "file": "curriculum_docs_auto\\LifeSciences_Gr12\\Term 3\\03. Human evolution.md",
+        "diagram_context_count": 6,
+        "scores": {
+          "biological_labeling": 12,
+          "wave_optics": 2
+        },
+        "primary_visual_modality": "biological_labeling"
+      }
+    },
+    "MathematicalLiteracy_Gr10": {
+      "Syllabus": {
+        "file": "curriculum_docs_auto\\MathematicalLiteracy_Gr10\\Syllabus.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "01. Conversions and time": {
+        "file": "curriculum_docs_auto\\MathematicalLiteracy_Gr10\\Term 1\\01. Conversions and time.md",
+        "diagram_context_count": 318,
+        "scores": {
+          "circuit": 29,
+          "free_body_diagram": 30,
+          "biological_labeling": 12,
+          "chemical_structure": 4,
+          "wave_optics": 13
+        },
+        "primary_visual_modality": "free_body_diagram"
+      },
+      "01. Measuring length weight volume and temperature": {
+        "file": "curriculum_docs_auto\\MathematicalLiteracy_Gr10\\Term 1\\01. Measuring length weight volume and temperature.md",
+        "diagram_context_count": 284,
+        "scores": {
+          "circuit": 21,
+          "free_body_diagram": 26,
+          "biological_labeling": 12,
+          "chemical_structure": 4,
+          "wave_optics": 13
+        },
+        "primary_visual_modality": "free_body_diagram"
+      },
+      "01. Personal income expenditure and budgets": {
+        "file": "curriculum_docs_auto\\MathematicalLiteracy_Gr10\\Term 1\\01. Personal income expenditure and budgets.md",
+        "diagram_context_count": 243,
+        "scores": {
+          "circuit": 13,
+          "free_body_diagram": 18,
+          "biological_labeling": 12,
+          "chemical_structure": 4,
+          "wave_optics": 13
+        },
+        "primary_visual_modality": "free_body_diagram"
+      },
+      "02. Banking interest and taxation": {
+        "file": "curriculum_docs_auto\\MathematicalLiteracy_Gr10\\Term 1\\02. Banking interest and taxation.md",
+        "diagram_context_count": 29,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "02. Financial documents and tariff ystems": {
+        "file": "curriculum_docs_auto\\MathematicalLiteracy_Gr10\\Term 1\\02. Financial documents and tariff ystems.md",
+        "diagram_context_count": 328,
+        "scores": {
+          "circuit": 30,
+          "free_body_diagram": 30,
+          "biological_labeling": 12,
+          "chemical_structure": 4,
+          "wave_optics": 14
+        },
+        "primary_visual_modality": "circuit"
+      },
+      "02. Numbers and calculations with numbers": {
+        "file": "curriculum_docs_auto\\MathematicalLiteracy_Gr10\\Term 1\\02. Numbers and calculations with numbers.md",
+        "diagram_context_count": 328,
+        "scores": {
+          "circuit": 29,
+          "free_body_diagram": 30,
+          "biological_labeling": 13,
+          "chemical_structure": 4,
+          "wave_optics": 13
+        },
+        "primary_visual_modality": "free_body_diagram"
+      },
+      "01. Data handling": {
+        "file": "curriculum_docs_auto\\MathematicalLiteracy_Gr10\\Term 2\\01. Data handling.md",
+        "diagram_context_count": 77,
+        "scores": {
+          "circuit": 17,
+          "free_body_diagram": 8,
+          "biological_labeling": 5
+        },
+        "primary_visual_modality": "circuit"
+      },
+      "01. Scale maps and plans": {
+        "file": "curriculum_docs_auto\\MathematicalLiteracy_Gr10\\Term 2\\01. Scale maps and plans.md",
+        "diagram_context_count": 89,
+        "scores": {
+          "circuit": 17,
+          "free_body_diagram": 8,
+          "biological_labeling": 16
+        },
+        "primary_visual_modality": "circuit"
+      },
+      "02. Assembly diagrams floor plans and packaging": {
+        "file": "curriculum_docs_auto\\MathematicalLiteracy_Gr10\\Term 2\\02. Assembly diagrams floor plans and packaging.md",
+        "diagram_context_count": 12,
+        "scores": {
+          "circuit": 17
+        },
+        "primary_visual_modality": "circuit"
+      },
+      "01. Measurement of perimeter and area": {
+        "file": "curriculum_docs_auto\\MathematicalLiteracy_Gr10\\Term 3\\01. Measurement of perimeter and area.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "free_body_diagram": 1
+        },
+        "primary_visual_modality": null
+      },
+      "02. Patterns relationships and representations": {
+        "file": "curriculum_docs_auto\\MathematicalLiteracy_Gr10\\Term 3\\02. Patterns relationships and representations.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "circuit": 4,
+          "jsxgraph_geometry": 2
+        },
+        "primary_visual_modality": "circuit"
+      },
+      "02. Probability": {
+        "file": "curriculum_docs_auto\\MathematicalLiteracy_Gr10\\Term 4\\02. Probability.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      }
+    },
+    "MathematicalLiteracy_Gr11": {
+      "Syllabus": {
+        "file": "curriculum_docs_auto\\MathematicalLiteracy_Gr11\\Syllabus.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "01. CONVERSIONS AND TIME": {
+        "file": "curriculum_docs_auto\\MathematicalLiteracy_Gr11\\Term 1\\01. CONVERSIONS AND TIME.md",
+        "diagram_context_count": 159,
+        "scores": {
+          "circuit": 4,
+          "biological_labeling": 4,
+          "chemical_structure": 8,
+          "wave_optics": 8
+        },
+        "primary_visual_modality": "chemical_structure"
+      },
+      "01. EXCHANGE RATES": {
+        "file": "curriculum_docs_auto\\MathematicalLiteracy_Gr11\\Term 1\\01. EXCHANGE RATES.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "circuit": 4,
+          "wave_optics": 1,
+          "jsxgraph_geometry": 15
+        },
+        "primary_visual_modality": "jsxgraph_geometry"
+      },
+      "01. Interest banking and inflation": {
+        "file": "curriculum_docs_auto\\MathematicalLiteracy_Gr11\\Term 1\\01. Interest banking and inflation.md",
+        "diagram_context_count": 334,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "01. PATTERNS RELATIONSHIPS AND REPRESENTATIONS": {
+        "file": "curriculum_docs_auto\\MathematicalLiteracy_Gr11\\Term 1\\01. PATTERNS RELATIONSHIPS AND REPRESENTATIONS.md",
+        "diagram_context_count": 128,
+        "scores": {
+          "circuit": 4,
+          "motion_graph": 13
+        },
+        "primary_visual_modality": "motion_graph"
+      },
+      "01. PLANS AND OTHER REPRESENTATIONS": {
+        "file": "curriculum_docs_auto\\MathematicalLiteracy_Gr11\\Term 1\\01. PLANS AND OTHER REPRESENTATIONS.md",
+        "diagram_context_count": 121,
+        "scores": {
+          "circuit": 8
+        },
+        "primary_visual_modality": "circuit"
+      },
+      "02. FINANCE (TAXATION AND UIF)": {
+        "file": "curriculum_docs_auto\\MathematicalLiteracy_Gr11\\Term 1\\02. FINANCE (TAXATION AND UIF).md",
+        "diagram_context_count": 16,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "01. Area and Volume": {
+        "file": "curriculum_docs_auto\\MathematicalLiteracy_Gr11\\Term 2\\01. Area and Volume.md",
+        "diagram_context_count": 234,
+        "scores": {
+          "wave_optics": 8,
+          "jsxgraph_geometry": 8
+        },
+        "primary_visual_modality": "wave_optics"
+      },
+      "01. DATA HANDLING": {
+        "file": "curriculum_docs_auto\\MathematicalLiteracy_Gr11\\Term 2\\01. DATA HANDLING.md",
+        "diagram_context_count": 741,
+        "scores": {
+          "circuit": 8,
+          "free_body_diagram": 1,
+          "biological_labeling": 9,
+          "wave_optics": 8,
+          "jsxgraph_geometry": 8
+        },
+        "primary_visual_modality": "biological_labeling"
+      },
+      "02. MAPS": {
+        "file": "curriculum_docs_auto\\MathematicalLiteracy_Gr11\\Term 2\\02. MAPS.md",
+        "diagram_context_count": 882,
+        "scores": {
+          "circuit": 12,
+          "free_body_diagram": 1,
+          "wave_optics": 8,
+          "jsxgraph_geometry": 8
+        },
+        "primary_visual_modality": "circuit"
+      },
+      "02. Financial documents and tariff systems": {
+        "file": "curriculum_docs_auto\\MathematicalLiteracy_Gr11\\Term 3\\02. Financial documents and tariff systems.md",
+        "diagram_context_count": 443,
+        "scores": {
+          "circuit": 25,
+          "free_body_diagram": 1,
+          "motion_graph": 8
+        },
+        "primary_visual_modality": "circuit"
+      },
+      "02. Weight and Temperatute": {
+        "file": "curriculum_docs_auto\\MathematicalLiteracy_Gr11\\Term 3\\02. Weight and Temperatute.md",
+        "diagram_context_count": 98,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "01. Probability": {
+        "file": "curriculum_docs_auto\\MathematicalLiteracy_Gr11\\Term 4\\01. Probability.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "circuit": 1,
+          "biological_labeling": 6
+        },
+        "primary_visual_modality": "biological_labeling"
+      }
+    },
+    "MathematicalLiteracy_Gr12": {
+      "Syllabus": {
+        "file": "curriculum_docs_auto\\MathematicalLiteracy_Gr12\\Syllabus.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "01. Financial documents and tariff systems": {
+        "file": "curriculum_docs_auto\\MathematicalLiteracy_Gr12\\Term 1\\01. Financial documents and tariff systems.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "free_body_diagram": 2
+        },
+        "primary_visual_modality": null
+      },
+      "01. Income tax": {
+        "file": "curriculum_docs_auto\\MathematicalLiteracy_Gr12\\Term 1\\01. Income tax.md",
+        "diagram_context_count": 21,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "01. exchange rates": {
+        "file": "curriculum_docs_auto\\MathematicalLiteracy_Gr12\\Term 1\\01. exchange rates.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "01. lengths perimeter area and volume": {
+        "file": "curriculum_docs_auto\\MathematicalLiteracy_Gr12\\Term 1\\01. lengths perimeter area and volume.md",
+        "diagram_context_count": 32,
+        "scores": {
+          "chemical_structure": 8
+        },
+        "primary_visual_modality": "chemical_structure"
+      },
+      "01. scale and map work": {
+        "file": "curriculum_docs_auto\\MathematicalLiteracy_Gr12\\Term 1\\01. scale and map work.md",
+        "diagram_context_count": 21,
+        "scores": {
+          "circuit": 15
+        },
+        "primary_visual_modality": "circuit"
+      },
+      "02. Measuring weight BMI medicine dosages": {
+        "file": "curriculum_docs_auto\\MathematicalLiteracy_Gr12\\Term 1\\02. Measuring weight BMI medicine dosages.md",
+        "diagram_context_count": 5,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "01. Maps and plans (models)": {
+        "file": "curriculum_docs_auto\\MathematicalLiteracy_Gr12\\Term 2\\01. Maps and plans (models).md",
+        "diagram_context_count": 6,
+        "scores": {
+          "circuit": 12,
+          "chemical_structure": 4
+        },
+        "primary_visual_modality": "circuit"
+      },
+      "01. plans and scale": {
+        "file": "curriculum_docs_auto\\MathematicalLiteracy_Gr12\\Term 2\\01. plans and scale.md",
+        "diagram_context_count": 7,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "02. Data handling": {
+        "file": "curriculum_docs_auto\\MathematicalLiteracy_Gr12\\Term 2\\02. Data handling.md",
+        "diagram_context_count": 30,
+        "scores": {
+          "circuit": 8,
+          "biological_labeling": 8,
+          "chemical_structure": 19
+        },
+        "primary_visual_modality": "chemical_structure"
+      },
+      "01. interest banking inflation": {
+        "file": "curriculum_docs_auto\\MathematicalLiteracy_Gr12\\Term 3\\01. interest banking inflation.md",
+        "diagram_context_count": 27,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "02. Probability": {
+        "file": "curriculum_docs_auto\\MathematicalLiteracy_Gr12\\Term 3\\02. Probability.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "circuit": 1
+        },
+        "primary_visual_modality": null
+      },
+      "01. conversions & time": {
+        "file": "curriculum_docs_auto\\MathematicalLiteracy_Gr12\\Term 4\\01. conversions & time.md",
+        "diagram_context_count": 12,
+        "scores": {},
+        "primary_visual_modality": null
+      }
+    },
+    "Mathematics_Gr10": {
+      "Syllabus": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr10\\Syllabus.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "free_body_diagram": 1,
+          "jsxgraph_geometry": 9
+        },
+        "primary_visual_modality": "jsxgraph_geometry"
+      },
+      "01. Algebraic expressions": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr10\\Term 1\\01. Algebraic expressions.md",
+        "diagram_context_count": 86,
+        "scores": {
+          "biological_labeling": 8,
+          "chemical_structure": 12
+        },
+        "primary_visual_modality": "chemical_structure"
+      },
+      "02. Exponents": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr10\\Term 1\\02. Exponents.md",
+        "diagram_context_count": 86,
+        "scores": {
+          "biological_labeling": 8,
+          "chemical_structure": 12
+        },
+        "primary_visual_modality": "chemical_structure"
+      },
+      "03. Number patterns": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr10\\Term 1\\03. Number patterns.md",
+        "diagram_context_count": 86,
+        "scores": {
+          "biological_labeling": 8,
+          "chemical_structure": 12
+        },
+        "primary_visual_modality": "chemical_structure"
+      },
+      "04. Equations and inequalities": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr10\\Term 1\\04. Equations and inequalities.md",
+        "diagram_context_count": 86,
+        "scores": {
+          "circuit": 2,
+          "biological_labeling": 8,
+          "chemical_structure": 12
+        },
+        "primary_visual_modality": "chemical_structure"
+      },
+      "05. Trigonometry 1": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr10\\Term 1\\05. Trigonometry 1.md",
+        "diagram_context_count": 86,
+        "scores": {
+          "biological_labeling": 8,
+          "chemical_structure": 12,
+          "jsxgraph_geometry": 16
+        },
+        "primary_visual_modality": "jsxgraph_geometry"
+      },
+      "05. Trigonometry 2": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr10\\Term 1\\05. Trigonometry 2.md",
+        "diagram_context_count": 55,
+        "scores": {
+          "jsxgraph_geometry": 25
+        },
+        "primary_visual_modality": "jsxgraph_geometry"
+      },
+      "01. Functions": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr10\\Term 2\\01. Functions.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "02. Analytical geometry": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr10\\Term 2\\02. Analytical geometry.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "jsxgraph_geometry": 1
+        },
+        "primary_visual_modality": null
+      },
+      "01. Finance and growth": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr10\\Term 3\\01. Finance and growth.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "jsxgraph_geometry": 1
+        },
+        "primary_visual_modality": null
+      },
+      "02. Statistics": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr10\\Term 3\\02. Statistics.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "wave_optics": 1
+        },
+        "primary_visual_modality": null
+      },
+      "04. Euclidean geometry 1": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr10\\Term 3\\04. Euclidean geometry 1.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "jsxgraph_geometry": 29
+        },
+        "primary_visual_modality": "jsxgraph_geometry"
+      },
+      "04. Euclidean geometry 2": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr10\\Term 3\\04. Euclidean geometry 2.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "jsxgraph_geometry": 16
+        },
+        "primary_visual_modality": "jsxgraph_geometry"
+      },
+      "01. Measurements": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr10\\Term 4\\01. Measurements.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "free_body_diagram": 1
+        },
+        "primary_visual_modality": null
+      },
+      "02. Probability": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr10\\Term 4\\02. Probability.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      }
+    },
+    "Mathematics_Gr11": {
+      "Syllabus": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr11\\Syllabus.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "jsxgraph_geometry": 36
+        },
+        "primary_visual_modality": "jsxgraph_geometry"
+      },
+      "01. Exponents and surds": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr11\\Term 1\\01. Exponents and surds.md",
+        "diagram_context_count": 243,
+        "scores": {
+          "circuit": 4,
+          "biological_labeling": 16,
+          "chemical_structure": 35
+        },
+        "primary_visual_modality": "chemical_structure"
+      },
+      "01. Linear programming": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr11\\Term 1\\01. Linear programming.md",
+        "diagram_context_count": 119,
+        "scores": {
+          "circuit": 4,
+          "chemical_structure": 15
+        },
+        "primary_visual_modality": "chemical_structure"
+      },
+      "02. Equations and inequalities": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr11\\Term 1\\02. Equations and inequalities.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "circuit": 3,
+          "jsxgraph_geometry": 1
+        },
+        "primary_visual_modality": "circuit"
+      },
+      "02. investigation and projects": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr11\\Term 1\\02. investigation and projects.md",
+        "diagram_context_count": 219,
+        "scores": {
+          "circuit": 4,
+          "biological_labeling": 16,
+          "chemical_structure": 35
+        },
+        "primary_visual_modality": "chemical_structure"
+      },
+      "03. Number patterns": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr11\\Term 1\\03. Number patterns.md",
+        "diagram_context_count": 219,
+        "scores": {
+          "circuit": 4,
+          "biological_labeling": 16,
+          "chemical_structure": 35
+        },
+        "primary_visual_modality": "chemical_structure"
+      },
+      "04. Trigonometry": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr11\\Term 1\\04. Trigonometry.md",
+        "diagram_context_count": 269,
+        "scores": {
+          "circuit": 4,
+          "biological_labeling": 16,
+          "chemical_structure": 43,
+          "jsxgraph_geometry": 16
+        },
+        "primary_visual_modality": "chemical_structure"
+      },
+      "01. Functions": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr11\\Term 2\\01. Functions.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "02. Analytical geometry": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr11\\Term 2\\02. Analytical geometry.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "jsxgraph_geometry": 1
+        },
+        "primary_visual_modality": null
+      },
+      "01. Finance growth and decay": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr11\\Term 3\\01. Finance growth and decay.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "02. Probability": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr11\\Term 3\\02. Probability.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "03. Euclidean geometry": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr11\\Term 3\\03. Euclidean geometry.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "jsxgraph_geometry": 31
+        },
+        "primary_visual_modality": "jsxgraph_geometry"
+      },
+      "01. Statistics": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr11\\Term 4\\01. Statistics.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "02. Measurement": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr11\\Term 4\\02. Measurement.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      }
+    },
+    "Mathematics_Gr12": {
+      "Syllabus": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr12\\Syllabus.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "free_body_diagram": 1,
+          "wave_optics": 2,
+          "jsxgraph_geometry": 20
+        },
+        "primary_visual_modality": "jsxgraph_geometry"
+      },
+      "01. Sequences and series": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr12\\Term 1\\01. Sequences and series.md",
+        "diagram_context_count": 237,
+        "scores": {
+          "jsxgraph_geometry": 4
+        },
+        "primary_visual_modality": "jsxgraph_geometry"
+      },
+      "02. Functions": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr12\\Term 1\\02. Functions.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "wave_optics": 4,
+          "jsxgraph_geometry": 6
+        },
+        "primary_visual_modality": "jsxgraph_geometry"
+      },
+      "03. Polynomials": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr12\\Term 1\\03. Polynomials.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "04. Differential calculus": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr12\\Term 1\\04. Differential calculus.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "motion_graph": 3,
+          "jsxgraph_geometry": 52
+        },
+        "primary_visual_modality": "jsxgraph_geometry"
+      },
+      "05. Trigonometry": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr12\\Term 1\\05. Trigonometry.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "01. Finance": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr12\\Term 2\\01. Finance.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "02. Analytical geometry": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr12\\Term 2\\02. Analytical geometry.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "jsxgraph_geometry": 24
+        },
+        "primary_visual_modality": "jsxgraph_geometry"
+      },
+      "03. Euclidean geometry": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr12\\Term 2\\03. Euclidean geometry.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "free_body_diagram": 1,
+          "jsxgraph_geometry": 3
+        },
+        "primary_visual_modality": "jsxgraph_geometry"
+      },
+      "01. Statistics": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr12\\Term 3\\01. Statistics.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "biological_labeling": 18,
+          "jsxgraph_geometry": 3
+        },
+        "primary_visual_modality": "biological_labeling"
+      },
+      "02. Probability": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr12\\Term 3\\02. Probability.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "circuit": 1
+        },
+        "primary_visual_modality": null
+      }
+    },
+    "Mathematics_Gr7": {
+      "Syllabus": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr7\\Syllabus.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "free_body_diagram": 4,
+          "wave_optics": 4
+        },
+        "primary_visual_modality": "free_body_diagram"
+      },
+      "01. Integers": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr7\\Term 1\\01. Integers.md",
+        "diagram_context_count": 14,
+        "scores": {
+          "circuit": 1
+        },
+        "primary_visual_modality": null
+      },
+      "01. Working with whole numbers": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr7\\Term 1\\01. Working with whole numbers.md",
+        "diagram_context_count": 100,
+        "scores": {
+          "motion_graph": 1
+        },
+        "primary_visual_modality": null
+      },
+      "02. Exponents": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr7\\Term 1\\02. Exponents.md",
+        "diagram_context_count": 100,
+        "scores": {
+          "free_body_diagram": 1,
+          "motion_graph": 1
+        },
+        "primary_visual_modality": null
+      },
+      "02. Represent data": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr7\\Term 1\\02. Represent data.md",
+        "diagram_context_count": 97,
+        "scores": {
+          "motion_graph": 1
+        },
+        "primary_visual_modality": null
+      },
+      "03. Construction of geometric figures": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr7\\Term 1\\03. Construction of geometric figures.md",
+        "diagram_context_count": 100,
+        "scores": {
+          "free_body_diagram": 6,
+          "motion_graph": 1
+        },
+        "primary_visual_modality": "free_body_diagram"
+      },
+      "03. Numeric and geometric patterns": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr7\\Term 1\\03. Numeric and geometric patterns.md",
+        "diagram_context_count": 75,
+        "scores": {
+          "free_body_diagram": 2,
+          "motion_graph": 1
+        },
+        "primary_visual_modality": null
+      },
+      "04. Geometry of 2D shapes": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr7\\Term 1\\04. Geometry of 2D shapes.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "04. Geometry of straight lines": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr7\\Term 1\\04. Geometry of straight lines.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "04. Graphs": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr7\\Term 1\\04. Graphs.md",
+        "diagram_context_count": 87,
+        "scores": {
+          "motion_graph": 1
+        },
+        "primary_visual_modality": null
+      },
+      "04. graph paper types": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr7\\Term 1\\04. graph paper types.md",
+        "diagram_context_count": 13,
+        "scores": {
+          "wave_optics": 5
+        },
+        "primary_visual_modality": "wave_optics"
+      },
+      "01. Fractions": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr7\\Term 2\\01. Fractions.md",
+        "diagram_context_count": 134,
+        "scores": {
+          "punnett_square": 1,
+          "wave_optics": 1
+        },
+        "primary_visual_modality": null
+      },
+      "01. The decimal notation for fractions": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr7\\Term 2\\01. The decimal notation for fractions.md",
+        "diagram_context_count": 124,
+        "scores": {
+          "punnett_square": 1
+        },
+        "primary_visual_modality": null
+      },
+      "03. Collect organise and summarise data": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr7\\Term 2\\03. Collect organise and summarise data.md",
+        "diagram_context_count": 131,
+        "scores": {
+          "punnett_square": 1
+        },
+        "primary_visual_modality": null
+      },
+      "03. Functions and relationships 1": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr7\\Term 2\\03. Functions and relationships 1.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "03. Functions and relationships 2": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr7\\Term 2\\03. Functions and relationships 2.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "03. Functions and relationships 3": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr7\\Term 2\\03. Functions and relationships 3.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "03. Relationships between variables": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr7\\Term 2\\03. Relationships between variables.md",
+        "diagram_context_count": 16,
+        "scores": {
+          "free_body_diagram": 1
+        },
+        "primary_visual_modality": null
+      },
+      "04. Algebraic expressions 1": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr7\\Term 2\\04. Algebraic expressions 1.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "04. Algebraic expressions 2": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr7\\Term 2\\04. Algebraic expressions 2.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "05. Algebraic equations 1": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr7\\Term 2\\05. Algebraic equations 1.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "05. Algebraic equations 2": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr7\\Term 2\\05. Algebraic equations 2.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "05. Numeric patterns": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr7\\Term 2\\05. Numeric patterns.md",
+        "diagram_context_count": 6,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "01. Surface area and volume of 3D objects": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr7\\Term 3\\01. Surface area and volume of 3D objects.md",
+        "diagram_context_count": 43,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "02. Geometry of 3D objects": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr7\\Term 3\\02. Geometry of 3D objects.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "04. Transformation geometry": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr7\\Term 3\\04. Transformation geometry.md",
+        "diagram_context_count": 106,
+        "scores": {
+          "wave_optics": 257,
+          "jsxgraph_geometry": 28
+        },
+        "primary_visual_modality": "wave_optics"
+      },
+      "01. Interpret analyse and report on data": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr7\\Term 4\\01. Interpret analyse and report on data.md",
+        "diagram_context_count": 15,
+        "scores": {
+          "wave_optics": 1
+        },
+        "primary_visual_modality": null
+      },
+      "01. Perimeter and area of 2D shapes": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr7\\Term 4\\01. Perimeter and area of 2D shapes.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "02. Probability": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr7\\Term 4\\02. Probability.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      }
+    },
+    "Mathematics_Gr8": {
+      "Syllabus": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr8\\Syllabus.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "free_body_diagram": 2,
+          "wave_optics": 4
+        },
+        "primary_visual_modality": "wave_optics"
+      },
+      "01. Interpret analyse and report on data": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr8\\Term 1\\01. Interpret analyse and report on data.md",
+        "diagram_context_count": 49,
+        "scores": {
+          "wave_optics": 1,
+          "jsxgraph_geometry": 8
+        },
+        "primary_visual_modality": "jsxgraph_geometry"
+      },
+      "01. Whole numbers": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr8\\Term 1\\01. Whole numbers.md",
+        "diagram_context_count": 104,
+        "scores": {
+          "jsxgraph_geometry": 12
+        },
+        "primary_visual_modality": "jsxgraph_geometry"
+      },
+      "02. Graphs": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr8\\Term 1\\02. Graphs.md",
+        "diagram_context_count": 92,
+        "scores": {
+          "jsxgraph_geometry": 9
+        },
+        "primary_visual_modality": "jsxgraph_geometry"
+      },
+      "02. Integers": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr8\\Term 1\\02. Integers.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "circuit": 1
+        },
+        "primary_visual_modality": null
+      },
+      "03. Exponents": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr8\\Term 1\\03. Exponents.md",
+        "diagram_context_count": 104,
+        "scores": {
+          "jsxgraph_geometry": 12
+        },
+        "primary_visual_modality": "jsxgraph_geometry"
+      },
+      "03. Represent data": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr8\\Term 1\\03. Represent data.md",
+        "diagram_context_count": 103,
+        "scores": {
+          "jsxgraph_geometry": 12
+        },
+        "primary_visual_modality": "jsxgraph_geometry"
+      },
+      "04. Numeric and geometric patterns": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr8\\Term 1\\04. Numeric and geometric patterns.md",
+        "diagram_context_count": 83,
+        "scores": {
+          "jsxgraph_geometry": 8
+        },
+        "primary_visual_modality": "jsxgraph_geometry"
+      },
+      "05. Collect organise and summarise data": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr8\\Term 1\\05. Collect organise and summarise data.md",
+        "diagram_context_count": 104,
+        "scores": {
+          "jsxgraph_geometry": 12
+        },
+        "primary_visual_modality": "jsxgraph_geometry"
+      },
+      "05. Fractions in decimal notation": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr8\\Term 1\\05. Fractions in decimal notation.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "05. Functions and relationships 1": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr8\\Term 1\\05. Functions and relationships 1.md",
+        "diagram_context_count": 49,
+        "scores": {
+          "free_body_diagram": 2,
+          "jsxgraph_geometry": 8
+        },
+        "primary_visual_modality": "jsxgraph_geometry"
+      },
+      "05. Functions and relationships 2": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr8\\Term 1\\05. Functions and relationships 2.md",
+        "diagram_context_count": 58,
+        "scores": {
+          "free_body_diagram": 1,
+          "jsxgraph_geometry": 8
+        },
+        "primary_visual_modality": "jsxgraph_geometry"
+      },
+      "01. Algebraic expressions 1": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr8\\Term 2\\01. Algebraic expressions 1.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "01. Algebraic expressions 2": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr8\\Term 2\\01. Algebraic expressions 2.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "02. Algebraic equations 1": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr8\\Term 2\\02. Algebraic equations 1.md",
+        "diagram_context_count": 66,
+        "scores": {
+          "biological_labeling": 4,
+          "jsxgraph_geometry": 127
+        },
+        "primary_visual_modality": "jsxgraph_geometry"
+      },
+      "02. Algebraic equations 2": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr8\\Term 2\\02. Algebraic equations 2.md",
+        "diagram_context_count": 38,
+        "scores": {
+          "jsxgraph_geometry": 64
+        },
+        "primary_visual_modality": "jsxgraph_geometry"
+      },
+      "02. Algebraic equations 3": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr8\\Term 2\\02. Algebraic equations 3.md",
+        "diagram_context_count": 89,
+        "scores": {
+          "biological_labeling": 4,
+          "wave_optics": 4,
+          "jsxgraph_geometry": 158
+        },
+        "primary_visual_modality": "jsxgraph_geometry"
+      },
+      "03. Common fractions": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr8\\Term 2\\03. Common fractions.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "03. Geometry of straight lines": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr8\\Term 2\\03. Geometry of straight lines.md",
+        "diagram_context_count": 70,
+        "scores": {
+          "free_body_diagram": 3,
+          "wave_optics": 2,
+          "jsxgraph_geometry": 163
+        },
+        "primary_visual_modality": "jsxgraph_geometry"
+      },
+      "04. Geometry of 2D shapes": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr8\\Term 2\\04. Geometry of 2D shapes.md",
+        "diagram_context_count": 163,
+        "scores": {
+          "biological_labeling": 4,
+          "wave_optics": 8,
+          "jsxgraph_geometry": 248
+        },
+        "primary_visual_modality": "jsxgraph_geometry"
+      },
+      "04. Perimeter and area of 2D shapes": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr8\\Term 2\\04. Perimeter and area of 2D shapes.md",
+        "diagram_context_count": 148,
+        "scores": {
+          "biological_labeling": 4,
+          "wave_optics": 4,
+          "jsxgraph_geometry": 237
+        },
+        "primary_visual_modality": "jsxgraph_geometry"
+      },
+      "01. Construction of geometric figures": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr8\\Term 3\\01. Construction of geometric figures.md",
+        "diagram_context_count": 58,
+        "scores": {
+          "free_body_diagram": 4,
+          "wave_optics": 4,
+          "jsxgraph_geometry": 63
+        },
+        "primary_visual_modality": "jsxgraph_geometry"
+      },
+      "01. Transformation geometry": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr8\\Term 3\\01. Transformation geometry.md",
+        "diagram_context_count": 228,
+        "scores": {
+          "free_body_diagram": 12,
+          "wave_optics": 228,
+          "jsxgraph_geometry": 109
+        },
+        "primary_visual_modality": "wave_optics"
+      },
+      "02. Geometry of 3D objects": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr8\\Term 3\\02. Geometry of 3D objects.md",
+        "diagram_context_count": 204,
+        "scores": {
+          "free_body_diagram": 13,
+          "wave_optics": 81,
+          "jsxgraph_geometry": 107
+        },
+        "primary_visual_modality": "jsxgraph_geometry"
+      },
+      "03. The theorem of Pythagoras": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr8\\Term 3\\03. The theorem of Pythagoras.md",
+        "diagram_context_count": 32,
+        "scores": {
+          "jsxgraph_geometry": 10
+        },
+        "primary_visual_modality": "jsxgraph_geometry"
+      },
+      "04. graph paper types": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr8\\Term 3\\04. graph paper types.md",
+        "diagram_context_count": 27,
+        "scores": {
+          "wave_optics": 18,
+          "jsxgraph_geometry": 10
+        },
+        "primary_visual_modality": "wave_optics"
+      },
+      "01. Surface area and volume of 3D objects": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr8\\Term 4\\01. Surface area and volume of 3D objects.md",
+        "diagram_context_count": 31,
+        "scores": {
+          "wave_optics": 2
+        },
+        "primary_visual_modality": null
+      },
+      "03. Probability": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr8\\Term 4\\03. Probability.md",
+        "diagram_context_count": 31,
+        "scores": {
+          "wave_optics": 2
+        },
+        "primary_visual_modality": null
+      }
+    },
+    "Mathematics_Gr9": {
+      "Syllabus": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr9\\Syllabus.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "free_body_diagram": 3,
+          "wave_optics": 9
+        },
+        "primary_visual_modality": "wave_optics"
+      },
+      "01. Interpret analyse and report on data": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr9\\Term 1\\01. Interpret analyse and report on data.md",
+        "diagram_context_count": 20,
+        "scores": {
+          "wave_optics": 1
+        },
+        "primary_visual_modality": null
+      },
+      "01. The decimal notation for fractions": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr9\\Term 1\\01. The decimal notation for fractions.md",
+        "diagram_context_count": 53,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "01. Whole numbers": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr9\\Term 1\\01. Whole numbers.md",
+        "diagram_context_count": 53,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "02. Integers": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr9\\Term 1\\02. Integers.md",
+        "diagram_context_count": 49,
+        "scores": {
+          "circuit": 2
+        },
+        "primary_visual_modality": null
+      },
+      "03. Exponents": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr9\\Term 1\\03. Exponents.md",
+        "diagram_context_count": 53,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "03. Representing data": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr9\\Term 1\\03. Representing data.md",
+        "diagram_context_count": 52,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "04. Patterns": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr9\\Term 1\\04. Patterns.md",
+        "diagram_context_count": 53,
+        "scores": {
+          "circuit": 3,
+          "jsxgraph_geometry": 1
+        },
+        "primary_visual_modality": "circuit"
+      },
+      "05. Collect organise and summarise data": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr9\\Term 1\\05. Collect organise and summarise data.md",
+        "diagram_context_count": 53,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "05. Functions and relationships": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr9\\Term 1\\05. Functions and relationships.md",
+        "diagram_context_count": 20,
+        "scores": {
+          "free_body_diagram": 2
+        },
+        "primary_visual_modality": null
+      },
+      "05. Functions": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr9\\Term 1\\05. Functions.md",
+        "diagram_context_count": 53,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "06. Algebraic expressions 1": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr9\\Term 1\\06. Algebraic expressions 1.md",
+        "diagram_context_count": 18,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "06. Algebraic expressions 2": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr9\\Term 1\\06. Algebraic expressions 2.md",
+        "diagram_context_count": 6,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "01. Equations 1": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr9\\Term 2\\01. Equations 1.md",
+        "diagram_context_count": 36,
+        "scores": {
+          "wave_optics": 8,
+          "jsxgraph_geometry": 52
+        },
+        "primary_visual_modality": "jsxgraph_geometry"
+      },
+      "01. Equations 2": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr9\\Term 2\\01. Equations 2.md",
+        "diagram_context_count": 26,
+        "scores": {
+          "wave_optics": 8,
+          "jsxgraph_geometry": 40
+        },
+        "primary_visual_modality": "jsxgraph_geometry"
+      },
+      "01. Fractions": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr9\\Term 2\\01. Fractions.md",
+        "diagram_context_count": 108,
+        "scores": {
+          "wave_optics": 9,
+          "jsxgraph_geometry": 106
+        },
+        "primary_visual_modality": "jsxgraph_geometry"
+      },
+      "02. Graphs": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr9\\Term 2\\02. Graphs.md",
+        "diagram_context_count": 87,
+        "scores": {
+          "wave_optics": 8,
+          "jsxgraph_geometry": 96
+        },
+        "primary_visual_modality": "jsxgraph_geometry"
+      },
+      "03. Geometry of straight lines": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr9\\Term 2\\03. Geometry of straight lines.md",
+        "diagram_context_count": 48,
+        "scores": {
+          "free_body_diagram": 1,
+          "wave_optics": 8,
+          "jsxgraph_geometry": 73
+        },
+        "primary_visual_modality": "jsxgraph_geometry"
+      },
+      "04. Geometry of 2D shapes": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr9\\Term 2\\04. Geometry of 2D shapes.md",
+        "diagram_context_count": 108,
+        "scores": {
+          "wave_optics": 9,
+          "jsxgraph_geometry": 106
+        },
+        "primary_visual_modality": "jsxgraph_geometry"
+      },
+      "01. Construction of geometric figures": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr9\\Term 3\\01. Construction of geometric figures.md",
+        "diagram_context_count": 183,
+        "scores": {
+          "free_body_diagram": 5,
+          "wave_optics": 48,
+          "jsxgraph_geometry": 66
+        },
+        "primary_visual_modality": "jsxgraph_geometry"
+      },
+      "01. Transformation geometry": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr9\\Term 3\\01. Transformation geometry.md",
+        "diagram_context_count": 183,
+        "scores": {
+          "wave_optics": 167,
+          "jsxgraph_geometry": 66
+        },
+        "primary_visual_modality": "wave_optics"
+      },
+      "02. Pythagoras Theorem": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr9\\Term 3\\02. Pythagoras Theorem.md",
+        "diagram_context_count": 120,
+        "scores": {
+          "wave_optics": 20,
+          "jsxgraph_geometry": 52
+        },
+        "primary_visual_modality": "jsxgraph_geometry"
+      },
+      "03. Area and perimeter of 2D shapes": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr9\\Term 3\\03. Area and perimeter of 2D shapes.md",
+        "diagram_context_count": 154,
+        "scores": {
+          "wave_optics": 47,
+          "jsxgraph_geometry": 53
+        },
+        "primary_visual_modality": "jsxgraph_geometry"
+      },
+      "01. Geometry of 3D objects": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr9\\Term 4\\01. Geometry of 3D objects.md",
+        "diagram_context_count": 115,
+        "scores": {
+          "biological_labeling": 4,
+          "jsxgraph_geometry": 9
+        },
+        "primary_visual_modality": "jsxgraph_geometry"
+      },
+      "01. Surface area volume and capacity of 3D objects": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr9\\Term 4\\01. Surface area volume and capacity of 3D objects.md",
+        "diagram_context_count": 97,
+        "scores": {
+          "biological_labeling": 4,
+          "jsxgraph_geometry": 5
+        },
+        "primary_visual_modality": "jsxgraph_geometry"
+      },
+      "03. Probability": {
+        "file": "curriculum_docs_auto\\Mathematics_Gr9\\Term 4\\03. Probability.md",
+        "diagram_context_count": 114,
+        "scores": {
+          "biological_labeling": 4,
+          "jsxgraph_geometry": 9
+        },
+        "primary_visual_modality": "jsxgraph_geometry"
+      }
+    },
+    "NaturalSciences_Gr7": {
+      "Syllabus": {
+        "file": "curriculum_docs_auto\\NaturalSciences_Gr7\\Syllabus.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "circuit": 3,
+          "biological_labeling": 8,
+          "chemical_structure": 10,
+          "wave_optics": 1
+        },
+        "primary_visual_modality": "chemical_structure"
+      },
+      "01. Glossary1": {
+        "file": "curriculum_docs_auto\\NaturalSciences_Gr7\\Term 1\\01. Glossary1.md",
+        "diagram_context_count": 78,
+        "scores": {
+          "circuit": 4,
+          "punnett_square": 2,
+          "biological_labeling": 16,
+          "wave_optics": 20
+        },
+        "primary_visual_modality": "wave_optics"
+      },
+      "01. Glossary3": {
+        "file": "curriculum_docs_auto\\NaturalSciences_Gr7\\Term 1\\01. Glossary3.md",
+        "diagram_context_count": 30,
+        "scores": {
+          "circuit": 4,
+          "biological_labeling": 1,
+          "wave_optics": 8
+        },
+        "primary_visual_modality": "wave_optics"
+      },
+      "01. Glossary4": {
+        "file": "curriculum_docs_auto\\NaturalSciences_Gr7\\Term 1\\01. Glossary4.md",
+        "diagram_context_count": 18,
+        "scores": {
+          "circuit": 5,
+          "biological_labeling": 2,
+          "wave_optics": 4
+        },
+        "primary_visual_modality": "circuit"
+      },
+      "01. The Biosphere": {
+        "file": "curriculum_docs_auto\\NaturalSciences_Gr7\\Term 1\\01. The Biosphere.md",
+        "diagram_context_count": 338,
+        "scores": {
+          "circuit": 39,
+          "free_body_diagram": 33,
+          "punnett_square": 2,
+          "biological_labeling": 49,
+          "chemical_structure": 12,
+          "wave_optics": 38
+        },
+        "primary_visual_modality": "biological_labeling"
+      },
+      "02. Biodiversity": {
+        "file": "curriculum_docs_auto\\NaturalSciences_Gr7\\Term 1\\02. Biodiversity.md",
+        "diagram_context_count": 240,
+        "scores": {
+          "circuit": 30,
+          "free_body_diagram": 18,
+          "punnett_square": 2,
+          "biological_labeling": 74,
+          "chemical_structure": 12,
+          "wave_optics": 38
+        },
+        "primary_visual_modality": "biological_labeling"
+      },
+      "03. Sexual reproduction": {
+        "file": "curriculum_docs_auto\\NaturalSciences_Gr7\\Term 1\\03. Sexual reproduction.md",
+        "diagram_context_count": 425,
+        "scores": {
+          "circuit": 39,
+          "free_body_diagram": 35,
+          "punnett_square": 2,
+          "biological_labeling": 141,
+          "chemical_structure": 12,
+          "wave_optics": 43
+        },
+        "primary_visual_modality": "biological_labeling"
+      },
+      "04. Variation": {
+        "file": "curriculum_docs_auto\\NaturalSciences_Gr7\\Term 1\\04. Variation.md",
+        "diagram_context_count": 225,
+        "scores": {
+          "circuit": 33,
+          "free_body_diagram": 21,
+          "punnett_square": 2,
+          "biological_labeling": 37,
+          "chemical_structure": 12,
+          "wave_optics": 38
+        },
+        "primary_visual_modality": "wave_optics"
+      },
+      "01. Properties of materials": {
+        "file": "curriculum_docs_auto\\NaturalSciences_Gr7\\Term 2\\01. Properties of materials.md",
+        "diagram_context_count": 68,
+        "scores": {
+          "circuit": 16,
+          "free_body_diagram": 10,
+          "biological_labeling": 7,
+          "chemical_structure": 8,
+          "wave_optics": 4
+        },
+        "primary_visual_modality": "circuit"
+      },
+      "02. Separating mixtures": {
+        "file": "curriculum_docs_auto\\NaturalSciences_Gr7\\Term 2\\02. Separating mixtures.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "03. Acids bases and neutral substances": {
+        "file": "curriculum_docs_auto\\NaturalSciences_Gr7\\Term 2\\03. Acids bases and neutral substances.md",
+        "diagram_context_count": 69,
+        "scores": {
+          "circuit": 4,
+          "free_body_diagram": 2,
+          "biological_labeling": 12,
+          "chemical_structure": 4
+        },
+        "primary_visual_modality": "biological_labeling"
+      },
+      "04. The Periodic Table of Elements": {
+        "file": "curriculum_docs_auto\\NaturalSciences_Gr7\\Term 2\\04. The Periodic Table of Elements.md",
+        "diagram_context_count": 196,
+        "scores": {
+          "circuit": 24,
+          "free_body_diagram": 6,
+          "biological_labeling": 25,
+          "chemical_structure": 299,
+          "wave_optics": 4
+        },
+        "primary_visual_modality": "chemical_structure"
+      },
+      "01. Sources of energy": {
+        "file": "curriculum_docs_auto\\NaturalSciences_Gr7\\Term 3\\01. Sources of energy.md",
+        "diagram_context_count": 45,
+        "scores": {
+          "biological_labeling": 11,
+          "chemical_structure": 21
+        },
+        "primary_visual_modality": "chemical_structure"
+      },
+      "02. Potential and kinetic energy": {
+        "file": "curriculum_docs_auto\\NaturalSciences_Gr7\\Term 3\\02. Potential and kinetic energy.md",
+        "diagram_context_count": 253,
+        "scores": {
+          "circuit": 95,
+          "free_body_diagram": 12,
+          "biological_labeling": 17,
+          "chemical_structure": 39,
+          "wave_optics": 24
+        },
+        "primary_visual_modality": "circuit"
+      },
+      "03. Energy transfer to surroundings": {
+        "file": "curriculum_docs_auto\\NaturalSciences_Gr7\\Term 3\\03. Energy transfer to surroundings.md",
+        "diagram_context_count": 33,
+        "scores": {
+          "circuit": 20,
+          "free_body_diagram": 1,
+          "chemical_structure": 1,
+          "wave_optics": 4
+        },
+        "primary_visual_modality": "circuit"
+      },
+      "03. Heat Energy transfer": {
+        "file": "curriculum_docs_auto\\NaturalSciences_Gr7\\Term 3\\03. Heat Energy transfer.md",
+        "diagram_context_count": 243,
+        "scores": {
+          "circuit": 65,
+          "free_body_diagram": 19,
+          "biological_labeling": 13,
+          "chemical_structure": 39,
+          "wave_optics": 25
+        },
+        "primary_visual_modality": "circuit"
+      },
+      "04. Heat insulation and energy saving": {
+        "file": "curriculum_docs_auto\\NaturalSciences_Gr7\\Term 3\\04. Heat insulation and energy saving.md",
+        "diagram_context_count": 38,
+        "scores": {
+          "circuit": 4,
+          "free_body_diagram": 6,
+          "biological_labeling": 5,
+          "chemical_structure": 4,
+          "wave_optics": 4
+        },
+        "primary_visual_modality": "free_body_diagram"
+      },
+      "01. Relationship of the moon to the earth": {
+        "file": "curriculum_docs_auto\\NaturalSciences_Gr7\\Term 4\\01. Relationship of the moon to the earth.md",
+        "diagram_context_count": 274,
+        "scores": {
+          "circuit": 21,
+          "free_body_diagram": 5,
+          "wave_optics": 61,
+          "jsxgraph_geometry": 4
+        },
+        "primary_visual_modality": "wave_optics"
+      },
+      "01. Relationship of the sun to the Earth": {
+        "file": "curriculum_docs_auto\\NaturalSciences_Gr7\\Term 4\\01. Relationship of the sun to the Earth.md",
+        "diagram_context_count": 104,
+        "scores": {
+          "circuit": 9,
+          "free_body_diagram": 5,
+          "wave_optics": 25
+        },
+        "primary_visual_modality": "wave_optics"
+      },
+      "02. Historical development of astronomy": {
+        "file": "curriculum_docs_auto\\NaturalSciences_Gr7\\Term 4\\02. Historical development of astronomy.md",
+        "diagram_context_count": 221,
+        "scores": {
+          "circuit": 16,
+          "biological_labeling": 1,
+          "wave_optics": 55,
+          "jsxgraph_geometry": 4
+        },
+        "primary_visual_modality": "wave_optics"
+      }
+    },
+    "NaturalSciences_Gr8": {
+      "Syllabus": {
+        "file": "curriculum_docs_auto\\NaturalSciences_Gr8\\Syllabus.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "circuit": 45,
+          "biological_labeling": 3,
+          "chemical_structure": 6,
+          "wave_optics": 35
+        },
+        "primary_visual_modality": "circuit"
+      },
+      "01. Glossary1": {
+        "file": "curriculum_docs_auto\\NaturalSciences_Gr8\\Term 1\\01. Glossary1.md",
+        "diagram_context_count": 2,
+        "scores": {
+          "biological_labeling": 11,
+          "chemical_structure": 3
+        },
+        "primary_visual_modality": "biological_labeling"
+      },
+      "01. Glossary2": {
+        "file": "curriculum_docs_auto\\NaturalSciences_Gr8\\Term 1\\01. Glossary2.md",
+        "diagram_context_count": 1,
+        "scores": {
+          "biological_labeling": 13,
+          "chemical_structure": 3
+        },
+        "primary_visual_modality": "biological_labeling"
+      },
+      "01. Glossary3": {
+        "file": "curriculum_docs_auto\\NaturalSciences_Gr8\\Term 1\\01. Glossary3.md",
+        "diagram_context_count": 1,
+        "scores": {
+          "circuit": 17,
+          "biological_labeling": 7,
+          "chemical_structure": 3,
+          "wave_optics": 2
+        },
+        "primary_visual_modality": "circuit"
+      },
+      "01. Glossary4": {
+        "file": "curriculum_docs_auto\\NaturalSciences_Gr8\\Term 1\\01. Glossary4.md",
+        "diagram_context_count": 1,
+        "scores": {
+          "biological_labeling": 6,
+          "chemical_structure": 3
+        },
+        "primary_visual_modality": "biological_labeling"
+      },
+      "01. Photosynthesis and respiration": {
+        "file": "curriculum_docs_auto\\NaturalSciences_Gr8\\Term 1\\01. Photosynthesis and respiration.md",
+        "diagram_context_count": 139,
+        "scores": {
+          "circuit": 12,
+          "free_body_diagram": 2,
+          "biological_labeling": 27,
+          "chemical_structure": 20,
+          "wave_optics": 5
+        },
+        "primary_visual_modality": "biological_labeling"
+      },
+      "02. Interactions and interdependence within the environment": {
+        "file": "curriculum_docs_auto\\NaturalSciences_Gr8\\Term 1\\02. Interactions and interdependence within the environment.md",
+        "diagram_context_count": 214,
+        "scores": {
+          "circuit": 16,
+          "free_body_diagram": 8,
+          "biological_labeling": 13,
+          "chemical_structure": 52,
+          "wave_optics": 8
+        },
+        "primary_visual_modality": "chemical_structure"
+      },
+      "01. Atoms": {
+        "file": "curriculum_docs_auto\\NaturalSciences_Gr8\\Term 2\\01. Atoms.md",
+        "diagram_context_count": 256,
+        "scores": {
+          "circuit": 40,
+          "free_body_diagram": 7,
+          "biological_labeling": 66,
+          "chemical_structure": 143
+        },
+        "primary_visual_modality": "chemical_structure"
+      },
+      "02. Particle model of matter": {
+        "file": "curriculum_docs_auto\\NaturalSciences_Gr8\\Term 2\\02. Particle model of matter.md",
+        "diagram_context_count": 282,
+        "scores": {
+          "circuit": 37,
+          "free_body_diagram": 3,
+          "biological_labeling": 40,
+          "chemical_structure": 134,
+          "wave_optics": 1
+        },
+        "primary_visual_modality": "chemical_structure"
+      },
+      "03. Chemical reactions": {
+        "file": "curriculum_docs_auto\\NaturalSciences_Gr8\\Term 2\\03. Chemical reactions.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "circuit": 2
+        },
+        "primary_visual_modality": null
+      },
+      "03. Microorganisms": {
+        "file": "curriculum_docs_auto\\NaturalSciences_Gr8\\Term 2\\03. Microorganisms.md",
+        "diagram_context_count": 277,
+        "scores": {
+          "circuit": 36,
+          "biological_labeling": 52,
+          "chemical_structure": 99
+        },
+        "primary_visual_modality": "chemical_structure"
+      },
+      "01. Energy transfer in electrical systems": {
+        "file": "curriculum_docs_auto\\NaturalSciences_Gr8\\Term 3\\01. Energy transfer in electrical systems.md",
+        "diagram_context_count": 346,
+        "scores": {
+          "circuit": 1974,
+          "free_body_diagram": 5,
+          "biological_labeling": 94,
+          "chemical_structure": 50,
+          "wave_optics": 448
+        },
+        "primary_visual_modality": "circuit"
+      },
+      "01. Static electricity": {
+        "file": "curriculum_docs_auto\\NaturalSciences_Gr8\\Term 3\\01. Static electricity.md",
+        "diagram_context_count": 43,
+        "scores": {
+          "circuit": 21,
+          "biological_labeling": 23,
+          "chemical_structure": 4
+        },
+        "primary_visual_modality": "biological_labeling"
+      },
+      "03. Series and parallel circuits": {
+        "file": "curriculum_docs_auto\\NaturalSciences_Gr8\\Term 3\\03. Series and parallel circuits.md",
+        "diagram_context_count": 80,
+        "scores": {
+          "circuit": 1596,
+          "biological_labeling": 12,
+          "chemical_structure": 19,
+          "wave_optics": 4
+        },
+        "primary_visual_modality": "circuit"
+      },
+      "04. Visible light": {
+        "file": "curriculum_docs_auto\\NaturalSciences_Gr8\\Term 3\\04. Visible light.md",
+        "diagram_context_count": 375,
+        "scores": {
+          "circuit": 1440,
+          "free_body_diagram": 4,
+          "biological_labeling": 126,
+          "chemical_structure": 50,
+          "wave_optics": 852
+        },
+        "primary_visual_modality": "circuit"
+      },
+      "01. Beyond the solar system": {
+        "file": "curriculum_docs_auto\\NaturalSciences_Gr8\\Term 4\\01. Beyond the solar system.md",
+        "diagram_context_count": 284,
+        "scores": {
+          "circuit": 14,
+          "free_body_diagram": 20,
+          "biological_labeling": 17,
+          "wave_optics": 136
+        },
+        "primary_visual_modality": "wave_optics"
+      },
+      "01. The Solar System": {
+        "file": "curriculum_docs_auto\\NaturalSciences_Gr8\\Term 4\\01. The Solar System.md",
+        "diagram_context_count": 142,
+        "scores": {
+          "circuit": 5,
+          "free_body_diagram": 11,
+          "biological_labeling": 3,
+          "wave_optics": 47
+        },
+        "primary_visual_modality": "wave_optics"
+      },
+      "03. Looking into space": {
+        "file": "curriculum_docs_auto\\NaturalSciences_Gr8\\Term 4\\03. Looking into space.md",
+        "diagram_context_count": 101,
+        "scores": {
+          "circuit": 5,
+          "free_body_diagram": 11,
+          "biological_labeling": 20,
+          "chemical_structure": 2,
+          "wave_optics": 96
+        },
+        "primary_visual_modality": "wave_optics"
+      }
+    },
+    "NaturalSciences_Gr9": {
+      "Syllabus": {
+        "file": "curriculum_docs_auto\\NaturalSciences_Gr9\\Syllabus.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "circuit": 65,
+          "free_body_diagram": 1,
+          "biological_labeling": 33,
+          "chemical_structure": 6,
+          "wave_optics": 1
+        },
+        "primary_visual_modality": "circuit"
+      },
+      "01. Cells as the basic units of life": {
+        "file": "curriculum_docs_auto\\NaturalSciences_Gr9\\Term 1\\01. Cells as the basic units of life.md",
+        "diagram_context_count": 310,
+        "scores": {
+          "circuit": 23,
+          "free_body_diagram": 10,
+          "punnett_square": 4,
+          "biological_labeling": 462,
+          "chemical_structure": 3,
+          "wave_optics": 29
+        },
+        "primary_visual_modality": "biological_labeling"
+      },
+      "02. Systems in the human body": {
+        "file": "curriculum_docs_auto\\NaturalSciences_Gr9\\Term 1\\02. Systems in the human body.md",
+        "diagram_context_count": 308,
+        "scores": {
+          "circuit": 23,
+          "free_body_diagram": 9,
+          "punnett_square": 4,
+          "biological_labeling": 455,
+          "chemical_structure": 3,
+          "wave_optics": 28
+        },
+        "primary_visual_modality": "biological_labeling"
+      },
+      "03. Human reproduction": {
+        "file": "curriculum_docs_auto\\NaturalSciences_Gr9\\Term 1\\03. Human reproduction.md",
+        "diagram_context_count": 310,
+        "scores": {
+          "circuit": 23,
+          "free_body_diagram": 9,
+          "punnett_square": 4,
+          "biological_labeling": 457,
+          "chemical_structure": 3,
+          "wave_optics": 28
+        },
+        "primary_visual_modality": "biological_labeling"
+      },
+      "04. Circulatory and respiratory systems": {
+        "file": "curriculum_docs_auto\\NaturalSciences_Gr9\\Term 1\\04. Circulatory and respiratory systems.md",
+        "diagram_context_count": 310,
+        "scores": {
+          "circuit": 25,
+          "free_body_diagram": 10,
+          "punnett_square": 4,
+          "biological_labeling": 592,
+          "chemical_structure": 3,
+          "wave_optics": 30
+        },
+        "primary_visual_modality": "biological_labeling"
+      },
+      "01. Chemical reactions": {
+        "file": "curriculum_docs_auto\\NaturalSciences_Gr9\\Term 2\\01. Chemical reactions.md",
+        "diagram_context_count": 63,
+        "scores": {
+          "circuit": 1,
+          "chemical_structure": 1,
+          "wave_optics": 13
+        },
+        "primary_visual_modality": "wave_optics"
+      },
+      "01. Compounds": {
+        "file": "curriculum_docs_auto\\NaturalSciences_Gr9\\Term 2\\01. Compounds.md",
+        "diagram_context_count": 361,
+        "scores": {
+          "circuit": 58,
+          "free_body_diagram": 1,
+          "biological_labeling": 19,
+          "chemical_structure": 240,
+          "wave_optics": 29,
+          "jsxgraph_geometry": 1
+        },
+        "primary_visual_modality": "chemical_structure"
+      },
+      "02. Reactions of metals with oxygen": {
+        "file": "curriculum_docs_auto\\NaturalSciences_Gr9\\Term 2\\02. Reactions of metals with oxygen.md",
+        "diagram_context_count": 338,
+        "scores": {
+          "circuit": 46,
+          "free_body_diagram": 1,
+          "biological_labeling": 12,
+          "chemical_structure": 85,
+          "wave_optics": 29,
+          "jsxgraph_geometry": 1
+        },
+        "primary_visual_modality": "chemical_structure"
+      },
+      "03. Reactions of non metals with oxygen": {
+        "file": "curriculum_docs_auto\\NaturalSciences_Gr9\\Term 2\\03. Reactions of non metals with oxygen.md",
+        "diagram_context_count": 43,
+        "scores": {
+          "free_body_diagram": 3,
+          "biological_labeling": 4,
+          "chemical_structure": 13
+        },
+        "primary_visual_modality": "chemical_structure"
+      },
+      "04. Acids bases and the pH value": {
+        "file": "curriculum_docs_auto\\NaturalSciences_Gr9\\Term 2\\04. Acids bases and the pH value.md",
+        "diagram_context_count": 332,
+        "scores": {
+          "circuit": 43,
+          "free_body_diagram": 9,
+          "biological_labeling": 12,
+          "chemical_structure": 70,
+          "wave_optics": 29,
+          "jsxgraph_geometry": 1
+        },
+        "primary_visual_modality": "chemical_structure"
+      },
+      "04. Reactions of Acids and bases": {
+        "file": "curriculum_docs_auto\\NaturalSciences_Gr9\\Term 2\\04. Reactions of Acids and bases.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "05. Reactions of acids with a metal": {
+        "file": "curriculum_docs_auto\\NaturalSciences_Gr9\\Term 2\\05. Reactions of acids with a metal.md",
+        "diagram_context_count": 26,
+        "scores": {
+          "circuit": 7,
+          "free_body_diagram": 2,
+          "chemical_structure": 10
+        },
+        "primary_visual_modality": "chemical_structure"
+      },
+      "05. Resistance": {
+        "file": "curriculum_docs_auto\\NaturalSciences_Gr9\\Term 2\\05. Resistance.md",
+        "diagram_context_count": 361,
+        "scores": {
+          "circuit": 419,
+          "free_body_diagram": 3,
+          "biological_labeling": 13,
+          "chemical_structure": 86,
+          "wave_optics": 33,
+          "jsxgraph_geometry": 1
+        },
+        "primary_visual_modality": "circuit"
+      },
+      "01. Forces": {
+        "file": "curriculum_docs_auto\\NaturalSciences_Gr9\\Term 3\\01. Forces.md",
+        "diagram_context_count": 486,
+        "scores": {
+          "circuit": 1666,
+          "free_body_diagram": 177,
+          "motion_graph": 2,
+          "biological_labeling": 67,
+          "chemical_structure": 88,
+          "wave_optics": 4
+        },
+        "primary_visual_modality": "circuit"
+      },
+      "02. Series and parallel circuits": {
+        "file": "curriculum_docs_auto\\NaturalSciences_Gr9\\Term 3\\02. Series and parallel circuits.md",
+        "diagram_context_count": 443,
+        "scores": {
+          "circuit": 2193,
+          "free_body_diagram": 45,
+          "biological_labeling": 59,
+          "chemical_structure": 76,
+          "wave_optics": 7
+        },
+        "primary_visual_modality": "circuit"
+      },
+      "03. Cost of electrical energy": {
+        "file": "curriculum_docs_auto\\NaturalSciences_Gr9\\Term 3\\03. Cost of electrical energy.md",
+        "diagram_context_count": 407,
+        "scores": {
+          "circuit": 1363,
+          "free_body_diagram": 44,
+          "biological_labeling": 51,
+          "chemical_structure": 72,
+          "wave_optics": 4
+        },
+        "primary_visual_modality": "circuit"
+      },
+      "03. Safety with electricity": {
+        "file": "curriculum_docs_auto\\NaturalSciences_Gr9\\Term 3\\03. Safety with electricity.md",
+        "diagram_context_count": 389,
+        "scores": {
+          "circuit": 1542,
+          "free_body_diagram": 44,
+          "biological_labeling": 43,
+          "chemical_structure": 72,
+          "wave_optics": 4
+        },
+        "primary_visual_modality": "circuit"
+      },
+      "04. Birth life and the death of a star": {
+        "file": "curriculum_docs_auto\\NaturalSciences_Gr9\\Term 3\\04. Birth life and the death of a star.md",
+        "diagram_context_count": 367,
+        "scores": {
+          "circuit": 1092,
+          "free_body_diagram": 44,
+          "biological_labeling": 31,
+          "chemical_structure": 60,
+          "wave_optics": 4
+        },
+        "primary_visual_modality": "circuit"
+      },
+      "04. Energy and the national electricity grid": {
+        "file": "curriculum_docs_auto\\NaturalSciences_Gr9\\Term 3\\04. Energy and the national electricity grid.md",
+        "diagram_context_count": 65,
+        "scores": {
+          "circuit": 33,
+          "free_body_diagram": 4,
+          "biological_labeling": 17
+        },
+        "primary_visual_modality": "circuit"
+      },
+      "01. Digestive system": {
+        "file": "curriculum_docs_auto\\NaturalSciences_Gr9\\Term 4\\01. Digestive system.md",
+        "diagram_context_count": 56,
+        "scores": {
+          "circuit": 5,
+          "biological_labeling": 36,
+          "chemical_structure": 5,
+          "wave_optics": 8
+        },
+        "primary_visual_modality": "biological_labeling"
+      },
+      "01. Electric cells as energy systems": {
+        "file": "curriculum_docs_auto\\NaturalSciences_Gr9\\Term 4\\01. Electric cells as energy systems.md",
+        "diagram_context_count": 25,
+        "scores": {
+          "circuit": 124,
+          "free_body_diagram": 3
+        },
+        "primary_visual_modality": "circuit"
+      },
+      "01. The earth as a system": {
+        "file": "curriculum_docs_auto\\NaturalSciences_Gr9\\Term 4\\01. The earth as a system.md",
+        "diagram_context_count": 59,
+        "scores": {
+          "circuit": 1,
+          "free_body_diagram": 1,
+          "chemical_structure": 1,
+          "wave_optics": 8
+        },
+        "primary_visual_modality": "wave_optics"
+      },
+      "02. Glossary1": {
+        "file": "curriculum_docs_auto\\NaturalSciences_Gr9\\Term 4\\02. Glossary1.md",
+        "diagram_context_count": 1,
+        "scores": {
+          "free_body_diagram": 1,
+          "biological_labeling": 20,
+          "chemical_structure": 2
+        },
+        "primary_visual_modality": "biological_labeling"
+      },
+      "02. Glossary2": {
+        "file": "curriculum_docs_auto\\NaturalSciences_Gr9\\Term 4\\02. Glossary2.md",
+        "diagram_context_count": 1,
+        "scores": {
+          "biological_labeling": 4,
+          "chemical_structure": 9
+        },
+        "primary_visual_modality": "chemical_structure"
+      },
+      "02. Glossary3": {
+        "file": "curriculum_docs_auto\\NaturalSciences_Gr9\\Term 4\\02. Glossary3.md",
+        "diagram_context_count": 2,
+        "scores": {
+          "circuit": 24,
+          "free_body_diagram": 2,
+          "biological_labeling": 3,
+          "chemical_structure": 2
+        },
+        "primary_visual_modality": "circuit"
+      },
+      "02. Glossary4": {
+        "file": "curriculum_docs_auto\\NaturalSciences_Gr9\\Term 4\\02. Glossary4.md",
+        "diagram_context_count": 1,
+        "scores": {
+          "biological_labeling": 1,
+          "chemical_structure": 3
+        },
+        "primary_visual_modality": "chemical_structure"
+      },
+      "02. The lithosphere": {
+        "file": "curriculum_docs_auto\\NaturalSciences_Gr9\\Term 4\\02. The lithosphere.md",
+        "diagram_context_count": 442,
+        "scores": {
+          "circuit": 87,
+          "free_body_diagram": 6,
+          "biological_labeling": 57,
+          "chemical_structure": 83,
+          "wave_optics": 32
+        },
+        "primary_visual_modality": "circuit"
+      },
+      "03. Mining of mineral resources": {
+        "file": "curriculum_docs_auto\\NaturalSciences_Gr9\\Term 4\\03. Mining of mineral resources.md",
+        "diagram_context_count": 445,
+        "scores": {
+          "circuit": 88,
+          "free_body_diagram": 5,
+          "biological_labeling": 57,
+          "chemical_structure": 84,
+          "wave_optics": 33
+        },
+        "primary_visual_modality": "circuit"
+      },
+      "04. The atmosphere": {
+        "file": "curriculum_docs_auto\\NaturalSciences_Gr9\\Term 4\\04. The atmosphere.md",
+        "diagram_context_count": 92,
+        "scores": {
+          "circuit": 8,
+          "free_body_diagram": 8,
+          "biological_labeling": 8,
+          "chemical_structure": 31,
+          "wave_optics": 4
+        },
+        "primary_visual_modality": "chemical_structure"
+      }
+    },
+    "PhysicalSciences_Gr10": {
+      "Syllabus": {
+        "file": "curriculum_docs_auto\\PhysicalSciences_Gr10\\Syllabus.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "circuit": 97,
+          "free_body_diagram": 6,
+          "motion_graph": 4,
+          "biological_labeling": 6,
+          "chemical_structure": 42,
+          "wave_optics": 18,
+          "jsxgraph_geometry": 4
+        },
+        "primary_visual_modality": "circuit"
+      },
+      "01. Skills for science": {
+        "file": "curriculum_docs_auto\\PhysicalSciences_Gr10\\Term 1\\01. Skills for science.md",
+        "diagram_context_count": 4,
+        "scores": {
+          "circuit": 1,
+          "jsxgraph_geometry": 5
+        },
+        "primary_visual_modality": "jsxgraph_geometry"
+      },
+      "02. Classification of matter": {
+        "file": "curriculum_docs_auto\\PhysicalSciences_Gr10\\Term 1\\02. Classification of matter.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "circuit": 4,
+          "chemical_structure": 8
+        },
+        "primary_visual_modality": "chemical_structure"
+      },
+      "03. States of matter and the kinetic theory molecular theory": {
+        "file": "curriculum_docs_auto\\PhysicalSciences_Gr10\\Term 1\\03. States of matter and the kinetic theory molecular theory.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "chemical_structure": 3
+        },
+        "primary_visual_modality": "chemical_structure"
+      },
+      "04. The atom": {
+        "file": "curriculum_docs_auto\\PhysicalSciences_Gr10\\Term 1\\04. The atom.md",
+        "diagram_context_count": 4,
+        "scores": {
+          "biological_labeling": 64,
+          "chemical_structure": 89,
+          "wave_optics": 1,
+          "jsxgraph_geometry": 4
+        },
+        "primary_visual_modality": "chemical_structure"
+      },
+      "05. The periodic table": {
+        "file": "curriculum_docs_auto\\PhysicalSciences_Gr10\\Term 1\\05. The periodic table.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "biological_labeling": 1,
+          "chemical_structure": 32
+        },
+        "primary_visual_modality": "chemical_structure"
+      },
+      "06. Chemical bonding": {
+        "file": "curriculum_docs_auto\\PhysicalSciences_Gr10\\Term 1\\06. Chemical bonding.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "biological_labeling": 3,
+          "chemical_structure": 12
+        },
+        "primary_visual_modality": "chemical_structure"
+      },
+      "07. Transverse pulses": {
+        "file": "curriculum_docs_auto\\PhysicalSciences_Gr10\\Term 1\\07. Transverse pulses.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "wave_optics": 5
+        },
+        "primary_visual_modality": "wave_optics"
+      },
+      "08. Transverse waves": {
+        "file": "curriculum_docs_auto\\PhysicalSciences_Gr10\\Term 1\\08. Transverse waves.md",
+        "diagram_context_count": 4,
+        "scores": {
+          "wave_optics": 146,
+          "jsxgraph_geometry": 4
+        },
+        "primary_visual_modality": "wave_optics"
+      },
+      "09. Longitudinal waves": {
+        "file": "curriculum_docs_auto\\PhysicalSciences_Gr10\\Term 1\\09. Longitudinal waves.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "wave_optics": 51
+        },
+        "primary_visual_modality": "wave_optics"
+      },
+      "10. Sound": {
+        "file": "curriculum_docs_auto\\PhysicalSciences_Gr10\\Term 1\\10. Sound.md",
+        "diagram_context_count": 4,
+        "scores": {
+          "free_body_diagram": 3,
+          "biological_labeling": 9,
+          "wave_optics": 23,
+          "jsxgraph_geometry": 4
+        },
+        "primary_visual_modality": "wave_optics"
+      },
+      "11. Electromagnetic radiation": {
+        "file": "curriculum_docs_auto\\PhysicalSciences_Gr10\\Term 1\\11. Electromagnetic radiation.md",
+        "diagram_context_count": 4,
+        "scores": {
+          "biological_labeling": 2,
+          "jsxgraph_geometry": 4
+        },
+        "primary_visual_modality": "jsxgraph_geometry"
+      },
+      "01. The particles that substances are made of": {
+        "file": "curriculum_docs_auto\\PhysicalSciences_Gr10\\Term 2\\01. The particles that substances are made of.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "chemical_structure": 5
+        },
+        "primary_visual_modality": "chemical_structure"
+      },
+      "02. Physical and Chemical Changes": {
+        "file": "curriculum_docs_auto\\PhysicalSciences_Gr10\\Term 2\\02. Physical and Chemical Changes.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "chemical_structure": 2
+        },
+        "primary_visual_modality": null
+      },
+      "02. Representing chemical change": {
+        "file": "curriculum_docs_auto\\PhysicalSciences_Gr10\\Term 2\\02. Representing chemical change.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "chemical_structure": 2
+        },
+        "primary_visual_modality": null
+      },
+      "04. Magnetism": {
+        "file": "curriculum_docs_auto\\PhysicalSciences_Gr10\\Term 2\\04. Magnetism.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "circuit": 1,
+          "biological_labeling": 1
+        },
+        "primary_visual_modality": null
+      },
+      "05. Electrostatics": {
+        "file": "curriculum_docs_auto\\PhysicalSciences_Gr10\\Term 2\\05. Electrostatics.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "circuit": 9
+        },
+        "primary_visual_modality": "circuit"
+      },
+      "06. Electric circuits": {
+        "file": "curriculum_docs_auto\\PhysicalSciences_Gr10\\Term 2\\06. Electric circuits.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "circuit": 565
+        },
+        "primary_visual_modality": "circuit"
+      },
+      "01. Reaction in aqeuous solution": {
+        "file": "curriculum_docs_auto\\PhysicalSciences_Gr10\\Term 3\\01. Reaction in aqeuous solution.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "circuit": 8
+        },
+        "primary_visual_modality": "circuit"
+      },
+      "02. Quantitative aspects of chemical change": {
+        "file": "curriculum_docs_auto\\PhysicalSciences_Gr10\\Term 3\\02. Quantitative aspects of chemical change.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "chemical_structure": 3
+        },
+        "primary_visual_modality": "chemical_structure"
+      },
+      "03. Vectors and scalars": {
+        "file": "curriculum_docs_auto\\PhysicalSciences_Gr10\\Term 3\\03. Vectors and scalars.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "free_body_diagram": 2
+        },
+        "primary_visual_modality": null
+      },
+      "04. Motion in one dimension": {
+        "file": "curriculum_docs_auto\\PhysicalSciences_Gr10\\Term 3\\04. Motion in one dimension.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "free_body_diagram": 1,
+          "motion_graph": 134,
+          "jsxgraph_geometry": 7
+        },
+        "primary_visual_modality": "motion_graph"
+      },
+      "05. Mechanical energy": {
+        "file": "curriculum_docs_auto\\PhysicalSciences_Gr10\\Term 3\\05. Mechanical energy.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "01. The hydrosphere": {
+        "file": "curriculum_docs_auto\\PhysicalSciences_Gr10\\Term 4\\01. The hydrosphere.md",
+        "diagram_context_count": 1,
+        "scores": {
+          "chemical_structure": 1
+        },
+        "primary_visual_modality": null
+      },
+      "02. Units of measurement applied": {
+        "file": "curriculum_docs_auto\\PhysicalSciences_Gr10\\Term 4\\02. Units of measurement applied.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      }
+    },
+    "PhysicalSciences_Gr11": {
+      "Syllabus": {
+        "file": "curriculum_docs_auto\\PhysicalSciences_Gr11\\Syllabus.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "circuit": 35,
+          "free_body_diagram": 52,
+          "motion_graph": 2,
+          "chemical_structure": 37,
+          "wave_optics": 32
+        },
+        "primary_visual_modality": "free_body_diagram"
+      },
+      "01. Vectors in two dimensions": {
+        "file": "curriculum_docs_auto\\PhysicalSciences_Gr11\\Term 1\\01. Vectors in two dimensions.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "free_body_diagram": 6
+        },
+        "primary_visual_modality": "free_body_diagram"
+      },
+      "02. Atomic combinations": {
+        "file": "curriculum_docs_auto\\PhysicalSciences_Gr11\\Term 1\\02. Atomic combinations.md",
+        "diagram_context_count": 47,
+        "scores": {
+          "biological_labeling": 12,
+          "chemical_structure": 141
+        },
+        "primary_visual_modality": "chemical_structure"
+      },
+      "03. Intermolecular forces": {
+        "file": "curriculum_docs_auto\\PhysicalSciences_Gr11\\Term 1\\03. Intermolecular forces.md",
+        "diagram_context_count": 25,
+        "scores": {
+          "free_body_diagram": 12,
+          "chemical_structure": 236
+        },
+        "primary_visual_modality": "chemical_structure"
+      },
+      "04. Ideal gases": {
+        "file": "curriculum_docs_auto\\PhysicalSciences_Gr11\\Term 1\\04. Ideal gases.md",
+        "diagram_context_count": 174,
+        "scores": {
+          "free_body_diagram": 4,
+          "motion_graph": 2,
+          "biological_labeling": 8,
+          "chemical_structure": 153,
+          "jsxgraph_geometry": 1
+        },
+        "primary_visual_modality": "chemical_structure"
+      },
+      "01. Newton's laws": {
+        "file": "curriculum_docs_auto\\PhysicalSciences_Gr11\\Term 2\\01. Newton's laws.md",
+        "diagram_context_count": 295,
+        "scores": {
+          "circuit": 116,
+          "free_body_diagram": 826,
+          "motion_graph": 7,
+          "biological_labeling": 4,
+          "wave_optics": 889,
+          "jsxgraph_geometry": 35
+        },
+        "primary_visual_modality": "wave_optics"
+      },
+      "02. Geometrical optics": {
+        "file": "curriculum_docs_auto\\PhysicalSciences_Gr11\\Term 2\\02. Geometrical optics.md",
+        "diagram_context_count": 295,
+        "scores": {
+          "circuit": 116,
+          "free_body_diagram": 73,
+          "biological_labeling": 4,
+          "wave_optics": 1405,
+          "jsxgraph_geometry": 37
+        },
+        "primary_visual_modality": "wave_optics"
+      },
+      "03. 2D and 3D wavefronts": {
+        "file": "curriculum_docs_auto\\PhysicalSciences_Gr11\\Term 2\\03. 2D and 3D wavefronts.md",
+        "diagram_context_count": 141,
+        "scores": {
+          "circuit": 70,
+          "free_body_diagram": 40,
+          "biological_labeling": 5,
+          "wave_optics": 320,
+          "jsxgraph_geometry": 18
+        },
+        "primary_visual_modality": "wave_optics"
+      },
+      "04. Electrostatics": {
+        "file": "curriculum_docs_auto\\PhysicalSciences_Gr11\\Term 2\\04. Electrostatics.md",
+        "diagram_context_count": 162,
+        "scores": {
+          "circuit": 75,
+          "free_body_diagram": 46,
+          "biological_labeling": 6,
+          "wave_optics": 359,
+          "jsxgraph_geometry": 13
+        },
+        "primary_visual_modality": "wave_optics"
+      },
+      "05. Electromagnetism": {
+        "file": "curriculum_docs_auto\\PhysicalSciences_Gr11\\Term 2\\05. Electromagnetism.md",
+        "diagram_context_count": 226,
+        "scores": {
+          "circuit": 178,
+          "free_body_diagram": 76,
+          "biological_labeling": 4,
+          "wave_optics": 461,
+          "jsxgraph_geometry": 30
+        },
+        "primary_visual_modality": "wave_optics"
+      },
+      "01. Electric circuits": {
+        "file": "curriculum_docs_auto\\PhysicalSciences_Gr11\\Term 3\\01. Electric circuits.md",
+        "diagram_context_count": 208,
+        "scores": {
+          "circuit": 2197,
+          "free_body_diagram": 5,
+          "chemical_structure": 4
+        },
+        "primary_visual_modality": "circuit"
+      },
+      "02. Energy and chemical change": {
+        "file": "curriculum_docs_auto\\PhysicalSciences_Gr11\\Term 3\\02. Energy and chemical change.md",
+        "diagram_context_count": 24,
+        "scores": {
+          "free_body_diagram": 4,
+          "chemical_structure": 3
+        },
+        "primary_visual_modality": "free_body_diagram"
+      },
+      "03. Types of reaction": {
+        "file": "curriculum_docs_auto\\PhysicalSciences_Gr11\\Term 3\\03. Types of reaction.md",
+        "diagram_context_count": 301,
+        "scores": {
+          "circuit": 1886,
+          "free_body_diagram": 4,
+          "biological_labeling": 1,
+          "chemical_structure": 4
+        },
+        "primary_visual_modality": "circuit"
+      },
+      "04. Quantitative aspects of chemical change": {
+        "file": "curriculum_docs_auto\\PhysicalSciences_Gr11\\Term 3\\04. Quantitative aspects of chemical change.md",
+        "diagram_context_count": 327,
+        "scores": {
+          "circuit": 2313,
+          "free_body_diagram": 4,
+          "chemical_structure": 9
+        },
+        "primary_visual_modality": "circuit"
+      },
+      "01. The lithosphere": {
+        "file": "curriculum_docs_auto\\PhysicalSciences_Gr11\\Term 4\\01. The lithosphere.md",
+        "diagram_context_count": 18,
+        "scores": {
+          "free_body_diagram": 2
+        },
+        "primary_visual_modality": null
+      },
+      "02. Units applied": {
+        "file": "curriculum_docs_auto\\PhysicalSciences_Gr11\\Term 4\\02. Units applied.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "circuit": 2,
+          "free_body_diagram": 4
+        },
+        "primary_visual_modality": "free_body_diagram"
+      }
+    },
+    "PhysicalSciences_Gr12": {
+      "Syllabus": {
+        "file": "curriculum_docs_auto\\PhysicalSciences_Gr12\\Syllabus.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "circuit": 66,
+          "free_body_diagram": 18,
+          "motion_graph": 6,
+          "biological_labeling": 2,
+          "chemical_structure": 26
+        },
+        "primary_visual_modality": "circuit"
+      },
+      "01. Momentum and Impulse": {
+        "file": "curriculum_docs_auto\\PhysicalSciences_Gr12\\Term 1\\01. Momentum and Impulse.md",
+        "diagram_context_count": 414,
+        "scores": {
+          "circuit": 31,
+          "free_body_diagram": 149,
+          "motion_graph": 12,
+          "biological_labeling": 8,
+          "chemical_structure": 180
+        },
+        "primary_visual_modality": "chemical_structure"
+      },
+      "02. Vertical projectile motion in one dimension": {
+        "file": "curriculum_docs_auto\\PhysicalSciences_Gr12\\Term 1\\02. Vertical projectile motion in one dimension.md",
+        "diagram_context_count": 379,
+        "scores": {
+          "circuit": 31,
+          "free_body_diagram": 100,
+          "motion_graph": 42,
+          "biological_labeling": 8,
+          "chemical_structure": 171,
+          "jsxgraph_geometry": 6
+        },
+        "primary_visual_modality": "chemical_structure"
+      },
+      "03. Work energy and power": {
+        "file": "curriculum_docs_auto\\PhysicalSciences_Gr12\\Term 1\\03. Work energy and power.md",
+        "diagram_context_count": 332,
+        "scores": {
+          "circuit": 31,
+          "free_body_diagram": 197,
+          "biological_labeling": 8,
+          "chemical_structure": 164
+        },
+        "primary_visual_modality": "free_body_diagram"
+      },
+      "04. Organic molecules": {
+        "file": "curriculum_docs_auto\\PhysicalSciences_Gr12\\Term 1\\04. Organic molecules.md",
+        "diagram_context_count": 623,
+        "scores": {
+          "circuit": 33,
+          "free_body_diagram": 103,
+          "motion_graph": 5,
+          "biological_labeling": 8,
+          "chemical_structure": 904
+        },
+        "primary_visual_modality": "chemical_structure"
+      },
+      "01. Rate and Extent of Reaction": {
+        "file": "curriculum_docs_auto\\PhysicalSciences_Gr12\\Term 2\\01. Rate and Extent of Reaction.md",
+        "diagram_context_count": 43,
+        "scores": {
+          "motion_graph": 1,
+          "chemical_structure": 3,
+          "jsxgraph_geometry": 2
+        },
+        "primary_visual_modality": "chemical_structure"
+      },
+      "02. Chemical equilibrium": {
+        "file": "curriculum_docs_auto\\PhysicalSciences_Gr12\\Term 2\\02. Chemical equilibrium.md",
+        "diagram_context_count": 100,
+        "scores": {
+          "free_body_diagram": 1,
+          "chemical_structure": 15,
+          "wave_optics": 20
+        },
+        "primary_visual_modality": "wave_optics"
+      },
+      "03. Acids and bases": {
+        "file": "curriculum_docs_auto\\PhysicalSciences_Gr12\\Term 2\\03. Acids and bases.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "circuit": 2,
+          "biological_labeling": 1
+        },
+        "primary_visual_modality": null
+      },
+      "04. The Doppler effect": {
+        "file": "curriculum_docs_auto\\PhysicalSciences_Gr12\\Term 2\\04. The Doppler effect.md",
+        "diagram_context_count": 58,
+        "scores": {
+          "free_body_diagram": 2,
+          "chemical_structure": 4,
+          "wave_optics": 60
+        },
+        "primary_visual_modality": "wave_optics"
+      },
+      "01. Electrodynamics": {
+        "file": "curriculum_docs_auto\\PhysicalSciences_Gr12\\Term 3\\01. Electrodynamics.md",
+        "diagram_context_count": 37,
+        "scores": {
+          "circuit": 115,
+          "chemical_structure": 2
+        },
+        "primary_visual_modality": "circuit"
+      },
+      "02. Electric circuits": {
+        "file": "curriculum_docs_auto\\PhysicalSciences_Gr12\\Term 3\\02. Electric circuits.md",
+        "diagram_context_count": 147,
+        "scores": {
+          "circuit": 2336,
+          "free_body_diagram": 1
+        },
+        "primary_visual_modality": "circuit"
+      },
+      "03. Optical phenomena and properties of matter": {
+        "file": "curriculum_docs_auto\\PhysicalSciences_Gr12\\Term 3\\03. Optical phenomena and properties of matter.md",
+        "diagram_context_count": 32,
+        "scores": {
+          "circuit": 16,
+          "motion_graph": 2,
+          "biological_labeling": 1,
+          "chemical_structure": 5,
+          "wave_optics": 1
+        },
+        "primary_visual_modality": "circuit"
+      },
+      "04. Electrochemical reactions": {
+        "file": "curriculum_docs_auto\\PhysicalSciences_Gr12\\Term 3\\04. Electrochemical reactions.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "circuit": 2,
+          "free_body_diagram": 1,
+          "chemical_structure": 2
+        },
+        "primary_visual_modality": null
+      },
+      "05. The chemical industry": {
+        "file": "curriculum_docs_auto\\PhysicalSciences_Gr12\\Term 3\\05. The chemical industry.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "circuit": 2
+        },
+        "primary_visual_modality": null
+      },
+      "01. Skills for science": {
+        "file": "curriculum_docs_auto\\PhysicalSciences_Gr12\\Term 4\\01. Skills for science.md",
+        "diagram_context_count": 18,
+        "scores": {
+          "free_body_diagram": 1,
+          "chemical_structure": 8,
+          "wave_optics": 1,
+          "jsxgraph_geometry": 1
+        },
+        "primary_visual_modality": "chemical_structure"
+      }
+    },
+    "TechnicalMathematics_Gr10": {
+      "Syllabus": {
+        "file": "curriculum_docs_auto\\TechnicalMathematics_Gr10\\Syllabus.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "jsxgraph_geometry": 5
+        },
+        "primary_visual_modality": "jsxgraph_geometry"
+      },
+      "01. Introduction": {
+        "file": "curriculum_docs_auto\\TechnicalMathematics_Gr10\\Term 1\\01. Introduction.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "circuit": 4
+        },
+        "primary_visual_modality": "circuit"
+      },
+      "02. Number Systems": {
+        "file": "curriculum_docs_auto\\TechnicalMathematics_Gr10\\Term 1\\02. Number Systems.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "circuit": 3,
+          "biological_labeling": 2,
+          "wave_optics": 1
+        },
+        "primary_visual_modality": "circuit"
+      },
+      "03. Algebraic expressions": {
+        "file": "curriculum_docs_auto\\TechnicalMathematics_Gr10\\Term 1\\03. Algebraic expressions.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "04. Exponents": {
+        "file": "curriculum_docs_auto\\TechnicalMathematics_Gr10\\Term 1\\04. Exponents.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "free_body_diagram": 1
+        },
+        "primary_visual_modality": null
+      },
+      "05. Equalities and inequalities": {
+        "file": "curriculum_docs_auto\\TechnicalMathematics_Gr10\\Term 1\\05. Equalities and inequalities.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "06. Trigonometry": {
+        "file": "curriculum_docs_auto\\TechnicalMathematics_Gr10\\Term 1\\06. Trigonometry.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "jsxgraph_geometry": 16
+        },
+        "primary_visual_modality": "jsxgraph_geometry"
+      },
+      "01. Functions and graphs": {
+        "file": "curriculum_docs_auto\\TechnicalMathematics_Gr10\\Term 2\\01. Functions and graphs.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "jsxgraph_geometry": 16
+        },
+        "primary_visual_modality": "jsxgraph_geometry"
+      },
+      "02. Analytical Geometry": {
+        "file": "curriculum_docs_auto\\TechnicalMathematics_Gr10\\Term 2\\02. Analytical Geometry.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "jsxgraph_geometry": 1
+        },
+        "primary_visual_modality": null
+      },
+      "02. Geometry": {
+        "file": "curriculum_docs_auto\\TechnicalMathematics_Gr10\\Term 2\\02. Geometry.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "jsxgraph_geometry": 1
+        },
+        "primary_visual_modality": null
+      },
+      "01. Circles  angles and angular Movement": {
+        "file": "curriculum_docs_auto\\TechnicalMathematics_Gr10\\Term 3\\01. Circles  angles and angular Movement.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "02. Finance and Growth": {
+        "file": "curriculum_docs_auto\\TechnicalMathematics_Gr10\\Term 3\\02. Finance and Growth.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "jsxgraph_geometry": 1
+        },
+        "primary_visual_modality": null
+      }
+    },
+    "TechnicalMathematics_Gr11": {
+      "Syllabus": {
+        "file": "curriculum_docs_auto\\TechnicalMathematics_Gr11\\Syllabus.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "free_body_diagram": 1,
+          "jsxgraph_geometry": 15
+        },
+        "primary_visual_modality": "jsxgraph_geometry"
+      },
+      "01. Exponents and surds": {
+        "file": "curriculum_docs_auto\\TechnicalMathematics_Gr11\\Term 1\\01. Exponents and surds.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "02. Logarithms": {
+        "file": "curriculum_docs_auto\\TechnicalMathematics_Gr11\\Term 1\\02. Logarithms.md",
+        "diagram_context_count": 8,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "03. Equations": {
+        "file": "curriculum_docs_auto\\TechnicalMathematics_Gr11\\Term 1\\03. Equations.md",
+        "diagram_context_count": 8,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "04. Trigonometry": {
+        "file": "curriculum_docs_auto\\TechnicalMathematics_Gr11\\Term 1\\04. Trigonometry.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "circuit": 1,
+          "free_body_diagram": 2,
+          "jsxgraph_geometry": 8
+        },
+        "primary_visual_modality": "jsxgraph_geometry"
+      },
+      "01. Functions and graphs": {
+        "file": "curriculum_docs_auto\\TechnicalMathematics_Gr11\\Term 2\\01. Functions and graphs.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "wave_optics": 1,
+          "jsxgraph_geometry": 32
+        },
+        "primary_visual_modality": "jsxgraph_geometry"
+      },
+      "02. Analytical geometry": {
+        "file": "curriculum_docs_auto\\TechnicalMathematics_Gr11\\Term 2\\02. Analytical geometry.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "free_body_diagram": 1
+        },
+        "primary_visual_modality": null
+      },
+      "01. Circles angles and angular movement": {
+        "file": "curriculum_docs_auto\\TechnicalMathematics_Gr11\\Term 3\\01. Circles angles and angular movement.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "jsxgraph_geometry": 2
+        },
+        "primary_visual_modality": null
+      },
+      "02. Finance growth and decays": {
+        "file": "curriculum_docs_auto\\TechnicalMathematics_Gr11\\Term 3\\02. Finance growth and decays.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "03. Euclidean geometry": {
+        "file": "curriculum_docs_auto\\TechnicalMathematics_Gr11\\Term 3\\03. Euclidean geometry.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "circuit": 1,
+          "free_body_diagram": 3,
+          "jsxgraph_geometry": 108
+        },
+        "primary_visual_modality": "jsxgraph_geometry"
+      },
+      "01. Mensuration": {
+        "file": "curriculum_docs_auto\\TechnicalMathematics_Gr11\\Term 4\\01. Mensuration.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "jsxgraph_geometry": 1
+        },
+        "primary_visual_modality": null
+      }
+    },
+    "TechnicalMathematics_Gr12": {
+      "Syllabus": {
+        "file": "curriculum_docs_auto\\TechnicalMathematics_Gr12\\Syllabus.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "jsxgraph_geometry": 12
+        },
+        "primary_visual_modality": "jsxgraph_geometry"
+      },
+      "01. Complex numbers": {
+        "file": "curriculum_docs_auto\\TechnicalMathematics_Gr12\\Term 1\\01. Complex numbers.md",
+        "diagram_context_count": 15,
+        "scores": {
+          "circuit": 5,
+          "chemical_structure": 13
+        },
+        "primary_visual_modality": "chemical_structure"
+      },
+      "02. Polynomials": {
+        "file": "curriculum_docs_auto\\TechnicalMathematics_Gr12\\Term 1\\02. Polynomials.md",
+        "diagram_context_count": 48,
+        "scores": {
+          "circuit": 4,
+          "biological_labeling": 4,
+          "chemical_structure": 37,
+          "jsxgraph_geometry": 18
+        },
+        "primary_visual_modality": "chemical_structure"
+      },
+      "03. Differentiation": {
+        "file": "curriculum_docs_auto\\TechnicalMathematics_Gr12\\Term 1\\03. Differentiation.md",
+        "diagram_context_count": 48,
+        "scores": {
+          "circuit": 4,
+          "free_body_diagram": 1,
+          "biological_labeling": 4,
+          "chemical_structure": 37,
+          "jsxgraph_geometry": 48
+        },
+        "primary_visual_modality": "jsxgraph_geometry"
+      },
+      "04. Integration": {
+        "file": "curriculum_docs_auto\\TechnicalMathematics_Gr12\\Term 1\\04. Integration.md",
+        "diagram_context_count": 46,
+        "scores": {
+          "circuit": 4,
+          "biological_labeling": 4,
+          "chemical_structure": 37,
+          "jsxgraph_geometry": 26
+        },
+        "primary_visual_modality": "chemical_structure"
+      },
+      "05. Trigonometry": {
+        "file": "curriculum_docs_auto\\TechnicalMathematics_Gr12\\Term 1\\05. Trigonometry.md",
+        "diagram_context_count": 48,
+        "scores": {
+          "circuit": 4,
+          "biological_labeling": 4,
+          "chemical_structure": 37,
+          "jsxgraph_geometry": 65
+        },
+        "primary_visual_modality": "jsxgraph_geometry"
+      },
+      "01. Financial mathematics": {
+        "file": "curriculum_docs_auto\\TechnicalMathematics_Gr12\\Term 2\\01. Financial mathematics.md",
+        "diagram_context_count": 0,
+        "scores": {},
+        "primary_visual_modality": null
+      },
+      "02. Analytical geometry": {
+        "file": "curriculum_docs_auto\\TechnicalMathematics_Gr12\\Term 2\\02. Analytical geometry.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "jsxgraph_geometry": 1
+        },
+        "primary_visual_modality": null
+      },
+      "03. Euclidean Geometry Proportionality and similarity": {
+        "file": "curriculum_docs_auto\\TechnicalMathematics_Gr12\\Term 2\\03. Euclidean Geometry Proportionality and similarity.md",
+        "diagram_context_count": 0,
+        "scores": {
+          "jsxgraph_geometry": 15
+        },
+        "primary_visual_modality": "jsxgraph_geometry"
+      }
+    }
+  }
+}

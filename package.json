@@ -24,7 +24,14 @@
     "test:set9": "node scripts/run_interactive_e2e.js e2e/set9_thabo_gr12.spec.js",
     "test:set10": "node scripts/run_interactive_e2e.js e2e/set10_lerato_gr12.spec.js",
     "test:set11": "node scripts/run_interactive_e2e.js e2e/set11_sibusiso_regression.spec.js",
-    "test:audit": "node scripts/run_audit_pipeline.js"
+    "test:bkt-dossiers": "npx playwright test e2e/curriculum_matrix/bkt_dossier_pipeline.spec.js --project=fundile-autopilot",
+    "test:audit": "node scripts/run_audit_pipeline.js",
+    "test:diagrams:headed": "npx playwright test e2e/visual/diagrammatic_archetypes.spec.js --headed",
+    "test:science-diagrams:headed": "npx playwright test e2e/visual/all_science_diagrams_3layer.spec.js --project=fundile-autopilot --headed",
+    "test:heart": "npx playwright test e2e/visual/human_heart_textbook.spec.js --project=fundile-autopilot --headed",
+    "vet:diagrams": "node scripts/audit_diagram_archetypes_pipeline.js",
+    "vet:diagrams:gr7": "node scripts/audit_diagram_archetypes_pipeline.js --grade 7",
+    "vet:diagrams:gr7:headed": "node scripts/audit_diagram_archetypes_pipeline.js --grade 7 --headless false"
   },
   "dependencies": {
     "@fontsource/afacad": "^5.1.1",
@@ -42,6 +49,7 @@
     "qrcode.react": "^4.2.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
+    "three": "^0.187.0",
     "tus-js-client": "^4.3.1",
     "web-vitals": "^5.0.3"
   },

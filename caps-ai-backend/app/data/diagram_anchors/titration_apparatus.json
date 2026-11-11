@@ -1,0 +1,79 @@
+{
+  "diagram": "titration_apparatus",
+  "view": "textbook",
+  "viewBox": "0 0 600 480",
+  "anchors": {
+    "meniscus_level": {
+      "name": "Bottom of Liquid Meniscus",
+      "anchor": [302, 146],
+      "default_box": [60, 95],
+      "side": "left",
+      "grades": ["g11", "g12"],
+      "acceptable": ["Meniscus", "Bottom of meniscus", "Liquid meniscus", "Titrant level"],
+      "description": "Curved upper surface of the titrant liquid inside the burette; read at eye level from the bottom of the concave curve to avoid parallax error."
+    },
+    "burette_clamp": {
+      "name": "Burette Clamp",
+      "anchor": [276, 195],
+      "default_box": [60, 185],
+      "side": "left",
+      "grades": ["g11", "g12"],
+      "acceptable": ["Burette clamp", "Clamp", "Bosshead and clamp", "Retort clamp"],
+      "description": "Holds the burette strictly vertical on the retort stand so volumetric scale readings remain accurate."
+    },
+    "retort_stand": {
+      "name": "Retort Stand",
+      "anchor": [242, 260],
+      "default_box": [60, 275],
+      "side": "left",
+      "grades": ["g11", "g12"],
+      "acceptable": ["Retort stand", "Stand", "Support stand"],
+      "description": "Heavy metallic base and vertical rod providing stable mechanical support for the burette clamp."
+    },
+    "delivery_jet": {
+      "name": "Burette Delivery Jet / Tip",
+      "anchor": [302, 315],
+      "default_box": [60, 365],
+      "side": "left",
+      "grades": ["g11", "g12"],
+      "acceptable": ["Burette tip", "Delivery jet", "Nozzle", "Jet tip"],
+      "description": "Fine glass nozzle at the base of the burette that delivers single drops of titrant; must be free of air bubbles before taking the initial reading."
+    },
+    "burette_tube": {
+      "name": "Burette",
+      "anchor": [303, 95],
+      "default_box": [540, 95],
+      "side": "right",
+      "grades": ["g11", "g12"],
+      "acceptable": ["Burette", "Graduated burette"],
+      "description": "Precision graduated glass tube (typically 50,00 cm³ with 0,1 cm³ subdivisions) used to dispense and measure the exact volume of titrant added."
+    },
+    "stopcock_tap": {
+      "name": "Stopcock / Burette Tap",
+      "anchor": [305, 290],
+      "default_box": [540, 215],
+      "side": "right",
+      "grades": ["g11", "g12"],
+      "acceptable": ["Stopcock", "Tap", "Valve", "Burette tap"],
+      "description": "Rotary valve at the base of the burette that controls the rate of titrant flow down to drop-by-drop addition near the endpoint."
+    },
+    "conical_flask": {
+      "name": "Conical Flask (Erlenmeyer Flask)",
+      "anchor": [304, 382],
+      "default_box": [540, 330],
+      "side": "right",
+      "grades": ["g11", "g12"],
+      "acceptable": ["Conical flask", "Erlenmeyer flask", "Titration flask"],
+      "description": "Sloped-wall reaction vessel holding a pipetted aliquot of the analyte solution and acid-base indicator; its shape allows vigorous swirling without splashing."
+    },
+    "white_tile": {
+      "name": "White Porcelain Tile",
+      "anchor": [332, 416],
+      "default_box": [540, 420],
+      "side": "right",
+      "grades": ["g11", "g12"],
+      "acceptable": ["White tile", "Porcelain tile", "White paper"],
+      "description": "Placed directly beneath the conical flask to provide a neutral white background so the first permanent colour change of the indicator at the endpoint is clearly visible."
+    }
+  }
+}

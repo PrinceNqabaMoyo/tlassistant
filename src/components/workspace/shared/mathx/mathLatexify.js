@@ -21,6 +21,9 @@ export const latexify = (text) => {
     s = s.replace(/_([A-Za-z0-9]+)/g, '_{$1}');
     s = s.replace(/_\(([^()]*)\)/g, '_{$1}');
 
+    // Mixed numbers: e.g. "1 3/10" -> "1\frac{3}{10}"
+    s = s.replace(/\b(\d+)\s+(\d+)\/(\d+)\b/g, '$1\\frac{$2}{$3}');
+
     // Fractions: (a)/(b) or simple tokens
     s = s.replace(/\(([^()]+)\)\/\(([^()]+)\)/g, '\\frac{$1}{$2}');
     s = s.replace(/([A-Za-z0-9.,]+)\/([A-Za-z0-9.,]+)/g, '\\frac{$1}{$2}');
@@ -34,6 +37,9 @@ export const latexify = (text) => {
     s = s.replace(/\bapprox\b/g, ' \\approx ');
     s = s.replace(/\bpi\b/g, '\\pi');
     s = s.replace(/\btheta\b/g, '\\theta');
+    s = s.replace(/\bDelta\b/g, '\\Delta ');
+    s = s.replace(/\balpha\b/g, '\\alpha');
+    s = s.replace(/\bbeta\b/g, '\\beta');
     s = s.replace(/\bdeg\b/g, '^{\\circ}');
     s = s.replace(/\b(sin|cos|tan)\b/g, '\\$1');
 

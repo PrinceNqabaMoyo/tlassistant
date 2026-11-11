@@ -107,10 +107,18 @@ def create_app():
         except (ValueError, TypeError):
             seed = None
         subskill = data.get('subskill', 'mixed')
-        difficulty = data.get('difficulty', 'medium')
-        mode = data.get('mode', 'compound')
+        difficulty = data.get('difficulty') or 'auto'
+        mode = data.get('mode') or 'auto'
+        stage = data.get('stage')
+        diag_step_raw = data.get('diagnostic_step')
+        try:
+            diag_step = int(diag_step_raw) if diag_step_raw is not None else None
+        except (ValueError, TypeError):
+            diag_step = None
         extra_config = {
             'mode': mode,
+            'stage': stage,
+            'diagnostic_step': diag_step,
             'exam_type': data.get('exam_type'),
             'paper': data.get('paper', 1),
             'term': data.get('term', 1),
@@ -140,8 +148,31 @@ def create_app():
                     "topic": topic,
                     "resolved_key": resolve_generator_key(topic, grade=grade, subject=subject),
                     "seed": seed,
+                    "stage": stage or "practice",
                     "total_questions": len(questions),
                 }
+            })
+        except Exception as e:
+            return jsonify({"success": False, "error": str(e)}), 400
+
+    @app.route('/api/curriculum/archetypes', methods=['GET'])
+    def curriculum_archetypes_endpoint():
+        from flask import request, jsonify
+        from .services.generator_registry import get_curriculum_archetypes_catalog, get_topic_archetypes
+        subject = request.args.get('subject')
+        grade = request.args.get('grade')
+        topic = request.args.get('topic')
+        try:
+            if topic and subject and grade:
+                info = get_topic_archetypes(topic=topic, grade=str(grade), subject=subject)
+                return jsonify({"success": True, "topics": [info], "total_topics": 1})
+            catalog = get_curriculum_archetypes_catalog(subject=subject, grade=grade)
+            total_archetypes = sum(len(item.get("archetypes", [])) for item in catalog)
+            return jsonify({
+                "success": True,
+                "topics": catalog,
+                "total_topics": len(catalog),
+                "total_archetypes": total_archetypes,
             })
         except Exception as e:
             return jsonify({"success": False, "error": str(e)}), 400
@@ -207,7 +238,7 @@ def create_app():
             q_copy['question_type'] = 'journal'
         elif ('options' in q_copy or 'options_latex' in q_copy) and not q_copy.get('question_type'):
             q_copy['question_type'] = 'mcq'
-        elif ('arithmetic_grid' in q_copy or q_copy.get('subskill') == 'long_division' or (isinstance(clean_answer, dict) and 'quotient' in clean_answer)) and not q_copy.get('modality'):
+        elif ('arithmetic_grid' in q_copy and q_copy.get('arithmetic_grid') or (isinstance(clean_answer, dict) and 'quotient' in clean_answer)) and not q_copy.get('modality'):
             q_copy['modality'] = 'arithmetic_grid'
 
         if 'correct_index' in q_copy and 'correct_idx' not in q_copy:
@@ -224,6 +255,7 @@ def create_app():
                 "success": True,
                 "score": score,
                 "total": max_score,
+                "max_score": max_score,
                 "percentage": pct,
                 "is_correct": is_correct,
                 "feedback": res.get('feedback', report.get('overall_feedback', '')),
@@ -242,9 +274,55 @@ def create_app():
                 "error": str(e),
                 "score": 0,
                 "total": q_copy.get('marks', 5),
+                "max_score": q_copy.get('marks', 5),
                 "percentage": 0,
                 "is_correct": False,
                 "feedback": f"Marking error: {e}",
             }), 200
 
+    @app.route('/api/audit/bkt-dossier', methods=['POST'])
+    def bkt_dossier_audit_endpoint():
+        import asyncio
+        from flask import request, jsonify
+        from .services.bkt_dossier_service import simulate_persona_topic_dossier
+
+        data = request.get_json() or {}
+        grade = str(data.get('grade', '10'))
+        subject = data.get('subject', 'Mathematics')
+        topic = data.get('topic', 'Algebraic Expressions')
+        personas = data.get('personas') or (
+            [data['persona']] if data.get('persona') else ['high-performing', 'medium-performing', 'low-performing']
+        )
+        practice_count = max(50, int(data.get('practice_count', 50)))
+        exams_count = max(3, int(data.get('exams_count', 3)))
+        questions_per_exam = max(1, int(data.get('questions_per_exam', 5)))
+
+        try:
+            async def _run_all():
+                results = []
+                for p in personas:
+                    res = await simulate_persona_topic_dossier(
+                        grade=grade,
+                        subject=subject,
+                        topic=topic,
+                        persona=p,
+                        practice_count=practice_count,
+                        exams_count=exams_count,
+                        questions_per_exam=questions_per_exam,
+                    )
+                    results.append(res)
+                return results
+
+            dossiers = asyncio.run(_run_all())
+            return jsonify({
+                "success": True,
+                "grade": grade,
+                "subject": subject,
+                "topic": topic,
+                "dossiers": dossiers,
+            })
+        except Exception as e:
+            return jsonify({"success": False, "error": str(e)}), 400
+
     return app
+

@@ -1,0 +1,45 @@
+﻿to_markdown params: ['args', 'kwargs']
+
+=== (a) the 6 re-scraped chapters ===
+  LifeSciences_Gr11\Term 4\PDF - Hum leaks=    0 lines=   0 chars=  95815
+  NaturalSciences_Gr7\Term 2\PDF - S leaks=    0 lines=   0 chars=  73857
+  NaturalSciences_Gr8\Term 2\PDF - C leaks=    0 lines=   0 chars=  39693
+  NaturalSciences_Gr9\Term 2\PDF - R leaks=    0 lines=   0 chars=  71368
+  PhysicalSciences_Gr11\Term 2\PDF - leaks=    0 lines=   0 chars=  31585
+  PhysicalSciences_Gr12\Term 3\PDF - leaks=    0 lines=   0 chars= 179384
+
+=== (b) existing auto .md corpus (all chapters, sampled by subject) ===
+  Accounting_Gr10            files=  15 files_with_latex=  10
+  Accounting_Gr11            files=  20 files_with_latex=  13
+  Accounting_Gr12            files=  18 files_with_latex=  14
+  BusinessStudies_Gr10       files=  19 files_with_latex=  11
+  BusinessStudies_Gr11       files=  19 files_with_latex=  13
+  BusinessStudies_Gr12       files=  15 files_with_latex=  11
+  EMS_Gr7                    files=  13 files_with_latex=   7
+  EMS_Gr8                    files=  13 files_with_latex=   8
+  EMS_Gr9                    files=  14 files_with_latex=   9
+  LifeSciences_Gr10          files=  11 files_with_latex=  11
+  LifeSciences_Gr11          files=  10 files_with_latex=  10
+  LifeSciences_Gr12          files=  10 files_with_latex=  10
+  MathematicalLiteracy_Gr10  files=  12 files_with_latex=  12
+  MathematicalLiteracy_Gr11  files=  12 files_with_latex=  11
+  MathematicalLiteracy_Gr12  files=  12 files_with_latex=   9
+  Mathematics_Gr10           files=  14 files_with_latex=  13
+  Mathematics_Gr11           files=  13 files_with_latex=  13
+  Mathematics_Gr12           files=  10 files_with_latex=   8
+  Mathematics_Gr7            files=  28 files_with_latex=  23
+  Mathematics_Gr8            files=  27 files_with_latex=  26
+  Mathematics_Gr9            files=  25 files_with_latex=  25
+  NaturalSciences_Gr7        files=  19 files_with_latex=  18
+  NaturalSciences_Gr8        files=  17 files_with_latex=  14
+  NaturalSciences_Gr9        files=  28 files_with_latex=  24
+  PhysicalSciences_Gr10      files=  24 files_with_latex=  23
+  PhysicalSciences_Gr11      files=  15 files_with_latex=  15
+  PhysicalSciences_Gr12      files=  14 files_with_latex=  12
+  TechnicalMathematics_Gr10  files=  11 files_with_latex=   9
+  TechnicalMathematics_Gr11  files=  10 files_with_latex=   9
+  TechnicalMathematics_Gr12  files=   8 files_with_latex=   8
+  TOTAL 476 files, 399 contain LaTeX escapes
+
+=== (c) what a learner sees: harvested items ===
+  items scanned=4035  items with LaTeX leak=0

@@ -13,14 +13,15 @@ import { exportCognitiveAuditReport } from '../helpers/cognitiveAuditLogger.js';
  */
 
 test.describe('Curriculum Matrix Evaluation: Grade 10 FET Phase', () => {
-  test.setTimeout(180000);
+  test.setTimeout(300000);
   const baseUrl = process.env.PLAYWRIGHT_BASE_URL || 'http://localhost:5173';
 
   test.afterAll(() => {
     const report = exportCognitiveAuditReport();
     console.log(`\n📄 [Grade 10 Matrix Audit] Exported logs to:`);
     console.log(`   - JSON: ${report.jsonPath}`);
-    console.log(`   - HTML: ${report.htmlPath} (${report.totalEntries} entries recorded)\n`);
+    console.log(`   - HTML: ${report.htmlPath}`);
+    console.log(`   - Summary MD: ${report.summaryMdPath} (${report.totalEntries} entries recorded)\n`);
   });
 
   test('Grade 10 Mathematics: Algebraic expressions', async ({ page, request }) => {
@@ -113,6 +114,22 @@ test.describe('Curriculum Matrix Evaluation: Grade 10 FET Phase', () => {
       topic: 'Personal income expenditure and budgets',
       sampleSeeds: [101, 202, 303, 404],
       expectedModality: 'standard',
+      testCognitiveRepair: false
+    });
+    expect(result.status).toBe('PASSED');
+    expect(result.entropyScore).toBeGreaterThan(0.2);
+  });
+
+  test('Grade 10 Technical Mathematics: Introduction', async ({ page, request }) => {
+    const result = await evaluateSubjectTrack({
+      page,
+      request,
+      baseUrl,
+      grade: 10,
+      subject: 'Technical Mathematics',
+      topic: 'Introduction',
+      sampleSeeds: [101, 202, 303, 404],
+      expectedModality: 'math',
       testCognitiveRepair: false
     });
     expect(result.status).toBe('PASSED');

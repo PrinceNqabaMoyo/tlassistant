@@ -1,0 +1,319 @@
+{
+  "7": [
+    {
+      "archetype_id": "functions_relationships_1",
+      "curriculum_doc_path": "curriculum_docs_auto/Mathematics_Gr7/Term 2/03. Functions and relationships 1.md",
+      "description": "Authored dedicated 5-subskill generator covering forward/reverse flow diagrams and integer mappings."
+    },
+    {
+      "archetype_id": "functions_relationships_2",
+      "curriculum_doc_path": "curriculum_docs_auto/Mathematics_Gr7/Term 2/03. Functions and relationships 2.md",
+      "description": "Authored dedicated 5-subskill generator for tables of values and function formula rules."
+    },
+    {
+      "archetype_id": "functions_relationships_3",
+      "curriculum_doc_path": "curriculum_docs_auto/Mathematics_Gr7/Term 2/03. Functions and relationships 3.md",
+      "description": "Authored dedicated 5-subskill generator for Cartesian ordered pairs and linear vs non-linear graphs."
+    },
+    {
+      "archetype_id": "graphs",
+      "curriculum_doc_path": "curriculum_docs_auto/Mathematics_Gr7/Term 1/04. Graphs.md",
+      "description": "Decoupled Graphs from grab-bag to dedicated 5-subskill generator for graph stories, rates of change, and extrema."
+    },
+    {
+      "archetype_id": "relationships_between_variables",
+      "curriculum_doc_path": "curriculum_docs_auto/Mathematics_Gr7/Term 2/03. Relationships between variables.md",
+      "description": "Authored dedicated 5-subskill generator for constant vs variable quantities, dependent variables, and formulas."
+    },
+    {
+      "archetype_id": "algebraic_expressions_1",
+      "curriculum_doc_path": "curriculum_docs_auto/Mathematics_Gr7/Term 2/04. Algebraic expressions 1.md",
+      "description": "Authored dedicated 5-subskill generator for algebraic language conventions, coefficients, variables, and constants."
+    },
+    {
+      "archetype_id": "algebraic_expressions_2",
+      "curriculum_doc_path": "curriculum_docs_auto/Mathematics_Gr7/Term 2/04. Algebraic expressions 2.md",
+      "description": "Authored dedicated 5-subskill generator for numerical substitution with negative integers and collecting like terms."
+    },
+    {
+      "archetype_id": "algebraic_equations_1",
+      "curriculum_doc_path": "curriculum_docs_auto/Mathematics_Gr7/Term 2/05. Algebraic equations 1.md",
+      "description": "Authored dedicated 5-subskill generator for balance scale concept and one-step equations solved by inspection."
+    },
+    {
+      "archetype_id": "algebraic_equations_2",
+      "curriculum_doc_path": "curriculum_docs_auto/Mathematics_Gr7/Term 2/05. Algebraic equations 2.md",
+      "description": "Authored dedicated 5-subskill generator for two-step equations with inverse operations and authentic word problems."
+    },
+    {
+      "archetype_id": "numeric_and_geometric_patterns",
+      "curriculum_doc_path": "curriculum_docs_auto/Mathematics_Gr7/Term 1/03. Numeric and geometric patterns.md",
+      "description": "Authored dedicated 5-subskill generator for geometric matchstick and dot chain patterns."
+    },
+    {
+      "archetype_id": "numeric_patterns",
+      "curriculum_doc_path": "curriculum_docs_auto/Mathematics_Gr7/Term 2/05. Numeric patterns.md",
+      "description": "Authored dedicated 5-subskill generator for constant difference sequences, negative integers, and Tn general formulas."
+    },
+    {
+      "archetype_id": "data_representation",
+      "curriculum_doc_path": "curriculum_docs_auto/Mathematics_Gr7/Term 1/02. Represent data.md",
+      "description": "Calibrated entropy for histogram interpretation and frequency polygon trends to eliminate zero-entropy static prompts."
+    },
+    {
+      "archetype_id": "data_collection_tally",
+      "curriculum_doc_path": "curriculum_docs_auto/Mathematics_Gr7/Term 2/03. Collect organise and summarise data.md",
+      "description": "Authored dedicated 5-subskill generator for tally frequency tables, stem-and-leaf, and grouped class intervals."
+    },
+    {
+      "archetype_id": "data_measures",
+      "curriculum_doc_path": "curriculum_docs_auto/Mathematics_Gr7/Term 4/01. Interpret analyse and report on data.md",
+      "description": "Authored dedicated 5-subskill generator for mean, median, mode, range, and extreme outliers."
+    },
+    {
+      "archetype_id": "probability",
+      "curriculum_doc_path": "curriculum_docs_auto/Mathematics_Gr7/Term 4/02. Probability.md",
+      "description": "Eradicated pre-attempt answer leaks and isolated to 5 pure probability subskills."
+    },
+    {
+      "archetype_id": "surface_area_and_volume_of_3d_objects",
+      "curriculum_doc_path": "curriculum_docs_auto/Mathematics_Gr7/Term 3/01. Surface area and volume of 3D objects.md",
+      "description": "Decoupled from measurement grab-bag into dedicated 5-subskill generator for cube volume/SA, rectangular prism volume/SA, and unit capacity conversions."
+    },
+    {
+      "archetype_id": "perimeter_and_area",
+      "curriculum_doc_path": "curriculum_docs_auto/Mathematics_Gr7/Term 4/01. Perimeter and area of 2D shapes.md",
+      "description": "Decoupled from measurement grab-bag into dedicated 5-subskill generator for rectangle/square perimeter, polygon perimeter, rectangle/square area, triangle area, and compound shapes."
+    },
+    {
+      "archetype_id": "geometric_nets_3d",
+      "curriculum_doc_path": "curriculum_docs_auto/Mathematics_Gr7/Term 3/01. Surface area and volume of 3D objects.md",
+      "description": "Harmonized subskills list and generator emission keys across cube net, 3D net identification, Euler's formula, surface area from net, and cylinder net."
+    }
+  ],
+  "8": [
+    {
+      "archetype_id": "algebraic_expressions_1",
+      "curriculum_doc_path": "curriculum_docs_auto/Mathematics_Gr8/Term 2/01. Algebraic expressions 1.md",
+      "description": "Authored dedicated 5-subskill generator for words to symbols, degree of polynomials, like terms with powers, and coefficients."
+    },
+    {
+      "archetype_id": "algebraic_expressions_2",
+      "curriculum_doc_path": "curriculum_docs_auto/Mathematics_Gr8/Term 2/01. Algebraic expressions 2.md",
+      "description": "Authored dedicated 5-subskill generator for distributive law expansion, nested brackets, monomial division, and difference of squares."
+    },
+    {
+      "archetype_id": "algebraic_equations_1",
+      "curriculum_doc_path": "curriculum_docs_auto/Mathematics_Gr8/Term 2/02. Algebraic equations 1.md",
+      "description": "Authored dedicated 5-subskill generator for inspection puzzles, additive/multiplicative inverses, and two-step equations."
+    },
+    {
+      "archetype_id": "algebraic_equations_2",
+      "curriculum_doc_path": "curriculum_docs_auto/Mathematics_Gr8/Term 2/02. Algebraic equations 2.md",
+      "description": "Authored dedicated 5-subskill generator for variables on both sides, consecutive numbers, age problems, and perimeter equations."
+    },
+    {
+      "archetype_id": "algebraic_equations_3",
+      "curriculum_doc_path": "curriculum_docs_auto/Mathematics_Gr8/Term 2/02. Algebraic equations 3.md",
+      "description": "Authored dedicated 5-subskill generator for fractional denominators, orchard growth rate models, and break-even comparisons."
+    },
+    {
+      "archetype_id": "functions_relationships_1",
+      "curriculum_doc_path": "curriculum_docs_auto/Mathematics_Gr8/Term 1/05. Functions and relationships 1.md",
+      "description": "Authored dedicated 5-subskill generator for flow diagrams with fractions, negative integers, and inverse operations."
+    },
+    {
+      "archetype_id": "functions_relationships_2",
+      "curriculum_doc_path": "curriculum_docs_auto/Mathematics_Gr8/Term 1/05. Functions and relationships 2.md",
+      "description": "Authored dedicated 5-subskill generator for tables of values, formula deduction y = mx + c, and non-consecutive inputs."
+    },
+    {
+      "archetype_id": "graphs",
+      "curriculum_doc_path": "curriculum_docs_auto/Mathematics_Gr8/Term 1/02. Graphs.md",
+      "description": "Authored dedicated 5-subskill generator for 4-quadrant coordinates, gradients, x/y-intercepts, and journey graphs."
+    },
+    {
+      "archetype_id": "collect_organise_summarise",
+      "curriculum_doc_path": "curriculum_docs_auto/Mathematics_Gr8/Term 1/05. Collect organise and summarise data.md",
+      "description": "Authored dedicated 5-subskill generator for class intervals, tally tables, stem-and-leaf, and survey bias."
+    },
+    {
+      "archetype_id": "represent_data",
+      "curriculum_doc_path": "curriculum_docs_auto/Mathematics_Gr8/Term 1/03. Represent data.md",
+      "description": "Authored dedicated 5-subskill generator for continuous histograms, double bar graphs, pie chart angles, and line trends."
+    },
+    {
+      "archetype_id": "interpret_analyse_report",
+      "curriculum_doc_path": "curriculum_docs_auto/Mathematics_Gr8/Term 1/01. Interpret analyse and report on data.md",
+      "description": "Authored dedicated 5-subskill generator for mean, median of even sets, bimodal distributions, and outlier effects."
+    },
+    {
+      "archetype_id": "levels_and_functions_of_management",
+      "curriculum_doc_path": "curriculum_docs_auto/EMS_Gr8/Term 3/02. Levels and functions of management.md",
+      "description": "Re-routed EMS Levels and Functions of Management to dedicated term3_management generator."
+    },
+    {
+      "archetype_id": "perimeter_and_area_of_2d_shapes",
+      "curriculum_doc_path": "curriculum_docs_auto/Mathematics_Gr8/Term 2/04. Perimeter and area of 2D shapes.md",
+      "description": "Authored dedicated 5-subskill generator for square/rectangle perimeter, polygon perimeter, area, and circle circumference/area."
+    },
+    {
+      "archetype_id": "measurement_3d",
+      "curriculum_doc_path": "curriculum_docs_auto/Mathematics_Gr8/Term 4/01. Surface area and volume of 3D objects.md",
+      "description": "Authored dedicated 5-subskill generator for rectangular prism, triangular prism, cube SA/vol, capacity conversions, and compound containers."
+    }
+  ],
+  "9": [
+    {
+      "archetype_id": "debtors_journal",
+      "curriculum_doc_path": "curriculum_docs_auto/EMS_Gr9/Term 3/01. Credit transactions (Debtors 1).md",
+      "description": "Expanded Debtors Journal procedure from stub 'See completed table' to complete 5-step posting protocol and cost calculation."
+    },
+    {
+      "archetype_id": "creditors_journal",
+      "curriculum_doc_path": "curriculum_docs_auto/EMS_Gr9/Term 3/01. Credit transactions (Creditors 1).md",
+      "description": "Upgraded Creditors Journal sample answer and worked solution with multi-column allocation procedures."
+    },
+    {
+      "archetype_id": "economic_systems",
+      "curriculum_doc_path": "curriculum_docs_auto/EMS_Gr9/Term 1/01. Economic systems.md",
+      "description": "Injected dynamic commodity export/import permutations into Global Economy & Trade archetype."
+    },
+    {
+      "archetype_id": "trade_unions",
+      "curriculum_doc_path": "curriculum_docs_auto/EMS_Gr9/Term 1/01. Trade Unions.md",
+      "description": "Added dynamic industry sector context across mining, energy, logistics, and retail to Roles vs Responsibilities archetype."
+    },
+    {
+      "archetype_id": "functions_of_a_business",
+      "curriculum_doc_path": "curriculum_docs_auto/EMS_Gr9/Term 4/04. Functions of a business.md",
+      "description": "Enriched Business Functions marking points and 2-mark worked procedure depth."
+    },
+    {
+      "archetype_id": "patterns",
+      "curriculum_doc_path": "curriculum_docs_auto/Mathematics_Gr9/Term 1/04. Patterns.md",
+      "description": "Upgraded square numbers and sequence building rules with stepwise formula derivations."
+    },
+    {
+      "archetype_id": "functions_and_relationships",
+      "curriculum_doc_path": "curriculum_docs_auto/Mathematics_Gr9/Term 1/05. Functions and relationships.md",
+      "description": "Added dynamic coefficient variations to Set A/B input mapping and table of values from graphs."
+    },
+    {
+      "archetype_id": "cells_as_the_basic_units_of_life",
+      "curriculum_doc_path": "curriculum_docs_auto/NaturalSciences_Gr9/Term 1/01. Cells as the basic units of life.md",
+      "description": "Unified 6-pillar contract keys (prompt, sample_answer, worked_solution, marks) across plant and animal cell diagrams."
+    },
+    {
+      "archetype_id": "human_reproduction",
+      "curriculum_doc_path": "curriculum_docs_auto/NaturalSciences_Gr9/Term 1/03. Human reproduction.md",
+      "description": "Standardized human reproduction question contract with multi-step physiological solutions."
+    },
+    {
+      "archetype_id": "circulatory_and_respiratory_systems",
+      "curriculum_doc_path": "curriculum_docs_auto/NaturalSciences_Gr9/Term 1/04. Circulatory and respiratory systems.md",
+      "description": "Calibrated prime-modulo seed indexing to ensure distinct dynamic specimens across heart chambers and blood vessels."
+    }
+  ],
+  "10": [
+    {
+      "archetype_id": "organelle_biochemistry",
+      "curriculum_doc_path": "curriculum_docs_auto/LifeSciences_Gr10/Term 1/01. Cells the basic units of life.md",
+      "description": "Reconciled question_text and solution_steps to 6-pillar prompt, worked_solution, and sample_answer contracts for organelle biochemistry."
+    },
+    {
+      "archetype_id": "membrane_transport",
+      "curriculum_doc_path": "curriculum_docs_auto/LifeSciences_Gr10/Term 1/01. Cells the basic units of life.md",
+      "description": "Reconciled fluid mosaic model and active vs passive transport to 6-pillar prompt and worked solution procedures."
+    },
+    {
+      "archetype_id": "cancer_cell_cycle",
+      "curriculum_doc_path": "curriculum_docs_auto/LifeSciences_Gr10/Term 1/02. Cell division.md",
+      "description": "Grounded uncontrolled mitotic division and carcinogens in authoritative curriculum terminology with complete solution procedures."
+    },
+    {
+      "archetype_id": "cytokinesis_plant_animal",
+      "curriculum_doc_path": "curriculum_docs_auto/LifeSciences_Gr10/Term 1/02. Cell division.md",
+      "description": "Grounded cleavage furrow vs cell plate synthesis in authoritative curriculum terminology with complete solution procedures."
+    },
+    {
+      "archetype_id": "blood_vessel_histology",
+      "curriculum_doc_path": "curriculum_docs_auto/LifeSciences_Gr10/Term 2/05. Transport systems in animals.md",
+      "description": "Implemented 3 histological variants (tunica layers, pressure differentials, capillary exchange) ensuring seed entropy."
+    },
+    {
+      "archetype_id": "open_closed_double_circulation",
+      "curriculum_doc_path": "curriculum_docs_auto/LifeSciences_Gr10/Term 2/05. Transport systems in animals.md",
+      "description": "Added systemic vs pulmonary pathway distinctions and non-aliased subskill dispatch."
+    },
+    {
+      "archetype_id": "valve_mechanics",
+      "curriculum_doc_path": "curriculum_docs_auto/LifeSciences_Gr10/Term 2/05. Transport systems in animals.md",
+      "description": "Calibrated anterior vs coronal anatomical orientation frames to ensure seed entropy without leaking target valve identities."
+    },
+    {
+      "archetype_id": "find_length",
+      "curriculum_doc_path": "curriculum_docs_auto/Mathematics_Gr10/Term 1/05. Trigonometry 1.md",
+      "description": "Embedded right-triangle parameters in prompt_latex ensuring cross-seed prompt entropy."
+    },
+    {
+      "archetype_id": "find_angle",
+      "curriculum_doc_path": "curriculum_docs_auto/Mathematics_Gr10/Term 1/05. Trigonometry 1.md",
+      "description": "Embedded triangle side specifications in prompt_latex ensuring cross-seed prompt entropy."
+    },
+    {
+      "archetype_id": "electric_circuits",
+      "curriculum_doc_path": "curriculum_docs_auto/PhysicalSciences_Gr10/Term 2/06. Electric circuits.md",
+      "description": "Populated complete stepwise Ohms Law and series resistance calculations in worked_solution."
+    }
+  ],
+  "11": [
+    {
+      "archetype_id": "classify_sequence",
+      "curriculum_doc_path": "curriculum_docs_auto/Mathematics_Gr11/Term 1/03. Number patterns.md",
+      "description": "Rephrased pattern classification prompt to eliminate keyword answer leak in non-polynomial progression probes."
+    },
+    {
+      "archetype_id": "cellular_respiration_stages",
+      "curriculum_doc_path": "curriculum_docs_auto/LifeSciences_Gr11/Term 2/03. Cellular respiration.md",
+      "description": "Diversified metabolic tissue contexts across skeletal muscle, hepatocytes, and plant seedlings ensuring seed entropy."
+    },
+    {
+      "archetype_id": "hr_discussion",
+      "curriculum_doc_path": "curriculum_docs_auto/BusinessStudies_Gr11/Term 3/04. Introduction to the human resources function.md",
+      "description": "Expanded discussion difficulty mappings across induction benefits and EEA compliance to prevent pool exhaustion."
+    },
+    {
+      "archetype_id": "control_accounts_and_fixed_assets",
+      "curriculum_doc_path": "curriculum_docs_auto/Accounting_Gr11/Term 1/01. Fixed Tangible Assets.md",
+      "description": "Synthesized complete multi-point rubrics and worked procedures from guidelines for partnership ledgers and asset disposals."
+    }
+  ],
+  "12": [
+    {
+      "archetype_id": "ear_defects",
+      "curriculum_doc_path": "curriculum_docs_auto/LifeSciences_Gr12/Term 2/01. Human responses to the environment.md",
+      "description": "Implemented 3 clinical hearing scenarios (otitis media grommets, conductive vs sensorineural hearing loss, barotrauma)."
+    },
+    {
+      "archetype_id": "diabetes_mellitus",
+      "curriculum_doc_path": "curriculum_docs_auto/LifeSciences_Gr12/Term 2/04. The human endocrine system and homeostasis.md",
+      "description": "Expanded diabetes mellitus scenarios across Type 1 autoimmunity, Type 2 insulin resistance, and osmotic diuresis."
+    },
+    {
+      "archetype_id": "general_negative_feedback",
+      "curriculum_doc_path": "curriculum_docs_auto/LifeSciences_Gr12/Term 2/04. The human endocrine system and homeostasis.md",
+      "description": "Added homeostatic negative feedback loops across thyroxine/TSH pituitary axis and hyperventilation CO2 restoration."
+    },
+    {
+      "archetype_id": "log_power_law_simplify",
+      "curriculum_doc_path": "curriculum_docs_auto/Mathematics_Gr12/Term 1/02. Functions.md",
+      "description": "Expanded logarithmic power law simplification to include multi-step worked derivations applying inner exponent rules and log coefficient extraction."
+    },
+    {
+      "archetype_id": "payment_from_future_value",
+      "curriculum_doc_path": "curriculum_docs_auto/Mathematics_Gr12/Term 2/01. Finance.md",
+      "description": "Enriched future value annuity payment calculation with 3-step formula derivation, substitution, and evaluation."
+    }
+  ]
+}

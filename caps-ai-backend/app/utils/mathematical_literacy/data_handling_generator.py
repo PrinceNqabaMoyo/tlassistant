@@ -1,129 +1,68 @@
-"""Grade 10–12 Mathematical Literacy — Data Handling (Deterministic 6-Pillar Generator).
-100% aligned with South African CAPS Curriculum (Mathematical Literacy Paper 1 & 2: Data Handling).
-Covers:
-- Measures of central tendency: Mean (average), Median, Mode
-- Measure of spread: Range, Maximum, Minimum
-- Frequency distribution tables from real South African data contexts (provincial stats, municipal consumption, school tuckshop)
-- Percentage analysis and data interpretation
+"""Grade 10 Mathematical Literacy - Term 2: Data Handling Generator.
 
-Zero-LLM: 100% deterministic Python logic with South African comma decimals ({,}).
+Exhaustively grounded in:
+  - curriculum_docs_auto/MathematicalLiteracy_Gr10/Term 2/01. Data handling.md
+  - curriculum_docs/Mathematical Literacy/
+  - CAPS Mathematical Literacy Grade 10-12 Curriculum Standards
+
+Features:
+  - 52 distinct subskill archetypes covering:
+      * Data handling cycle stages, population vs sample, sample bias and fairness audits, data collection instruments, questionnaire design and leading question detection, categorical vs numerical data, discrete vs continuous data, ethical protocols and informed consent (Subskills 1 to 8)
+      * Tally mark conversion (bundles of 5), total sample size frequency sums (n = ∑ f), relative frequency percentages, grouped frequency intervals and modal class identification, stem-and-leaf plot interpretation, two-way contingency table reading, missing frequency reconstruction, cumulative frequency columns (Subskills 9 to 16)
+      * Measures of central tendency, arithmetic mean of raw datasets, weighted mean of frequency tables, median of odd datasets ((n+1)/2), median of even datasets (middle pair average), unsorted data sorting prerequisite, mode of unimodal datasets, bimodal distributions and no-mode conditions, modal category for qualitative data, missing test score reconstruction (Subskills 17 to 25)
+      * Measures of spread and quartiles, range calculation (Max − Min), range with negative temperatures (double negative addition), lower quartile (Q1), upper quartile (Q3), interquartile range (IQR = Q3 − Q1), semi-interquartile range, outlier impact on mean vs median, identifying extreme outliers, consistency comparison between groups (Subskills 26 to 34)
+      * Bar graphs, histograms & graphical displays, vertical bar graph readings, compound double bar graphs, stacked component bar graphs, continuous histograms across interval bins, bar graph vs histogram distinctions (gaps vs touching), time-series line graphs and seasonal trends, broken/truncated axis audits, frequency polygon midpoint coordinates, percentage increase between bars (Subskills 35 to 43)
+      * Pie charts & advanced interpretation, sector angle from percentage, percentage from sector angle, frequency from central angle, grand total population reconstruction from slice, scatter plot correlation (positive, negative, zero), line of best fit estimation, misleading 3D perspective distortion audits, Stats SA census demographic tables, summary statistic selection for skewed distributions (Subskills 44 to 52)
+  - Full step-by-step pedagogical worked solutions showing the thought process:
+      Step 1: Conceptual Reasoning & Identification
+      Step 2: Technical Method & Working Setup with explicit mark allocation [1 Mark: Method – ...]
+      Step 3: Final Calculation & Answer with explicit mark allocation [1 Mark: Accuracy – ...]
+  - Strict South African Rand formatting with 2 decimal places where currency is calculated (e.g. R 1 250,00).
+  - Clean LaTeX and math mode that renders seamlessly with KaTeX.
+  - Strictly unique 4-option multiple-choice sets with zero duplicate choices.
+  - 3-tier diagnostic pre-baked hints for scaffolded remediation.
 """
+
 from __future__ import annotations
 
-import math
 import random
 from typing import Any, Dict, List, Optional
 
-TOPIC = "mathematical_literacy_data_handling"
-LO = "mathlit_data_handling_measures"
-
-CONTEXTS = [
-    {
-        "desc": "Weekly litres of petrol purchased by local delivery drivers",
-        "unit": "litres",
-        "data_pool": [35, 42, 50, 42, 28, 60, 45, 52, 42, 38],
-    },
-    {
-        "desc": "Daily electricity consumption (kWh) of households in Polokwane",
-        "unit": "kWh",
-        "data_pool": [14, 18, 22, 18, 25, 30, 16, 20, 18, 24],
-    },
-    {
-        "desc": "Monthly cell phone airtime expenditure (Rand) of Grade 11 learners",
-        "unit": "Rand",
-        "data_pool": [85, 110, 150, 110, 95, 200, 130, 110, 175, 120],
-    },
-]
+from .data_handling import DISPATCH_TABLE, SUBSKILLS
 
 
-def _rng(seed: Optional[int] = None) -> random.Random:
-    return random.Random(seed)
+def generate(
+    seed: Optional[int] = None,
+    subskill: Optional[str] = None,
+    archetype_index: Optional[int] = None,
+    count: int = 1,
+    **kwargs: Any
+) -> List[Dict[str, Any]]:
+    """Master generation function.
+    Deterministic execution via seeded Random instance.
+    Supports single generation, iteration mode by archetype_index (0..51),
+    subskill filtering, or batch count.
+    """
+    actual_seed = seed if seed is not None else random.randint(1, 10_000_000)
+    r = random.Random(actual_seed)
 
+    questions: List[Dict[str, Any]] = []
 
-def _fmt_sa(val: float | int, places: int = 2) -> str:
-    if isinstance(val, int) or (isinstance(val, float) and val.is_integer()):
-        return str(int(val))
-    return f"{val:.{places}f}".replace(".", ",")
+    for i in range(max(1, count)):
+        if archetype_index is not None and 0 <= archetype_index < len(SUBSKILLS):
+            chosen_subskill = SUBSKILLS[archetype_index]
+        elif subskill and subskill in DISPATCH_TABLE:
+            chosen_subskill = subskill
+        elif count > 1:
+            chosen_subskill = SUBSKILLS[i % len(SUBSKILLS)]
+        else:
+            chosen_subskill = r.choice(SUBSKILLS)
 
+        generator_fn = DISPATCH_TABLE[chosen_subskill]
+        # Seed individual question generator for independent entropy
+        q_seed = r.randint(1, 10_000_000)
+        q_rng = random.Random(q_seed)
+        q = generator_fn(q_rng)
+        questions.append(q)
 
-def _build_summary_drill(r: random.Random) -> Dict[str, Any]:
-    ctx = r.choice(CONTEXTS)
-    data = list(ctx["data_pool"])
-    r.shuffle(data)
-
-    s = sorted(data)
-    n = len(s)
-    mean_val = round(sum(s) / n, 2)
-
-    # Mode
-    counts = {}
-    for x in s:
-        counts[x] = counts.get(x, 0) + 1
-    max_c = max(counts.values())
-    modes = [k for k, v in counts.items() if v == max_c]
-    mode_str = ", ".join(str(m) for m in modes) if max_c > 1 else "No unique mode"
-
-    # Median
-    mid = n // 2
-    if n % 2 == 1:
-        median_val = float(s[mid])
-    else:
-        median_val = round((s[mid - 1] + s[mid]) / 2.0, 2)
-
-    range_val = s[-1] - s[0]
-
-    raw_str = ", ".join(str(x) for x in data)
-
-    prompt = (
-        rf"The following data shows the {ctx['desc']} recorded over a {n}-day period:\n\n"
-        rf"$$\{{{raw_str}\}}$$\n\n"
-        rf"1. Determine the mode of the data.\n"
-        rf"2. Determine the median of the data.\n"
-        rf"3. Calculate the mean (average) value. Round off to ONE decimal place.\n"
-        rf"4. Calculate the range of the data."
-    )
-
-    sample_ans = (
-        rf"1. Mode: {mode_str} {ctx['unit']}.\n"
-        rf"2. Ordered data: {', '.join(str(x) for x in s)}. Median = {_fmt_sa(median_val)} {ctx['unit']}.\n"
-        rf"3. Mean = {sum(s)} / {n} = {_fmt_sa(mean_val, 1)} {ctx['unit']}.\n"
-        rf"4. Range = Maximum - Minimum = {s[-1]} - {s[0]} = {range_val} {ctx['unit']}."
-    )
-
-    return {
-        "id": f"mathlit_data_{r.randint(1000, 9999)}",
-        "question_type": "typed",
-        "topic": "Data handling",
-        "learning_objective_id": LO,
-        "term": 2,
-        "caps_weight_percent": 15,
-        "suggested_duration_mins": 5,
-        "prompt": prompt,
-        "marks": 6,
-        "correct_answer": f"Mode: {mode_str}, Median: {_fmt_sa(median_val)}, Mean: {_fmt_sa(mean_val, 1)}, Range: {range_val}",
-        "sample_answer": sample_ans,
-        "marking_schema": {
-            "total_marks": 6,
-            "marking_points": [
-                {"id": "mp_1", "desc": "Mode identification", "marks": 1, "editable": True},
-                {"id": "mp_2", "desc": "Ordered data and median calculation", "marks": 2, "editable": True},
-                {"id": "mp_3", "desc": "Sum and mean calculation with rounding", "marks": 2, "editable": True},
-                {"id": "mp_4", "desc": "Range calculation (Max - Min)", "marks": 1, "editable": True},
-            ],
-            "carry_forward_rule": "consequential_accuracy",
-        },
-        "hint_sections": {
-            "1_nudge": "Sort the data in ascending order before finding the median.",
-            "2_concept": "Mode is the most common number; Median is the middle number; Mean is sum divided by count; Range is highest minus lowest.",
-            "3_breakdown": rf"Median = {_fmt_sa(median_val)}, Mean = {_fmt_sa(mean_val, 1)}, Range = {range_val}.",
-        },
-        "misconception_tags": ["unsorted_median_error", "mean_sum_count_error"],
-    }
-
-
-def generate(subskill: Optional[str] = None, difficulty: str = "medium", count: int = 1, seed: Optional[int] = None, **kwargs) -> List[Dict[str, Any]]:
-    r = _rng(seed)
-    questions = []
-    for _ in range(count):
-        questions.append(_build_summary_drill(r))
     return questions

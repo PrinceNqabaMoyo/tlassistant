@@ -116,6 +116,22 @@ def generate_newton_law_question(r: random.Random, mode: str = "scaffold") -> Di
         "id": f"phys_newton_{r.randint(100000, 999999)}",
         "topic": "Physical Sciences Mechanics",
         "subskill": "newtons_second_law",
+        "modality": "free_body_diagram",
+        "diagram_spec": {
+            "diagram_role": "context",
+            "kind": "free_body_diagram",
+            "mass_kg": mass, "angle_deg": theta,
+        },
+        "fbd_spec": {
+            "mass_kg": mass,
+            "angle_deg": 0,
+            "forces": [
+                {"name": "F_N", "label": "Normal Force (FN)", "magnitude": round(mass * 9.8), "dir": "up"},
+                {"name": "F_g", "label": "Weight (Fg)", "magnitude": round(mass * 9.8), "dir": "down"},
+                {"name": "f_k", "label": "Friction (fk)", "magnitude": friction, "dir": "left"},
+                {"name": "F_app", "label": "Applied Force (F)", "magnitude": f_applied, "dir": "right"}
+            ]
+        },
         "term": 1,
         "caps_weight_percent": 22,
         "suggested_duration_mins": 8,
@@ -255,6 +271,22 @@ def generate_inclined_plane_question(r: random.Random, mode: str = "compound") -
         "topic": "Physical Sciences Mechanics",
         "subskill": "inclined_plane_newton",
         "mode": "compound",
+        "modality": "free_body_diagram",
+        "diagram_spec": {
+            "diagram_role": "context",
+            "kind": "free_body_diagram",
+            "mass_kg": mass, "angle_deg": theta,
+        },
+        "fbd_spec": {
+            "mass_kg": mass,
+            "angle_deg": theta,
+            "forces": [
+                {"name": "F_N", "label": "Normal Force (FN)", "magnitude": normal_force, "dir": "up"},
+                {"name": "F_g", "label": "Weight (Fg)", "magnitude": round(mass * 9.8), "dir": "down"},
+                {"name": "f_k", "label": "Friction (fk)", "magnitude": fk, "dir": "left"},
+                {"name": "F_app", "label": "Applied Force (F)", "magnitude": f_app, "dir": "right"}
+            ]
+        },
         "difficulty": "hard",
         "term": 1,
         "caps_weight_percent": 22,
@@ -283,17 +315,31 @@ def generate_inclined_plane_question(r: random.Random, mode: str = "compound") -
     }
 
 
-def generate(subskill: str = "kinematics_1d", count: int = 1, mode: str = "compound", seed: Optional[int] = None, **kwargs) -> List[Dict[str, Any]]:
+def generate(subskill: str = "mixed", count: int = 1, mode: str = "compound", seed: Optional[int] = None, **kwargs) -> List[Dict[str, Any]]:
     r = _rng(seed)
     questions = []
     
-    for _ in range(count):
-        if mode in ("compound", "elementary_normal_force_incline", "elementary_parallel_gravity") or subskill in ("inclined_plane", "inclined_plane_newton"):
+    for i in range(count):
+        sub_seed = (seed + i * 37) if seed is not None else r.randint(1000, 999999)
+        if subskill in ("pulley_incline_masses_system", "two_body_pulley", "inclined_plane_pulley"):
+            from app.utils.physical_sciences.physical_sciences_builders import build_pulley_incline_masses_system_question
+            q = build_pulley_incline_masses_system_question(seed=sub_seed, grade=11, mode=mode)
+        elif subskill == "inclined_plane" or subskill == "inclined_plane_newton":
             q = generate_inclined_plane_question(r, mode=mode)
         elif subskill == "newtons_second_law":
             q = generate_newton_law_question(r, mode=mode)
-        else:
+        elif subskill == "kinematics_1d":
             q = generate_kinematics_question(r, mode=mode)
+        else:
+            # Default / mixed rotation across mechanics subskills
+            rot = (sub_seed) % 3
+            if rot == 0:
+                from app.utils.physical_sciences.physical_sciences_builders import build_pulley_incline_masses_system_question
+                q = build_pulley_incline_masses_system_question(seed=sub_seed, grade=11, mode=mode)
+            elif rot == 1:
+                q = generate_inclined_plane_question(r, mode=mode)
+            else:
+                q = generate_kinematics_question(r, mode=mode)
         questions.append(q)
         
     return questions

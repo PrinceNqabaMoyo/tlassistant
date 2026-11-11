@@ -267,12 +267,29 @@ class StudentStore {
   // Update student profile details
   updateProfileDetails({ studentName, grade, school, isIndependent }) {
     const updatedGrade = grade !== undefined ? Number(grade) : this.state.grade;
+    const prevGrade = this.state.grade;
     const phase = updatedGrade >= 10 ? 'FET Phase (Gr 10–12)' : 'Senior Phase (Gr 7–9)';
+    
+    // Ensure enabledSubjects match the new phase when switching across phase boundaries
+    let nextEnabled = Array.isArray(this.state.enabledSubjects) ? [...this.state.enabledSubjects] : [];
+    const isFET = updatedGrade >= 10;
+    const wasSenior = prevGrade < 10;
+    const wasFET = prevGrade >= 10;
+
+    if (isFET && (wasSenior || !nextEnabled.some(s => ['physical_sciences', 'accounting', 'life_sciences', 'business_studies'].includes(s)))) {
+      nextEnabled = ['physical_sciences', 'mathematics', 'life_sciences', 'accounting'];
+      try { localStorage.setItem('fundile_enabled_subjects', JSON.stringify(nextEnabled)); } catch {}
+    } else if (!isFET && (wasFET || !nextEnabled.some(s => ['natural_sciences', 'ems'].includes(s)))) {
+      nextEnabled = ['mathematics', 'natural_sciences', 'ems'];
+      try { localStorage.setItem('fundile_enabled_subjects', JSON.stringify(nextEnabled)); } catch {}
+    }
+
     this.saveState({
       ...this.state,
       studentName: studentName || this.state.studentName,
       grade: updatedGrade,
       phase,
+      enabledSubjects: nextEnabled,
       school: school !== undefined ? school : this.state.school,
       isIndependent: isIndependent !== undefined ? Boolean(isIndependent) : Boolean(this.state.isIndependent),
     });
@@ -628,17 +645,20 @@ class StudentStore {
     });
   }
 
+  normalizeSubjectId(subjectId) {
+    const sId = String(subjectId || '').toLowerCase().trim().replace(/[\s-]+/g, '_');
+    if (sId === 'maths') return 'mathematics';
+    if (sId === 'mathslit' || sId === 'maths_lit') return 'mathematical_literacy';
+    if (sId === 'physics') return 'physical_sciences';
+    if (sId === 'business') return 'business_studies';
+    if (sId === 'lifesci') return 'life_sciences';
+    if (sId === 'techmaths') return 'technical_mathematics';
+    if (sId === 'natsci' || sId === 'nat_sci') return 'natural_sciences';
+    return sId;
+  }
+
   getSubject(subjectId) {
-    const sId = String(subjectId || '').toLowerCase().replace(/[\s-]+/g, '_');
-    const normalized = 
-      sId === 'maths' ? 'mathematics' :
-      sId === 'mathslit' || sId === 'maths_lit' ? 'mathematical_literacy' :
-      sId === 'physics' ? 'physical_sciences' :
-      sId === 'business' ? 'business_studies' :
-      sId === 'lifesci' ? 'life_sciences' :
-      sId === 'techmaths' ? 'technical_mathematics' :
-      sId === 'natsci' || sId === 'nat_sci' ? 'natural_sciences' :
-      sId;
+    const normalized = this.normalizeSubjectId(subjectId);
 
     return this.state.subjects[normalized] || {
       id: normalized,
@@ -647,43 +667,70 @@ class StudentStore {
       status: 'diagnostic_required',
       questionsAttempted: 0,
       questionsPassed: 0,
+      consecutiveErrors: 0,
+      prerequisiteGapDetected: false,
       xpEarned: 0
     };
   }
 
   // Record a completed question attempt
-  recordAttempt(subjectId, { isCorrect, score = 0, totalMarks = 1, xp = 20, mode = 'practice' }) {
-    const sId = String(subjectId || '').toLowerCase();
-    const normalized = 
-      sId === 'maths' ? 'mathematics' :
-      sId === 'physics' ? 'physical_sciences' :
-      sId === 'business' ? 'business_studies' :
-      sId === 'lifesci' ? 'life_sciences' :
-      sId === 'techmaths' ? 'technical_mathematics' :
-      sId;
-
+  recordAttempt(subjectId, { isCorrect, score = 0, totalMarks = 1, xp = 20, mode = 'practice', misconceptionTag = null }) {
+    const normalized = this.normalizeSubjectId(subjectId);
     const currentSub = this.getSubject(normalized);
     const pct = totalMarks > 0 ? Math.round((score / totalMarks) * 100) : (isCorrect ? 100 : 0);
+    const passed = typeof isCorrect === 'boolean' ? isCorrect : pct >= 50;
 
-    // Exponential Moving Average BKT update
-    const alpha = 0.25;
-    const newFormative = Math.min(100, Math.max(0, Math.round(currentSub.formativeMastery * (1 - alpha) + pct * alpha)));
-    const newEvaluative = mode === 'exam' || mode === 'assessment' 
-      ? Math.round(currentSub.evaluativeScore * 0.7 + pct * 0.3)
+    let newFormative = currentSub.formativeMastery || 0;
+    let consecutiveErrors = currentSub.consecutiveErrors || 0;
+    let prerequisiteGapDetected = Boolean(currentSub.prerequisiteGapDetected);
+
+    if (passed) {
+      consecutiveErrors = 0;
+      prerequisiteGapDetected = false;
+      const gainScale = Math.max(0.5, pct / 100);
+      if (newFormative < 60) {
+        // Scaffold stage: 2-3 correct questions cross the 60% Practice threshold
+        newFormative = Math.min(100, Math.round(newFormative + 11 * gainScale));
+      } else if (newFormative < 80) {
+        // Practice stage: 3-4 correct questions cross the 80% Exam Mode threshold
+        newFormative = Math.min(100, Math.round(newFormative + 6 * gainScale));
+      } else {
+        // Exam-ready mastery refinement
+        newFormative = Math.min(100, Math.round(newFormative + 3 * gainScale));
+      }
+    } else {
+      consecutiveErrors += 1;
+      const drop = consecutiveErrors >= 2 ? Math.max(12, Math.round(newFormative * 0.22)) : 4;
+      newFormative = Math.max(0, newFormative - drop);
+      if (consecutiveErrors >= 2) {
+        prerequisiteGapDetected = true;
+        newFormative = Math.min(newFormative, 45);
+      }
+    }
+
+    const newEvaluative = mode === 'exam' || mode === 'assessment'
+      ? Math.round((currentSub.evaluativeScore || 0) * 0.7 + pct * 0.3)
       : currentSub.evaluativeScore;
 
-    const newStatus = 
-      newFormative >= 80 ? 'exam_ready' :
-      newFormative >= 60 ? 'practice' : 'scaffold';
+    const newStatus = prerequisiteGapDetected
+      ? 'scaffold'
+      : newFormative >= 80
+        ? 'exam_ready'
+        : newFormative >= 60
+          ? 'practice'
+          : 'scaffold';
 
     const updatedSub = {
       ...currentSub,
       formativeMastery: newFormative,
       evaluativeScore: newEvaluative,
       status: newStatus,
-      questionsAttempted: currentSub.questionsAttempted + 1,
-      questionsPassed: currentSub.questionsPassed + (isCorrect ? 1 : 0),
-      xpEarned: currentSub.xpEarned + xp,
+      questionsAttempted: (currentSub.questionsAttempted || 0) + 1,
+      questionsPassed: (currentSub.questionsPassed || 0) + (passed ? 1 : 0),
+      consecutiveErrors,
+      prerequisiteGapDetected,
+      lastMisconceptionTag: passed ? null : (misconceptionTag || currentSub.lastMisconceptionTag || null),
+      xpEarned: (currentSub.xpEarned || 0) + xp,
       lastPracticed: new Date().toISOString()
     };
 
@@ -692,12 +739,16 @@ class StudentStore {
       [normalized]: updatedSub
     };
 
-    const earnedXp = this.state.totalXp + xp;
+    const earnedXp = (this.state.totalXp || 0) + xp;
     const newStreak = this.state.streakDays === 0 ? 1 : this.state.streakDays;
+    const nextProgressionMode =
+      newStatus === 'exam_ready' ? 'assessment' :
+      newStatus === 'practice' ? 'practice' : 'scaffold';
+
     const nextActiveSession = {
       ...(this.state.activeSession || {}),
       subjectId: normalized,
-      progressionMode: mode,
+      progressionMode: nextProgressionMode,
       lastUpdated: new Date().toISOString()
     };
 
@@ -708,6 +759,8 @@ class StudentStore {
       streakDays: newStreak,
       activeSession: nextActiveSession
     });
+
+    return updatedSub;
   }
 
   // Award XP directly (e.g. from Post-Exam Triage or SimuLearn completion)
@@ -719,34 +772,52 @@ class StudentStore {
     });
   }
 
-  // Complete diagnostic test and assign baseline score
+  // Complete diagnostic test and assign calibrated baseline score
   completeDiagnostic(subjectId, initialScore = 40) {
-    const sId = String(subjectId || '').toLowerCase();
-    const normalized = 
-      sId === 'maths' ? 'mathematics' :
-      sId === 'physics' ? 'physical_sciences' :
-      sId === 'business' ? 'business_studies' :
-      sId === 'lifesci' ? 'life_sciences' :
-      sId === 'techmaths' ? 'technical_mathematics' :
-      sId;
-
+    const normalized = this.normalizeSubjectId(subjectId);
     const currentSub = this.getSubject(normalized);
+    const rawPct = Math.max(0, Math.min(100, Math.round(Number(initialScore) || 0)));
+
+    // Calibrate starting mastery so 2-3 Scaffold questions reach 60% and 3-4 Practice questions reach 80%
+    const calibratedMastery =
+      rawPct >= 80 ? Math.max(85, rawPct) :
+      rawPct >= 60 ? Math.max(64, Math.min(74, rawPct)) :
+      42;
+
+    const resolvedStatus =
+      calibratedMastery >= 80 ? 'exam_ready' :
+      calibratedMastery >= 60 ? 'practice' : 'scaffold';
+
     const updatedSub = {
       ...currentSub,
-      formativeMastery: initialScore,
-      evaluativeScore: Math.round(initialScore * 0.8),
-      status: initialScore >= 80 ? 'exam_ready' : initialScore >= 60 ? 'practice' : 'scaffold',
+      formativeMastery: calibratedMastery,
+      evaluativeScore: Math.round(calibratedMastery * 0.8),
+      status: resolvedStatus,
+      consecutiveErrors: 0,
+      prerequisiteGapDetected: false,
       questionsAttempted: Math.max(1, (currentSub.questionsAttempted || 0) + 1),
       lastPracticed: new Date().toISOString()
     };
+
+    const nextProgressionMode =
+      resolvedStatus === 'exam_ready' ? 'assessment' :
+      resolvedStatus === 'practice' ? 'practice' : 'scaffold';
 
     this.saveState({
       ...this.state,
       subjects: {
         ...this.state.subjects,
         [normalized]: updatedSub
+      },
+      activeSession: {
+        ...(this.state.activeSession || {}),
+        subjectId: normalized,
+        progressionMode: nextProgressionMode,
+        lastUpdated: new Date().toISOString()
       }
     });
+
+    return updatedSub;
   }
 
   // ═══════════════════════════════════════════════════════════
@@ -755,14 +826,7 @@ class StudentStore {
 
   // Reset a single subject to 0% (Diagnostic Required)
   resetSubjectToZero(subjectId) {
-    const sId = String(subjectId || '').toLowerCase();
-    const normalized = 
-      sId === 'maths' ? 'mathematics' :
-      sId === 'physics' ? 'physical_sciences' :
-      sId === 'business' ? 'business_studies' :
-      sId === 'lifesci' ? 'life_sciences' :
-      sId === 'techmaths' ? 'technical_mathematics' :
-      sId;
+    const normalized = this.normalizeSubjectId(subjectId);
 
     const updatedSub = {
       id: normalized,
@@ -771,6 +835,8 @@ class StudentStore {
       status: 'diagnostic_required',
       questionsAttempted: 0,
       questionsPassed: 0,
+      consecutiveErrors: 0,
+      prerequisiteGapDetected: false,
       xpEarned: 0,
       lastPracticed: null,
       history: []

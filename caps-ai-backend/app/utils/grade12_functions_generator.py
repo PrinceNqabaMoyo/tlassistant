@@ -245,9 +245,14 @@ def _log_power_law_simplify(r: random.Random, difficulty: str, question_type: st
      m = _choice(r, [2, 3, 4])
 
      # log_a (b^{k})^{m} = km log_a b
-     prompt = f"Simplify: log_{base} ({inner_base}^{k})^{m}"
+     prompt = f"Simplify: $\\log_{{{base}}} ({inner_base}^{{{k}}})^{{{m}}}$"
      ans = f"{k*m} log_{base} {inner_base}"
-     explanation = "Use log_a(x^b) = b log_a x."
+     explanation = (
+         f"Step 1: Simplify the inner power using the power of a power rule $(x^a)^b = x^{{ab}}$: "
+         f"$({inner_base}^{{{k}}})^{{{m}}} = {inner_base}^{{{k*m}}}.\n"
+         f"Step 2: Apply the logarithm power rule $\\log_a(x^p) = p \\log_a(x)$: "
+         f"$\\log_{{{base}}}({inner_base}^{{{k*m}}}) = {k*m} \\log_{{{base}}}({inner_base})$."
+     )
      if qt == "mcq":
          wrong_1 = f"{k+m} log_{base} {inner_base}"
          wrong_2 = f"{k*m} log_{inner_base} {base}"

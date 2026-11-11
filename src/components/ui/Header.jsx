@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { Bell, LogOut, X, Smartphone, Users, Mail } from 'lucide-react';
+import { Bell, LogOut, X, Smartphone, Users, Mail, Sparkles } from 'lucide-react';
 import { getAuth, sendEmailVerification } from 'firebase/auth';
 import FundileLogo from './FundileLogo';
 import InstallAppModal from './InstallAppModal';
@@ -51,6 +51,7 @@ const Header = ({
   onNavigateToSubscription,
   onNavigateHome,
   onOpenPersonaSwitcher = null,
+  onOpenArchetypeWorkbench = null,
 }) => {
   const [showNotifications, setShowNotifications] = useState(false);
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
@@ -228,6 +229,21 @@ const Header = ({
                 <Users className="w-3.5 h-3.5 text-amber-300" />
                 <span className="hidden md:inline">Mock School Tester</span>
                 <span className="md:hidden">Mock</span>
+              </button>
+            )}
+
+            {/* Super Admin Archetype Workbench 1-Click Access */}
+            {(currentUser?.isSuperAdmin || currentUser?.isOwner) && onOpenArchetypeWorkbench && (
+              <button
+                type="button"
+                data-testid="btn-header-archetype-workbench"
+                onClick={onOpenArchetypeWorkbench}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-purple-500/25 hover:bg-purple-500/40 text-purple-200 text-xs font-bold transition border border-purple-400/50 cursor-pointer shrink-0 shadow-xs"
+                title="Open Super Admin Archetype & Diagram Vetting Workbench"
+              >
+                <Sparkles className="w-3.5 h-3.5 text-amber-300 animate-pulse" />
+                <span className="hidden lg:inline">Archetype Workbench</span>
+                <span className="lg:hidden">Workbench</span>
               </button>
             )}
 

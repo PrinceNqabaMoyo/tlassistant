@@ -2,129 +2,146 @@ import random
 import sympy as sp
 from typing import Dict, Any, List
 
+SUBSKILLS = ['hypotenuse', 'shorter_leg', 'converse', 'pythagorean_triples']
+
 class SeniorPhasePythagorasGenerator:
     """Generator for Grade 8 and 9 Theorem of Pythagoras."""
+    SUBSKILLS = SUBSKILLS
     
-    def generate(self, grade: int = 8, mode: str = "pythagoras", seed: int = None) -> Dict[str, Any]:
-        rng = random.Random(seed)
-        
-        # Subskills: hypotenuse, shorter_leg, converse
-        subskills = ['hypotenuse', 'shorter_leg', 'converse']
-        subskill = rng.choice(subskills)
-        
+    def _generate_one(self, rng: random.Random, subskill: str, grade: int = 8) -> Dict[str, Any]:
         if subskill == 'hypotenuse':
-            leg1 = rng.randint(3, 12)
-            leg2 = rng.randint(4, 16)
+            triples = [(3, 4, 5), (5, 12, 13), (6, 8, 10), (8, 15, 17), (7, 24, 25)]
+            leg1, leg2, hyp = rng.choice(triples)
+            scale = rng.choice([1, 2])
+            leg1 *= scale
+            leg2 *= scale
+            hyp *= scale
             hyp2 = leg1**2 + leg2**2
-            hyp = sp.sqrt(hyp2)
-            
-            question = f"In a right-angled triangle, the lengths of the two shorter sides are {leg1} cm and {leg2} cm. Calculate the length of the hypotenuse."
-            
-            if hyp.is_Integer:
-                ans_str = str(hyp)
-            else:
-                ans_float = float(hyp)
-                ans_str = f"{ans_float:.2f}".replace('.', '{,}')
-                
+            ans_str = f"{hyp} cm"
+            question = f"In a right-angled triangle, the two shorter sides have lengths {leg1} cm and {leg2} cm. Calculate the length of the hypotenuse."
             steps = [
-                f"c^2 = a^2 + b^2",
-                f"c^2 = {leg1}^2 + {leg2}^2",
-                f"c^2 = {leg1**2} + {leg2**2}",
-                f"c^2 = {hyp2}",
-                f"c = \\sqrt{{{hyp2}}}",
-                f"c \\approx {ans_str} \\text{{ cm}}"
+                f"c^2 = a^2 + b^2 \\quad \\text{{(Pythagoras)}}",
+                f"c^2 = {leg1}^2 + {leg2}^2 = {leg1**2} + {leg2**2} = {hyp2}",
+                f"c = \\sqrt{{{hyp2}}} = {hyp} \\text{{ cm}}"
             ]
-            
-            return {
-                "question": question,
-                "solution_steps": steps,
-                "final_answer": ans_str,
-                "hints": [
-                    "Recall the Theorem of Pythagoras: in a right-angled triangle, the square of the hypotenuse is equal to the sum of the squares of the other two sides.",
-                    "Substitute the given lengths into the formula: $c^2 = a^2 + b^2$.",
-                    "Don't forget to take the square root at the end to find the length."
-                ]
+            memo = f"1. Formula and substitution: $c^2 = {leg1}^2 + {leg2}^2 = {hyp2}$ (Pythagoras) [1]\n2. Calculated hypotenuse: ${hyp} \\text{{ cm}}$ [1]"
+            hints = {
+                "tier_1": "Recall the Theorem of Pythagoras: c^2 = a^2 + b^2.",
+                "tier_2": f"Square {leg1} and {leg2}, add them to get {hyp2}, then take the square root.",
+                "tier_3": f"Hypotenuse = {hyp} cm."
             }
-            
         elif subskill == 'shorter_leg':
-            hyp = rng.randint(5, 20)
-            leg1 = rng.randint(3, hyp - 1)
+            triples = [(3, 4, 5), (5, 12, 13), (6, 8, 10), (8, 15, 17)]
+            leg1, leg2, hyp = rng.choice(triples)
+            scale = rng.choice([1, 2])
+            leg1 *= scale
+            leg2 *= scale
+            hyp *= scale
             leg2_sq = hyp**2 - leg1**2
-            leg2 = sp.sqrt(leg2_sq)
-            
+            ans_str = f"{leg2} cm"
             question = f"The hypotenuse of a right-angled triangle is {hyp} cm and one of the other sides is {leg1} cm. Calculate the length of the unknown side."
-            
-            if leg2.is_Integer:
-                ans_str = str(leg2)
-            else:
-                ans_float = float(leg2)
-                ans_str = f"{ans_float:.2f}".replace('.', '{,}')
-                
             steps = [
-                f"c^2 = a^2 + b^2",
-                f"{hyp}^2 = {leg1}^2 + b^2",
-                f"{hyp**2} = {leg1**2} + b^2",
-                f"b^2 = {hyp**2} - {leg1**2}",
-                f"b^2 = {leg2_sq}",
-                f"b = \\sqrt{{{leg2_sq}}}",
-                f"b \\approx {ans_str} \\text{{ cm}}"
+                f"b^2 = c^2 - a^2 \\quad \\text{{(Pythagoras)}}",
+                f"b^2 = {hyp}^2 - {leg1}^2 = {hyp**2} - {leg1**2} = {leg2_sq}",
+                f"b = \\sqrt{{{leg2_sq}}} = {leg2} \\text{{ cm}}"
             ]
-            
-            return {
-                "question": question,
-                "solution_steps": steps,
-                "final_answer": ans_str,
-                "hints": [
-                    "Write down the Theorem of Pythagoras: $c^2 = a^2 + b^2$.",
-                    "Substitute the hypotenuse and the known side.",
-                    "Rearrange the formula to solve for the unknown shorter side."
-                ]
+            memo = f"1. Subtraction: $b^2 = {hyp}^2 - {leg1}^2 = {leg2_sq}$ (Pythagoras) [1]\n2. Calculated side length: ${leg2} \\text{{ cm}}$ [1]"
+            hints = {
+                "tier_1": "Rearrange Pythagoras to find a shorter leg: b^2 = c^2 - a^2.",
+                "tier_2": f"Subtract: {hyp**2} - {leg1**2} = {leg2_sq}, then take the square root.",
+                "tier_3": f"Unknown side = {leg2} cm."
             }
-            
-        else: # converse
-            # generate triplet that may or may not be right angled
+        elif subskill == 'converse':
             is_right = rng.choice([True, False])
             if is_right:
-                m = rng.randint(2, 5)
-                n = rng.randint(1, m-1)
-                a = m**2 - n**2
-                b = 2*m*n
-                c = m**2 + n**2
-                sides = sorted([a, b, c])
+                a, b, c = rng.choice([(3, 4, 5), (5, 12, 13), (6, 8, 10), (8, 15, 17)])
+                verdict = "Yes, it is a right-angled triangle"
             else:
-                a = rng.randint(3, 10)
-                b = rng.randint(4, 12)
-                c = rng.randint(max(a, b) + 1, a + b - 1)
-                sides = sorted([a, b, c])
-                if sides[0]**2 + sides[1]**2 == sides[2]**2:
-                    # inadvertently got a right angle, change it slightly
-                    sides[2] += 1
-            
-            question = f"A triangle has side lengths {sides[0]} cm, {sides[1]} cm, and {sides[2]} cm. Determine whether this triangle is a right-angled triangle."
-            
-            lhs = sides[0]**2 + sides[1]**2
-            rhs = sides[2]**2
-            
+                a, b = rng.choice([(3, 4), (5, 10), (6, 9), (7, 12)])
+                c = int(sp.sqrt(a**2 + b**2)) + rng.choice([-1, 1, 2])
+                verdict = "No, it is not a right-angled triangle"
+            ans_str = verdict
+            question = f"A triangle has side lengths {a} cm, {b} cm, and {c} cm. Using the converse of Pythagoras, determine whether the triangle is right-angled. (State 'Yes' or 'No' with calculation)."
+            lhs = a**2 + b**2
+            rhs = c**2
+            eq_sym = "=" if lhs == rhs else "\\neq"
             steps = [
-                f"Identify the longest side as the possible hypotenuse: c = {sides[2]}",
-                f"Calculate c^2 = {sides[2]}^2 = {rhs}",
-                f"Calculate a^2 + b^2 = {sides[0]}^2 + {sides[1]}^2 = {sides[0]**2} + {sides[1]**2} = {lhs}"
+                f"a^2 + b^2 = {a}^2 + {b}^2 = {lhs}",
+                f"c^2 = {c}^2 = {rhs}",
+                f"\\text{{Since }} {lhs} {eq_sym} {rhs}, {verdict}."
             ]
-            
-            if lhs == rhs:
-                ans_str = "Yes"
-                steps.append(f"Since {lhs} = {rhs}, the triangle is right-angled (Converse of Pythagoras).")
-            else:
-                ans_str = "No"
-                steps.append(f"Since {lhs} \\neq {rhs}, the triangle is not right-angled.")
-                
-            return {
-                "question": question,
-                "solution_steps": steps,
-                "final_answer": ans_str,
-                "hints": [
-                    "To check if a triangle is right-angled, use the Converse of the Theorem of Pythagoras.",
-                    "Square the longest side and compare it to the sum of the squares of the other two sides.",
-                    "If they are equal, the triangle is right-angled."
-                ]
+            memo = f"1. Calculations: ${a}^2 + {b}^2 = {lhs}$ and $c^2 = {rhs}$ [1]\n2. Conclusion: {verdict} [1]"
+            hints = {
+                "tier_1": "Test if the sum of squares of the two shorter sides equals the square of the longest side.",
+                "tier_2": f"Calculate {a}^2 + {b}^2 = {lhs} and {c}^2 = {rhs}.",
+                "tier_3": f"{verdict} (since {lhs} {eq_sym} {rhs})."
             }
+        else: # pythagorean_triples
+            subskill = 'pythagorean_triples'
+            triples = [(3, 4, 5), (5, 12, 13), (7, 24, 25), (8, 15, 17)]
+            t = rng.choice(triples)
+            ans_str = f"({t[0]}; {t[1]}; {t[2]})"
+            question = f"Verify whether the numbers {t[0]}, {t[1]}, and {t[2]} form a Pythagorean triple."
+            steps = [
+                f"{t[0]}^2 + {t[1]}^2 = {t[0]**2} + {t[1]**2} = {t[0]**2 + t[1]**2}",
+                f"{t[2]}^2 = {t[2]**2}",
+                f"\\text{{Since }} {t[0]**2 + t[1]**2} = {t[2]**2}, \\text{{ they form a valid Pythagorean triple.}}"
+            ]
+            memo = f"1. Verification: ${t[0]}^2 + {t[1]}^2 = {t[2]**2}$ [1]\n2. Conclusion: Valid Pythagorean triple [1]"
+            hints = {
+                "tier_1": "A Pythagorean triple satisfies a^2 + b^2 = c^2 for integers.",
+                "tier_2": f"Check {t[0]}^2 + {t[1]}^2 = {t[2]}^2.",
+                "tier_3": "Yes, they form a Pythagorean triple."
+            }
+
+        qid = f"g{grade}_pyth_{rng.randint(100000, 999999)}"
+        return {
+            "id": qid,
+            "question_id": qid,
+            "question": question,
+            "prompt": question,
+            "question_type": "short_answer",
+            "modality": "math",
+            "solution_steps": steps,
+            "worked_solution": memo,
+            "canonical_solution": {
+                "steps": steps,
+                "final_latex": ans_str,
+            },
+            "sample_answer": ans_str,
+            "correct_answer": ans_str,
+            "explanation": memo,
+            "solution": memo,
+            "marks": 2,
+            "total_marks": 2,
+            "term": 2,
+            "caps_weight_percent": 15,
+            "suggested_duration_mins": 3,
+            "subskill": subskill,
+            "hints": hints,
+            "marking_schema": {
+                "total_marks": 2,
+                "marking_points": [
+                    {"id": "mp1", "desc": "Application of Pythagoras formula", "marks": 1, "editable": True},
+                    {"id": "mp2", "desc": f"Accurate calculation: {ans_str}", "marks": 1, "editable": True},
+                ]
+            },
+            "misconception_tags": [
+                "add_lengths_before_squaring",
+                "subtracts_when_finding_hypotenuse",
+            ],
+            "difficulty": "medium",
+            "stage_metadata": {"grade": grade, "subskill": subskill}
+        }
+
+    def generate(self, grade: int = 8, mode: str = "pythagoras", seed: int = None, count: int = 1, subskill: str = None, **kwargs) -> List[Dict[str, Any]]:
+        rng = random.Random(seed) if seed is not None else random.Random()
+        questions = []
+        target_sub = str(subskill or "").strip().lower()
+        for i in range(count):
+            if target_sub in SUBSKILLS:
+                cur_sub = target_sub
+            else:
+                cur_sub = SUBSKILLS[i % len(SUBSKILLS)]
+            questions.append(self._generate_one(rng, cur_sub, grade=grade))
+        return questions

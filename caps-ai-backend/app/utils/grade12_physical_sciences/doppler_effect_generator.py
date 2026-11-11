@@ -188,24 +188,5 @@ def generate(
     **kwargs: Any,
 ) -> List[Dict[str, Any]]:
     """Master generator for Grade 12 Physical Sciences The Doppler Effect."""
-    r = random.Random(seed) if seed is not None else random.Random()
-    questions: List[Dict[str, Any]] = []
-
-    for i in range(count):
-        sub_seed = r.randint(1, 1_000_000_000)
-        sub_r = random.Random(sub_seed)
-
-        if subskill in ("approach", "towards") or mode == "elementary_doppler_towards":
-            q = _generate_doppler_approach_question(sub_r, sub_seed, i, mode)
-        elif subskill in ("recede", "away", "redshift") or mode in ("elementary_doppler_away", "elementary_redshift_universe"):
-            q = _generate_doppler_recede_question(sub_r, sub_seed, i, mode)
-        else:
-            chosen = sub_r.choice(["approach", "recede"])
-            if chosen == "approach":
-                q = _generate_doppler_approach_question(sub_r, sub_seed, i, mode)
-            else:
-                q = _generate_doppler_recede_question(sub_r, sub_seed, i, mode)
-
-        questions.append(q)
-
-    return questions
+    from app.utils.physical_sciences.ps12_doppler_effect_generator import generate as ps_doppler
+    return ps_doppler(subskill=subskill, difficulty=difficulty, count=count, seed=seed, mode=mode, grade=grade, **kwargs)

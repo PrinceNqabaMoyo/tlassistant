@@ -105,7 +105,6 @@ def _ops_to_words(ops: List[Tuple[str, int]]) -> str:
 
 
 def _ops_to_symbolic(ops: List[Tuple[str, int]]) -> str:
-    # Build y = ... using x
     expr = 'x'
     for sym, k in ops:
         if sym == '×':
@@ -117,7 +116,6 @@ def _ops_to_symbolic(ops: List[Tuple[str, int]]) -> str:
             expr = f"({expr}) + {k}"
         elif sym == '-':
             expr = f"({expr}) - {k}"
-    # Mild cleanup: remove outer parentheses when safe
     if expr.startswith('(') and expr.endswith(')'):
         expr = expr[1:-1]
     return f"y = {expr}"
@@ -156,7 +154,6 @@ def _gen_constant_or_variable(rng: random.Random, difficulty: str, qtype: str) -
 
 
 def _gen_flow_table_outputs(rng: random.Random, difficulty: str, qtype: str) -> Dict[str, Any]:
-    # Based on doc: one or two operator boxes.
     ops_bank_1 = [('+', 5), ('-', 5), ('×', 2), ('×', 3)]
     op1 = rng.choice(ops_bank_1)
 
@@ -183,7 +180,6 @@ def _gen_flow_table_outputs(rng: random.Random, difficulty: str, qtype: str) -> 
     explanation = f"Apply the operator(s) to each input: { _ops_to_words(ops) }."
 
     if qtype == 'mcq':
-        # Distractors: tweak one output
         wrong1 = ', '.join(_fmt_int(y + 1) for y in outputs)
         wrong2 = ', '.join(_fmt_int(y - 1) for y in outputs)
         wrong3 = ', '.join(_fmt_int((_flow_apply(x, ops[:-1]) if len(ops) > 1 else _flow_apply(x, [('+', 0)]))) for x in inputs)
@@ -223,8 +219,6 @@ def _gen_flow_table_outputs(rng: random.Random, difficulty: str, qtype: str) -> 
 
 
 def _gen_symbolic_from_words(rng: random.Random, difficulty: str, qtype: str) -> Dict[str, Any]:
-    # Based on doc Q4: word → symbolic.
-    # We limit to up to 3 steps.
     candidates = [
         [('×', 4), ('-', 7)],
         [('-', 7), ('×', 5)],
@@ -245,7 +239,6 @@ def _gen_symbolic_from_words(rng: random.Random, difficulty: str, qtype: str) ->
     explanation = 'Start with x and apply each operation in order, writing the result as an expression for y.'
 
     if qtype == 'mcq':
-        # Make common-order/parenthesis mistakes as distractors.
         if ops == [('×', 4), ('-', 7)]:
             wrongs = ['y = 4x + 7', 'y = 4(x - 7)', 'y = (x - 7) + 4']
         elif ops == [('-', 7), ('×', 5)]:
@@ -261,7 +254,6 @@ def _gen_symbolic_from_words(rng: random.Random, difficulty: str, qtype: str) ->
 
 
 def _gen_word_from_symbolic(rng: random.Random, difficulty: str, qtype: str) -> Dict[str, Any]:
-    # Based on the doc examples: translate symbolic formulae to words.
     formulas = [
         [('×', 7), ('+', 10)],
         [('×', 2), ('+', 3)],
@@ -278,8 +270,6 @@ def _gen_word_from_symbolic(rng: random.Random, difficulty: str, qtype: str) -> 
             ]
         )
 
-    # Keep stable for now (doc explicitly uses y = 7x + 10 / bracket variants).
-    # We'll introduce bracket variants via prompt/distractors rather than changing the ops list.
     ops = rng.choice(formulas)
 
     formula = _ops_to_symbolic(ops)
@@ -290,7 +280,6 @@ def _gen_word_from_symbolic(rng: random.Random, difficulty: str, qtype: str) -> 
     )
 
     word = f"To get y, { _ops_to_words(ops) }."
-    # Light cleanup: make wording friendlier.
     word = word.replace('multiply by', 'multiply x by').replace(', then ', ' then ').replace('add ', 'add ').replace('subtract ', 'subtract ')
     correct = word
     explanation = 'Read the formula from left to right: coefficient means multiply, and +/− means add/subtract.'
@@ -306,6 +295,84 @@ def _gen_word_from_symbolic(rng: random.Random, difficulty: str, qtype: str) -> 
         return _make_mcq(prompt=prompt, options=options, correct_answer=correct, explanation=explanation, parameters={'formula': formula})
 
     return _make_typed(prompt=prompt, correct_answer=correct, explanation=explanation, parameters={'formula': formula})
+
+
+def _gen_cartesian_coordinates_point(rng: random.Random, difficulty: str, qtype: str) -> Dict[str, Any]:
+    px = rng.choice([-4, -3, -2, 2, 3, 4, 5])
+    py = rng.choice([-4, -3, -2, 2, 3, 4, 5])
+    dx = rng.choice([2, 3, 4])
+    dy = rng.choice([1, 2, 3])
+    nx = px + dx
+    ny = py - dy
+
+    if px > 0 and py > 0:
+        quad = "Quadrant I"
+    elif px < 0 and py > 0:
+        quad = "Quadrant II"
+    elif px < 0 and py < 0:
+        quad = "Quadrant III"
+    else:
+        quad = "Quadrant IV"
+
+    prompt = (
+        f"Refer to the Cartesian coordinate plane showing point \\(P\\).\n\n"
+        f"1. Write down the coordinates of point \\(P\\) in the standard ordered-pair form \\((x; y)\\).\n"
+        f"2. State which quadrant (Quadrant I, II, III, or IV) contains point \\(P\\).\n"
+        f"3. Determine the coordinates of the image point \\(P'\\) if \\(P\\) is translated \\({dx}\\) units right and \\({dy}\\) units down."
+    )
+
+    correct = f"1. P({px}; {py})\n2. {quad}\n3. P'({nx}; {ny})"
+    sol = (
+        f"Step 1: Read the coordinates of point P from the axes:\n"
+        f"The horizontal x-coordinate is {px} and the vertical y-coordinate is {py}, so P({px}; {py}).\n\n"
+        f"Step 2: Identify the quadrant:\n"
+        f"Since x is {'positive' if px > 0 else 'negative'} ({px}) and y is {'positive' if py > 0 else 'negative'} ({py}), point P lies in {quad}.\n\n"
+        f"Step 3: Apply the translation ({dx} units right adds {dx} to x; {dy} units down subtracts {dy} from y):\n"
+        f"x' = {px} + {dx} = {nx}\n"
+        f"y' = {py} - {dy} = {ny}\n"
+        f"Therefore, P'({nx}; {ny})."
+    )
+
+    diagram_spec = {
+        "kind": "cartesian_point",
+        "point": [px, py],
+        "label": "P",
+        "show_coords": False,
+        "show_cast": False,
+        "show_angle": False,
+        "show_projection": True,
+    }
+
+    if qtype == 'mcq':
+        distractors = [
+            f"1. P({py}; {px}), 2. {quad}, 3. P'({py + dx}; {px - dy})",
+            f"1. P({-px}; {py}), 2. {quad}, 3. P'({-px + dx}; {py - dy})",
+            f"1. P({px}; {-py}), 2. {quad}, 3. P'({px + dx}; {-py - dy})",
+        ]
+        options = [correct] + distractors
+        rng.shuffle(options)
+        res = _make_mcq(prompt=prompt, options=options, correct_answer=correct, explanation=sol, parameters={'x': px, 'y': py})
+    else:
+        res = _make_typed(prompt=prompt, correct_answer=correct, explanation=sol, parameters={'x': px, 'y': py})
+
+    res['diagram_spec'] = diagram_spec
+    if isinstance(diagram_spec, dict):
+        diagram_spec.setdefault("diagram_role", "context")
+    res['sample_answer'] = sol
+    res['worked_solution'] = sol
+    res['marks'] = 4
+    res['marking_schema'] = {
+        'total_marks': 4,
+        'marking_points': [
+            {'id': 'mp_1', 'desc': f'1. Correct coordinates of P: ({px}; {py})', 'marks': 1, 'editable': True},
+            {'id': 'mp_2', 'desc': f'2. Correct quadrant identification: {quad}', 'marks': 1, 'editable': True},
+            {'id': 'mp_3', 'desc': f'3. Correct translated x-coordinate: {px} + {dx} = {nx}', 'marks': 1, 'editable': True},
+            {'id': 'mp_4', 'desc': f"4. Correct translated y-coordinate and ordered pair P'({nx}; {ny})", 'marks': 1, 'editable': True},
+        ],
+        'deductions': [],
+        'carry_forward_rule': 'consequential_accuracy',
+    }
+    return res
 
 
 def generate_grade8_functions_question(
@@ -327,6 +394,8 @@ def generate_grade8_functions_question(
         'flow_table_outputs',
         'symbolic_from_words',
         'word_from_symbolic',
+        'cartesian_point',
+        'cartesian_coordinates',
     ]
 
     if subskill in {'functions_and_relationships', 'functions', 'mixed'}:
@@ -337,6 +406,8 @@ def generate_grade8_functions_question(
         'flow_table_outputs': _gen_flow_table_outputs,
         'symbolic_from_words': _gen_symbolic_from_words,
         'word_from_symbolic': _gen_word_from_symbolic,
+        'cartesian_point': _gen_cartesian_coordinates_point,
+        'cartesian_coordinates': _gen_cartesian_coordinates_point,
     }
 
     if subskill not in generators:

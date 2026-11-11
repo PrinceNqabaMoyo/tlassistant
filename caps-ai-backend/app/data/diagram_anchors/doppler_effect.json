@@ -1,0 +1,70 @@
+{
+  "master": "doppler_effect",
+  "view": "moving_source_wavefront_compression_and_dilation",
+  "viewBox": "0 0 600 480",
+  "anchors": {
+    "moving_source": {
+      "name": "Moving Sound Source",
+      "synonyms": ["sound source", "moving transmitter", "siren vehicle"],
+      "anchor": [330, 240],
+      "default_box": [60, 200],
+      "side": "left",
+      "grades": ["g12"],
+      "description": "Object translating through the medium at speed vs while periodically emitting spherical sound waves at source frequency fs."
+    },
+    "compressed_wavefronts": {
+      "name": "Compressed Wavefronts (Ahead)",
+      "synonyms": ["compressed wavefronts", "shorter wavelength", "high frequency zone"],
+      "anchor": [420, 240],
+      "default_box": [540, 150],
+      "side": "right",
+      "grades": ["g12"],
+      "description": "Wavefronts crowded together ahead of the moving source; observed wavelength λL is shorter, resulting in higher observed frequency fL > fs."
+    },
+    "stretched_wavefronts": {
+      "name": "Dilated / Stretched Wavefronts (Behind)",
+      "synonyms": ["stretched wavefronts", "longer wavelength", "low frequency zone"],
+      "anchor": [190, 240],
+      "default_box": [60, 290],
+      "side": "left",
+      "grades": ["g12"],
+      "description": "Wavefronts spaced further apart behind the moving source; observed wavelength λL is longer, resulting in lower observed frequency fL < fs."
+    },
+    "observer_ahead": {
+      "name": "Stationary Observer Ahead (Approaching)",
+      "synonyms": ["approaching observer", "listener ahead", "high pitch observer"],
+      "anchor": [520, 240],
+      "default_box": [540, 240],
+      "side": "right",
+      "grades": ["g12"],
+      "description": "Stationary listener towards whom the source approaches; intercepts wavefronts at a higher rate, perceiving a higher frequency (higher pitch)."
+    },
+    "observer_behind": {
+      "name": "Stationary Observer Behind (Receding)",
+      "synonyms": ["receding observer", "listener behind", "low pitch observer"],
+      "anchor": [80, 240],
+      "default_box": [60, 370],
+      "side": "left",
+      "grades": ["g12"],
+      "description": "Stationary listener from whom the source moves away; intercepts wavefronts at a lower rate, perceiving a lower frequency (lower pitch)."
+    },
+    "source_velocity_vector": {
+      "name": "Source Velocity Vector (vs)",
+      "synonyms": ["source velocity", "velocity arrow", "motion vector"],
+      "anchor": [360, 215],
+      "default_box": [540, 80],
+      "side": "right",
+      "grades": ["g12"],
+      "description": "Vector representing the translational velocity of the sound source moving towards the right."
+    },
+    "sound_wave_speed": {
+      "name": "Medium Sound Speed (v)",
+      "synonyms": ["speed of sound", "propagation speed", "medium velocity"],
+      "anchor": [300, 110],
+      "default_box": [60, 110],
+      "side": "left",
+      "grades": ["g12"],
+      "description": "Speed at which acoustic disturbances propagate symmetrically through the stationary air medium (approx 340 m·s⁻¹)."
+    }
+  }
+}

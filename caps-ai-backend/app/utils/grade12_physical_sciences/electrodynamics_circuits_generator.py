@@ -14,6 +14,11 @@ import math
 import random
 from typing import Any, Dict, List, Optional
 
+try:
+    from app.utils.physical_sciences.physical_sciences_builders import build_ac_dc_generator_motor_apparatus_question
+except ImportError:
+    from ..physical_sciences.physical_sciences_builders import build_ac_dc_generator_motor_apparatus_question
+
 
 def _rng(seed: Optional[int] = None) -> random.Random:
     r = random.Random()
@@ -59,6 +64,7 @@ def _build_ac_rms_drill(r: random.Random) -> Dict[str, Any]:
     return {
         "id": f"g12_ps_ac_rms_{r.randint(10000, 99999)}",
         "type": "compound",
+        "modality": "electrodynamics",
         "prompt": prompt,
         "correct_answer": f"Vmax={_fmt_sa(v_max)} V, Irms={_fmt_sa(i_rms)} A, R={_fmt_sa(r_val)} Ohm",
         "worked_solution": sol,
@@ -124,6 +130,7 @@ def _build_machines_drill(r: random.Random) -> Dict[str, Any]:
     return {
         "id": f"g12_ps_mach_{r.randint(10000, 99999)}",
         "type": "compound",
+        "modality": "electrodynamics",
         "prompt": prompt,
         "correct_answer": f"Principle: {principle}, Component: {component}",
         "worked_solution": sol,
@@ -182,8 +189,26 @@ def _build_internal_resistance_drill(r: random.Random) -> Dict[str, Any]:
     return {
         "id": f"g12_ps_circ_int_{r.randint(10000, 99999)}",
         "type": "compound",
+        "modality": "circuit",
         "prompt": prompt,
-        "correct_answer": f"Vload={_fmt_sa(v_load)} V, r={_fmt_sa(r_int)} Ohm",
+        "question": prompt,
+        "circuit_spec": {
+            "type": "series",
+            "voltage": emf,
+            "components": [
+                {"type": "battery", "voltage": emf, "internal_resistance": r_int, "label": f"EMF={_fmt_sa(emf)} V, r={_fmt_sa(r_int)} Ω"},
+                {"type": "switch", "state": "closed"},
+                {"type": "ammeter", "label": "A", "reading": i_current},
+                {"type": "resistor", "id": "R_ext", "resistance": r_ext, "label": f"R ({_fmt_sa(r_ext)} Ω)"}
+            ]
+        },
+        "sub_parts": [
+            {"id": "part_1", "label": "1. Definition of emf", "marks": 1, "expected_answer": "Maximum energy provided per unit charge"},
+            {"id": "part_2", "label": "2. Terminal potential difference (Vload)", "marks": 2, "expected_answer": f"{_fmt_sa(v_load)}"},
+            {"id": "part_3", "label": "3. Lost volts (Vlost)", "marks": 1, "expected_answer": f"{_fmt_sa(v_lost)}"},
+            {"id": "part_4", "label": "4. Internal resistance (r)", "marks": 1, "expected_answer": f"{_fmt_sa(r_int)}"}
+        ],
+        "expected_answer": f"Vload={_fmt_sa(v_load)} V, r={_fmt_sa(r_int)} Ohm",
         "worked_solution": sol,
         "marking_schema": {
             "total_marks": 5,
@@ -209,21 +234,53 @@ def _build_internal_resistance_drill(r: random.Random) -> Dict[str, Any]:
     }
 
 
+def generate_electrodynamics(seed: Optional[int] = None, mode: str = "compound", **kwargs) -> Dict[str, Any]:
+    """Dedicated generator for Grade 12 Electrodynamics (Electrical machines & AC theory)."""
+    r = _rng(seed)
+    if mode == "elementary_ac_rms":
+        return _build_ac_rms_drill(r)
+    elif mode == "elementary_generators_motors":
+        return _build_machines_drill(r)
+    elif mode in ("ac_dc_generator_motor_apparatus", "generator_diagram") or kwargs.get("subskill") in ("ac_dc_generator_motor_apparatus", "generator", "motor", "apparatus"):
+        return build_ac_dc_generator_motor_apparatus_question(seed=int(seed) if seed is not None else r.randint(1000, 9999), grade=12)
+    else:
+        choice = r.choice(["machines", "diagram", "ac_rms"])
+        if choice == "diagram":
+            return build_ac_dc_generator_motor_apparatus_question(seed=int(seed) if seed is not None else r.randint(1000, 9999), grade=12)
+        elif choice == "machines":
+            return _build_machines_drill(r)
+        else:
+            return _build_ac_rms_drill(r)
+
+
+def generate_electric_circuits(seed: Optional[int] = None, mode: str = "compound", **kwargs) -> Dict[str, Any]:
+    """Dedicated generator for Grade 12 Electric Circuits (Internal resistance & lost volts)."""
+    r = _rng(seed)
+    return _build_internal_resistance_drill(r)
+
+
 def generate(seed: Optional[int] = None, mode: str = "compound", **kwargs) -> Dict[str, Any]:
     """Main generator entrypoint adhering to 6-pillar contract."""
-    r = _rng(seed)
+    topic = str(kwargs.get("topic") or "").lower()
+    if any(k in topic for k in ("circuit", "internal", "resistance", "series", "parallel")):
+        return generate_electric_circuits(seed=seed, mode=mode, **kwargs)
+    elif any(k in topic for k in ("electro", "motor", "generator", "armature", "ac ", "alternat")):
+        return generate_electrodynamics(seed=seed, mode=mode, **kwargs)
 
+    r = _rng(seed)
     if mode == "elementary_ac_rms":
         return _build_ac_rms_drill(r)
     elif mode == "elementary_generators_motors":
         return _build_machines_drill(r)
     elif mode == "elementary_internal_resistance":
         return _build_internal_resistance_drill(r)
+    elif mode in ("ac_dc_generator_motor_apparatus", "generator_diagram") or kwargs.get("subskill") in ("ac_dc_generator_motor_apparatus", "generator", "motor", "apparatus"):
+        return build_ac_dc_generator_motor_apparatus_question(seed=int(seed) if seed is not None else r.randint(1000, 9999), grade=12)
     else:
-        choice = r.choice(["ac_rms", "machines", "internal_res"])
-        if choice == "ac_rms":
-            return _build_ac_rms_drill(r)
+        choice = r.choice(["machines", "diagram", "ac_rms"])
+        if choice == "diagram":
+            return build_ac_dc_generator_motor_apparatus_question(seed=int(seed) if seed is not None else r.randint(1000, 9999), grade=12)
         elif choice == "machines":
             return _build_machines_drill(r)
         else:
-            return _build_internal_resistance_drill(r)
+            return _build_ac_rms_drill(r)

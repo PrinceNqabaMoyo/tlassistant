@@ -1,0 +1,156 @@
+{
+  "master": "meiosis_crossing_over",
+  "view": "prophase_i_synapsis_recombination",
+  "viewBox": "0 0 600 480",
+  "anchors": {
+    "homologous_pair": {
+      "name": "Homologous Chromosome Pair (Bivalent)",
+      "synonyms": [
+        "homologous chromosome pair",
+        "bivalent",
+        "tetrad",
+        "homologous pair"
+      ],
+      "anchor": [
+        118,
+        165
+      ],
+      "default_box": [
+        60,
+        80
+      ],
+      "side": "left",
+      "grades": [
+        "g12"
+      ],
+      "description": "Pair of matching maternal and paternal chromosomes carrying identical gene loci that pair up closely during synapsis in Prophase I."
+    },
+    "sister_chromatids": {
+      "name": "Sister Chromatids",
+      "synonyms": [
+        "sister chromatids",
+        "sister chromatid",
+        "identical chromatids"
+      ],
+      "anchor": [
+        52,
+        175
+      ],
+      "default_box": [
+        60,
+        170
+      ],
+      "side": "left",
+      "grades": [
+        "g12"
+      ],
+      "description": "Two identical copies of a replicated chromosome joined together at the centromere, produced during interphase DNA replication."
+    },
+    "non_sister_chromatids": {
+      "name": "Non-Sister Chromatids",
+      "synonyms": [
+        "non-sister chromatids",
+        "non sister chromatids",
+        "non-sister chromatid"
+      ],
+      "anchor": [
+        235,
+        160
+      ],
+      "default_box": [
+        60,
+        250
+      ],
+      "side": "left",
+      "grades": [
+        "g12"
+      ],
+      "description": "Chromatids belonging to different homologous chromosomes within a bivalent that can physically cross over and exchange genetic material."
+    },
+    "chiasma": {
+      "name": "Chiasma (Point of Genetic Exchange)",
+      "synonyms": [
+        "chiasma",
+        "chiasmata",
+        "crossover point",
+        "chiasma point"
+      ],
+      "anchor": [
+        375,
+        295
+      ],
+      "default_box": [
+        60,
+        340
+      ],
+      "side": "left",
+      "grades": [
+        "g12"
+      ],
+      "description": "X-shaped physical junction where non-sister chromatids break and rejoin, swapping equivalent reciprocal segments of maternal and paternal DNA."
+    },
+    "centromere": {
+      "name": "Centromere",
+      "synonyms": [
+        "centromere",
+        "kinetochore"
+      ],
+      "anchor": [
+        68,
+        228
+      ],
+      "default_box": [
+        60,
+        420
+      ],
+      "side": "left",
+      "grades": [
+        "g12"
+      ],
+      "description": "Specialized condensed heterochromatin region holding duplicated sister chromatids together until Anaphase II of meiosis."
+    },
+    "recombinant_chromatids": {
+      "name": "Recombinant Chromatid (Mosaic)",
+      "synonyms": [
+        "recombinant chromatid",
+        "recombinant",
+        "recombinant chromatids",
+        "crossover chromatid"
+      ],
+      "anchor": [
+        490,
+        315
+      ],
+      "default_box": [
+        540,
+        200
+      ],
+      "side": "right",
+      "grades": [
+        "g12"
+      ],
+      "description": "Chromatid containing a novel mosaic combination of maternal and paternal alleles resulting from crossing over, driving genetic variation."
+    },
+    "non_recombinant_chromatids": {
+      "name": "Non-Recombinant Chromatid (Parental)",
+      "synonyms": [
+        "non-recombinant chromatid",
+        "parental chromatid",
+        "non-recombinant"
+      ],
+      "anchor": [
+        548,
+        280
+      ],
+      "default_box": [
+        540,
+        100
+      ],
+      "side": "right",
+      "grades": [
+        "g12"
+      ],
+      "description": "Chromatid that did not participate in crossing over, retaining the original unmodified parental linkage of alleles."
+    }
+  }
+}

@@ -131,11 +131,11 @@ export default function LedgerModalityRenderer({
     };
 
     // Normalize column headers
-    const rawHeaders = journal.headers || question.columns || question.table_schema?.columns || ['Date', 'Details', 'Fol', 'Debit', 'Credit'];
+    const rawHeaders = journal.headers || question.headers || question.columns || question.table_schema?.headers || question.table_schema?.columns || ['Date', 'Details', 'Fol', 'Debit', 'Credit'];
     const headers = rawHeaders.map((col, idx) => {
         const label = typeof col === 'string' ? col : col.title || col.label || `Col ${idx + 1}`;
         const lNorm = label.toLowerCase();
-        const isNumeric = /debit|credit|bank|sales|cost|amount|total|vat|receipts|r|price|disc/i.test(lNorm);
+        const isNumeric = /debit|credit|bank|sales|cost|amount|total|vat|receipts|r|price|disc|jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec/i.test(lNorm);
         const isCenter = /^(doc|day|fol|no|date)$/i.test(lNorm);
         const widthInfo = getColumnWidthInfo(label);
         return {
@@ -164,10 +164,15 @@ export default function LedgerModalityRenderer({
 
                 return cellList.map((cell, cIdx) => {
                     if (cell && typeof cell === 'object') {
+                        const resolvedCellId = cell.cell_id || cell.coordinate || `r${rIdx}_c${cIdx}`;
+                        // EMS #6 & Rule D: Blank cells that need no entry stay editable (not frozen)
+                        // Students must understand when to leave a cell empty under exam conditions.
+                        const isExplicitlyFrozen = cell.editable === false || cell.prefilled === true;
+                        const isEditable = !isExplicitlyFrozen;
                         return {
-                            cell_id: cell.cell_id || `r${rIdx}_c${cIdx}`,
-                            value: cell.value ?? '',
-                            editable: Boolean(cell.editable),
+                            cell_id: resolvedCellId,
+                            value: isEditable && !cell.prefilled ? '' : (cell.value ?? ''),
+                            editable: isEditable,
                         };
                     }
                     return {
@@ -456,6 +461,8 @@ export default function LedgerModalityRenderer({
                                 <div className="relative">
                                     <input
                                         type="text"
+                                        data-cell-id={cellId}
+                                        data-testid={`ledger-cell-${cellId}`}
                                         value={fieldVal}
                                         onChange={(e) => handleCellChange(cellId, e.target.value)}
                                         placeholder={`Enter ${field.label}...`}
@@ -490,6 +497,31 @@ export default function LedgerModalityRenderer({
                             </div>
                         );
                     })}
+                </div>
+            )}
+
+            {/* Transactions to Record Card (EMS #5) */}
+            {Array.isArray(question?.transactions) && question.transactions.length > 0 && (
+                <div data-testid="ledger-transactions-card" className="rounded-xl border border-blue-200 bg-blue-50/40 p-4 shadow-2xs font-sans space-y-2">
+                    <div className="flex items-center gap-2 border-b border-blue-100 pb-2">
+                        <span className="w-5 h-5 rounded-md bg-[#13519C]/10 text-[#13519C] flex items-center justify-center text-xs font-bold font-mono">
+                            📝
+                        </span>
+                        <span className="text-xs font-bold text-slate-800 uppercase tracking-wide">
+                            Transactions to Record
+                        </span>
+                        <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-blue-100 text-[#13519C] font-mono">
+                            {question.transactions.length} entries
+                        </span>
+                    </div>
+                    <ul className="space-y-1.5 text-xs text-slate-700 font-sans">
+                        {question.transactions.map((tx, idx) => (
+                            <li key={idx} className="p-2.5 rounded-lg bg-white border border-blue-100 text-slate-800 leading-relaxed font-sans shadow-2xs">
+                                <span className="font-bold text-[#13519C] mr-1.5">•</span>
+                                {tx}
+                            </li>
+                        ))}
+                    </ul>
                 </div>
             )}
 
@@ -574,6 +606,8 @@ export default function LedgerModalityRenderer({
                                                 <div className="relative flex items-center w-full">
                                                     <input
                                                         type="text"
+                                                        data-cell-id={cellId}
+                                                        data-testid={`ledger-cell-${cellId}`}
                                                         value={cellVal}
                                                         onChange={(e) => handleCellChange(cellId, e.target.value)}
                                                         className={`w-full px-2 py-1.5 ${cellHint ? 'pr-6' : 'pr-1.5'} rounded-md border text-xs transition outline-none ${

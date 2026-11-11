@@ -1,3 +1,20 @@
+"""Grade 8 EMS — Levels and Functions of Management.
+Grounded strictly in: curriculum_docs_auto/EMS_Gr8/Term 3/02. Levels and functions of management.md
+
+Covers CAPS subskills:
+  1. elementary_levels: Top, Middle, Lower/First-line management roles and hierarchy.
+  2. elementary_tasks: POLC management tasks (Planning, Organising, Leading, Controlling).
+  3. elementary_styles: Autocratic, Democratic/Participative, and Laissez-faire management styles.
+  4. elementary_characteristics: Qualities and ethical traits of an effective manager.
+
+Zero-LLM, 100% deterministic, authentic South African context.
+"""
+SUBSKILLS = [
+    "elementary_levels",
+    "elementary_tasks",
+    "elementary_styles",
+    "elementary_characteristics",
+]
 import random
 from app.utils.ems_namelist import NAMES, AREAS
 
@@ -50,8 +67,16 @@ def _with_metadata(
 
 def _mcq_question(rng, item, mode="scaffold"):
     mode_norm = str(mode or "").strip().lower()
-    correct_option = item['options'][item['correct_index']]
+    c_idx = int(item['correct_index'])
+    correct_option = item['options'][c_idx]
+    correct_letter = chr(65 + c_idx)
+    marks = item.get('marks', 1)
+    ans_text = f"{correct_letter}. {correct_option}"
+    worked_sol = f"**{ans_text}** [{marks} mark{'s' if marks > 1 else ''}]\n\n{item.get('explanation', '')}"
+
     question = {
+        'worked_solution': worked_sol,
+        'canonical_solution': worked_sol,
         'id': f"g8_ems_mgmt_mcq_{rng.randint(1000, 999999)}",
         'title': item.get('title', 'Levels and Functions of Management'),
         'question_type': 'mcq',
@@ -60,9 +85,9 @@ def _mcq_question(rng, item, mode="scaffold"):
         'correct_index': str(item['correct_index']),
         'explanation': item['explanation'],
         'marks': item.get('marks', 2),
-        'sample_answer': correct_option,
-        'ideal_answer': correct_option,
-        'marking_points': [correct_option],
+        'sample_answer': ans_text,
+        'ideal_answer': ans_text,
+        'marking_points': [f'Selects correct option: {ans_text}'],
         'term': 3,
         'caps_weight_percent': 20,
         'suggested_duration_mins': 12,
@@ -346,19 +371,47 @@ def _build_styles_questions(rng):
     ]
 
 def _build_characteristics_questions(rng):
+    scenarios = [
+        {
+            "ctx": "A regional retail supermarket chain (e.g. Sindi's Supermarket)",
+            "correct": "Demonstrates strong interpersonal people skills, high ethical integrity, and efficient inventory coordination",
+            "distractors": [
+                "Dictates orders aggressively without listening and ignores staff grievances",
+                "Abandons all store oversight to unguided casual workers and refuses accountability",
+                "Cuts employee safety equipment to artificially boost monthly branch profit"
+            ]
+        },
+        {
+            "ctx": "A bustling furniture manufacturing workshop (e.g. Sipho's Woodcrafts)",
+            "correct": "Communicates clear workshop targets, resolves technical bottlenecks calmly, and enforces workplace safety protocols",
+            "distractors": [
+                "Micro-manages every single cut while refusing to share production schedules",
+                "Blames factory floor workers publicly whenever machinery maintenance is neglected",
+                "Ignores South African labor standards and forces excessive unpaid overtime"
+            ]
+        },
+        {
+            "ctx": "A technology delivery and courier enterprise (e.g. Lerato's Express Logistics)",
+            "correct": "Adapts delivery schedules flexibly, supports driver well-being, and inspires trust through transparent financial reporting",
+            "distractors": [
+                "Penalizes drivers arbitrarily without reviewing vehicle GPS logs or road conditions",
+                "Keeps company vehicle maintenance records completely secret from dispatchers",
+                "Changes customer pricing terms verbally without formal receipts or contracts"
+            ]
+        }
+    ]
+    sc = rng.choice(scenarios)
+    options = [sc["correct"]] + sc["distractors"]
+    rng.shuffle(options)
+    corr_idx = options.index(sc["correct"])
     return [
         _with_metadata({
             'title': 'Characteristics of a Good Manager',
             'prompt': (
-                "Which combination of traits best represents the qualities of an effective and trustworthy business manager?"
+                f"In the context of {sc['ctx']}, which combination of traits best represents the qualities of an effective and trustworthy business manager?"
             ),
-            'options': [
-                "Possesses strong interpersonal people skills, demonstrates integrity, and organizes resources efficiently",
-                "Dictates all orders without listening, works in isolation, and ignores worker grievances",
-                "Leaves all decisions entirely to unguided junior workers and refuses to take responsibility for business failures",
-                "Prioritizes short-term personal profits over worker safety and ethical business standards"
-            ],
-            'correct_index': 0,
+            'options': options,
+            'correct_index': corr_idx,
             'explanation': (
                 "Effective managers demonstrate strong people skills, ethical trustworthiness, organizational competence, "
                 "and responsibility for their team's performance."

@@ -1,3 +1,9 @@
+SUBSKILLS = [
+    "factors_of_production_classification",
+    "factor_market_vs_goods_market",
+    "factors_of_production_remuneration",
+    "goods_and_services_market",
+]
 import random
 from app.utils.ems_namelist import get_ems_scenario
 
@@ -47,20 +53,27 @@ def _with_metadata(
 
 def _mcq_question(rng, item, mode="scaffold"):
     mode_norm = str(mode or "").strip().lower()
-    correct_option = item['options'][item['correct_index']]
-    
+    c_idx = int(item['correct_index'])
+    correct_option = item['options'][c_idx]
+    correct_letter = chr(65 + c_idx)
+    marks = item.get('marks', 1)
+    ans_text = f"{correct_letter}. {correct_option}"
+    worked_sol = f"**{ans_text}** [{marks} mark{'s' if marks > 1 else ''}]\n\n{item.get('explanation', '')}"
+
     question = {
         'id': f"g8_ems_mcq_{rng.randint(1000, 999999)}",
         'title': item.get('title', 'Concept check'),
         'question_type': 'mcq',
         'prompt': item['prompt'],
         'options': item['options'],
-        'correct_index': str(item['correct_index']),
+        'correct_index': str(c_idx),
         'explanation': item['explanation'],
-        'marks': item.get('marks', 1),
-        'sample_answer': correct_option,
-        'ideal_answer': correct_option,
-        'marking_points': [correct_option],
+        'marks': marks,
+        'sample_answer': ans_text,
+        'ideal_answer': ans_text,
+        'worked_solution': worked_sol,
+        'canonical_solution': worked_sol,
+        'marking_points': [f"Selects correct option: {ans_text}"],
         **{k: v for k, v in item.items() if k not in ['prompt', 'options', 'correct_index', 'explanation', 'title', 'marks', 'hint_sections', 'guidelines', 'teaching_note']}
     }
     
@@ -119,7 +132,7 @@ def _concept_pool(rng):
         
         _with_metadata({
             'title': 'The Factor Market',
-            'prompt': "In which market do households sell their labour, land, or capital to businesses?",
+            'prompt': f"In {scenario['area']}, when {scenario['entrepreneur']}'s employees sell their labour, or when landlords lease commercial property to the business, in which specific market do these transactions take place?",
             'options': [
                 "The goods and services market", 
                 "The factor market", 
@@ -145,7 +158,7 @@ def _discussion_pool(rng):
     return [
         _with_metadata({
             'title': 'Remuneration of Factors',
-            'prompt': f"Name the four factors of production and state the remuneration (reward) that each factor receives. (8 marks)",
+            'prompt': f"For an enterprise such as {scenario['entrepreneur']}'s {scenario['business_type']} in {scenario['area']}, name the four factors of production utilized and state the specific remuneration (reward) that each factor receives. (8 marks)",
             'marks': 8,
             'marking_points': [
                 "Land - Rent",
@@ -167,17 +180,24 @@ def _discussion_pool(rng):
 
 def generate(subskill="concepts", difficulty="medium", count=1, mode="scaffold", seed=None, **kwargs):
     rng = _rng(seed)
+    topic_str = str(kwargs.get('topic', '') or subskill or '').lower()
     
-    if subskill == "discussion":
+    if "remuneration" in topic_str or subskill == "discussion":
         pool = _discussion_pool(rng)
+        chosen = rng.sample(pool, min(count, len(pool)))
+        res = [_typed_question(rng, item, mode=mode) for item in chosen]
     else:
         pool = _concept_pool(rng)
-        
-    selected = [q for q in pool if difficulty in q['difficulty_band']]
-    if not selected: selected = pool
-    chosen = rng.sample(selected, min(count, len(selected)))
-    
-    if subskill == "discussion":
-        return [_typed_question(rng, item, mode=mode) for item in chosen]
-    else:
-        return [_mcq_question(rng, item, mode=mode) for item in chosen]
+        if "market" in topic_str and len(pool) > 1:
+            chosen = [pool[1]]
+        elif ("factor" in topic_str or "production" in topic_str) and len(pool) > 0:
+            chosen = [pool[0]]
+        elif len(pool) > 1 and rng.random() > 0.5:
+            chosen = [pool[1]]
+        else:
+            chosen = [pool[0]]
+        res = [_mcq_question(rng, item, mode=mode) for item in chosen]
+    for r_item in res:
+        r_item["subskill"] = subskill
+        r_item["archetype"] = subskill
+    return res

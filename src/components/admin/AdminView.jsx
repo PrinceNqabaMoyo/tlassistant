@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { AdminDashboard, PendingPayments, UserManagement, InterestSubmissions } from '../forms/AdminForms';
 import SchoolAdminView from './SchoolAdminView';
+import SuperAdminArchetypeWorkbench from './SuperAdminArchetypeWorkbench';
 import {
     SystemAnalyticsView,
     ContentManagementView,
@@ -39,6 +40,12 @@ const AdminView = ({ view, setView, db, currentUser }) => {
             case 'class_management': 
             case 'classManagement':
                 return <SchoolAdminView currentUser={currentUser} onBack={handleNavigateDashboard} />;
+            case 'archetypeIteration':
+            case 'archetype_iteration':
+                return <SuperAdminArchetypeWorkbench currentUser={currentUser} onBack={handleNavigateDashboard} initialTab="iteration" />;
+            case 'archetypeVetting':
+            case 'archetype_vetting':
+                return <SuperAdminArchetypeWorkbench currentUser={currentUser} onBack={handleNavigateDashboard} initialTab="diagrams" />;
             case 'systemAnalytics':
                 return <SystemAnalyticsView onBack={handleNavigateDashboard} />;
             case 'contentManagement':

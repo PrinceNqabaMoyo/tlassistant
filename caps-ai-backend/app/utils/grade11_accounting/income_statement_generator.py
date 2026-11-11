@@ -1463,18 +1463,25 @@ def generate_questions(
 
     subskill_norm = str(subskill or "mixed").strip().lower()
 
+    def _tagged(fn, sub_name):
+        def _wrap():
+            q = fn()
+            q["subskill"] = sub_name
+            return q
+        return _wrap
+
     builders: List[Any] = [
-        lambda: _make_income_statement_archetype_multi_adjustment(r=r, difficulty=difficulty, mode=mode),
-        lambda: _make_income_statement_archetype_markup_backcalc(r=r, difficulty=difficulty, mode=mode),
-        lambda: _make_income_statement_archetype_interest_expense_balancing(r=r, difficulty=difficulty, mode=mode),
-        lambda: _make_income_statement_archetype_loan_statement_interest_bundle(r=r, difficulty=difficulty, mode=mode),
-        lambda: _make_income_statement_archetype_stock_theft_insurance(r=r, difficulty=difficulty, mode=mode),
-        lambda: _make_income_statement_archetype_missing_labels(r=r, difficulty=difficulty, mode=mode),
-        lambda: _make_income_statement_archetype_sundry_balancing(r=r, difficulty=difficulty, mode=mode),
-        lambda: _make_income_statement_archetype_prepaid_accrued_focus(r=r, difficulty=difficulty, mode=mode),
-        lambda: _make_income_statement_archetype_debtors_provision_focus(r=r, difficulty=difficulty, mode=mode),
-        lambda: _make_income_statement_archetype_fixed_deposit_bank_statement_bundle(r=r, difficulty=difficulty, mode=mode),
-        lambda: _make_income_statement_archetype_advertising_contract(r=r, difficulty=difficulty, mode=mode),
+        _tagged(lambda: _make_income_statement_archetype_multi_adjustment(r=r, difficulty=difficulty, mode=mode), "multi_adjustment_income_statement"),
+        _tagged(lambda: _make_income_statement_archetype_markup_backcalc(r=r, difficulty=difficulty, mode=mode), "markup_backcalc_income_statement"),
+        _tagged(lambda: _make_income_statement_archetype_interest_expense_balancing(r=r, difficulty=difficulty, mode=mode), "interest_expense_balancing"),
+        _tagged(lambda: _make_income_statement_archetype_loan_statement_interest_bundle(r=r, difficulty=difficulty, mode=mode), "loan_statement_interest"),
+        _tagged(lambda: _make_income_statement_archetype_stock_theft_insurance(r=r, difficulty=difficulty, mode=mode), "stock_theft_and_insurance"),
+        _tagged(lambda: _make_income_statement_archetype_missing_labels(r=r, difficulty=difficulty, mode=mode), "missing_labels_income_statement"),
+        _tagged(lambda: _make_income_statement_archetype_sundry_balancing(r=r, difficulty=difficulty, mode=mode), "sundry_expenses_balancing"),
+        _tagged(lambda: _make_income_statement_archetype_prepaid_accrued_focus(r=r, difficulty=difficulty, mode=mode), "prepaid_and_accrued_adjustments"),
+        _tagged(lambda: _make_income_statement_archetype_debtors_provision_focus(r=r, difficulty=difficulty, mode=mode), "debtors_and_provision_adjustments"),
+        _tagged(lambda: _make_income_statement_archetype_fixed_deposit_bank_statement_bundle(r=r, difficulty=difficulty, mode=mode), "fixed_deposit_interest_adjustment"),
+        _tagged(lambda: _make_income_statement_archetype_advertising_contract(r=r, difficulty=difficulty, mode=mode), "advertising_contract_adjustment"),
     ]
 
     # Subskill aliases so the controller can target individual archetype families if needed.

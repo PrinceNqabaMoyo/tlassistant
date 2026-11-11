@@ -150,19 +150,36 @@ def _generate_gr12_galvanic_cell(r: random.Random, seed: Optional[int], idx: int
     e0_cell = round(e0_cathode - e0_anode, 2)
 
     qid = _make_id("ps12_galvanic", seed, idx)
+    modality = "bio_diagram"
+    diagram_spec = {
+        "diagram_role": "identify" if locals().get("target_pin_letter") or locals().get("target_pin") else "context",
+        "image_type": "galvanic_cell",
+        "anode_metal": anode_key,
+        "cathode_metal": cathode_key,
+        "voltmeter_reading": f"{_fmt_sa(e0_cell)} V",
+        "labels": [
+            {"id": "A", "name": f"Anode Electrode ({anode_key})", "x": 22, "y": 38},
+            {"id": "B", "name": f"Cathode Electrode ({cathode_key})", "x": 78, "y": 38},
+            {"id": "C", "name": "Salt bridge (KNO₃ / KCl gel)", "x": 50, "y": 34},
+            {"id": "D", "name": f"Voltmeter ({_fmt_sa(e0_cell)} V)", "x": 50, "y": 12},
+            {"id": "E", "name": f"Anode electrolyte ({anode_key}²⁺ 1 mol·dm⁻³)", "x": 18, "y": 72},
+            {"id": "F", "name": f"Cathode electrolyte ({cathode_key}²⁺ 1 mol·dm⁻³)", "x": 82, "y": 72},
+            {"id": "G", "name": "Electron flow direction in external circuit (e⁻)", "x": 34, "y": 10},
+        ],
+    }
 
     if mode == "elementary_galvanic_cell_potential":
         prompt = (
-            f"A standard electrochemical cell is set up consisting of a {anode_data['name']} half-cell "
+            f"The diagram represents a standard galvanic electrochemical cell consisting of a {anode_data['name']} half-cell "
             f"($E^\\circ = {_fmt_sa(e0_anode)}\\text{{ V}}$) and a {cathode_data['name']} half-cell "
             f"($E^\\circ = {_fmt_sa(e0_cathode)}\\text{{ V}}$).\n\n"
-            f"1. Identify which electrode acts as the cathode.\n"
+            f"1. Identify which electrode (A or B) acts as the cathode.\n"
             f"2. Calculate the standard cell potential ($E^\\circ_{{\\text{{cell}}}}$) of this cell."
         )
-        ans_str = f"1. Cathode: {cathode_data['name']} ({cathode_key}); 2. E0_cell = {_fmt_sa(e0_cell)} V"
+        ans_str = f"1. Cathode: {cathode_data['name']} ({cathode_key}) [Electrode B]; 2. E0_cell = {_fmt_sa(e0_cell)} V"
         memo = (
             f"1. Cathode identification [1]: {cathode_data['name']} ({cathode_key}) has the more positive standard reduction potential "
-            f"(${_fmt_sa(e0_cathode)}\\text{{ V}} > {_fmt_sa(e0_anode)}\\text{{ V}}$), hence it undergoes reduction at the cathode. [1]\n"
+            f"(${_fmt_sa(e0_cathode)}\\text{{ V}} > {_fmt_sa(e0_anode)}\\text{{ V}}$), hence it undergoes reduction at cathode B. [1]\n"
             f"2. Cell potential calculation [2]:\n"
             f"   $$E^\\circ_{{\\text{{cell}}}} = E^\\circ_{{\\text{{cathode}}}} - E^\\circ_{{\\text{{anode}}}} = ({_fmt_sa(e0_cathode)}) - ({_fmt_sa(e0_anode)}) = {_fmt_sa(e0_cell)}\\text{{ V}}$$ [M+A]"
         )
@@ -173,35 +190,37 @@ def _generate_gr12_galvanic_cell(r: random.Random, seed: Optional[int], idx: int
         }
         marks = 3
     else:
-        # Full compound 11-mark Grade 12 exam question
+        # Full compound Grade 12 exam question
         prompt = (
-            f"An electrochemical cell is set up under standard conditions using a {anode_data['name']} ({anode_key}) electrode dipped into a "
-            f"$1\\text{{ mol}}\\cdot\\text{{dm}}^{{-3}}$ {anode_key}$^{{2+}}$ solution and a {cathode_data['name']} ({cathode_key}) electrode "
-            f"dipped into a $1\\text{{ mol}}\\cdot\\text{{dm}}^{{-3}}$ {cathode_key}$^{{2+}}$ solution. "
-            f"A salt bridge containing concentrated potassium chloride ($\\text{{KCl}}$) connects the two beakers.\n\n"
+            f"The diagram represents a standard galvanic electrochemical cell operating at $25^\\circ\\text{{C}}$.\n"
+            f"Electrode A ({anode_data['name']}) is dipped in a $1\\text{{ mol}}\\cdot\\text{{dm}}^{{-3}}$ {anode_key}$^{{2+}}$ electrolyte solution (E),\n"
+            f"and Electrode B ({cathode_data['name']}) is dipped in a $1\\text{{ mol}}\\cdot\\text{{dm}}^{{-3}}$ {cathode_key}$^{{2+}}$ electrolyte solution (F).\n"
+            f"Component C is a U-tube salt bridge connecting the two half-cells, and instrument D is a high-resistance voltmeter.\n\n"
             f"1. State the TWO standard conditions applicable to solutions and temperature in this cell.\n"
-            f"2. Identify the ANODE in this cell and write down the oxidation half-reaction taking place.\n"
+            f"2. Identify the ANODE (Electrode A or B) and write down the oxidation half-reaction taking place.\n"
             f"3. Write down the reduction half-reaction taking place at the cathode.\n"
             f"4. Write down the overall balanced net ionic cell reaction.\n"
             f"5. Write down the cell notation for this galvanic cell.\n"
-            f"6. State TWO functions of the salt bridge.\n"
-            f"7. Calculate the standard cell potential ($E^\\circ_{{\\text{{cell}}}}$)."
+            f"6. State TWO functions of the salt bridge (C).\n"
+            f"7. State the direction of electron flow in the external circuit (from A to B or B to A).\n"
+            f"8. Calculate the standard cell potential ($E^\\circ_{{\\text{{cell}}}}$)."
         )
         ans_str = (
             f"1. Temp = 25 C (298 K), Concentration = 1 mol/dm3; "
-            f"2. Anode: {anode_key}, {anode_key} -> {anode_key}^(2+) + 2e-; "
+            f"2. Anode: Electrode A ({anode_key}), {anode_key} -> {anode_key}^(2+) + 2e-; "
             f"3. {cathode_key}^(2+) + 2e- -> {cathode_key}; "
             f"4. {anode_key}(s) + {cathode_key}^(2+)(aq) -> {anode_key}^(2+)(aq) + {cathode_key}(s); "
             f"5. {anode_key}(s) | {anode_key}^(2+)(1 mol/dm3) || {cathode_key}^(2+)(1 mol/dm3) | {cathode_key}(s); "
             f"6. Completes circuit, maintains electrical neutrality; "
-            f"7. E0_cell = {_fmt_sa(e0_cell)} V"
+            f"7. From A to B (anode to cathode); "
+            f"8. E0_cell = {_fmt_sa(e0_cell)} V"
         )
         memo = (
             f"1. Standard conditions [2]:\n"
             f"   - Temperature: $25^\\circ\\text{{C}}$ (or $298\\text{{ K}}$) [1]\n"
             f"   - Concentration of electrolytes: $1\\text{{ mol}}\\cdot\\text{{dm}}^{{-3}}$ [1]\n"
             f"2. Anode & Oxidation half-reaction [2]:\n"
-            f"   - Anode: {anode_key} (has lower reduction potential ${_fmt_sa(e0_anode)}\\text{{ V}}$) [1]\n"
+            f"   - Anode: Electrode A ({anode_key}) (has lower reduction potential ${_fmt_sa(e0_anode)}\\text{{ V}}$) [1]\n"
             f"   - Half-reaction: $$\\text{{{anode_key}(s)}} \\to \\text{{{anode_key}}}^{{2+}}\\text{{(aq)}} + 2e^-$$ [1]\n"
             f"3. Cathode & Reduction half-reaction [1]:\n"
             f"   $$\\text{{{cathode_key}}}^{{2+}}\\text{{(aq)}} + 2e^- \\to \\text{{{cathode_key}(s)}}$$ [1]\n"
@@ -212,15 +231,16 @@ def _generate_gr12_galvanic_cell(r: random.Random, seed: Optional[int], idx: int
             f"6. Functions of the salt bridge [2]:\n"
             f"   - Completes the electric circuit [1]\n"
             f"   - Maintains electrical neutrality in both half-cells by ion migration [1]\n"
-            f"7. Cell potential calculation [2]:\n"
+            f"7. Electron flow direction [1]: From Electrode A (anode) to Electrode B (cathode) through the external conducting wire [1]\n"
+            f"8. Cell potential calculation [2]:\n"
             f"   $$E^\\circ_{{\\text{{cell}}}} = E^\\circ_{{\\text{{cathode}}}} - E^\\circ_{{\\text{{anode}}}} = ({_fmt_sa(e0_cathode)}) - ({_fmt_sa(e0_anode)}) = {_fmt_sa(e0_cell)}\\text{{ V}}$$ [M+A]"
         )
         hints = {
-            "tier_1": "Recall: Anode is oxidation (loss of electrons). Cathode is reduction (gain of electrons).",
+            "tier_1": "Recall: Anode is oxidation (loss of electrons). Cathode is reduction (gain of electrons). Electrons travel from anode to cathode.",
             "tier_2": "Cell notation is always written: Anode | Anode ion || Cathode ion | Cathode.",
-            "tier_3": f"E0_cell = {e0_cathode} - ({e0_anode}) = {e0_cell:.2f} V.",
+            "tier_3": f"E0_cell = {e0_cathode} - ({e0_anode}) = {e0_cell:.2f} V. Electrons flow from A to B.",
         }
-        marks = 13
+        marks = 14
 
     return {
         "id": qid,
@@ -230,6 +250,8 @@ def _generate_gr12_galvanic_cell(r: random.Random, seed: Optional[int], idx: int
         "suggested_duration_mins": 14,
         "mode": mode,
         "question_type": "short_answer",
+        "modality": modality,
+        "diagram_spec": diagram_spec,
         "question": prompt,
         "correct_answer": ans_str,
         "sample_answer": ans_str,
@@ -270,15 +292,10 @@ def generate(
     **kwargs: Any,
 ) -> List[Dict[str, Any]]:
     """Master generation endpoint for Electrochemistry & Chemical Change."""
-    r = random.Random(seed)
-    questions = []
-
-    for i in range(count):
-        gr_str = str(grade).strip()
-        if gr_str == "9":
-            q = _generate_gr9_acids_bases(r, seed, i, mode)
-        else:
-            q = _generate_gr12_galvanic_cell(r, seed, i, mode)
-        questions.append(q)
-
-    return questions
+    gr_str = str(grade).strip()
+    if gr_str == "9":
+        from app.utils.natural_sciences.ns7_acids_bases_neutrals_generator import generate as ns_gen
+        return ns_gen(subskill=subskill, difficulty=difficulty, count=count, grade="9", seed=seed, mode=mode, **kwargs)
+    
+    from app.utils.physical_sciences.ps12_electrochemistry_galvanic_generator import generate as ps_gen
+    return ps_gen(subskill=subskill, difficulty=difficulty, count=count, grade="12", seed=seed, mode=mode, **kwargs)

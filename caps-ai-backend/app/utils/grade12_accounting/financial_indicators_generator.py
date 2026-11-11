@@ -691,14 +691,38 @@ def generate(
     **kwargs: Any,
 ) -> Dict[str, Any]:
     """Generates deterministic Grade 12 Accounting Financial Indicator questions."""
+    from app.utils.grade12_accounting.analysis_interpretation_generator import generate_questions as gen_ai
     base_seed = 42 if seed is None else int(seed)
-    chosen_mode = mode if mode in BUILDERS else ("compound" if subskill is None else subskill)
-    builder = BUILDERS.get(chosen_mode, _build_compound_financial_indicators)
+    r_pick = _rng(base_seed)
+
+    all_keys = [
+        "financial_indicators_comprehensive",
+        "elementary_acid_test",
+        "elementary_debt_equity",
+        "elementary_roshe_calc",
+        "eps_and_dps_indicator",
+        "nav_per_share_indicator",
+        "rotce_and_gearing_indicator",
+        "solvency_and_liquidity_indicator",
+    ]
+    ai_map = {
+        "eps_and_dps_indicator": "eps",
+        "nav_per_share_indicator": "nav",
+        "rotce_and_gearing_indicator": "rotce",
+        "solvency_and_liquidity_indicator": "solvency",
+    }
 
     questions = []
     for i in range(max(1, count)):
         r = _rng(base_seed * 1000 + i)
-        q = builder(r)
+        chosen = subskill if (subskill in all_keys) else r_pick.choice(all_keys)
+        if chosen in BUILDERS:
+            q = BUILDERS[chosen](r)
+        elif chosen == "financial_indicators_comprehensive":
+            q = _build_compound_financial_indicators(r)
+        else:
+            q = gen_ai(subskill=ai_map[chosen], question_type="calc", count=1, seed=base_seed * 1000 + i)[0]
+        q["subskill"] = chosen
         q["seed"] = base_seed * 1000 + i
         questions.append(q)
 

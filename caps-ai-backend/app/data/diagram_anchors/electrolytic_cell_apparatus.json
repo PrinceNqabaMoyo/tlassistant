@@ -1,0 +1,196 @@
+{
+  "diagram": "electrolytic_cell_apparatus",
+  "view": "textbook",
+  "viewBox": "0 0 600 480",
+  "anchors": {
+    "dc_power_supply": {
+      "name": "External DC Power Source (Battery)",
+      "anchor": [
+        298,
+        56
+      ],
+      "default_box": [
+        60,
+        70
+      ],
+      "side": "left",
+      "grades": [
+        "g8",
+        "g9",
+        "g12"
+      ],
+      "acceptable": [
+        "DC power supply",
+        "Power source",
+        "Battery",
+        "Cell",
+        "Direct current source"
+      ],
+      "description": "External electrical energy source that drives a non-spontaneous redox reaction by converting electrical energy into chemical energy."
+    },
+    "positive_anode_electrode": {
+      "name": "Anode (Positive Graphite Electrode)",
+      "anchor": [
+        232,
+        215
+      ],
+      "default_box": [
+        60,
+        165
+      ],
+      "side": "left",
+      "grades": [
+        "g8",
+        "g9",
+        "g12"
+      ],
+      "acceptable": [
+        "Anode",
+        "Positive electrode",
+        "Carbon anode",
+        "Graphite anode"
+      ],
+      "description": "Electrode connected to the positive terminal of the DC source where oxidation occurs (2Cl⁻(aq) → Cl₂(g) + 2e⁻)."
+    },
+    "chlorine_gas_bubbles": {
+      "name": "Chlorine Gas Bubbles (Cl₂(g))",
+      "anchor": [
+        226,
+        325
+      ],
+      "default_box": [
+        60,
+        365
+      ],
+      "side": "left",
+      "grades": [
+        "g8",
+        "g9",
+        "g12"
+      ],
+      "acceptable": [
+        "Chlorine gas",
+        "Cl2 bubbles",
+        "Gas bubbles",
+        "Chlorine bubbles"
+      ],
+      "description": "Pungent yellowish-green chlorine gas bubbles formed at the anode surface as chloride ions are oxidised."
+    },
+    "chloride_anions": {
+      "name": "Chloride Anions (Cl⁻(aq))",
+      "anchor": [
+        275,
+        308
+      ],
+      "default_box": [
+        60,
+        295
+      ],
+      "side": "left",
+      "grades": [
+        "g12"
+      ],
+      "acceptable": [
+        "Chloride ions",
+        "Cl- ions",
+        "Anions",
+        "Negative ions"
+      ],
+      "description": "Negatively charged chloride anions in solution migrating toward the positively charged anode."
+    },
+    "negative_cathode_electrode": {
+      "name": "Cathode (Negative Graphite Electrode)",
+      "anchor": [
+        368,
+        215
+      ],
+      "default_box": [
+        540,
+        120
+      ],
+      "side": "right",
+      "grades": [
+        "g8",
+        "g9",
+        "g12"
+      ],
+      "acceptable": [
+        "Cathode",
+        "Negative electrode",
+        "Carbon cathode",
+        "Graphite cathode"
+      ],
+      "description": "Electrode connected to the negative terminal of the DC source where reduction occurs (Cu²⁺(aq) + 2e⁻ → Cu(s))."
+    },
+    "copper_cations": {
+      "name": "Copper(II) Cations (Cu²⁺(aq))",
+      "anchor": [
+        341,
+        316
+      ],
+      "default_box": [
+        540,
+        225
+      ],
+      "side": "right",
+      "grades": [
+        "g12"
+      ],
+      "acceptable": [
+        "Copper ions",
+        "Cu2+ ions",
+        "Cations",
+        "Positive copper ions"
+      ],
+      "description": "Positively charged Cu²⁺ cations in the electrolyte migrating toward the negatively charged cathode."
+    },
+    "copper_metal_deposit": {
+      "name": "Reddish-Brown Copper Deposit (Cu(s))",
+      "anchor": [
+        368,
+        348
+      ],
+      "default_box": [
+        540,
+        325
+      ],
+      "side": "right",
+      "grades": [
+        "g8",
+        "g9",
+        "g12"
+      ],
+      "acceptable": [
+        "Copper deposit",
+        "Solid copper",
+        "Cu(s) coating",
+        "Plated copper metal"
+      ],
+      "description": "Layer of solid reddish-brown copper metal plated onto the submerged cathode surface during reduction."
+    },
+    "aqueous_electrolyte": {
+      "name": "Aqueous Copper(II) Chloride Electrolyte (CuCl₂(aq))",
+      "anchor": [
+        300,
+        412
+      ],
+      "default_box": [
+        540,
+        415
+      ],
+      "side": "right",
+      "grades": [
+        "g8",
+        "g9",
+        "g12"
+      ],
+      "acceptable": [
+        "Electrolyte",
+        "Copper(II) chloride solution",
+        "CuCl2(aq)",
+        "Ionic solution"
+      ],
+      "description": "Conducting aqueous ionic solution containing free mobile Cu²⁺ and Cl⁻ ions."
+    }
+  }
+}

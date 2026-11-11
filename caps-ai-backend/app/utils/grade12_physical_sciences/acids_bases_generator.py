@@ -27,7 +27,7 @@ def _fmt_sa(val: float | int, places: int = 2) -> str:
     if isinstance(val, int) or (isinstance(val, float) and val.is_integer()):
         return str(int(val))
     s = f"{val:.{places}f}".rstrip("0").rstrip(".")
-    return s.replace(".", "{{,}}")
+    return s.replace(".", "{,}")
 
 
 CONJUGATE_SYSTEMS = [
@@ -146,6 +146,29 @@ def _build_definitions_conjugate_drill(r: random.Random) -> Dict[str, Any]:
         "prompt": prompt,
         "correct_answer": f"Pairs: ({sys['acid_1']}/{sys['base_1']}) and ({sys['acid_2']}/{sys['base_2']})",
         "worked_solution": sol,
+        "sub_parts": [
+            {
+                "part": "1",
+                "label": "1. Brønsted-Lowry acid definition",
+                "prompt": "Define an acid according to the Brønsted-Lowry theory.",
+                "expected_answer": "Proton donor",
+                "marks": 1,
+            },
+            {
+                "part": "2",
+                "label": "2. Conjugate acid-base pairs",
+                "prompt": "Identify the two conjugate acid-base pairs in this reaction.",
+                "expected_answer": f"({sys['acid_1']}, {sys['base_1']}) and ({sys['acid_2']}, {sys['base_2']})",
+                "marks": 2,
+            },
+            {
+                "part": "3",
+                "label": "3. Ampholyte property",
+                "prompt": f"Explain why {sys['ampholyte']} can act as an ampholyte.",
+                "expected_answer": "Acts as either an acid or a base",
+                "marks": 2,
+            },
+        ],
         "marking_schema": {
             "total_marks": 5,
             "marking_points": [
@@ -213,12 +236,24 @@ def _build_ph_calc_drill(r: random.Random) -> Dict[str, Any]:
             f"$\\text{{pH}} = -\\log[\\text{{H}}_3\\text{{O}}^+] = {_fmt_sa(ph)}$"
         )
 
+    if acid_choice in ["HCl", "HNO3"]:
+        sub_parts = [
+            {"part": "1", "label": f"1. Strength of {acid_choice}", "prompt": f"Is {acid_choice} a strong or weak acid?", "expected_answer": "Strong", "marks": 1},
+            {"part": "2", "label": "2. Hydronium [H3O+] conc.", "prompt": "Write down [H3O+] in mol/dm3.", "expected_answer": _fmt_sa(h3o), "marks": 1},
+            {"part": "3", "label": "3. pH of solution", "prompt": "Calculate the pH of the solution.", "expected_answer": _fmt_sa(ph), "marks": 1},
+        ]
+    else:
+        sub_parts = [
+            {"part": "1", "label": "1. pH calculation", "prompt": "Calculate the pH of the solution.", "expected_answer": _fmt_sa(ph), "marks": 3}
+        ]
+
     return {
         "id": f"g12_ps_ab_ph_{r.randint(10000, 99999)}",
-        "type": "numeric",
+        "type": "numeric" if len(sub_parts) == 1 else "compound",
         "prompt": prompt,
         "correct_answer": _fmt_sa(ph),
         "worked_solution": sol,
+        "sub_parts": sub_parts,
         "marking_schema": {
             "total_marks": 3,
             "marking_points": [
@@ -272,9 +307,50 @@ def _build_titration_drill(r: random.Random) -> Dict[str, Any]:
     return {
         "id": f"g12_ps_ab_titr_{r.randint(10000, 99999)}",
         "type": "compound",
+        "modality": "bio_diagram",
+        "diagram_spec": {
+            "diagram_role": "identify" if locals().get("target_pin_letter") or locals().get("target_pin") else "context",
+            "image_type": "titration_apparatus",
+            "burette_sol": f"{pair['acid']} ({_fmt_sa(ca)} mol/dm3)",
+            "flask_sol": f"{pair['base']}",
+            "burette_vol": f"{_fmt_sa(va)} cm3",
+            "flask_vol": f"{_fmt_sa(vb)} cm3",
+            "indicator": pair["indicator"],
+            "labels": [
+                {"id": "A", "name": f"Burette with standard {pair['acid']} ({_fmt_sa(ca)} mol/dm3)", "x": 62, "y": 32},
+                {"id": "B", "name": "Retort stand and clamping bosshead", "x": 26, "y": 22},
+                {"id": "C", "name": "Stopcock tap for fine fluid delivery", "x": 62, "y": 64},
+                {"id": "D", "name": f"Conical flask with {pair['base']} + {pair['indicator']}", "x": 62, "y": 84},
+                {"id": "E", "name": "White tile to highlight color change at equivalence point", "x": 78, "y": 92},
+                {"id": "F", "name": f"Meniscus reading level ({_fmt_sa(va)} cm3 delivered)", "x": 42, "y": 44},
+            ],
+        },
         "prompt": prompt,
         "correct_answer": f"cb = {_fmt_sa(cb)} mol/dm3",
         "worked_solution": sol,
+        "sub_parts": [
+            {
+                "part": "1",
+                "label": "1. Suitable indicator",
+                "prompt": f"Choose the most suitable indicator for this titration ({pair['type']}).",
+                "expected_answer": pair["indicator"],
+                "marks": 1,
+            },
+            {
+                "part": "2",
+                "label": "2. Reason for indicator choice",
+                "prompt": "Explain your indicator choice based on the nature of the salt formed at equivalence.",
+                "expected_answer": pair["salt_nature"],
+                "marks": 2,
+            },
+            {
+                "part": "3",
+                "label": "3. Base concentration (cb)",
+                "prompt": f"Calculate the concentration of the {pair['base']} solution ($c_b$).",
+                "expected_answer": _fmt_sa(cb),
+                "marks": 2,
+            },
+        ],
         "marking_schema": {
             "total_marks": 5,
             "marking_points": [
@@ -301,6 +377,11 @@ def _build_titration_drill(r: random.Random) -> Dict[str, Any]:
 
 def generate(seed: Optional[int] = None, mode: str = "compound", **kwargs) -> Dict[str, Any]:
     """Main generator entrypoint adhering to 6-pillar contract."""
+    if mode == "scaffold" or kwargs.get("subskill") in ("titration_apparatus", "titration_apparatus_diagram", "titration"):
+        from app.utils.physical_sciences.physical_sciences_builders import build_titration_apparatus_question
+        s = seed if seed is not None else 1001
+        return [build_titration_apparatus_question(seed=s, grade=12, mode="scaffold")] if kwargs.get("as_list") else build_titration_apparatus_question(seed=s, grade=12, mode="scaffold")
+
     r = _rng(seed)
 
     if mode == "elementary_definitions_conjugate":

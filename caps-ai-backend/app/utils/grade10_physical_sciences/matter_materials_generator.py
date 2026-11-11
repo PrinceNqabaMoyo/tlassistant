@@ -18,6 +18,11 @@ from __future__ import annotations
 import random
 from typing import Any, Dict, List, Optional
 
+try:
+    from app.utils.physical_sciences.physical_sciences_builders import build_atomic_bohr_structure_question
+except ImportError:
+    from ..physical_sciences.physical_sciences_builders import build_atomic_bohr_structure_question
+
 TOPIC = "grade10_matter_materials"
 AVOGADRO_CONSTANT = 6.02e23
 MOLAR_VOLUME_STP = 22.4  # dm^3/mol
@@ -216,12 +221,19 @@ def generate(
 
         if subskill in ("mole", "concentration", "stoichiometry") or mode in ("elementary_mole_calculation", "elementary_solution_concentration"):
             q = _generate_moles_concentration_question(sub_r, sub_seed, i, mode)
+        elif subskill in ("bohr_diagram", "atomic_bohr_structure"):
+            q = build_atomic_bohr_structure_question(sub_seed, grade=10, mode=mode)
         elif subskill in ("isotopes", "atomic_structure", "periodic_table") or mode in ("elementary_isotope_abundance", "elementary_electron_config"):
-            q = _generate_atomic_structure_question(sub_r, sub_seed, i, mode)
+            if sub_r.random() < 0.5:
+                q = build_atomic_bohr_structure_question(sub_seed, grade=10, mode=mode)
+            else:
+                q = _generate_atomic_structure_question(sub_r, sub_seed, i, mode)
         else:
-            chosen = sub_r.choice(["mole", "isotopes"])
+            chosen = sub_r.choice(["mole", "isotopes", "bohr_diagram"])
             if chosen == "mole":
                 q = _generate_moles_concentration_question(sub_r, sub_seed, i, mode)
+            elif chosen == "bohr_diagram":
+                q = build_atomic_bohr_structure_question(sub_seed, grade=10, mode=mode)
             else:
                 q = _generate_atomic_structure_question(sub_r, sub_seed, i, mode)
 

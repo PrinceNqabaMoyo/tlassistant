@@ -961,17 +961,17 @@ export const curriculumData = {
             "topics": [
                 "History of money",
                 "Needs and Wants",
-                "Goods and Service",
+                "Goods and services",
+                "Businesses",
                 "Accounting concepts",
                 "Income and Expenses",
                 "Budgets",
-                "Entrepreneur's Day",
                 "The entrepreneur",
-                "Businesses",
                 "Starting a business",
+                "Entrepreneur's Day",
+                "Inequality and poverty",
                 "The production process",
-                "Savings",
-                "Inequality and poverty"
+                "Savings"
             ],
             "topics_with_terms": [
                 {
@@ -987,7 +987,13 @@ export const curriculumData = {
                     "duration": 45
                 },
                 {
-                    "name": "Goods and Service",
+                    "name": "Goods and services",
+                    "term": 1,
+                    "weight": 25,
+                    "duration": 45
+                },
+                {
+                    "name": "Businesses",
                     "term": 1,
                     "weight": 25,
                     "duration": 45
@@ -1011,19 +1017,7 @@ export const curriculumData = {
                     "duration": 45
                 },
                 {
-                    "name": "Entrepreneur's Day",
-                    "term": 3,
-                    "weight": 25,
-                    "duration": 45
-                },
-                {
                     "name": "The entrepreneur",
-                    "term": 3,
-                    "weight": 25,
-                    "duration": 45
-                },
-                {
-                    "name": "Businesses",
                     "term": 3,
                     "weight": 25,
                     "duration": 45
@@ -1035,19 +1029,25 @@ export const curriculumData = {
                     "duration": 45
                 },
                 {
-                    "name": "The production process",
+                    "name": "Entrepreneur's Day",
                     "term": 3,
                     "weight": 25,
                     "duration": 45
                 },
                 {
-                    "name": "Savings",
+                    "name": "Inequality and poverty",
+                    "term": 3,
+                    "weight": 25,
+                    "duration": 45
+                },
+                {
+                    "name": "The production process",
                     "term": 4,
                     "weight": 25,
                     "duration": 45
                 },
                 {
-                    "name": "Inequality and poverty",
+                    "name": "Savings",
                     "term": 4,
                     "weight": 25,
                     "duration": 45
@@ -1057,7 +1057,8 @@ export const curriculumData = {
                 "1": [
                     "History of money",
                     "Needs and Wants",
-                    "Goods and Service"
+                    "Goods and services",
+                    "Businesses"
                 ],
                 "2": [
                     "Accounting concepts",
@@ -1065,15 +1066,14 @@ export const curriculumData = {
                     "Budgets"
                 ],
                 "3": [
-                    "Entrepreneur's Day",
                     "The entrepreneur",
-                    "Businesses",
                     "Starting a business",
-                    "The production process"
+                    "Entrepreneur's Day",
+                    "Inequality and poverty"
                 ],
                 "4": [
-                    "Savings",
-                    "Inequality and poverty"
+                    "The production process",
+                    "Savings"
                 ]
             },
             "syllabus_info": true

@@ -16,6 +16,74 @@ from __future__ import annotations
 import random
 from typing import Any, Dict, List, Optional
 
+SUBSKILLS = [
+    "linear_numeric_patterns",
+    "general_rule_formula",
+    "calculate_large_term",
+    "find_term_position",
+    "geometric_matchstick_patterns"
+]
+
+
+def _generate_general_rule_question(rng: random.Random) -> Dict[str, Any]:
+    """Generates question asking specifically for the general rule Tn."""
+    diff = rng.randint(3, 8)
+    first_term = rng.randint(1, 12)
+    c = first_term - diff
+    terms = [first_term + diff * i for i in range(4)]
+    terms_str = ", ".join(str(t) for t in terms) + ", \\dots"
+    rule_str = f"{diff}n {'+' if c > 0 else '-'} {abs(c)}" if c != 0 else f"{diff}n"
+
+    prompt = (
+        f"Study the following linear sequence of numbers:\n\n"
+        f"$${terms_str}$$\n\n"
+        f"1. What is the constant difference ($d$) between successive terms?\n"
+        f"2. Write down the algebraic formula for the **general rule ($T_n$)** in terms of $n$."
+    )
+    sol = (
+        f"**Step 1:** Calculate constant difference:\n\n"
+        f"$$d = {terms[1]} - {terms[0]} = {diff}$$\n\n"
+        f"**Step 2:** Formulate general rule:\n\n"
+        f"$$T_n = d \\times n + c$$\n\n"
+        f"Using $T_1 = {first_term}$: $${diff}(1) + c = {first_term} \\implies c = {c}$$\n\n"
+        f"$$\\therefore T_n = \\mathbf{{{rule_str}}}$$"
+    )
+    return {
+        "id": f"g7_math_pat_rule_{rng.randint(100000, 999999)}",
+        "question_type": "typed",
+        "prompt": prompt,
+        "prompt_latex": prompt,
+        "answer_mode": "text",
+        "correct_answer": f"d = {diff}; Tn = {rule_str}",
+        "answer_latex": f"T_n = {rule_str}",
+        "explanation": sol,
+        "canonical_solution": sol,
+        "marks": 3,
+        "term": 1,
+        "caps_weight_percent": 15,
+        "suggested_duration_mins": 3,
+        "subskill": "numeric_patterns_subskill_2",
+        "learning_objective_id": "math_g7_patterns_rule_formula",
+        "misconception_tags": ["first_difference_multiplication_omission"],
+        "diagnostic_tags": ["patterns", "general_rule"],
+        "minimum_mastery_score": 75,
+        "keywords": ["general rule", "Tn", "formula"],
+        "marking_schema": {
+            "total_marks": 3,
+            "marking_points": [
+                {"id": "mp_1", "desc": f"Identification of difference d = {diff}", "marks": 1, "editable": True},
+                {"id": "mp_2", "desc": f"Correct formula Tn = {rule_str}", "marks": 2, "editable": True}
+            ],
+            "deductions": [],
+            "carry_forward_rule": "consequential_accuracy"
+        },
+        "hints": {
+            "tier_1": f"Find the constant difference d first.",
+            "tier_2": f"The formula is Tn = d*n + c. Here d = {diff}.",
+            "tier_3": f"Tn = {rule_str}."
+        }
+    }
+
 
 def _generate_numeric_sequence_question(rng: random.Random, difficulty: str = "medium") -> Dict[str, Any]:
     """Generates linear sequence questions with constant difference."""
@@ -148,7 +216,7 @@ def _generate_geometric_matchstick_question(rng: random.Random) -> Dict[str, Any
         "term": 1,
         "caps_weight_percent": 15,
         "suggested_duration_mins": 4,
-        "subskill": "geometric_patterns",
+        "subskill": "geometric_matchstick_patterns",
         "learning_objective_id": "math_g7_patterns_geometric_matchsticks",
         "misconception_tags": [
             "multiplied_without_accounting_for_shared_sides",
@@ -175,6 +243,130 @@ def _generate_geometric_matchstick_question(rng: random.Random) -> Dict[str, Any
     }
 
 
+def _generate_next_terms_question(rng: random.Random) -> Dict[str, Any]:
+    """Generates next three terms question from a given linear sequence."""
+    diff = rng.randint(4, 11)
+    t1 = rng.randint(3, 19)
+    terms = [t1 + diff * i for i in range(4)]
+    next_3 = [t1 + diff * (4 + i) for i in range(3)]
+    terms_str = ", ".join(str(t) for t in terms) + ", \\dots"
+    ans_str = ", ".join(str(t) for t in next_3)
+
+    prompt = (
+        f"Consider the number sequence:\n\n"
+        f"$${terms_str}$$\n\n"
+        f"1. Write down the constant difference ($d$) between consecutive terms.\n"
+        f"2. Write down the next THREE terms of the sequence."
+    )
+    sol = (
+        f"**Step 1:** The constant difference is:\n\n"
+        f"$$d = {terms[1]} - {terms[0]} = {diff}$$\n\n"
+        f"**Step 2:** Add $d = {diff}$ to find the next three terms:\n\n"
+        f"- Next term: ${terms[3]} + {diff} = {next_3[0]}$\n"
+        f"- Next term: ${next_3[0]} + {diff} = {next_3[1]}$\n"
+        f"- Next term: ${next_3[1]} + {diff} = {next_3[2]}$\n\n"
+        f"$$\\therefore \\text{{Next 3 terms are }} \\mathbf{{{ans_str}}}$$"
+    )
+    return {
+        "id": f"g7_math_pat_next_{rng.randint(100000, 999999)}",
+        "question_type": "typed",
+        "prompt": prompt,
+        "prompt_latex": prompt,
+        "answer_mode": "text",
+        "correct_answer": f"d = {diff}; {ans_str}",
+        "answer_latex": f"d = {diff};\\ {ans_str}",
+        "explanation": sol,
+        "canonical_solution": sol,
+        "marks": 4,
+        "term": 1,
+        "caps_weight_percent": 15,
+        "suggested_duration_mins": 3,
+        "subskill": "linear_numeric_patterns",
+        "learning_objective_id": "math_g7_patterns_next_terms",
+        "misconception_tags": ["arithmetic_addition_error"],
+        "diagnostic_tags": ["patterns", "sequences"],
+        "minimum_mastery_score": 75,
+        "keywords": ["constant difference", "next terms", "linear sequence"],
+        "marking_schema": {
+            "total_marks": 4,
+            "marking_points": [
+                {"id": "mp_1", "desc": f"Correct difference d = {diff}", "marks": 1, "editable": True},
+                {"id": "mp_2", "desc": "Correct calculation of 3 consecutive terms", "marks": 3, "editable": True}
+            ],
+            "deductions": [],
+            "carry_forward_rule": "consequential_accuracy"
+        },
+        "hints": {
+            "tier_1": f"Find how much is added from one number to the next.",
+            "tier_2": f"The difference is {diff}. Add {diff} to the last given number ({terms[3]}).",
+            "tier_3": f"Next terms are {ans_str}."
+        }
+    }
+
+
+def _generate_term_position_question(rng: random.Random) -> Dict[str, Any]:
+    """Determines the position n of a given term value in a sequence."""
+    diff = rng.randint(3, 8)
+    first_term = rng.randint(2, 10)
+    c = first_term - diff
+    target_pos = rng.randint(12, 30)
+    target_val = first_term + diff * (target_pos - 1)
+    terms = [first_term + diff * i for i in range(4)]
+    terms_str = ", ".join(str(t) for t in terms) + ", \\dots"
+    rule_str = f"{diff}n {'+' if c > 0 else '-'} {abs(c)}" if c != 0 else f"{diff}n"
+
+    prompt = (
+        f"A number pattern begins:\n\n"
+        f"$${terms_str}$$\n\n"
+        f"Which term of the pattern has a value of **{target_val}**? (Find the position $n$ where $T_n = {target_val}$)."
+    )
+    sol = (
+        f"**Step 1:** The general rule is:\n\n"
+        f"$$T_n = {diff}n + ({c}) = {rule_str}$$\n\n"
+        f"**Step 2:** Set $T_n = {target_val}$ and solve for $n$:\n\n"
+        f"$${rule_str} = {target_val}$$\n\n"
+        f"$${diff}n = {target_val} - ({c}) = {target_val - c}$$\n\n"
+        f"$$n = \\frac{{{target_val - c}}}{{{diff}}} = {target_pos}$$\n\n"
+        f"$$\\therefore \\text{{The }} \\mathbf{{{target_pos}\\text{{th term}}}} \\text{{ has a value of }} {target_val}$$"
+    )
+    return {
+        "id": f"g7_math_pat_pos_{rng.randint(100000, 999999)}",
+        "question_type": "typed",
+        "prompt": prompt,
+        "prompt_latex": prompt,
+        "answer_mode": "text",
+        "correct_answer": str(target_pos),
+        "answer_latex": f"n = {target_pos}",
+        "explanation": sol,
+        "canonical_solution": sol,
+        "marks": 3,
+        "term": 1,
+        "caps_weight_percent": 15,
+        "suggested_duration_mins": 3,
+        "subskill": "numeric_patterns_subskill_4",
+        "learning_objective_id": "math_g7_patterns_term_position",
+        "misconception_tags": ["confused_term_value_with_position"],
+        "diagnostic_tags": ["patterns", "equations"],
+        "minimum_mastery_score": 75,
+        "keywords": ["term position", "solve for n", "general rule"],
+        "marking_schema": {
+            "total_marks": 3,
+            "marking_points": [
+                {"id": "mp_1", "desc": "Setting up equation with general rule", "marks": 1, "editable": True},
+                {"id": "mp_2", "desc": "Isolating n", "marks": 1, "editable": True},
+                {"id": "mp_3", "desc": f"Correct position n = {target_pos}", "marks": 1, "editable": True}
+            ],
+            "deductions": [],
+            "carry_forward_rule": "consequential_accuracy"
+        },
+        "hints": {
+            "tier_1": f"First find the general rule Tn = {rule_str}.",
+            "tier_2": f"Set {rule_str} = {target_val} and solve for n.",
+            "tier_3": f"n = {target_pos}."
+        }
+    }
+
+
 def generate(
     count: int = 1,
     seed: Optional[int] = None,
@@ -186,18 +378,37 @@ def generate(
     """
     Main entry point for Grade 7 Patterns Question Generator.
     Supports atomic micro-drills:
-    - mode="elementary_constant_difference"
-    - mode="elementary_matchsticks"
-    - mode="compound"
+    - linear_numeric_patterns
+    - numeric_patterns_subskill_2 (general rule)
+    - numeric_patterns_subskill_3 (large position term)
+    - numeric_patterns_subskill_4 (find term position)
+    - numeric_patterns_subskill_5 (geometric matchsticks)
     """
     rng = random.Random(seed) if seed is not None else random.Random()
     questions = []
 
+    sub_str = str(subskill or "").lower()
+
     for _ in range(count):
-        if mode == "elementary_matchsticks" or subskill == "matchsticks":
+        if "matchstick" in sub_str or "subskill_5" in sub_str or "geometric" in sub_str:
+            q = _generate_geometric_matchstick_question(rng)
+        elif "position" in sub_str or "subskill_4" in sub_str:
+            q = _generate_term_position_question(rng)
+        elif "large" in sub_str or "subskill_3" in sub_str:
+            q = _generate_numeric_sequence_question(rng, difficulty="hard")
+        elif "rule" in sub_str or "subskill_2" in sub_str:
+            q = _generate_general_rule_question(rng)
+        elif sub_str:
+            q = _generate_next_terms_question(rng)
+        elif mode == "elementary_matchsticks":
             q = _generate_geometric_matchstick_question(rng)
         else: # compound / numeric
-            q = _generate_numeric_sequence_question(rng, difficulty)
+            q = rng.choice([
+                _generate_next_terms_question,
+                _generate_numeric_sequence_question,
+                _generate_term_position_question,
+                _generate_geometric_matchstick_question
+            ])(rng)
         questions.append(q)
 
     return questions

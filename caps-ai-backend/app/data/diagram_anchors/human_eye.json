@@ -1,0 +1,269 @@
+{
+  "master": "human_eye",
+  "view": "longitudinal_cross_section",
+  "viewBox": "0 0 600 480",
+  "anchors": {
+    "cornea": {
+      "name": "Cornea",
+      "synonyms": [
+        "cornea",
+        "transparent cornea"
+      ],
+      "anchor": [
+        116,
+        260
+      ],
+      "default_box": [
+        60,
+        100
+      ],
+      "side": "left",
+      "grades": [
+        "g8",
+        "g9",
+        "g12"
+      ],
+      "description": "Transparent anterior dome of the sclera that allows light to enter and provides the major refraction (bending) of incoming light rays."
+    },
+    "pupil": {
+      "name": "Pupil",
+      "synonyms": [
+        "pupil",
+        "pupillary aperture"
+      ],
+      "anchor": [
+        138,
+        265
+      ],
+      "default_box": [
+        60,
+        150
+      ],
+      "side": "left",
+      "grades": [
+        "g8",
+        "g9",
+        "g12"
+      ],
+      "description": "Central circular opening in the iris through which light passes into the posterior chamber of the eye."
+    },
+    "iris": {
+      "name": "Iris",
+      "synonyms": [
+        "iris",
+        "pigmented iris"
+      ],
+      "anchor": [
+        132,
+        222
+      ],
+      "default_box": [
+        60,
+        200
+      ],
+      "side": "left",
+      "grades": [
+        "g8",
+        "g9",
+        "g12"
+      ],
+      "description": "Pigmented muscular ring containing antagonistic circular and radial muscles that regulate pupil aperture (pupillary reflex)."
+    },
+    "biconvex_lens": {
+      "name": "Biconvex Lens",
+      "synonyms": [
+        "lens",
+        "biconvex lens",
+        "crystalline lens"
+      ],
+      "anchor": [
+        170,
+        265
+      ],
+      "default_box": [
+        60,
+        250
+      ],
+      "side": "left",
+      "grades": [
+        "g8",
+        "g9",
+        "g12"
+      ],
+      "description": "Transparent, flexible biconvex disc that alters its curvature to fine-focus light rays onto the photoreceptors of the retina (accommodation)."
+    },
+    "ciliary_body": {
+      "name": "Ciliary Body & Muscle",
+      "synonyms": [
+        "ciliary body",
+        "ciliary muscle",
+        "ciliary body and muscle"
+      ],
+      "anchor": [
+        155,
+        165
+      ],
+      "default_box": [
+        60,
+        310
+      ],
+      "side": "left",
+      "grades": [
+        "g12"
+      ],
+      "description": "Thickened ring of vascular tissue and smooth muscle that contracts and relaxes to control tension on the suspensory ligaments during accommodation."
+    },
+    "suspensory_ligaments": {
+      "name": "Suspensory Ligaments (Zonules)",
+      "synonyms": [
+        "suspensory ligaments",
+        "zonules",
+        "zonule fibres",
+        "suspensory ligament"
+      ],
+      "anchor": [
+        168,
+        195
+      ],
+      "default_box": [
+        60,
+        360
+      ],
+      "side": "left",
+      "grades": [
+        "g12"
+      ],
+      "description": "Inelastic fibrous strands connecting the ciliary body to the lens capsule, transmitting mechanical tension to flatten or round the lens."
+    },
+    "retina": {
+      "name": "Retina (Photoreceptive Layer)",
+      "synonyms": [
+        "retina",
+        "photoreceptor layer",
+        "retinal layer"
+      ],
+      "anchor": [
+        282,
+        138
+      ],
+      "default_box": [
+        540,
+        120
+      ],
+      "side": "right",
+      "grades": [
+        "g8",
+        "g9",
+        "g12"
+      ],
+      "description": "Innermost sensory tunic containing light-sensitive photoreceptor cells (rods for dim monochrome vision and cones for acute colour vision)."
+    },
+    "choroid": {
+      "name": "Choroid",
+      "synonyms": [
+        "choroid",
+        "choroid layer",
+        "vascular tunic"
+      ],
+      "anchor": [
+        330,
+        145
+      ],
+      "default_box": [
+        540,
+        180
+      ],
+      "side": "right",
+      "grades": [
+        "g12"
+      ],
+      "description": "Darkly pigmented, highly vascular middle tunic that absorbs internal reflections of light and supplies oxygen and nutrients to retinal cells."
+    },
+    "sclera": {
+      "name": "Sclera",
+      "synonyms": [
+        "sclera",
+        "sclerotic coat"
+      ],
+      "anchor": [
+        362,
+        130
+      ],
+      "default_box": [
+        540,
+        240
+      ],
+      "side": "right",
+      "grades": [
+        "g8",
+        "g9",
+        "g12"
+      ],
+      "description": "Tough, opaque, fibrous outer white layer that protects delicate inner structures and maintains the spherical intraocular shape of the eyeball."
+    },
+    "fovea_centralis": {
+      "name": "Fovea Centralis (Yellow Spot)",
+      "synonyms": [
+        "fovea",
+        "fovea centralis",
+        "yellow spot",
+        "macula"
+      ],
+      "anchor": [
+        350,
+        225
+      ],
+      "default_box": [
+        540,
+        300
+      ],
+      "side": "right",
+      "grades": [
+        "g12"
+      ],
+      "description": "Depressed central area of the retina with the densest packing of cones and zero rods, producing maximum visual acuity."
+    },
+    "blind_spot": {
+      "name": "Blind Spot (Optic Disc)",
+      "synonyms": [
+        "blind spot",
+        "optic disc"
+      ],
+      "anchor": [
+        425,
+        225
+      ],
+      "default_box": [
+        60,
+        420
+      ],
+      "side": "right",
+      "grades": [
+        "g12"
+      ],
+      "description": "Region of the retina where nerve fibers converge to form the optic nerve; devoid of photoreceptors, creating an insensitive area in visual field."
+    },
+    "optic_nerve": {
+      "name": "Optic Nerve (Cranial Nerve II)",
+      "synonyms": [
+        "optic nerve",
+        "cranial nerve ii"
+      ],
+      "anchor": [
+        475,
+        228
+      ],
+      "default_box": [
+        540,
+        370
+      ],
+      "side": "right",
+      "grades": [
+        "g8",
+        "g9",
+        "g12"
+      ],
+      "description": "Thick sensory nerve bundle carrying action potentials generated by photoreceptors to the visual cortex of the occipital lobe in the brain."
+    }
+  }
+}

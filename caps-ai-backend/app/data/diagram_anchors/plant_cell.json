@@ -1,0 +1,254 @@
+{
+  "master": "plant_cell",
+  "view": "eukaryotic_ultrastructure_cross_section",
+  "viewBox": "0 0 600 480",
+  "anchors": {
+    "cell_wall": {
+      "name": "Cell Wall (Cellulose)",
+      "synonyms": [
+        "cell wall",
+        "primary cell wall",
+        "cellulose cell wall",
+        "outer wall"
+      ],
+      "anchor": [
+        120,
+        260
+      ],
+      "default_box": [
+        60,
+        80
+      ],
+      "side": "left",
+      "grades": [
+        "g7",
+        "g9",
+        "g10"
+      ],
+      "description": "Rigid, non-living outer protective layer composed of cellulose microfibrils that maintains cell shape and prevents osmotic lysis."
+    },
+    "plasma_membrane": {
+      "name": "Plasma Membrane (Cell Membrane)",
+      "synonyms": [
+        "plasma membrane",
+        "cell membrane",
+        "plasmalemma"
+      ],
+      "anchor": [
+        146,
+        200
+      ],
+      "default_box": [
+        60,
+        150
+      ],
+      "side": "left",
+      "grades": [
+        "g7",
+        "g9",
+        "g10"
+      ],
+      "description": "Selectively permeable phospholipid bilayer with embedded transport proteins regulating the entry and exit of solutes."
+    },
+    "chloroplast": {
+      "name": "Chloroplast (Thylakoids & Stroma)",
+      "synonyms": [
+        "chloroplast",
+        "plastid",
+        "chloroplasts"
+      ],
+      "anchor": [
+        170,
+        150
+      ],
+      "default_box": [
+        60,
+        220
+      ],
+      "side": "left",
+      "grades": [
+        "g7",
+        "g9",
+        "g10"
+      ],
+      "description": "Double-membraned photosynthetic organelle containing chlorophyll pigments in disc-like thylakoids (grana) for carbohydrate synthesis."
+    },
+    "large_central_vacuole": {
+      "name": "Large Central Vacuole (Cell Sap)",
+      "synonyms": [
+        "large central vacuole",
+        "central vacuole",
+        "vacuole",
+        "cell sap"
+      ],
+      "anchor": [
+        230,
+        180
+      ],
+      "default_box": [
+        60,
+        290
+      ],
+      "side": "left",
+      "grades": [
+        "g7",
+        "g9",
+        "g10"
+      ],
+      "description": "Prominent fluid-filled internal reservoir storing water, mineral salts, and organic compounds, generating internal turgor pressure."
+    },
+    "tonoplast": {
+      "name": "Tonoplast (Vacuolar Membrane)",
+      "synonyms": [
+        "tonoplast",
+        "vacuolar membrane",
+        "vacuole membrane"
+      ],
+      "anchor": [
+        265,
+        222
+      ],
+      "default_box": [
+        60,
+        360
+      ],
+      "side": "left",
+      "grades": [
+        "g10"
+      ],
+      "description": "Selectively permeable single lipid bilayer bounding the central vacuole that maintains cell turgidity through active transport."
+    },
+    "cytoplasm": {
+      "name": "Cytoplasm (Cytosol)",
+      "synonyms": [
+        "cytoplasm",
+        "cytosol",
+        "intracellular fluid"
+      ],
+      "anchor": [
+        305,
+        112
+      ],
+      "default_box": [
+        60,
+        430
+      ],
+      "side": "left",
+      "grades": [
+        "g7",
+        "g9",
+        "g10"
+      ],
+      "description": "Jelly-like aqueous colloidal ground substance where metabolic enzymatic reactions occur and organelles are suspended."
+    },
+    "nucleus": {
+      "name": "Nucleus (Chromatin & Nuclear Envelope)",
+      "synonyms": [
+        "nucleus",
+        "cell nucleus",
+        "nuclear envelope"
+      ],
+      "anchor": [
+        382,
+        165
+      ],
+      "default_box": [
+        540,
+        80
+      ],
+      "side": "right",
+      "grades": [
+        "g7",
+        "g9",
+        "g10"
+      ],
+      "description": "Spherical double-membrane bounded control center housing genetic information (DNA in chromatin fibers) and controlling protein synthesis."
+    },
+    "nucleolus": {
+      "name": "Nucleolus",
+      "synonyms": [
+        "nucleolus"
+      ],
+      "anchor": [
+        356,
+        196
+      ],
+      "default_box": [
+        540,
+        150
+      ],
+      "side": "right",
+      "grades": [
+        "g10"
+      ],
+      "description": "Dense, dark-staining sub-nuclear body responsible for transcribing ribosomal RNA (rRNA) and assembling ribosome subunits."
+    },
+    "endoplasmic_reticulum": {
+      "name": "Endoplasmic Reticulum (Rough & Smooth)",
+      "synonyms": [
+        "endoplasmic reticulum",
+        "er",
+        "rough er",
+        "smooth er"
+      ],
+      "anchor": [
+        420,
+        210
+      ],
+      "default_box": [
+        540,
+        220
+      ],
+      "side": "right",
+      "grades": [
+        "g10"
+      ],
+      "description": "Interconnected labyrinth of membranous cisternae; rough ER is studded with ribosomes for protein synthesis, while smooth ER synthesizes lipids."
+    },
+    "mitochondrion": {
+      "name": "Mitochondrion (Cristae & Matrix)",
+      "synonyms": [
+        "mitochondrion",
+        "mitochondria",
+        "chondriosome"
+      ],
+      "anchor": [
+        465,
+        245
+      ],
+      "default_box": [
+        540,
+        290
+      ],
+      "side": "right",
+      "grades": [
+        "g7",
+        "g9",
+        "g10"
+      ],
+      "description": "Double-membraned powerhouse organelle with folded inner cristae responsible for aerobic cellular respiration and ATP generation."
+    },
+    "golgi_apparatus": {
+      "name": "Golgi Apparatus (Golgi Body)",
+      "synonyms": [
+        "golgi apparatus",
+        "golgi body",
+        "golgi complex",
+        "dictyosome"
+      ],
+      "anchor": [
+        360,
+        295
+      ],
+      "default_box": [
+        540,
+        370
+      ],
+      "side": "right",
+      "grades": [
+        "g10"
+      ],
+      "description": "Stack of flattened curved cisternae that chemically modifies, sorts, and packages glycoproteins and lipids into secretory vesicles."
+    }
+  }
+}

@@ -1,0 +1,137 @@
+{
+  "master": "intestinal_villus",
+  "view": "longitudinal_cross_section",
+  "viewBox": "0 0 600 480",
+  "anchors": {
+    "microvilli": {
+      "name": "Microvilli (Brush Border)",
+      "synonyms": [
+        "microvilli",
+        "brush border",
+        "microvillar border"
+      ],
+      "anchor": [
+        242,
+        102
+      ],
+      "default_box": [
+        60,
+        60
+      ],
+      "side": "left",
+      "grades": [
+        "g11"
+      ],
+      "description": "Sub-microscopic folding of the apical columnar plasma membrane that vastly multiplies the absorptive surface area."
+    },
+    "columnar_epithelium": {
+      "name": "Single-Layer Columnar Epithelium",
+      "synonyms": [
+        "columnar epithelium",
+        "epithelial cells",
+        "enterocytes",
+        "absorptive cells"
+      ],
+      "anchor": [
+        256,
+        178
+      ],
+      "default_box": [
+        60,
+        160
+      ],
+      "side": "left",
+      "grades": [
+        "g11"
+      ],
+      "description": "Tall, single-cell layer providing a thin boundary for the rapid active and passive transport of digested nutrients."
+    },
+    "goblet_cell": {
+      "name": "Goblet Cell",
+      "synonyms": [
+        "goblet cell",
+        "mucus-secreting cell",
+        "mucous cell"
+      ],
+      "anchor": [
+        252,
+        250
+      ],
+      "default_box": [
+        60,
+        260
+      ],
+      "side": "left",
+      "grades": [
+        "g11"
+      ],
+      "description": "Specialized glandular epithelial cell producing and secreting protective mucus that lubricates the intestine and protects against enzymatic auto-digestion."
+    },
+    "lacteal": {
+      "name": "Central Lacteal (Lymphatic Vessel)",
+      "synonyms": [
+        "central lacteal",
+        "lacteal",
+        "lymph vessel",
+        "lymphatic lacteal"
+      ],
+      "anchor": [
+        300,
+        160
+      ],
+      "default_box": [
+        540,
+        170
+      ],
+      "side": "right",
+      "grades": [
+        "g11"
+      ],
+      "description": "Blind-ended central lymphatic capillary absorbing reconstituted chylomicrons (fatty acids, glycerol, and fat-soluble vitamins A, D, E, K)."
+    },
+    "capillary_network": {
+      "name": "Blood Capillary Network",
+      "synonyms": [
+        "capillary network",
+        "blood capillaries",
+        "capillary plexus",
+        "capillaries"
+      ],
+      "anchor": [
+        316,
+        230
+      ],
+      "default_box": [
+        540,
+        260
+      ],
+      "side": "right",
+      "grades": [
+        "g11"
+      ],
+      "description": "Dense microvascular network absorbing water-soluble nutrients (glucose, galactose, amino acids, mineral ions) and transporting them directly to the hepatic portal vein."
+    },
+    "crypt_of_lieberkuhn": {
+      "name": "Crypt of Lieberk\u00fchn (Intestinal Gland)",
+      "synonyms": [
+        "crypt of lieberkuhn",
+        "crypt of lieberk\u00fchn",
+        "intestinal crypt",
+        "intestinal gland"
+      ],
+      "anchor": [
+        220,
+        355
+      ],
+      "default_box": [
+        60,
+        360
+      ],
+      "side": "left",
+      "grades": [
+        "g11"
+      ],
+      "description": "Invagination at the base of the villus containing rapidly dividing stem cells that regenerate the epithelial lining every 3-5 days."
+    }
+  }
+}

@@ -300,6 +300,131 @@ def _generate_gr11_cellular_respiration(r: random.Random, seed: Optional[int], i
     }
 
 
+
+
+def _generate_gr10_leaf_anatomy(r: random.Random, seed: Optional[int], idx: int, mode: str) -> Dict[str, Any]:
+    """Grade 10 Life Sciences: Transverse anatomy of a dicotyledonous leaf, tissue specialization, and stomatal regulation."""
+    plant_name = r.choice(["Dicotyledonous mesophyte leaf", "Geranium leaf", "Hibiscus leaf", "Bean leaf"])
+    qid = _make_id("ls10_leaf_anatomy", seed, idx)
+
+    labels = [
+        {"id": "A", "name": "Waxy cuticle (prevents excessive desiccation / water loss)", "x": 18, "y": 12},
+        {"id": "B", "name": "Upper epidermis (protective layer of tightly packed cells without chloroplasts)", "x": 80, "y": 20},
+        {"id": "C", "name": "Palisade mesophyll (columnar cells densely packed with chloroplasts for photosynthesis)", "x": 15, "y": 38},
+        {"id": "D", "name": "Spongy mesophyll (loosely arranged spherical cells with intercellular air spaces)", "x": 15, "y": 68},
+        {"id": "E", "name": "Vascular bundle / Vein (xylem vessels on adaxial side, phloem on abaxial side)", "x": 50, "y": 62},
+        {"id": "F", "name": "Intercellular air space (allows free diffusion of CO2 and O2)", "x": 78, "y": 70},
+        {"id": "G", "name": "Stoma and paired guard cells (bean-shaped cells controlling gas exchange & transpiration)", "x": 30, "y": 92},
+    ]
+
+    diagram_spec = {
+        "diagram_role": "identify" if locals().get("target_pin") else "context",
+        "image_type": "plant_leaf_cross_section",
+        "leaf_type": plant_name,
+        "stoma_state": "Open (Daylight Transpiration)",
+        "labels": labels,
+    }
+
+    if mode == "elementary_leaf_anatomy":
+        prompt = (
+            f"The diagram below represents a microscopic transverse cross-section through a **{plant_name}**.\n\n"
+            "1. Identify tissue layer **C** and structure **G**.\n"
+            "2. State the primary physiological process that occurs in layer **C**."
+        )
+        ans_str = "1. C = Palisade mesophyll, G = Stoma / Guard cells; 2. Photosynthesis"
+        memo = (
+            "1. C: Palisade mesophyll (or palisade parenchyma) [1]\n"
+            "   G: Stoma / Guard cell [1]\n"
+            "2. Layer C is the primary site of photosynthesis (radiant energy conversion into chemical energy/glucose). [1]"
+        )
+        hints = {
+            "tier_1": "Look at the shape and position of cells in C: they are upright columnar cells right below the upper epidermis.",
+            "tier_2": "C is palisade mesophyll packed with chloroplasts. G is the pore on the lower epidermis with guard cells.",
+            "tier_3": "1. C = Palisade mesophyll; G = Stoma / Guard cell. 2. Photosynthesis.",
+        }
+        marks = 3
+        sub_parts = [
+            {"part": "1", "label": "1. Identify parts C and G", "prompt": "Identify tissue layer C and structure G.", "expected_answer": "Palisade mesophyll; Stoma / Guard cells", "marks": 2},
+            {"part": "2", "label": "2. Physiological process in C", "prompt": "State the primary physiological process that occurs in layer C.", "expected_answer": "Photosynthesis", "marks": 1},
+        ]
+        mp = [
+            {"id": "mp_1", "desc": "Identify C as palisade mesophyll and G as stoma/guard cells", "marks": 2, "editable": True},
+            {"id": "mp_2", "desc": "Identify primary process as photosynthesis", "marks": 1, "editable": True},
+        ]
+    else:
+        # Full compound Gr10 question
+        prompt = (
+            f"The diagram below represents a microscopic transverse cross-section through a **{plant_name}**.\n\n"
+            "1. Identify tissue layer **C** and structure **G**.\n"
+            "2. Explain TWO structural adaptations of the cells in layer **C** that maximize its efficiency in photosynthesis.\n"
+            "3. Layer **E** represents a vascular bundle. Name the TWO conducting tissues found in **E** and state the function of each.\n"
+            "4. Explain how layer **A** (cuticle) protects the plant from desiccation without blocking sunlight."
+        )
+        ans_str = (
+            "1. C = Palisade mesophyll, G = Stoma/Guard cells; "
+            "2. Elongated columnar cells perpendicular to light + high concentration of chloroplasts; "
+            "3. Xylem (water/minerals) and Phloem (sucrose/translocation); "
+            "4. Transparent waxy layer prevents water evaporation while transmitting radiant light."
+        )
+        memo = (
+            "1. C: Palisade mesophyll [1]; G: Stoma with guard cells [1]\n"
+            "2. Two structural adaptations of palisade mesophyll [2]:\n"
+            "   - Elongated, columnar cells arranged perpendicular to the upper surface to maximize light absorption.\n"
+            "   - Densely packed with high concentration of chloroplasts containing chlorophyll.\n"
+            "3. Conducting tissues in vascular bundle E [4]:\n"
+            "   - Xylem: Transports water and dissolved mineral ions upward from the roots to the leaves. [2]\n"
+            "   - Phloem: Transports synthesized organic nutrients (sucrose) from the leaves to other plant parts via translocation. [2]\n"
+            "4. Layer A (waxy cuticle) is composed of hydrophobic cutin which is impermeable to water (minimizing transpiration) "
+            "yet transparent to visible light, allowing radiant energy to penetrate to the photosynthesizing cells below. [2]"
+        )
+        hints = {
+            "tier_1": "Recall: Xylem carries water up; Phloem translocates food. Palisade cells are positioned right where sunlight strikes.",
+            "tier_2": "C is palisade mesophyll (columnar, many chloroplasts). E contains Xylem and Phloem. Cuticle is waterproof yet transparent.",
+            "tier_3": "1. Palisade mesophyll & Stoma. 2. Columnar arrangement + dense chloroplasts. 3. Xylem (water) & Phloem (sucrose). 4. Waterproof cutin is transparent.",
+        }
+        marks = 10
+        sub_parts = [
+            {"part": "1", "label": "1. Identify C and G", "prompt": "Identify tissue layer C and structure G.", "expected_answer": "Palisade mesophyll; Stoma", "marks": 2},
+            {"part": "2", "label": "2. Structural adaptations of C", "prompt": "Explain TWO structural adaptations of layer C for photosynthesis.", "expected_answer": "Columnar cells perpendicular to light, high density of chloroplasts", "marks": 2},
+            {"part": "3", "label": "3. Tissues in vascular bundle E", "prompt": "Name the two conducting tissues in E and their transport functions.", "expected_answer": "Xylem (water/minerals) and Phloem (sucrose/organic food)", "marks": 4},
+            {"part": "4", "label": "4. Cuticle adaptation", "prompt": "Explain how layer A protects from desiccation without blocking sunlight.", "expected_answer": "Transparent hydrophobic wax layer blocks water evaporation while allowing light through", "marks": 2},
+        ]
+        mp = [
+            {"id": "mp_1", "desc": "Identify C as palisade mesophyll and G as stoma/guard cells", "marks": 2, "editable": True},
+            {"id": "mp_2", "desc": "Explain two adaptations of palisade mesophyll", "marks": 2, "editable": True},
+            {"id": "mp_3", "desc": "Name xylem (water) and phloem (sucrose translocation)", "marks": 4, "editable": True},
+            {"id": "mp_4", "desc": "Cuticle transparency and waterproofing explanation", "marks": 2, "editable": True},
+        ]
+
+    return {
+        "id": qid,
+        "question_id": qid,
+        "term": 2,
+        "caps_weight_percent": 15,
+        "suggested_duration_mins": 6,
+        "mode": mode,
+        "modality": "bio_diagram",
+        "diagram_spec": diagram_spec,
+        "question_type": "compound",
+        "question": prompt,
+        "prompt": prompt,
+        "correct_answer": ans_str,
+        "sample_answer": ans_str,
+        "worked_solution": memo,
+        "explanation": memo,
+        "marks": marks,
+        "sub_parts": sub_parts,
+        "hints": hints,
+        "misconception_tags": ["xylem_phloem_inversion", "cuticle_impermeability_confusion", "palisade_vs_spongy_confusion"],
+        "marking_schema": {
+            "total_marks": marks,
+            "marking_points": mp,
+            "deductions": [{"rule": "confused_xylem_phloem_direction", "penalty": -1}],
+            "carry_forward_rule": "consequential_accuracy",
+        },
+    }
+
+
 def generate(
     subskill: str = "mixed",
     difficulty: str = "medium",
@@ -319,7 +444,9 @@ def generate(
         sub_seed = (int(seed or 0) * 1000 + i) if seed is not None else random.randint(1, 1_000_000_000)
         sub_r = random.Random(sub_seed)
 
-        if grade_num == "8" or subskill == "photosynthesis_gr8" or mode == "elementary_starch_test":
+        if grade_num == "10" or subskill == "leaf_anatomy" or mode in ("elementary_leaf_anatomy", "leaf_anatomy"):
+            q = _generate_gr10_leaf_anatomy(sub_r, sub_seed, i, mode)
+        elif grade_num == "8" or subskill == "photosynthesis_gr8" or mode == "elementary_starch_test":
             q = _generate_gr8_photosynthesis(sub_r, sub_seed, i, mode)
         elif subskill == "cellular_respiration" or mode == "elementary_atp_yield":
             q = _generate_gr11_cellular_respiration(sub_r, sub_seed, i, mode)

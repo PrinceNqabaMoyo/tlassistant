@@ -48,34 +48,34 @@ def _build_zero_negative_exponents(r, difficulty: str) -> Dict[str, Any]:
     case = r.choice(["zero", "negative_simple", "negative_fraction", "zero_with_coeff"])
     if case == "zero":
         base = r.choice([2, 3, 5, 7, 10, 11, 13])
-        expr = sp.Pow(base, 0)
+        expr_str = f"{base}^{{0}}"
         ans = sp.Integer(1)
-        steps = [step(from_expr=expr, to_expr=ans, op="apply zero exponent", rule="a^0 = 1",
+        steps = [step(from_expr=expr_str, to_expr=ans, op="apply zero exponent", rule="a^0 = 1",
                       common_errors=["zero_exponent"])]
     elif case == "negative_simple":
         base = r.choice([2, 3, 5, 10])
         exp = r.randint(1, 4)
-        expr = sp.Pow(base, -exp)
-        ans = sp.Pow(base, exp)
-        steps = [step(from_expr=expr, to_expr=ans, op="rewrite negative exponent",
+        expr_str = f"{base}^{{-{exp}}}"
+        ans = sp.Rational(1, base**exp)
+        steps = [step(from_expr=expr_str, to_expr=ans, op="rewrite negative exponent",
                       rule="a^{-n} = 1/a^n", common_errors=["negative_exponent_sign"])]
     elif case == "negative_fraction":
         base = r.choice([2, 3, 5])
         exp = r.choice([2, 3])
-        expr = sp.Pow(sp.Rational(1, base), -exp)
+        expr_str = f"\\left(\\dfrac{{1}}{{{base}}}\\right)^{{-{exp}}}"
         ans = sp.Pow(base, exp)
-        steps = [step(from_expr=expr, to_expr=ans, op="rewrite negative exponent",
+        steps = [step(from_expr=expr_str, to_expr=ans, op="rewrite negative exponent",
                       rule="(1/a)^{-n} = a^n", common_errors=["negative_exponent_sign"])]
     else:
         coeff = r.randint(2, 9)
         base = r.choice([2, 3, 5])
         var = sp.Symbol(r.choice(["a", "b", "x", "p"]))
-        expr = coeff * var * sp.Pow(base, 0)
+        expr_str = f"{coeff}{var} \\cdot {base}^{{0}}"
         ans = coeff * var
-        steps = [step(from_expr=expr, to_expr=ans, op="apply zero exponent", rule="a^0 = 1",
+        steps = [step(from_expr=expr_str, to_expr=ans, op="apply zero exponent", rule="a^0 = 1",
                       common_errors=["zero_exponent"])]
     sol = solution(goal="simplify", chain_type="expression", var="x", steps=steps, final_expr=ans)
-    q = make_short(prefix=TOPIC, prompt_latex=f"\\text{{Simplify: }} {to_latex(expr)}",
+    q = make_short(prefix=TOPIC, prompt_latex=f"Simplify: ${expr_str}$",
                    answer_expr=ans, answer_mode="expression_positive_exponents", marks=1,
                    canonical_solution=sol,
                    explanation="Any non-zero number raised to the power 0 equals 1. A negative exponent means take the reciprocal.",
@@ -97,9 +97,9 @@ def _build_laws_monomial(r, difficulty: str) -> Dict[str, Any]:
         b = nonzero(r, 2, 9)
         m = nonzero(r, 1, 5)
         n = nonzero(r, 1, 5)
-        expr = (a * sp.Pow(var, m)) * (b * sp.Pow(var, n))
-        ans = sp.simplify(expr)
-        steps = [step(from_expr=expr, to_expr=ans, op="multiply coefficients, add exponents",
+        expr_str = f"({a}{var}^{{{m}}})({b}{var}^{{{n}}})"
+        ans = (a * b) * sp.Pow(var, m + n)
+        steps = [step(from_expr=expr_str, to_expr=ans, op="multiply coefficients, add exponents",
                       rule="a^m · a^n = a^{m+n}", common_errors=["multiply_instead_of_add_exponents"])]
     elif law == "quotient":
         a = r.randint(2, 12)
@@ -107,17 +107,17 @@ def _build_laws_monomial(r, difficulty: str) -> Dict[str, Any]:
         b = r.choice(divisors) if divisors else 2
         m = nonzero(r, 2, 6)
         n = nonzero(r, 1, m - 1)
-        expr = (a * sp.Pow(var, m)) / (b * sp.Pow(var, n))
-        ans = sp.simplify(expr)
-        steps = [step(from_expr=expr, to_expr=ans, op="divide coefficients, subtract exponents",
+        expr_str = f"\\dfrac{{{a}{var}^{{{m}}}}}{{{b}{var}^{{{n}}}}}"
+        ans = sp.simplify((a * sp.Pow(var, m)) / (b * sp.Pow(var, n)))
+        steps = [step(from_expr=expr_str, to_expr=ans, op="divide coefficients, subtract exponents",
                       rule="a^m / a^n = a^{m-n}", common_errors=["subtract_wrong_direction"])]
     elif law == "power":
         a = nonzero(r, 2, 5)
         m = nonzero(r, 1, 4)
         n = nonzero(r, 2, 4)
-        expr = sp.Pow(a * sp.Pow(var, m), n)
-        ans = sp.simplify(expr)
-        steps = [step(from_expr=expr, to_expr=ans, op="power of a product",
+        expr_str = f"({a}{var}^{{{m}}})^{{{n}}}"
+        ans = sp.Pow(a, n) * sp.Pow(var, m * n)
+        steps = [step(from_expr=expr_str, to_expr=ans, op="power of a product",
                       rule="(ab)^n = a^n b^n", common_errors=["distribute_power_over_sum", "coefficient_raised_wrongly"])]
     else:
         v1 = sp.Symbol(r.choice(["x", "a", "p"]))
@@ -126,12 +126,12 @@ def _build_laws_monomial(r, difficulty: str) -> Dict[str, Any]:
         c2 = nonzero(r, 2, 8)
         e1 = nonzero(r, 1, 5)
         e3 = nonzero(r, 1, 4)
-        expr = (c1 * sp.Pow(v1, e1)) * (c2 * sp.Pow(v1, 1) * sp.Pow(v2, e3))
-        ans = sp.simplify(expr)
-        steps = [step(from_expr=expr, to_expr=ans, op="multiply coefficients, add exponents for each variable",
+        expr_str = f"({c1}{v1}^{{{e1}}})({c2}{v1}{v2}^{{{e3}}})"
+        ans = (c1 * c2) * sp.Pow(v1, e1 + 1) * sp.Pow(v2, e3)
+        steps = [step(from_expr=expr_str, to_expr=ans, op="multiply coefficients, add exponents for each variable",
                       rule="a^m · a^n = a^{m+n}", common_errors=["multiply_instead_of_add_exponents"])]
     sol = solution(goal="simplify using exponent laws", chain_type="expression", var=str(var), steps=steps, final_expr=ans)
-    q = make_short(prefix=TOPIC, prompt_latex=f"\\text{{Simplify: }} {to_latex(expr)}",
+    q = make_short(prefix=TOPIC, prompt_latex=f"Simplify: ${expr_str}$",
                    answer_expr=ans, answer_mode="expression_positive_exponents", marks=2, canonical_solution=sol,
                    explanation="Apply the product, quotient, and power laws of exponents.",
                    hint="When multiplying with the same base, add the exponents.")
@@ -152,17 +152,17 @@ def _build_laws_with_brackets(r, difficulty: str) -> Dict[str, Any]:
         outer = nonzero(r, 2, 3)
         symbol = sp.Symbol(r.choice(["n", "x", "t"]))
         inner_exp = base * symbol + nonzero(r, 1, 5)
-        expr = sp.Pow(sp.Pow(base, inner_exp), outer)
-        ans = sp.simplify(expr)
-        steps = [step(from_expr=expr, to_expr=ans, op="power of a power", rule="(a^m)^n = a^{mn}",
+        expr_str = f"({base}^{{{to_latex(inner_exp)}}})^{{{outer}}}"
+        ans = sp.Pow(base, sp.simplify(outer * inner_exp))
+        steps = [step(from_expr=expr_str, to_expr=ans, op="power of a power", rule="(a^m)^n = a^{mn}",
                       common_errors=["multiply_instead_of_add_exponents"])]
     elif law == "product_in_bracket":
         coeff = nonzero(r, 2, 6)
         var_pow = nonzero(r, 1, 4)
         outer = nonzero(r, 2, 4)
-        expr = sp.Pow(coeff * sp.Pow(var, var_pow), outer)
-        ans = sp.simplify(expr)
-        steps = [step(from_expr=expr, to_expr=ans, op="distribute power over product", rule="(ab)^n = a^n b^n",
+        expr_str = f"({coeff}{var}^{{{var_pow}}})^{{{outer}}}"
+        ans = sp.Pow(coeff, outer) * sp.Pow(var, var_pow * outer)
+        steps = [step(from_expr=expr_str, to_expr=ans, op="distribute power over product", rule="(ab)^n = a^n b^n",
                       common_errors=["coefficient_raised_wrongly", "distribute_power_over_sum"])]
     else:
         num_exp = nonzero(r, 3, 8)
@@ -170,12 +170,12 @@ def _build_laws_with_brackets(r, difficulty: str) -> Dict[str, Any]:
         outer = nonzero(r, 2, 4)
         v1 = sp.Symbol(r.choice(["x", "a"]))
         v2 = sp.Symbol(r.choice(["y", "b"]))
-        expr = sp.Pow(sp.Pow(v1, num_exp) / sp.Pow(v2, den_exp), outer)
-        ans = sp.simplify(expr)
-        steps = [step(from_expr=expr, to_expr=ans, op="power of a quotient", rule="(a/b)^n = a^n/b^n",
+        expr_str = f"\\left(\\dfrac{{{v1}^{{{num_exp}}}}}{{{v2}^{{{den_exp}}}}}\right)^{{{outer}}}"
+        ans = sp.Pow(v1, num_exp * outer) / sp.Pow(v2, den_exp * outer)
+        steps = [step(from_expr=expr_str, to_expr=ans, op="power of a quotient", rule="(a/b)^n = a^n/b^n",
                       common_errors=["distribute_power_over_sum"])]
     sol = solution(goal="simplify bracketed powers", chain_type="expression", var=str(var), steps=steps, final_expr=ans)
-    q = make_short(prefix=TOPIC, prompt_latex=f"\\text{{Simplify: }} {to_latex(expr)}",
+    q = make_short(prefix=TOPIC, prompt_latex=f"Simplify: ${expr_str}$",
                    answer_expr=ans, answer_mode="expression_positive_exponents", marks=2, canonical_solution=sol,
                    explanation="Apply the power of a product and power of a quotient laws.",
                    hint="Every factor inside the bracket is raised to the outer power.")
@@ -185,8 +185,6 @@ def _build_laws_with_brackets(r, difficulty: str) -> Dict[str, Any]:
                          diagnostic_tags=["exponent_laws", "brackets"])
 
 
-# --------------------------------------------------------------------------- #
-# prime_base_simplify
 # --------------------------------------------------------------------------- #
 def _build_prime_base_simplify(r, difficulty: str) -> Dict[str, Any]:
     pmap = _prime_base_map()

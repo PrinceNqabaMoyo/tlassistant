@@ -319,19 +319,71 @@ def generate(
     r = _rng(seed)
     questions: List[Dict[str, Any]] = []
 
+    def _build_overdue_interest_and_provision(r_sub):
+        co = (generate_sa_enterprise(r_sub, form="Public Company").get("business_name") or "Apex Retailers Ltd")
+        b60 = r_sub.choice([30000, 45000, 60000])
+        b90 = r_sub.choice([15000, 20000, 30000])
+        overdue = b60 + b90
+        int_m = int(overdue * 0.12 / 12)
+        prov = int(overdue * 0.10)
+        return {
+            "question_type": "table_fill",
+            "subskill": "overdue_interest_and_provision_from_aging",
+            "question_text": (
+                f"**{co}** charges **12% p.a. interest** for one month on all accounts in the **60-day (R{b60:,})** and **90-day (R{b90:,})** buckets "
+                f"and sets its **Provision for Bad Debts at 10% of overdue accounts**. Complete the schedule."
+            ),
+            "headers": ["Overdue Debtors Calculation", "Amount (R)"],
+            "rows": [
+                ["Total overdue debtors (60 days + 90 days)", "{r0_c1}"],
+                ["Interest charged for 1 month at 12% p.a.", "{r1_c1}"],
+                ["Required Provision for Bad Debts (10% of overdue debt)", "{r2_c1}"],
+            ],
+            "correct_map": {"r0_c1": overdue, "r1_c1": int_m, "r2_c1": prov},
+            "marks": 5,
+            "worked_solution": f"Total overdue = `R{overdue:,}`; Monthly interest = `R{int_m:,}`; Provision (10%) = `R{prov:,}`.",
+        }
+
+    def _build_aging_allocation_adjustments(r_sub):
+        co = (generate_sa_enterprise(r_sub, form="Public Company").get("business_name") or "Apex Retailers Ltd")
+        curr = r_sub.randint(10, 18) * 1000
+        d30 = r_sub.randint(8, 14) * 1000
+        d60 = r_sub.randint(5, 9) * 1000
+        ret_curr = r_sub.randint(2, 4) * 1000
+        new_curr = curr - ret_curr
+        new_tot = new_curr + d30
+        return {
+            "question_type": "table_fill",
+            "subskill": "aging_bucket_payment_and_return_allocation",
+            "question_text": (
+                f"Update the age analysis of debtor **K. Mokoena** at **{co}** after recording an EFT receipt of **R{d60:,}** "
+                f"(settling the 60-day balance) and a return of **R{ret_curr:,}** from the current month's invoice."
+            ),
+            "headers": ["Debtor: K. Mokoena", "Total (R)", "Current (R)", "30 Days (R)", "60 Days (R)"],
+            "rows": [
+                ["Unadjusted balance", f"R{curr + d30 + d60:,}", f"R{curr:,}", f"R{d30:,}", f"R{d60:,}"],
+                [f"EFT receipt settling oldest debt (R{d60:,}) & Current return (R{ret_curr:,})", f"(R{d60 + ret_curr:,})", f"(R{ret_curr:,})", "0", f"(R{d60:,})"],
+                ["Adjusted Age Analysis Balance", "{r2_c1}", "{r2_c2}", f"R{d30:,}", "{r2_c4}"],
+            ],
+            "correct_map": {"r2_c1": new_tot, "r2_c2": new_curr, "r2_c4": 0},
+            "marks": 5,
+            "worked_solution": f"Adjusted Current = `R{new_curr:,}`; Adjusted 60 Days = `R0`; Adjusted Total = `R{new_tot:,}`.",
+        }
+
     builders = {
         "elementary_age_breakdown": _build_age_breakdown,
         "elementary_credit_limit_check": _build_credit_limit_check,
         "elementary_internal_control_advice": _build_internal_control_advice,
+        "overdue_interest_and_provision_from_aging": _build_overdue_interest_and_provision,
+        "aging_bucket_payment_and_return_allocation": _build_aging_allocation_adjustments,
     }
+    keys = list(builders.keys())
 
     for _ in range(count):
         sub_r = _rng(r.randint(1, 1_000_000_000))
-        if mode == "compound":
-            questions.extend(_build_compound(sub_r))
-        elif mode in builders:
-            questions.append(builders[mode](sub_r))
-        else:
-            questions.extend(_build_compound(sub_r))
+        chosen = subskill if (subskill in builders) else r.choice(keys)
+        q = builders[chosen](sub_r)
+        q["subskill"] = chosen
+        questions.append(q)
 
     return questions

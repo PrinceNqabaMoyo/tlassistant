@@ -725,7 +725,7 @@ def _gen_classify_sequence(rng: random.Random, difficulty: str, qtype: str) -> D
         terms = [start * (r ** i) for i in range(shown_n)]
         correct = 'neither'
 
-    prompt = f"Sequence: {'; '.join(str(t) for t in terms)}. Classify it as linear, quadratic, or neither."
+    prompt = f"Analyze the sequence: {'; '.join(str(t) for t in terms)}. Determine whether the progression is linear, quadratic, or non-polynomial."
     explanation = 'Linear: constant first difference. Quadratic: constant second difference. Otherwise: neither.'
 
     if qtype == 'mcq':

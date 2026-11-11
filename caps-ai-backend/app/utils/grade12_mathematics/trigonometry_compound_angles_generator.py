@@ -6,7 +6,7 @@ Covers:
   - Proving trigonometric identities with LHS = RHS structure.
   - General solution of trigonometric equations with double angles.
 
-Follows South African CAPS curriculum specifications and the 6-Pillar Generator Contract.
+Follows South African national curriculum specifications and the 6-Pillar Generator Contract.
 Strictly zero-LLM, deterministic execution.
 """
 from __future__ import annotations

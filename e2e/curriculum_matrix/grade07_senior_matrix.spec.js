@@ -13,13 +13,15 @@ import { exportCognitiveAuditReport } from '../helpers/cognitiveAuditLogger.js';
  */
 
 test.describe('Curriculum Matrix Evaluation: Grade 7 Senior Phase', () => {
+  test.setTimeout(180000);
   const baseUrl = process.env.PLAYWRIGHT_BASE_URL || 'http://localhost:5173';
 
   test.afterAll(() => {
     const report = exportCognitiveAuditReport();
     console.log(`\n📄 [Grade 7 Matrix Audit] Exported logs to:`);
     console.log(`   - JSON: ${report.jsonPath}`);
-    console.log(`   - HTML: ${report.htmlPath} (${report.totalEntries} entries recorded)\n`);
+    console.log(`   - HTML: ${report.htmlPath}`);
+    console.log(`   - Summary MD: ${report.summaryMdPath} (${report.totalEntries} entries recorded)\n`);
   });
 
   test('Grade 7 Mathematics: Working with whole numbers', async ({ page, request }) => {

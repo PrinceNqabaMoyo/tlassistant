@@ -65,6 +65,7 @@ def right_triangle(
         "sides": sides,
         "vertex_labels": dict(vertex_labels or {}),
         "caption": caption,
+        "diagram_role": "context",
     }
     return spec
 
@@ -89,6 +90,7 @@ def cartesian_point(
         "show_dropline": bool(show_dropline),
         "show_radius": bool(show_radius),
         "caption": caption,
+        "diagram_role": "context",
     }
 
 

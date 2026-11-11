@@ -816,25 +816,29 @@ def generate_questions(
         )
     )
 
-    # Doc-faithful table/ledger/typed archetypes
-    journal_pool.append(_make_asset_register_question(r=r, difficulty=difficulty, mode=mode_norm))
-    journal_pool.append(_make_asset_disposal_account_question(r=r, difficulty=difficulty, mode=mode_norm))
-    journal_pool.append(_make_fixed_assets_note_question(r=r, difficulty=difficulty, mode=mode_norm))
-    typed_pool.append(_make_fixed_assets_ethics_internal_control_typed(r=r, mode=mode_norm))
+    # Stamp subskills on all pools
+    for q in concept_pool:
+        q["subskill"] = "fixed_asset_concepts"
+    for q in straight_pool:
+        q["subskill"] = "depreciation_straight_line"
+    for q in diminishing_pool:
+        q["subskill"] = "depreciation_diminishing_balance"
+    for q in carrying_value_pool:
+        q["subskill"] = "carrying_value_calculation"
+    for q in disposal_pool:
+        q["subskill"] = "asset_disposal_profit_loss"
 
-    # Bundle: register + disposal + note + ethics
-    bundle_pool.append(
-        _make_bundle(
-            prompt="Fixed/Tangible Assets\n\nComplete all parts.",
-            parts=[
-                _make_asset_register_question(r=r, difficulty=difficulty, mode=mode_norm),
-                _make_asset_disposal_account_question(r=r, difficulty=difficulty, mode=mode_norm),
-                _make_fixed_assets_note_question(r=r, difficulty=difficulty, mode=mode_norm),
-                _make_fixed_assets_ethics_internal_control_typed(r=r, mode=mode_norm),
-            ],
-            archetype_key="g11_fixed_assets_full_bundle",
-        )
-    )
+    q_reg = _make_asset_register_question(r=r, difficulty=difficulty, mode=mode_norm)
+    q_reg["subskill"] = "asset_register_schedule"
+    q_disp_acc = _make_asset_disposal_account_question(r=r, difficulty=difficulty, mode=mode_norm)
+    q_disp_acc["subskill"] = "asset_disposal_taccount"
+    q_note = _make_fixed_assets_note_question(r=r, difficulty=difficulty, mode=mode_norm)
+    q_note["subskill"] = "fixed_tangible_assets_note"
+
+    journal_pool.extend([q_reg, q_note])
+    typed_pool.append(_make_fixed_assets_ethics_internal_control_typed(r=r, mode=mode_norm))
+    for q in typed_pool:
+        q["subskill"] = "fixed_assets_internal_control"
 
     pools = {
         "concepts": concept_pool,
@@ -843,13 +847,13 @@ def generate_questions(
         "depreciation_diminishing": diminishing_pool,
         "diminishing": diminishing_pool,
         "carrying_value": carrying_value_pool,
-        "disposal": disposal_pool,
-        "asset_register": journal_pool,
-        "note": journal_pool,
-        "ledger": journal_pool,
-        "bundle": bundle_pool,
+        "disposal": disposal_pool + [q_disp_acc],
+        "asset_register": [q_reg],
+        "note": [q_note],
+        "ledger": [q_reg, q_note],
+        "bundle": [q_note],
         "typed": typed_pool,
-        "mixed": concept_pool + straight_pool + diminishing_pool + carrying_value_pool + disposal_pool + journal_pool + bundle_pool + typed_pool,
+        "mixed": concept_pool + straight_pool + diminishing_pool + carrying_value_pool + [q_reg, q_note],
     }
 
     pool = pools.get(subskill_norm, pools["mixed"])

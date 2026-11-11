@@ -260,3 +260,118 @@ class ResilientFallbackProvider(BaseLLMProvider):
 def get_llm_provider() -> BaseLLMProvider:
     """Returns resilient multi-key, multi-model provider with cascading failover."""
     return ResilientFallbackProvider()
+
+
+AFFORDABLE_GRADING_MODELS = [
+    "models/gemini-flash-lite-latest",
+    "models/gemini-3.5-flash-lite",
+    "models/gemini-3.1-flash-lite",
+    "models/gemini-flash-latest",
+    "models/gemma-4-31b-it",
+]
+
+
+def evaluate_semantic_rubric_llm(
+    question_prompt: str,
+    marking_points: List[Dict[str, Any]],
+    model_answer: str,
+    student_answer: str,
+    max_score: int,
+) -> Optional[Dict[str, Any]]:
+    """
+    Ultra-affordable, strictly guardrailed JSON semantic rubric evaluator for high-school
+    explanatory answers. Uses Gemini Flash-Lite / Gemma-2-2b-it at temperature=0.0 and
+    < 220 output tokens. Never engages in chat; strictly returns awarded rubric point IDs.
+    """
+    import json
+    import re
+
+    clean_student = re.sub(
+        r"(?i)(ignore\s+previous|system\s+prompt|award\s+full\s+marks|give\s+me\s+\d+)",
+        "",
+        str(student_answer or ""),
+    ).strip()[:1200]
+    if not clean_student or len(clean_student) < 3:
+        return None
+
+    rubric_lines = []
+    valid_ids = {}
+    for idx, mp in enumerate(marking_points or []):
+        if isinstance(mp, dict):
+            pid = str(mp.get("id") or f"mp_{idx + 1}")
+            pdesc = str(mp.get("desc") or mp.get("point") or mp.get("criterion") or "")
+            pmarks = int(mp.get("marks") or mp.get("max_marks") or 1)
+        else:
+            pid = f"mp_{idx + 1}"
+            pdesc = str(mp)
+            pmarks = 1
+        valid_ids[pid] = {"id": pid, "marks": pmarks, "desc": pdesc}
+        rubric_lines.append(f"- {pid} ({pmarks} mark(s)): {pdesc}")
+
+    rubric_str = "\n".join(rubric_lines) if rubric_lines else f"- mp_1 ({max_score} mark(s)): {model_answer}"
+
+    sys_prompt = (
+        "You are an objective South African High School National Curriculum examiner.\n"
+        "Grade the LEARNER ANSWER strictly against the OFFICIAL RUBRIC POINTS and MODEL MEMORANDUM.\n"
+        "Award a rubric point if the learner expresses the equivalent scientific, economic, or mathematical meaning in their own words (valid paraphrase or synonym), even if exact wording differs.\n"
+        "Do NOT award marks for factually wrong, contradictory, or irrelevant statements.\n"
+        "Respond ONLY with valid JSON matching this schema:\n"
+        '{"awarded_point_ids": ["mp_1"], "score": 2, "feedback": "Concise 1-sentence examiner feedback."}'
+    )
+
+    user_prompt = (
+        f"QUESTION:\n{str(question_prompt or '')[:600]}\n\n"
+        f"MODEL MEMORANDUM:\n{str(model_answer or '')[:500]}\n\n"
+        f"OFFICIAL RUBRIC POINTS (Max {max_score} marks):\n{rubric_str}\n\n"
+        f"LEARNER ANSWER:\n{clean_student}"
+    )
+
+    provider = GoogleGeminiProvider()
+    provider.models_pool = list(AFFORDABLE_GRADING_MODELS)
+    raw = ""
+    if provider.keys:
+        raw = provider.invoke(
+            messages=[
+                {"role": "system", "content": sys_prompt},
+                {"role": "user", "content": user_prompt},
+            ],
+            temperature=0.0,
+            max_tokens=220,
+        )
+    if not raw and os.getenv("HF_API_KEY") and InferenceClient is not None:
+        try:
+            hf = HuggingFaceProvider(model="google/gemma-2-2b-it")
+            raw = hf.invoke(
+                messages=[
+                    {"role": "system", "content": sys_prompt},
+                    {"role": "user", "content": user_prompt},
+                ],
+                temperature=0.0,
+                max_tokens=220,
+            )
+        except Exception:
+            raw = ""
+
+    if not raw:
+        return None
+
+    try:
+        m = re.search(r"\{.*\}", raw, re.DOTALL)
+        if not m:
+            return None
+        parsed = json.loads(m.group(0))
+        awarded_ids = [str(x) for x in (parsed.get("awarded_point_ids") or []) if str(x) in valid_ids]
+        awarded_pts = [valid_ids[aid] for aid in awarded_ids]
+        if valid_ids and awarded_pts:
+            computed_score = sum(p["marks"] for p in awarded_pts)
+        else:
+            computed_score = int(parsed.get("score", 0))
+        computed_score = max(0, min(max_score, computed_score))
+        return {
+            "score": computed_score,
+            "awarded_points": awarded_pts,
+            "feedback": str(parsed.get("feedback") or f"Awarded {computed_score} / {max_score} marks based on semantic rubric evaluation."),
+            "graded_by": "affordable_llm_rubric",
+        }
+    except Exception:
+        return None

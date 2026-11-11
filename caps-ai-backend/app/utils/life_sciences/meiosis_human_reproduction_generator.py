@@ -92,7 +92,23 @@ def _generate_meiosis_question(r: random.Random, seed: Optional[int], idx: int, 
     elif mode == "elementary_chromosome_counts":
         archetype = "chromosome_arithmetic"
 
+    modality = "semantic"
+    diagram_spec = None
+
     if archetype == "phases_crossing_over":
+        modality = "bio_diagram"
+        diagram_spec = {
+        "diagram_role": "identify" if locals().get("target_pin") else "context",
+            "image_type": "meiosis_crossing_over",
+            "labels": [
+                {"id": "A", "name": "Homologous chromosome pair / Bivalent", "x": 18, "y": 15},
+                {"id": "B", "name": "Sister chromatids", "x": 14, "y": 45},
+                {"id": "C", "name": "Non-sister chromatids", "x": 48, "y": 40},
+                {"id": "D", "name": "Chiasma / Chiasmata", "x": 50, "y": 55},
+                {"id": "E", "name": "Recombinant chromatids", "x": 82, "y": 58},
+                {"id": "F", "name": "Centromere", "x": 32, "y": 48},
+            ]
+        }
         prompt = (
             f"{hook} the cytological process of meiotic division is analyzed in {org['name']} somatic and germinal cells.\n\n"
             f"1. State the specific phase of Meiosis during which crossing over occurs.\n"
@@ -196,6 +212,8 @@ def _generate_meiosis_question(r: random.Random, seed: Optional[int], idx: int, 
         "caps_weight_percent": 14,
         "suggested_duration_mins": 10,
         "mode": mode,
+        "modality": modality,
+        "diagram_spec": diagram_spec,
         "topic": TOPIC,
         "question_type": "short_answer",
         "question": prompt,
@@ -219,18 +237,120 @@ def _generate_meiosis_question(r: random.Random, seed: Optional[int], idx: int, 
     }
 
 
-def _generate_human_reproduction_question(r: random.Random, seed: Optional[int], idx: int, mode: str) -> Dict[str, Any]:
-    """Generates CAPS Term 2 Human Reproduction question (6-pillar contract)."""
+def _generate_human_reproduction_question(r: random.Random, seed: Optional[int], idx: int, mode: str, grade: str = "12") -> Dict[str, Any]:
+    """Generates CAPS Human Reproduction question (6-pillar contract)."""
     hook = r.choice(PROMPT_LEAD_HOOKS_REPRO)
-    qid = _make_id("ls12_human_repro", seed, idx)
+    modality = "semantic"
+    diagram_spec = None
+    qid = _make_id("ns9_human_repro" if str(grade) == "9" else "ls12_human_repro", seed, idx)
 
-    archetype = r.choice(["hormonal_menstrual_cycle", "gametogenesis_comparison", "fertilisation_implantation"])
-    if mode == "elementary_menstrual_hormones":
+    archetype = r.choice(["hormonal_menstrual_cycle", "gametogenesis_comparison", "fertilisation_implantation", "anatomical_pin_labelling"])
+    if str(grade) == "9" or mode in ("elementary_anatomy", "diagram", "anatomical_pin_labelling"):
+        archetype = "anatomical_pin_labelling"
+    elif mode == "elementary_menstrual_hormones":
         archetype = "hormonal_menstrual_cycle"
     elif mode == "elementary_gametogenesis":
         archetype = "gametogenesis_comparison"
 
-    if archetype == "hormonal_menstrual_cycle":
+    if archetype == "anatomical_pin_labelling":
+        is_male = (r.randint(0, 100) % 2 == 0)
+        if is_male:
+            image_type = "male_reproductive_system"
+            labels = [
+                {"id": "A", "name": "Penis (Erectile tissue)", "x": 26, "y": 68},
+                {"id": "B", "name": "Testis", "x": 49, "y": 86},
+                {"id": "C", "name": "Scrotum", "x": 50, "y": 95},
+                {"id": "D", "name": "Urethra", "x": 38, "y": 68},
+                {"id": "E", "name": "Vas deferens (Sperm duct)", "x": 62, "y": 42},
+                {"id": "F", "name": "Prostate gland", "x": 53, "y": 50},
+                {"id": "G", "name": "Urinary bladder", "x": 52, "y": 28},
+            ]
+            prompt = (
+                f"{hook} the anatomical organization of the human male reproductive system is shown in sagittal section.\n\n"
+                "1. Identify the organ indicated by Pin A.\n"
+                "2. Describe the physiological function of organ A during copulation.\n"
+                "3. Explain why the testes (Pin B) are situated outside the abdominal cavity in the scrotum (Pin C).\n"
+                "4. State the dual physiological role of the urethra (Pin D) in human males."
+            )
+            ans_str = "1. Penis; 2. Transfer of semen/sperm into the female vagina during copulation; 3. Temperature 2-3°C below core body temperature is required for viable spermatogenesis; 4. Conveys both urine and semen out of the body."
+            memo = (
+                "1. Penis (erectile tissue). [1]\n"
+                "2. Transmits semen and sperm into the female reproductive tract during copulation. [1]\n"
+                "3. Spermatogenesis requires a temperature approximately 2°C to 3°C lower than internal core body temperature (37°C) for viable sperm production. [2]\n"
+                "4. Serves as a common urogenital duct conveying both urine (excretion) and semen (reproduction) at separate times. [2]"
+            )
+            hints = {
+                "tier_1": "Pin A is the male external organ of copulation. Pin B is the testis.",
+                "tier_2": "The penis introduces sperm into the vagina. Testes need cooler temperatures (2-3°C lower) for sperm formation.",
+                "tier_3": "1. Penis. 2. Delivers semen during copulation. 3. Cooler temperature for spermatogenesis. 4. Excretes urine and conducts semen.",
+            }
+        else:
+            image_type = "female_reproductive_system"
+            labels = [
+                {"id": "A", "name": "Ovary", "x": 20, "y": 38},
+                {"id": "B", "name": "Fallopian tube (Oviduct)", "x": 30, "y": 20},
+                {"id": "C", "name": "Uterus (Myometrium)", "x": 50, "y": 38},
+                {"id": "D", "name": "Endometrium", "x": 50, "y": 54},
+                {"id": "E", "name": "Cervix", "x": 50, "y": 72},
+                {"id": "F", "name": "Vagina", "x": 50, "y": 88},
+            ]
+            prompt = (
+                f"{hook} the internal reproductive anatomy of the human female is represented in coronal cross-section.\n\n"
+                "1. Identify the organ indicated by Pin A.\n"
+                "2. State the letter of the structure where fertilisation normally occurs.\n"
+                "3. Identify structure D and describe its physiological role during the menstrual cycle.\n"
+                "4. Explain the function of the muscular wall of the uterus (Pin C) during childbirth."
+            )
+            ans_str = "1. Ovary; 2. Pin B (Fallopian tube / Oviduct); 3. Endometrium (thickens to nourish blastocyst; sloughs off during menstruation if no fertilisation occurs); 4. Strong rhythmic contractions push the fetus through the cervix and birth canal."
+            memo = (
+                "1. Ovary (produces ova and secretes oestrogen and progesterone). [1]\n"
+                "2. Pin B (Fallopian tube / oviduct). [1]\n"
+                "3. Structure D is the Endometrium [1]; it thickens and vascularizes to allow implantation of the blastocyst, and breaks down as menstrual flow if fertilisation does not occur [1].\n"
+                "4. The muscular myometrium contracts rhythmically under oxytocin stimulation to expel the fetus through the cervix and vagina during labour. [2]"
+            )
+            hints = {
+                "tier_1": "Pin A is the ovary where eggs are produced. Fertilisation takes place in the Fallopian tube (Pin B).",
+                "tier_2": "Pin D is the inner lining (endometrium). The muscular uterine wall (Pin C) contracts to push the fetus out.",
+                "tier_3": "1. Ovary. 2. Pin B (Fallopian tube). 3. Endometrium (thickens for implantation). 4. Uterine contractions during labour.",
+            }
+
+        return {
+            "id": qid,
+            "question_id": qid,
+            "term": 1 if str(grade) == "9" else 2,
+            "caps_weight_percent": 20,
+            "suggested_duration_mins": 10,
+            "mode": mode,
+            "topic": TOPIC,
+            "question_type": "short_answer",
+            "modality": "bio_diagram",
+            "diagram_spec": {
+            "diagram_role": "identify" if locals().get("target_pin") else "context",
+                "image_type": image_type,
+                "labels": labels,
+            },
+            "question": prompt,
+            "correct_answer": ans_str,
+            "sample_answer": ans_str,
+            "worked_solution": memo,
+            "explanation": memo,
+            "marks": 6,
+            "hints": hints,
+            "misconception_tags": ["confusing_urethra_with_ureter", "fertilisation_site_confusion"],
+            "marking_schema": {
+                "total_marks": 6,
+                "marking_points": [
+                    {"id": "mp_1", "desc": "Organ identification from visual pin", "marks": 1, "editable": True},
+                    {"id": "mp_2", "desc": "Physiological function of identified organ", "marks": 1, "editable": True},
+                    {"id": "mp_3", "desc": "Thermoregulatory / anatomical adaptation reasoning", "marks": 2, "editable": True},
+                    {"id": "mp_4", "desc": "Physiological process explanation", "marks": 2, "editable": True},
+                ],
+                "deductions": [],
+                "carry_forward_rule": "consequential_accuracy",
+            },
+        }
+
+    elif archetype == "hormonal_menstrual_cycle":
         target_hormone = r.choice(HORMONES_DB)
         day_ovulation = 14
         prompt = (
@@ -309,6 +429,8 @@ def _generate_human_reproduction_question(r: random.Random, seed: Optional[int],
         "caps_weight_percent": 18,
         "suggested_duration_mins": 10,
         "mode": mode,
+        "modality": modality,
+        "diagram_spec": diagram_spec,
         "topic": TOPIC,
         "question_type": "short_answer",
         "question": prompt,
@@ -351,15 +473,15 @@ def generate(
 
         if subskill in ("meiosis", "crossing_over", "karyotype", "non_disjunction") or mode in ("elementary_meiosis_phases", "elementary_chromosome_counts"):
             q = _generate_meiosis_question(sub_r, sub_seed, i, mode)
-        elif subskill in ("human_reproduction", "menstrual_cycle", "gametogenesis", "fertilisation") or mode in ("elementary_menstrual_hormones", "elementary_gametogenesis"):
-            q = _generate_human_reproduction_question(sub_r, sub_seed, i, mode)
+        elif subskill in ("human_reproduction", "menstrual_cycle", "gametogenesis", "fertilisation") or mode in ("elementary_menstrual_hormones", "elementary_gametogenesis") or str(grade) == "9":
+            q = _generate_human_reproduction_question(sub_r, sub_seed, i, mode, grade=grade)
         else:
             # 50/50 distribution between Term 1 Meiosis and Term 2 Human Reproduction
             chosen = sub_r.choice(["meiosis", "repro"])
             if chosen == "meiosis":
                 q = _generate_meiosis_question(sub_r, sub_seed, i, mode)
             else:
-                q = _generate_human_reproduction_question(sub_r, sub_seed, i, mode)
+                q = _generate_human_reproduction_question(sub_r, sub_seed, i, mode, grade=grade)
 
         questions.append(q)
 

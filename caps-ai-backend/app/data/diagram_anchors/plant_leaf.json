@@ -1,0 +1,277 @@
+{
+  "master": "plant_leaf",
+  "view": "dicotyledonous_leaf_transverse_section",
+  "viewBox": "0 0 600 480",
+  "anchors": {
+    "waxy_cuticle": {
+      "name": "Waxy Cuticle",
+      "synonyms": [
+        "cuticle",
+        "waxy layer",
+        "cuticle layer"
+      ],
+      "anchor": [
+        230,
+        125
+      ],
+      "default_box": [
+        60,
+        80
+      ],
+      "side": "left",
+      "grades": [
+        "g10",
+        "g11"
+      ],
+      "description": "Transparent, hydrophobic lipid-rich cutin layer secreted by epidermal cells; prevents excessive desiccation without obstructing radiant sunlight transmission."
+    },
+    "upper_epidermis": {
+      "name": "Upper Epidermis",
+      "synonyms": [
+        "upper epidermis",
+        "epidermis",
+        "adaxial epidermis"
+      ],
+      "anchor": [
+        220,
+        145
+      ],
+      "default_box": [
+        60,
+        150
+      ],
+      "side": "left",
+      "grades": [
+        "g10",
+        "g11"
+      ],
+      "description": "Single-cell-thick protective boundary of tightly packed, transparent barrel-shaped cells devoid of chloroplasts, allowing maximum sunlight penetration to the mesophyll."
+    },
+    "palisade_mesophyll": {
+      "name": "Palisade Mesophyll",
+      "synonyms": [
+        "palisade mesophyll",
+        "palisade parenchyma",
+        "palisade layer",
+        "palisade cells"
+      ],
+      "anchor": [
+        230,
+        205
+      ],
+      "default_box": [
+        60,
+        220
+      ],
+      "side": "left",
+      "grades": [
+        "g10",
+        "g11"
+      ],
+      "description": "Elongated columnar chlorenchyma cells packed vertically beneath the upper epidermis; contains the highest density of chloroplasts for radiant energy capture and carbohydrate synthesis."
+    },
+    "spongy_mesophyll": {
+      "name": "Spongy Mesophyll",
+      "synonyms": [
+        "spongy mesophyll",
+        "spongy parenchyma",
+        "spongy layer",
+        "spongy cells"
+      ],
+      "anchor": [
+        170,
+        280
+      ],
+      "default_box": [
+        60,
+        290
+      ],
+      "side": "left",
+      "grades": [
+        "g10",
+        "g11"
+      ],
+      "description": "Loosely arranged spherical parenchymal cells with fewer chloroplasts; surrounded by extensive interconnected air spaces facilitating internal gaseous exchange."
+    },
+    "intercellular_air_space": {
+      "name": "Intercellular Air Space",
+      "synonyms": [
+        "air space",
+        "intercellular air spaces",
+        "air cavity",
+        "intercellular channel"
+      ],
+      "anchor": [
+        195,
+        325
+      ],
+      "default_box": [
+        60,
+        360
+      ],
+      "side": "left",
+      "grades": [
+        "g10",
+        "g11"
+      ],
+      "description": "Interconnected microscopic gas channels linking sub-stomatal chambers to mesophyll cell surfaces, permitting rapid internal diffusion of carbon dioxide and oxygen."
+    },
+    "lower_epidermis": {
+      "name": "Lower Epidermis",
+      "synonyms": [
+        "lower epidermis",
+        "ventral epidermis",
+        "abaxial epidermis"
+      ],
+      "anchor": [
+        200,
+        370
+      ],
+      "default_box": [
+        60,
+        425
+      ],
+      "side": "left",
+      "grades": [
+        "g10",
+        "g11"
+      ],
+      "description": "Ventral protective cell monolayer punctuated by numerous stomata; covered by a thinner cuticle than the upper surface to facilitate gaseous exchange while shaded from direct sun."
+    },
+    "bundle_sheath": {
+      "name": "Bundle Sheath",
+      "synonyms": [
+        "bundle sheath",
+        "vein sheath",
+        "sheath cells"
+      ],
+      "anchor": [
+        312,
+        280
+      ],
+      "default_box": [
+        540,
+        90
+      ],
+      "side": "right",
+      "grades": [
+        "g10",
+        "g11"
+      ],
+      "description": "Protective ring of tightly packed parenchyma and sclerenchyma cells enclosing the vein, providing mechanical rigidity and regulating solute entry into conductive tissues."
+    },
+    "xylem_vessels": {
+      "name": "Xylem Vessels",
+      "synonyms": [
+        "xylem",
+        "xylem tissue",
+        "xylem vessels",
+        "xylem tracheary elements"
+      ],
+      "anchor": [
+        265,
+        275
+      ],
+      "default_box": [
+        540,
+        165
+      ],
+      "side": "right",
+      "grades": [
+        "g10",
+        "g11"
+      ],
+      "description": "Non-living, hollow conduits with lignified cell walls situated on the adaxial (upper) vein surface; transports water and dissolved mineral ions upwards from roots via transpiration pull."
+    },
+    "phloem_sieve_tubes": {
+      "name": "Phloem Sieve Tubes",
+      "synonyms": [
+        "phloem",
+        "phloem tissue",
+        "phloem sieve tubes",
+        "sieve tube elements"
+      ],
+      "anchor": [
+        265,
+        315
+      ],
+      "default_box": [
+        540,
+        235
+      ],
+      "side": "right",
+      "grades": [
+        "g10",
+        "g11"
+      ],
+      "description": "Living, enucleated conductive tubes associated with companion cells situated on the abaxial (lower) vein surface; translocates manufactured sucrose bidirectionally throughout the plant."
+    },
+    "sub_stomatal_cavity": {
+      "name": "Sub-Stomatal Air Cavity",
+      "synonyms": [
+        "sub-stomatal cavity",
+        "sub-stomatal air space",
+        "sub-stomatal chamber"
+      ],
+      "anchor": [
+        278,
+        362
+      ],
+      "default_box": [
+        540,
+        305
+      ],
+      "side": "right",
+      "grades": [
+        "g10",
+        "g11"
+      ],
+      "description": "Internal air chamber situated directly internal to the stomatal pore, serving as a reservoir for saturated water vapour prior to transpirational loss."
+    },
+    "guard_cells": {
+      "name": "Guard Cells",
+      "synonyms": [
+        "guard cell",
+        "guard cells",
+        "paired guard cells"
+      ],
+      "anchor": [
+        305,
+        396
+      ],
+      "default_box": [
+        540,
+        375
+      ],
+      "side": "right",
+      "grades": [
+        "g10",
+        "g11"
+      ],
+      "description": "Pairs of specialized photosynthetic epidermal cells with differentially thickened inner cell walls; swell to open the stomatal aperture when turgid and relax to close it when flaccid."
+    },
+    "stomatal_pore": {
+      "name": "Stomatal Pore",
+      "synonyms": [
+        "stoma",
+        "stomatal pore",
+        "stomata",
+        "stomatal aperture"
+      ],
+      "anchor": [
+        278,
+        386
+      ],
+      "default_box": [
+        540,
+        440
+      ],
+      "side": "right",
+      "grades": [
+        "g10",
+        "g11"
+      ],
+      "description": "Microscopic aperture between adjacent guard cells that regulates carbon dioxide influx for photosynthesis and water vapour efflux during transpiration."
+    }
+  }
+}

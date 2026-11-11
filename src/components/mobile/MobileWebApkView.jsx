@@ -82,6 +82,8 @@ export default function MobileWebApkView({
   onOpenTopicScope = null,
   onCheckAnswer = () => {},
   onNextQuestion = () => {},
+  onStartMicroDrill = null,
+  prerequisiteBanner = null,
   result = null,
   onOpenProfilePhoto = () => {},
   onOpenLinkGuardian = () => {},
@@ -822,6 +824,8 @@ export default function MobileWebApkView({
               onCheck={onCheckAnswer}
               onNext={onNextQuestion}
               onSelectTopic={onSelectTopic}
+              onStartMicroDrill={onStartMicroDrill}
+              prerequisiteBanner={prerequisiteBanner}
               result={result}
               isEmbedded={true}
               formativeMastery={currentSubData?.formativeMastery || 0}

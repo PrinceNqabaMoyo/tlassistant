@@ -1,0 +1,79 @@
+{
+  "master": "transverse_wave",
+  "view": "sinusoidal_wave_profile_and_displacement",
+  "viewBox": "0 0 600 480",
+  "anchors": {
+    "crest_point": {
+      "name": "Wave Crest",
+      "synonyms": ["crest", "wave peak", "positive peak"],
+      "anchor": [200, 150],
+      "default_box": [60, 110],
+      "side": "left",
+      "grades": ["g10"],
+      "description": "Point on the transverse wave where the displacement of medium particles is at maximum positive distance above equilibrium."
+    },
+    "trough_point": {
+      "name": "Wave Trough",
+      "synonyms": ["trough", "wave valley", "negative peak"],
+      "anchor": [320, 330],
+      "default_box": [60, 370],
+      "side": "left",
+      "grades": ["g10"],
+      "description": "Point on the transverse wave where the displacement of medium particles is at maximum negative distance below equilibrium."
+    },
+    "amplitude_displacement": {
+      "name": "Wave Amplitude (A)",
+      "synonyms": ["amplitude", "displacement height", "peak displacement"],
+      "anchor": [200, 195],
+      "default_box": [60, 190],
+      "side": "left",
+      "grades": ["g10"],
+      "description": "Maximum displacement of a medium particle from its central equilibrium rest position; measured in metres (m)."
+    },
+    "wavelength_interval": {
+      "name": "Wavelength (λ)",
+      "synonyms": ["wavelength", "lambda", "cycle length"],
+      "anchor": [320, 110],
+      "default_box": [540, 90],
+      "side": "right",
+      "grades": ["g10"],
+      "description": "Distance between two consecutive points that are in phase (such as two consecutive crests); measured in metres (m)."
+    },
+    "equilibrium_line": {
+      "name": "Equilibrium / Rest Line",
+      "synonyms": ["equilibrium line", "rest position", "undisturbed line"],
+      "anchor": [460, 240],
+      "default_box": [540, 240],
+      "side": "right",
+      "grades": ["g10"],
+      "description": "Central reference line representing the undisturbed position of the medium particles when no wave energy is propagating."
+    },
+    "wave_propagation_dir": {
+      "name": "Wave Propagation Vector",
+      "synonyms": ["wave propagation", "direction of travel", "wave velocity"],
+      "anchor": [520, 220],
+      "default_box": [540, 160],
+      "side": "right",
+      "grades": ["g10"],
+      "description": "Horizontal direction in which the continuous train of wave disturbances and energy travels through the medium."
+    },
+    "particle_motion_dir": {
+      "name": "Particle Oscillation Axis",
+      "synonyms": ["particle motion", "transverse vibration", "perpendicular motion"],
+      "anchor": [120, 240],
+      "default_box": [60, 280],
+      "side": "left",
+      "grades": ["g10"],
+      "description": "Vertical axis along which individual particles oscillate perpendicular (at 90°) to the direction of wave propagation."
+    },
+    "in_phase_crest": {
+      "name": "Consecutive In-Phase Crest",
+      "synonyms": ["in-phase crest", "second crest", "adjacent crest"],
+      "anchor": [440, 150],
+      "default_box": [540, 330],
+      "side": "right",
+      "grades": ["g10"],
+      "description": "Next crest along the wave train that is moving in the identical direction and phase as the first crest."
+    }
+  }
+}

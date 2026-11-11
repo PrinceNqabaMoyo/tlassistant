@@ -1507,16 +1507,22 @@ def generate_questions(
 
     subskill_norm = str(subskill or "mixed").strip().lower()
 
+    def _tag(fn, name):
+        def _w():
+            q = fn()
+            q["subskill"] = name
+            return q
+        return _w
+
     builders: List[Any] = [
-        lambda: _make_company_income_statement(r=r, difficulty=difficulty, mode=mode),
-        lambda: _make_example2_statement_of_comprehensive_income(r=r, difficulty=difficulty, mode=mode),
-        lambda: _make_retained_income_note(r=r, difficulty=difficulty, mode=mode),
-        lambda: _make_balance_sheet(r=r, difficulty=difficulty, mode=mode),
-        lambda: _mk_trade_receivables_note(r=r, difficulty=difficulty, mode=mode),
-        lambda: _make_example3_retained_note_and_balance_sheet_bundle(r=r, difficulty=difficulty, mode=mode),
-        lambda: _make_fixed_assets_note(r=r, difficulty=difficulty, mode=mode),
-        lambda: _make_trade_payables_note(r=r, difficulty=difficulty, mode=mode),
-        lambda: _make_cash_flow_statement(r=r, difficulty=difficulty, mode=mode),
+        _tag(lambda: _make_company_income_statement(r=r, difficulty=difficulty, mode=mode), "company_income_statement"),
+        _tag(lambda: _make_example2_statement_of_comprehensive_income(r=r, difficulty=difficulty, mode=mode), "statement_of_comprehensive_income"),
+        _tag(lambda: _make_retained_income_note(r=r, difficulty=difficulty, mode=mode), "retained_income_note"),
+        _tag(lambda: _make_balance_sheet(r=r, difficulty=difficulty, mode=mode), "statement_of_financial_position"),
+        _tag(lambda: _mk_trade_receivables_note(r=r, difficulty=difficulty, mode=mode), "trade_and_other_receivables_note"),
+        _tag(lambda: _make_example3_retained_note_and_balance_sheet_bundle(r=r, difficulty=difficulty, mode=mode), "retained_income_and_balance_sheet"),
+        _tag(lambda: _make_fixed_assets_note(r=r, difficulty=difficulty, mode=mode), "fixed_tangible_assets_note"),
+        _tag(lambda: _make_trade_payables_note(r=r, difficulty=difficulty, mode=mode), "trade_and_other_payables_note"),
     ]
 
     if subskill_norm in {"income-statement", "income_statement", "income"}:

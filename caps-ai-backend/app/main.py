@@ -24,6 +24,7 @@ from app.api.notifications import router as notifications_router
 from app.api.olympiad import router as olympiad_router
 from app.api.gamification import router as gamification_router
 from app.api.generate import router as generate_router
+from app.api.diagram_study import router as diagram_study_router
 
 # Initialize FastAPI App
 app = FastAPI(
@@ -58,6 +59,7 @@ app.include_router(notifications_router, tags=["Notifications"])
 app.include_router(olympiad_router, tags=["Olympiad Track"])
 app.include_router(gamification_router, tags=["Gamification & Credentials"])
 app.include_router(generate_router)
+app.include_router(diagram_study_router)
 
 # Health Check & Root Endpoints
 @app.get("/")

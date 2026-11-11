@@ -478,14 +478,59 @@ _GENERATORS = [
 ]
 
 
+def _gen_specific_identification_table(r: random.Random) -> Dict[str, Any]:
+    m1_cost = 18000
+    m2_cost = 24000
+    m1_unsold = r.randint(3, 6)
+    m2_unsold = r.randint(2, 5)
+    val_m1 = m1_unsold * m1_cost
+    val_m2 = m2_unsold * m2_cost
+    tot_close = val_m1 + val_m2
+    return {
+        "question_type": "table_fill",
+        "subskill": "specific_identification_closing_stock_table",
+        "question_text": (
+            f"A company uses the **Specific Identification Method** for high-value laptops. "
+            f"At year-end, **{m1_unsold} Model X laptops (cost R{m1_cost:,} each)** and **{m2_unsold} Model Y laptops (cost R{m2_cost:,} each)** "
+            f"remain unsold. Complete the closing stock valuation schedule."
+        ),
+        "headers": ["Model", "Units on Hand", "Unit Cost (R)", "Closing Stock Value (R)"],
+        "rows": [
+            ["Model X Laptops", str(m1_unsold), f"R{m1_cost:,}", "{r0_c3}"],
+            ["Model Y Laptops", str(m2_unsold), f"R{m2_cost:,}", "{r1_c3}"],
+            ["Total Closing Stock Valuation", "", "", "{r2_c3}"],
+        ],
+        "correct_map": {"r0_c3": val_m1, "r1_c3": val_m2, "r2_c3": tot_close},
+        "marks": 5,
+        "worked_solution": f"Model X = `R{val_m1:,}`; Model Y = `R{val_m2:,}`; Total Closing Stock = `R{tot_close:,}`.",
+    }
+
+
 def generate_questions(
-    *, subskill="mixed", difficulty="easy", question_type="mixed",
-    count=1, seed=None, mode="",
+    count=1, subskill="mixed", difficulty="easy", question_type="mixed",
+    seed=None, mode="", **kwargs,
 ) -> List[Dict[str, Any]]:
     r = _rng(seed)
+    pool = [
+        _gen_fifo_closing_stock,
+        _gen_weighted_avg_closing,
+        _gen_cost_of_sales,
+        _gen_gross_profit,
+        _gen_stock_theft,
+        _gen_stock_turnover_rate,
+        _gen_stock_holding_period,
+        _gen_markup_comparison,
+        _gen_perpetual_periodic_mcq,
+        _gen_specific_identification_table,
+    ]
+    if mode == "exam":
+        pool.extend([_gen_fifo_vs_wavg_typed, _gen_ethics_inventory, _gen_internal_control_inventory])
+
     questions = []
     for _ in range(count):
-        q = r.choice(_GENERATORS)(r)
+        gen = r.choice(pool)
+        q = gen(r)
+        q["subskill"] = gen.__name__.lstrip("_")
         q["difficulty"] = difficulty
         q["mode"] = mode
         questions.append(q)

@@ -489,15 +489,97 @@ _GENERATORS = [
 ]
 
 
+def _gen_company_bank_recon_table(r: random.Random) -> Dict[str, Any]:
+    stmt_bal = r.randint(35, 75) * 1000
+    out_dep = r.randint(18, 32) * 1000
+    out_eft = r.randint(12, 24) * 1000
+    bank_err = r.randint(2, 5) * 1000
+    ledger_bal = stmt_bal + out_dep - out_eft + bank_err
+    return {
+        "question_type": "table_fill",
+        "subskill": "company_bank_reconciliation_statement_table",
+        "question_text": "Complete the **Bank Reconciliation Statement** for the company at month-end.",
+        "headers": ["Bank Reconciliation Statement Item", "Amount (R)"],
+        "rows": [
+            ["Credit (favourable) balance per Bank Statement", f"R{stmt_bal:,}"],
+            ["Add: Outstanding deposit made on 28 February", f"R{out_dep:,}"],
+            ["Less: Outstanding EFT / cheque not yet presented", f"(R{out_eft:,})"],
+            [f"Add: Bank error (debit order of another company wrongly debited: R{bank_err:,})", "{r3_c1}"],
+            ["Correct Debit Balance per Bank Account in General Ledger", "{r4_c1}"],
+        ],
+        "correct_map": {"r3_c1": bank_err, "r4_c1": ledger_bal},
+        "marks": 5,
+        "worked_solution": f"Reconciled Bank Balance = `R{stmt_bal:,} + R{out_dep:,} - R{out_eft:,} + R{bank_err:,} = R{ledger_bal:,}`.",
+    }
+
+
+def _gen_company_creditors_recon_table(r: random.Random) -> Dict[str, Any]:
+    stmt_bal = r.randint(60, 110) * 1000
+    ret_omitted = r.randint(4, 9) * 1000
+    pay_omitted = r.randint(15, 25) * 1000
+    final_bal = stmt_bal - ret_omitted - pay_omitted
+    return {
+        "question_type": "table_fill",
+        "subskill": "company_creditors_reconciliation_statement_table",
+        "question_text": "Complete the **Creditors Reconciliation Statement** reconciling the supplier's statement to the Creditors Ledger.",
+        "headers": ["Creditors Reconciliation Statement Item", "Amount (R)"],
+        "rows": [
+            ["Balance per Supplier's Monthly Statement", f"R{stmt_bal:,}"],
+            [f"Less: Goods returned (Debit Note) omitted from supplier statement (R{ret_omitted:,})", "{r1_c1}"],
+            [f"Less: Month-end EFT payment not yet recorded by supplier", f"(R{pay_omitted:,})"],
+            ["Reconciled Balance Equal to Creditors Ledger Account", "{r3_c1}"],
+        ],
+        "correct_map": {"r1_c1": ret_omitted, "r3_c1": final_bal},
+        "marks": 5,
+        "worked_solution": f"Reconciled Creditors Statement = `R{stmt_bal:,} - R{ret_omitted:,} - R{pay_omitted:,} = R{final_bal:,}`.",
+    }
+
+
 def generate_questions(
-    *, subskill="mixed", difficulty="easy", question_type="mixed",
-    count=1, seed=None, mode="",
+    count=1, subskill="mixed", difficulty="easy", question_type="mixed",
+    seed=None, mode="", **kwargs,
 ) -> List[Dict[str, Any]]:
     r = _rng(seed)
+    sub_norm = str(subskill or "mixed").strip().lower()
+    bank_pool = [
+        _gen_bank_recon_balance,
+        _gen_cpj_correction,
+        _gen_rd_cheque,
+        _gen_stale_cheque,
+        _gen_bank_error,
+        _gen_company_bank_recon_table,
+    ]
+    cred_pool = [
+        _gen_debtors_control_correction,
+        _gen_debtor_individual_correction,
+        _gen_creditors_recon,
+        _gen_overcast_undercast,
+        _gen_recon_concepts_mcq,
+        _gen_company_creditors_recon_table,
+    ]
+    if sub_norm in {"bank", "bank_recon", "bank_reconciliation"}:
+        pool = bank_pool
+    elif sub_norm in {"creditors", "reconciliations", "creditors_recon"}:
+        pool = cred_pool
+    else:
+        pool = bank_pool + cred_pool
+
     questions = []
     for _ in range(count):
-        q = r.choice(_GENERATORS)(r)
+        gen = r.choice(pool)
+        q = gen(r)
+        q["subskill"] = gen.__name__.lstrip("_")
         q["difficulty"] = difficulty
         q["mode"] = mode
         questions.append(q)
     return questions
+
+
+def generate_bank_reconciliation_questions(**kwargs) -> List[Dict[str, Any]]:
+    clean = {k: v for k, v in kwargs.items() if k != "subskill"}
+    return generate_questions(subskill="bank", **clean)
+
+
+def generate_creditors_reconciliation_questions(**kwargs) -> List[Dict[str, Any]]:
+    clean = {k: v for k, v in kwargs.items() if k != "subskill"}
+    return generate_questions(subskill="creditors", **clean)

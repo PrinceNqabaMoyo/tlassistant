@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { getAuth } from 'firebase/auth';
 import { collection, getDocs, getDoc, doc, updateDoc, setDoc, query, where, Timestamp } from 'firebase/firestore';
-import { Users, Settings, BarChart3, Shield, Database, Activity, FileText, Plus, Edit, Trash2, Eye, CheckCircle, XCircle, ChevronLeft, School } from 'lucide-react';
+import { Users, Settings, BarChart3, Shield, Database, Activity, FileText, Plus, Edit, Trash2, Eye, CheckCircle, XCircle, ChevronLeft, School, Sparkles } from 'lucide-react';
 import { buildApiUrl } from '../../utils/apiBaseUrl';
 
 const getDateValue = (value) => {
@@ -153,6 +153,46 @@ export const AdminDashboard = ({ currentUser, db, onSelect }) => {
                         {users.length} total users
                     </div>
                 </div>
+
+                {canManageSubscribers && (
+                    <div className="bg-white rounded-lg shadow-md p-6 border-2 border-purple-200" data-testid="card-archetype-iteration-studio">
+                        <div className="flex items-center justify-between mb-4">
+                            <h3 className="text-xl font-semibold text-gray-800">Archetype Iteration Studio</h3>
+                            <Sparkles className="h-6 w-6 text-purple-600" />
+                        </div>
+                        <p className="text-gray-600 mb-4">Step linearly through all 50+ curriculum archetypes across any FET/Senior topic with infinite PRNG entropy</p>
+                        <button
+                            data-testid="btn-open-archetype-iteration"
+                            onClick={() => onSelect('archetypeIteration')}
+                            className="w-full bg-purple-600 text-white py-2 px-4 rounded-lg hover:bg-purple-700 transition-colors font-medium shadow-xs"
+                        >
+                            Open Archetype Iteration Studio
+                        </button>
+                        <div className="mt-3 text-sm text-purple-700 font-medium">
+                            Full 50+ Archetype Coverage • Zero Adaptive Gating
+                        </div>
+                    </div>
+                )}
+
+                {canManageSubscribers && (
+                    <div className="bg-white rounded-lg shadow-md p-6 border-2 border-emerald-100" data-testid="card-archetype-vetting-workbench">
+                        <div className="flex items-center justify-between mb-4">
+                            <h3 className="text-xl font-semibold text-gray-800">Archetype & Diagram Vetting</h3>
+                            <Shield className="h-6 w-6 text-emerald-600" />
+                        </div>
+                        <p className="text-gray-600 mb-4">Super Admin studio: input seeds, vet live diagrams, marking schemas, and 3-tier hints</p>
+                        <button
+                            data-testid="btn-open-vetting-workbench"
+                            onClick={() => onSelect('archetypeVetting')}
+                            className="w-full bg-emerald-600 text-white py-2 px-4 rounded-lg hover:bg-emerald-700 transition-colors font-medium"
+                        >
+                            Open Vetting Workbench
+                        </button>
+                        <div className="mt-3 text-sm text-gray-500">
+                            Strict Super Admin clearance
+                        </div>
+                    </div>
+                )}
 
                 {canManageSubscribers && (
                     <div className="bg-white rounded-lg shadow-md p-6 border-2 border-blue-100">

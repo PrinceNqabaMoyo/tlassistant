@@ -1,0 +1,61 @@
+{
+  "diagram": "optical_telescopes",
+  "view": "textbook",
+  "viewBox": "0 0 600 480",
+  "anchors": {
+    "concave_primary_mirror": {
+      "name": "Concave Primary Mirror (Reflector)",
+      "anchor": [200, 135],
+      "default_box": [60, 135],
+      "side": "left",
+      "grades": ["g8", "g10", "g11"],
+      "acceptable": ["Primary mirror", "Concave primary mirror", "Reflecting mirror", "Parabolic mirror", "Curved mirror"],
+      "description": "Large curved mirror at the base of a reflecting telescope that reflects and converges incoming parallel starlight toward a focal point with zero chromatic aberration."
+    },
+    "flat_secondary_mirror": {
+      "name": "Flat Secondary Diagonal Mirror",
+      "anchor": [380, 135],
+      "default_box": [540, 135],
+      "side": "right",
+      "grades": ["g8", "g10", "g11"],
+      "acceptable": ["Secondary mirror", "Flat diagonal mirror", "Plane mirror", "Secondary reflector"],
+      "description": "Small flat mirror angled at 45 degrees near the open aperture that deflects the converging light cone 90 degrees out through the side of the tube into the eyepiece."
+    },
+    "reflector_eyepiece": {
+      "name": "Eyepiece Lens (Reflector)",
+      "anchor": [380, 70],
+      "default_box": [540, 70],
+      "side": "right",
+      "grades": ["g8", "g10", "g11"],
+      "acceptable": ["Eyepiece", "Eyepiece lens", "Ocular lens"],
+      "description": "Short focal length magnifying lens positioned at the side of the telescope tube that produces a magnified virtual image for the observer or detector."
+    },
+    "objective_lens": {
+      "name": "Convex Objective Lens (Refractor)",
+      "anchor": [140, 360],
+      "default_box": [60, 360],
+      "side": "left",
+      "grades": ["g8", "g10", "g11"],
+      "acceptable": ["Objective lens", "Convex objective", "Primary lens", "Large front lens"],
+      "description": "Large double-convex glass lens at the front aperture of a refracting telescope that bends (refracts) incoming starlight rays to form an inverted real intermediate image."
+    },
+    "refractor_eyepiece": {
+      "name": "Eyepiece Lens (Refractor)",
+      "anchor": [465, 360],
+      "default_box": [540, 360],
+      "side": "right",
+      "grades": ["g8", "g10", "g11"],
+      "acceptable": ["Eyepiece", "Eyepiece lens", "Rear lens", "Ocular lens"],
+      "description": "Convex lens at the rear of the refracting tube that magnifies the real intermediate image produced by the objective lens."
+    },
+    "focal_point": {
+      "name": "Principal Focal Point (F)",
+      "anchor": [370, 360],
+      "default_box": [370, 420],
+      "side": "right",
+      "grades": ["g8", "g10", "g11"],
+      "acceptable": ["Focal point", "Principal focus", "Focus", "Focal plane"],
+      "description": "Point along the principal optical axis where parallel light rays refracted by the objective lens intersect and form a real inverted image."
+    }
+  }
+}

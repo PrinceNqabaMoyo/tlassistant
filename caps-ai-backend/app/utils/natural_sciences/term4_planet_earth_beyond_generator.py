@@ -339,21 +339,36 @@ def _gen_stellar_evolution_question(r: random.Random, mode: str = "compound") ->
 # MAIN DISPATCH ENTRY POINT
 # ============================================================================
 
-def generate(seed: Optional[int] = None, grade: int = 8, mode: str = "compound", archetype: Optional[str] = None) -> Dict[str, Any]:
+def generate(seed: Optional[int] = None, grade: Optional[int] = None, mode: str = "compound", archetype: Optional[str] = None, **kwargs: Any) -> Dict[str, Any]:
     """Generates a fully formed 6-pillar Natural Sciences Planet Earth & Beyond question."""
+    from app.utils.natural_sciences.natural_sciences_builders import build_earth_lithosphere_layers_question
+
     r = rng(seed)
-    
-    if archetype == "sun_earth_moon" or (archetype is None and grade == 7):
+    s_val = seed if seed is not None else r.randint(1000, 999999)
+    topic_hint = str(kwargs.get("topic") or "").lower()
+
+    if archetype in ("earth_lithosphere_layers", "earth_layers") or kwargs.get("subskill") in ("earth_lithosphere_layers", "earth_layers"):
+        return build_earth_lithosphere_layers_question(seed=s_val, grade=grade or 9, mode=mode)
+
+    if "lithosphere" in topic_hint or archetype == "lithosphere":
+        if s_val % 2 == 0:
+            return build_earth_lithosphere_layers_question(seed=s_val, grade=grade or 9, mode=mode)
+        return _gen_lithosphere_mining_question(r, mode=mode)
+
+    if archetype == "sun_earth_moon" or grade == 7:
         return _gen_sun_earth_moon_question(r, mode=mode)
-    elif archetype == "stellar" or (archetype is None and grade == 8):
+    elif archetype == "stellar":
         return _gen_stellar_evolution_question(r, mode=mode)
-    elif archetype == "lithosphere" or (archetype is None and grade == 9):
+    elif grade == 9:
+        if s_val % 2 == 0:
+            return build_earth_lithosphere_layers_question(seed=s_val, grade=9, mode=mode)
         return _gen_lithosphere_mining_question(r, mode=mode)
     else:
-        choice = r.choice(["sun_earth_moon", "stellar", "lithosphere"])
-        if choice == "sun_earth_moon":
+        # Default rotation across all Term 4 planetary science topics
+        rot = s_val % 3
+        if rot == 0:
+            return build_earth_lithosphere_layers_question(seed=s_val, grade=grade or 9, mode=mode)
+        elif rot == 1:
             return _gen_sun_earth_moon_question(r, mode=mode)
-        elif choice == "stellar":
-            return _gen_stellar_evolution_question(r, mode=mode)
         else:
-            return _gen_lithosphere_mining_question(r, mode=mode)
+            return _gen_stellar_evolution_question(r, mode=mode)

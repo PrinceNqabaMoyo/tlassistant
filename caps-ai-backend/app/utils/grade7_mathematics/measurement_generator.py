@@ -152,11 +152,12 @@ def _generate_perimeter_2d(rng: random.Random) -> Dict[str, Any]:
 # ARCHETYPE 2: 2D Area (Rectangles & Triangles)
 # ============================================================================
 
-def _generate_area_2d(rng: random.Random) -> Dict[str, Any]:
+def _generate_area_2d(rng: random.Random, is_triangle: Optional[bool] = None) -> Dict[str, Any]:
     """
     Area of rectangle or triangle (A = 1/2 * b * h).
     """
-    is_triangle = rng.choice([True, False])
+    if is_triangle is None:
+        is_triangle = rng.choice([True, False])
 
     if is_triangle:
         base = rng.choice([6, 8, 10, 12, 14, 16])
@@ -255,12 +256,16 @@ def _generate_area_2d(rng: random.Random) -> Dict[str, Any]:
 # ARCHETYPE 3: 3D Surface Area & Volume
 # ============================================================================
 
-def _generate_surface_area_and_volume(rng: random.Random) -> Dict[str, Any]:
+def _generate_surface_area_and_volume(
+    rng: random.Random,
+    force_cube: Optional[bool] = None,
+    force_volume: Optional[bool] = None
+) -> Dict[str, Any]:
     """
     Surface area and volume of rectangular prisms and cubes.
     """
-    is_volume = rng.choice([True, False])
-    is_cube = rng.choice([True, False])
+    is_volume = force_volume if force_volume is not None else rng.choice([True, False])
+    is_cube = force_cube if force_cube is not None else rng.choice([True, False])
 
     if is_cube:
         side = rng.randint(3, 8)
@@ -397,6 +402,20 @@ def _generate_surface_area_and_volume(rng: random.Random) -> Dict[str, Any]:
     }
 
 
+def _generate_surface_area_and_volume_targeted(rng: random.Random, is_cube: bool, is_volume: bool) -> Dict[str, Any]:
+    return _generate_surface_area_and_volume(rng, force_cube=is_cube, force_volume=is_volume)
+
+
+SUBSKILLS = [
+    "perimeter_2d",
+    "area_2d",
+    "cube_volume",
+    "cube_surface_area",
+    "prism_volume",
+    "prism_surface_area"
+]
+
+
 # ============================================================================
 # MASTER GENERATE FUNCTION (6-Pillar Contract)
 # ============================================================================
@@ -407,33 +426,63 @@ def generate(
     difficulty: str = "medium",
     mode: str = "compound",
     subskill: Optional[str] = None,
+    topic: Optional[str] = None,
     **kwargs: Any
 ) -> List[Dict[str, Any]]:
     """
     Main entry point for Grade 7 Measurement Question Generator.
     Supports atomic micro-drills:
-    - mode="elementary_perimeter_2d": Perimeter of 2D shapes
-    - mode="elementary_area_2d": Area of triangles and rectangles
-    - mode="elementary_3d": Surface area and volume of prisms and cubes
-    - mode="compound": Full authentic exam mix
+    - 2D: perimeter_2d, area_2d
+    - 3D: cube_volume, cube_surface_area, prism_volume, prism_surface_area
     """
     rng = _rng(seed)
     questions = []
 
-    for _ in range(count):
-        if mode == "elementary_perimeter_2d" or subskill == "perimeter":
-            q = _generate_perimeter_2d(rng)
-        elif mode == "elementary_area_2d" or subskill == "area":
-            q = _generate_area_2d(rng)
-        elif mode == "elementary_3d" or subskill in ["volume", "surface_area"]:
-            q = _generate_surface_area_and_volume(rng)
-        else: # compound: pick across all archetypes
-            archetype = rng.choice([
-                lambda: _generate_perimeter_2d(rng),
-                lambda: _generate_area_2d(rng),
-                lambda: _generate_surface_area_and_volume(rng)
-            ])
-            q = archetype()
-        questions.append(q)
+    target_sub = str(subskill or "").strip().lower()
+    topic_str = str(topic or kwargs.get("name") or "").strip().lower()
+
+    # Determine 2D vs 3D focus
+    is_3d_topic = "3d" in topic_str or "volume" in topic_str or "surface" in topic_str
+    is_2d_topic = "2d" in topic_str or "perimeter" in topic_str
+
+    def _build_one(sub_name: str) -> Dict[str, Any]:
+        if "triangle" in sub_name and "area" in sub_name:
+            return _generate_area_2d(rng, is_triangle=True)
+        elif "rectangle" in sub_name and "area" in sub_name:
+            return _generate_area_2d(rng, is_triangle=False)
+        elif "area_2d" in sub_name or "2d_area" in sub_name:
+            return _generate_area_2d(rng)
+        elif "perim" in sub_name:
+            return _generate_perimeter_2d(rng)
+        elif "cube_v" in sub_name or sub_name == "cube_volume":
+            return _generate_surface_area_and_volume_targeted(rng, is_cube=True, is_volume=True)
+        elif "cube_s" in sub_name or sub_name == "cube_surface_area":
+            return _generate_surface_area_and_volume_targeted(rng, is_cube=True, is_volume=False)
+        elif "prism_v" in sub_name or sub_name == "prism_volume" or "rectangular_prism_volume" in sub_name:
+            return _generate_surface_area_and_volume_targeted(rng, is_cube=False, is_volume=True)
+        elif "prism_s" in sub_name or sub_name == "prism_surface_area" or "rectangular_prism_surface_area" in sub_name:
+            return _generate_surface_area_and_volume_targeted(rng, is_cube=False, is_volume=False)
+        elif "volume" in sub_name:
+            return _generate_surface_area_and_volume_targeted(rng, is_cube=rng.choice([True, False]), is_volume=True)
+        elif "surface" in sub_name:
+            return _generate_surface_area_and_volume_targeted(rng, is_cube=rng.choice([True, False]), is_volume=False)
+        else:
+            return _generate_surface_area_and_volume(rng)
+
+    if target_sub and target_sub not in ("compound", "all", "mixed", "auto", "default", "none"):
+        for _ in range(count):
+            questions.append(_build_one(target_sub))
+        return questions
+
+    if is_3d_topic:
+        sub_list = ["cube_volume", "cube_surface_area", "prism_volume", "prism_surface_area"]
+    elif is_2d_topic:
+        sub_list = ["perimeter_2d", "area_2d"]
+    else:
+        sub_list = SUBSKILLS
+
+    for i in range(count):
+        sub = sub_list[i % len(sub_list)]
+        questions.append(_build_one(sub))
 
     return questions

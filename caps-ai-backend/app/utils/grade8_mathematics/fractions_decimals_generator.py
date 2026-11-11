@@ -1,10 +1,13 @@
 """Grade 8 Mathematics - Fractions, Decimals and Percentages Generator.
-Covers:
+Grounded in: curriculum_docs_auto/Mathematics_Gr8/Term 1/05. Fractions in decimal notation.md
+and curriculum_docs_auto/Mathematics_Gr8/Term 2/03. Common fractions.md
+
+Covers CAPS subskills:
   - Common fractions: addition, subtraction, multiplication, division of proper fractions and mixed numbers.
   - Decimal fractions: calculation techniques, BODMAS with decimals, South African comma formatting.
   - Percentages: percentage of a quantity, percentage increase and decrease, financial discounts.
 
-Follows South African CAPS curriculum specifications and the 6-Pillar Generator Contract.
+Follows South African national curriculum specifications and the 6-Pillar Generator Contract.
 Strictly zero-LLM, deterministic execution.
 """
 from __future__ import annotations
@@ -26,19 +29,33 @@ def _fmt_sa(val: float, places: int = 2) -> str:
     return s.replace(".", "{,}")
 
 
+SUBSKILLS = [
+    "fraction_addition",
+    "fraction_multiplication",
+    "decimals_bodmas",
+    "percentage_increase_decrease",
+]
+
+
 def generate_grade8_fractions_decimals_question(
     seed: Optional[int] = None,
     difficulty: str = "medium",
     mode: str = "compound",
+    subskill: Optional[str] = None,
 ) -> Dict[str, Any]:
     r = _rng(seed)
-    subskill = mode if mode.startswith("elementary_") else "fractions_decimals_percentages"
+    sub = (subskill or mode or "").lower()
 
-    archetype = r.choice(["fraction_addition_subtraction", "fraction_multiplication_division", "decimal_operations", "percentage_increase_decrease"])
-    if subskill == "elementary_fraction_addition":
+    if "addition" in sub or "subtraction" in sub or "fraction_add" in sub:
         archetype = "fraction_addition_subtraction"
-    elif subskill == "elementary_decimal_multiplication":
+    elif "multiplication" in sub or "division" in sub or "fraction_mult" in sub:
+        archetype = "fraction_multiplication_division"
+    elif "decimal" in sub or "bodmas" in sub:
         archetype = "decimal_operations"
+    elif "percent" in sub or "discount" in sub:
+        archetype = "percentage_increase_decrease"
+    else:
+        archetype = r.choice(["fraction_addition_subtraction", "fraction_multiplication_division", "decimal_operations", "percentage_increase_decrease"])
 
     if archetype == "fraction_addition_subtraction":
         d1 = r.choice([2, 3, 4])
@@ -57,10 +74,11 @@ def generate_grade8_fractions_decimals_question(
 
         prompt = f"Calculate and simplify your answer:\n$$\\frac{{{n1}}}{{{d1}}} + \\frac{{{n2}}}{{{d2}}}$$"
         sample_answer = (
-            rf"\text{{LCM}} = {lcm}\\\ "
-            rf"\frac{{{n1} \times {m1}}}{{{lcm}}} + \\frac{{{n2} \times {m2}}}{{{lcm}}} = "
-            rf"\frac{{{n1 * m1} + {n2 * m2}}}{{{lcm}}} = \\frac{{{num_res}}}{{{lcm}}}"
-            + (rf" = \frac{{{simp_num}}}{{{simp_den}}}" if common_factor > 1 else "")
+            f"$$\\text{{LCM}} = {lcm}$$\n\n"
+            f"$$\\frac{{{n1} \\times {m1}}}{{{lcm}}} + \\frac{{{n2} \\times {m2}}}{{{lcm}}} = "
+            f"\\frac{{{n1 * m1} + {n2 * m2}}}{{{lcm}}} = \\frac{{{num_res}}}{{{lcm}}}"
+            + (f" = \\frac{{{simp_num}}}{{{simp_den}}}" if common_factor > 1 else "")
+            + "$$"
         )
 
         return {
@@ -163,7 +181,7 @@ def generate_grade8_fractions_decimals_question(
         prod_str = _fmt_sa(prod, 1)
         ans_str = _fmt_sa(ans, 1)
 
-        prompt = f"Use the correct order of operations (BODMAS) to calculate:\n$${a_str} + {b_str} \\times {c_str}$$"
+        prompt = f"Calculate the following using the correct order of operations:\n$${a_str} + {b_str} \\times {c_str}$$"
         sample_answer = rf"{a_str} + ({b_str} \times {c_str}) = {a_str} + {prod_str} = {ans_str}"
 
         return {
@@ -215,11 +233,10 @@ def generate_grade8_fractions_decimals_question(
             f"1. Calculate the amount of the {action_word}.\n"
             f"2. Determine the new selling price of the jacket."
         )
+        new_price_str = f"2. New Price = R{original_price} + R{int(change_amount)} = R{int(final_amount)}" if is_increase else f"2. New Price = R{original_price} - R{int(change_amount)} = R{int(final_amount)}"
         sample_answer = (
-            rf"\text{{Change}} = \frac{{{pct}}}{{100}} \times {original_price} = \text{{R}}\,{int(change_amount)}\\\ "
-            rf"\text{{New Price}} = {original_price} {'+' if is_increase else '-'} {int(change_amount)} = \text{{R}}\,{int(final_amount)}"
+            f"1. Change = ({pct}/100) * R{original_price} = R{int(change_amount)}\n" + new_price_str
         )
-
         return {
             "id": f"g8_pct_calc_{random.randint(100000, 999999)}",
             "subject": "mathematics",
@@ -261,13 +278,20 @@ def generate(
     seed: Optional[int] = None,
     difficulty: str = "medium",
     mode: str = "compound",
+    subskill: Optional[str] = None,
+    **kwargs,
 ) -> List[Dict[str, Any]]:
     base_seed = seed if seed is not None else 42
-    return [
-        generate_grade8_fractions_decimals_question(
+    out = []
+    for i in range(count):
+        q = generate_grade8_fractions_decimals_question(
             seed=base_seed + i,
             difficulty=difficulty,
             mode=mode,
+            subskill=subskill,
         )
-        for i in range(count)
-    ]
+        if subskill:
+            q["subskill"] = subskill
+            q["archetype"] = subskill
+        out.append(q)
+    return out

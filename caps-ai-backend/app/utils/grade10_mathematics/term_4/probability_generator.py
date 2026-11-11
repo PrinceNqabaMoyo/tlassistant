@@ -36,9 +36,10 @@ def _fmt_frac(f: Fraction) -> str:
 
 def _build_venn_diagram_drill(r: random.Random) -> Dict[str, Any]:
     total = r.choice([80, 100, 120, 150])
-    inter = r.randint(12, 28)
-    only_a = r.randint(20, total // 2 - inter)
-    only_b = r.randint(18, total // 2 - inter)
+    inter = r.randint(10, min(20, total // 4))
+    upper_bound = max(22, total // 2 - inter)
+    only_a = r.randint(15, upper_bound)
+    only_b = r.randint(12, upper_bound)
     neither = total - (only_a + only_b + inter)
 
     tot_a = only_a + inter

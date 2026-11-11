@@ -1,0 +1,67 @@
+﻿python : C:\Users\princ\fundile-tlassistant-vite\scripts\_latex_kinds.py:3: 
+SyntaxWarning: invalid escape sequence '\%'
+At line:1 char:46
++ ... fundile-tlassistant-vite; python scripts/_latex_kinds.py 2>&1 | Out-F ...
++                               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (C:\Users\princ\...e sequence '\%' 
+   :String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+  '\%' is pymupdf4llm escaping a percent sign, not math. '\( \theta \)' IS 
+LaTeX.
+scanned 512 .md files
+
+pattern                         count
+escaped *                      199523
+\text{ / \mathrm{               41707
+\frac                           30171
+\times \cdot \pm \approx        17442
+escaped _                       16107
+superscript ^{..}               15542
+greek/op names                  13505
+subscript _{..}                  6574
+left/right                       5476
+escaped %                        2145
+escaped #                         992
+paren-math \(...\)                 25
+
+=== samples ===
+
+--- escaped * ---
+    Accounting_Gr10\Syllabus.md: ...    *   **Specific Identification:** $Cost = \sum (Units \times Unit Price)$     ...
+    Accounting_Gr10\Syllabus.md: ...ecific Identification:** $Cost = \sum (Units \times Unit Price)$     *   **First-...
+    Accounting_Gr10\Syllabus.md: ... stock items.     *   **Weighted Average:** $\text{Weighted Average Cost} = \frac...
+    Accounting_Gr10\Syllabus.md: ...d Average:** $\text{Weighted Average Cost} = \frac{\text{Total Cost of Goods Avai...
+
+--- \text{ / \mathrm{ ---
+    Accounting_Gr10\Syllabus.md: ... stock items.     *   **Weighted Average:** $\text{Weighted Average Cost} = \frac{\tex...
+    Accounting_Gr10\Syllabus.md: ...age:** $\text{Weighted Average Cost} = \frac{\text{Total Cost of Goods Available}}{\te...
+    Accounting_Gr10\Syllabus.md: ... \frac{\text{Total Cost of Goods Available}}{\text{Total Units Available}}$  ---  ####...
+    Accounting_Gr10\Syllabus.md: ...*          *   Straight line (on cost): $D = \text{Cost} \times \text{Rate}$         *...
+
+--- \frac ---
+    Accounting_Gr10\Syllabus.md: ...d Average:** $\text{Weighted Average Cost} = \frac{\text{Total Cost of Goods Availabl...
+    Accounting_Gr10\Syllabus.md: ...ents:  *   **Gross Profit on Sales:**      $$\frac{Gross\ Profit}{Sales} \times 100$$...
+    Accounting_Gr10\Syllabus.md: ...Profit on Cost of Sales (Markup %):**      $$\frac{Gross\ Profit}{Cost\ of\ Sales} \t...
+    Accounting_Gr10\Syllabus.md: ...es 100$$ *   **Net Profit on Sales:**      $$\frac{Net\ Profit}{Sales} \times 100$$ *...
+
+--- \times \cdot \pm \approx ---
+    Accounting_Gr10\Syllabus.md: ...ecific Identification:** $Cost = \sum (Units \times Unit Price)$     *   **First-In-Fi...
+    Accounting_Gr10\Syllabus.md: ...   Straight line (on cost): $D = \text{Cost} \times \text{Rate}$         *   Diminishi...
+    Accounting_Gr10\Syllabus.md: ...ext{Cost} - \text{Accumulated Depreciation}) \times \text{Rate}$     *   **Adjustments...
+    Accounting_Gr10\Syllabus.md: ... Sales:**      $$\frac{Gross\ Profit}{Sales} \times 100$$ *   **Gross Profit on Cost o...
+
+--- escaped _ ---
+    BusinessStudies_Gr10\Term 4\03. Self man: ...bscripts are written as underscore eg Aê = Aê\_1 + Aê\_2     ## Introduction  * Ge...
+    BusinessStudies_Gr10\Term 4\03. Self man: ... are written as underscore eg Aê = Aê\_1 + Aê\_2     ## Introduction  * Geometry (...
+Traceback (most recent call last):
+  File "C:\Users\princ\fundile-tlassistant-vite\scripts\_latex_kinds.py", line 
+58, in <module>
+    print("   ", s.replace("\n", " ")[:170])
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\u25b3' in 
+position 54: character maps to <undefined>
+    

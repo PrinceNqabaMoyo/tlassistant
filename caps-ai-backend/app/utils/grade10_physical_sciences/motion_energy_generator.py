@@ -31,7 +31,7 @@ def _fmt_sa(val: float | int, places: int = 2) -> str:
     if isinstance(val, int) or (isinstance(val, float) and val.is_integer()):
         return str(int(val))
     s = f"{val:.{places}f}".rstrip("0").rstrip(".")
-    return s.replace(".", "{{,}}")
+    return s.replace(".", "{,}")
 
 
 G_VAL = 9.8
@@ -63,9 +63,21 @@ def _build_kinematics_drill(r: random.Random) -> Dict[str, Any]:
         f"   $\\Delta x = {round(vi * t, 2)} + {round(0.5 * a * (t**2), 2)} = {_fmt_sa(dx)}\\text{{ m}}$"
     )
 
+    fbd_kin = {
+        "mass_kg": 1200.0,
+        "angle_deg": 0.0,
+        "forces": [
+            {"name": "F_engine", "magnitude": round(1200.0 * a, 1), "angle": 0.0, "label": "Forward Thrust"},
+            {"name": "F_N", "magnitude": round(1200.0 * G_VAL, 1), "angle": 90.0, "label": "Normal Force"},
+            {"name": "F_g", "magnitude": round(1200.0 * G_VAL, 1), "angle": 270.0, "label": "Weight"},
+        ],
+    }
+
     return {
         "id": f"g10_ps_mot_kin_{r.randint(10000, 99999)}",
         "type": "compound",
+        "modality": "free_body_diagram",
+        "fbd_spec": fbd_kin,
         "prompt": prompt,
         "correct_answer": f"vf={_fmt_sa(vf)} m/s, dx={_fmt_sa(dx)} m",
         "worked_solution": sol,
@@ -124,9 +136,20 @@ def _build_mechanical_energy_drill(r: random.Random) -> Dict[str, Any]:
         f"   $v = \\sqrt{{{round(2 * G_VAL * h_initial, 2)}}} = {_fmt_sa(v_bottom)}\\text{{ m}}\\cdot\\text{{s}}^{{-1}}$"
     )
 
+    fbd_mech = {
+        "mass_kg": float(mass),
+        "angle_deg": 30.0,
+        "forces": [
+            {"name": "F_g", "magnitude": round(mass * G_VAL, 1), "angle": 270.0, "label": "Gravitational Force (Weight)"},
+            {"name": "F_N", "magnitude": round(mass * G_VAL * 0.866, 1), "angle": 120.0, "label": "Normal Force"},
+        ],
+    }
+
     return {
         "id": f"g10_ps_energy_mech_{r.randint(10000, 99999)}",
         "type": "compound",
+        "modality": "free_body_diagram",
+        "fbd_spec": fbd_mech,
         "prompt": prompt,
         "correct_answer": f"Ep={_fmt_sa(ep_top)} J, v={_fmt_sa(v_bottom)} m/s",
         "worked_solution": sol,

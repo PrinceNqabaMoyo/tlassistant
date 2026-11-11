@@ -17,6 +17,10 @@ import math
 import random
 from typing import Any, Dict, List, Optional
 
+from app.utils.physical_sciences.physical_sciences_builders import (
+    build_pulley_incline_masses_system_question,
+)
+
 TOPIC = "grade11_vectors_newton"
 G_ACCEL = 9.8  # m/s^2
 
@@ -83,6 +87,17 @@ def _generate_vector_resolution_question(r: random.Random, seed: Optional[int], 
         "mode": mode,
         "topic": TOPIC,
         "question_type": "short_answer",
+        "modality": "free_body_diagram",
+        "fbd_spec": {
+            "mass_kg": 20,
+            "angle_deg": theta_deg,
+            "forces": [
+                {"name": "F_app", "label": "Tensile Force (F)", "magnitude": float(f_mag), "dir": "right"},
+                {"name": "F_x", "label": "Horizontal Component (Fx)", "magnitude": round(fx, 1), "dir": "right"},
+                {"name": "F_y", "label": "Vertical Component (Fy)", "magnitude": round(fy, 1), "dir": "up"},
+                {"name": "F_g", "label": "Weight (Fg)", "magnitude": 196.0, "dir": "down"}
+            ]
+        },
         "question": prompt,
         "correct_answer": ans_str,
         "sample_answer": ans_str,
@@ -153,9 +168,26 @@ def _generate_newton_friction_question(r: random.Random, seed: Optional[int], id
         "mode": mode,
         "topic": TOPIC,
         "question_type": "short_answer",
+        "modality": "free_body_diagram",
+        "fbd_spec": {
+            "mass_kg": mass,
+            "angle_deg": 0,
+            "forces": [
+                {"name": "F_N", "label": "Normal Force (FN)", "magnitude": round(normal_force, 1), "dir": "up"},
+                {"name": "F_g", "label": "Weight (Fg)", "magnitude": round(normal_force, 1), "dir": "down"},
+                {"name": "f_k", "label": "Friction (fk)", "magnitude": round(f_k, 2), "dir": "left"},
+                {"name": "F_pull", "label": "Applied Force (F)", "magnitude": f_pull, "dir": "right"}
+            ]
+        },
+        "sub_parts": [
+            {"id": "part_1", "label": "1. Newton's Second Law", "marks": 2, "expected_answer": "Acceleration is directly proportional to net force and inversely proportional to mass"},
+            {"id": "part_2", "label": "2. Kinetic friction (fk)", "marks": 2, "expected_answer": f"{_fmt_sa(f_k, 2)}"},
+            {"id": "part_3", "label": "3. Acceleration (a)", "marks": 3, "expected_answer": f"{_fmt_sa(accel, 2)}"}
+        ],
         "question": prompt,
         "correct_answer": ans_str,
         "sample_answer": ans_str,
+        "expected_answer": ans_str,
         "worked_solution": memo,
         "explanation": memo,
         "marks": 7,
@@ -221,6 +253,16 @@ def _generate_inclined_plane_question(r: random.Random, seed: Optional[int], idx
         "mode": mode,
         "topic": TOPIC,
         "question_type": "short_answer",
+        "modality": "free_body_diagram",
+        "fbd_spec": {
+            "mass_kg": mass,
+            "angle_deg": incline_deg,
+            "forces": [
+                {"name": "F_N", "label": "Normal Force (FN)", "magnitude": round(normal_force, 1), "dir": "up"},
+                {"name": "F_g", "label": "Weight (Fg)", "magnitude": round(mass * 9.8, 1), "dir": "down"},
+                {"name": "F_parallel", "label": "Parallel Component (Fg//)", "magnitude": round(fg_parallel, 1), "dir": "left"}
+            ]
+        },
         "question": prompt,
         "correct_answer": ans_str,
         "sample_answer": ans_str,
@@ -260,20 +302,24 @@ def generate(
         sub_seed = r.randint(1, 1_000_000_000)
         sub_r = random.Random(sub_seed)
 
-        if subskill in ("vectors", "components", "resolution") or mode == "elementary_vector_resolution":
+        if subskill in ("pulley", "incline_pulley", "connected_masses", "pulley_incline_masses_system") or mode == "elementary_pulley_incline":
+            q = build_pulley_incline_masses_system_question(sub_seed, grade=11, mode=mode)
+        elif subskill in ("vectors", "components", "resolution") or mode == "elementary_vector_resolution":
             q = _generate_vector_resolution_question(sub_r, sub_seed, i, mode)
         elif subskill in ("newton", "friction", "second_law") or mode == "elementary_newton_second_law":
             q = _generate_newton_friction_question(sub_r, sub_seed, i, mode)
         elif subskill in ("incline", "slope", "ramp") or mode == "elementary_inclined_friction":
             q = _generate_inclined_plane_question(sub_r, sub_seed, i, mode)
         else:
-            chosen = sub_r.choice(["resolution", "newton", "incline"])
+            chosen = sub_r.choice(["resolution", "newton", "incline", "pulley_incline"])
             if chosen == "resolution":
                 q = _generate_vector_resolution_question(sub_r, sub_seed, i, mode)
             elif chosen == "newton":
                 q = _generate_newton_friction_question(sub_r, sub_seed, i, mode)
-            else:
+            elif chosen == "incline":
                 q = _generate_inclined_plane_question(sub_r, sub_seed, i, mode)
+            else:
+                q = build_pulley_incline_masses_system_question(sub_seed, grade=11, mode=mode)
 
         questions.append(q)
 

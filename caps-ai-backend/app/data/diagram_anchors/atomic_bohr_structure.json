@@ -1,0 +1,174 @@
+{
+  "diagram": "atomic_bohr_structure",
+  "view": "textbook",
+  "viewBox": "0 0 600 480",
+  "anchors": {
+    "outer_valence_shell": {
+      "name": "Outer Valence Shell (n = 3)",
+      "anchor": [
+        126,
+        136
+      ],
+      "default_box": [
+        60,
+        85
+      ],
+      "side": "left",
+      "grades": [
+        "g8",
+        "g9",
+        "g10"
+      ],
+      "acceptable": [
+        "Valence shell",
+        "Outermost energy level",
+        "Outer shell",
+        "n=3 shell",
+        "Third energy level"
+      ],
+      "description": "Outermost occupied electron energy level containing the valence electrons that determine chemical reactivity and bonding."
+    },
+    "inner_core_shell": {
+      "name": "Second Energy Level (n = 2 Core Shell)",
+      "anchor": [
+        206,
+        141
+      ],
+      "default_box": [
+        60,
+        170
+      ],
+      "side": "left",
+      "grades": [
+        "g9",
+        "g10"
+      ],
+      "acceptable": [
+        "Second energy level",
+        "Inner electron shell",
+        "Core shell",
+        "L-shell",
+        "n=2 energy level"
+      ],
+      "description": "Inner core electron shell holding up to 8 electrons (2s²2p⁶) closer to the nucleus than the valence shell."
+    },
+    "proton_nucleon": {
+      "name": "Proton (Positively Charged Nucleon, p⁺)",
+      "anchor": [
+        291,
+        223
+      ],
+      "default_box": [
+        60,
+        260
+      ],
+      "side": "left",
+      "grades": [
+        "g8",
+        "g9",
+        "g10"
+      ],
+      "acceptable": [
+        "Proton",
+        "Positively charged particle",
+        "p+"
+      ],
+      "description": "Positively charged subatomic particle in the nucleus whose count defines the element's atomic number (Z)."
+    },
+    "atomic_nucleus": {
+      "name": "Central Atomic Nucleus",
+      "anchor": [
+        282,
+        267
+      ],
+      "default_box": [
+        60,
+        355
+      ],
+      "side": "left",
+      "grades": [
+        "g8",
+        "g9",
+        "g10"
+      ],
+      "acceptable": [
+        "Nucleus",
+        "Atomic nucleus",
+        "Central nucleus"
+      ],
+      "description": "Dense, positively charged central core of the atom containing protons and neutrons (nucleons) and nearly all atomic mass."
+    },
+    "first_energy_level": {
+      "name": "First Energy Level (n = 1 Innermost K-Shell)",
+      "anchor": [
+        299,
+        141
+      ],
+      "default_box": [
+        540,
+        95
+      ],
+      "side": "right",
+      "grades": [
+        "g10"
+      ],
+      "acceptable": [
+        "First energy level",
+        "Innermost shell",
+        "K-shell",
+        "n=1 shell",
+        "1s shell"
+      ],
+      "description": "Lowest-energy electron shell closest to the nucleus, holding a maximum of 2 paired electrons (1s²)."
+    },
+    "neutron_nucleon": {
+      "name": "Neutron (Neutral Nucleon, n⁰)",
+      "anchor": [
+        323,
+        249
+      ],
+      "default_box": [
+        540,
+        220
+      ],
+      "side": "right",
+      "grades": [
+        "g8",
+        "g9",
+        "g10"
+      ],
+      "acceptable": [
+        "Neutron",
+        "Neutral particle",
+        "Neutral nucleon",
+        "n0"
+      ],
+      "description": "Uncharged subatomic particle in the nucleus that contributes to mass number (A) and varies between isotopes of the same element."
+    },
+    "valence_electron": {
+      "name": "Valence Electron (e⁻)",
+      "anchor": [
+        474,
+        136
+      ],
+      "default_box": [
+        540,
+        335
+      ],
+      "side": "right",
+      "grades": [
+        "g8",
+        "g9",
+        "g10"
+      ],
+      "acceptable": [
+        "Valence electron",
+        "Electron",
+        "Outer electron",
+        "Negatively charged electron",
+        "e-"
+      ],
+      "description": "Negatively charged subatomic particle occupying the outermost energy shell that is shared or transferred during chemical bonding."
+    }
+  }
+}

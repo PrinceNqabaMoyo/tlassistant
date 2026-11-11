@@ -107,7 +107,7 @@ def _build_elementary_momentum(r: random.Random) -> Dict[str, Any]:
         },
         "hints": {
             "tier_1": f"Recall that linear momentum is the product of an object's mass and its velocity. Check if the mass needs to be in kilograms.",
-            "tier_2": f"Use the official CAPS formula $p = mv$. Ensure mass is in kg: divide grams by 1 000 if applicable. Remember momentum is a vector quantity having the same direction as velocity.",
+            "tier_2": f"Use the official standard formula $p = mv$. Ensure mass is in kg: divide grams by 1 000 if applicable. Remember momentum is a vector quantity having the same direction as velocity.",
             "tier_3": f"Mass = {_fmt_sa(mass_kg)} kg, velocity = {_fmt_sa(velocity)} m·s⁻¹ {direction}. $p = ({_fmt_sa(mass_kg)})({_fmt_sa(velocity)}) = {_fmt_sa(p_val)}$ kg·m·s⁻¹ {direction}."
         }
     }
@@ -213,7 +213,7 @@ def _build_elementary_impulse(r: random.Random) -> Dict[str, Any]:
     prompt = (
         f"A constant net horizontal force of {_fmt_sa(f_net)} N acts {direction} on a {scen['context']} "
         f"for a time interval of {_fmt_sa(dt)} s.\n\n"
-        f"Calculate the impulse of the net force acting on the object."
+        "Calculate the impulse ($F_{\\text{net}} \\Delta t$) acting on the object."
     )
 
     sample_answer = (

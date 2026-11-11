@@ -285,9 +285,15 @@ def _generate_sa_mixed_drill(r: random.Random, mode: str = "scaffold") -> Dict[s
 # Sub-Drill 4: Global Economy & International Trade
 # --------------------------------------------------------------------------- #
 def _generate_global_trade_drill(r: random.Random, mode: str = "scaffold") -> Dict[str, Any]:
+    commodities = [
+        ("minerals (such as platinum, manganese, and coal) along with fresh citrus and deciduous produce", "refined petroleum products, industrial machinery, and microelectronics"),
+        ("ferrous metals, iron ore, and specialized automotive components", "crude petroleum fuels, specialized medical equipment, and consumer electronics"),
+        ("refined gold, catalytic converters, and agricultural wine exports", "telecommunications equipment, pharmaceuticals, and high-tech aviation parts"),
+    ]
+    exports, imports = r.choice(commodities)
     prompt = (
-        "South Africa participates actively in the global economic system, exporting minerals (platinum, gold, coal) "
-        "and agricultural produce, while importing refined petroleum, vehicles, and electronics.\n\n"
+        f"South Africa participates actively in the global economic system, exporting {exports}, "
+        f"while importing {imports}.\n\n"
         "1. Differentiate between **imports** and **exports**. (2 marks)\n"
         "2. State TWO reasons why a country like South Africa cannot produce all the goods and services its citizens need. (2 marks)\n"
         "3. Explain how a depreciation of the South African Rand (ZAR) against the US Dollar affects local exporters and importers differently. (2 marks)"

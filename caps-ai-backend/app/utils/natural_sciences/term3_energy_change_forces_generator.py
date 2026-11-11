@@ -206,6 +206,7 @@ def _gen_forces_and_weight_question(r: random.Random, mode: str = "compound") ->
         mode=mode,
         difficulty="medium",
         marks=7,
+        modality="semantic",
     )
 
 
@@ -301,6 +302,7 @@ def _gen_heat_transfer_question(r: random.Random, mode: str = "compound") -> Dic
         mode=mode,
         difficulty="medium",
         marks=7,
+        modality="semantic",
     )
 
 
@@ -310,11 +312,29 @@ def _gen_heat_transfer_question(r: random.Random, mode: str = "compound") -> Dic
 
 def generate(seed: Optional[int] = None, grade: int = 8, mode: str = "compound", archetype: Optional[str] = None) -> Dict[str, Any]:
     """Generates a fully formed 6-pillar Natural Sciences Energy & Change question."""
+    from app.utils.natural_sciences.natural_sciences_builders import (
+        build_electrolytic_cell_ns_question,
+        build_generator_grid_ns_question,
+        build_pulley_incline_ns_question,
+    )
+
     r = rng(seed)
-    
+    s_val = seed if seed is not None else r.randint(1000, 999999)
+
+    if archetype in ("electrolytic_cell_apparatus", "electrolysis"):
+        return build_electrolytic_cell_ns_question(seed=s_val, grade=grade, mode=mode)
+    if archetype in ("pulley_incline_masses_system", "pulley_forces"):
+        return build_pulley_incline_ns_question(seed=s_val, grade=grade, mode=mode)
+    if archetype in ("ac_dc_generator_motor_apparatus", "national_grid_generator"):
+        return build_generator_grid_ns_question(seed=s_val, grade=grade, mode=mode)
+
     if archetype == "cost_electricity" or (archetype is None and grade == 9):
+        if s_val % 3 == 0:
+            return build_generator_grid_ns_question(seed=s_val, grade=9, mode=mode)
         return _gen_cost_of_electricity_question(r, mode=mode)
     elif archetype == "forces" or (archetype is None and grade == 8):
+        if s_val % 3 == 0:
+            return build_pulley_incline_ns_question(seed=s_val, grade=9, mode=mode)
         return _gen_forces_and_weight_question(r, mode=mode)
     elif archetype == "heat_transfer" or (archetype is None and grade == 7):
         return _gen_heat_transfer_question(r, mode=mode)

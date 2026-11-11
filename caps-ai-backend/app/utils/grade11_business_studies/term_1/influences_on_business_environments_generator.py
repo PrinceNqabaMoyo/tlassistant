@@ -1,9 +1,28 @@
 import random
 
+from .._g11_common import (
+    TopicMeta as _TopicMeta,
+    derive_crossword as _derive_crossword,
+    derive_essay as _derive_essay,
+    derive_matching as _derive_matching,
+    derive_wordbank as _derive_wordbank,
+    make_crossword_question as _make_crossword,
+    make_essay_question as _make_essay,
+    make_matching_question as _make_matching,
+    make_wordbank_question as _make_wordbank,
+)
 from ..names import MANUFACTURING_SUFFIXES
 from ..names import RETAIL_AND_LIFESTYLE_SUFFIXES
 from ..names import pick_business_name as _pick_business_name
 from ..names import pick_supplier_name as _pick_supplier_name
+
+
+_META = _TopicMeta(
+    topic_id='grade11_business_studies',
+    subtopic_id='influences_on_business_environments',
+    curriculum_reference='Term 1 > Influences on business environments',
+    id_prefix='g11_bs_influences',
+)
 
 
 def _rng(seed=None):
@@ -134,7 +153,7 @@ def _apply_metadata_filters(pool, **kwargs):
 
 
 def _mcq_question(rng, item):
-    correct_option = item['options'][item['correct_index']]
+    correct_option = item['options'][int(item['correct_index'])]
     return {
         'id': f"g11_bs_inf_mcq_{rng.randint(1000, 999999)}",
         'title': item.get('title', 'Concept check'),
@@ -1635,6 +1654,39 @@ def generate(subskill='concepts', difficulty='medium', count=1, seed=None, **kwa
     concepts = _apply_metadata_filters(_concept_pool(), **kwargs)
     application = _apply_metadata_filters(_application_pool(rng), **kwargs)
     discussion = _apply_metadata_filters(_discussion_pool(), **kwargs)
+
+    # enrich with authentic questions harvested from the curriculum .md docs
+    topic_key = str(kwargs.get('topic') or kwargs.get('topic_key') or '')
+    harvest_pairs = []
+    if topic_key.startswith('grade1') and '_bs_' in topic_key:
+        try:
+            _grade = int(topic_key[5:7])
+        except ValueError:
+            _grade = 0
+        if _grade:
+            from .._g11_common import _harvested
+            harvested = _harvested(_grade, topic_key)
+            if harvested:
+                concepts = concepts + [h for h in harvested if h.get('kind') == 'mcq']
+                discussion = discussion + [h for h in harvested if h.get('kind') != 'mcq']
+            try:
+                from ....bs_docs_harvester import harvest_pairs as _hp
+                harvest_pairs = _hp(_grade, topic_key)
+            except Exception:
+                harvest_pairs = []
+
+    if subskill == 'word_bank':
+        pool = _derive_wordbank(concepts)
+        return [_make_wordbank(_META, rng, item) for item in _select_items(rng, pool, count, difficulty)] if pool else []
+    if subskill == 'matching':
+        pool = _derive_matching(concepts, extra_pairs=harvest_pairs)
+        return [_make_matching(_META, rng, item) for item in _select_items(rng, pool, count, difficulty)] if pool else []
+    if subskill == 'crossword':
+        pool = _derive_crossword(concepts, extra_pairs=harvest_pairs)
+        return [_make_crossword(_META, rng, item) for item in _select_items(rng, pool, count, difficulty)] if pool else []
+    if subskill == 'essay':
+        pool = _derive_essay(discussion)
+        return [_make_essay(_META, rng, item) for item in _select_items(rng, pool, count, difficulty)] if pool else []
 
     if subskill == 'application':
         return [_typed_question(rng, item) for item in _select_items(rng, application, count, difficulty)]

@@ -18,6 +18,9 @@ from app.utils.grade9_ems import (
     term3_debtors_ledger,
     term3_business,
     term3_trade_unions,
+    term3_creditors_ledger,
+    term4_business_plan,
+    term4_transactions_cash_credit,
     assessment_generator
 )
 from app.utils.grade9_ems._ems_curriculum import get_g9_topic_sections
@@ -25,20 +28,32 @@ from app.utils.grade9_ems._ems_curriculum import get_g9_topic_sections
 grade9_ems_bp = Blueprint('grade9_ems', __name__)
 
 GENERATORS = {
-    'grade9_ems_crj': lambda subskill, difficulty, count, mode, **kw: term1_crj_cpj.generate(subskill="crj", mode=mode),
-    'grade9_ems_cpj': lambda subskill, difficulty, count, mode, **kw: term1_crj_cpj.generate(subskill="cpj", mode=mode),
-    'grade9_ems_crj_cpj': lambda subskill, difficulty, count, mode, **kw: term1_crj_cpj.generate(mode=mode),
-    'grade9_ems_general_ledger': lambda subskill, difficulty, count, mode, **kw: term1_general_ledger.generate(mode=mode),
-    'grade9_ems_economic_systems': lambda subskill, difficulty, count, mode, **kw: term1_economy.generate(mode=mode),
-    'grade9_ems_circular_flow': lambda subskill, difficulty, count, mode, **kw: term1_circular_flow.generate(mode=mode),
-    'grade9_ems_debtors_journal': lambda subskill, difficulty, count, mode, **kw: term2_debtors_journal.generate(mode=mode),
-    'grade9_ems_price_theory': lambda subskill, difficulty, count, mode, **kw: term2_economy.generate(mode=mode),
-    'grade9_ems_sectors_of_economy': lambda subskill, difficulty, count, mode, **kw: term2_sectors_of_economy.generate(mode=mode),
-    'grade9_ems_creditors_journal': lambda subskill, difficulty, count, mode, **kw: term3_creditors_journal.generate(mode=mode),
-    'grade9_ems_creditors_journal_2': lambda subskill, difficulty, count, mode, **kw: term3_creditors_journal.generate(mode=mode),
-    'grade9_ems_debtors_ledger': lambda subskill, difficulty, count, mode, **kw: term3_debtors_ledger.generate(mode=mode),
-    'grade9_ems_business_functions': lambda subskill, difficulty, count, mode, **kw: term3_business.generate(mode=mode),
-    'grade9_ems_trade_unions': lambda subskill, difficulty, count, mode, **kw: term3_trade_unions.generate(mode=mode),
+    # Term 1
+    'grade9_ems_economic_systems': lambda subskill, difficulty, count, mode, **kw: term1_economy.generate(subskill=subskill, difficulty=difficulty, count=count, mode=mode, **kw),
+    'grade9_ems_circular_flow': lambda subskill, difficulty, count, mode, **kw: term1_circular_flow.generate(subskill=subskill, difficulty=difficulty, count=count, mode=mode, **kw),
+    'grade9_ems_crj_cpj': lambda subskill, difficulty, count, mode, **kw: term1_crj_cpj.generate(subskill=subskill, difficulty=difficulty, count=count, mode=mode, **kw),
+    'grade9_ems_general_ledger': lambda subskill, difficulty, count, mode, **kw: term1_general_ledger.generate(subskill=subskill, difficulty=difficulty, count=count, mode=mode, **kw),
+    
+    # Term 2
+    'grade9_ems_price_theory': lambda subskill, difficulty, count, mode, **kw: term2_economy.generate(subskill=subskill, difficulty=difficulty, count=count, mode=mode, **kw),
+    'grade9_ems_debtors_journal': lambda subskill, difficulty, count, mode, **kw: term2_debtors_journal.generate(subskill=subskill, difficulty=difficulty, count=count, mode=mode, **kw),
+    'grade9_ems_sectors_of_economy': lambda subskill, difficulty, count, mode, **kw: term2_sectors_of_economy.generate(subskill=subskill, difficulty=difficulty, count=count, mode=mode, **kw),
+    
+    # Term 3
+    'grade9_ems_trade_unions': lambda subskill, difficulty, count, mode, **kw: term3_trade_unions.generate(subskill=subskill, difficulty=difficulty, count=count, mode=mode, **kw),
+    'grade9_ems_debtors_ledger': lambda subskill, difficulty, count, mode, **kw: term3_debtors_ledger.generate(subskill=subskill, difficulty=difficulty, count=count, mode=mode, **kw),
+    'grade9_ems_creditors_journal': lambda subskill, difficulty, count, mode, **kw: term3_creditors_journal.generate(subskill=subskill, difficulty=difficulty, count=count, mode=mode, **kw),
+    'grade9_ems_business_functions': lambda subskill, difficulty, count, mode, **kw: term3_business.generate(subskill=subskill, difficulty=difficulty, count=count, mode=mode, **kw),
+    'grade9_ems_creditors_ledger': lambda subskill, difficulty, count, mode, **kw: term3_creditors_ledger.generate(subskill=subskill, difficulty=difficulty, count=count, mode=mode, **kw),
+    
+    # Term 4
+    'grade9_ems_business_plan': lambda subskill, difficulty, count, mode, **kw: term4_business_plan.generate(subskill=subskill, difficulty=difficulty, count=count, mode=mode, **kw),
+    'grade9_ems_transactions_cash_and_credit': lambda subskill, difficulty, count, mode, **kw: term4_transactions_cash_credit.generate(subskill=subskill, difficulty=difficulty, count=count, mode=mode, **kw),
+    
+    # Legacy & subskill shortcuts
+    'grade9_ems_crj': lambda subskill, difficulty, count, mode, **kw: term1_crj_cpj.generate(subskill="crj", difficulty=difficulty, count=count, mode=mode, **kw),
+    'grade9_ems_cpj': lambda subskill, difficulty, count, mode, **kw: term1_crj_cpj.generate(subskill="cpj", difficulty=difficulty, count=count, mode=mode, **kw),
+    'grade9_ems_creditors_journal_2': lambda subskill, difficulty, count, mode, **kw: term3_creditors_ledger.generate(subskill=subskill, difficulty=difficulty, count=count, mode=mode, **kw),
     'grade9_ems_assessment': lambda subskill, difficulty, count, mode, **kw: assessment_generator.generate(mode=mode, count=count or 5),
 }
 
@@ -53,10 +68,13 @@ _LEGACY_TO_CURRICULUM_TOPIC = {
     'price_theory': 'grade9_ems_price_theory',
     'sectors_of_economy': 'grade9_ems_sectors_of_economy',
     'creditors_journal': 'grade9_ems_creditors_journal',
-    'creditors_journal_2': 'grade9_ems_creditors_journal_2',
+    'creditors_journal_2': 'grade9_ems_creditors_ledger',
+    'creditors_ledger': 'grade9_ems_creditors_ledger',
     'debtors_ledger': 'grade9_ems_debtors_ledger',
     'business_functions': 'grade9_ems_business_functions',
     'trade_unions': 'grade9_ems_trade_unions',
+    'business_plan': 'grade9_ems_business_plan',
+    'transactions_cash_and_credit': 'grade9_ems_transactions_cash_and_credit',
     'assessment': 'grade9_ems_assessment',
 }
 

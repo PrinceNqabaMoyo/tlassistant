@@ -1,0 +1,155 @@
+{
+  "diagram": "pulley_incline_masses_system",
+  "view": "textbook",
+  "viewBox": "0 0 600 480",
+  "anchors": {
+    "sliding_block_m1": {
+      "name": "Block on Inclined Plane (Mass m₁)",
+      "anchor": [
+        215,
+        248
+      ],
+      "default_box": [
+        60,
+        120
+      ],
+      "side": "left",
+      "grades": [
+        "g7",
+        "g9",
+        "g11",
+        "g12"
+      ],
+      "acceptable": [
+        "Block on incline",
+        "Mass m1",
+        "Sliding block",
+        "Crate on ramp"
+      ],
+      "description": "Mass resting or sliding on the inclined surface, acted on by gravity (m₁g), normal force (N), tension (T), and friction (f)."
+    },
+    "inclined_plane_surface": {
+      "name": "Inclined Plane (Ramp Surface)",
+      "anchor": [
+        162,
+        316
+      ],
+      "default_box": [
+        60,
+        235
+      ],
+      "side": "left",
+      "grades": [
+        "g7",
+        "g9",
+        "g11",
+        "g12"
+      ],
+      "acceptable": [
+        "Inclined plane",
+        "Ramp",
+        "Rough incline",
+        "Slope surface"
+      ],
+      "description": "Plane surface inclined at angle θ to the horizontal along which the block accelerates or remains in equilibrium."
+    },
+    "incline_angle_theta": {
+      "name": "Angle of Inclination (θ)",
+      "anchor": [
+        144,
+        360
+      ],
+      "default_box": [
+        60,
+        355
+      ],
+      "side": "left",
+      "grades": [
+        "g11",
+        "g12"
+      ],
+      "acceptable": [
+        "Angle of inclination",
+        "Incline angle",
+        "Angle theta",
+        "Slope angle"
+      ],
+      "description": "Acute angle θ between the inclined plane and the horizontal base, used to resolve weight into Fg∥ = mg sin θ and Fg⊥ = mg cos θ."
+    },
+    "frictionless_pulley": {
+      "name": "Light Frictionless Pulley",
+      "anchor": [
+        438,
+        114
+      ],
+      "default_box": [
+        540,
+        95
+      ],
+      "side": "right",
+      "grades": [
+        "g7",
+        "g9",
+        "g11",
+        "g12"
+      ],
+      "acceptable": [
+        "Pulley",
+        "Frictionless pulley",
+        "Fixed pulley",
+        "Pulley wheel"
+      ],
+      "description": "Grooved wheel mounted at the apex of the incline that redirects the tension force without changing its magnitude."
+    },
+    "inextensible_cord": {
+      "name": "Light Inextensible String (Tension T)",
+      "anchor": [
+        332,
+        168
+      ],
+      "default_box": [
+        540,
+        195
+      ],
+      "side": "right",
+      "grades": [
+        "g9",
+        "g11",
+        "g12"
+      ],
+      "acceptable": [
+        "Light inextensible string",
+        "Cord",
+        "Rope",
+        "Tension cable",
+        "String"
+      ],
+      "description": "Massless, unstretchable cord connecting both masses so that both bodies share the same magnitude of acceleration a and tension T."
+    },
+    "hanging_mass_m2": {
+      "name": "Suspended Hanging Mass (m₂)",
+      "anchor": [
+        466,
+        302
+      ],
+      "default_box": [
+        540,
+        305
+      ],
+      "side": "right",
+      "grades": [
+        "g7",
+        "g9",
+        "g11",
+        "g12"
+      ],
+      "acceptable": [
+        "Hanging mass",
+        "Suspended mass",
+        "Mass m2",
+        "Hanging weight"
+      ],
+      "description": "Vertically suspended cylinder acted on only by downward gravitational force (m₂g) and upward string tension (T)."
+    }
+  }
+}

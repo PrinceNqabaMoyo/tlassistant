@@ -332,8 +332,17 @@ def generate(
     questions = []
 
     for i in range(count):
-        gr_str = str(grade).strip()
-        if gr_str == "7":
+        sub_seed = (seed + i * 37) if seed is not None else r.randint(1000, 999999)
+        gr_str = "".join(ch for ch in str(grade) if ch.isdigit()) or "8"
+        gr_int = int(gr_str) if gr_str in ("7", "8", "9") else 8
+
+        if subskill in ("solar_system_diagram", "solar_system_earth_space"):
+            from app.utils.natural_sciences.natural_sciences_builders import build_solar_system_question
+            q = build_solar_system_question(sub_seed, grade=gr_int, mode=mode)
+        elif (sub_seed + i) % 3 == 0 and mode not in ("elementary_gravity_tides", "elementary_light_year_calc", "elementary_stellar_lifecycle"):
+            from app.utils.natural_sciences.natural_sciences_builders import build_solar_system_question
+            q = build_solar_system_question(sub_seed, grade=gr_int, mode=mode)
+        elif gr_str == "7":
             q = _generate_gr7_earth_moon_sun(r, seed, i, mode)
         elif gr_str == "9":
             q = _generate_gr9_stellar_evolution(r, seed, i, mode)

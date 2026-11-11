@@ -8,6 +8,11 @@ import random
 import uuid
 from typing import Any, Dict, List, Optional
 
+try:
+    from app.utils.physical_sciences.physical_sciences_builders import build_gas_evolution_rate_apparatus_question
+except ImportError:
+    from ..physical_sciences.physical_sciences_builders import build_gas_evolution_rate_apparatus_question
+
 
 def _rng(seed: Optional[int] = None) -> random.Random:
     r = random.Random()
@@ -233,10 +238,94 @@ def _build_compound_equilibrium(r: random.Random) -> Dict[str, Any]:
 # --------------------------------------------------------------------------- #
 # Public Dispatcher
 # --------------------------------------------------------------------------- #
+
+def _build_reaction_energy_profile_drill(r: random.Random, seed: Optional[int] = None) -> Dict[str, Any]:
+    """Generates authentic NSC questions on Potential Energy (Ep) Reaction Profiles (Grade 12 Chem)."""
+    is_exo = r.choice([True, False])
+    rxn_type = "exothermic" if is_exo else "endothermic"
+    
+    e_reactants = r.randint(120, 180) if is_exo else r.randint(80, 120)
+    delta_h = -r.randint(50, 90) if is_exo else r.randint(60, 110)
+    e_products = e_reactants + delta_h
+    ea_uncat = r.randint(80, 140)
+    e_activated_complex = e_reactants + ea_uncat
+    ea_cat = ea_uncat - r.randint(25, 45)
+    
+    reason_text = "lower" if is_exo else "higher"
+    sign_text = "negative" if is_exo else "positive"
+
+    prompt = (
+        f"Study the potential energy ($E_p$) diagram below representing a reversible reaction in the presence and absence of a catalyst.\n\n"
+        f"- Energy of reactants: {e_reactants} kJ·mol⁻¹\n"
+        f"- Energy of products: {e_products} kJ·mol⁻¹\n"
+        f"- Energy of activated complex (uncatalysed): {e_activated_complex} kJ·mol⁻¹\n\n"
+        f"1. State whether this reaction is EXOTHERMIC or ENDOTHERMIC. Give a reason based on the values above.\n"
+        f"2. Define activation energy.\n"
+        f"3. Calculate the activation energy ($E_a$) of the uncatalysed forward reaction.\n"
+        f"4. Calculate the enthalpy change (ΔH) of the reaction.\n"
+        f"5. The dashed curve shows the reaction pathway with a catalyst. Explain how the catalyst increases the reaction rate according to the collision theory."
+    )
+    
+    memo = (
+        f"1. {rxn_type.upper()}. Reason: Energy of products ({e_products} kJ·mol⁻¹) is {reason_text} "
+        f"than energy of reactants ({e_reactants} kJ·mol⁻¹), so ΔH is {sign_text}. [2]\n"
+        f"2. Activation energy is the minimum energy required to initiate a chemical reaction (or minimum energy colliding particles must possess). [2]\n"
+        f"3. Ea(forward) = E(activated complex) - E(reactants) = {e_activated_complex} - {e_reactants} = {ea_uncat} kJ·mol⁻¹ [2]\n"
+        f"4. ΔH = E(products) - E(reactants) = {e_products} - {e_reactants} = {delta_h} kJ·mol⁻¹ [2]\n"
+        f"5. A catalyst provides an alternative reaction pathway of lower activation energy [1]. Therefore, a larger fraction "
+        f"of colliding reactant particles have kinetic energy greater than or equal to the activation energy ($E_k \\ge E_a$) [1], "
+        f"resulting in a higher frequency of effective collisions per unit time [1]."
+    )
+    
+    return {
+        "id": f"chem_energy_profile_{r.randint(100000, 999999)}",
+        "topic": "Rates of Reaction & Energy Changes",
+        "subskill": "potential_energy_profile",
+        "mode": "energy_profile",
+        "difficulty": "medium",
+        "term": 2,
+        "caps_weight_percent": 15,
+        "suggested_duration_mins": 10,
+        "prompt": prompt,
+        "ideal_answer": f"{rxn_type.capitalize()}; Ea = {ea_uncat} kJ/mol; delta H = {delta_h} kJ/mol.",
+        "sample_answer": memo,
+        "worked_solution": memo,
+        "marks": 11,
+        "misconception_tags": ["confusing_activation_energy_with_enthalpy", "forgetting_negative_sign_for_exothermic_delta_h", "catalyst_shifts_equilibrium_myth"],
+        "marking_schema": {
+            "total_marks": 11,
+            "marking_points": [
+                {"id": "mp_type", "desc": f"{rxn_type.capitalize()} with correct reason comparing Ep(products) vs Ep(reactants)", "marks": 2, "editable": True},
+                {"id": "mp_def_ea", "desc": "Standard definition of activation energy: minimum energy required to initiate a reaction", "marks": 2, "editable": True},
+                {"id": "mp_calc_ea", "desc": f"Ea = {ea_uncat} kJ·mol⁻¹", "marks": 2, "editable": True},
+                {"id": "mp_calc_dh", "desc": f"ΔH = {delta_h} kJ·mol⁻¹", "marks": 2, "editable": True},
+                {"id": "mp_cat_coll", "desc": "Collision theory explanation (lower Ea -> more effective collisions per unit time)", "marks": 3, "editable": True}
+            ],
+            "carry_forward_rule": "consequential_accuracy"
+        },
+        "hints": {
+            "nudge": "ΔH = Energy of products - Energy of reactants. If products have less energy than reactants, heat is released (exothermic).",
+            "concept": "Activation energy is the vertical gap from the reactants plateau up to the peak (activated complex).",
+            "breakdown": f"E_a = {e_activated_complex} - {e_reactants} = {ea_uncat} kJ·mol⁻¹; ΔH = {delta_h} kJ·mol⁻¹."
+        },
+        "diagram_spec": {
+            "diagram_role": "identify" if locals().get("target_pin_letter") or locals().get("target_pin") else "context",
+            "kind": "reaction_energy_profile",
+            "reaction_type": rxn_type,
+            "ea_uncatalyzed": ea_uncat,
+            "ea_catalyzed": ea_cat,
+            "delta_h": delta_h,
+            "reactants_energy": e_reactants,
+            "products_energy": e_products
+        }
+    }
+
 BUILDERS = {
     "compound": _build_compound_equilibrium,
     "elementary_molar_mass_calc": _build_moles_drill,
     "elementary_kc_expression": _build_kc_expression_drill,
+    "reaction_energy_profile": _build_reaction_energy_profile_drill,
+    "gas_evolution_rate_apparatus": lambda r, seed=None: build_gas_evolution_rate_apparatus_question(seed or r.randint(1000, 9999), grade=12),
 }
 
 
@@ -255,9 +344,23 @@ def generate(
 
     questions = []
     for i in range(max(1, count)):
-        r = _rng(base_seed * 1000 + i)
-        q = builder(r)
-        q["seed"] = base_seed * 1000 + i
+        curr_seed = base_seed * 1000 + i
+        r = _rng(curr_seed)
+        if subskill in ("gas_evolution", "rate_apparatus", "gas_evolution_rate_apparatus"):
+            q = build_gas_evolution_rate_apparatus_question(curr_seed, grade=12)
+        elif subskill in ("energy_profile", "reaction_profile", "reaction_energy_profile"):
+            q = _build_reaction_energy_profile_drill(r, curr_seed)
+        elif chosen_mode == "compound":
+            rot = (base_seed + i) % 4
+            if rot == 1:
+                q = _build_reaction_energy_profile_drill(r, curr_seed)
+            elif rot == 2:
+                q = build_gas_evolution_rate_apparatus_question(curr_seed, grade=12)
+            else:
+                q = builder(r)
+        else:
+            q = builder(r)
+        q["seed"] = curr_seed
         questions.append(q)
 
     return {"questions": questions}

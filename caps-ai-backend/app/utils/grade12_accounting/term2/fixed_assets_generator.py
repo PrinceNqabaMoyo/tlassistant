@@ -467,13 +467,30 @@ _GENERATORS = [
 
 
 def generate_questions(
-    *, subskill="mixed", difficulty="easy", question_type="mixed",
-    count=1, seed=None, mode="",
+    count=1, subskill="mixed", difficulty="easy", question_type="mixed",
+    seed=None, mode="", **kwargs,
 ) -> List[Dict[str, Any]]:
+    from app.utils.grade12_accounting.financial_statements_notes_generator import _make_fixed_assets_note
     r = _rng(seed)
+    pool = [
+        _gen_depreciation_straight_line,
+        _gen_depreciation_diminishing,
+        _gen_cost_price_backcalc,
+        _gen_total_depreciation,
+        _gen_fully_depreciated,
+        _gen_gaap_principles_mcq,
+        lambda r_in: _make_fixed_assets_note(r=r_in, difficulty=difficulty, mode=mode),
+    ]
+    if mode == "exam":
+        pool.extend([_gen_csr_ethics, _gen_internal_control])
+
     questions = []
     for _ in range(count):
-        q = r.choice(_GENERATORS)(r)
+        gen = r.choice(pool)
+        q = gen(r)
+        q["subskill"] = getattr(gen, "__name__", "fixed_tangible_assets_note").lstrip("_")
+        if q["subskill"] == "<lambda>":
+            q["subskill"] = "fixed_tangible_assets_note"
         q["difficulty"] = difficulty
         q["mode"] = mode
         questions.append(q)

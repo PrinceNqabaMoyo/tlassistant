@@ -291,6 +291,23 @@ def _build_compound_circle(r, difficulty: str) -> Dict[str, Any]:
         suggested_duration_mins=12,
         mode="compound",
         difficulty="hard",
+        diagram_spec={
+            "kind": "circle_geometry",
+            "center": [float(a), float(b)],
+            "radius": float(radius_val),
+            "points": {
+                "M": [float(a), float(b)],
+                "P": [float(px), float(py)],
+                "T": [0.0, float(y_int)],
+            },
+            "vertex_labels": {
+                "M": f"M({a}; {b})",
+                "P": f"P({px}; {py})",
+                "T": f"T(0; {to_latex(y_int)})",
+            },
+            "chords": [["M", "P"]],
+            "tangents": [["T", "P"]],
+        },
     )
 
 
@@ -325,3 +342,5 @@ def generate(
         questions.append(q)
 
     return {"questions": questions}
+
+# diagram_role: context (math / ems declarative context visualization)

@@ -33,10 +33,24 @@ export const KEYPAD_GROUPS = {
     ],
     fractions_division: [
         { label: '\\dfrac{a}{b}', insert: '()/()', offset: -4, title: 'Fraction' },
+        { label: 'a\\dfrac{b}{c}', insert: '1 1/2', offset: -5, title: 'Mixed Number (e.g. 1 3/10)' },
         { label: '\\dfrac{1}{x}', insert: '1/', title: 'Reciprocal fraction' },
         { label: '\\overline{)\\;}', insert: ' / ', title: 'Long division' },
         { label: '\\div', insert: ' / ', title: 'Division symbol' },
         { label: '%', insert: '%', title: 'Percent' },
+    ],
+    greek_geometry: [
+        { label: '\\pi', insert: 'pi', title: 'Pi (π)' },
+        { label: '\\theta', insert: 'theta', title: 'Theta (θ)' },
+        { label: '\\Delta', insert: 'Delta ', title: 'Delta / Change (Δ)' },
+        { label: '\\alpha', insert: 'alpha', title: 'Alpha (α)' },
+        { label: '\\beta', insert: 'beta', title: 'Beta (β)' },
+        { label: '^{\\circ}', insert: '°', title: 'Degrees (°)' },
+        { label: '\\angle', insert: '∠', title: 'Angle (∠)' },
+        { label: '\\triangle', insert: '△', title: 'Triangle (△)' },
+        { label: '\\perp', insert: '⊥', title: 'Perpendicular (⊥)' },
+        { label: '\\parallel', insert: '∥', title: 'Parallel (∥)' },
+        { label: '\\therefore', insert: '∴ ', title: 'Therefore (∴)' },
     ],
     subscripts: [
         { label: 'x_1', insert: 'x_1', title: 'Subscript 1' },
@@ -122,15 +136,16 @@ KEYPAD_GROUPS.circles = KEYPAD_GROUPS.angular_movement;
 
 export const KEYPAD_CATEGORY_TABS = [
     { id: 'topic', label: 'Topic Keys' },
+    { id: 'fractions_division', label: 'Fractions & Mixed' },
+    { id: 'powers_roots', label: 'Powers & Roots' },
+    { id: 'algebra', label: 'Algebra' },
+    { id: 'greek_geometry', label: 'Greek & Geometry' },
+    { id: 'subscripts', label: 'Subscripts' },
+    { id: 'trigonometry', label: 'Trig & Angles' },
+    { id: 'inequalities', label: 'Inequalities' },
     { id: 'complex_numbers', label: 'Complex & Polar' },
     { id: 'calculus', label: 'Calculus & Limits' },
     { id: 'angular_movement', label: 'Angular & Circles' },
-    { id: 'powers_roots', label: 'Powers & Roots' },
-    { id: 'fractions_division', label: 'Fractions & Div' },
-    { id: 'subscripts', label: 'Subscripts' },
-    { id: 'algebra', label: 'Algebra' },
-    { id: 'trigonometry', label: 'Trig & Angles' },
-    { id: 'inequalities', label: 'Inequalities' },
     { id: 'all', label: 'All Symbols' },
 ];
 

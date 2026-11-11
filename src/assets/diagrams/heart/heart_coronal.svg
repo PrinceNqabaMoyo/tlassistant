@@ -1,0 +1,161 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 480" width="100%" height="100%" className="select-none">
+  <defs>
+    <!-- Deoxygenated blood flow gradient (Blue) -->
+    <linearGradient id="deoxFlowGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stopColor="#1e40af" />
+      <stop offset="50%" stopColor="#2563eb" />
+      <stop offset="100%" stopColor="#3b82f6" />
+    </linearGradient>
+
+    <!-- Oxygenated blood flow gradient (Red) -->
+    <linearGradient id="oxFlowGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stopColor="#991b1b" />
+      <stop offset="50%" stopColor="#dc2626" />
+      <stop offset="100%" stopColor="#ef4444" />
+    </linearGradient>
+
+    <!-- Myocardium muscular wall gradient -->
+    <linearGradient id="myocardiumGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stopColor="#f43f5e" />
+      <stop offset="50%" stopColor="#e11d48" />
+      <stop offset="100%" stopColor="#be123c" />
+    </linearGradient>
+
+    <!-- Septum cross-section gradient -->
+    <linearGradient id="septumGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stopColor="#be123c" />
+      <stop offset="100%" stopColor="#9f1239" />
+    </linearGradient>
+
+    <!-- Subtle organ shadow filter -->
+    <filter id="organDropShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" floodOpacity="0.12" floodColor="#0f172a" />
+    </filter>
+  </defs>
+
+  <!-- Layer: Pericardium & Muscular Silhouette -->
+  <g id="myocardium_framework" filter="url(#organDropShadow)">
+    <!-- Outer cardiac muscular contour (apex tilted towards anatomical left) -->
+    <path
+      d="M 170,150 C 130,165 110,240 135,320 C 155,385 220,445 300,455 C 375,445 465,370 480,270 C 490,200 450,155 400,150 C 370,148 350,165 300,165 C 250,165 220,145 170,150 Z"
+      fill="url(#myocardiumGrad)"
+      stroke="#881337"
+      strokeWidth="4"
+      strokeLinejoin="round"
+    />
+  </g>
+
+  <!-- Layer: Great Vessels (SVC, IVC, Aorta, Pulmonary Artery, Pulmonary Veins) -->
+  <g id="great_vessels">
+    <!-- Superior Vena Cava -->
+    <path
+      d="M 140,40 L 140,165 C 140,180 150,190 165,190 L 180,190 L 180,40 Z"
+      fill="url(#deoxFlowGrad)"
+      stroke="#1e3a8a"
+      strokeWidth="2.5"
+    />
+
+    <!-- Inferior Vena Cava -->
+    <path
+      d="M 150,380 L 150,450 L 185,450 L 185,380 Z"
+      fill="url(#deoxFlowGrad)"
+      stroke="#1e3a8a"
+      strokeWidth="2.5"
+    />
+
+    <!-- Aorta Arch (Passing behind pulmonary trunk and arching over) -->
+    <path
+      d="M 285,170 C 285,85 270,35 320,35 C 375,35 390,75 390,170 L 355,170 C 355,95 350,65 320,65 C 300,65 305,95 305,170 Z"
+      fill="url(#oxFlowGrad)"
+      stroke="#7f1d1d"
+      strokeWidth="3"
+    />
+    <!-- Brachiocephalic, Carotid, Subclavian Branches -->
+    <path d="M 315,40 L 305,10 M 335,35 L 335,8 M 355,40 L 365,10" stroke="#b91c1c" strokeWidth="8" strokeLinecap="round" />
+
+    <!-- Pulmonary Artery Trunk and Left/Right Bifurcation -->
+    <path
+      d="M 250,170 C 250,110 230,85 190,85 L 185,85 L 185,115 L 225,115 C 240,115 250,135 250,170 Z"
+      fill="url(#deoxFlowGrad)"
+      stroke="#1e3a8a"
+      strokeWidth="2"
+    />
+    <path
+      d="M 270,170 C 270,110 300,85 410,85 L 415,85 L 415,115 L 295,115 C 280,115 270,135 270,170 Z"
+      fill="url(#deoxFlowGrad)"
+      stroke="#1e3a8a"
+      strokeWidth="2"
+    />
+
+    <!-- Pulmonary Veins (Entering Left Atrium from lungs) -->
+    <path d="M 450,185 L 415,185 L 415,205 L 450,205 Z" fill="url(#oxFlowGrad)" stroke="#7f1d1d" strokeWidth="2" />
+    <path d="M 450,215 L 420,215 L 420,235 L 450,235 Z" fill="url(#oxFlowGrad)" stroke="#7f1d1d" strokeWidth="2" />
+  </g>
+
+  <!-- Layer: Internal Chambers (RA, RV, LA, LV) -->
+  <g id="cardiac_chambers">
+    <!-- Right Atrium Interior -->
+    <path
+      d="M 155,180 C 135,190 135,245 165,260 C 190,265 225,255 225,225 C 225,190 190,175 155,180 Z"
+      fill="#eff6ff"
+      stroke="#3b82f6"
+      strokeWidth="2"
+    />
+
+    <!-- Right Ventricle Interior (Moderate muscular wall) -->
+    <path
+      d="M 175,280 C 150,310 165,375 220,405 C 265,420 280,390 280,280 Z"
+      fill="#eff6ff"
+      stroke="#3b82f6"
+      strokeWidth="2"
+    />
+
+    <!-- Left Atrium Interior -->
+    <path
+      d="M 345,180 C 325,190 325,230 350,250 C 375,260 415,250 420,225 C 425,190 380,175 345,180 Z"
+      fill="#fff1f2"
+      stroke="#ef4444"
+      strokeWidth="2"
+    />
+
+    <!-- Left Ventricle Interior (3x thicker muscular myocardium wall) -->
+    <path
+      d="M 315,280 C 315,385 330,425 365,435 C 400,420 425,370 425,280 Z"
+      fill="#fff1f2"
+      stroke="#ef4444"
+      strokeWidth="2"
+    />
+
+    <!-- Interventricular Septum (Muscular wall separating ventricles) -->
+    <path
+      d="M 280,265 C 285,320 295,385 300,448 C 310,448 315,385 315,265 Z"
+      fill="url(#septumGrad)"
+      stroke="#881337"
+      strokeWidth="2"
+    />
+  </g>
+
+  <!-- Layer: Valves & Chordae Tendineae (Dynamic states handled in component wrapper) -->
+  <g id="valves_and_cords">
+    <!-- Papillary Muscles in Ventricles -->
+    <path d="M 205,380 C 210,355 220,355 225,380 Z" fill="#e11d48" />
+    <path d="M 380,380 C 385,350 395,350 400,380 Z" fill="#e11d48" />
+
+    <!-- Tendinous Cords (Chordae Tendineae) -->
+    <line x1="215" y1="355" x2="205" y2="280" stroke="#e2e8f0" strokeWidth="2" strokeDasharray="1 1" />
+    <line x1="220" y1="355" x2="225" y2="280" stroke="#e2e8f0" strokeWidth="2" strokeDasharray="1 1" />
+    <line x1="390" y1="350" x2="355" y2="280" stroke="#e2e8f0" strokeWidth="2" strokeDasharray="1 1" />
+    <line x1="395" y1="350" x2="385" y2="280" stroke="#e2e8f0" strokeWidth="2" strokeDasharray="1 1" />
+  </g>
+
+  <!-- Layer: Neuromuscular Pacemaker & Conduction Nodes (FET Phase) -->
+  <g id="pacemaker_conduction">
+    <!-- Sinoatrial (SA) Node in upper right atrium wall -->
+    <ellipse cx="190" cy="175" rx="7" ry="5" fill="#facc15" stroke="#ca8a04" strokeWidth="1.5" />
+    <text x="190" y="162" fontSize="9" fontWeight="bold" fill="#854d0e" textAnchor="middle">SA Node</text>
+
+    <!-- Atrioventricular (AV) Node near interatrial septum base -->
+    <ellipse cx="260" cy="245" rx="6" ry="4" fill="#facc15" stroke="#ca8a04" strokeWidth="1.5" />
+    <text x="260" y="238" fontSize="9" fontWeight="bold" fill="#854d0e" textAnchor="middle">AV Node</text>
+  </g>
+</svg>

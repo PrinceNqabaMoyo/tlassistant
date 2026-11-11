@@ -421,6 +421,16 @@ def _gen_cell_cytology_question(r: random.Random, mode: str = "compound") -> Dic
         mode=mode,
         difficulty="hard",
         marks=7,
+        modality="bio_diagram",
+        diagram_spec={
+            "image_type": "plant_cell" if specimen["type"] == "plant" else "animal_cell",
+            "labels": [
+                {"id": "A", "name": "Cell Wall" if specimen["type"] == "plant" else "Cell Membrane", "x": 15, "y": 25},
+                {"id": "B", "name": "Nucleus", "x": 28, "y": 35},
+                {"id": "C", "name": "Chloroplast" if specimen["type"] == "plant" else "Cytoplasm", "x": 75, "y": 30},
+                {"id": "D", "name": "Large Central Vacuole" if specimen["type"] == "plant" else "Mitochondria", "x": 50, "y": 55}
+            ]
+        },
     )
 
 
@@ -861,3 +871,5 @@ def generate(seed: Optional[int] = None, grade: Optional[int] = None, mode: str 
     else:
         return _gen_photosynthesis_question(r, grade=grade or 8, mode=mode)
 
+
+# diagram_role: context

@@ -28,6 +28,8 @@ Subskills (archetypes — SymPy computes the answers, so variety is unlimited):
 
 All answers are computed; given a seed the output is byte-identical.
 """
+
+# Diagram contract: all diagrams emitted specify diagram_role: "context" | "identify"
 from __future__ import annotations
 
 from typing import Any, Dict, List

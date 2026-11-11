@@ -1,0 +1,1734 @@
+# BKT Adaptive Progression & Question Audit Dossier
+
+| Attribute | Value |
+| :--- | :--- |
+| **Grade** | Grade 11 (`Gr11`) |
+| **Subject** | Mathematics |
+| **Topic** | investigation and projects |
+| **Student Performance Level** | `high-performing` |
+| **Resolved Generator Key** | `grade11_math_investigation_and_projects` |
+| **Archetypes / Subskills** | `journal` |
+| **Total Questions (BKT Order)** | **68** |
+| **Practice Level Questions** | **50** *(Minimum Required: 50)* |
+| **Exams Written** | **3 Exams** (15 Exam Questions) |
+| **Final Formative BKT Mastery** | **100%** |
+| **Final Evaluative Exam Score** | **98%** |
+| **Final Adaptive Status** | `exam_ready` |
+| **Pipeline Verification Status** | ✅ **PASSED (0 Issues)** |
+
+## 📊 Exam-Level Performance Summary (3 Exams)
+
+| Exam | Questions | Score Awarded | Max Marks | Percentage |
+| :--- | :---: | :---: | :---: | :---: |
+| **Exam 1** | 5 | 20 | 20 | **100%** |
+| **Exam 2** | 5 | 18 | 20 | **90%** |
+| **Exam 3** | 5 | 20 | 20 | **100%** |
+
+## 📈 Chronological BKT Progression Matrix
+
+| Step | Progression Stage / Phase | Seed | Question ID | Subskill | Diff | Intent | Score | BKT Mastery (Before -> After) | Status | Misconception / Note |
+| :---: | :--- | :---: | :--- | :--- | :---: | :---: | :---: | :---: | :---: | :--- |
+| 1 | Diagnostic Q1/3 | 100 | `lp_formulation_17576bc102b6` | `journal` | easy | canonical | **4/4** | 0% &rarr; **11%** | `scaffold` | — |
+| 2 | Diagnostic Q2/3 | 101 | `lp_formulation_bdccfeaa64ac` | `journal` | medium | canonical | **4/4** | 11% &rarr; **22%** | `scaffold` | — |
+| 3 | Diagnostic Q3/3 | 102 | `lp_formulation_14c99bfcdd13` | `journal` | hard | canonical | **4/4** | 22% &rarr; **100%** | `exam_ready` | — |
+| 4 | Practice Q1/50 | 1001 | `lp_formulation_7bbb8a180771` | `journal` | medium | canonical | **4/4** | 100% &rarr; **100%** | `exam_ready` | — |
+| 5 | Practice Q2/50 | 1002 | `lp_formulation_6fbff9884946` | `journal` | medium | canonical | **4/4** | 100% &rarr; **100%** | `exam_ready` | — |
+| 6 | Practice Q3/50 | 1003 | `lp_formulation_7c55ff665ed4` | `journal` | medium | canonical | **4/4** | 100% &rarr; **100%** | `exam_ready` | — |
+| 7 | Practice Q4/50 | 1004 | `lp_formulation_99e62b434034` | `journal` | medium | canonical | **4/4** | 100% &rarr; **100%** | `exam_ready` | — |
+| 8 | Practice Q5/50 | 1005 | `lp_formulation_be62e3924c87` | `journal` | medium | canonical | **4/4** | 100% &rarr; **100%** | `exam_ready` | — |
+| 9 | Practice Q6/50 | 1006 | `lp_formulation_74c3c027f1f9` | `journal` | medium | canonical | **4/4** | 100% &rarr; **100%** | `exam_ready` | — |
+| 10 | Practice Q7/50 | 1007 | `lp_formulation_d08755d03d7e` | `journal` | medium | canonical | **4/4** | 100% &rarr; **100%** | `exam_ready` | — |
+| 11 | Practice Q8/50 | 1008 | `lp_formulation_abb60e1cc887` | `journal` | medium | canonical | **4/4** | 100% &rarr; **100%** | `exam_ready` | — |
+| 12 | Practice Q9/50 | 1009 | `lp_formulation_4cee7a9eb758` | `journal` | medium | canonical | **4/4** | 100% &rarr; **100%** | `exam_ready` | — |
+| 13 | Practice Q10/50 | 1010 | `lp_formulation_f1e2b762ea5e` | `journal` | medium | canonical | **4/4** | 100% &rarr; **100%** | `exam_ready` | — |
+| 14 | Practice Q11/50 | 1011 | `lp_formulation_3d44bade2cb7` | `journal` | medium | canonical | **4/4** | 100% &rarr; **100%** | `exam_ready` | — |
+| 15 | Practice Q12/50 | 1012 | `lp_formulation_e4f7835edaf0` | `journal` | medium | canonical | **4/4** | 100% &rarr; **100%** | `exam_ready` | — |
+| 16 | Practice Q13/50 | 1013 | `lp_formulation_72ecc5f199cc` | `journal` | medium | canonical | **4/4** | 100% &rarr; **100%** | `exam_ready` | — |
+| 17 | Practice Q14/50 | 1014 | `lp_formulation_cd5472f40651` | `journal` | medium | canonical | **4/4** | 100% &rarr; **100%** | `exam_ready` | — |
+| 18 | Practice Q15/50 | 1015 | `lp_formulation_0ad9358f8610` | `journal` | medium | partial | **2/4** | 100% &rarr; **96%** | `exam_ready` | `inequality_direction_inversion` |
+| 19 | Practice Q16/50 | 1016 | `lp_formulation_8e9464e630f9` | `journal` | medium | canonical | **4/4** | 96% &rarr; **99%** | `exam_ready` | — |
+| 20 | Practice Q17/50 | 1017 | `lp_formulation_118eb3056e85` | `journal` | medium | canonical | **4/4** | 99% &rarr; **100%** | `exam_ready` | — |
+| 21 | Practice Q18/50 | 1018 | `lp_formulation_827f7b8e6e0e` | `journal` | medium | canonical | **4/4** | 100% &rarr; **100%** | `exam_ready` | — |
+| 22 | Practice Q19/50 | 1019 | `lp_formulation_0a0bf00c9384` | `journal` | medium | canonical | **4/4** | 100% &rarr; **100%** | `exam_ready` | — |
+| 23 | Practice Q20/50 | 1020 | `lp_formulation_4865aabb52f1` | `journal` | medium | canonical | **4/4** | 100% &rarr; **100%** | `exam_ready` | — |
+| 24 | Practice Q21/50 | 1021 | `lp_formulation_d2956e260138` | `journal` | medium | canonical | **4/4** | 100% &rarr; **100%** | `exam_ready` | — |
+| 25 | Practice Q22/50 | 1022 | `lp_formulation_a13264007040` | `journal` | medium | canonical | **4/4** | 100% &rarr; **100%** | `exam_ready` | — |
+| 26 | Practice Q23/50 | 1023 | `lp_formulation_2c5d0bf0afce` | `journal` | medium | canonical | **4/4** | 100% &rarr; **100%** | `exam_ready` | — |
+| 27 | Practice Q24/50 | 1024 | `lp_formulation_67cf8584455d` | `journal` | medium | canonical | **4/4** | 100% &rarr; **100%** | `exam_ready` | — |
+| 28 | Practice Q25/50 | 1025 | `lp_formulation_23ed48b7332d` | `journal` | medium | wrong | **0/4** | 100% &rarr; **96%** | `exam_ready` | `inequality_direction_inversion` |
+| 29 | Practice Q26/50 | 1026 | `lp_formulation_ad2168603bda` | `journal` | medium | canonical | **4/4** | 96% &rarr; **99%** | `exam_ready` | — |
+| 30 | Practice Q27/50 | 1027 | `lp_formulation_bf5f9e36fb0e` | `journal` | medium | canonical | **4/4** | 99% &rarr; **100%** | `exam_ready` | — |
+| 31 | Practice Q28/50 | 1028 | `lp_formulation_c4c7e9992d0a` | `journal` | medium | canonical | **4/4** | 100% &rarr; **100%** | `exam_ready` | — |
+| 32 | Practice Q29/50 | 1029 | `lp_formulation_7eb34ed2d0ab` | `journal` | medium | canonical | **4/4** | 100% &rarr; **100%** | `exam_ready` | — |
+| 33 | Practice Q30/50 | 1030 | `lp_formulation_f9f842898400` | `journal` | medium | partial | **2/4** | 100% &rarr; **96%** | `exam_ready` | `inequality_direction_inversion` |
+| 34 | Practice Q31/50 | 1031 | `lp_formulation_edfc00222374` | `journal` | medium | canonical | **4/4** | 96% &rarr; **99%** | `exam_ready` | — |
+| 35 | Practice Q32/50 | 1032 | `lp_formulation_5db5d6a46090` | `journal` | medium | canonical | **4/4** | 99% &rarr; **100%** | `exam_ready` | — |
+| 36 | Practice Q33/50 | 1033 | `lp_formulation_4e9e690eb967` | `journal` | medium | canonical | **4/4** | 100% &rarr; **100%** | `exam_ready` | — |
+| 37 | Practice Q34/50 | 1034 | `lp_formulation_e3cc32964628` | `journal` | medium | canonical | **4/4** | 100% &rarr; **100%** | `exam_ready` | — |
+| 38 | Practice Q35/50 | 1035 | `lp_formulation_fd75fc73b838` | `journal` | medium | canonical | **4/4** | 100% &rarr; **100%** | `exam_ready` | — |
+| 39 | Practice Q36/50 | 1036 | `lp_formulation_5bba5d96c9b4` | `journal` | medium | canonical | **4/4** | 100% &rarr; **100%** | `exam_ready` | — |
+| 40 | Practice Q37/50 | 1037 | `lp_formulation_72deef3ad65b` | `journal` | medium | canonical | **4/4** | 100% &rarr; **100%** | `exam_ready` | — |
+| 41 | Practice Q38/50 | 1038 | `lp_formulation_ad00423fd33b` | `journal` | medium | canonical | **4/4** | 100% &rarr; **100%** | `exam_ready` | — |
+| 42 | Practice Q39/50 | 1039 | `lp_formulation_daf9a2f0cacd` | `journal` | medium | canonical | **4/4** | 100% &rarr; **100%** | `exam_ready` | — |
+| 43 | Practice Q40/50 | 1040 | `lp_formulation_6dfd9c0b6096` | `journal` | medium | canonical | **4/4** | 100% &rarr; **100%** | `exam_ready` | — |
+| 44 | Practice Q41/50 | 1041 | `lp_formulation_4b1c758345a0` | `journal` | medium | canonical | **4/4** | 100% &rarr; **100%** | `exam_ready` | — |
+| 45 | Practice Q42/50 | 1042 | `lp_formulation_684cfbb8ed58` | `journal` | medium | partial | **2/4** | 100% &rarr; **96%** | `exam_ready` | `inequality_direction_inversion` |
+| 46 | Practice Q43/50 | 1043 | `lp_formulation_b77da9f4c091` | `journal` | medium | canonical | **4/4** | 96% &rarr; **99%** | `exam_ready` | — |
+| 47 | Practice Q44/50 | 1044 | `lp_formulation_8a9a7ec7fa47` | `journal` | medium | canonical | **4/4** | 99% &rarr; **100%** | `exam_ready` | — |
+| 48 | Practice Q45/50 | 1045 | `lp_formulation_2fc9b3a24140` | `journal` | medium | canonical | **4/4** | 100% &rarr; **100%** | `exam_ready` | — |
+| 49 | Practice Q46/50 | 1046 | `lp_formulation_4761c0c5f6ee` | `journal` | medium | canonical | **4/4** | 100% &rarr; **100%** | `exam_ready` | — |
+| 50 | Practice Q47/50 | 1047 | `lp_formulation_08e7f95d7314` | `journal` | medium | canonical | **4/4** | 100% &rarr; **100%** | `exam_ready` | — |
+| 51 | Practice Q48/50 | 1048 | `lp_formulation_b1a0f26e64c0` | `journal` | medium | canonical | **4/4** | 100% &rarr; **100%** | `exam_ready` | — |
+| 52 | Practice Q49/50 | 1049 | `lp_formulation_017998be4157` | `journal` | medium | canonical | **4/4** | 100% &rarr; **100%** | `exam_ready` | — |
+| 53 | Practice Q50/50 | 1050 | `lp_formulation_434c96be1d06` | `journal` | medium | canonical | **4/4** | 100% &rarr; **100%** | `exam_ready` | — |
+| 54 | Exam 1 - Q1/5 | 2101 | `lp_formulation_9e17ed90b702` | `journal` | hard | canonical | **4/4** | 100% &rarr; **100%** | `exam_ready` | — |
+| 55 | Exam 1 - Q2/5 | 2102 | `lp_formulation_3d4ed3a93d42` | `journal` | hard | canonical | **4/4** | 100% &rarr; **100%** | `exam_ready` | — |
+| 56 | Exam 1 - Q3/5 | 2103 | `lp_formulation_1c3bce62c0d3` | `journal` | hard | canonical | **4/4** | 100% &rarr; **100%** | `exam_ready` | — |
+| 57 | Exam 1 - Q4/5 | 2104 | `lp_formulation_490753b15977` | `journal` | hard | canonical | **4/4** | 100% &rarr; **100%** | `exam_ready` | — |
+| 58 | Exam 1 - Q5/5 | 2105 | `lp_formulation_63c8a614d66e` | `journal` | hard | canonical | **4/4** | 100% &rarr; **100%** | `exam_ready` | — |
+| 59 | Exam 2 - Q1/5 | 2201 | `lp_formulation_85d729e410b7` | `journal` | hard | canonical | **4/4** | 100% &rarr; **100%** | `exam_ready` | — |
+| 60 | Exam 2 - Q2/5 | 2202 | `lp_formulation_a130769ceff2` | `journal` | hard | canonical | **4/4** | 100% &rarr; **100%** | `exam_ready` | — |
+| 61 | Exam 2 - Q3/5 | 2203 | `lp_formulation_a46856cdce3c` | `journal` | hard | canonical | **4/4** | 100% &rarr; **100%** | `exam_ready` | — |
+| 62 | Exam 2 - Q4/5 | 2204 | `lp_formulation_ddbefebac2a2` | `journal` | hard | partial | **2/4** | 100% &rarr; **96%** | `exam_ready` | `inequality_direction_inversion` |
+| 63 | Exam 2 - Q5/5 | 2205 | `lp_formulation_90889d09943c` | `journal` | hard | canonical | **4/4** | 96% &rarr; **99%** | `exam_ready` | — |
+| 64 | Exam 3 - Q1/5 | 2301 | `lp_formulation_10de2d9a356e` | `journal` | hard | canonical | **4/4** | 99% &rarr; **100%** | `exam_ready` | — |
+| 65 | Exam 3 - Q2/5 | 2302 | `lp_formulation_8fbc2a282adf` | `journal` | hard | canonical | **4/4** | 100% &rarr; **100%** | `exam_ready` | — |
+| 66 | Exam 3 - Q3/5 | 2303 | `lp_formulation_ceccf000a746` | `journal` | hard | canonical | **4/4** | 100% &rarr; **100%** | `exam_ready` | — |
+| 67 | Exam 3 - Q4/5 | 2304 | `lp_formulation_9cb2f4873c78` | `journal` | hard | canonical | **4/4** | 100% &rarr; **100%** | `exam_ready` | — |
+| 68 | Exam 3 - Q5/5 | 2305 | `lp_formulation_dadb85707ea2` | `journal` | hard | canonical | **4/4** | 100% &rarr; **100%** | `exam_ready` | — |
+
+---
+
+## 📝 Complete Question, Student Input & Memorandum Ledger (In Order of BKT)
+
+### Step 1: Diagnostic Q1/3 — `lp_formulation_17576bc102b6` (Seed: `100`)
+- **Stage:** `diagnostic` | **Mode:** `elementary` | **Difficulty:** `easy` | **Subskill:** `journal`
+- **BKT Mastery:** `0%` &rarr; `11%` | **Evaluative Score:** `0%` | **Adaptive Status:** `diagnostic_required` &rarr; `scaffold`
+
+**Question Prompt:**
+> **Apex Woodcraft** manufactures two products: executive desks ($x$) and bookshelves ($y$).
+> 
+> • Each executive desks requires $2\text{ hours}$ of carpentry labour and $1\text{ hours}$ of varnishing time.
+> • Each bookshelves requires $3\text{ hours}$ of carpentry labour and $2\text{ hours}$ of varnishing time.
+> • A maximum of $46\text{ hours}$ of carpentry labour and $32\text{ hours}$ of varnishing time are available each week.
+> • The factory can manufacture at most $8$ executive desks per week.
+> • The profit is R190 per executive desks and R240 per bookshelves.
+> 
+> **Required:**
+> 1. Write down the constraint inequality for carpentry labour.
+> 2. Write down the constraint inequality for varnishing time.
+> 3. State the production limit inequality for $x$ and the non-negativity conditions.
+> 4. Write down the objective function $P$ for total weekly profit.
+
+- **Student Inputted Answer (canonical):** `{"constraint_1": "2x + 3y \\le 46", "constraint_2": "1x + 2y \\le 32", "non_negativity": "x \\le 8,\\quad x \\ge 0,\\quad y \\ge 0", "object...`
+- **Expected / Memo Answer:** `{"constraint_1": "2x + 3y \\le 46", "constraint_2": "1x + 2y \\le 32", "non_negativity": "x \\le 8,\\quad x \\ge 0,\\quad y \\ge 0", "object...`
+- **Official Worked Solution:** 1. 2x + 3y \le 46; 2. 1x + 2y \le 32; 3. x \le 8,\quad x \ge 0,\quad y \ge 0; 4. P = 190x + 240y
+- **Marking Evaluation:** **4 / 4** (✅ Correct)
+
+### Step 2: Diagnostic Q2/3 — `lp_formulation_bdccfeaa64ac` (Seed: `101`)
+- **Stage:** `diagnostic` | **Mode:** `compound` | **Difficulty:** `medium` | **Subskill:** `journal`
+- **BKT Mastery:** `11%` &rarr; `22%` | **Evaluative Score:** `0%` | **Adaptive Status:** `scaffold` &rarr; `scaffold`
+
+**Question Prompt:**
+> **Veld Cycle Works** manufactures two products: mountain bikes ($x$) and road bikes ($y$).
+> 
+> • Each mountain bikes requires $2\text{ hours}$ of frame welding and $1\text{ hours}$ of gear assembly.
+> • Each road bikes requires $2\text{ hours}$ of frame welding and $2\text{ hours}$ of gear assembly.
+> • A maximum of $60\text{ hours}$ of frame welding and $28\text{ hours}$ of gear assembly are available each week.
+> • The factory can manufacture at most $20$ mountain bikes per week.
+> • The profit is R300 per mountain bikes and R590 per road bikes.
+> 
+> **Required:**
+> 1. Write down the constraint inequality for frame welding.
+> 2. Write down the constraint inequality for gear assembly.
+> 3. State the production limit inequality for $x$ and the non-negativity conditions.
+> 4. Write down the objective function $P$ for total weekly profit.
+
+- **Student Inputted Answer (canonical):** `{"constraint_1": "2x + 2y \\le 60", "constraint_2": "1x + 2y \\le 28", "non_negativity": "x \\le 20,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Expected / Memo Answer:** `{"constraint_1": "2x + 2y \\le 60", "constraint_2": "1x + 2y \\le 28", "non_negativity": "x \\le 20,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Official Worked Solution:** 1. 2x + 2y \le 60; 2. 1x + 2y \le 28; 3. x \le 20,\quad x \ge 0,\quad y \ge 0; 4. P = 300x + 590y
+- **Marking Evaluation:** **4 / 4** (✅ Correct)
+
+### Step 3: Diagnostic Q3/3 — `lp_formulation_14c99bfcdd13` (Seed: `102`)
+- **Stage:** `diagnostic` | **Mode:** `compound` | **Difficulty:** `hard` | **Subskill:** `journal`
+- **BKT Mastery:** `22%` &rarr; `100%` | **Evaluative Score:** `80%` | **Adaptive Status:** `scaffold` &rarr; `exam_ready`
+
+**Question Prompt:**
+> **Veld Cycle Works** manufactures two products: mountain bikes ($x$) and road bikes ($y$).
+> 
+> • Each mountain bikes requires $3\text{ hours}$ of frame welding and $2\text{ hours}$ of gear assembly.
+> • Each road bikes requires $3\text{ hours}$ of frame welding and $2\text{ hours}$ of gear assembly.
+> • A maximum of $34\text{ hours}$ of frame welding and $32\text{ hours}$ of gear assembly are available each week.
+> • The factory can manufacture at most $14$ mountain bikes per week.
+> • The profit is R400 per mountain bikes and R420 per road bikes.
+> 
+> **Required:**
+> 1. Write down the constraint inequality for frame welding.
+> 2. Write down the constraint inequality for gear assembly.
+> 3. State the production limit inequality for $x$ and the non-negativity conditions.
+> 4. Write down the objective function $P$ for total weekly profit.
+
+- **Student Inputted Answer (canonical):** `{"constraint_1": "3x + 3y \\le 34", "constraint_2": "2x + 2y \\le 32", "non_negativity": "x \\le 14,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Expected / Memo Answer:** `{"constraint_1": "3x + 3y \\le 34", "constraint_2": "2x + 2y \\le 32", "non_negativity": "x \\le 14,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Official Worked Solution:** 1. 3x + 3y \le 34; 2. 2x + 2y \le 32; 3. x \le 14,\quad x \ge 0,\quad y \ge 0; 4. P = 400x + 420y
+- **Marking Evaluation:** **4 / 4** (✅ Correct)
+
+### Step 4: Practice Q1/50 — `lp_formulation_7bbb8a180771` (Seed: `1001`)
+- **Stage:** `practice` | **Mode:** `compound` | **Difficulty:** `medium` | **Subskill:** `journal`
+- **BKT Mastery:** `100%` &rarr; `100%` | **Evaluative Score:** `80%` | **Adaptive Status:** `exam_ready` &rarr; `exam_ready`
+
+**Question Prompt:**
+> **Apex Woodcraft** manufactures two products: executive desks ($x$) and bookshelves ($y$).
+> 
+> • Each executive desks requires $4\text{ hours}$ of carpentry labour and $2\text{ hours}$ of varnishing time.
+> • Each bookshelves requires $2\text{ hours}$ of carpentry labour and $3\text{ hours}$ of varnishing time.
+> • A maximum of $40\text{ hours}$ of carpentry labour and $31\text{ hours}$ of varnishing time are available each week.
+> • The factory can manufacture at most $13$ executive desks per week.
+> • The profit is R230 per executive desks and R470 per bookshelves.
+> 
+> **Required:**
+> 1. Write down the constraint inequality for carpentry labour.
+> 2. Write down the constraint inequality for varnishing time.
+> 3. State the production limit inequality for $x$ and the non-negativity conditions.
+> 4. Write down the objective function $P$ for total weekly profit.
+
+- **Student Inputted Answer (canonical):** `{"constraint_1": "4x + 2y \\le 40", "constraint_2": "2x + 3y \\le 31", "non_negativity": "x \\le 13,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Expected / Memo Answer:** `{"constraint_1": "4x + 2y \\le 40", "constraint_2": "2x + 3y \\le 31", "non_negativity": "x \\le 13,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Official Worked Solution:** 1. 4x + 2y \le 40; 2. 2x + 3y \le 31; 3. x \le 13,\quad x \ge 0,\quad y \ge 0; 4. P = 230x + 470y
+- **Marking Evaluation:** **4 / 4** (✅ Correct)
+
+### Step 5: Practice Q2/50 — `lp_formulation_6fbff9884946` (Seed: `1002`)
+- **Stage:** `practice` | **Mode:** `compound` | **Difficulty:** `medium` | **Subskill:** `journal`
+- **BKT Mastery:** `100%` &rarr; `100%` | **Evaluative Score:** `80%` | **Adaptive Status:** `exam_ready` &rarr; `exam_ready`
+
+**Question Prompt:**
+> **Golden Harvest Bakery** manufactures two products: speciality cakes ($x$) and artisan loaves ($y$).
+> 
+> • Each speciality cakes requires $3\text{ hours}$ of baking oven capacity and $1\text{ hours}$ of decorating time.
+> • Each artisan loaves requires $2\text{ hours}$ of baking oven capacity and $2\text{ hours}$ of decorating time.
+> • A maximum of $28\text{ hours}$ of baking oven capacity and $43\text{ hours}$ of decorating time are available each week.
+> • The factory can manufacture at most $12$ speciality cakes per week.
+> • The profit is R340 per speciality cakes and R450 per artisan loaves.
+> 
+> **Required:**
+> 1. Write down the constraint inequality for baking oven capacity.
+> 2. Write down the constraint inequality for decorating time.
+> 3. State the production limit inequality for $x$ and the non-negativity conditions.
+> 4. Write down the objective function $P$ for total weekly profit.
+
+- **Student Inputted Answer (canonical):** `{"constraint_1": "3x + 2y \\le 28", "constraint_2": "1x + 2y \\le 43", "non_negativity": "x \\le 12,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Expected / Memo Answer:** `{"constraint_1": "3x + 2y \\le 28", "constraint_2": "1x + 2y \\le 43", "non_negativity": "x \\le 12,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Official Worked Solution:** 1. 3x + 2y \le 28; 2. 1x + 2y \le 43; 3. x \le 12,\quad x \ge 0,\quad y \ge 0; 4. P = 340x + 450y
+- **Marking Evaluation:** **4 / 4** (✅ Correct)
+
+### Step 6: Practice Q3/50 — `lp_formulation_7c55ff665ed4` (Seed: `1003`)
+- **Stage:** `practice` | **Mode:** `compound` | **Difficulty:** `medium` | **Subskill:** `journal`
+- **BKT Mastery:** `100%` &rarr; `100%` | **Evaluative Score:** `80%` | **Adaptive Status:** `exam_ready` &rarr; `exam_ready`
+
+**Question Prompt:**
+> **Veld Cycle Works** manufactures two products: mountain bikes ($x$) and road bikes ($y$).
+> 
+> • Each mountain bikes requires $4\text{ hours}$ of frame welding and $2\text{ hours}$ of gear assembly.
+> • Each road bikes requires $3\text{ hours}$ of frame welding and $4\text{ hours}$ of gear assembly.
+> • A maximum of $51\text{ hours}$ of frame welding and $32\text{ hours}$ of gear assembly are available each week.
+> • The factory can manufacture at most $17$ mountain bikes per week.
+> • The profit is R170 per mountain bikes and R510 per road bikes.
+> 
+> **Required:**
+> 1. Write down the constraint inequality for frame welding.
+> 2. Write down the constraint inequality for gear assembly.
+> 3. State the production limit inequality for $x$ and the non-negativity conditions.
+> 4. Write down the objective function $P$ for total weekly profit.
+
+- **Student Inputted Answer (canonical):** `{"constraint_1": "4x + 3y \\le 51", "constraint_2": "2x + 4y \\le 32", "non_negativity": "x \\le 17,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Expected / Memo Answer:** `{"constraint_1": "4x + 3y \\le 51", "constraint_2": "2x + 4y \\le 32", "non_negativity": "x \\le 17,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Official Worked Solution:** 1. 4x + 3y \le 51; 2. 2x + 4y \le 32; 3. x \le 17,\quad x \ge 0,\quad y \ge 0; 4. P = 170x + 510y
+- **Marking Evaluation:** **4 / 4** (✅ Correct)
+
+### Step 7: Practice Q4/50 — `lp_formulation_99e62b434034` (Seed: `1004`)
+- **Stage:** `practice` | **Mode:** `compound` | **Difficulty:** `medium` | **Subskill:** `journal`
+- **BKT Mastery:** `100%` &rarr; `100%` | **Evaluative Score:** `80%` | **Adaptive Status:** `exam_ready` &rarr; `exam_ready`
+
+**Question Prompt:**
+> **Veld Cycle Works** manufactures two products: mountain bikes ($x$) and road bikes ($y$).
+> 
+> • Each mountain bikes requires $3\text{ hours}$ of frame welding and $2\text{ hours}$ of gear assembly.
+> • Each road bikes requires $1\text{ hours}$ of frame welding and $2\text{ hours}$ of gear assembly.
+> • A maximum of $27\text{ hours}$ of frame welding and $45\text{ hours}$ of gear assembly are available each week.
+> • The factory can manufacture at most $9$ mountain bikes per week.
+> • The profit is R230 per mountain bikes and R360 per road bikes.
+> 
+> **Required:**
+> 1. Write down the constraint inequality for frame welding.
+> 2. Write down the constraint inequality for gear assembly.
+> 3. State the production limit inequality for $x$ and the non-negativity conditions.
+> 4. Write down the objective function $P$ for total weekly profit.
+
+- **Student Inputted Answer (canonical):** `{"constraint_1": "3x + 1y \\le 27", "constraint_2": "2x + 2y \\le 45", "non_negativity": "x \\le 9,\\quad x \\ge 0,\\quad y \\ge 0", "object...`
+- **Expected / Memo Answer:** `{"constraint_1": "3x + 1y \\le 27", "constraint_2": "2x + 2y \\le 45", "non_negativity": "x \\le 9,\\quad x \\ge 0,\\quad y \\ge 0", "object...`
+- **Official Worked Solution:** 1. 3x + 1y \le 27; 2. 2x + 2y \le 45; 3. x \le 9,\quad x \ge 0,\quad y \ge 0; 4. P = 230x + 360y
+- **Marking Evaluation:** **4 / 4** (✅ Correct)
+
+### Step 8: Practice Q5/50 — `lp_formulation_be62e3924c87` (Seed: `1005`)
+- **Stage:** `practice` | **Mode:** `compound` | **Difficulty:** `medium` | **Subskill:** `journal`
+- **BKT Mastery:** `100%` &rarr; `100%` | **Evaluative Score:** `80%` | **Adaptive Status:** `exam_ready` &rarr; `exam_ready`
+
+**Question Prompt:**
+> **Golden Harvest Bakery** manufactures two products: speciality cakes ($x$) and artisan loaves ($y$).
+> 
+> • Each speciality cakes requires $4\text{ hours}$ of baking oven capacity and $2\text{ hours}$ of decorating time.
+> • Each artisan loaves requires $2\text{ hours}$ of baking oven capacity and $3\text{ hours}$ of decorating time.
+> • A maximum of $58\text{ hours}$ of baking oven capacity and $28\text{ hours}$ of decorating time are available each week.
+> • The factory can manufacture at most $19$ speciality cakes per week.
+> • The profit is R240 per speciality cakes and R360 per artisan loaves.
+> 
+> **Required:**
+> 1. Write down the constraint inequality for baking oven capacity.
+> 2. Write down the constraint inequality for decorating time.
+> 3. State the production limit inequality for $x$ and the non-negativity conditions.
+> 4. Write down the objective function $P$ for total weekly profit.
+
+- **Student Inputted Answer (canonical):** `{"constraint_1": "4x + 2y \\le 58", "constraint_2": "2x + 3y \\le 28", "non_negativity": "x \\le 19,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Expected / Memo Answer:** `{"constraint_1": "4x + 2y \\le 58", "constraint_2": "2x + 3y \\le 28", "non_negativity": "x \\le 19,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Official Worked Solution:** 1. 4x + 2y \le 58; 2. 2x + 3y \le 28; 3. x \le 19,\quad x \ge 0,\quad y \ge 0; 4. P = 240x + 360y
+- **Marking Evaluation:** **4 / 4** (✅ Correct)
+
+### Step 9: Practice Q6/50 — `lp_formulation_74c3c027f1f9` (Seed: `1006`)
+- **Stage:** `practice` | **Mode:** `compound` | **Difficulty:** `medium` | **Subskill:** `journal`
+- **BKT Mastery:** `100%` &rarr; `100%` | **Evaluative Score:** `80%` | **Adaptive Status:** `exam_ready` &rarr; `exam_ready`
+
+**Question Prompt:**
+> **Apex Woodcraft** manufactures two products: executive desks ($x$) and bookshelves ($y$).
+> 
+> • Each executive desks requires $4\text{ hours}$ of carpentry labour and $1\text{ hours}$ of varnishing time.
+> • Each bookshelves requires $2\text{ hours}$ of carpentry labour and $3\text{ hours}$ of varnishing time.
+> • A maximum of $33\text{ hours}$ of carpentry labour and $28\text{ hours}$ of varnishing time are available each week.
+> • The factory can manufacture at most $15$ executive desks per week.
+> • The profit is R260 per executive desks and R400 per bookshelves.
+> 
+> **Required:**
+> 1. Write down the constraint inequality for carpentry labour.
+> 2. Write down the constraint inequality for varnishing time.
+> 3. State the production limit inequality for $x$ and the non-negativity conditions.
+> 4. Write down the objective function $P$ for total weekly profit.
+
+- **Student Inputted Answer (canonical):** `{"constraint_1": "4x + 2y \\le 33", "constraint_2": "1x + 3y \\le 28", "non_negativity": "x \\le 15,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Expected / Memo Answer:** `{"constraint_1": "4x + 2y \\le 33", "constraint_2": "1x + 3y \\le 28", "non_negativity": "x \\le 15,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Official Worked Solution:** 1. 4x + 2y \le 33; 2. 1x + 3y \le 28; 3. x \le 15,\quad x \ge 0,\quad y \ge 0; 4. P = 260x + 400y
+- **Marking Evaluation:** **4 / 4** (✅ Correct)
+
+### Step 10: Practice Q7/50 — `lp_formulation_d08755d03d7e` (Seed: `1007`)
+- **Stage:** `practice` | **Mode:** `compound` | **Difficulty:** `medium` | **Subskill:** `journal`
+- **BKT Mastery:** `100%` &rarr; `100%` | **Evaluative Score:** `80%` | **Adaptive Status:** `exam_ready` &rarr; `exam_ready`
+
+**Question Prompt:**
+> **Golden Harvest Bakery** manufactures two products: speciality cakes ($x$) and artisan loaves ($y$).
+> 
+> • Each speciality cakes requires $3\text{ hours}$ of baking oven capacity and $2\text{ hours}$ of decorating time.
+> • Each artisan loaves requires $3\text{ hours}$ of baking oven capacity and $4\text{ hours}$ of decorating time.
+> • A maximum of $40\text{ hours}$ of baking oven capacity and $34\text{ hours}$ of decorating time are available each week.
+> • The factory can manufacture at most $18$ speciality cakes per week.
+> • The profit is R380 per speciality cakes and R230 per artisan loaves.
+> 
+> **Required:**
+> 1. Write down the constraint inequality for baking oven capacity.
+> 2. Write down the constraint inequality for decorating time.
+> 3. State the production limit inequality for $x$ and the non-negativity conditions.
+> 4. Write down the objective function $P$ for total weekly profit.
+
+- **Student Inputted Answer (canonical):** `{"constraint_1": "3x + 3y \\le 40", "constraint_2": "2x + 4y \\le 34", "non_negativity": "x \\le 18,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Expected / Memo Answer:** `{"constraint_1": "3x + 3y \\le 40", "constraint_2": "2x + 4y \\le 34", "non_negativity": "x \\le 18,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Official Worked Solution:** 1. 3x + 3y \le 40; 2. 2x + 4y \le 34; 3. x \le 18,\quad x \ge 0,\quad y \ge 0; 4. P = 380x + 230y
+- **Marking Evaluation:** **4 / 4** (✅ Correct)
+
+### Step 11: Practice Q8/50 — `lp_formulation_abb60e1cc887` (Seed: `1008`)
+- **Stage:** `practice` | **Mode:** `compound` | **Difficulty:** `medium` | **Subskill:** `journal`
+- **BKT Mastery:** `100%` &rarr; `100%` | **Evaluative Score:** `80%` | **Adaptive Status:** `exam_ready` &rarr; `exam_ready`
+
+**Question Prompt:**
+> **Veld Cycle Works** manufactures two products: mountain bikes ($x$) and road bikes ($y$).
+> 
+> • Each mountain bikes requires $3\text{ hours}$ of frame welding and $1\text{ hours}$ of gear assembly.
+> • Each road bikes requires $3\text{ hours}$ of frame welding and $2\text{ hours}$ of gear assembly.
+> • A maximum of $22\text{ hours}$ of frame welding and $50\text{ hours}$ of gear assembly are available each week.
+> • The factory can manufacture at most $19$ mountain bikes per week.
+> • The profit is R200 per mountain bikes and R430 per road bikes.
+> 
+> **Required:**
+> 1. Write down the constraint inequality for frame welding.
+> 2. Write down the constraint inequality for gear assembly.
+> 3. State the production limit inequality for $x$ and the non-negativity conditions.
+> 4. Write down the objective function $P$ for total weekly profit.
+
+- **Student Inputted Answer (canonical):** `{"constraint_1": "3x + 3y \\le 22", "constraint_2": "1x + 2y \\le 50", "non_negativity": "x \\le 19,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Expected / Memo Answer:** `{"constraint_1": "3x + 3y \\le 22", "constraint_2": "1x + 2y \\le 50", "non_negativity": "x \\le 19,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Official Worked Solution:** 1. 3x + 3y \le 22; 2. 1x + 2y \le 50; 3. x \le 19,\quad x \ge 0,\quad y \ge 0; 4. P = 200x + 430y
+- **Marking Evaluation:** **4 / 4** (✅ Correct)
+
+### Step 12: Practice Q9/50 — `lp_formulation_4cee7a9eb758` (Seed: `1009`)
+- **Stage:** `practice` | **Mode:** `compound` | **Difficulty:** `medium` | **Subskill:** `journal`
+- **BKT Mastery:** `100%` &rarr; `100%` | **Evaluative Score:** `80%` | **Adaptive Status:** `exam_ready` &rarr; `exam_ready`
+
+**Question Prompt:**
+> **Apex Woodcraft** manufactures two products: executive desks ($x$) and bookshelves ($y$).
+> 
+> • Each executive desks requires $4\text{ hours}$ of carpentry labour and $1\text{ hours}$ of varnishing time.
+> • Each bookshelves requires $3\text{ hours}$ of carpentry labour and $4\text{ hours}$ of varnishing time.
+> • A maximum of $27\text{ hours}$ of carpentry labour and $23\text{ hours}$ of varnishing time are available each week.
+> • The factory can manufacture at most $15$ executive desks per week.
+> • The profit is R210 per executive desks and R230 per bookshelves.
+> 
+> **Required:**
+> 1. Write down the constraint inequality for carpentry labour.
+> 2. Write down the constraint inequality for varnishing time.
+> 3. State the production limit inequality for $x$ and the non-negativity conditions.
+> 4. Write down the objective function $P$ for total weekly profit.
+
+- **Student Inputted Answer (canonical):** `{"constraint_1": "4x + 3y \\le 27", "constraint_2": "1x + 4y \\le 23", "non_negativity": "x \\le 15,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Expected / Memo Answer:** `{"constraint_1": "4x + 3y \\le 27", "constraint_2": "1x + 4y \\le 23", "non_negativity": "x \\le 15,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Official Worked Solution:** 1. 4x + 3y \le 27; 2. 1x + 4y \le 23; 3. x \le 15,\quad x \ge 0,\quad y \ge 0; 4. P = 210x + 230y
+- **Marking Evaluation:** **4 / 4** (✅ Correct)
+
+### Step 13: Practice Q10/50 — `lp_formulation_f1e2b762ea5e` (Seed: `1010`)
+- **Stage:** `practice` | **Mode:** `compound` | **Difficulty:** `medium` | **Subskill:** `journal`
+- **BKT Mastery:** `100%` &rarr; `100%` | **Evaluative Score:** `80%` | **Adaptive Status:** `exam_ready` &rarr; `exam_ready`
+
+**Question Prompt:**
+> **Apex Woodcraft** manufactures two products: executive desks ($x$) and bookshelves ($y$).
+> 
+> • Each executive desks requires $2\text{ hours}$ of carpentry labour and $1\text{ hours}$ of varnishing time.
+> • Each bookshelves requires $3\text{ hours}$ of carpentry labour and $2\text{ hours}$ of varnishing time.
+> • A maximum of $54\text{ hours}$ of carpentry labour and $31\text{ hours}$ of varnishing time are available each week.
+> • The factory can manufacture at most $14$ executive desks per week.
+> • The profit is R320 per executive desks and R310 per bookshelves.
+> 
+> **Required:**
+> 1. Write down the constraint inequality for carpentry labour.
+> 2. Write down the constraint inequality for varnishing time.
+> 3. State the production limit inequality for $x$ and the non-negativity conditions.
+> 4. Write down the objective function $P$ for total weekly profit.
+
+- **Student Inputted Answer (canonical):** `{"constraint_1": "2x + 3y \\le 54", "constraint_2": "1x + 2y \\le 31", "non_negativity": "x \\le 14,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Expected / Memo Answer:** `{"constraint_1": "2x + 3y \\le 54", "constraint_2": "1x + 2y \\le 31", "non_negativity": "x \\le 14,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Official Worked Solution:** 1. 2x + 3y \le 54; 2. 1x + 2y \le 31; 3. x \le 14,\quad x \ge 0,\quad y \ge 0; 4. P = 320x + 310y
+- **Marking Evaluation:** **4 / 4** (✅ Correct)
+
+### Step 14: Practice Q11/50 — `lp_formulation_3d44bade2cb7` (Seed: `1011`)
+- **Stage:** `practice` | **Mode:** `compound` | **Difficulty:** `medium` | **Subskill:** `journal`
+- **BKT Mastery:** `100%` &rarr; `100%` | **Evaluative Score:** `80%` | **Adaptive Status:** `exam_ready` &rarr; `exam_ready`
+
+**Question Prompt:**
+> **Apex Woodcraft** manufactures two products: executive desks ($x$) and bookshelves ($y$).
+> 
+> • Each executive desks requires $3\text{ hours}$ of carpentry labour and $1\text{ hours}$ of varnishing time.
+> • Each bookshelves requires $2\text{ hours}$ of carpentry labour and $4\text{ hours}$ of varnishing time.
+> • A maximum of $41\text{ hours}$ of carpentry labour and $29\text{ hours}$ of varnishing time are available each week.
+> • The factory can manufacture at most $8$ executive desks per week.
+> • The profit is R410 per executive desks and R420 per bookshelves.
+> 
+> **Required:**
+> 1. Write down the constraint inequality for carpentry labour.
+> 2. Write down the constraint inequality for varnishing time.
+> 3. State the production limit inequality for $x$ and the non-negativity conditions.
+> 4. Write down the objective function $P$ for total weekly profit.
+
+- **Student Inputted Answer (canonical):** `{"constraint_1": "3x + 2y \\le 41", "constraint_2": "1x + 4y \\le 29", "non_negativity": "x \\le 8,\\quad x \\ge 0,\\quad y \\ge 0", "object...`
+- **Expected / Memo Answer:** `{"constraint_1": "3x + 2y \\le 41", "constraint_2": "1x + 4y \\le 29", "non_negativity": "x \\le 8,\\quad x \\ge 0,\\quad y \\ge 0", "object...`
+- **Official Worked Solution:** 1. 3x + 2y \le 41; 2. 1x + 4y \le 29; 3. x \le 8,\quad x \ge 0,\quad y \ge 0; 4. P = 410x + 420y
+- **Marking Evaluation:** **4 / 4** (✅ Correct)
+
+### Step 15: Practice Q12/50 — `lp_formulation_e4f7835edaf0` (Seed: `1012`)
+- **Stage:** `practice` | **Mode:** `compound` | **Difficulty:** `medium` | **Subskill:** `journal`
+- **BKT Mastery:** `100%` &rarr; `100%` | **Evaluative Score:** `80%` | **Adaptive Status:** `exam_ready` &rarr; `exam_ready`
+
+**Question Prompt:**
+> **Golden Harvest Bakery** manufactures two products: speciality cakes ($x$) and artisan loaves ($y$).
+> 
+> • Each speciality cakes requires $2\text{ hours}$ of baking oven capacity and $2\text{ hours}$ of decorating time.
+> • Each artisan loaves requires $3\text{ hours}$ of baking oven capacity and $4\text{ hours}$ of decorating time.
+> • A maximum of $47\text{ hours}$ of baking oven capacity and $32\text{ hours}$ of decorating time are available each week.
+> • The factory can manufacture at most $10$ speciality cakes per week.
+> • The profit is R210 per speciality cakes and R240 per artisan loaves.
+> 
+> **Required:**
+> 1. Write down the constraint inequality for baking oven capacity.
+> 2. Write down the constraint inequality for decorating time.
+> 3. State the production limit inequality for $x$ and the non-negativity conditions.
+> 4. Write down the objective function $P$ for total weekly profit.
+
+- **Student Inputted Answer (canonical):** `{"constraint_1": "2x + 3y \\le 47", "constraint_2": "2x + 4y \\le 32", "non_negativity": "x \\le 10,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Expected / Memo Answer:** `{"constraint_1": "2x + 3y \\le 47", "constraint_2": "2x + 4y \\le 32", "non_negativity": "x \\le 10,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Official Worked Solution:** 1. 2x + 3y \le 47; 2. 2x + 4y \le 32; 3. x \le 10,\quad x \ge 0,\quad y \ge 0; 4. P = 210x + 240y
+- **Marking Evaluation:** **4 / 4** (✅ Correct)
+
+### Step 16: Practice Q13/50 — `lp_formulation_72ecc5f199cc` (Seed: `1013`)
+- **Stage:** `practice` | **Mode:** `compound` | **Difficulty:** `medium` | **Subskill:** `journal`
+- **BKT Mastery:** `100%` &rarr; `100%` | **Evaluative Score:** `80%` | **Adaptive Status:** `exam_ready` &rarr; `exam_ready`
+
+**Question Prompt:**
+> **Golden Harvest Bakery** manufactures two products: speciality cakes ($x$) and artisan loaves ($y$).
+> 
+> • Each speciality cakes requires $4\text{ hours}$ of baking oven capacity and $1\text{ hours}$ of decorating time.
+> • Each artisan loaves requires $2\text{ hours}$ of baking oven capacity and $2\text{ hours}$ of decorating time.
+> • A maximum of $56\text{ hours}$ of baking oven capacity and $27\text{ hours}$ of decorating time are available each week.
+> • The factory can manufacture at most $10$ speciality cakes per week.
+> • The profit is R390 per speciality cakes and R530 per artisan loaves.
+> 
+> **Required:**
+> 1. Write down the constraint inequality for baking oven capacity.
+> 2. Write down the constraint inequality for decorating time.
+> 3. State the production limit inequality for $x$ and the non-negativity conditions.
+> 4. Write down the objective function $P$ for total weekly profit.
+
+- **Student Inputted Answer (canonical):** `{"constraint_1": "4x + 2y \\le 56", "constraint_2": "1x + 2y \\le 27", "non_negativity": "x \\le 10,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Expected / Memo Answer:** `{"constraint_1": "4x + 2y \\le 56", "constraint_2": "1x + 2y \\le 27", "non_negativity": "x \\le 10,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Official Worked Solution:** 1. 4x + 2y \le 56; 2. 1x + 2y \le 27; 3. x \le 10,\quad x \ge 0,\quad y \ge 0; 4. P = 390x + 530y
+- **Marking Evaluation:** **4 / 4** (✅ Correct)
+
+### Step 17: Practice Q14/50 — `lp_formulation_cd5472f40651` (Seed: `1014`)
+- **Stage:** `practice` | **Mode:** `compound` | **Difficulty:** `medium` | **Subskill:** `journal`
+- **BKT Mastery:** `100%` &rarr; `100%` | **Evaluative Score:** `80%` | **Adaptive Status:** `exam_ready` &rarr; `exam_ready`
+
+**Question Prompt:**
+> **Apex Woodcraft** manufactures two products: executive desks ($x$) and bookshelves ($y$).
+> 
+> • Each executive desks requires $4\text{ hours}$ of carpentry labour and $1\text{ hours}$ of varnishing time.
+> • Each bookshelves requires $1\text{ hours}$ of carpentry labour and $3\text{ hours}$ of varnishing time.
+> • A maximum of $56\text{ hours}$ of carpentry labour and $30\text{ hours}$ of varnishing time are available each week.
+> • The factory can manufacture at most $8$ executive desks per week.
+> • The profit is R290 per executive desks and R290 per bookshelves.
+> 
+> **Required:**
+> 1. Write down the constraint inequality for carpentry labour.
+> 2. Write down the constraint inequality for varnishing time.
+> 3. State the production limit inequality for $x$ and the non-negativity conditions.
+> 4. Write down the objective function $P$ for total weekly profit.
+
+- **Student Inputted Answer (canonical):** `{"constraint_1": "4x + 1y \\le 56", "constraint_2": "1x + 3y \\le 30", "non_negativity": "x \\le 8,\\quad x \\ge 0,\\quad y \\ge 0", "object...`
+- **Expected / Memo Answer:** `{"constraint_1": "4x + 1y \\le 56", "constraint_2": "1x + 3y \\le 30", "non_negativity": "x \\le 8,\\quad x \\ge 0,\\quad y \\ge 0", "object...`
+- **Official Worked Solution:** 1. 4x + 1y \le 56; 2. 1x + 3y \le 30; 3. x \le 8,\quad x \ge 0,\quad y \ge 0; 4. P = 290x + 290y
+- **Marking Evaluation:** **4 / 4** (✅ Correct)
+
+### Step 18: Practice Q15/50 — `lp_formulation_0ad9358f8610` (Seed: `1015`)
+- **Stage:** `practice` | **Mode:** `compound` | **Difficulty:** `medium` | **Subskill:** `journal`
+- **BKT Mastery:** `100%` &rarr; `96%` | **Evaluative Score:** `80%` | **Adaptive Status:** `exam_ready` &rarr; `exam_ready`
+
+**Question Prompt:**
+> **Veld Cycle Works** manufactures two products: mountain bikes ($x$) and road bikes ($y$).
+> 
+> • Each mountain bikes requires $4\text{ hours}$ of frame welding and $1\text{ hours}$ of gear assembly.
+> • Each road bikes requires $2\text{ hours}$ of frame welding and $3\text{ hours}$ of gear assembly.
+> • A maximum of $38\text{ hours}$ of frame welding and $20\text{ hours}$ of gear assembly are available each week.
+> • The factory can manufacture at most $8$ mountain bikes per week.
+> • The profit is R410 per mountain bikes and R480 per road bikes.
+> 
+> **Required:**
+> 1. Write down the constraint inequality for frame welding.
+> 2. Write down the constraint inequality for gear assembly.
+> 3. State the production limit inequality for $x$ and the non-negativity conditions.
+> 4. Write down the objective function $P$ for total weekly profit.
+
+- **Student Inputted Answer (partial):** `{"constraint_1": "4x + 2y \\le 38", "constraint_2": "1x + 3y \\le 20"}`
+- **Expected / Memo Answer:** `{"constraint_1": "4x + 2y \\le 38", "constraint_2": "1x + 3y \\le 20", "non_negativity": "x \\le 8,\\quad x \\ge 0,\\quad y \\ge 0", "object...`
+- **Official Worked Solution:** 1. 4x + 2y \le 38; 2. 1x + 3y \le 20; 3. x \le 8,\quad x \ge 0,\quad y \ge 0; 4. P = 410x + 480y
+- **Marking Evaluation:** **2 / 4** (❌ Incorrect / Partial) | **Misconception Tag:** `inequality_direction_inversion`
+
+### Step 19: Practice Q16/50 — `lp_formulation_8e9464e630f9` (Seed: `1016`)
+- **Stage:** `practice` | **Mode:** `compound` | **Difficulty:** `medium` | **Subskill:** `journal`
+- **BKT Mastery:** `96%` &rarr; `99%` | **Evaluative Score:** `80%` | **Adaptive Status:** `exam_ready` &rarr; `exam_ready`
+
+**Question Prompt:**
+> **Golden Harvest Bakery** manufactures two products: speciality cakes ($x$) and artisan loaves ($y$).
+> 
+> • Each speciality cakes requires $4\text{ hours}$ of baking oven capacity and $2\text{ hours}$ of decorating time.
+> • Each artisan loaves requires $1\text{ hours}$ of baking oven capacity and $4\text{ hours}$ of decorating time.
+> • A maximum of $56\text{ hours}$ of baking oven capacity and $40\text{ hours}$ of decorating time are available each week.
+> • The factory can manufacture at most $16$ speciality cakes per week.
+> • The profit is R380 per speciality cakes and R330 per artisan loaves.
+> 
+> **Required:**
+> 1. Write down the constraint inequality for baking oven capacity.
+> 2. Write down the constraint inequality for decorating time.
+> 3. State the production limit inequality for $x$ and the non-negativity conditions.
+> 4. Write down the objective function $P$ for total weekly profit.
+
+- **Student Inputted Answer (canonical):** `{"constraint_1": "4x + 1y \\le 56", "constraint_2": "2x + 4y \\le 40", "non_negativity": "x \\le 16,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Expected / Memo Answer:** `{"constraint_1": "4x + 1y \\le 56", "constraint_2": "2x + 4y \\le 40", "non_negativity": "x \\le 16,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Official Worked Solution:** 1. 4x + 1y \le 56; 2. 2x + 4y \le 40; 3. x \le 16,\quad x \ge 0,\quad y \ge 0; 4. P = 380x + 330y
+- **Marking Evaluation:** **4 / 4** (✅ Correct)
+
+### Step 20: Practice Q17/50 — `lp_formulation_118eb3056e85` (Seed: `1017`)
+- **Stage:** `practice` | **Mode:** `compound` | **Difficulty:** `medium` | **Subskill:** `journal`
+- **BKT Mastery:** `99%` &rarr; `100%` | **Evaluative Score:** `80%` | **Adaptive Status:** `exam_ready` &rarr; `exam_ready`
+
+**Question Prompt:**
+> **Golden Harvest Bakery** manufactures two products: speciality cakes ($x$) and artisan loaves ($y$).
+> 
+> • Each speciality cakes requires $3\text{ hours}$ of baking oven capacity and $2\text{ hours}$ of decorating time.
+> • Each artisan loaves requires $3\text{ hours}$ of baking oven capacity and $4\text{ hours}$ of decorating time.
+> • A maximum of $52\text{ hours}$ of baking oven capacity and $22\text{ hours}$ of decorating time are available each week.
+> • The factory can manufacture at most $12$ speciality cakes per week.
+> • The profit is R300 per speciality cakes and R310 per artisan loaves.
+> 
+> **Required:**
+> 1. Write down the constraint inequality for baking oven capacity.
+> 2. Write down the constraint inequality for decorating time.
+> 3. State the production limit inequality for $x$ and the non-negativity conditions.
+> 4. Write down the objective function $P$ for total weekly profit.
+
+- **Student Inputted Answer (canonical):** `{"constraint_1": "3x + 3y \\le 52", "constraint_2": "2x + 4y \\le 22", "non_negativity": "x \\le 12,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Expected / Memo Answer:** `{"constraint_1": "3x + 3y \\le 52", "constraint_2": "2x + 4y \\le 22", "non_negativity": "x \\le 12,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Official Worked Solution:** 1. 3x + 3y \le 52; 2. 2x + 4y \le 22; 3. x \le 12,\quad x \ge 0,\quad y \ge 0; 4. P = 300x + 310y
+- **Marking Evaluation:** **4 / 4** (✅ Correct)
+
+### Step 21: Practice Q18/50 — `lp_formulation_827f7b8e6e0e` (Seed: `1018`)
+- **Stage:** `practice` | **Mode:** `compound` | **Difficulty:** `medium` | **Subskill:** `journal`
+- **BKT Mastery:** `100%` &rarr; `100%` | **Evaluative Score:** `80%` | **Adaptive Status:** `exam_ready` &rarr; `exam_ready`
+
+**Question Prompt:**
+> **Apex Woodcraft** manufactures two products: executive desks ($x$) and bookshelves ($y$).
+> 
+> • Each executive desks requires $4\text{ hours}$ of carpentry labour and $2\text{ hours}$ of varnishing time.
+> • Each bookshelves requires $2\text{ hours}$ of carpentry labour and $2\text{ hours}$ of varnishing time.
+> • A maximum of $51\text{ hours}$ of carpentry labour and $37\text{ hours}$ of varnishing time are available each week.
+> • The factory can manufacture at most $19$ executive desks per week.
+> • The profit is R440 per executive desks and R580 per bookshelves.
+> 
+> **Required:**
+> 1. Write down the constraint inequality for carpentry labour.
+> 2. Write down the constraint inequality for varnishing time.
+> 3. State the production limit inequality for $x$ and the non-negativity conditions.
+> 4. Write down the objective function $P$ for total weekly profit.
+
+- **Student Inputted Answer (canonical):** `{"constraint_1": "4x + 2y \\le 51", "constraint_2": "2x + 2y \\le 37", "non_negativity": "x \\le 19,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Expected / Memo Answer:** `{"constraint_1": "4x + 2y \\le 51", "constraint_2": "2x + 2y \\le 37", "non_negativity": "x \\le 19,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Official Worked Solution:** 1. 4x + 2y \le 51; 2. 2x + 2y \le 37; 3. x \le 19,\quad x \ge 0,\quad y \ge 0; 4. P = 440x + 580y
+- **Marking Evaluation:** **4 / 4** (✅ Correct)
+
+### Step 22: Practice Q19/50 — `lp_formulation_0a0bf00c9384` (Seed: `1019`)
+- **Stage:** `practice` | **Mode:** `compound` | **Difficulty:** `medium` | **Subskill:** `journal`
+- **BKT Mastery:** `100%` &rarr; `100%` | **Evaluative Score:** `80%` | **Adaptive Status:** `exam_ready` &rarr; `exam_ready`
+
+**Question Prompt:**
+> **Golden Harvest Bakery** manufactures two products: speciality cakes ($x$) and artisan loaves ($y$).
+> 
+> • Each speciality cakes requires $2\text{ hours}$ of baking oven capacity and $1\text{ hours}$ of decorating time.
+> • Each artisan loaves requires $1\text{ hours}$ of baking oven capacity and $3\text{ hours}$ of decorating time.
+> • A maximum of $43\text{ hours}$ of baking oven capacity and $39\text{ hours}$ of decorating time are available each week.
+> • The factory can manufacture at most $18$ speciality cakes per week.
+> • The profit is R370 per speciality cakes and R230 per artisan loaves.
+> 
+> **Required:**
+> 1. Write down the constraint inequality for baking oven capacity.
+> 2. Write down the constraint inequality for decorating time.
+> 3. State the production limit inequality for $x$ and the non-negativity conditions.
+> 4. Write down the objective function $P$ for total weekly profit.
+
+- **Student Inputted Answer (canonical):** `{"constraint_1": "2x + 1y \\le 43", "constraint_2": "1x + 3y \\le 39", "non_negativity": "x \\le 18,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Expected / Memo Answer:** `{"constraint_1": "2x + 1y \\le 43", "constraint_2": "1x + 3y \\le 39", "non_negativity": "x \\le 18,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Official Worked Solution:** 1. 2x + 1y \le 43; 2. 1x + 3y \le 39; 3. x \le 18,\quad x \ge 0,\quad y \ge 0; 4. P = 370x + 230y
+- **Marking Evaluation:** **4 / 4** (✅ Correct)
+
+### Step 23: Practice Q20/50 — `lp_formulation_4865aabb52f1` (Seed: `1020`)
+- **Stage:** `practice` | **Mode:** `compound` | **Difficulty:** `medium` | **Subskill:** `journal`
+- **BKT Mastery:** `100%` &rarr; `100%` | **Evaluative Score:** `80%` | **Adaptive Status:** `exam_ready` &rarr; `exam_ready`
+
+**Question Prompt:**
+> **Veld Cycle Works** manufactures two products: mountain bikes ($x$) and road bikes ($y$).
+> 
+> • Each mountain bikes requires $3\text{ hours}$ of frame welding and $1\text{ hours}$ of gear assembly.
+> • Each road bikes requires $3\text{ hours}$ of frame welding and $3\text{ hours}$ of gear assembly.
+> • A maximum of $50\text{ hours}$ of frame welding and $43\text{ hours}$ of gear assembly are available each week.
+> • The factory can manufacture at most $20$ mountain bikes per week.
+> • The profit is R280 per mountain bikes and R360 per road bikes.
+> 
+> **Required:**
+> 1. Write down the constraint inequality for frame welding.
+> 2. Write down the constraint inequality for gear assembly.
+> 3. State the production limit inequality for $x$ and the non-negativity conditions.
+> 4. Write down the objective function $P$ for total weekly profit.
+
+- **Student Inputted Answer (canonical):** `{"constraint_1": "3x + 3y \\le 50", "constraint_2": "1x + 3y \\le 43", "non_negativity": "x \\le 20,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Expected / Memo Answer:** `{"constraint_1": "3x + 3y \\le 50", "constraint_2": "1x + 3y \\le 43", "non_negativity": "x \\le 20,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Official Worked Solution:** 1. 3x + 3y \le 50; 2. 1x + 3y \le 43; 3. x \le 20,\quad x \ge 0,\quad y \ge 0; 4. P = 280x + 360y
+- **Marking Evaluation:** **4 / 4** (✅ Correct)
+
+### Step 24: Practice Q21/50 — `lp_formulation_d2956e260138` (Seed: `1021`)
+- **Stage:** `practice` | **Mode:** `compound` | **Difficulty:** `medium` | **Subskill:** `journal`
+- **BKT Mastery:** `100%` &rarr; `100%` | **Evaluative Score:** `80%` | **Adaptive Status:** `exam_ready` &rarr; `exam_ready`
+
+**Question Prompt:**
+> **Apex Woodcraft** manufactures two products: executive desks ($x$) and bookshelves ($y$).
+> 
+> • Each executive desks requires $4\text{ hours}$ of carpentry labour and $1\text{ hours}$ of varnishing time.
+> • Each bookshelves requires $3\text{ hours}$ of carpentry labour and $4\text{ hours}$ of varnishing time.
+> • A maximum of $55\text{ hours}$ of carpentry labour and $35\text{ hours}$ of varnishing time are available each week.
+> • The factory can manufacture at most $15$ executive desks per week.
+> • The profit is R340 per executive desks and R520 per bookshelves.
+> 
+> **Required:**
+> 1. Write down the constraint inequality for carpentry labour.
+> 2. Write down the constraint inequality for varnishing time.
+> 3. State the production limit inequality for $x$ and the non-negativity conditions.
+> 4. Write down the objective function $P$ for total weekly profit.
+
+- **Student Inputted Answer (canonical):** `{"constraint_1": "4x + 3y \\le 55", "constraint_2": "1x + 4y \\le 35", "non_negativity": "x \\le 15,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Expected / Memo Answer:** `{"constraint_1": "4x + 3y \\le 55", "constraint_2": "1x + 4y \\le 35", "non_negativity": "x \\le 15,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Official Worked Solution:** 1. 4x + 3y \le 55; 2. 1x + 4y \le 35; 3. x \le 15,\quad x \ge 0,\quad y \ge 0; 4. P = 340x + 520y
+- **Marking Evaluation:** **4 / 4** (✅ Correct)
+
+### Step 25: Practice Q22/50 — `lp_formulation_a13264007040` (Seed: `1022`)
+- **Stage:** `practice` | **Mode:** `compound` | **Difficulty:** `medium` | **Subskill:** `journal`
+- **BKT Mastery:** `100%` &rarr; `100%` | **Evaluative Score:** `80%` | **Adaptive Status:** `exam_ready` &rarr; `exam_ready`
+
+**Question Prompt:**
+> **Veld Cycle Works** manufactures two products: mountain bikes ($x$) and road bikes ($y$).
+> 
+> • Each mountain bikes requires $3\text{ hours}$ of frame welding and $2\text{ hours}$ of gear assembly.
+> • Each road bikes requires $1\text{ hours}$ of frame welding and $4\text{ hours}$ of gear assembly.
+> • A maximum of $35\text{ hours}$ of frame welding and $47\text{ hours}$ of gear assembly are available each week.
+> • The factory can manufacture at most $14$ mountain bikes per week.
+> • The profit is R180 per mountain bikes and R490 per road bikes.
+> 
+> **Required:**
+> 1. Write down the constraint inequality for frame welding.
+> 2. Write down the constraint inequality for gear assembly.
+> 3. State the production limit inequality for $x$ and the non-negativity conditions.
+> 4. Write down the objective function $P$ for total weekly profit.
+
+- **Student Inputted Answer (canonical):** `{"constraint_1": "3x + 1y \\le 35", "constraint_2": "2x + 4y \\le 47", "non_negativity": "x \\le 14,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Expected / Memo Answer:** `{"constraint_1": "3x + 1y \\le 35", "constraint_2": "2x + 4y \\le 47", "non_negativity": "x \\le 14,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Official Worked Solution:** 1. 3x + 1y \le 35; 2. 2x + 4y \le 47; 3. x \le 14,\quad x \ge 0,\quad y \ge 0; 4. P = 180x + 490y
+- **Marking Evaluation:** **4 / 4** (✅ Correct)
+
+### Step 26: Practice Q23/50 — `lp_formulation_2c5d0bf0afce` (Seed: `1023`)
+- **Stage:** `practice` | **Mode:** `compound` | **Difficulty:** `medium` | **Subskill:** `journal`
+- **BKT Mastery:** `100%` &rarr; `100%` | **Evaluative Score:** `80%` | **Adaptive Status:** `exam_ready` &rarr; `exam_ready`
+
+**Question Prompt:**
+> **Veld Cycle Works** manufactures two products: mountain bikes ($x$) and road bikes ($y$).
+> 
+> • Each mountain bikes requires $3\text{ hours}$ of frame welding and $2\text{ hours}$ of gear assembly.
+> • Each road bikes requires $2\text{ hours}$ of frame welding and $4\text{ hours}$ of gear assembly.
+> • A maximum of $45\text{ hours}$ of frame welding and $48\text{ hours}$ of gear assembly are available each week.
+> • The factory can manufacture at most $15$ mountain bikes per week.
+> • The profit is R330 per mountain bikes and R520 per road bikes.
+> 
+> **Required:**
+> 1. Write down the constraint inequality for frame welding.
+> 2. Write down the constraint inequality for gear assembly.
+> 3. State the production limit inequality for $x$ and the non-negativity conditions.
+> 4. Write down the objective function $P$ for total weekly profit.
+
+- **Student Inputted Answer (canonical):** `{"constraint_1": "3x + 2y \\le 45", "constraint_2": "2x + 4y \\le 48", "non_negativity": "x \\le 15,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Expected / Memo Answer:** `{"constraint_1": "3x + 2y \\le 45", "constraint_2": "2x + 4y \\le 48", "non_negativity": "x \\le 15,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Official Worked Solution:** 1. 3x + 2y \le 45; 2. 2x + 4y \le 48; 3. x \le 15,\quad x \ge 0,\quad y \ge 0; 4. P = 330x + 520y
+- **Marking Evaluation:** **4 / 4** (✅ Correct)
+
+### Step 27: Practice Q24/50 — `lp_formulation_67cf8584455d` (Seed: `1024`)
+- **Stage:** `practice` | **Mode:** `compound` | **Difficulty:** `medium` | **Subskill:** `journal`
+- **BKT Mastery:** `100%` &rarr; `100%` | **Evaluative Score:** `80%` | **Adaptive Status:** `exam_ready` &rarr; `exam_ready`
+
+**Question Prompt:**
+> **Apex Woodcraft** manufactures two products: executive desks ($x$) and bookshelves ($y$).
+> 
+> • Each executive desks requires $4\text{ hours}$ of carpentry labour and $2\text{ hours}$ of varnishing time.
+> • Each bookshelves requires $1\text{ hours}$ of carpentry labour and $2\text{ hours}$ of varnishing time.
+> • A maximum of $50\text{ hours}$ of carpentry labour and $37\text{ hours}$ of varnishing time are available each week.
+> • The factory can manufacture at most $14$ executive desks per week.
+> • The profit is R360 per executive desks and R470 per bookshelves.
+> 
+> **Required:**
+> 1. Write down the constraint inequality for carpentry labour.
+> 2. Write down the constraint inequality for varnishing time.
+> 3. State the production limit inequality for $x$ and the non-negativity conditions.
+> 4. Write down the objective function $P$ for total weekly profit.
+
+- **Student Inputted Answer (canonical):** `{"constraint_1": "4x + 1y \\le 50", "constraint_2": "2x + 2y \\le 37", "non_negativity": "x \\le 14,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Expected / Memo Answer:** `{"constraint_1": "4x + 1y \\le 50", "constraint_2": "2x + 2y \\le 37", "non_negativity": "x \\le 14,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Official Worked Solution:** 1. 4x + 1y \le 50; 2. 2x + 2y \le 37; 3. x \le 14,\quad x \ge 0,\quad y \ge 0; 4. P = 360x + 470y
+- **Marking Evaluation:** **4 / 4** (✅ Correct)
+
+### Step 28: Practice Q25/50 — `lp_formulation_23ed48b7332d` (Seed: `1025`)
+- **Stage:** `practice` | **Mode:** `compound` | **Difficulty:** `medium` | **Subskill:** `journal`
+- **BKT Mastery:** `100%` &rarr; `96%` | **Evaluative Score:** `80%` | **Adaptive Status:** `exam_ready` &rarr; `exam_ready`
+
+**Question Prompt:**
+> **Golden Harvest Bakery** manufactures two products: speciality cakes ($x$) and artisan loaves ($y$).
+> 
+> • Each speciality cakes requires $3\text{ hours}$ of baking oven capacity and $2\text{ hours}$ of decorating time.
+> • Each artisan loaves requires $3\text{ hours}$ of baking oven capacity and $3\text{ hours}$ of decorating time.
+> • A maximum of $37\text{ hours}$ of baking oven capacity and $45\text{ hours}$ of decorating time are available each week.
+> • The factory can manufacture at most $16$ speciality cakes per week.
+> • The profit is R210 per speciality cakes and R270 per artisan loaves.
+> 
+> **Required:**
+> 1. Write down the constraint inequality for baking oven capacity.
+> 2. Write down the constraint inequality for decorating time.
+> 3. State the production limit inequality for $x$ and the non-negativity conditions.
+> 4. Write down the objective function $P$ for total weekly profit.
+
+- **Student Inputted Answer (wrong):** `{"constraint_1": "999999", "constraint_2": "999999", "non_negativity": "999999", "objective_function": "999999"}`
+- **Expected / Memo Answer:** `{"constraint_1": "3x + 3y \\le 37", "constraint_2": "2x + 3y \\le 45", "non_negativity": "x \\le 16,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Official Worked Solution:** 1. 3x + 3y \le 37; 2. 2x + 3y \le 45; 3. x \le 16,\quad x \ge 0,\quad y \ge 0; 4. P = 210x + 270y
+- **Marking Evaluation:** **0 / 4** (❌ Incorrect / Partial) | **Misconception Tag:** `inequality_direction_inversion`
+
+### Step 29: Practice Q26/50 — `lp_formulation_ad2168603bda` (Seed: `1026`)
+- **Stage:** `practice` | **Mode:** `compound` | **Difficulty:** `medium` | **Subskill:** `journal`
+- **BKT Mastery:** `96%` &rarr; `99%` | **Evaluative Score:** `80%` | **Adaptive Status:** `exam_ready` &rarr; `exam_ready`
+
+**Question Prompt:**
+> **Apex Woodcraft** manufactures two products: executive desks ($x$) and bookshelves ($y$).
+> 
+> • Each executive desks requires $2\text{ hours}$ of carpentry labour and $2\text{ hours}$ of varnishing time.
+> • Each bookshelves requires $1\text{ hours}$ of carpentry labour and $4\text{ hours}$ of varnishing time.
+> • A maximum of $58\text{ hours}$ of carpentry labour and $29\text{ hours}$ of varnishing time are available each week.
+> • The factory can manufacture at most $9$ executive desks per week.
+> • The profit is R170 per executive desks and R200 per bookshelves.
+> 
+> **Required:**
+> 1. Write down the constraint inequality for carpentry labour.
+> 2. Write down the constraint inequality for varnishing time.
+> 3. State the production limit inequality for $x$ and the non-negativity conditions.
+> 4. Write down the objective function $P$ for total weekly profit.
+
+- **Student Inputted Answer (canonical):** `{"constraint_1": "2x + 1y \\le 58", "constraint_2": "2x + 4y \\le 29", "non_negativity": "x \\le 9,\\quad x \\ge 0,\\quad y \\ge 0", "object...`
+- **Expected / Memo Answer:** `{"constraint_1": "2x + 1y \\le 58", "constraint_2": "2x + 4y \\le 29", "non_negativity": "x \\le 9,\\quad x \\ge 0,\\quad y \\ge 0", "object...`
+- **Official Worked Solution:** 1. 2x + 1y \le 58; 2. 2x + 4y \le 29; 3. x \le 9,\quad x \ge 0,\quad y \ge 0; 4. P = 170x + 200y
+- **Marking Evaluation:** **4 / 4** (✅ Correct)
+
+### Step 30: Practice Q27/50 — `lp_formulation_bf5f9e36fb0e` (Seed: `1027`)
+- **Stage:** `practice` | **Mode:** `compound` | **Difficulty:** `medium` | **Subskill:** `journal`
+- **BKT Mastery:** `99%` &rarr; `100%` | **Evaluative Score:** `80%` | **Adaptive Status:** `exam_ready` &rarr; `exam_ready`
+
+**Question Prompt:**
+> **Apex Woodcraft** manufactures two products: executive desks ($x$) and bookshelves ($y$).
+> 
+> • Each executive desks requires $3\text{ hours}$ of carpentry labour and $1\text{ hours}$ of varnishing time.
+> • Each bookshelves requires $1\text{ hours}$ of carpentry labour and $3\text{ hours}$ of varnishing time.
+> • A maximum of $49\text{ hours}$ of carpentry labour and $50\text{ hours}$ of varnishing time are available each week.
+> • The factory can manufacture at most $20$ executive desks per week.
+> • The profit is R440 per executive desks and R380 per bookshelves.
+> 
+> **Required:**
+> 1. Write down the constraint inequality for carpentry labour.
+> 2. Write down the constraint inequality for varnishing time.
+> 3. State the production limit inequality for $x$ and the non-negativity conditions.
+> 4. Write down the objective function $P$ for total weekly profit.
+
+- **Student Inputted Answer (canonical):** `{"constraint_1": "3x + 1y \\le 49", "constraint_2": "1x + 3y \\le 50", "non_negativity": "x \\le 20,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Expected / Memo Answer:** `{"constraint_1": "3x + 1y \\le 49", "constraint_2": "1x + 3y \\le 50", "non_negativity": "x \\le 20,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Official Worked Solution:** 1. 3x + 1y \le 49; 2. 1x + 3y \le 50; 3. x \le 20,\quad x \ge 0,\quad y \ge 0; 4. P = 440x + 380y
+- **Marking Evaluation:** **4 / 4** (✅ Correct)
+
+### Step 31: Practice Q28/50 — `lp_formulation_c4c7e9992d0a` (Seed: `1028`)
+- **Stage:** `practice` | **Mode:** `compound` | **Difficulty:** `medium` | **Subskill:** `journal`
+- **BKT Mastery:** `100%` &rarr; `100%` | **Evaluative Score:** `80%` | **Adaptive Status:** `exam_ready` &rarr; `exam_ready`
+
+**Question Prompt:**
+> **Veld Cycle Works** manufactures two products: mountain bikes ($x$) and road bikes ($y$).
+> 
+> • Each mountain bikes requires $2\text{ hours}$ of frame welding and $2\text{ hours}$ of gear assembly.
+> • Each road bikes requires $3\text{ hours}$ of frame welding and $2\text{ hours}$ of gear assembly.
+> • A maximum of $58\text{ hours}$ of frame welding and $36\text{ hours}$ of gear assembly are available each week.
+> • The factory can manufacture at most $17$ mountain bikes per week.
+> • The profit is R360 per mountain bikes and R440 per road bikes.
+> 
+> **Required:**
+> 1. Write down the constraint inequality for frame welding.
+> 2. Write down the constraint inequality for gear assembly.
+> 3. State the production limit inequality for $x$ and the non-negativity conditions.
+> 4. Write down the objective function $P$ for total weekly profit.
+
+- **Student Inputted Answer (canonical):** `{"constraint_1": "2x + 3y \\le 58", "constraint_2": "2x + 2y \\le 36", "non_negativity": "x \\le 17,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Expected / Memo Answer:** `{"constraint_1": "2x + 3y \\le 58", "constraint_2": "2x + 2y \\le 36", "non_negativity": "x \\le 17,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Official Worked Solution:** 1. 2x + 3y \le 58; 2. 2x + 2y \le 36; 3. x \le 17,\quad x \ge 0,\quad y \ge 0; 4. P = 360x + 440y
+- **Marking Evaluation:** **4 / 4** (✅ Correct)
+
+### Step 32: Practice Q29/50 — `lp_formulation_7eb34ed2d0ab` (Seed: `1029`)
+- **Stage:** `practice` | **Mode:** `compound` | **Difficulty:** `medium` | **Subskill:** `journal`
+- **BKT Mastery:** `100%` &rarr; `100%` | **Evaluative Score:** `80%` | **Adaptive Status:** `exam_ready` &rarr; `exam_ready`
+
+**Question Prompt:**
+> **Veld Cycle Works** manufactures two products: mountain bikes ($x$) and road bikes ($y$).
+> 
+> • Each mountain bikes requires $3\text{ hours}$ of frame welding and $1\text{ hours}$ of gear assembly.
+> • Each road bikes requires $1\text{ hours}$ of frame welding and $3\text{ hours}$ of gear assembly.
+> • A maximum of $29\text{ hours}$ of frame welding and $22\text{ hours}$ of gear assembly are available each week.
+> • The factory can manufacture at most $11$ mountain bikes per week.
+> • The profit is R360 per mountain bikes and R210 per road bikes.
+> 
+> **Required:**
+> 1. Write down the constraint inequality for frame welding.
+> 2. Write down the constraint inequality for gear assembly.
+> 3. State the production limit inequality for $x$ and the non-negativity conditions.
+> 4. Write down the objective function $P$ for total weekly profit.
+
+- **Student Inputted Answer (canonical):** `{"constraint_1": "3x + 1y \\le 29", "constraint_2": "1x + 3y \\le 22", "non_negativity": "x \\le 11,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Expected / Memo Answer:** `{"constraint_1": "3x + 1y \\le 29", "constraint_2": "1x + 3y \\le 22", "non_negativity": "x \\le 11,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Official Worked Solution:** 1. 3x + 1y \le 29; 2. 1x + 3y \le 22; 3. x \le 11,\quad x \ge 0,\quad y \ge 0; 4. P = 360x + 210y
+- **Marking Evaluation:** **4 / 4** (✅ Correct)
+
+### Step 33: Practice Q30/50 — `lp_formulation_f9f842898400` (Seed: `1030`)
+- **Stage:** `practice` | **Mode:** `compound` | **Difficulty:** `medium` | **Subskill:** `journal`
+- **BKT Mastery:** `100%` &rarr; `96%` | **Evaluative Score:** `80%` | **Adaptive Status:** `exam_ready` &rarr; `exam_ready`
+
+**Question Prompt:**
+> **Apex Woodcraft** manufactures two products: executive desks ($x$) and bookshelves ($y$).
+> 
+> • Each executive desks requires $4\text{ hours}$ of carpentry labour and $1\text{ hours}$ of varnishing time.
+> • Each bookshelves requires $1\text{ hours}$ of carpentry labour and $2\text{ hours}$ of varnishing time.
+> • A maximum of $49\text{ hours}$ of carpentry labour and $44\text{ hours}$ of varnishing time are available each week.
+> • The factory can manufacture at most $18$ executive desks per week.
+> • The profit is R180 per executive desks and R490 per bookshelves.
+> 
+> **Required:**
+> 1. Write down the constraint inequality for carpentry labour.
+> 2. Write down the constraint inequality for varnishing time.
+> 3. State the production limit inequality for $x$ and the non-negativity conditions.
+> 4. Write down the objective function $P$ for total weekly profit.
+
+- **Student Inputted Answer (partial):** `{"constraint_1": "4x + 1y \\le 49", "constraint_2": "1x + 2y \\le 44"}`
+- **Expected / Memo Answer:** `{"constraint_1": "4x + 1y \\le 49", "constraint_2": "1x + 2y \\le 44", "non_negativity": "x \\le 18,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Official Worked Solution:** 1. 4x + 1y \le 49; 2. 1x + 2y \le 44; 3. x \le 18,\quad x \ge 0,\quad y \ge 0; 4. P = 180x + 490y
+- **Marking Evaluation:** **2 / 4** (❌ Incorrect / Partial) | **Misconception Tag:** `inequality_direction_inversion`
+
+### Step 34: Practice Q31/50 — `lp_formulation_edfc00222374` (Seed: `1031`)
+- **Stage:** `practice` | **Mode:** `compound` | **Difficulty:** `medium` | **Subskill:** `journal`
+- **BKT Mastery:** `96%` &rarr; `99%` | **Evaluative Score:** `80%` | **Adaptive Status:** `exam_ready` &rarr; `exam_ready`
+
+**Question Prompt:**
+> **Veld Cycle Works** manufactures two products: mountain bikes ($x$) and road bikes ($y$).
+> 
+> • Each mountain bikes requires $2\text{ hours}$ of frame welding and $1\text{ hours}$ of gear assembly.
+> • Each road bikes requires $1\text{ hours}$ of frame welding and $3\text{ hours}$ of gear assembly.
+> • A maximum of $31\text{ hours}$ of frame welding and $39\text{ hours}$ of gear assembly are available each week.
+> • The factory can manufacture at most $12$ mountain bikes per week.
+> • The profit is R210 per mountain bikes and R300 per road bikes.
+> 
+> **Required:**
+> 1. Write down the constraint inequality for frame welding.
+> 2. Write down the constraint inequality for gear assembly.
+> 3. State the production limit inequality for $x$ and the non-negativity conditions.
+> 4. Write down the objective function $P$ for total weekly profit.
+
+- **Student Inputted Answer (canonical):** `{"constraint_1": "2x + 1y \\le 31", "constraint_2": "1x + 3y \\le 39", "non_negativity": "x \\le 12,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Expected / Memo Answer:** `{"constraint_1": "2x + 1y \\le 31", "constraint_2": "1x + 3y \\le 39", "non_negativity": "x \\le 12,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Official Worked Solution:** 1. 2x + 1y \le 31; 2. 1x + 3y \le 39; 3. x \le 12,\quad x \ge 0,\quad y \ge 0; 4. P = 210x + 300y
+- **Marking Evaluation:** **4 / 4** (✅ Correct)
+
+### Step 35: Practice Q32/50 — `lp_formulation_5db5d6a46090` (Seed: `1032`)
+- **Stage:** `practice` | **Mode:** `compound` | **Difficulty:** `medium` | **Subskill:** `journal`
+- **BKT Mastery:** `99%` &rarr; `100%` | **Evaluative Score:** `80%` | **Adaptive Status:** `exam_ready` &rarr; `exam_ready`
+
+**Question Prompt:**
+> **Apex Woodcraft** manufactures two products: executive desks ($x$) and bookshelves ($y$).
+> 
+> • Each executive desks requires $2\text{ hours}$ of carpentry labour and $1\text{ hours}$ of varnishing time.
+> • Each bookshelves requires $1\text{ hours}$ of carpentry labour and $4\text{ hours}$ of varnishing time.
+> • A maximum of $55\text{ hours}$ of carpentry labour and $48\text{ hours}$ of varnishing time are available each week.
+> • The factory can manufacture at most $18$ executive desks per week.
+> • The profit is R410 per executive desks and R350 per bookshelves.
+> 
+> **Required:**
+> 1. Write down the constraint inequality for carpentry labour.
+> 2. Write down the constraint inequality for varnishing time.
+> 3. State the production limit inequality for $x$ and the non-negativity conditions.
+> 4. Write down the objective function $P$ for total weekly profit.
+
+- **Student Inputted Answer (canonical):** `{"constraint_1": "2x + 1y \\le 55", "constraint_2": "1x + 4y \\le 48", "non_negativity": "x \\le 18,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Expected / Memo Answer:** `{"constraint_1": "2x + 1y \\le 55", "constraint_2": "1x + 4y \\le 48", "non_negativity": "x \\le 18,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Official Worked Solution:** 1. 2x + 1y \le 55; 2. 1x + 4y \le 48; 3. x \le 18,\quad x \ge 0,\quad y \ge 0; 4. P = 410x + 350y
+- **Marking Evaluation:** **4 / 4** (✅ Correct)
+
+### Step 36: Practice Q33/50 — `lp_formulation_4e9e690eb967` (Seed: `1033`)
+- **Stage:** `practice` | **Mode:** `compound` | **Difficulty:** `medium` | **Subskill:** `journal`
+- **BKT Mastery:** `100%` &rarr; `100%` | **Evaluative Score:** `80%` | **Adaptive Status:** `exam_ready` &rarr; `exam_ready`
+
+**Question Prompt:**
+> **Apex Woodcraft** manufactures two products: executive desks ($x$) and bookshelves ($y$).
+> 
+> • Each executive desks requires $4\text{ hours}$ of carpentry labour and $1\text{ hours}$ of varnishing time.
+> • Each bookshelves requires $3\text{ hours}$ of carpentry labour and $4\text{ hours}$ of varnishing time.
+> • A maximum of $59\text{ hours}$ of carpentry labour and $26\text{ hours}$ of varnishing time are available each week.
+> • The factory can manufacture at most $16$ executive desks per week.
+> • The profit is R420 per executive desks and R530 per bookshelves.
+> 
+> **Required:**
+> 1. Write down the constraint inequality for carpentry labour.
+> 2. Write down the constraint inequality for varnishing time.
+> 3. State the production limit inequality for $x$ and the non-negativity conditions.
+> 4. Write down the objective function $P$ for total weekly profit.
+
+- **Student Inputted Answer (canonical):** `{"constraint_1": "4x + 3y \\le 59", "constraint_2": "1x + 4y \\le 26", "non_negativity": "x \\le 16,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Expected / Memo Answer:** `{"constraint_1": "4x + 3y \\le 59", "constraint_2": "1x + 4y \\le 26", "non_negativity": "x \\le 16,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Official Worked Solution:** 1. 4x + 3y \le 59; 2. 1x + 4y \le 26; 3. x \le 16,\quad x \ge 0,\quad y \ge 0; 4. P = 420x + 530y
+- **Marking Evaluation:** **4 / 4** (✅ Correct)
+
+### Step 37: Practice Q34/50 — `lp_formulation_e3cc32964628` (Seed: `1034`)
+- **Stage:** `practice` | **Mode:** `compound` | **Difficulty:** `medium` | **Subskill:** `journal`
+- **BKT Mastery:** `100%` &rarr; `100%` | **Evaluative Score:** `80%` | **Adaptive Status:** `exam_ready` &rarr; `exam_ready`
+
+**Question Prompt:**
+> **Golden Harvest Bakery** manufactures two products: speciality cakes ($x$) and artisan loaves ($y$).
+> 
+> • Each speciality cakes requires $4\text{ hours}$ of baking oven capacity and $1\text{ hours}$ of decorating time.
+> • Each artisan loaves requires $2\text{ hours}$ of baking oven capacity and $3\text{ hours}$ of decorating time.
+> • A maximum of $48\text{ hours}$ of baking oven capacity and $38\text{ hours}$ of decorating time are available each week.
+> • The factory can manufacture at most $17$ speciality cakes per week.
+> • The profit is R190 per speciality cakes and R320 per artisan loaves.
+> 
+> **Required:**
+> 1. Write down the constraint inequality for baking oven capacity.
+> 2. Write down the constraint inequality for decorating time.
+> 3. State the production limit inequality for $x$ and the non-negativity conditions.
+> 4. Write down the objective function $P$ for total weekly profit.
+
+- **Student Inputted Answer (canonical):** `{"constraint_1": "4x + 2y \\le 48", "constraint_2": "1x + 3y \\le 38", "non_negativity": "x \\le 17,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Expected / Memo Answer:** `{"constraint_1": "4x + 2y \\le 48", "constraint_2": "1x + 3y \\le 38", "non_negativity": "x \\le 17,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Official Worked Solution:** 1. 4x + 2y \le 48; 2. 1x + 3y \le 38; 3. x \le 17,\quad x \ge 0,\quad y \ge 0; 4. P = 190x + 320y
+- **Marking Evaluation:** **4 / 4** (✅ Correct)
+
+### Step 38: Practice Q35/50 — `lp_formulation_fd75fc73b838` (Seed: `1035`)
+- **Stage:** `practice` | **Mode:** `compound` | **Difficulty:** `medium` | **Subskill:** `journal`
+- **BKT Mastery:** `100%` &rarr; `100%` | **Evaluative Score:** `80%` | **Adaptive Status:** `exam_ready` &rarr; `exam_ready`
+
+**Question Prompt:**
+> **Golden Harvest Bakery** manufactures two products: speciality cakes ($x$) and artisan loaves ($y$).
+> 
+> • Each speciality cakes requires $3\text{ hours}$ of baking oven capacity and $2\text{ hours}$ of decorating time.
+> • Each artisan loaves requires $1\text{ hours}$ of baking oven capacity and $4\text{ hours}$ of decorating time.
+> • A maximum of $38\text{ hours}$ of baking oven capacity and $30\text{ hours}$ of decorating time are available each week.
+> • The factory can manufacture at most $14$ speciality cakes per week.
+> • The profit is R450 per speciality cakes and R270 per artisan loaves.
+> 
+> **Required:**
+> 1. Write down the constraint inequality for baking oven capacity.
+> 2. Write down the constraint inequality for decorating time.
+> 3. State the production limit inequality for $x$ and the non-negativity conditions.
+> 4. Write down the objective function $P$ for total weekly profit.
+
+- **Student Inputted Answer (canonical):** `{"constraint_1": "3x + 1y \\le 38", "constraint_2": "2x + 4y \\le 30", "non_negativity": "x \\le 14,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Expected / Memo Answer:** `{"constraint_1": "3x + 1y \\le 38", "constraint_2": "2x + 4y \\le 30", "non_negativity": "x \\le 14,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Official Worked Solution:** 1. 3x + 1y \le 38; 2. 2x + 4y \le 30; 3. x \le 14,\quad x \ge 0,\quad y \ge 0; 4. P = 450x + 270y
+- **Marking Evaluation:** **4 / 4** (✅ Correct)
+
+### Step 39: Practice Q36/50 — `lp_formulation_5bba5d96c9b4` (Seed: `1036`)
+- **Stage:** `practice` | **Mode:** `compound` | **Difficulty:** `medium` | **Subskill:** `journal`
+- **BKT Mastery:** `100%` &rarr; `100%` | **Evaluative Score:** `80%` | **Adaptive Status:** `exam_ready` &rarr; `exam_ready`
+
+**Question Prompt:**
+> **Veld Cycle Works** manufactures two products: mountain bikes ($x$) and road bikes ($y$).
+> 
+> • Each mountain bikes requires $2\text{ hours}$ of frame welding and $2\text{ hours}$ of gear assembly.
+> • Each road bikes requires $3\text{ hours}$ of frame welding and $4\text{ hours}$ of gear assembly.
+> • A maximum of $53\text{ hours}$ of frame welding and $36\text{ hours}$ of gear assembly are available each week.
+> • The factory can manufacture at most $17$ mountain bikes per week.
+> • The profit is R160 per mountain bikes and R320 per road bikes.
+> 
+> **Required:**
+> 1. Write down the constraint inequality for frame welding.
+> 2. Write down the constraint inequality for gear assembly.
+> 3. State the production limit inequality for $x$ and the non-negativity conditions.
+> 4. Write down the objective function $P$ for total weekly profit.
+
+- **Student Inputted Answer (canonical):** `{"constraint_1": "2x + 3y \\le 53", "constraint_2": "2x + 4y \\le 36", "non_negativity": "x \\le 17,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Expected / Memo Answer:** `{"constraint_1": "2x + 3y \\le 53", "constraint_2": "2x + 4y \\le 36", "non_negativity": "x \\le 17,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Official Worked Solution:** 1. 2x + 3y \le 53; 2. 2x + 4y \le 36; 3. x \le 17,\quad x \ge 0,\quad y \ge 0; 4. P = 160x + 320y
+- **Marking Evaluation:** **4 / 4** (✅ Correct)
+
+### Step 40: Practice Q37/50 — `lp_formulation_72deef3ad65b` (Seed: `1037`)
+- **Stage:** `practice` | **Mode:** `compound` | **Difficulty:** `medium` | **Subskill:** `journal`
+- **BKT Mastery:** `100%` &rarr; `100%` | **Evaluative Score:** `80%` | **Adaptive Status:** `exam_ready` &rarr; `exam_ready`
+
+**Question Prompt:**
+> **Veld Cycle Works** manufactures two products: mountain bikes ($x$) and road bikes ($y$).
+> 
+> • Each mountain bikes requires $3\text{ hours}$ of frame welding and $2\text{ hours}$ of gear assembly.
+> • Each road bikes requires $3\text{ hours}$ of frame welding and $2\text{ hours}$ of gear assembly.
+> • A maximum of $37\text{ hours}$ of frame welding and $38\text{ hours}$ of gear assembly are available each week.
+> • The factory can manufacture at most $10$ mountain bikes per week.
+> • The profit is R160 per mountain bikes and R310 per road bikes.
+> 
+> **Required:**
+> 1. Write down the constraint inequality for frame welding.
+> 2. Write down the constraint inequality for gear assembly.
+> 3. State the production limit inequality for $x$ and the non-negativity conditions.
+> 4. Write down the objective function $P$ for total weekly profit.
+
+- **Student Inputted Answer (canonical):** `{"constraint_1": "3x + 3y \\le 37", "constraint_2": "2x + 2y \\le 38", "non_negativity": "x \\le 10,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Expected / Memo Answer:** `{"constraint_1": "3x + 3y \\le 37", "constraint_2": "2x + 2y \\le 38", "non_negativity": "x \\le 10,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Official Worked Solution:** 1. 3x + 3y \le 37; 2. 2x + 2y \le 38; 3. x \le 10,\quad x \ge 0,\quad y \ge 0; 4. P = 160x + 310y
+- **Marking Evaluation:** **4 / 4** (✅ Correct)
+
+### Step 41: Practice Q38/50 — `lp_formulation_ad00423fd33b` (Seed: `1038`)
+- **Stage:** `practice` | **Mode:** `compound` | **Difficulty:** `medium` | **Subskill:** `journal`
+- **BKT Mastery:** `100%` &rarr; `100%` | **Evaluative Score:** `80%` | **Adaptive Status:** `exam_ready` &rarr; `exam_ready`
+
+**Question Prompt:**
+> **Veld Cycle Works** manufactures two products: mountain bikes ($x$) and road bikes ($y$).
+> 
+> • Each mountain bikes requires $2\text{ hours}$ of frame welding and $2\text{ hours}$ of gear assembly.
+> • Each road bikes requires $2\text{ hours}$ of frame welding and $4\text{ hours}$ of gear assembly.
+> • A maximum of $53\text{ hours}$ of frame welding and $31\text{ hours}$ of gear assembly are available each week.
+> • The factory can manufacture at most $17$ mountain bikes per week.
+> • The profit is R210 per mountain bikes and R520 per road bikes.
+> 
+> **Required:**
+> 1. Write down the constraint inequality for frame welding.
+> 2. Write down the constraint inequality for gear assembly.
+> 3. State the production limit inequality for $x$ and the non-negativity conditions.
+> 4. Write down the objective function $P$ for total weekly profit.
+
+- **Student Inputted Answer (canonical):** `{"constraint_1": "2x + 2y \\le 53", "constraint_2": "2x + 4y \\le 31", "non_negativity": "x \\le 17,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Expected / Memo Answer:** `{"constraint_1": "2x + 2y \\le 53", "constraint_2": "2x + 4y \\le 31", "non_negativity": "x \\le 17,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Official Worked Solution:** 1. 2x + 2y \le 53; 2. 2x + 4y \le 31; 3. x \le 17,\quad x \ge 0,\quad y \ge 0; 4. P = 210x + 520y
+- **Marking Evaluation:** **4 / 4** (✅ Correct)
+
+### Step 42: Practice Q39/50 — `lp_formulation_daf9a2f0cacd` (Seed: `1039`)
+- **Stage:** `practice` | **Mode:** `compound` | **Difficulty:** `medium` | **Subskill:** `journal`
+- **BKT Mastery:** `100%` &rarr; `100%` | **Evaluative Score:** `80%` | **Adaptive Status:** `exam_ready` &rarr; `exam_ready`
+
+**Question Prompt:**
+> **Veld Cycle Works** manufactures two products: mountain bikes ($x$) and road bikes ($y$).
+> 
+> • Each mountain bikes requires $4\text{ hours}$ of frame welding and $2\text{ hours}$ of gear assembly.
+> • Each road bikes requires $2\text{ hours}$ of frame welding and $3\text{ hours}$ of gear assembly.
+> • A maximum of $51\text{ hours}$ of frame welding and $47\text{ hours}$ of gear assembly are available each week.
+> • The factory can manufacture at most $9$ mountain bikes per week.
+> • The profit is R320 per mountain bikes and R260 per road bikes.
+> 
+> **Required:**
+> 1. Write down the constraint inequality for frame welding.
+> 2. Write down the constraint inequality for gear assembly.
+> 3. State the production limit inequality for $x$ and the non-negativity conditions.
+> 4. Write down the objective function $P$ for total weekly profit.
+
+- **Student Inputted Answer (canonical):** `{"constraint_1": "4x + 2y \\le 51", "constraint_2": "2x + 3y \\le 47", "non_negativity": "x \\le 9,\\quad x \\ge 0,\\quad y \\ge 0", "object...`
+- **Expected / Memo Answer:** `{"constraint_1": "4x + 2y \\le 51", "constraint_2": "2x + 3y \\le 47", "non_negativity": "x \\le 9,\\quad x \\ge 0,\\quad y \\ge 0", "object...`
+- **Official Worked Solution:** 1. 4x + 2y \le 51; 2. 2x + 3y \le 47; 3. x \le 9,\quad x \ge 0,\quad y \ge 0; 4. P = 320x + 260y
+- **Marking Evaluation:** **4 / 4** (✅ Correct)
+
+### Step 43: Practice Q40/50 — `lp_formulation_6dfd9c0b6096` (Seed: `1040`)
+- **Stage:** `practice` | **Mode:** `compound` | **Difficulty:** `medium` | **Subskill:** `journal`
+- **BKT Mastery:** `100%` &rarr; `100%` | **Evaluative Score:** `80%` | **Adaptive Status:** `exam_ready` &rarr; `exam_ready`
+
+**Question Prompt:**
+> **Apex Woodcraft** manufactures two products: executive desks ($x$) and bookshelves ($y$).
+> 
+> • Each executive desks requires $3\text{ hours}$ of carpentry labour and $1\text{ hours}$ of varnishing time.
+> • Each bookshelves requires $2\text{ hours}$ of carpentry labour and $4\text{ hours}$ of varnishing time.
+> • A maximum of $32\text{ hours}$ of carpentry labour and $37\text{ hours}$ of varnishing time are available each week.
+> • The factory can manufacture at most $17$ executive desks per week.
+> • The profit is R300 per executive desks and R450 per bookshelves.
+> 
+> **Required:**
+> 1. Write down the constraint inequality for carpentry labour.
+> 2. Write down the constraint inequality for varnishing time.
+> 3. State the production limit inequality for $x$ and the non-negativity conditions.
+> 4. Write down the objective function $P$ for total weekly profit.
+
+- **Student Inputted Answer (canonical):** `{"constraint_1": "3x + 2y \\le 32", "constraint_2": "1x + 4y \\le 37", "non_negativity": "x \\le 17,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Expected / Memo Answer:** `{"constraint_1": "3x + 2y \\le 32", "constraint_2": "1x + 4y \\le 37", "non_negativity": "x \\le 17,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Official Worked Solution:** 1. 3x + 2y \le 32; 2. 1x + 4y \le 37; 3. x \le 17,\quad x \ge 0,\quad y \ge 0; 4. P = 300x + 450y
+- **Marking Evaluation:** **4 / 4** (✅ Correct)
+
+### Step 44: Practice Q41/50 — `lp_formulation_4b1c758345a0` (Seed: `1041`)
+- **Stage:** `practice` | **Mode:** `compound` | **Difficulty:** `medium` | **Subskill:** `journal`
+- **BKT Mastery:** `100%` &rarr; `100%` | **Evaluative Score:** `80%` | **Adaptive Status:** `exam_ready` &rarr; `exam_ready`
+
+**Question Prompt:**
+> **Veld Cycle Works** manufactures two products: mountain bikes ($x$) and road bikes ($y$).
+> 
+> • Each mountain bikes requires $2\text{ hours}$ of frame welding and $1\text{ hours}$ of gear assembly.
+> • Each road bikes requires $1\text{ hours}$ of frame welding and $3\text{ hours}$ of gear assembly.
+> • A maximum of $45\text{ hours}$ of frame welding and $32\text{ hours}$ of gear assembly are available each week.
+> • The factory can manufacture at most $20$ mountain bikes per week.
+> • The profit is R400 per mountain bikes and R460 per road bikes.
+> 
+> **Required:**
+> 1. Write down the constraint inequality for frame welding.
+> 2. Write down the constraint inequality for gear assembly.
+> 3. State the production limit inequality for $x$ and the non-negativity conditions.
+> 4. Write down the objective function $P$ for total weekly profit.
+
+- **Student Inputted Answer (canonical):** `{"constraint_1": "2x + 1y \\le 45", "constraint_2": "1x + 3y \\le 32", "non_negativity": "x \\le 20,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Expected / Memo Answer:** `{"constraint_1": "2x + 1y \\le 45", "constraint_2": "1x + 3y \\le 32", "non_negativity": "x \\le 20,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Official Worked Solution:** 1. 2x + 1y \le 45; 2. 1x + 3y \le 32; 3. x \le 20,\quad x \ge 0,\quad y \ge 0; 4. P = 400x + 460y
+- **Marking Evaluation:** **4 / 4** (✅ Correct)
+
+### Step 45: Practice Q42/50 — `lp_formulation_684cfbb8ed58` (Seed: `1042`)
+- **Stage:** `practice` | **Mode:** `compound` | **Difficulty:** `medium` | **Subskill:** `journal`
+- **BKT Mastery:** `100%` &rarr; `96%` | **Evaluative Score:** `80%` | **Adaptive Status:** `exam_ready` &rarr; `exam_ready`
+
+**Question Prompt:**
+> **Golden Harvest Bakery** manufactures two products: speciality cakes ($x$) and artisan loaves ($y$).
+> 
+> • Each speciality cakes requires $3\text{ hours}$ of baking oven capacity and $1\text{ hours}$ of decorating time.
+> • Each artisan loaves requires $1\text{ hours}$ of baking oven capacity and $2\text{ hours}$ of decorating time.
+> • A maximum of $59\text{ hours}$ of baking oven capacity and $36\text{ hours}$ of decorating time are available each week.
+> • The factory can manufacture at most $8$ speciality cakes per week.
+> • The profit is R350 per speciality cakes and R430 per artisan loaves.
+> 
+> **Required:**
+> 1. Write down the constraint inequality for baking oven capacity.
+> 2. Write down the constraint inequality for decorating time.
+> 3. State the production limit inequality for $x$ and the non-negativity conditions.
+> 4. Write down the objective function $P$ for total weekly profit.
+
+- **Student Inputted Answer (partial):** `{"constraint_1": "3x + 1y \\le 59", "constraint_2": "1x + 2y \\le 36"}`
+- **Expected / Memo Answer:** `{"constraint_1": "3x + 1y \\le 59", "constraint_2": "1x + 2y \\le 36", "non_negativity": "x \\le 8,\\quad x \\ge 0,\\quad y \\ge 0", "object...`
+- **Official Worked Solution:** 1. 3x + 1y \le 59; 2. 1x + 2y \le 36; 3. x \le 8,\quad x \ge 0,\quad y \ge 0; 4. P = 350x + 430y
+- **Marking Evaluation:** **2 / 4** (❌ Incorrect / Partial) | **Misconception Tag:** `inequality_direction_inversion`
+
+### Step 46: Practice Q43/50 — `lp_formulation_b77da9f4c091` (Seed: `1043`)
+- **Stage:** `practice` | **Mode:** `compound` | **Difficulty:** `medium` | **Subskill:** `journal`
+- **BKT Mastery:** `96%` &rarr; `99%` | **Evaluative Score:** `80%` | **Adaptive Status:** `exam_ready` &rarr; `exam_ready`
+
+**Question Prompt:**
+> **Golden Harvest Bakery** manufactures two products: speciality cakes ($x$) and artisan loaves ($y$).
+> 
+> • Each speciality cakes requires $3\text{ hours}$ of baking oven capacity and $1\text{ hours}$ of decorating time.
+> • Each artisan loaves requires $2\text{ hours}$ of baking oven capacity and $2\text{ hours}$ of decorating time.
+> • A maximum of $36\text{ hours}$ of baking oven capacity and $31\text{ hours}$ of decorating time are available each week.
+> • The factory can manufacture at most $13$ speciality cakes per week.
+> • The profit is R350 per speciality cakes and R370 per artisan loaves.
+> 
+> **Required:**
+> 1. Write down the constraint inequality for baking oven capacity.
+> 2. Write down the constraint inequality for decorating time.
+> 3. State the production limit inequality for $x$ and the non-negativity conditions.
+> 4. Write down the objective function $P$ for total weekly profit.
+
+- **Student Inputted Answer (canonical):** `{"constraint_1": "3x + 2y \\le 36", "constraint_2": "1x + 2y \\le 31", "non_negativity": "x \\le 13,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Expected / Memo Answer:** `{"constraint_1": "3x + 2y \\le 36", "constraint_2": "1x + 2y \\le 31", "non_negativity": "x \\le 13,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Official Worked Solution:** 1. 3x + 2y \le 36; 2. 1x + 2y \le 31; 3. x \le 13,\quad x \ge 0,\quad y \ge 0; 4. P = 350x + 370y
+- **Marking Evaluation:** **4 / 4** (✅ Correct)
+
+### Step 47: Practice Q44/50 — `lp_formulation_8a9a7ec7fa47` (Seed: `1044`)
+- **Stage:** `practice` | **Mode:** `compound` | **Difficulty:** `medium` | **Subskill:** `journal`
+- **BKT Mastery:** `99%` &rarr; `100%` | **Evaluative Score:** `80%` | **Adaptive Status:** `exam_ready` &rarr; `exam_ready`
+
+**Question Prompt:**
+> **Apex Woodcraft** manufactures two products: executive desks ($x$) and bookshelves ($y$).
+> 
+> • Each executive desks requires $3\text{ hours}$ of carpentry labour and $2\text{ hours}$ of varnishing time.
+> • Each bookshelves requires $3\text{ hours}$ of carpentry labour and $2\text{ hours}$ of varnishing time.
+> • A maximum of $36\text{ hours}$ of carpentry labour and $43\text{ hours}$ of varnishing time are available each week.
+> • The factory can manufacture at most $14$ executive desks per week.
+> • The profit is R340 per executive desks and R340 per bookshelves.
+> 
+> **Required:**
+> 1. Write down the constraint inequality for carpentry labour.
+> 2. Write down the constraint inequality for varnishing time.
+> 3. State the production limit inequality for $x$ and the non-negativity conditions.
+> 4. Write down the objective function $P$ for total weekly profit.
+
+- **Student Inputted Answer (canonical):** `{"constraint_1": "3x + 3y \\le 36", "constraint_2": "2x + 2y \\le 43", "non_negativity": "x \\le 14,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Expected / Memo Answer:** `{"constraint_1": "3x + 3y \\le 36", "constraint_2": "2x + 2y \\le 43", "non_negativity": "x \\le 14,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Official Worked Solution:** 1. 3x + 3y \le 36; 2. 2x + 2y \le 43; 3. x \le 14,\quad x \ge 0,\quad y \ge 0; 4. P = 340x + 340y
+- **Marking Evaluation:** **4 / 4** (✅ Correct)
+
+### Step 48: Practice Q45/50 — `lp_formulation_2fc9b3a24140` (Seed: `1045`)
+- **Stage:** `practice` | **Mode:** `compound` | **Difficulty:** `medium` | **Subskill:** `journal`
+- **BKT Mastery:** `100%` &rarr; `100%` | **Evaluative Score:** `80%` | **Adaptive Status:** `exam_ready` &rarr; `exam_ready`
+
+**Question Prompt:**
+> **Golden Harvest Bakery** manufactures two products: speciality cakes ($x$) and artisan loaves ($y$).
+> 
+> • Each speciality cakes requires $3\text{ hours}$ of baking oven capacity and $2\text{ hours}$ of decorating time.
+> • Each artisan loaves requires $3\text{ hours}$ of baking oven capacity and $3\text{ hours}$ of decorating time.
+> • A maximum of $48\text{ hours}$ of baking oven capacity and $23\text{ hours}$ of decorating time are available each week.
+> • The factory can manufacture at most $14$ speciality cakes per week.
+> • The profit is R340 per speciality cakes and R490 per artisan loaves.
+> 
+> **Required:**
+> 1. Write down the constraint inequality for baking oven capacity.
+> 2. Write down the constraint inequality for decorating time.
+> 3. State the production limit inequality for $x$ and the non-negativity conditions.
+> 4. Write down the objective function $P$ for total weekly profit.
+
+- **Student Inputted Answer (canonical):** `{"constraint_1": "3x + 3y \\le 48", "constraint_2": "2x + 3y \\le 23", "non_negativity": "x \\le 14,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Expected / Memo Answer:** `{"constraint_1": "3x + 3y \\le 48", "constraint_2": "2x + 3y \\le 23", "non_negativity": "x \\le 14,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Official Worked Solution:** 1. 3x + 3y \le 48; 2. 2x + 3y \le 23; 3. x \le 14,\quad x \ge 0,\quad y \ge 0; 4. P = 340x + 490y
+- **Marking Evaluation:** **4 / 4** (✅ Correct)
+
+### Step 49: Practice Q46/50 — `lp_formulation_4761c0c5f6ee` (Seed: `1046`)
+- **Stage:** `practice` | **Mode:** `compound` | **Difficulty:** `medium` | **Subskill:** `journal`
+- **BKT Mastery:** `100%` &rarr; `100%` | **Evaluative Score:** `80%` | **Adaptive Status:** `exam_ready` &rarr; `exam_ready`
+
+**Question Prompt:**
+> **Veld Cycle Works** manufactures two products: mountain bikes ($x$) and road bikes ($y$).
+> 
+> • Each mountain bikes requires $3\text{ hours}$ of frame welding and $2\text{ hours}$ of gear assembly.
+> • Each road bikes requires $3\text{ hours}$ of frame welding and $3\text{ hours}$ of gear assembly.
+> • A maximum of $50\text{ hours}$ of frame welding and $25\text{ hours}$ of gear assembly are available each week.
+> • The factory can manufacture at most $13$ mountain bikes per week.
+> • The profit is R210 per mountain bikes and R420 per road bikes.
+> 
+> **Required:**
+> 1. Write down the constraint inequality for frame welding.
+> 2. Write down the constraint inequality for gear assembly.
+> 3. State the production limit inequality for $x$ and the non-negativity conditions.
+> 4. Write down the objective function $P$ for total weekly profit.
+
+- **Student Inputted Answer (canonical):** `{"constraint_1": "3x + 3y \\le 50", "constraint_2": "2x + 3y \\le 25", "non_negativity": "x \\le 13,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Expected / Memo Answer:** `{"constraint_1": "3x + 3y \\le 50", "constraint_2": "2x + 3y \\le 25", "non_negativity": "x \\le 13,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Official Worked Solution:** 1. 3x + 3y \le 50; 2. 2x + 3y \le 25; 3. x \le 13,\quad x \ge 0,\quad y \ge 0; 4. P = 210x + 420y
+- **Marking Evaluation:** **4 / 4** (✅ Correct)
+
+### Step 50: Practice Q47/50 — `lp_formulation_08e7f95d7314` (Seed: `1047`)
+- **Stage:** `practice` | **Mode:** `compound` | **Difficulty:** `medium` | **Subskill:** `journal`
+- **BKT Mastery:** `100%` &rarr; `100%` | **Evaluative Score:** `80%` | **Adaptive Status:** `exam_ready` &rarr; `exam_ready`
+
+**Question Prompt:**
+> **Veld Cycle Works** manufactures two products: mountain bikes ($x$) and road bikes ($y$).
+> 
+> • Each mountain bikes requires $3\text{ hours}$ of frame welding and $1\text{ hours}$ of gear assembly.
+> • Each road bikes requires $1\text{ hours}$ of frame welding and $4\text{ hours}$ of gear assembly.
+> • A maximum of $26\text{ hours}$ of frame welding and $49\text{ hours}$ of gear assembly are available each week.
+> • The factory can manufacture at most $12$ mountain bikes per week.
+> • The profit is R150 per mountain bikes and R240 per road bikes.
+> 
+> **Required:**
+> 1. Write down the constraint inequality for frame welding.
+> 2. Write down the constraint inequality for gear assembly.
+> 3. State the production limit inequality for $x$ and the non-negativity conditions.
+> 4. Write down the objective function $P$ for total weekly profit.
+
+- **Student Inputted Answer (canonical):** `{"constraint_1": "3x + 1y \\le 26", "constraint_2": "1x + 4y \\le 49", "non_negativity": "x \\le 12,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Expected / Memo Answer:** `{"constraint_1": "3x + 1y \\le 26", "constraint_2": "1x + 4y \\le 49", "non_negativity": "x \\le 12,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Official Worked Solution:** 1. 3x + 1y \le 26; 2. 1x + 4y \le 49; 3. x \le 12,\quad x \ge 0,\quad y \ge 0; 4. P = 150x + 240y
+- **Marking Evaluation:** **4 / 4** (✅ Correct)
+
+### Step 51: Practice Q48/50 — `lp_formulation_b1a0f26e64c0` (Seed: `1048`)
+- **Stage:** `practice` | **Mode:** `compound` | **Difficulty:** `medium` | **Subskill:** `journal`
+- **BKT Mastery:** `100%` &rarr; `100%` | **Evaluative Score:** `80%` | **Adaptive Status:** `exam_ready` &rarr; `exam_ready`
+
+**Question Prompt:**
+> **Veld Cycle Works** manufactures two products: mountain bikes ($x$) and road bikes ($y$).
+> 
+> • Each mountain bikes requires $3\text{ hours}$ of frame welding and $2\text{ hours}$ of gear assembly.
+> • Each road bikes requires $1\text{ hours}$ of frame welding and $4\text{ hours}$ of gear assembly.
+> • A maximum of $21\text{ hours}$ of frame welding and $44\text{ hours}$ of gear assembly are available each week.
+> • The factory can manufacture at most $13$ mountain bikes per week.
+> • The profit is R320 per mountain bikes and R360 per road bikes.
+> 
+> **Required:**
+> 1. Write down the constraint inequality for frame welding.
+> 2. Write down the constraint inequality for gear assembly.
+> 3. State the production limit inequality for $x$ and the non-negativity conditions.
+> 4. Write down the objective function $P$ for total weekly profit.
+
+- **Student Inputted Answer (canonical):** `{"constraint_1": "3x + 1y \\le 21", "constraint_2": "2x + 4y \\le 44", "non_negativity": "x \\le 13,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Expected / Memo Answer:** `{"constraint_1": "3x + 1y \\le 21", "constraint_2": "2x + 4y \\le 44", "non_negativity": "x \\le 13,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Official Worked Solution:** 1. 3x + 1y \le 21; 2. 2x + 4y \le 44; 3. x \le 13,\quad x \ge 0,\quad y \ge 0; 4. P = 320x + 360y
+- **Marking Evaluation:** **4 / 4** (✅ Correct)
+
+### Step 52: Practice Q49/50 — `lp_formulation_017998be4157` (Seed: `1049`)
+- **Stage:** `practice` | **Mode:** `compound` | **Difficulty:** `medium` | **Subskill:** `journal`
+- **BKT Mastery:** `100%` &rarr; `100%` | **Evaluative Score:** `80%` | **Adaptive Status:** `exam_ready` &rarr; `exam_ready`
+
+**Question Prompt:**
+> **Golden Harvest Bakery** manufactures two products: speciality cakes ($x$) and artisan loaves ($y$).
+> 
+> • Each speciality cakes requires $3\text{ hours}$ of baking oven capacity and $1\text{ hours}$ of decorating time.
+> • Each artisan loaves requires $3\text{ hours}$ of baking oven capacity and $2\text{ hours}$ of decorating time.
+> • A maximum of $28\text{ hours}$ of baking oven capacity and $45\text{ hours}$ of decorating time are available each week.
+> • The factory can manufacture at most $17$ speciality cakes per week.
+> • The profit is R200 per speciality cakes and R590 per artisan loaves.
+> 
+> **Required:**
+> 1. Write down the constraint inequality for baking oven capacity.
+> 2. Write down the constraint inequality for decorating time.
+> 3. State the production limit inequality for $x$ and the non-negativity conditions.
+> 4. Write down the objective function $P$ for total weekly profit.
+
+- **Student Inputted Answer (canonical):** `{"constraint_1": "3x + 3y \\le 28", "constraint_2": "1x + 2y \\le 45", "non_negativity": "x \\le 17,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Expected / Memo Answer:** `{"constraint_1": "3x + 3y \\le 28", "constraint_2": "1x + 2y \\le 45", "non_negativity": "x \\le 17,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Official Worked Solution:** 1. 3x + 3y \le 28; 2. 1x + 2y \le 45; 3. x \le 17,\quad x \ge 0,\quad y \ge 0; 4. P = 200x + 590y
+- **Marking Evaluation:** **4 / 4** (✅ Correct)
+
+### Step 53: Practice Q50/50 — `lp_formulation_434c96be1d06` (Seed: `1050`)
+- **Stage:** `practice` | **Mode:** `compound` | **Difficulty:** `medium` | **Subskill:** `journal`
+- **BKT Mastery:** `100%` &rarr; `100%` | **Evaluative Score:** `80%` | **Adaptive Status:** `exam_ready` &rarr; `exam_ready`
+
+**Question Prompt:**
+> **Apex Woodcraft** manufactures two products: executive desks ($x$) and bookshelves ($y$).
+> 
+> • Each executive desks requires $4\text{ hours}$ of carpentry labour and $2\text{ hours}$ of varnishing time.
+> • Each bookshelves requires $2\text{ hours}$ of carpentry labour and $4\text{ hours}$ of varnishing time.
+> • A maximum of $58\text{ hours}$ of carpentry labour and $24\text{ hours}$ of varnishing time are available each week.
+> • The factory can manufacture at most $19$ executive desks per week.
+> • The profit is R350 per executive desks and R450 per bookshelves.
+> 
+> **Required:**
+> 1. Write down the constraint inequality for carpentry labour.
+> 2. Write down the constraint inequality for varnishing time.
+> 3. State the production limit inequality for $x$ and the non-negativity conditions.
+> 4. Write down the objective function $P$ for total weekly profit.
+
+- **Student Inputted Answer (canonical):** `{"constraint_1": "4x + 2y \\le 58", "constraint_2": "2x + 4y \\le 24", "non_negativity": "x \\le 19,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Expected / Memo Answer:** `{"constraint_1": "4x + 2y \\le 58", "constraint_2": "2x + 4y \\le 24", "non_negativity": "x \\le 19,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Official Worked Solution:** 1. 4x + 2y \le 58; 2. 2x + 4y \le 24; 3. x \le 19,\quad x \ge 0,\quad y \ge 0; 4. P = 350x + 450y
+- **Marking Evaluation:** **4 / 4** (✅ Correct)
+
+### Step 54: Exam 1 - Q1/5 — `lp_formulation_9e17ed90b702` (Seed: `2101`)
+- **Stage:** `assessment` | **Mode:** `compound` | **Difficulty:** `hard` | **Subskill:** `journal`
+- **BKT Mastery:** `100%` &rarr; `100%` | **Evaluative Score:** `86%` | **Adaptive Status:** `exam_ready` &rarr; `exam_ready`
+
+**Question Prompt:**
+> **Golden Harvest Bakery** manufactures two products: speciality cakes ($x$) and artisan loaves ($y$).
+> 
+> • Each speciality cakes requires $3\text{ hours}$ of baking oven capacity and $2\text{ hours}$ of decorating time.
+> • Each artisan loaves requires $1\text{ hours}$ of baking oven capacity and $2\text{ hours}$ of decorating time.
+> • A maximum of $53\text{ hours}$ of baking oven capacity and $43\text{ hours}$ of decorating time are available each week.
+> • The factory can manufacture at most $18$ speciality cakes per week.
+> • The profit is R340 per speciality cakes and R290 per artisan loaves.
+> 
+> **Required:**
+> 1. Write down the constraint inequality for baking oven capacity.
+> 2. Write down the constraint inequality for decorating time.
+> 3. State the production limit inequality for $x$ and the non-negativity conditions.
+> 4. Write down the objective function $P$ for total weekly profit.
+
+- **Student Inputted Answer (canonical):** `{"constraint_1": "3x + 1y \\le 53", "constraint_2": "2x + 2y \\le 43", "non_negativity": "x \\le 18,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Expected / Memo Answer:** `{"constraint_1": "3x + 1y \\le 53", "constraint_2": "2x + 2y \\le 43", "non_negativity": "x \\le 18,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Official Worked Solution:** 1. 3x + 1y \le 53; 2. 2x + 2y \le 43; 3. x \le 18,\quad x \ge 0,\quad y \ge 0; 4. P = 340x + 290y
+- **Marking Evaluation:** **4 / 4** (✅ Correct)
+
+### Step 55: Exam 1 - Q2/5 — `lp_formulation_3d4ed3a93d42` (Seed: `2102`)
+- **Stage:** `assessment` | **Mode:** `compound` | **Difficulty:** `hard` | **Subskill:** `journal`
+- **BKT Mastery:** `100%` &rarr; `100%` | **Evaluative Score:** `90%` | **Adaptive Status:** `exam_ready` &rarr; `exam_ready`
+
+**Question Prompt:**
+> **Apex Woodcraft** manufactures two products: executive desks ($x$) and bookshelves ($y$).
+> 
+> • Each executive desks requires $4\text{ hours}$ of carpentry labour and $1\text{ hours}$ of varnishing time.
+> • Each bookshelves requires $2\text{ hours}$ of carpentry labour and $4\text{ hours}$ of varnishing time.
+> • A maximum of $24\text{ hours}$ of carpentry labour and $45\text{ hours}$ of varnishing time are available each week.
+> • The factory can manufacture at most $11$ executive desks per week.
+> • The profit is R310 per executive desks and R520 per bookshelves.
+> 
+> **Required:**
+> 1. Write down the constraint inequality for carpentry labour.
+> 2. Write down the constraint inequality for varnishing time.
+> 3. State the production limit inequality for $x$ and the non-negativity conditions.
+> 4. Write down the objective function $P$ for total weekly profit.
+
+- **Student Inputted Answer (canonical):** `{"constraint_1": "4x + 2y \\le 24", "constraint_2": "1x + 4y \\le 45", "non_negativity": "x \\le 11,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Expected / Memo Answer:** `{"constraint_1": "4x + 2y \\le 24", "constraint_2": "1x + 4y \\le 45", "non_negativity": "x \\le 11,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Official Worked Solution:** 1. 4x + 2y \le 24; 2. 1x + 4y \le 45; 3. x \le 11,\quad x \ge 0,\quad y \ge 0; 4. P = 310x + 520y
+- **Marking Evaluation:** **4 / 4** (✅ Correct)
+
+### Step 56: Exam 1 - Q3/5 — `lp_formulation_1c3bce62c0d3` (Seed: `2103`)
+- **Stage:** `assessment` | **Mode:** `compound` | **Difficulty:** `hard` | **Subskill:** `journal`
+- **BKT Mastery:** `100%` &rarr; `100%` | **Evaluative Score:** `93%` | **Adaptive Status:** `exam_ready` &rarr; `exam_ready`
+
+**Question Prompt:**
+> **Apex Woodcraft** manufactures two products: executive desks ($x$) and bookshelves ($y$).
+> 
+> • Each executive desks requires $2\text{ hours}$ of carpentry labour and $2\text{ hours}$ of varnishing time.
+> • Each bookshelves requires $3\text{ hours}$ of carpentry labour and $4\text{ hours}$ of varnishing time.
+> • A maximum of $38\text{ hours}$ of carpentry labour and $25\text{ hours}$ of varnishing time are available each week.
+> • The factory can manufacture at most $11$ executive desks per week.
+> • The profit is R340 per executive desks and R200 per bookshelves.
+> 
+> **Required:**
+> 1. Write down the constraint inequality for carpentry labour.
+> 2. Write down the constraint inequality for varnishing time.
+> 3. State the production limit inequality for $x$ and the non-negativity conditions.
+> 4. Write down the objective function $P$ for total weekly profit.
+
+- **Student Inputted Answer (canonical):** `{"constraint_1": "2x + 3y \\le 38", "constraint_2": "2x + 4y \\le 25", "non_negativity": "x \\le 11,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Expected / Memo Answer:** `{"constraint_1": "2x + 3y \\le 38", "constraint_2": "2x + 4y \\le 25", "non_negativity": "x \\le 11,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Official Worked Solution:** 1. 2x + 3y \le 38; 2. 2x + 4y \le 25; 3. x \le 11,\quad x \ge 0,\quad y \ge 0; 4. P = 340x + 200y
+- **Marking Evaluation:** **4 / 4** (✅ Correct)
+
+### Step 57: Exam 1 - Q4/5 — `lp_formulation_490753b15977` (Seed: `2104`)
+- **Stage:** `assessment` | **Mode:** `compound` | **Difficulty:** `hard` | **Subskill:** `journal`
+- **BKT Mastery:** `100%` &rarr; `100%` | **Evaluative Score:** `95%` | **Adaptive Status:** `exam_ready` &rarr; `exam_ready`
+
+**Question Prompt:**
+> **Golden Harvest Bakery** manufactures two products: speciality cakes ($x$) and artisan loaves ($y$).
+> 
+> • Each speciality cakes requires $2\text{ hours}$ of baking oven capacity and $1\text{ hours}$ of decorating time.
+> • Each artisan loaves requires $2\text{ hours}$ of baking oven capacity and $3\text{ hours}$ of decorating time.
+> • A maximum of $47\text{ hours}$ of baking oven capacity and $46\text{ hours}$ of decorating time are available each week.
+> • The factory can manufacture at most $15$ speciality cakes per week.
+> • The profit is R160 per speciality cakes and R290 per artisan loaves.
+> 
+> **Required:**
+> 1. Write down the constraint inequality for baking oven capacity.
+> 2. Write down the constraint inequality for decorating time.
+> 3. State the production limit inequality for $x$ and the non-negativity conditions.
+> 4. Write down the objective function $P$ for total weekly profit.
+
+- **Student Inputted Answer (canonical):** `{"constraint_1": "2x + 2y \\le 47", "constraint_2": "1x + 3y \\le 46", "non_negativity": "x \\le 15,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Expected / Memo Answer:** `{"constraint_1": "2x + 2y \\le 47", "constraint_2": "1x + 3y \\le 46", "non_negativity": "x \\le 15,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Official Worked Solution:** 1. 2x + 2y \le 47; 2. 1x + 3y \le 46; 3. x \le 15,\quad x \ge 0,\quad y \ge 0; 4. P = 160x + 290y
+- **Marking Evaluation:** **4 / 4** (✅ Correct)
+
+### Step 58: Exam 1 - Q5/5 — `lp_formulation_63c8a614d66e` (Seed: `2105`)
+- **Stage:** `assessment` | **Mode:** `compound` | **Difficulty:** `hard` | **Subskill:** `journal`
+- **BKT Mastery:** `100%` &rarr; `100%` | **Evaluative Score:** `96%` | **Adaptive Status:** `exam_ready` &rarr; `exam_ready`
+
+**Question Prompt:**
+> **Veld Cycle Works** manufactures two products: mountain bikes ($x$) and road bikes ($y$).
+> 
+> • Each mountain bikes requires $3\text{ hours}$ of frame welding and $1\text{ hours}$ of gear assembly.
+> • Each road bikes requires $2\text{ hours}$ of frame welding and $4\text{ hours}$ of gear assembly.
+> • A maximum of $28\text{ hours}$ of frame welding and $37\text{ hours}$ of gear assembly are available each week.
+> • The factory can manufacture at most $14$ mountain bikes per week.
+> • The profit is R240 per mountain bikes and R480 per road bikes.
+> 
+> **Required:**
+> 1. Write down the constraint inequality for frame welding.
+> 2. Write down the constraint inequality for gear assembly.
+> 3. State the production limit inequality for $x$ and the non-negativity conditions.
+> 4. Write down the objective function $P$ for total weekly profit.
+
+- **Student Inputted Answer (canonical):** `{"constraint_1": "3x + 2y \\le 28", "constraint_2": "1x + 4y \\le 37", "non_negativity": "x \\le 14,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Expected / Memo Answer:** `{"constraint_1": "3x + 2y \\le 28", "constraint_2": "1x + 4y \\le 37", "non_negativity": "x \\le 14,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Official Worked Solution:** 1. 3x + 2y \le 28; 2. 1x + 4y \le 37; 3. x \le 14,\quad x \ge 0,\quad y \ge 0; 4. P = 240x + 480y
+- **Marking Evaluation:** **4 / 4** (✅ Correct)
+
+### Step 59: Exam 2 - Q1/5 — `lp_formulation_85d729e410b7` (Seed: `2201`)
+- **Stage:** `assessment` | **Mode:** `compound` | **Difficulty:** `hard` | **Subskill:** `journal`
+- **BKT Mastery:** `100%` &rarr; `100%` | **Evaluative Score:** `97%` | **Adaptive Status:** `exam_ready` &rarr; `exam_ready`
+
+**Question Prompt:**
+> **Veld Cycle Works** manufactures two products: mountain bikes ($x$) and road bikes ($y$).
+> 
+> • Each mountain bikes requires $4\text{ hours}$ of frame welding and $2\text{ hours}$ of gear assembly.
+> • Each road bikes requires $3\text{ hours}$ of frame welding and $2\text{ hours}$ of gear assembly.
+> • A maximum of $49\text{ hours}$ of frame welding and $38\text{ hours}$ of gear assembly are available each week.
+> • The factory can manufacture at most $15$ mountain bikes per week.
+> • The profit is R410 per mountain bikes and R470 per road bikes.
+> 
+> **Required:**
+> 1. Write down the constraint inequality for frame welding.
+> 2. Write down the constraint inequality for gear assembly.
+> 3. State the production limit inequality for $x$ and the non-negativity conditions.
+> 4. Write down the objective function $P$ for total weekly profit.
+
+- **Student Inputted Answer (canonical):** `{"constraint_1": "4x + 3y \\le 49", "constraint_2": "2x + 2y \\le 38", "non_negativity": "x \\le 15,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Expected / Memo Answer:** `{"constraint_1": "4x + 3y \\le 49", "constraint_2": "2x + 2y \\le 38", "non_negativity": "x \\le 15,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Official Worked Solution:** 1. 4x + 3y \le 49; 2. 2x + 2y \le 38; 3. x \le 15,\quad x \ge 0,\quad y \ge 0; 4. P = 410x + 470y
+- **Marking Evaluation:** **4 / 4** (✅ Correct)
+
+### Step 60: Exam 2 - Q2/5 — `lp_formulation_a130769ceff2` (Seed: `2202`)
+- **Stage:** `assessment` | **Mode:** `compound` | **Difficulty:** `hard` | **Subskill:** `journal`
+- **BKT Mastery:** `100%` &rarr; `100%` | **Evaluative Score:** `98%` | **Adaptive Status:** `exam_ready` &rarr; `exam_ready`
+
+**Question Prompt:**
+> **Golden Harvest Bakery** manufactures two products: speciality cakes ($x$) and artisan loaves ($y$).
+> 
+> • Each speciality cakes requires $3\text{ hours}$ of baking oven capacity and $2\text{ hours}$ of decorating time.
+> • Each artisan loaves requires $3\text{ hours}$ of baking oven capacity and $2\text{ hours}$ of decorating time.
+> • A maximum of $57\text{ hours}$ of baking oven capacity and $30\text{ hours}$ of decorating time are available each week.
+> • The factory can manufacture at most $17$ speciality cakes per week.
+> • The profit is R250 per speciality cakes and R600 per artisan loaves.
+> 
+> **Required:**
+> 1. Write down the constraint inequality for baking oven capacity.
+> 2. Write down the constraint inequality for decorating time.
+> 3. State the production limit inequality for $x$ and the non-negativity conditions.
+> 4. Write down the objective function $P$ for total weekly profit.
+
+- **Student Inputted Answer (canonical):** `{"constraint_1": "3x + 3y \\le 57", "constraint_2": "2x + 2y \\le 30", "non_negativity": "x \\le 17,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Expected / Memo Answer:** `{"constraint_1": "3x + 3y \\le 57", "constraint_2": "2x + 2y \\le 30", "non_negativity": "x \\le 17,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Official Worked Solution:** 1. 3x + 3y \le 57; 2. 2x + 2y \le 30; 3. x \le 17,\quad x \ge 0,\quad y \ge 0; 4. P = 250x + 600y
+- **Marking Evaluation:** **4 / 4** (✅ Correct)
+
+### Step 61: Exam 2 - Q3/5 — `lp_formulation_a46856cdce3c` (Seed: `2203`)
+- **Stage:** `assessment` | **Mode:** `compound` | **Difficulty:** `hard` | **Subskill:** `journal`
+- **BKT Mastery:** `100%` &rarr; `100%` | **Evaluative Score:** `99%` | **Adaptive Status:** `exam_ready` &rarr; `exam_ready`
+
+**Question Prompt:**
+> **Veld Cycle Works** manufactures two products: mountain bikes ($x$) and road bikes ($y$).
+> 
+> • Each mountain bikes requires $2\text{ hours}$ of frame welding and $2\text{ hours}$ of gear assembly.
+> • Each road bikes requires $2\text{ hours}$ of frame welding and $3\text{ hours}$ of gear assembly.
+> • A maximum of $44\text{ hours}$ of frame welding and $23\text{ hours}$ of gear assembly are available each week.
+> • The factory can manufacture at most $15$ mountain bikes per week.
+> • The profit is R150 per mountain bikes and R400 per road bikes.
+> 
+> **Required:**
+> 1. Write down the constraint inequality for frame welding.
+> 2. Write down the constraint inequality for gear assembly.
+> 3. State the production limit inequality for $x$ and the non-negativity conditions.
+> 4. Write down the objective function $P$ for total weekly profit.
+
+- **Student Inputted Answer (canonical):** `{"constraint_1": "2x + 2y \\le 44", "constraint_2": "2x + 3y \\le 23", "non_negativity": "x \\le 15,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Expected / Memo Answer:** `{"constraint_1": "2x + 2y \\le 44", "constraint_2": "2x + 3y \\le 23", "non_negativity": "x \\le 15,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Official Worked Solution:** 1. 2x + 2y \le 44; 2. 2x + 3y \le 23; 3. x \le 15,\quad x \ge 0,\quad y \ge 0; 4. P = 150x + 400y
+- **Marking Evaluation:** **4 / 4** (✅ Correct)
+
+### Step 62: Exam 2 - Q4/5 — `lp_formulation_ddbefebac2a2` (Seed: `2204`)
+- **Stage:** `assessment` | **Mode:** `compound` | **Difficulty:** `hard` | **Subskill:** `journal`
+- **BKT Mastery:** `100%` &rarr; `96%` | **Evaluative Score:** `84%` | **Adaptive Status:** `exam_ready` &rarr; `exam_ready`
+
+**Question Prompt:**
+> **Veld Cycle Works** manufactures two products: mountain bikes ($x$) and road bikes ($y$).
+> 
+> • Each mountain bikes requires $3\text{ hours}$ of frame welding and $2\text{ hours}$ of gear assembly.
+> • Each road bikes requires $1\text{ hours}$ of frame welding and $4\text{ hours}$ of gear assembly.
+> • A maximum of $60\text{ hours}$ of frame welding and $23\text{ hours}$ of gear assembly are available each week.
+> • The factory can manufacture at most $12$ mountain bikes per week.
+> • The profit is R330 per mountain bikes and R430 per road bikes.
+> 
+> **Required:**
+> 1. Write down the constraint inequality for frame welding.
+> 2. Write down the constraint inequality for gear assembly.
+> 3. State the production limit inequality for $x$ and the non-negativity conditions.
+> 4. Write down the objective function $P$ for total weekly profit.
+
+- **Student Inputted Answer (partial):** `{"constraint_1": "3x + 1y \\le 60", "constraint_2": "2x + 4y \\le 23"}`
+- **Expected / Memo Answer:** `{"constraint_1": "3x + 1y \\le 60", "constraint_2": "2x + 4y \\le 23", "non_negativity": "x \\le 12,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Official Worked Solution:** 1. 3x + 1y \le 60; 2. 2x + 4y \le 23; 3. x \le 12,\quad x \ge 0,\quad y \ge 0; 4. P = 330x + 430y
+- **Marking Evaluation:** **2 / 4** (❌ Incorrect / Partial) | **Misconception Tag:** `inequality_direction_inversion`
+
+### Step 63: Exam 2 - Q5/5 — `lp_formulation_90889d09943c` (Seed: `2205`)
+- **Stage:** `assessment` | **Mode:** `compound` | **Difficulty:** `hard` | **Subskill:** `journal`
+- **BKT Mastery:** `96%` &rarr; `99%` | **Evaluative Score:** `89%` | **Adaptive Status:** `exam_ready` &rarr; `exam_ready`
+
+**Question Prompt:**
+> **Golden Harvest Bakery** manufactures two products: speciality cakes ($x$) and artisan loaves ($y$).
+> 
+> • Each speciality cakes requires $3\text{ hours}$ of baking oven capacity and $2\text{ hours}$ of decorating time.
+> • Each artisan loaves requires $3\text{ hours}$ of baking oven capacity and $2\text{ hours}$ of decorating time.
+> • A maximum of $44\text{ hours}$ of baking oven capacity and $41\text{ hours}$ of decorating time are available each week.
+> • The factory can manufacture at most $11$ speciality cakes per week.
+> • The profit is R170 per speciality cakes and R250 per artisan loaves.
+> 
+> **Required:**
+> 1. Write down the constraint inequality for baking oven capacity.
+> 2. Write down the constraint inequality for decorating time.
+> 3. State the production limit inequality for $x$ and the non-negativity conditions.
+> 4. Write down the objective function $P$ for total weekly profit.
+
+- **Student Inputted Answer (canonical):** `{"constraint_1": "3x + 3y \\le 44", "constraint_2": "2x + 2y \\le 41", "non_negativity": "x \\le 11,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Expected / Memo Answer:** `{"constraint_1": "3x + 3y \\le 44", "constraint_2": "2x + 2y \\le 41", "non_negativity": "x \\le 11,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Official Worked Solution:** 1. 3x + 3y \le 44; 2. 2x + 2y \le 41; 3. x \le 11,\quad x \ge 0,\quad y \ge 0; 4. P = 170x + 250y
+- **Marking Evaluation:** **4 / 4** (✅ Correct)
+
+### Step 64: Exam 3 - Q1/5 — `lp_formulation_10de2d9a356e` (Seed: `2301`)
+- **Stage:** `assessment` | **Mode:** `compound` | **Difficulty:** `hard` | **Subskill:** `journal`
+- **BKT Mastery:** `99%` &rarr; `100%` | **Evaluative Score:** `92%` | **Adaptive Status:** `exam_ready` &rarr; `exam_ready`
+
+**Question Prompt:**
+> **Golden Harvest Bakery** manufactures two products: speciality cakes ($x$) and artisan loaves ($y$).
+> 
+> • Each speciality cakes requires $3\text{ hours}$ of baking oven capacity and $2\text{ hours}$ of decorating time.
+> • Each artisan loaves requires $1\text{ hours}$ of baking oven capacity and $4\text{ hours}$ of decorating time.
+> • A maximum of $33\text{ hours}$ of baking oven capacity and $47\text{ hours}$ of decorating time are available each week.
+> • The factory can manufacture at most $10$ speciality cakes per week.
+> • The profit is R370 per speciality cakes and R280 per artisan loaves.
+> 
+> **Required:**
+> 1. Write down the constraint inequality for baking oven capacity.
+> 2. Write down the constraint inequality for decorating time.
+> 3. State the production limit inequality for $x$ and the non-negativity conditions.
+> 4. Write down the objective function $P$ for total weekly profit.
+
+- **Student Inputted Answer (canonical):** `{"constraint_1": "3x + 1y \\le 33", "constraint_2": "2x + 4y \\le 47", "non_negativity": "x \\le 10,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Expected / Memo Answer:** `{"constraint_1": "3x + 1y \\le 33", "constraint_2": "2x + 4y \\le 47", "non_negativity": "x \\le 10,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Official Worked Solution:** 1. 3x + 1y \le 33; 2. 2x + 4y \le 47; 3. x \le 10,\quad x \ge 0,\quad y \ge 0; 4. P = 370x + 280y
+- **Marking Evaluation:** **4 / 4** (✅ Correct)
+
+### Step 65: Exam 3 - Q2/5 — `lp_formulation_8fbc2a282adf` (Seed: `2302`)
+- **Stage:** `assessment` | **Mode:** `compound` | **Difficulty:** `hard` | **Subskill:** `journal`
+- **BKT Mastery:** `100%` &rarr; `100%` | **Evaluative Score:** `94%` | **Adaptive Status:** `exam_ready` &rarr; `exam_ready`
+
+**Question Prompt:**
+> **Apex Woodcraft** manufactures two products: executive desks ($x$) and bookshelves ($y$).
+> 
+> • Each executive desks requires $4\text{ hours}$ of carpentry labour and $1\text{ hours}$ of varnishing time.
+> • Each bookshelves requires $2\text{ hours}$ of carpentry labour and $4\text{ hours}$ of varnishing time.
+> • A maximum of $28\text{ hours}$ of carpentry labour and $23\text{ hours}$ of varnishing time are available each week.
+> • The factory can manufacture at most $13$ executive desks per week.
+> • The profit is R180 per executive desks and R380 per bookshelves.
+> 
+> **Required:**
+> 1. Write down the constraint inequality for carpentry labour.
+> 2. Write down the constraint inequality for varnishing time.
+> 3. State the production limit inequality for $x$ and the non-negativity conditions.
+> 4. Write down the objective function $P$ for total weekly profit.
+
+- **Student Inputted Answer (canonical):** `{"constraint_1": "4x + 2y \\le 28", "constraint_2": "1x + 4y \\le 23", "non_negativity": "x \\le 13,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Expected / Memo Answer:** `{"constraint_1": "4x + 2y \\le 28", "constraint_2": "1x + 4y \\le 23", "non_negativity": "x \\le 13,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Official Worked Solution:** 1. 4x + 2y \le 28; 2. 1x + 4y \le 23; 3. x \le 13,\quad x \ge 0,\quad y \ge 0; 4. P = 180x + 380y
+- **Marking Evaluation:** **4 / 4** (✅ Correct)
+
+### Step 66: Exam 3 - Q3/5 — `lp_formulation_ceccf000a746` (Seed: `2303`)
+- **Stage:** `assessment` | **Mode:** `compound` | **Difficulty:** `hard` | **Subskill:** `journal`
+- **BKT Mastery:** `100%` &rarr; `100%` | **Evaluative Score:** `96%` | **Adaptive Status:** `exam_ready` &rarr; `exam_ready`
+
+**Question Prompt:**
+> **Golden Harvest Bakery** manufactures two products: speciality cakes ($x$) and artisan loaves ($y$).
+> 
+> • Each speciality cakes requires $3\text{ hours}$ of baking oven capacity and $1\text{ hours}$ of decorating time.
+> • Each artisan loaves requires $1\text{ hours}$ of baking oven capacity and $3\text{ hours}$ of decorating time.
+> • A maximum of $43\text{ hours}$ of baking oven capacity and $39\text{ hours}$ of decorating time are available each week.
+> • The factory can manufacture at most $10$ speciality cakes per week.
+> • The profit is R420 per speciality cakes and R340 per artisan loaves.
+> 
+> **Required:**
+> 1. Write down the constraint inequality for baking oven capacity.
+> 2. Write down the constraint inequality for decorating time.
+> 3. State the production limit inequality for $x$ and the non-negativity conditions.
+> 4. Write down the objective function $P$ for total weekly profit.
+
+- **Student Inputted Answer (canonical):** `{"constraint_1": "3x + 1y \\le 43", "constraint_2": "1x + 3y \\le 39", "non_negativity": "x \\le 10,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Expected / Memo Answer:** `{"constraint_1": "3x + 1y \\le 43", "constraint_2": "1x + 3y \\le 39", "non_negativity": "x \\le 10,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Official Worked Solution:** 1. 3x + 1y \le 43; 2. 1x + 3y \le 39; 3. x \le 10,\quad x \ge 0,\quad y \ge 0; 4. P = 420x + 340y
+- **Marking Evaluation:** **4 / 4** (✅ Correct)
+
+### Step 67: Exam 3 - Q4/5 — `lp_formulation_9cb2f4873c78` (Seed: `2304`)
+- **Stage:** `assessment` | **Mode:** `compound` | **Difficulty:** `hard` | **Subskill:** `journal`
+- **BKT Mastery:** `100%` &rarr; `100%` | **Evaluative Score:** `97%` | **Adaptive Status:** `exam_ready` &rarr; `exam_ready`
+
+**Question Prompt:**
+> **Golden Harvest Bakery** manufactures two products: speciality cakes ($x$) and artisan loaves ($y$).
+> 
+> • Each speciality cakes requires $2\text{ hours}$ of baking oven capacity and $1\text{ hours}$ of decorating time.
+> • Each artisan loaves requires $3\text{ hours}$ of baking oven capacity and $2\text{ hours}$ of decorating time.
+> • A maximum of $60\text{ hours}$ of baking oven capacity and $32\text{ hours}$ of decorating time are available each week.
+> • The factory can manufacture at most $10$ speciality cakes per week.
+> • The profit is R260 per speciality cakes and R420 per artisan loaves.
+> 
+> **Required:**
+> 1. Write down the constraint inequality for baking oven capacity.
+> 2. Write down the constraint inequality for decorating time.
+> 3. State the production limit inequality for $x$ and the non-negativity conditions.
+> 4. Write down the objective function $P$ for total weekly profit.
+
+- **Student Inputted Answer (canonical):** `{"constraint_1": "2x + 3y \\le 60", "constraint_2": "1x + 2y \\le 32", "non_negativity": "x \\le 10,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Expected / Memo Answer:** `{"constraint_1": "2x + 3y \\le 60", "constraint_2": "1x + 2y \\le 32", "non_negativity": "x \\le 10,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Official Worked Solution:** 1. 2x + 3y \le 60; 2. 1x + 2y \le 32; 3. x \le 10,\quad x \ge 0,\quad y \ge 0; 4. P = 260x + 420y
+- **Marking Evaluation:** **4 / 4** (✅ Correct)
+
+### Step 68: Exam 3 - Q5/5 — `lp_formulation_dadb85707ea2` (Seed: `2305`)
+- **Stage:** `assessment` | **Mode:** `compound` | **Difficulty:** `hard` | **Subskill:** `journal`
+- **BKT Mastery:** `100%` &rarr; `100%` | **Evaluative Score:** `98%` | **Adaptive Status:** `exam_ready` &rarr; `exam_ready`
+
+**Question Prompt:**
+> **Apex Woodcraft** manufactures two products: executive desks ($x$) and bookshelves ($y$).
+> 
+> • Each executive desks requires $2\text{ hours}$ of carpentry labour and $2\text{ hours}$ of varnishing time.
+> • Each bookshelves requires $3\text{ hours}$ of carpentry labour and $2\text{ hours}$ of varnishing time.
+> • A maximum of $56\text{ hours}$ of carpentry labour and $48\text{ hours}$ of varnishing time are available each week.
+> • The factory can manufacture at most $17$ executive desks per week.
+> • The profit is R360 per executive desks and R470 per bookshelves.
+> 
+> **Required:**
+> 1. Write down the constraint inequality for carpentry labour.
+> 2. Write down the constraint inequality for varnishing time.
+> 3. State the production limit inequality for $x$ and the non-negativity conditions.
+> 4. Write down the objective function $P$ for total weekly profit.
+
+- **Student Inputted Answer (canonical):** `{"constraint_1": "2x + 3y \\le 56", "constraint_2": "2x + 2y \\le 48", "non_negativity": "x \\le 17,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Expected / Memo Answer:** `{"constraint_1": "2x + 3y \\le 56", "constraint_2": "2x + 2y \\le 48", "non_negativity": "x \\le 17,\\quad x \\ge 0,\\quad y \\ge 0", "objec...`
+- **Official Worked Solution:** 1. 2x + 3y \le 56; 2. 2x + 2y \le 48; 3. x \le 17,\quad x \ge 0,\quad y \ge 0; 4. P = 360x + 470y
+- **Marking Evaluation:** **4 / 4** (✅ Correct)

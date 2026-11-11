@@ -140,6 +140,16 @@ def _generate_gr10_stepped_water_tariffs(r: random.Random, seed: Optional[int], 
     return {
         "id": qid,
         "question_id": qid,
+        "diagram_spec": {
+        "diagram_role": "context",
+            "kind": "step_tariff",
+            "blocks": [
+                {"range": "0–6 kL", "rate": r1},
+                {"range": ">6–15 kL", "rate": r2},
+                {"range": ">15–30 kL", "rate": r3},
+                {"range": ">30 kL", "rate": r4},
+            ],
+        },
         "term": 1,
         "caps_weight_percent": 20,
         "suggested_duration_mins": 12,
@@ -278,6 +288,7 @@ def _generate_gr12_sars_income_tax(r: random.Random, seed: Optional[int], idx: i
     return {
         "id": qid,
         "question_id": qid,
+        "diagram_spec": None,
         "term": 1,
         "caps_weight_percent": 25,
         "suggested_duration_mins": 14,

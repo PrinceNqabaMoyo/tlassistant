@@ -47,20 +47,27 @@ def _with_metadata(
 
 def _mcq_question(rng, item, mode="scaffold"):
     mode_norm = str(mode or "").strip().lower()
-    correct_option = item['options'][item['correct_index']]
-    
+    c_idx = int(item['correct_index'])
+    correct_option = item['options'][c_idx]
+    correct_letter = chr(65 + c_idx)
+    marks = item.get('marks', 1)
+    ans_text = f"{correct_letter}. {correct_option}"
+    worked_sol = f"**{ans_text}** [{marks} mark{'s' if marks > 1 else ''}]\n\n{item.get('explanation', '')}"
+
     question = {
         'id': f"g8_ems_mcq_{rng.randint(1000, 999999)}",
         'title': item.get('title', 'Concept check'),
         'question_type': 'mcq',
         'prompt': item['prompt'],
         'options': item['options'],
-        'correct_index': str(item['correct_index']),
+        'correct_index': str(c_idx),
         'explanation': item['explanation'],
-        'marks': item.get('marks', 1),
-        'sample_answer': correct_option,
-        'ideal_answer': correct_option,
-        'marking_points': [correct_option],
+        'marks': marks,
+        'sample_answer': ans_text,
+        'ideal_answer': ans_text,
+        'worked_solution': worked_sol,
+        'canonical_solution': worked_sol,
+        'marking_points': [f"Selects correct option: {ans_text}"],
         **{k: v for k, v in item.items() if k not in ['prompt', 'options', 'correct_index', 'explanation', 'title', 'marks', 'hint_sections', 'guidelines', 'teaching_note']}
     }
     
@@ -73,15 +80,20 @@ def _mcq_question(rng, item, mode="scaffold"):
 
 def _typed_question(rng, item, mode="scaffold"):
     mode_norm = str(mode or "").strip().lower()
+    marks = item.get('marks', 2)
+    sample_ans = item.get('sample_answer') or (item.get('marking_points')[0] if item.get('marking_points') else 'Accurate answer')
+    worked_sol = f"**Model Answer** [{marks} mark{'s' if marks > 1 else ''}]:\n\n{sample_ans}"
     question = {
         'id': f"g8_ems_typed_{rng.randint(1000, 999999)}",
         'title': item.get('title', 'Written response'),
         'question_type': 'typed',
         'prompt': item['prompt'],
-        'marks': item.get('marks', 2),
-        'marking_points': item.get('marking_points') or [item.get('sample_answer', 'Accurate answer')],
-        'sample_answer': item.get('sample_answer', 'Refer to marking points.'),
-        'ideal_answer': item.get('ideal_answer', item.get('sample_answer', 'Refer to marking points.')),
+        'marks': marks,
+        'marking_points': item.get('marking_points') or [sample_ans],
+        'sample_answer': sample_ans,
+        'ideal_answer': sample_ans,
+        'worked_solution': worked_sol,
+        'canonical_solution': worked_sol,
         **{k: v for k, v in item.items() if k not in ['prompt', 'marks', 'marking_points', 'sample_answer', 'ideal_answer', 'hint_sections', 'guidelines', 'teaching_note', 'title']}
     }
     
@@ -248,24 +260,34 @@ def _discussion_pool(rng):
         }, subskill='discussion', learning_objective_id='lo_lifestyle_standard', question_family_id='lifestyle_essay', concept_id='standard_vs_lifestyle', concept_group='standard_of_living', misconception_tags=['confuses_standard_and_lifestyle'], diagnostic_tags=['essay', 'societies'])
     ]
 
-def generate(seed=None, difficulty=None, mode='scaffold', **kwargs):
+def generate(seed=None, difficulty=None, mode='scaffold', subskill='concepts', **kwargs):
     rng = _rng(seed)
     
-    pools = [
-        _concept_pool(rng),
-        _discussion_pool(rng)
-    ]
+    all_items = _concept_pool(rng) + _discussion_pool(rng)
     
-    selected_pool = rng.choice(pools)
+    topic_str = str(kwargs.get('topic', '') or subskill or '').lower()
     
+    # Isolate scope based on topic request (Rule 0d-13 & EMS #21)
+    if 'budget' in topic_str or 'national_budget' in topic_str:
+        filtered = [q for q in all_items if q.get('concept_group') == 'national_budget']
+    elif 'government' in topic_str:
+        filtered = [q for q in all_items if q.get('concept_group') == 'government']
+    elif 'living' in topic_str or 'society' in topic_str or 'standard_of_living' in topic_str:
+        filtered = [q for q in all_items if q.get('concept_group') == 'standard_of_living']
+    else:
+        filtered = all_items
+
+    if not filtered:
+        filtered = all_items
+
     if difficulty:
-        filtered = [q for q in selected_pool if difficulty in q['difficulty_band']]
-        if filtered:
-            selected_pool = filtered
+        by_diff = [q for q in filtered if difficulty in q.get('difficulty_band', [])]
+        if by_diff:
+            filtered = by_diff
             
-    raw_item = rng.choice(selected_pool)
+    raw_item = rng.choice(filtered)
     
-    if raw_item.get('question_type') == 'mcq':
+    if raw_item.get('question_type') == 'mcq' or 'options' in raw_item:
         return _mcq_question(rng, raw_item, mode)
     else:
         return _typed_question(rng, raw_item, mode)

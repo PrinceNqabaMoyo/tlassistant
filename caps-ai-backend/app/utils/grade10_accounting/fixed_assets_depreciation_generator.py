@@ -6,7 +6,7 @@ Covers:
   - Recording depreciation in the General Journal (Debit Depreciation, Credit Accumulated Depreciation).
   - Asset Register schedules for Sole Traders.
 
-Follows South African CAPS curriculum specifications and the 6-Pillar Generator Contract.
+Follows South African national curriculum specifications and the 6-Pillar Generator Contract.
 Strictly zero-LLM, deterministic execution.
 """
 from __future__ import annotations

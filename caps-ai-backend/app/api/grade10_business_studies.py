@@ -16,6 +16,8 @@ from app.utils.grade10_business_studies.term_3 import creative_thinking_generato
 from app.utils.grade10_business_studies.term_3 import business_opportunities_generator
 from app.utils.grade10_business_studies.term_3 import business_location_generator
 from app.utils.grade10_business_studies.term_3 import contracts_generator
+from app.utils.grade10_business_studies.term_4 import relationships_team_performance_generator
+from app.utils.grade10_business_studies.term_4 import self_management_generator
 from app.utils.grade10_business_studies.term_3 import presentation_generator
 from app.utils.grade10_business_studies.term_3 import business_plans_generator
 from app.services.adaptive_progression import (
@@ -51,6 +53,8 @@ GENERATORS = {
     'grade10_bs_business_opportunities': business_opportunities_generator.generate_business_opportunities,
     'grade10_bs_business_location': business_location_generator.generate_business_location,
     'grade10_bs_contracts': contracts_generator.generate_contracts,
+    'grade10_bs_relationships': relationships_team_performance_generator.generate_relationships,
+    'grade10_bs_self_management': self_management_generator.generate_self_management,
     'grade10_bs_presentation': presentation_generator.generate_presentation,
     'grade10_bs_business_plans': business_plans_generator.generate_business_plans,
 }
@@ -182,6 +186,7 @@ def generate_questions(topic, subskill, difficulty, count=1, config=None):
     """
     if config is None:
         config = {}
+    config = {**config, 'topic': topic}
 
     # Check if subskill is a section key from curriculum .md
     section = get_section_for_topic(topic, subskill)

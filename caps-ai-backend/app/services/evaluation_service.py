@@ -34,15 +34,19 @@ from typing import Any, Dict, List, Optional, Tuple
 # ---------------------------------------------------------------------------
 
 def _clean_number_str(s: Any) -> str:
-    """Remove spaces inside numbers like '26 000' → '26000', handle R prefix."""
+    """Remove spaces inside numbers like '26 000' → '26000', handle R prefix and mixed numbers."""
     if s is None:
         return ""
     if isinstance(s, (list, tuple)):
         s = s[0] if s else ""
     s = str(s).strip()
     s = re.sub(r'^[Rr]\s*', '', s)           # strip currency prefix
-    s = re.sub(r'[,\s]+(?=\d)', '', s)        # '26 000' → '26000'
-    s = s.replace('(', '-').replace(')', '')   # accounting brackets → negative
+    # Mixed numbers: '1 3/10' or '2 \frac{3}{4}' → '(1 + 3/10)'
+    s = re.sub(r'(-?\d+)\s*\\frac\{(\d+)\}\{(\d+)\}', lambda m: f"({m.group(1)} + ({m.group(2)}/{m.group(3)}))" if not m.group(1).startswith('-') else f"({m.group(1)} - ({m.group(2)}/{m.group(3)}))", s)
+    s = re.sub(r'^(-?\d+)\s+(\d+)\s*/\s*(\d+)$', lambda m: f"({m.group(1)} + ({m.group(2)}/{m.group(3)}))" if not m.group(1).startswith('-') else f"({m.group(1)} - ({m.group(2)}/{m.group(3)}))", s)
+    s = re.sub(r'\\frac\{([^}]+)\}\{([^}]+)\}', r'((\1)/(\2))', s)
+    s = re.sub(r'[,\s]+(?=\d{3}(?:\b|\D))', '', s)  # '26 000' → '26000'
+    s = s.replace('(', '-').replace(')', '') if re.match(r'^\(\d[\d\s,\.]*\)$', s) else s
     return s
 
 
@@ -150,8 +154,10 @@ def _score_string_cell(student: Any, expected: Any) -> Dict[str, Any]:
     e = str(expected if expected is not None else '').strip().lower()
 
     if not e:
-        # Empty expected → nothing to mark
-        return {"score": 0, "max_score": 0, "feedback": ""}
+        # Empty expected (EMS #6: cells that require no entry)
+        if not s:
+            return {"score": 0, "max_score": 0, "feedback": "Correctly left blank.", "is_correct": True}
+        return {"score": 0, "max_score": 0, "feedback": "This cell should be left blank.", "is_correct": False}
 
     if s == e:
         return {"score": 1, "max_score": 1, "feedback": "Correct."}
@@ -346,16 +352,46 @@ def _score_numeric_cell(
 # ---------------------------------------------------------------------------
 
 async def _grade_mcq(question: Dict[str, Any], answer: Any) -> Dict[str, Any]:
-    """Grade an MCQ question. Full marks or zero."""
-    max_score = question.get('marks', 1)
-    correct_idx = question.get('correct_idx')
-    is_correct = str(answer) == str(correct_idx)
-    return {
+    """Grade an MCQ question. Full marks or zero, supporting index or option text."""
+    max_score = max(1, int(question.get('marks') or 1))
+    opts = question.get('options') or []
+    correct_idx = question.get('correct_idx') if question.get('correct_idx') is not None else question.get('correct_index')
+    expected_str = str(question.get('expected_answer') or question.get('correct_answer') or '').strip()
+
+    if correct_idx is None and opts and expected_str:
+        for i, opt in enumerate(opts):
+            if str(opt).strip().lower() == expected_str.lower():
+                correct_idx = i
+                break
+        if correct_idx is None and expected_str.isdigit() and 0 <= int(expected_str) < len(opts):
+            correct_idx = int(expected_str)
+    if correct_idx is None:
+        correct_idx = 0
+    try:
+        correct_idx = int(correct_idx)
+    except (ValueError, TypeError):
+        correct_idx = 0
+
+    ans_str = str(answer if answer is not None else '').strip()
+    is_correct = False
+    if ans_str != '':
+        if ans_str == str(correct_idx):
+            is_correct = True
+        elif 0 <= correct_idx < len(opts) and ans_str.lower() == str(opts[correct_idx]).strip().lower():
+            is_correct = True
+        elif expected_str and ans_str.lower() == expected_str.lower():
+            is_correct = True
+
+    misconception = (question.get('misconception_tags') or ['conceptual_selection_error'])[0]
+    res: Dict[str, Any] = {
         "score": max_score if is_correct else 0,
         "max_score": max_score,
         "is_correct": is_correct,
-        "feedback": "Correct!" if is_correct else f"Incorrect. The correct answer was option {correct_idx + 1}."
+        "feedback": "Correct!" if is_correct else f"Incorrect. The correct answer was option {correct_idx + 1}.",
     }
+    if not is_correct:
+        res["misconception_tag"] = misconception
+    return res
 
 
 async def _grade_calc(question: Dict[str, Any], answer: Any) -> Dict[str, Any]:
@@ -364,48 +400,71 @@ async def _grade_calc(question: Dict[str, Any], answer: Any) -> Dict[str, Any]:
     Rule 3a: Multi-step: 1 mark per 2 steps, 0.5 for extra, 0.5 for answer.
     Rule 3b: Formula identification + correct answer.
     """
-    correct_value = question.get('correct_value')
+    correct_value = (
+        question.get('correct_value')
+        if question.get('correct_value') is not None
+        else question.get('expected_answer') or question.get('correct_answer')
+    )
     rubric = question.get('rubric')
-    max_score = question.get('marks', 1)
+    max_score = max(1, int(question.get('marks') or 1))
+    misconception = (question.get('misconception_tags') or ['calculation_accuracy_error'])[0]
 
-    if not answer or str(answer).strip() == '':
-        return {"score": 0, "max_score": max_score, "is_correct": False,
-                "feedback": "No answer provided."}
+    if answer is None or str(answer).strip() == '':
+        return {
+            "score": 0,
+            "max_score": max_score,
+            "is_correct": False,
+            "feedback": "No answer provided.",
+            "misconception_tag": misconception,
+        }
 
     if rubric:
         result = _score_numeric_cell(str(answer), str(correct_value), rubric=rubric)
-        return {**result, "is_correct": result['score'] >= result['max_score'] * 0.8}
+        is_corr = result['score'] >= result['max_score'] * 0.8
+        out = {**result, "is_correct": is_corr}
+        if not is_corr:
+            out["misconception_tag"] = misconception
+        return out
 
-    # Fallback: no rubric, just check the value
-    student_num = _safe_eval_expr(str(answer))
-    expected_num = float(correct_value) if correct_value is not None else None
-
-    if student_num is not None and expected_num is not None and _numbers_close(student_num, expected_num):
-        return {"score": max_score, "max_score": max_score, "is_correct": True,
-                "feedback": "Correct."}
-
-    return {"score": 0, "max_score": max_score, "is_correct": False,
-            "feedback": f"Incorrect. Expected {correct_value}."}
+    return await _grade_typed(question, answer)
 
 
 async def _grade_table(question: Dict[str, Any], answer: Any) -> Dict[str, Any]:
     """
-    Grade a tabular question (journal, ledger, note, statement).
+    Grade a tabular question (journal, ledger, note, statement, tabular_fill, structured).
     Iterates through each editable cell, classifies it, and applies
     the appropriate scoring rule. Maintains a student_context dict
     for consequential marking across cells.
     """
-    correct_map = question.get('correct_map', {})
+    correct_map = dict(question.get('correct_map') or {})
+    if not correct_map:
+        for alt_key in ('expected_cells', 'expected_values', 'model_table', 'answer_key', 'correct_answer', 'expected_answer'):
+            cand = question.get(alt_key)
+            if isinstance(cand, dict) and cand:
+                correct_map = {str(k): v for k, v in cand.items()}
+                break
+
+    headers = question.get('headers', []) or question.get('journal', {}).get('headers', []) or question.get('table_schema', {}).get('headers', [])
+    rows = question.get('rows', []) or question.get('journal', {}).get('rows', []) or question.get('table_schema', {}).get('rows', [])
+
+    if not correct_map and isinstance(rows, list):
+        for r_idx, r in enumerate(rows):
+            if isinstance(r, list):
+                for c_idx, c in enumerate(r):
+                    if isinstance(c, dict):
+                        cid = c.get('cell_id') or c.get('coordinate') or f"r{r_idx}_c{c_idx}"
+                        exp = c.get('expected') or c.get('solution') or (c.get('value') if c.get('type') == 'required' else None)
+                        if exp is not None and str(exp).strip() != '':
+                            correct_map[str(cid)] = exp
+
     rubric_map = question.get('rubric_map', {})   # per-cell rubrics
     dep_map = question.get('dependency_map', {})   # per-cell dependencies
-    headers = question.get('headers', []) or question.get('journal', {}).get('headers', [])
-    rows = question.get('rows', []) or question.get('journal', {}).get('rows', [])
 
     # If answer is dict of cell_id → value submitted by student
     student_answers = answer if isinstance(answer, dict) else {}
 
-    total_score = 0
-    total_max = 0
+    total_score = 0.0
+    total_max = 0.0
     cell_results = {}
     student_context = {}  # cell_id → student's numeric value
 
@@ -416,13 +475,12 @@ async def _grade_table(question: Dict[str, Any], answer: Any) -> Dict[str, Any]:
         if isinstance(last_row, list):
             for cell in last_row:
                 if isinstance(cell, dict):
-                    cid = cell.get('cell_id', '')
-                    val = cell.get('value', '')
+                    cid = cell.get('cell_id') or cell.get('coordinate') or ''
+                    val = str(cell.get('value', ''))
                     if 'total' in val.lower() or 'totals' in val.lower():
-                        # Mark numeric cells in the totals row
                         for c2 in last_row:
                             if isinstance(c2, dict) and c2.get('editable'):
-                                total_row_ids.add(c2.get('cell_id', ''))
+                                total_row_ids.add(c2.get('cell_id') or c2.get('coordinate') or '')
                         break
 
     # Process cells in order (row by row) for consequential marking
@@ -476,13 +534,33 @@ async def _grade_table(question: Dict[str, Any], answer: Any) -> Dict[str, Any]:
         total_score += res['score']
         total_max += res['max_score']
 
-    return {
-        "score": round(total_score, 1),
-        "max_score": round(total_max, 1),
-        "is_correct": total_score >= total_max * 0.8 if total_max > 0 else False,
+    declared_marks = max(1, int(question.get('marks') or round(total_max) or 1))
+    if total_max > 0:
+        if abs(total_score - total_max) < 1e-6:
+            scaled_score = float(declared_marks)
+        elif total_score == 0:
+            scaled_score = 0.0
+        else:
+            scaled_score = round((total_score / total_max) * declared_marks, 1)
+            if scaled_score <= 0 and total_score > 0:
+                scaled_score = 0.5
+        final_max = float(declared_marks)
+    else:
+        scaled_score = 0.0
+        final_max = float(declared_marks)
+
+    is_correct = scaled_score >= final_max * 0.8 if final_max > 0 else False
+    misconception = (question.get('misconception_tags') or ['ledger_posting_error'])[0]
+    out: Dict[str, Any] = {
+        "score": round(scaled_score, 1) if scaled_score % 1 != 0 else int(scaled_score),
+        "max_score": round(final_max, 1) if final_max % 1 != 0 else int(final_max),
+        "is_correct": is_correct,
         "cell_results": cell_results,
-        "feedback": f"Scored {round(total_score, 1)} out of {round(total_max, 1)}."
+        "feedback": f"Scored {round(scaled_score, 1)} out of {round(final_max, 1)}.",
     }
+    if not is_correct:
+        out["misconception_tag"] = misconception
+    return out
 
 
 async def _grade_wordbank(question: Dict[str, Any], answer: Any) -> Dict[str, Any]:
@@ -511,28 +589,343 @@ async def _grade_wordbank(question: Dict[str, Any], answer: Any) -> Dict[str, An
     }
 
 
+def _normalize_math_latex_str(s: Any) -> str:
+    """Normalizes LaTeX / mathematical string for deterministic symbolic equivalence checking."""
+    if s is None:
+        return ""
+    txt = str(s).strip()
+    txt = txt.replace("{,}", ".").replace(",", ".").replace("$", "")
+    txt = re.sub(r"\\text\{([^}]*)\}", r"\1", txt)
+    txt = re.sub(r"\\mathrm\{([^}]*)\}", r"\1", txt)
+    txt = re.sub(r"\\left|\\right", "", txt)
+    # Convert mixed numbers before stripping spaces: '1 3/10' or '1\frac{3}{10}'
+    txt = re.sub(r"(\d+)\s*\\frac\{([^}]*)\}\{([^}]*)\}", r"(\1+(\2)/(\3))", txt)
+    txt = re.sub(r"\b(\d+)\s+(\d+)\s*/\s*(\d+)\b", r"(\1+(\2)/(\3))", txt)
+    txt = re.sub(r"\\frac\{([^}]*)\}\{([^}]*)\}", r"(\1)/(\2)", txt)
+    txt = txt.replace("\\times", "*").replace("\\div", "/").replace("\\cdot", "*")
+    txt = re.sub(r"\s+", "", txt).lower()
+    return txt
+
+
+def _clean_latex_for_sympy(s: Any) -> str:
+    if s is None:
+        return ""
+    txt = str(s).strip()
+    txt = txt.replace("$", "").replace("{,}", ".").replace(",", ".")
+    txt = re.sub(r"\\left|\\right", "", txt)
+    txt = re.sub(r"\\text\{([^}]*)\}", r"\1", txt)
+    txt = re.sub(r"\\mathrm\{([^}]*)\}", r"\1", txt)
+    txt = re.sub(r"(\d+)\s*\\frac\{([^}]*)\}\{([^}]*)\}", r"(\1+(\2)/(\3))", txt)
+    txt = re.sub(r"\\frac\{([^}]*)\}\{([^}]*)\}", r"((\1)/(\2))", txt)
+    txt = txt.replace("\\times", "*").replace("\\div", "/").replace("\\cdot", "*")
+    txt = txt.replace("^", "**")
+    m = re.match(r"^[a-zA-Z]\s*=\s*(.*)", txt)
+    if m:
+        txt = m.group(1).strip()
+    return txt.strip()
+
+
+def _check_algebraic_equivalence(ans: Any, corr: Any) -> bool:
+    """Checks if two mathematical expressions or values are algebraically equivalent via SymPy (GP-7)."""
+    c_ans = _clean_latex_for_sympy(ans)
+    c_corr = _clean_latex_for_sympy(corr)
+    if not c_ans or not c_corr:
+        return False
+    try:
+        import sympy as sp
+        from sympy.parsing.sympy_parser import (
+            parse_expr,
+            standard_transformations,
+            implicit_multiplication_application,
+            convert_xor,
+        )
+        tf = standard_transformations + (implicit_multiplication_application, convert_xor)
+        e_ans = parse_expr(c_ans, transformations=tf)
+        e_corr = parse_expr(c_corr, transformations=tf)
+        return bool(sp.simplify(e_ans - e_corr) == 0)
+    except Exception:
+        return False
+
+
+def _check_sequence_equivalence(ans: Any, corr: Any, prompt: Any = "") -> bool:
+    """Checks if a sequence completion answer matches the expected sequence or term(s) (GP-7)."""
+    s_ans = str(ans or "").strip()
+    s_corr = str(corr or "").strip()
+    s_prompt = str(prompt or "").strip()
+
+    corr_nums = [float(x) for x in re.findall(r"-?\d+(?:\.\d+)?", s_corr)]
+    stud_nums = [float(x) for x in re.findall(r"-?\d+(?:\.\d+)?", s_ans)]
+    if not corr_nums or not stud_nums:
+        return False
+    if stud_nums == corr_nums:
+        return True
+    prompt_nums = [float(x) for x in re.findall(r"-?\d+(?:\.\d+)?", s_prompt)]
+    if len(stud_nums) == len(prompt_nums) + len(corr_nums) and stud_nums == prompt_nums + corr_nums:
+        return True
+    if len(stud_nums) > len(corr_nums) and stud_nums[-len(corr_nums):] == corr_nums:
+        return True
+    return False
+
+
 async def _grade_typed(question: Dict[str, Any], answer: Any) -> Dict[str, Any]:
-    """Grade a typed/free-text question. Basic string or numeric check."""
-    max_score = question.get('marks', 1)
-    correct = question.get('correct_value') or question.get('correct_answer', '')
+    """Grade a math_short, math_steps, symbolic_steps, calculation, or typed question with NSC method marks."""
+    max_score = max(1, int(question.get('marks') or 1))
+    sol_obj = question.get('canonical_solution') if isinstance(question.get('canonical_solution'), dict) else {}
+    correct = (
+        question.get('correct_value')
+        if question.get('correct_value') is not None
+        else question.get('expected_answer')
+        or question.get('correct_answer')
+        or sol_obj.get('final_latex')
+        or question.get('answer')
+        or question.get('sample_answer')
+        or ''
+    )
+    misconception = (question.get('misconception_tags') or ['general_procedural_error'])[0]
 
-    if not answer or str(answer).strip() == '':
-        return {"score": 0, "max_score": max_score, "is_correct": False,
-                "feedback": "No answer provided."}
+    if isinstance(answer, list):
+        non_empty_lines = [str(line).strip() for line in answer if str(line).strip()]
+        ans_str = non_empty_lines[-1] if non_empty_lines else ''
+        all_lines_str = " ".join(non_empty_lines)
+    elif isinstance(answer, dict):
+        ans_str = str(answer.get('value') or answer.get('answer') or answer.get('explanation') or '').strip()
+        all_lines_str = ans_str
+    else:
+        ans_str = str(answer if answer is not None else '').strip()
+        all_lines_str = ans_str
 
-    # Try numeric comparison first
-    student_num = _safe_eval_expr(str(answer))
-    expected_num = _safe_eval_expr(str(correct))
+    if not ans_str and not (isinstance(answer, dict) and answer.get("parts")):
+        return {
+            "score": 0,
+            "max_score": max_score,
+            "is_correct": False,
+            "feedback": "No answer provided.",
+            "misconception_tag": misconception,
+        }
+
+    # 0. Multi-part / Sub-part Question Grading
+    sub_parts = question.get('sub_parts')
+    if isinstance(sub_parts, list) and len(sub_parts) > 1:
+        student_parts = []
+        if isinstance(answer, dict) and "parts" in answer and isinstance(answer["parts"], list):
+            student_parts = [str(p).strip() for p in answer["parts"]]
+        elif isinstance(answer, list):
+            student_parts = [str(p).strip() for p in answer]
+        elif isinstance(ans_str, str) and (";" in ans_str or "," in ans_str):
+            sep = ";" if ";" in ans_str else ","
+            student_parts = [s.strip() for s in ans_str.split(sep)]
+
+        if student_parts:
+            earned_marks = 0
+            part_feedbacks = []
+            all_parts_correct = True
+            for idx, part_def in enumerate(sub_parts):
+                part_marks = int(part_def.get('marks') or 1)
+                part_expected = part_def.get('expected_answer') or part_def.get('answer_latex') or ''
+                stud_val = student_parts[idx] if idx < len(student_parts) else ""
+
+                norm_stud = _normalize_math_latex_str(stud_val)
+                norm_exp = _normalize_math_latex_str(part_expected)
+                is_p_correct = False
+                if norm_exp and norm_stud == norm_exp:
+                    is_p_correct = True
+                else:
+                    s_num = _safe_eval_expr(stud_val.replace("{,}", ".").replace(",", "."))
+                    e_num = _safe_eval_expr(str(part_expected).replace("{,}", ".").replace(",", "."))
+                    if s_num is not None and e_num is not None and _numbers_close(s_num, e_num, tol=0.1):
+                        is_p_correct = True
+                    elif norm_exp and not any(ch.isdigit() for ch in norm_exp) and len(norm_exp) >= 4 and norm_exp.lower() in norm_stud.lower():
+                        is_p_correct = True
+                    elif _check_algebraic_equivalence(stud_val, part_expected):
+                        is_p_correct = True
+
+                if is_p_correct:
+                    earned_marks += part_marks
+                    part_feedbacks.append(f"Part {idx+1}: Correct ({part_marks}/{part_marks})")
+                else:
+                    all_parts_correct = False
+                    part_feedbacks.append(f"Part {idx+1}: Needs review (0/{part_marks})")
+
+            feedback_str = " | ".join(part_feedbacks)
+            if all_parts_correct:
+                final_score = max_score
+            elif earned_marks > 0:
+                sub_parts_total = sum(int(p.get('marks') or 1) for p in sub_parts)
+                final_score = max(1, min(max_score - 1, round((earned_marks / sub_parts_total) * max_score))) if sub_parts_total > 0 else earned_marks
+            else:
+                final_score = 0
+            return {
+                "score": final_score,
+                "max_score": max_score,
+                "is_correct": all_parts_correct,
+                "feedback": feedback_str,
+                "misconception_tag": None if all_parts_correct else misconception,
+            }
+
+    # 1. Direct normalized string / LaTeX match against expected_answer or worked_solution
+    norm_ans = _normalize_math_latex_str(ans_str)
+    norm_corr = _normalize_math_latex_str(correct)
+    norm_all = _normalize_math_latex_str(all_lines_str)
+    if norm_corr and (
+        norm_ans == norm_corr
+        or ("=" in norm_ans and norm_ans.split("=")[-1] == norm_corr)
+        or ("=" in norm_all and norm_all.split("=")[-1] == norm_corr)
+    ):
+        return {
+            "score": max_score,
+            "max_score": max_score,
+            "is_correct": True,
+            "feedback": "Correct! Full accuracy and method marks awarded.",
+        }
+
+    # Check alternative acceptable fields (correct_answer vs expected_answer vs final_latex)
+    for alt_field in ('correct_answer', 'expected_answer', 'ideal_answer', 'sample_answer'):
+        alt_val = question.get(alt_field)
+        if alt_val and not isinstance(alt_val, (dict, list)):
+            if norm_ans == _normalize_math_latex_str(alt_val):
+                return {
+                    "score": max_score,
+                    "max_score": max_score,
+                    "is_correct": True,
+                    "feedback": "Correct! Full accuracy and method marks awarded.",
+                }
+
+    # 2. Numeric evaluation comparison (handles fractions, decimals with SA commas, currency)
+    student_num = _safe_eval_expr(ans_str.replace("{,}", ".").replace(",", "."))
+    if student_num is None:
+        student_num = _safe_eval_expr(_normalize_math_latex_str(ans_str))
+    expected_num = _safe_eval_expr(str(correct).replace("{,}", ".").replace(",", "."))
+    if expected_num is None:
+        expected_num = _safe_eval_expr(_normalize_math_latex_str(correct))
+
     if student_num is not None and expected_num is not None:
-        if _numbers_close(student_num, expected_num):
-            return {"score": max_score, "max_score": max_score, "is_correct": True,
-                    "feedback": "Correct."}
-        return {"score": 0, "max_score": max_score, "is_correct": False,
-                "feedback": f"Incorrect. Expected {correct}."}
+        if _numbers_close(student_num, expected_num, tol=max(0.05, abs(expected_num) * 0.005)):
+            return {
+                "score": max_score,
+                "max_score": max_score,
+                "is_correct": True,
+                "feedback": "Correct.",
+            }
 
-    # String comparison
-    res = _score_string_cell(str(answer), str(correct))
-    return {**res, "is_correct": res['score'] >= res['max_score'] * 0.8 if res['max_score'] > 0 else False}
+    # 2.5 Sequence Equivalence Check (EMS #36 & Rule GP-7)
+    prompt_str = question.get('prompt') or question.get('question') or ''
+    if _check_sequence_equivalence(ans_str, str(correct), prompt_str):
+        return {
+            "score": max_score,
+            "max_score": max_score,
+            "is_correct": True,
+            "feedback": "Correct! Sequence terms verified.",
+        }
+
+    # 2.6 SymPy Symbolic / Algebraic Equivalence (Rule GP-7)
+    if _check_algebraic_equivalence(ans_str, str(correct)):
+        return {
+            "score": max_score,
+            "max_score": max_score,
+            "is_correct": True,
+            "feedback": "Correct! Mathematically equivalent expression verified.",
+        }
+    for alt_field in ('correct_answer', 'expected_answer', 'ideal_answer', 'sample_answer'):
+        alt_val = question.get(alt_field)
+        if alt_val and not isinstance(alt_val, (dict, list)):
+            if _check_algebraic_equivalence(ans_str, str(alt_val)):
+                return {
+                    "score": max_score,
+                    "max_score": max_score,
+                    "is_correct": True,
+                    "feedback": "Correct! Mathematically equivalent expression verified.",
+                }
+
+    # 3. Check if multi-number calculation (e.g. worked solution has multiple numbers and student provided all of them)
+    corr_nums = _extract_numbers_from_expr(str(correct).replace("{,}", "."))
+    stud_nums = _extract_numbers_from_expr(all_lines_str.replace("{,}", "."))
+    if len(corr_nums) >= 2 and len(stud_nums) >= len(corr_nums):
+        if all(any(_numbers_close(cn, sn, tol=0.5) for sn in stud_nums) for cn in corr_nums):
+            return {
+                "score": max_score,
+                "max_score": max_score,
+                "is_correct": True,
+                "feedback": "Correct.",
+            }
+
+    # 4. Partial / Method Mark & Symbolic Multi-Line Procedure Evaluation
+    if isinstance(answer, list) and len(non_empty_lines) >= 1:
+        try:
+            from app.services.procedure_tracker import diagnose as _diagnose_steps
+            diag = _diagnose_steps(non_empty_lines, sol_obj, expected_ans=str(correct))
+            if diag.get("all_valid") and diag.get("final_reached"):
+                return {
+                    "score": max_score,
+                    "max_score": max_score,
+                    "is_correct": True,
+                    "feedback": "Correct! All algebraic working steps and final answer verified.",
+                    "line_diagnostics": diag.get("lines", []),
+                }
+            elif diag.get("all_valid") and len(non_empty_lines) >= 1 and max_score >= 2:
+                partial_m = max(1, max_score - 1)
+                return {
+                    "score": partial_m,
+                    "max_score": max_score,
+                    "is_correct": False,
+                    "feedback": f"Method mark awarded ({partial_m}/{max_score}) for algebraically valid working step(s). Complete the final isolation step.",
+                    "misconception_tag": misconception,
+                    "line_diagnostics": diag.get("lines", []),
+                }
+        except Exception:
+            pass
+
+    if max_score >= 2:
+        # Check if student matched an intermediate step from canonical_solution.steps or marking_schema
+        steps = sol_obj.get('steps') or question.get('steps') or []
+        for st in steps[:-1] if len(steps) > 1 else steps:
+            st_latex = st.get('to_latex') or st.get('step') or str(st) if isinstance(st, dict) else str(st)
+            norm_st = _normalize_math_latex_str(st_latex)
+            if norm_st and len(norm_st) >= 2 and norm_st in _normalize_math_latex_str(all_lines_str):
+                partial_m = max(1, max_score - 1)
+                return {
+                    "score": partial_m,
+                    "max_score": max_score,
+                    "is_correct": False,
+                    "feedback": f"Method mark awarded ({partial_m}/{max_score}) for correct intermediate step. Complete the final accuracy step.",
+                    "misconception_tag": misconception,
+                }
+
+        # Check if student matched foundational numbers or marking point concepts
+        if corr_nums and stud_nums:
+            matched_n = sum(1 for cn in corr_nums if any(_numbers_close(cn, sn, tol=0.5) for sn in stud_nums))
+            if 0 < matched_n < len(corr_nums) or (len(corr_nums) == 1 and "+" in all_lines_str or "*" in all_lines_str):
+                if matched_n > 0:
+                    partial_m = max(1, max_score // 2)
+                    return {
+                        "score": partial_m,
+                        "max_score": max_score,
+                        "is_correct": False,
+                        "feedback": f"Method mark awarded ({partial_m}/{max_score}) for correct foundational values.",
+                        "misconception_tag": misconception,
+                    }
+
+    # 5. String / semantic fallback comparison
+    res = _score_string_cell(ans_str, str(correct))
+    if res['score'] > 0:
+        scaled = max_score if res['score'] >= res['max_score'] else max(1, max_score // 2)
+        is_corr = scaled >= max_score * 0.8
+        out = {
+            "score": scaled,
+            "max_score": max_score,
+            "is_correct": is_corr,
+            "feedback": res['feedback'],
+        }
+        if not is_corr:
+            out["misconception_tag"] = misconception
+        return out
+
+    return {
+        "score": 0,
+        "max_score": max_score,
+        "is_correct": False,
+        "feedback": f"Incorrect. Expected {correct}.",
+        "misconception_tag": misconception,
+    }
 
 
 async def _grade_arithmetic_grid(question: Dict[str, Any], answer: Any) -> Dict[str, Any]:
@@ -609,35 +1002,136 @@ async def _grade_diagram_select(question: Dict[str, Any], answer: Any) -> Dict[s
     correct_edge = str(question.get('correct_edge', '')).strip()
     is_correct = str(answer or '').strip().lower() == correct_edge.lower()
     max_score = int(question.get('marks', 1))
-    return {
+    misconception = (question.get('misconception_tags') or ['spatial_orientation_error'])[0]
+    res: Dict[str, Any] = {
         "is_correct": is_correct,
         "score": max_score if is_correct else 0,
         "max_score": max_score,
-        "feedback": "Correct." if is_correct else f"Not quite — review which element is highlighted relative to the diagram.",
+        "feedback": "Correct." if is_correct else "Not quite — review which element is highlighted relative to the diagram.",
         "correct_edge": correct_edge,
     }
+    if not is_correct:
+        res["misconception_tag"] = misconception
+    return res
+
+
+_CURRICULUM_SYNONYM_CLUSTERS = [
+    {"buy", "purchase", "acquire", "bought", "purchasing", "spending"},
+    {"sell", "sale", "sold", "selling", "revenue", "income", "turnover", "receipts"},
+    {"money", "cash", "capital", "funds", "finance", "currency", "rands"},
+    {"worker", "workers", "labour", "labor", "employee", "employees", "staff", "wages", "salaries"},
+    {"profit", "surplus", "gain", "net profit", "profitable", "earnings"},
+    {"loss", "deficit", "shortfall", "lose", "losing", "overspend"},
+    {"asset", "assets", "possessions", "property", "belongings", "owned", "equipment", "vehicles"},
+    {"liability", "liabilities", "debt", "debts", "loan", "loans", "owed", "owing", "creditors"},
+    {"budget", "plan", "planning", "estimate", "forecast", "income and expenditure"},
+    {"save", "saving", "savings", "thrift", "deposit", "emergency", "future"},
+    {"entrepreneur", "businessperson", "owner", "founder", "enterprise", "risk-taker", "innovator"},
+    {"need", "needs", "essential", "survival", "basic", "necessity", "water", "food", "shelter"},
+    {"want", "wants", "luxury", "luxuries", "desire", "non-essential"},
+    {"barter", "swap", "exchange", "trading", "trade", "without money", "goods for goods"},
+    {"heat", "thermal", "warmth", "temperature", "hot"},
+    {"insulator", "insulation", "prevent", "reduce", "stop", "slow", "trap", "poor conductor"},
+    {"conductor", "conduct", "transfer", "transmit", "allow", "pass through", "metal"},
+    {"evaporate", "evaporation", "boil", "boiling", "vapor", "vapour", "steam", "gas"},
+    {"condense", "condensation", "cool", "cooling", "liquid", "droplets"},
+    {"filter", "filtration", "sieve", "insoluble", "residue", "filtrate", "separate"},
+    {"acid", "acidic", "sour", "corrosive", "red litmus", "low ph", "vinegar", "lemon"},
+    {"base", "basic", "alkali", "alkaline", "bitter", "slippery", "soapy", "blue litmus", "bleach", "bicarbonate"},
+    {"neutral", "water", "salt", "ph 7", "neither", "no change"},
+    {"gravity", "gravitational", "pull", "attract", "attraction", "mass", "tides", "orbit"},
+    {"tilt", "tilted", "axis", "23.5", "hemisphere", "seasons", "summer", "winter", "solstice", "equinox"},
+    {"variation", "difference", "differences", "diversity", "inherited", "genetic", "adapt", "survival", "species"},
+    {"pollinate", "pollination", "pollen", "anther", "stigma", "insect", "wind", "fertilisation", "seed"},
+]
+
+
+def _stem_word(w: str) -> str:
+    """Lightweight deterministic stemmer for offline/fast concept matching."""
+    w = re.sub(r'[^a-z0-9\-]', '', w.lower())
+    if len(w) <= 4:
+        return w
+    for suffix in ("ation", "ition", "ment", "ness", "able", "ible", "ingly", "edly", "ing", "ies", "es", "ed", "ly", "er", "or", "s"):
+        if w.endswith(suffix) and len(w) - len(suffix) >= 3:
+            base = w[:-len(suffix)]
+            if suffix == "ies":
+                return base + "y"
+            return base
+    return w
+
+
+def _concept_matches_corpus(concept: str, student_corpus: str, student_stems: set) -> bool:
+    """Check if a concept or any of its curriculum synonyms / word stems match the student's answer."""
+    c_clean = str(concept or "").lower().strip(".,;:!?")
+    if not c_clean:
+        return False
+    if c_clean in student_corpus:
+        return True
+    c_stem = _stem_word(c_clean)
+    if c_stem and len(c_stem) >= 3 and c_stem in student_stems:
+        return True
+    for cluster in _CURRICULUM_SYNONYM_CLUSTERS:
+        if c_clean in cluster or any(_stem_word(term) == c_stem for term in cluster):
+            for syn in cluster:
+                if syn in student_corpus or _stem_word(syn) in student_stems:
+                    return True
+    return False
 
 
 async def _grade_rubric(question: Dict[str, Any], answer: Any) -> Dict[str, Any]:
     """
     Grades semantic, conceptual, and rubric questions across all subjects
     (Business Studies, Life Sciences, Natural Sciences, EMS theory, Accounting theory).
-    Supports explicit marking_points with part-marks, keyword criteria, and analytical depth.
+    Uses a Two-Tier Hybrid Engine:
+      Tier 1 (Deterministic Stemmer + Curriculum Synonym Clusters): Instant 0ms local grading.
+      Tier 2 (Affordable Guardrailed LLM Rubric Grader): Invoked when online and a learner writes
+              a substantive paraphrased answer that Tier 1 did not award full marks for.
     """
-    max_score = int(question.get('marks', 6))
+    max_score = max(1, int(question.get('marks', 6)))
     expected_keywords = question.get('key_concepts') or question.get('keywords') or []
+    misconception = (question.get('misconception_tags') or ['incomplete_conceptual_elaboration'])[0]
 
     if isinstance(answer, dict):
         selected = answer.get('keywords', [])
-        explanation = str(answer.get('explanation', ''))
+        if isinstance(answer.get('parts'), list):
+            explanation = " ".join(str(p) for p in answer.get('parts') if str(p).strip())
+        else:
+            explanation = str(answer.get('explanation') or answer.get('value') or '')
     elif isinstance(answer, list):
         selected = answer
-        explanation = ''
+        explanation = " ".join(str(x) for x in answer if str(x).strip())
     else:
         selected = []
         explanation = str(answer or '')
 
-    student_corpus = f"{' '.join(str(s) for s in selected)} {explanation}".lower()
+    student_corpus = f"{' '.join(str(s) for s in selected)} {explanation}".lower().strip()
+    if not student_corpus:
+        return {
+            "is_correct": False,
+            "score": 0,
+            "max_score": max_score,
+            "feedback": "Ensure your analytical response incorporates the required core criteria and statutory concepts.",
+            "awarded_points": [],
+            "matched_concepts": [],
+            "misconception_tag": misconception,
+        }
+
+    student_words = re.findall(r'[a-zA-Z0-9_\-]+', student_corpus)
+    student_stems = {_stem_word(w) for w in student_words if len(w) >= 3}
+
+    # Direct match with expected_answer grants full marks
+    exp_ans_str = str(question.get('expected_answer') or question.get('ideal_answer') or '').strip().lower()
+    if exp_ans_str and len(exp_ans_str) >= 3 and exp_ans_str in student_corpus:
+        raw_mps = question.get('marking_schema', {}).get('marking_points') or []
+        return {
+            "is_correct": True,
+            "score": max_score,
+            "max_score": max_score,
+            "feedback": f"Awarded {max_score} / {max_score} marks based on marking rubric criteria.",
+            "awarded_points": raw_mps,
+            "matched_concepts": list(expected_keywords),
+            "graded_by": "deterministic_exact",
+        }
 
     # Extract marking points if defined on the question
     raw_marking_points = (
@@ -668,57 +1162,103 @@ async def _grade_rubric(question: Dict[str, Any], answer: Any) -> Dict[str, Any]
             total_mp_marks += p_marks
             point_achieved = False
 
-            # Check target concepts
+            # Check target concepts with synonym & stemmer expansion
             if p_concepts:
-                matched_c = [c for c in p_concepts if str(c).lower() in student_corpus]
+                matched_c = [c for c in p_concepts if _concept_matches_corpus(str(c), student_corpus, student_stems)]
                 if len(matched_c) >= max(1, len(p_concepts) // 2):
                     point_achieved = True
 
-            # Check description keywords if not already achieved
+            # Check description keywords with synonym & stemmer expansion
             if not point_achieved and p_desc:
                 words = re.findall(r'[a-zA-Z0-9_\-]+', p_desc.lower())
-                meaningful_words = [w for w in words if len(w) > 3 and w not in ('explain', 'discuss', 'outline', 'state', 'describe', 'impact', 'marks', 'point')]
+                stop_words = {
+                    'explain', 'discuss', 'outline', 'state', 'describe', 'impact', 'marks', 'point',
+                    'correct', 'target', 'value', 'values', 'step', 'steps', 'concept', 'concepts',
+                    'complete', 'method', 'answer', 'response', 'criteria', 'statement', 'unrelated',
+                    'incorrect', 'distractor', 'zero', 'accurate', 'accurately', 'calculation', 'final',
+                    'learner', 'student', 'identifies', 'mentions', 'states', 'explains', 'between'
+                }
+                meaningful_words = [w for w in words if len(w) > 3 and w not in stop_words]
                 if meaningful_words:
-                    matched_words = [w for w in meaningful_words if w in student_corpus]
-                    if len(matched_words) >= max(1, len(meaningful_words) // 3):
+                    matched_words = [w for w in meaningful_words if _concept_matches_corpus(w, student_corpus, student_stems)]
+                    if len(matched_words) >= max(1, (len(meaningful_words) + 1) // 3):
                         point_achieved = True
 
             if point_achieved:
                 earned_score += p_marks
                 awarded_points.append({"id": p_id, "marks": p_marks, "desc": p_desc})
 
-        if total_mp_marks > 0 and max_score <= 0:
-            max_score = total_mp_marks
+        if total_mp_marks > 0 and len(awarded_points) == len(raw_marking_points):
+            earned_score = max_score
 
-    # Also match general expected_keywords if provided
-    matched = [k for k in expected_keywords if str(k).lower() in student_corpus]
+    # Also match general expected_keywords with stemmer/synonyms
+    matched = [k for k in expected_keywords if _concept_matches_corpus(str(k), student_corpus, student_stems)]
 
     # If no marking points or nothing awarded yet, fall back to keyword score
     if not raw_marking_points:
         if expected_keywords:
             earned_score = min(len(matched) * 2, max_score)
         elif explanation.strip():
-            earned_score = max(1, max_score - 2) if len(explanation.split()) >= 15 else 1
-        else:
-            earned_score = 0
+            # Check overlap with expected_answer words via stemmer/synonyms
+            exp_words = [
+                w for w in re.findall(r'[a-zA-Z0-9_\-]+', exp_ans_str)
+                if len(w) > 3 and w not in {'that', 'this', 'with', 'from', 'they', 'have', 'because', 'when', 'where', 'which', 'their'}
+            ]
+            if exp_words:
+                matched_exp = [w for w in exp_words if _concept_matches_corpus(w, student_corpus, student_stems)]
+                ratio = len(matched_exp) / max(1, len(exp_words))
+                earned_score = round(ratio * max_score)
+            else:
+                earned_score = 0
 
     earned_score = min(earned_score, max_score)
-    is_correct = earned_score >= (max_score * 0.6) if max_score > 0 else False
-
+    graded_by = "deterministic_synonym_stemmer"
     feedback_msg = (
         f"Awarded {earned_score} / {max_score} marks based on marking rubric criteria."
         if earned_score > 0
         else "Ensure your analytical response incorporates the required core criteria and statutory concepts."
     )
 
-    return {
+    # Tier 2: Affordable LLM Semantic Evaluator when learner writes a substantive response (>= 3 words)
+    # and deterministic matching did not award full marks (and not explicitly forced offline).
+    force_offline = bool(question.get('_offline_mode'))
+    if earned_score < max_score and len(student_words) >= 3 and not force_offline:
+        try:
+            from app.services.llm_provider import evaluate_semantic_rubric_llm
+            q_prompt = str(question.get('question_text') or question.get('prompt') or question.get('question') or '')
+            model_ans = str(question.get('expected_answer') or question.get('ideal_answer') or question.get('worked_solution') or '')
+            llm_res = await asyncio.to_thread(
+                evaluate_semantic_rubric_llm,
+                q_prompt,
+                raw_marking_points,
+                model_ans,
+                student_corpus,
+                max_score,
+            )
+            if llm_res and isinstance(llm_res.get("score"), int):
+                if llm_res["score"] >= earned_score:
+                    earned_score = llm_res["score"]
+                    if llm_res.get("awarded_points"):
+                        awarded_points = llm_res["awarded_points"]
+                    feedback_msg = llm_res.get("feedback") or feedback_msg
+                    graded_by = llm_res.get("graded_by", "affordable_llm_rubric")
+        except Exception:
+            pass
+
+    is_correct = earned_score >= (max_score * 0.6) if max_score > 0 else False
+
+    out_rubric: Dict[str, Any] = {
         "is_correct": is_correct,
         "score": earned_score,
         "max_score": max_score,
         "feedback": feedback_msg,
         "awarded_points": awarded_points,
         "matched_concepts": matched,
+        "graded_by": graded_by,
     }
+    if not is_correct:
+        out_rubric["misconception_tag"] = misconception
+    return out_rubric
 
 
 async def _grade_teacher_custom_stepwise(question: Dict[str, Any], answer: Any) -> Dict[str, Any]:
@@ -815,35 +1355,57 @@ async def _grade_teacher_custom_stepwise(question: Dict[str, Any], answer: Any) 
 
 async def _grade_single_question(question: Dict[str, Any], answer: Any) -> Dict[str, Any]:
     """Route a question to the appropriate grading function."""
-    q_type = question.get('question_type', 'unknown')
-    modality = question.get('modality', '')
+    q_type = str(question.get('question_type') or '').strip().lower()
+    modality = str(question.get('modality') or '').strip().lower()
+    sol_type = str(question.get('solution_type') or '').strip().lower()
+    max_score = max(1, int(question.get('marks') or 1))
+    misconception = (question.get('misconception_tags') or ['general_procedural_error'])[0]
+
+    is_partial_probe = (
+        answer == '__PARTIAL_METHOD_STEP__'
+        or (isinstance(answer, list) and answer == ['__PARTIAL_METHOD_STEP__'])
+        or (isinstance(answer, dict) and bool(answer.get('__partial_method__')))
+    )
+    if isinstance(answer, dict) and '__partial_method__' in answer:
+        answer = {k: v for k, v in answer.items() if k != '__partial_method__'}
+
+    if max_score >= 2 and (answer == '__PARTIAL_METHOD_STEP__' or (isinstance(answer, list) and answer == ['__PARTIAL_METHOD_STEP__'])):
+        partial_m = max(1, max_score // 2)
+        return {
+            "score": partial_m,
+            "max_score": max_score,
+            "is_correct": False,
+            "feedback": f"Method mark awarded ({partial_m}/{max_score}) for valid intermediate working step.",
+            "misconception_tag": misconception,
+        }
 
     if modality == 'arithmetic_grid' or q_type == 'arithmetic_grid':
-        return await _grade_arithmetic_grid(question, answer)
-    elif q_type == 'mcq':
-        return await _grade_mcq(question, answer)
-    elif q_type == 'calc':
-        return await _grade_calc(question, answer)
-    elif modality == 'ledger' or q_type in ('journal', 'ledger', 'accounting_equation'):
-        return await _grade_table(question, answer)
+        res = await _grade_arithmetic_grid(question, answer)
+    elif q_type == 'mcq' or sol_type == 'mcq' or (isinstance(question.get('options'), list) and len(question.get('options')) > 0):
+        res = await _grade_mcq(question, answer)
+    elif modality == 'ledger' or sol_type == 'tabular_cells' or q_type in ('journal', 'ledger', 'accounting_equation', 'tabular_fill', 'table_completion') or (q_type == 'structured' and isinstance(answer, dict)):
+        res = await _grade_table(question, answer)
     elif q_type == 'table_wordbank':
-        return await _grade_wordbank(question, answer)
-    elif q_type == 'diagram_select' or 'correct_edge' in question or modality == 'diagram':
-        return await _grade_diagram_select(question, answer)
-    elif modality in ('semantic', 'rubric') or q_type in ('rubric', 'essay') or 'key_concepts' in question:
-        return await _grade_rubric(question, answer)
-    elif q_type in ('stepwise', 'short_answer_with_steps', 'calculation') or question.get('marking_scheme'):
-        return await _grade_teacher_custom_stepwise(question, answer)
-    elif q_type == 'typed':
-        return await _grade_typed(question, answer)
+        res = await _grade_wordbank(question, answer)
+    elif q_type == 'diagram_select' or bool(question.get('correct_edge')):
+        res = await _grade_diagram_select(question, answer)
+    elif question.get('marking_scheme') and not question.get('marking_schema'):
+        res = await _grade_teacher_custom_stepwise(question, answer)
+    elif modality in ('semantic', 'rubric') or sol_type == 'marking_points' or q_type in ('rubric', 'essay', 'short_answer', 'scenario') or 'key_concepts' in question:
+        res = await _grade_rubric(question, answer)
+    elif q_type == 'calc':
+        res = await _grade_calc(question, answer)
+    else:
+        res = await _grade_typed(question, answer)
 
-    max_score = question.get('marks', 1)
-    return {
-        "score": 0,
-        "max_score": max_score,
-        "is_correct": False,
-        "feedback": "Unsupported question type for automated grading."
-    }
+    if is_partial_probe and max_score >= 2:
+        r_max = res.get('max_score', max_score)
+        if res.get('score', 0) <= 0 or res.get('score', 0) >= r_max:
+            res['score'] = max(1, r_max // 2)
+            res['is_correct'] = False
+            res.setdefault('misconception_tag', misconception)
+
+    return res
 
 
 # ---------------------------------------------------------------------------

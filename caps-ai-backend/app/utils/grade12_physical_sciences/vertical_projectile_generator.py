@@ -4,7 +4,7 @@ Grounding:
 
 Complies strictly with the 6-Pillar Generator Contract:
 1. Term & Calendar Metadata: term=1, caps_weight_percent=20, suggested_duration_mins=12.
-2. Deconstructibility: Compound multi-stage projectile scenarios and atomic elementary sub-drills (elementary_projectile_apex_time, elementary_projectile_max_height, elementary_projectile_impact_velocity, elementary_cliff_trajectory).
+2. Deconstructibility: Compound multi-stage projectile scenarios and atomic elementary sub-drills.
 3. Standardized Misconceptions: apex_acceleration_zero_misconception, sign_convention_inconsistency, omitted_initial_cliff_height.
 4. Teacher-Editable Marking Schema with [M] method and [A] accuracy marks.
 5. Deterministic 3-Tier Pre-Baked Hints.
@@ -22,9 +22,9 @@ G_ACCEL = 9.8  # m/s^2 downwards
 PROMPT_LEAD_HOOKS_PROJECTILE = [
     "During an athletics high-jump training session, a tennis ball is launched straight upwards,",
     "In a Grade 12 physics experiment measuring gravitational free-fall using a photogate timer,",
-    "A ball is thrown vertically upwards from the edge of a flat school building roof,",
-    "From the top of a cliff overlooking the ocean, a stone is projected vertically,",
-    "A distress flare is fired vertically upwards from a rescue boat,"
+    "A ball is thrown vertically upwards from a horizontal launch pad,",
+    "During a kinematics investigation, a projectile is launched vertically upwards,",
+    "A distress flare is fired vertically upwards from a stationary platform,",
 ]
 
 
@@ -51,28 +51,28 @@ def _generate_ground_launch_question(r: random.Random, seed: Optional[int], idx:
     t_total = 2 * t_apex
 
     prompt = (
-        f"{hook} with an initial speed of {_fmt_sa(vi)} m·s⁻¹. Ignore air resistance and take g = 9,8 m·s⁻².\n\n"
-        f"1. Define the term 'projectile'.\n"
-        f"2. State the magnitude and direction of the ball's acceleration at its highest point (apex).\n"
-        f"3. Calculate the time taken, in seconds, for the ball to reach its maximum height.\n"
-        f"4. Calculate the maximum height reached above the ground in meters.\n"
-        f"5. What is the ball's velocity upon returning to the ground?"
+        f"Refer to the velocity–time (\\(v\\text{{–}}t\\)) motion graph for a projectile. "
+        f"{hook} with an initial upward speed of \\(v_i = {_fmt_sa(vi)}\\text{{ m}}\\cdot\\text{{s}}^{{-1}}\\). Ignore air resistance and take \\(g = 9,8\\text{{ m}}\\cdot\\text{{s}}^{{-2}}\\) downwards.\n\n"
+        f"1. Define the term projectile. (2)\n"
+        f"2. State the magnitude and direction of the projectile's acceleration at its highest point (apex at \\(t = {_fmt_sa(t_apex)}\\text{{ s}}\\)), and explain how this is represented by the gradient of the \\(v\\text{{–}}t\\) graph. (2)\n"
+        f"3. Verify by calculation that the time taken to reach maximum height is \\({_fmt_sa(t_apex)}\\text{{ s}}\\). (2)\n"
+        f"4. Calculate the maximum vertical height (\\(\\Delta y_{{\\max}}\\)) reached above the launch point, represented by the shaded area under the \\(v\\text{{–}}t\\) graph from \\(t = 0\\text{{ s}}\\) to \\(t = {_fmt_sa(t_apex)}\\text{{ s}}\\). (2)"
     )
-    ans_str = f"1. An object upon which the only force acting is gravity; 2. 9,8 m/s^2 downwards; 3. {_fmt_sa(t_apex)} s; 4. {_fmt_sa(h_max)} m; 5. {_fmt_sa(vi)} m/s downwards"
     memo = (
-        "1. A projectile is an object which has been given an initial velocity and on which the only acting force is gravity. [2]\n"
-        "2. Acceleration at apex: 9,8 m·s⁻² downwards (gravity is constant throughout free-fall). [2]\n"
-        f"3. Taking upwards as positive:\n"
-        f"   vf = vi + g·Δt => 0 = {_fmt_sa(vi)} + (-9,8)·Δt [1M]\n"
-        f"   Δt = {_fmt_sa(vi)} / 9,8 = {_fmt_sa(t_apex, 2)} s [1A]\n"
-        f"4. vf² = vi² + 2g·Δy => 0 = ({_fmt_sa(vi)})² + 2(-9,8)·Δy [1M]\n"
-        f"   Δy = ({_fmt_sa(vi)})² / (19,6) = {_fmt_sa(h_max, 2)} m [1A]\n"
-        f"5. Velocity on return = {_fmt_sa(vi)} m·s⁻¹ downwards (by symmetry of motion in a vacuum). [1A]"
+        "Step 1: Definition of a projectile:\n"
+        "A projectile is an object upon which the only force acting is the gravitational force (weight).\n\n"
+        "Step 2: Acceleration at the apex:\n"
+        "9,8 m·s⁻² downwards; the v–t graph has a constant negative gradient equal to g = -9,8 m·s⁻² throughout the entire motion.\n\n"
+        f"Step 3: Time to reach maximum height (taking upwards as positive, v_f = 0 m·s⁻¹):\n"
+        f"v_f = v_i + g Δt\n"
+        f"0 = {_fmt_sa(vi)} + (-9,8) Δt => Δt = {_fmt_sa(vi)} ÷ 9,8 = {_fmt_sa(t_apex, 2)} s\n\n"
+        f"Step 4: Maximum height above the ground (Area of triangle = 0,5 × base × height or v_f² = v_i² + 2g Δy):\n"
+        f"Δy_max = 0,5 × {_fmt_sa(t_apex, 2)} × {_fmt_sa(vi)} = {_fmt_sa(h_max, 2)} m"
     )
     hints = {
-        "tier_1": "At apex, vertical velocity is zero, but acceleration is still 9.8 m/s^2 downwards.",
-        "tier_2": "Use vf = vi + a*t with vf = 0. Use vf^2 = vi^2 + 2*a*dy for maximum height.",
-        "tier_3": f"1. Free fall object. 2. 9,8 m/s^2 down. 3. t = {_fmt_sa(vi)} / 9,8 = {_fmt_sa(t_apex, 2)} s. 4. h = {_fmt_sa(h_max, 2)} m. 5. {_fmt_sa(vi)} m/s down.",
+        "tier_1": "At the apex, vertical velocity is zero, but the gradient of the v–t graph (acceleration) remains constant at 9,8 m·s⁻² downwards.",
+        "tier_2": "Use v_f = v_i + g Δt with v_f = 0, and find maximum height from the area under the v–t graph: Δy_max = 0,5 × t_apex × v_i.",
+        "tier_3": memo,
     }
 
     return {
@@ -84,9 +84,21 @@ def _generate_ground_launch_question(r: random.Random, seed: Optional[int], idx:
         "mode": mode,
         "topic": TOPIC,
         "question_type": "short_answer",
+        "modality": "motion_graph",
+        "diagram_spec": {
+            "diagram_role": "identify" if locals().get("target_pin_letter") or locals().get("target_pin") else "context",
+            "kind": "motion_graph",
+            "type": "motion_graph",
+            "v0": round(float(vi), 2),
+            "t_apex": round(float(t_apex), 2),
+            "t_total": round(float(t_total), 2),
+            "h_max": round(float(h_max), 2),
+            "graph_type": "velocity_time",
+        },
         "question": prompt,
-        "correct_answer": ans_str,
-        "sample_answer": ans_str,
+        "prompt": prompt,
+        "correct_answer": memo,
+        "sample_answer": memo,
         "worked_solution": memo,
         "explanation": memo,
         "marks": 8,
@@ -95,10 +107,10 @@ def _generate_ground_launch_question(r: random.Random, seed: Optional[int], idx:
         "marking_schema": {
             "total_marks": 8,
             "marking_points": [
-                {"id": "mp_1", "desc": "Projectile definition", "marks": 2, "editable": True},
-                {"id": "mp_2", "desc": "Acceleration at apex identification", "marks": 2, "editable": True},
-                {"id": "mp_3", "desc": "Time to apex calculation", "marks": 2, "editable": True},
-                {"id": "mp_4", "desc": "Maximum height calculation", "marks": 2, "editable": True},
+                {"id": "mp_1", "desc": "1. Projectile definition: object upon which the only force acting is gravity", "marks": 2, "editable": True},
+                {"id": "mp_2", "desc": "2. Acceleration at apex = 9,8 m·s⁻² downwards (constant gradient of v-t graph)", "marks": 2, "editable": True},
+                {"id": "mp_3", "desc": f"3. Time to apex calculation: 0 = {_fmt_sa(vi)} - 9,8 Δt => Δt = {_fmt_sa(t_apex, 2)} s", "marks": 2, "editable": True},
+                {"id": "mp_4", "desc": f"4. Maximum height calculation: Δy_max = {_fmt_sa(h_max, 2)} m", "marks": 2, "editable": True},
             ],
             "deductions": [],
             "carry_forward_rule": "consequential_accuracy",
@@ -111,40 +123,38 @@ def _generate_cliff_launch_question(r: random.Random, seed: Optional[int], idx: 
     hook = r.choice(PROMPT_LEAD_HOOKS_PROJECTILE)
     qid = _make_id("proj12_cliff", seed, idx)
 
-    cliff_height = r.choice([25.0, 30.0, 40.0, 50.0, 60.0, 80.0])
-    vi = r.choice([10.0, 15.0, 20.0, 25.0])
+    cliff_height = r.choice([25.0, 30.0, 40.0, 50.0, 60.0])
+    vi = r.choice([14.7, 19.6, 24.5])
+    t_apex = vi / G_ACCEL
+    h_above_cliff = (vi ** 2) / (2 * G_ACCEL)
 
-    # vf^2 = vi^2 + 2 * g * cliff_height (when falling down to ground, delta_y = -cliff_height)
     vf_squared = (vi ** 2) + (2 * G_ACCEL * cliff_height)
     vf_ground = math.sqrt(vf_squared)
-    # Total flight time: vf = vi + a*t => -vf_ground = vi - g*t => t = (vi + vf_ground) / g
     t_flight = (vi + vf_ground) / G_ACCEL
 
     prompt = (
-        f"{hook} from the top edge of a building of height {_fmt_sa(cliff_height)} m above the ground. "
-        f"The projectile is thrown vertically upwards with an initial speed of {_fmt_sa(vi)} m·s⁻¹. "
-        f"It rises to its highest point and then falls past the roofline straight to the ground below. "
-        f"(Take g = 9,8 m·s⁻²).\n\n"
-        f"1. Calculate the magnitude of the projectile's velocity just before it hits the ground in m·s⁻¹.\n"
-        f"2. Calculate the total time of flight, from launch until striking the ground, in seconds.\n"
-        f"3. Sketch or describe the shape of the position-versus-time graph for this motion."
+        f"Refer to the velocity–time (\\(v\\text{{–}}t\\)) motion graph for a vertical projectile.\n"
+        f"{hook} from a platform of height \\({_fmt_sa(cliff_height)}\\text{{ m}}\\) above the ground with an initial upward velocity of \\(v_i = {_fmt_sa(vi)}\\text{{ m}}\\cdot\\text{{s}}^{{-1}}\\). "
+        f"It reaches its apex at \\(t = {_fmt_sa(t_apex)}\\text{{ s}}\\) and then falls past the launch level to strike the ground below. (Take \\(g = 9,8\\text{{ m}}\\cdot\\text{{s}}^{{-2}}\\) downwards.)\n\n"
+        f"1. Calculate the maximum height above the launch platform reached at \\(t = {_fmt_sa(t_apex)}\\text{{ s}}\\) using the upward area of the \\(v\\text{{–}}t\\) graph. (2)\n"
+        f"2. Calculate the magnitude of the projectile's velocity just before it hits the ground in \\(\\text{{m}}\\cdot\\text{{s}}^{{-1}}\\). (3)\n"
+        f"3. Calculate the total time of flight from launch until striking the ground. (2)"
     )
-    ans_str = f"1. {_fmt_sa(vf_ground)} m/s; 2. {_fmt_sa(t_flight)} s; 3. Inverted parabolic curve starting at {_fmt_sa(cliff_height)} m, rising to apex, and dropping to 0 m."
     memo = (
-        f"1. Taking upwards as positive (displacement to ground Δy = -{_fmt_sa(cliff_height)} m):\n"
-        f"   vf² = vi² + 2g·Δy [1M]\n"
-        f"   vf² = ({_fmt_sa(vi)})² + 2(-9,8)(-{_fmt_sa(cliff_height)}) = {_fmt_sa(vi**2)} + {_fmt_sa(19.6 * cliff_height)} = {_fmt_sa(vf_squared, 2)} [1M]\n"
-        f"   vf = -√({_fmt_sa(vf_squared, 2)}) = -{_fmt_sa(vf_ground, 2)} m·s⁻¹\n"
-        f"   Magnitude = {_fmt_sa(vf_ground, 2)} m·s⁻¹ [1A]\n"
-        f"2. vf = vi + g·Δt [1M]\n"
-        f"   -{_fmt_sa(vf_ground, 2)} = {_fmt_sa(vi)} + (-9,8)·Δt\n"
-        f"   -9,8·Δt = -({_fmt_sa(vi)} + {_fmt_sa(vf_ground, 2)}) => Δt = {_fmt_sa(t_flight, 2)} s [1A]\n"
-        "3. Position-time graph: Inverted parabola starting at positive initial position y0 > 0, curving upwards to a peak, then curving downwards through y = 0. [2]"
+        f"Step 1: Maximum height above launch platform at t = {_fmt_sa(t_apex, 2)} s:\n"
+        f"Δy_up = 0,5 × base × height = 0,5 × {_fmt_sa(t_apex, 2)} × {_fmt_sa(vi)} = {_fmt_sa(h_above_cliff, 2)} m\n\n"
+        f"Step 2: Velocity just before striking the ground (taking upwards as positive, net displacement Δy = -{_fmt_sa(cliff_height)} m):\n"
+        f"v_f² = v_i² + 2g Δy\n"
+        f"v_f² = ({_fmt_sa(vi)})² + 2(-9,8)(-{_fmt_sa(cliff_height)}) = {_fmt_sa(round(vf_squared, 2))}\n"
+        f"Magnitude of impact velocity v_f = {_fmt_sa(vf_ground, 2)} m·s⁻¹ downwards.\n\n"
+        f"Step 3: Total time of flight from launch to ground:\n"
+        f"v_f = v_i + g Δt\n"
+        f"-{_fmt_sa(vf_ground, 2)} = {_fmt_sa(vi)} + (-9,8) Δt => Δt = {_fmt_sa(t_flight, 2)} s"
     )
     hints = {
-        "tier_1": "Watch your signs: if up is positive, displacement to the ground below is negative (-h).",
-        "tier_2": "vf^2 = vi^2 + 2*g*dy with dy = -cliff_height gives ground impact speed. Then use vf = vi + g*t.",
-        "tier_3": f"1. vf^2 = {_fmt_sa(vi)}^2 + 2(9.8)({_fmt_sa(cliff_height)}) => vf = {_fmt_sa(vf_ground, 2)} m/s. 2. t = ({_fmt_sa(vi)} + {_fmt_sa(vf_ground, 2)}) / 9.8 = {_fmt_sa(t_flight, 2)} s.",
+        "tier_1": "Watch your sign convention: taking upwards as positive, the net displacement from the cliff top to the ground below is Δy = -h.",
+        "tier_2": "Use v_f² = v_i² + 2g Δy with Δy = -cliff_height to find impact speed, then use v_f = v_i + g Δt for total flight time.",
+        "tier_3": memo,
     }
 
     return {
@@ -156,9 +166,21 @@ def _generate_cliff_launch_question(r: random.Random, seed: Optional[int], idx: 
         "mode": mode,
         "topic": TOPIC,
         "question_type": "short_answer",
+        "modality": "motion_graph",
+        "diagram_spec": {
+            "diagram_role": "identify" if locals().get("target_pin_letter") or locals().get("target_pin") else "context",
+            "kind": "motion_graph",
+            "type": "motion_graph",
+            "v0": round(float(vi), 2),
+            "t_apex": round(float(t_apex), 2),
+            "t_total": round(float(t_flight), 2),
+            "h_cliff": round(float(cliff_height), 2),
+            "graph_type": "velocity_time",
+        },
         "question": prompt,
-        "correct_answer": ans_str,
-        "sample_answer": ans_str,
+        "prompt": prompt,
+        "correct_answer": memo,
+        "sample_answer": memo,
         "worked_solution": memo,
         "explanation": memo,
         "marks": 7,
@@ -167,9 +189,9 @@ def _generate_cliff_launch_question(r: random.Random, seed: Optional[int], idx: 
         "marking_schema": {
             "total_marks": 7,
             "marking_points": [
-                {"id": "mp_1", "desc": "Ground velocity calculation (formula + substitution)", "marks": 3, "editable": True},
-                {"id": "mp_2", "desc": "Total flight time calculation (vf = vi + gt)", "marks": 2, "editable": True},
-                {"id": "mp_3", "desc": "Position-time graph description", "marks": 2, "editable": True},
+                {"id": "mp_1", "desc": f"1. Height above launch platform: Δy_up = 0,5 × {_fmt_sa(t_apex, 2)} × {_fmt_sa(vi)} = {_fmt_sa(h_above_cliff, 2)} m", "marks": 2, "editable": True},
+                {"id": "mp_2", "desc": f"2. Ground impact velocity: v_f = {_fmt_sa(vf_ground, 2)} m·s⁻¹ downwards", "marks": 3, "editable": True},
+                {"id": "mp_3", "desc": f"3. Total flight time: Δt = {_fmt_sa(t_flight, 2)} s", "marks": 2, "editable": True},
             ],
             "deductions": [],
             "carry_forward_rule": "consequential_accuracy",

@@ -347,6 +347,7 @@ export default function TopicScopeModal({
             <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
             <input
               type="text"
+              data-testid="input-topic-search"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder='Quick filter topics by keyword (e.g. "Trig", "VAT", "Newton")...'
@@ -454,6 +455,7 @@ export default function TopicScopeModal({
               return (
                 <div
                   key={`${topic.name}-${index}`}
+                  data-testid={`topic-card-${topic.name.toLowerCase().replace(/[^a-z0-9]/g, '-')}`}
                   onClick={() => {
                     if (isLocked) {
                       window.dispatchEvent(new CustomEvent('fundile:open-subscription-modal', { detail: { targetPlan: 'annual_pass' } }));

@@ -80,47 +80,36 @@ GAAP_POOL = [
 # --------------------------------------------------------------------------- #
 def _build_concepts(r: random.Random) -> Dict[str, Any]:
     company = _pick_company(r)
-    # Select 6 concepts, ask for 3 definitions
-    selected = r.sample(CONCEPTS_POOL, min(6, len(CONCEPTS_POOL)))
-    ask_count = 3
+    selected = r.sample(CONCEPTS_POOL, 4)
+    term_bank = [t for t, _ in selected]
+    r.shuffle(term_bank)
+    headers = ["#", "Company Accounting Definition", "Matching Company Term"]
+    rows = []
+    correct_map = {}
+    worked_lines = []
+    for i, (term, defn) in enumerate(selected):
+        rows.append([str(i + 1), defn, f"{{r{i}_c2}}"])
+        correct_map[f"r{i}_c2"] = term
+        worked_lines.append(f"- **{i+1}. {term}**: {defn}")
 
-    prompt_lines = [
-        f"The following terms relate to **{company}**.\n",
-        "Provide the correct accounting definition for each term:\n",
-    ]
-    correct = {}
-    marking_points = []
-    for i, (term, defn) in enumerate(selected[:ask_count]):
-        prompt_lines.append(f"{i+1}. **{term}**")
-        correct[f"def_{i}"] = defn
-        marking_points.append({
-            "id": f"mp_{i+1}", "desc": f"Definition of {term}", "marks": 1, "editable": True,
-        })
-
+    bank_str = " | ".join(f"`{t}`" for t in term_bank)
+    q_text = (
+        f"Match each corporate definition for **{company}** to the correct term from the Term Bank.\n\n"
+        f"**Term Bank:** {bank_str}"
+    )
+    worked = "**Company Concepts Matching**\n\n" + "\n".join(worked_lines)
     return {
         "id": _make_id("company_concepts"),
-        "question_type": "structured",
-        "question_text": "\n".join(prompt_lines),
-        "correct_answer": correct,
-        "sample_answer": f"{selected[0][0]}: {selected[0][1]}",
-        "marks": ask_count,
-        "term": 2,
-        "caps_weight_percent": 10,
-        "suggested_duration_mins": 4,
-        "learning_objective_id": "acct12_companies_concepts",
-        "mode": "elementary_concepts",
-        "misconception_tags": ["confused_director_shareholder", "auth_vs_issued_share_capital"],
-        "marking_schema": {
-            "total_marks": ask_count,
-            "marking_points": marking_points,
-            "deductions": [],
-            "carry_forward_rule": "consequential_accuracy",
-        },
-        "hints": {
-            "tier_1": "Think about who owns vs who manages the company.",
-            "tier_2": f"'{selected[0][0]}' relates to: {selected[0][1][:40]}...",
-            "tier_3": f"{selected[0][0]}: {selected[0][1]}",
-        },
+        "question_type": "table_fill",
+        "subskill": "elementary_concepts",
+        "question_text": q_text,
+        "prompt": q_text,
+        "headers": headers,
+        "rows": rows,
+        "correct_map": correct_map,
+        "marks": 4,
+        "worked_solution": worked,
+        "canonical_solution": worked,
     }
 
 
@@ -303,22 +292,43 @@ def generate(
     difficulty: str = "medium",
     **kwargs,
 ) -> List[Dict[str, Any]]:
+    from app.utils.grade12_accounting.company_general_ledger_generator import generate_questions as gen_ledger
     r = _rng(seed)
     questions: List[Dict[str, Any]] = []
 
-    builders = {
-        "elementary_concepts": _build_concepts,
-        "elementary_share_capital": _build_share_capital,
-        "elementary_dividends_tax": _build_dividends_tax,
+    all_subskills = [
+        "elementary_concepts",
+        "elementary_share_capital",
+        "elementary_dividends_tax",
+        "ordinary_share_capital_ledger",
+        "retained_income_ledger",
+        "sars_income_tax_ledger",
+        "shareholders_for_dividends_ledger",
+        "appropriation_account_ledger",
+    ]
+
+    ledger_map = {
+        "ordinary_share_capital_ledger": "ordinary-share-capital",
+        "retained_income_ledger": "retained-option1",
+        "sars_income_tax_ledger": "sars",
+        "shareholders_for_dividends_ledger": "dividends",
+        "appropriation_account_ledger": "appropriation-option1",
     }
 
-    for _ in range(count):
-        sub_r = _rng(r.randint(1, 1_000_000_000))
-        if mode == "compound":
-            questions.extend(_build_compound(sub_r))
-        elif mode in builders:
-            questions.append(builders[mode](sub_r))
+    for i in range(count):
+        sub_seed = r.randint(1, 1_000_000_000)
+        sub_r = _rng(sub_seed)
+        chosen = subskill if (subskill in all_subskills) else r.choice(all_subskills)
+        if chosen == "elementary_concepts":
+            q = _build_concepts(sub_r)
+        elif chosen == "elementary_share_capital":
+            q = _build_share_capital(sub_r)
+        elif chosen == "elementary_dividends_tax":
+            q = _build_dividends_tax(sub_r)
         else:
-            questions.extend(_build_compound(sub_r))
+            lq = gen_ledger(subskill=ledger_map[chosen], difficulty=difficulty, count=1, seed=sub_seed)
+            q = lq[0]
+        q["subskill"] = chosen
+        questions.append(q)
 
     return questions

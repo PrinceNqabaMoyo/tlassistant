@@ -367,6 +367,8 @@ def with_metadata(
         }
     )
     if diagram_spec is not None:
+        if isinstance(diagram_spec, dict) and "diagram_role" not in diagram_spec:
+            diagram_spec["diagram_role"] = "identify" if question.get("question_type") == "diagram_select" else "context"
         question["diagram_spec"] = diagram_spec
     return question
 

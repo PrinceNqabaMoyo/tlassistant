@@ -1,0 +1,209 @@
+{
+  "diagram": "gas_evolution_rate_apparatus",
+  "view": "textbook",
+  "viewBox": "0 0 600 480",
+  "anchors": {
+    "airtight_rubber_stopper": {
+      "name": "Airtight Rubber Stopper (Bung)",
+      "anchor": [
+        155,
+        168
+      ],
+      "default_box": [
+        60,
+        130
+      ],
+      "side": "left",
+      "grades": [
+        "g9",
+        "g12"
+      ],
+      "acceptable": [
+        "Rubber stopper",
+        "Rubber bung",
+        "Stopper",
+        "Cork"
+      ],
+      "description": "Seals the neck of the conical flask immediately after reactants mix so zero evolved gas escapes before reaching the syringe."
+    },
+    "glass_delivery_tube": {
+      "name": "Glass Delivery Tube",
+      "anchor": [
+        246,
+        135
+      ],
+      "default_box": [
+        60,
+        75
+      ],
+      "side": "left",
+      "grades": [
+        "g9",
+        "g12"
+      ],
+      "acceptable": [
+        "Delivery tube",
+        "Glass tube",
+        "Gas delivery tube"
+      ],
+      "description": "Narrow tubing that channels evolved gas from the reaction flask directly into the graduated gas syringe."
+    },
+    "conical_reaction_flask": {
+      "name": "Conical Flask (Erlenmeyer Flask)",
+      "anchor": [
+        135,
+        265
+      ],
+      "default_box": [
+        60,
+        225
+      ],
+      "side": "left",
+      "grades": [
+        "g9",
+        "g12"
+      ],
+      "acceptable": [
+        "Conical flask",
+        "Erlenmeyer flask",
+        "Reaction flask"
+      ],
+      "description": "Sloped-walled glass vessel containing the acid and solid reactant where the gas-evolving reaction takes place."
+    },
+    "dilute_acid_reactant": {
+      "name": "Dilute Acid Solution with Gas Bubbles",
+      "anchor": [
+        162,
+        338
+      ],
+      "default_box": [
+        60,
+        305
+      ],
+      "side": "left",
+      "grades": [
+        "g9",
+        "g12"
+      ],
+      "acceptable": [
+        "Dilute acid",
+        "Hydrochloric acid",
+        "HCl(aq)",
+        "Acid solution",
+        "Effervescence"
+      ],
+      "description": "Aqueous acid reactant (such as HCl(aq) or H₂SO₄(aq)) showing rapid effervescence of H₂ or CO₂ gas bubbles."
+    },
+    "solid_reactant_granules": {
+      "name": "Solid Reactant (Zinc Granules / CaCO₃ Chips)",
+      "anchor": [
+        155,
+        422
+      ],
+      "default_box": [
+        60,
+        415
+      ],
+      "side": "left",
+      "grades": [
+        "g9",
+        "g12"
+      ],
+      "acceptable": [
+        "Zinc granules",
+        "Calcium carbonate chips",
+        "Marble chips",
+        "Solid reactant",
+        "Metal granules"
+      ],
+      "description": "Solid metal or carbonate pieces whose state of division (surface area) directly affects the frequency of effective collisions."
+    },
+    "retort_stand_clamp": {
+      "name": "Retort Stand & Bosshead Clamp",
+      "anchor": [
+        435,
+        182
+      ],
+      "default_box": [
+        540,
+        105
+      ],
+      "side": "right",
+      "grades": [
+        "g9",
+        "g12"
+      ],
+      "acceptable": [
+        "Retort stand",
+        "Clamp",
+        "Retort clamp"
+      ],
+      "description": "Supports the graduated gas syringe horizontally to minimize friction on the moving plunger."
+    },
+    "graduated_gas_syringe": {
+      "name": "Graduated Gas Syringe Barrel",
+      "anchor": [
+        365,
+        212
+      ],
+      "default_box": [
+        540,
+        200
+      ],
+      "side": "right",
+      "grades": [
+        "g9",
+        "g12"
+      ],
+      "acceptable": [
+        "Gas syringe",
+        "Graduated syringe",
+        "Syringe barrel"
+      ],
+      "description": "Calibrated glass barrel (in cm³) used to measure the cumulative volume of gas collected at regular time intervals."
+    },
+    "syringe_plunger": {
+      "name": "Movable Syringe Plunger (Piston)",
+      "anchor": [
+        495,
+        218
+      ],
+      "default_box": [
+        540,
+        295
+      ],
+      "side": "right",
+      "grades": [
+        "g12"
+      ],
+      "acceptable": [
+        "Plunger",
+        "Syringe plunger",
+        "Piston"
+      ],
+      "description": "Low-friction sliding piston pushed outward by the pressure of the evolving gas to indicate collected gas volume ΔV."
+    },
+    "stopwatch_timer": {
+      "name": "Stopwatch (Reaction Timer)",
+      "anchor": [
+        248,
+        395
+      ],
+      "default_box": [
+        540,
+        395
+      ],
+      "side": "right",
+      "grades": [
+        "g9",
+        "g12"
+      ],
+      "acceptable": [
+        "Stopwatch",
+        "Timer",
+        "Stop clock"
+      ],
+      "description": "Measures elapsed time Δt so the average or instantaneous reaction rate (ΔV / Δt) can be determined."
+    }
+  }
+}

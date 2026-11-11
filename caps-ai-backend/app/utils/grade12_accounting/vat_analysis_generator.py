@@ -321,19 +321,34 @@ def generate(
     r = _rng(seed)
     questions: List[Dict[str, Any]] = []
 
+    from app.utils.grade12_accounting.term2.vat_generator import (
+        _gen_vat_payable,
+        _gen_vat_inclusive_calc,
+        _gen_vat_with_trade_discount,
+        _gen_zero_rated_mixed,
+        _gen_vat_on_bad_debts,
+        _gen_vat_on_discount,
+        _gen_vat_on_drawings,
+        _gen_vat_concepts_mcq,
+    )
+
     builders = {
         "elementary_vat_calc": _build_vat_calc,
         "elementary_vat_schedule": _build_vat_schedule,
-        "elementary_vat_ethical": _build_vat_ethical,
+        "vat_payable_control_calculation": _gen_vat_payable,
+        "vat_inclusive_exclusive_conversion": _gen_vat_inclusive_calc,
+        "vat_with_trade_discount": _gen_vat_with_trade_discount,
+        "vat_zero_rated_and_standard_mixed": _gen_zero_rated_mixed,
+        "vat_on_bad_debts_and_discounts": _gen_vat_on_bad_debts,
+        "vat_concepts_and_compliance": _gen_vat_concepts_mcq,
     }
+    keys = list(builders.keys())
 
     for _ in range(count):
         sub_r = _rng(r.randint(1, 1_000_000_000))
-        if mode == "compound":
-            questions.extend(_build_compound(sub_r))
-        elif mode in builders:
-            questions.append(builders[mode](sub_r))
-        else:
-            questions.extend(_build_compound(sub_r))
+        chosen = subskill if (subskill in builders) else r.choice(keys)
+        q = builders[chosen](sub_r)
+        q["subskill"] = chosen
+        questions.append(q)
 
     return questions

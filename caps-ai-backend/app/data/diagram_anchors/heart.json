@@ -1,0 +1,186 @@
+{
+  "master": "heart",
+  "view": "coronal_section",
+  "viewBox": "0 0 600 480",
+  "anchors": {
+    "superior_vena_cava": {
+      "name": "Superior Vena Cava",
+      "synonyms": ["superior vena cava", "vena cava", "cranial vena cava", "pre-caval vein"],
+      "anchor": [210, 120],
+      "default_box": [60, 70],
+      "side": "left",
+      "grades": ["g9", "g10"],
+      "description": "Carries deoxygenated blood from upper body (head, neck, arms) to right atrium."
+    },
+    "inferior_vena_cava": {
+      "name": "Inferior Vena Cava",
+      "synonyms": ["inferior vena cava", "vena cava", "caudal vena cava", "post-caval vein"],
+      "anchor": [215, 395],
+      "default_box": [60, 420],
+      "side": "left",
+      "grades": ["g9", "g10"],
+      "description": "Transports deoxygenated blood from lower body, trunk and legs to right atrium."
+    },
+    "right_atrium": {
+      "name": "Right Atrium",
+      "synonyms": ["right atrium", "right auricle", "atrium dextrum"],
+      "anchor": [215, 235],
+      "default_box": [60, 190],
+      "side": "left",
+      "grades": ["g9", "g10"],
+      "description": "Receives deoxygenated blood from systemic circulation via venae cavae."
+    },
+    "tricuspid_valve": {
+      "name": "Tricuspid Valve",
+      "synonyms": ["tricuspid valve", "right atrioventricular valve", "right av valve", "atrioventricular valve"],
+      "anchor": [240, 290],
+      "default_box": [60, 260],
+      "side": "left",
+      "grades": ["g10"],
+      "description": "Three-cusped valve preventing regurgitation of blood from right ventricle into right atrium during ventricular systole."
+    },
+    "right_ventricle": {
+      "name": "Right Ventricle",
+      "synonyms": ["right ventricle", "ventriculus dexter"],
+      "anchor": [270, 355],
+      "default_box": [60, 340],
+      "side": "left",
+      "grades": ["g9", "g10"],
+      "description": "Pumps deoxygenated blood under moderate pressure into pulmonary artery to lungs."
+    },
+    "pulmonary_artery": {
+      "name": "Pulmonary Artery",
+      "synonyms": ["pulmonary artery", "pulmonary trunk", "main pulmonary artery"],
+      "anchor": [350, 145],
+      "default_box": [540, 115],
+      "side": "right",
+      "grades": ["g9", "g10"],
+      "description": "Only artery carrying deoxygenated blood; branches to left and right lungs."
+    },
+    "pulmonary_veins": {
+      "name": "Pulmonary Veins",
+      "synonyms": ["pulmonary veins", "pulmonary vein", "left and right pulmonary veins"],
+      "anchor": [430, 190],
+      "default_box": [540, 175],
+      "side": "right",
+      "grades": ["g9", "g10"],
+      "description": "Transport oxygen-rich blood from alveolar capillary beds of lungs to left atrium."
+    },
+    "left_atrium": {
+      "name": "Left Atrium",
+      "synonyms": ["left atrium", "left auricle", "atrium sinistrum"],
+      "anchor": [375, 215],
+      "default_box": [540, 220],
+      "side": "right",
+      "grades": ["g9", "g10"],
+      "description": "Receives oxygenated blood from pulmonary veins."
+    },
+    "bicuspid_valve": {
+      "name": "Bicuspid (Mitral) Valve",
+      "synonyms": ["bicuspid valve", "mitral valve", "left atrioventricular valve", "left av valve", "bicuspid"],
+      "anchor": [370, 265],
+      "default_box": [540, 270],
+      "side": "right",
+      "grades": ["g10"],
+      "description": "Two-cusped valve preventing retrograde flow from left ventricle into left atrium."
+    },
+    "left_ventricle": {
+      "name": "Left Ventricle",
+      "synonyms": ["left ventricle", "ventriculus sinister"],
+      "anchor": [380, 340],
+      "default_box": [540, 360],
+      "side": "right",
+      "grades": ["g9", "g10"],
+      "description": "Thick-walled muscular chamber pumping oxygenated blood under high hydrostatic pressure through aorta to systemic circulation."
+    },
+    "aorta": {
+      "name": "Aorta",
+      "synonyms": ["aorta", "aortic arch", "systemic aorta"],
+      "anchor": [300, 95],
+      "default_box": [540, 65],
+      "side": "right",
+      "grades": ["g9", "g10"],
+      "description": "Largest systemic artery carrying oxygenated blood under high systolic pressure to systemic tissues."
+    },
+    "interventricular_septum": {
+      "name": "Interventricular Septum",
+      "synonyms": ["septum", "interventricular septum", "cardiac septum", "ventricular septum"],
+      "anchor": [335, 345],
+      "default_box": [540, 420],
+      "side": "right",
+      "grades": ["g9", "g10"],
+      "description": "Thick muscular partition separating right and left ventricles, preventing mixing of deoxygenated and oxygenated blood."
+    },
+    "semilunar_valves": {
+      "name": "Semi-lunar Valves",
+      "synonyms": ["semilunar valves", "semi-lunar valves", "aortic and pulmonary valves", "aortic valve", "pulmonary valve"],
+      "anchor": [290, 240],
+      "default_box": [60, 140],
+      "side": "left",
+      "grades": ["g10"],
+      "description": "Pocket valves in base of aorta and pulmonary artery that snap shut during diastole (causing dubb sound)."
+    },
+    "tendinous_cords": {
+      "name": "Tendinous Cords (Chordae Tendineae)",
+      "synonyms": ["tendinous cords", "chordae tendineae", "heart strings", "tendinous strings"],
+      "anchor": [375, 295],
+      "default_box": [540, 315],
+      "side": "right",
+      "grades": ["g10"],
+      "description": "Inelastic collagen cords tethering AV valve cusps to papillary muscles, preventing valve eversion."
+    },
+    "sa_node": {
+      "name": "Sinoatrial Node (Pacemaker)",
+      "synonyms": ["sinoatrial node", "sa node", "pacemaker", "sinuatrial node"],
+      "anchor": [205, 198],
+      "default_box": [60, 150],
+      "side": "left",
+      "grades": ["g10"],
+      "description": "Specialised myogenic neuromuscular tissue in upper wall of right atrium that initiates rhythmic electrical impulses controlling heart rate."
+    },
+    "av_node": {
+      "name": "Atrioventricular Node",
+      "synonyms": ["atrioventricular node", "av node"],
+      "anchor": [250, 265],
+      "default_box": [60, 225],
+      "side": "left",
+      "grades": ["g10"],
+      "description": "Nerve node at junction of atria and ventricles that delays impulse slightly to allow complete atrial emptying before ventricular contraction."
+    }
+  },
+  "phases": {
+    "atrial_systole": {
+      "name": "Atrial Systole",
+      "duration_sec": 0.1,
+      "atria": "contracted",
+      "ventricles": "relaxed_filling",
+      "av_valves": "open",
+      "semilunar_valves": "closed",
+      "sound": null,
+      "ecg_segment": "P wave and PR interval",
+      "narrative": "Both atria contract simultaneously. Blood is forced through open tricuspid and bicuspid valves into relaxed ventricles."
+    },
+    "ventricular_systole": {
+      "name": "Ventricular Systole",
+      "duration_sec": 0.3,
+      "atria": "relaxed",
+      "ventricles": "contracted_forceful",
+      "av_valves": "closed",
+      "semilunar_valves": "open",
+      "sound": "lubb",
+      "ecg_segment": "QRS complex and ST segment",
+      "narrative": "Both ventricles contract forcefully for 0,3 seconds. Atrioventricular valves snap shut (lubb sound). Semi-lunar valves open, pumping blood into aorta and pulmonary artery."
+    },
+    "general_diastole": {
+      "name": "General Diastole",
+      "duration_sec": 0.4,
+      "atria": "relaxed",
+      "ventricles": "relaxed",
+      "av_valves": "open",
+      "semilunar_valves": "closed",
+      "sound": "dubb",
+      "ecg_segment": "T wave to TP segment",
+      "narrative": "The entire myocardium relaxes for 0,4 seconds. Semi-lunar valves snap shut (dubb sound) preventing backflow. Blood flows passively into atria from venae cavae and pulmonary veins."
+    }
+  }
+}

@@ -57,14 +57,16 @@ def generate_questions(topic, subskill, difficulty, count=1, config=None):
                 subskill = pool_key
                 break
 
-    # Map new format keys to legacy subskill pools generators understand.
+    # Map frontend format keys to the generator subskill pools. Generators now
+    # emit real word_bank / matching_columns / crossword / essay payloads, so
+    # these are passed through instead of being collapsed to MCQ.
     _FORMAT_TO_SUBSKILL = {
         'mcq': 'concepts',
-        'word_bank': 'concepts',
-        'matching_columns': 'concepts',
-        'crossword': 'concepts',
         'typed': 'application',
-        'essay': 'discussion',
+        'word_bank': 'word_bank',
+        'matching_columns': 'matching',
+        'crossword': 'crossword',
+        'essay': 'essay',
     }
     subskill = _FORMAT_TO_SUBSKILL.get(subskill, subskill)
 
@@ -72,8 +74,8 @@ def generate_questions(topic, subskill, difficulty, count=1, config=None):
         raise ValueError(f'No generator found for topic: {topic}')
     generator = GENERATORS[topic]
     if hasattr(generator, 'generate'):
-        return generator.generate(subskill=subskill, difficulty=difficulty, count=count, **config)
-    return generator(subskill=subskill, difficulty=difficulty, count=count, **config)
+        return generator.generate(subskill=subskill, difficulty=difficulty, count=count, topic=topic, **{k: v for k, v in config.items() if k != 'topic'})
+    return generator(subskill=subskill, difficulty=difficulty, count=count, topic=topic, **{k: v for k, v in config.items() if k != 'topic'})
 
 
 def _normalize_text(value):

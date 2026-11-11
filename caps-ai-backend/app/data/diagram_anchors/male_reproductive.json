@@ -1,0 +1,231 @@
+{
+  "master": "male_reproductive",
+  "view": "sagittal_pelvic_section",
+  "viewBox": "0 0 600 480",
+  "anchors": {
+    "urinary_bladder": {
+      "name": "Urinary Bladder",
+      "synonyms": [
+        "urinary bladder",
+        "bladder"
+      ],
+      "anchor": [
+        285,
+        160
+      ],
+      "default_box": [
+        60,
+        120
+      ],
+      "side": "left",
+      "grades": [
+        "g7",
+        "g9",
+        "g12"
+      ],
+      "description": "Muscular pelvic sac that stores urine received from the ureters before discharge through the urethra."
+    },
+    "penis": {
+      "name": "Penis (Erectile Tissue)",
+      "synonyms": [
+        "penis",
+        "erectile tissue",
+        "shaft of penis"
+      ],
+      "anchor": [
+        172,
+        275
+      ],
+      "default_box": [
+        60,
+        200
+      ],
+      "side": "left",
+      "grades": [
+        "g7",
+        "g9",
+        "g12"
+      ],
+      "description": "External male copulatory organ containing erectile vascular tissue (corpora cavernosa) that engorges with blood during erection."
+    },
+    "urethra": {
+      "name": "Urethra (Urogenital Canal)",
+      "synonyms": [
+        "urethra",
+        "urogenital canal"
+      ],
+      "anchor": [
+        155,
+        290
+      ],
+      "default_box": [
+        60,
+        280
+      ],
+      "side": "left",
+      "grades": [
+        "g7",
+        "g9",
+        "g12"
+      ],
+      "description": "Common duct passing through the prostate and penis that conducts urine from the bladder and semen from the reproductive ducts to the exterior."
+    },
+    "testis": {
+      "name": "Testis",
+      "synonyms": [
+        "testis",
+        "testicle",
+        "male gonad"
+      ],
+      "anchor": [
+        225,
+        365
+      ],
+      "default_box": [
+        60,
+        370
+      ],
+      "side": "left",
+      "grades": [
+        "g7",
+        "g9",
+        "g12"
+      ],
+      "description": "Primary male reproductive organ producing spermatozoa inside seminiferous tubules and secreting testosterone from interstitial cells."
+    },
+    "scrotum": {
+      "name": "Scrotum",
+      "synonyms": [
+        "scrotum",
+        "scrotal sac"
+      ],
+      "anchor": [
+        225,
+        422
+      ],
+      "default_box": [
+        60,
+        440
+      ],
+      "side": "left",
+      "grades": [
+        "g7",
+        "g9",
+        "g12"
+      ],
+      "description": "Pouch of skin and smooth muscle outside the abdominal cavity keeping testes at 2-3\u00b0C below core temperature for optimal spermatogenesis."
+    },
+    "epididymis": {
+      "name": "Epididymis",
+      "synonyms": [
+        "epididymis",
+        "convoluted epididymis"
+      ],
+      "anchor": [
+        246,
+        332
+      ],
+      "default_box": [
+        540,
+        420
+      ],
+      "side": "right",
+      "grades": [
+        "g7",
+        "g9",
+        "g12"
+      ],
+      "description": "Tightly coiled crescent-shaped duct on the posterior border of the testis where immature sperm are stored, mature, and gain motility."
+    },
+    "cowpers_gland": {
+      "name": "Cowper's Gland (Bulbourethral Gland)",
+      "synonyms": [
+        "cowper's gland",
+        "cowpers gland",
+        "bulbourethral gland"
+      ],
+      "anchor": [
+        336,
+        275
+      ],
+      "default_box": [
+        540,
+        340
+      ],
+      "side": "right",
+      "grades": [
+        "g7",
+        "g9",
+        "g12"
+      ],
+      "description": "Small pea-shaped gland inferior to prostate that secretes alkaline mucus neutralizing residual acidic urine in the urethra before ejaculation."
+    },
+    "prostate_gland": {
+      "name": "Prostate Gland",
+      "synonyms": [
+        "prostate gland",
+        "prostate"
+      ],
+      "anchor": [
+        312,
+        232
+      ],
+      "default_box": [
+        540,
+        260
+      ],
+      "side": "right",
+      "grades": [
+        "g7",
+        "g9",
+        "g12"
+      ],
+      "description": "Firm muscular gland encircling the base of the urethra secreting a thin milky alkaline fluid that activates sperm motility and neutralizes vaginal acidity."
+    },
+    "vas_deferens": {
+      "name": "Vas Deferens (Sperm Duct)",
+      "synonyms": [
+        "vas deferens",
+        "sperm duct",
+        "ductus deferens"
+      ],
+      "anchor": [
+        348,
+        152
+      ],
+      "default_box": [
+        540,
+        180
+      ],
+      "side": "right",
+      "grades": [
+        "g7",
+        "g9",
+        "g12"
+      ],
+      "description": "Muscular tube that loops upward over the urinary bladder to propel mature spermatozoa from the epididymis to the ejaculatory duct via peristalsis."
+    },
+    "seminal_vesicle": {
+      "name": "Seminal Vesicle",
+      "synonyms": [
+        "seminal vesicle",
+        "seminal vesicles"
+      ],
+      "anchor": [
+        365,
+        200
+      ],
+      "default_box": [
+        540,
+        100
+      ],
+      "side": "right",
+      "grades": [
+        "g7",
+        "g9",
+        "g12"
+      ],
+      "description": "Sac-like gland posterior to bladder producing a thick, fructose-rich alkaline fluid supplying metabolic energy for swimming spermatozoa."
+    }
+  }
+}

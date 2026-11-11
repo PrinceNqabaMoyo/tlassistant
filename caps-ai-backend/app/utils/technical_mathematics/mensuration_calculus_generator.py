@@ -18,7 +18,7 @@ def _fmt_sa(val: float | int, places: int = 2) -> str:
     if isinstance(val, int) or (isinstance(val, float) and val.is_integer()):
         return str(int(val))
     s = f"{val:.{places}f}".rstrip("0").rstrip(".")
-    return s.replace(".", "{,}")
+    return s.replace(".", ",")
 
 
 # --------------------------------------------------------------------------- #
@@ -141,6 +141,8 @@ def _build_trapezoidal_formula_drill(r: random.Random) -> Dict[str, Any]:
         "question_id": f"tech_mens_trap_{r.randint(100000, 999999)}",
         "topic": "technical_mathematics_mensuration",
         "subskill": "trapezoidal_rule_elementary",
+        "diagram_spec": {
+        "diagram_role": "context","kind": "trapezoidal_rule", "h": h, "ordinates": ordinates, "unit": "m"},
         "learning_objective_id": "techmath_trapezoidal_formula",
         "prompt": prompt,
         "prompt_latex": prompt,
@@ -247,6 +249,8 @@ def _build_compound_mensuration(r: random.Random) -> Dict[str, Any]:
         "question_id": f"tech_mens_comp_{r.randint(100000, 999999)}",
         "topic": "technical_mathematics_mensuration",
         "subskill": "irregular_mensuration_compound",
+        "diagram_spec": {
+        "diagram_role": "context","kind": "trapezoidal_rule", "h": h, "ordinates": [y1, y2, y3, y4, y5, y6], "unit": "m"},
         "learning_objective_id": "techmath_mensuration_compound",
         "prompt": prompt,
         "prompt_latex": prompt,

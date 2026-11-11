@@ -2,8 +2,8 @@
   "_meta": {
     "app": "Fundile",
     "tagline": "Adaptive learning aligned with South African National Curriculum Standards for Grades 7–12",
-    "lastUpdated": "2026-10-18",
-    "version": "0.9.11",
+    "lastUpdated": "2026-11-11",
+    "version": "0.9.31",
     "maintainedBy": "owner",
     "updateProtocol": "Update this file when a layer, service, route, data model, or external dependency is added or its build status changes. Do NOT update for internal function changes or bug fixes.",
     "agentInstruction": "Read this file at session start to understand the full system. Do not ask the owner to explain the architecture — it is here. Cross-reference planning documents for detail on planned items."
@@ -32,9 +32,9 @@
       "styling": "Tailwind CSS v4 + Option 1 Dual-Font System (Afacad display headings, system-ui font-sans for workspace/controls, font-mono for numbers/tables/timers; 60-30-10 simulation box color palette); Native Markdown Table Parser in UniversalWorkspace.jsx rendering responsive, styled HTML tables with KaTeX math and monospace numbers",
       "mathRendering": "KaTeX",
       "diagramRendering": "JSXGraph + Dynamic Circle Geometry Gliders",
-      "sotaModalities": "AI Blackboard-inspired interactive 3D and dynamic visualizers: GeometricNets3DViewer.jsx (2D-to-3D folding net slider + rotatable polyhedra + Euler counter F+V-E=2), ElectrodynamicsMotorViewer.jsx (rotatable armature + Fleming's rule + live 60fps HTML5 oscilloscope), OrganicChemistry3DViewer.jsx (3D ball-and-stick CPK isomer explorer + IMF), and DiagramRenderer.jsx circle gliders (dynamic theorem proofs); Accounting/EMS Ledger Modality Renderer with [📖 Reveal Expected Answers] model answer toggle and [📖 View Full Memorandum] worked solution viewer",
+      "sotaModalities": "AI Blackboard-inspired interactive 3D and dynamic visualizers: CognitiveSidecarDrawer.jsx (slide-out companion panel housing exploratory visual aids: PeriodicTableAid.jsx (118 elements, Bohr shells concentric SVG, Pauling electronegativity heatmap), UnitCircleTrigAid.jsx (Cartesian circle, exact surd ratios, ASTC quadrant rules, dual live sine/cosine waveform traces), BiomolecularStructureAid.jsx (interactive Life Sciences macromolecules with direct Mol* 3D Sidecar launch sidecar://biomolecular-structure-viewer), and relocated 3D Three.js simulations GeometricNets3DViewer.jsx, OrganicChemistry3DViewer.jsx, and ElectrodynamicsMotorViewer.jsx, fully decoupled from question card grading), DiagramRenderer.jsx circle gliders (dynamic theorem proofs), CircuitModalityRenderer.jsx (interactive SVG circuit schematic with series/parallel resistors, cells, meters, switches, and component inspection), PunnettSquareModalityRenderer.jsx (interactive 2x2 genetics cross grid with gamete headers, offspring genotypes, and phenotypic ratio breakdowns), BioDiagramModalityRenderer.jsx (interactive biological cell cytology & anatomy schematic with pin labeling A, B, C, D and structure inspector), and FbdModalityRenderer.jsx (interactive Free Body Diagram vector coordinate canvas with normal force, gravitational weight, friction, and applied force vectors); Accounting/EMS Ledger Modality Renderer with [📖 Reveal Expected Answers] model answer toggle and [📖 View Full Memorandum] worked solution viewer; 100% Heart Standard (Rule 0d-14) compliance across all 29 Approach A scientific, anatomical, histological, chemical apparatus, astronomy/particle, atomic/molecular, mechanical/electrodynamics, geological, and architectural floor-plan diagrams (Milestones 1–9: human_heart, alveolus_gas_exchange, digestive_system, intestinal_villus, human_nephron, human_eye, human_ear, endocrine_system, male_reproductive, female_reproductive, meiosis_crossing_over, plant_cell, animal_cell, mitosis_stages, plant_leaf, distillation_apparatus, titration_apparatus, galvanic_cell, solar_system_earth_space, particle_model, atomic_bohr_structure, chemical_bonding_molecules, electrolytic_cell_apparatus, gas_evolution_rate_apparatus, pulley_incline_masses_system, ac_dc_generator_motor_apparatus, hydraulic_gears_belt_pulley, earth_lithosphere_layers, architectural_floor_packaging_plan) with unlabeled Textbook Master and NSC Exam Stipple plates in public/diagrams/, zero geometric SVG clipart, visually calibrated 600x480 pin coordinates, deterministic subskill cycling, and grade_mask scope isolation; Category B (Milestones 10–13: Mathematics Gr 7–12, Technical Mathematics Gr 10–12, Mathematical Literacy Gr 10–12, Physical Sciences Gr 10–12, and EMS/Business Studies Gr 7–12) 100% matching and exceeding GeoGebra and Desmos quality via GeoGebraGeometryRenderer.jsx, FunctionGraph.jsx, StatsAndFinancialGraphRenderer.jsx, and PhysicsAndEconomicsGraphRenderer.jsx (multi-curve Cartesian plotting, stationary/inflection landmarks, Argand complex plane, numerical integration trapezoidal strips, Ogives with quartile drop-lines, 5-number Box-and-Whisker summaries, least-squares scatter regressions, compound interest timelines, 3-event Venn diagrams, and kinematics motion graphs)",
       "bundler": "Vite",
-      "progressionLifecycle": "Gated 4-stage progression state machine: 0. Diagnostic (Required at 0% baseline; 3-question cognitive cluster probe: Foundations -> Operations -> Synthesis across all grades/subjects with subskill='mixed' default in generator_registry.py) -> 1. Scaffold (Guided 3-tier hints + SimuLearn vector worked solution replays; decoupled compact Exam Guidelines & Criteria pill toggle) -> 2. Practice (Unassisted, unlocks >=60%) -> 3. Exam Mode (Timed assessment with 10-min countdown, unlocks >=80% Level 7); Compact 1-line horizontal Topic Mastery strip in UniversalWorkspace.jsx; Post-Exam Triage Engine strictly gated to formal assessment failures; Super Admin 1-click progression reset to 0% baseline (resetAllProgress); Super Admin Independent vs. Institutional Learner Enrolment Switcher.",
+      "progressionLifecycle": "Intentional 4-stage progression architecture: 0. Diagnostic (Required at 0% baseline; 3-question cognitive cluster probe: Foundations -> Operations -> Synthesis across all grades/subjects concluding in Diagnostic Calibration Complete Debrief with calibrated score and deliberate [Proceed to Target Stage ->] action button) -> 1. Scaffold (Guided 3-tier hints + SimuLearn vector worked solution replays; decoupled compact Exam Guidelines & Criteria pill toggle) -> 2. Practice (Unassisted, unlocks >=60%; crossing 80% mastery triggers Exam Mode Unlocked Milestone Card offering learner autonomy between [Start Timed Exam ⏱️] and [Keep Practicing at My Own Pace 🔁] with zero forced countdown anxiety) -> 3. Exam Mode (Formal timed assessment with 10-min countdown, unlocks >=80% Level 7); Compact 1-line horizontal Topic Mastery strip in UniversalWorkspace.jsx; Post-Exam Triage Engine strictly gated to formal assessment failures; Super Admin 1-click progression reset to 0% baseline (resetAllProgress); Super Admin Independent vs. Institutional Learner Enrolment Switcher.",
       "onboardingAndTrial": "Chronological Multi-Stakeholder Institutional Architecture (School Registration 1st -> Super Admin Clearance 2nd -> Teacher Onboarding 3rd -> Learner Registration 4th -> Teacher Roster Review 5th -> Parent Pulse 6th -> School Admin SASAMS Mark Ledger 7th): 1) School Admin dynamically registers institution (e.g. Westville High School, EMIS 500124892, Bulk Prepaid license) generating Faculty Passcodes (WHS-TEACH-2026), single-use Grade 10 Master Passkeys (WHS-GR10-8421 through 8426), and uploads genuine Access Bank electronic funds transfer POP receipt (WHS-BULK-2026) creating pending_payments record, 2) Super Admin reviews and approves institutional bulk payment (btn-approve-payment-365d) granting 365-day clearance, 3) Teachers onboard with Faculty Passcode auto-binding to school and inheriting departmental rosters (ACC10A, EMS9Q1), 4) School-Linked learners register with Master Passkey waiving individual payment and self-allocating subjects/teachers in SubjectEnrollmentModal.jsx, 5) Teachers exercise roster authority and progress tracking, 6) Parents review Sunday Academic Pulse, 7) School Admins monitor ATP pacing and export official SASAMS CSV mark ledgers. Includes POPIA Section 35 compliance and independent learner EFT/free-trial journeys.",
       "pwa": "vite-plugin-pwa & custom Service Worker fundile-v2 with development isolation in index.html (unregisters stale dev SWs and purges cache on localhost/LAN 192.168.x to prevent mobile LAN cache poisoning; enables full Workbox/sw.js offline caching in production)",
       "pwaAssets": "public/manifest.json, public/sw.js, pwa-192x192.png, pwa-256x256.png, pwa-512x512.png, pwa-maskable-192x192.png, pwa-maskable-512x512.png, apple-touch-icon.png, favicon.svg, fundile-favicon.svg, favicon.ico (VS Code style 100% transparent floating gold graduation cap with zero background box for desktop shortcuts, taskbar pins, title bars, and browser tabs; maskable icons reserved for Android adaptive system cropping)",
@@ -43,7 +43,8 @@
       "parentDualUse": "Household Dual-Use Single-Account Architecture: Enables parents to host multiple learner profiles (Grades 7–12) with zero student email addresses required. Includes 1-click [🎒 Launch Learner Workspace] from ParentDashboard, dynamic role/state switching in App.jsx retaining parent billing/auth, and persistent [👨‍👩‍👧 Return to Guardian Portal] top header ribbon.",
       "mockEnvironment": "Institutional scale test harness (src/data/mock/): Westville High School (360 Named Students across Grades 7–12 across 24 class sections), 100 Named Independent Homeschool Students across Grades 7–12, 60 Faculty Members (Principal, Deputy, 9 HODs, 49 Educators), 330 Parents with cross-grade sibling linking, and 1-click PersonaSwitcherModal.jsx testing cockpit",
       "entryPoint": "src/main.jsx",
-      "mainApp": "src/App.jsx"
+      "mainApp": "src/App.jsx",
+      "offlineSemanticGrading": "Two-tier hybrid semantic grading engine: Tier 1 executes 0ms local offline Porter stemmer + synonym cluster evaluation; Tier 2 queues paraphrased answers for background sync to affordable LLM evaluation (gemini-flash-lite / gemma-2-2b-it) upon online reconnection."
     },
     "backend": {
       "framework": "FastAPI ASGI / Flask WSGI",
@@ -53,7 +54,7 @@
       "entryPoint": "caps-ai-backend/run.py",
       "mainApp": "caps-ai-backend/MainApp.py",
       "lanRouting": "Auto-detected LAN IP (192.168.x / 10.x) and localhost routing to port 5001 via src/utils/apiBaseUrl.js for real-time mobile cross-device testing",
-      "automatedTesting": "Unified 4-Pillar Certification Suite (npm run audit:full / scripts/run_system_certification.py): 1. Procedure Tracker SymPy step checker, 2. Monte Carlo 100-generator quality auditor (0% meta-curriculum jargon), 3. 4-persona BKT adaptive progression simulator with circuit breakers, 4. 141-button interactive UI crawler. Generates fundile-system-audit-report.html; Zero-Theater Playwright E2E Architecture (e2e/E2E_CONTRACT.md & scripts/audit_e2e_specs.py): Rules 0d-1 through 0d-7 Anti-Hollywood Invariant enforced mechanically across all 33 specs with 0 violations (zero silent skips via isVisible, zero mid-test backdoor database writes, zero phantom selectors, zero persona query spoofing); Rule 0d-8 Holistic Cross-Spec Pre-Flight Gate (npm run test:audit / scripts/run_audit_pipeline.js): Enforces 4-tier pre-flight checks (0. Generator preservation audit with 253/253 intact, 1. Mechanical purity with 0 violations across 33 specs, 2. Full 32-file Playwright test discovery with 350 tests, 3. Live 127.0.0.1:5173 headless DOM mount smoke check) ensuring zero cross-spec regressions; Rules 0d-9 (Responsive Visibility & Strict :visible Union Invariant), 0d-10 (Multi-Card Clearance Desk Scoping Invariant), 0d-11 (Resilient Profile Upsert & Authentic South African Banking POP Standard); Invariant 0d-12 (Systematic Cross-Grade & Cross-Subject Generalization Invariant / Anti-Whack-A-Mole Law): Mandates that any UX consistency, generator parameter, or diagnostic improvement identified in one grade or subject must be systematically audited and resolved across all 6 grades (Grades 7–12) and all 9 subjects (Mathematics, Accounting, Physical Sciences, Life Sciences, Business Studies, Technical Mathematics, Mathematical Literacy, EMS, Natural Sciences); Complete 30-Track Curriculum Matrix Evaluation Suite (e2e/curriculum_matrix/grade07_senior_matrix.spec.js through grade12_fet_matrix.spec.js): Certified 100% pass rate (30 passed / 30 tests) evaluating every subject across Senior Phase Grades 7–9 (Mathematics, Natural Sciences, EMS) and FET Phase Grades 10–12 (Mathematics, Accounting, Physical Sciences, Business Studies, Life Sciences, Mathematical Literacy, Technical Mathematics) verifying real-world learner journeys, multi-seed entropy, gated 4-stage progression, and differentiated learner support (Accelerated, Steady, Struggling with Post-Exam Triage & 3-Step Cognitive Repair); Topic Scope & Subscription Gating Specification (e2e/engine/05_topic_scope_and_term_gating.spec.js) verifying zero-ambiguity deterministic dropdown exact-match selection and annual vs term pass lock state; Real-Time Cognitive Audit Ledger (e2e/helpers/cognitiveAuditLogger.js): Intercepts, deduplicates, and logs every generated question prompt, learner input payload, and marking evaluation outcome to reports/cognitive_audit/question_input_eval_log.json (335 live records) and question_input_eval_log.html; Comprehensive Evaluation & Improvement Report (reports/curriculum_eval/curriculum_matrix_evaluation_report.md); Certified 11-Participant Multi-Subject Real-World Test Suite (Set 1 through Set 11 certified 100% pass rate hitting live Vite port 5173 and Flask port 5001 with authentic deterministic generator outputs, real Access Bank vector POP previews, and Super Admin clearances: Set 1 Lesedi Khumalo Gr 10 FET Desktop Accounting & Mathematics, Set 2 Ayanda Ndlovu Gr 7 Senior Mobile Pixel 7 Mathematics & EMS, Set 3 Bongani Sithole Gr 8 Senior Mobile Pixel 7 Mathematics & Natural Sciences, Set 4 Zanele Mthembu Gr 9 Senior Mobile Pixel 7 EMS & Natural Sciences 14-Day Free Trial, Set 5 Siyabonga Cele Gr 10 FET Desktop Business Studies & Mathematical Literacy R149 Monthly Pass, Set 6 Ntsako Baloyi Gr 11 FET Desktop Physical Sciences & Technical Mathematics R349 Term Pass, Set 7 Kelebogile Dlamini Gr 11 FET Desktop Life Sciences & Accounting R349 Term Pass, Set 8 Prince Mthembu Gr 12 Matric Desktop Mathematics Calculus & Physical Sciences R999 Annual Distinction Pass with Stage 3 Timed Exam Mode, Set 9 Thabo Molefe Gr 12 Matric Desktop Accounting & Business Studies King IV R349 Term Pass, Set 10 Lerato Khanyile Gr 12 Technical Desktop Technical Mathematics & Mathematical Literacy SARS Brackets R149 Monthly Pass, Set 11 Sibusiso Zulu Gr 12 to 8 Cross-Grade Adaptive Descent Calculus to Trinomials to HCF Factorisation with SimuLearn Visual Replay); Authentic Access Bank Vector PDF Generator (scripts/generate_authentic_pop_pdf.py) producing authentic vector-compliant EFT receipts with PASA disclosures, Access Bank FSP 5865 letterhead, and double-ring audit stamps; Firebase Admin SDK Targeted Pre-Flight Purge (scripts/purge_test_user_admin.py) ensuring 100% clean-slate test isolation; Decoupled 4-Domain Testing Architecture: 1) e2e/journeys/ for multi-stakeholder handshakes & trial/EFT paths, 2) e2e/cockpits/ for exhaustive button, tab & modal surface audits across Super Admin, School Admin, Teacher, Parent, and Student, 3) e2e/engine/ for CAPS level calibration, input modalities (2D ledger, SymPy math, long division, rubric), procedural marking, and Bayesian Knowledge Tracing (BKT) collation, 4) e2e/visual/ for Visual Neatness, Screenshot Capture & Cockpit Busyness Audit with button ergonomics evaluation (e2e/helpers/neatnessEvaluator.js generating reports/visual_audits/neatness_report.html). Super Admin clearance desk operates strictly via authentic owner authentication (princenqaba@gmail.com / princenqabamoyo@outlook.com) with valid Firebase ID tokens accessing /api/payments/pop-view-url signed URLs. Sequential Single-Window Lifecycle & On-Demand Interactive Pause (scripts/run_interactive_e2e.js & e2e/helpers/autopilotHud.js): Continuous automated execution with on-demand pause via PowerShell terminal ('p' + Enter) or browser [⏸️ Pause Autopilot] pill in non-interactive canvas margins (bottom: 16px; left: 16px)."
+      "automatedTesting": "Unified 4-Pillar Certification Suite (npm run audit:full / scripts/run_system_certification.py): 1. Procedure Tracker SymPy step checker, 2. Monte Carlo 100-generator quality auditor (0% meta-curriculum jargon), 3. 4-persona BKT adaptive progression simulator with circuit breakers, 4. 141-button interactive UI crawler. Generates fundile-system-audit-report.html; Zero-Theater Playwright E2E Architecture (e2e/E2E_CONTRACT.md & scripts/audit_e2e_specs.py): Rules 0d-1 through 0d-7 Anti-Hollywood Invariant enforced mechanically across all 39 specs with 0 violations (zero silent skips via isVisible, zero mid-test backdoor database writes, zero phantom selectors, zero persona query spoofing); Rule 0d-8 Holistic Cross-Spec Pre-Flight Gate (npm run test:audit / scripts/run_audit_pipeline.js): Enforces 5-tier pre-flight checks (0. Generator preservation audit with 288/288 intact, 1. Mechanical purity with 0 violations across 39 specs, 1b. Central Diagram Registry contract audit verifying 58 certified archetypes and 7 visual aids covering 52/52 essential curriculum topics, 1c. Complete diagrams.md 386-item coverage gate verifying 386/386 items mapped across 116 master components, 2. Full 36-file Playwright test discovery with 520 tests, 3. Live 127.0.0.1:5173 headless DOM mount smoke check) ensuring zero cross-spec regressions; Standardized 3-Layer Science Diagram Visual Inspection Suite (e2e/visual/all_science_diagrams_3layer.spec.js / npm run test:science-diagrams:headed): 100% certified 23/23 science diagram archetypes across Senior Phase (Grades 7–9) and FET Phase (Grades 10–12) Natural Sciences, Life Sciences, and Physical Sciences rendering with strict 3-layer architecture (canonical SVG canvas viewBox 0 0 600 480, horizontal elbow collision-free callout pins A-D, locked view badge, anti-leak contract, interactive autopilot HUD with Spacebar inspection pause); Rules 0d-9 (Responsive Visibility & Strict :visible Union Invariant), 0d-10 (Multi-Card Clearance Desk Scoping Invariant), 0d-11 (Resilient Profile Upsert & Authentic South African Banking POP Standard); Invariant 0d-12 (Systematic Cross-Grade & Cross-Subject Generalization Invariant / Anti-Whack-A-Mole Law); Invariant A (Grade-Bound Cross-Grade Bleed Prevention: asserts Grade < 12 questions never leak into Matric complex numbers, Argand plane, or polar form; Life Sciences Grades 10–11 decoupled from Matric genetics); Invariant B (Multi-Part Question & Input Parity: asserts N-part questions render at least N distinct labeled input boxes data-testid='input-math-answer-part-${idx}' with keypad focus routing and independent sub-part grading in evaluation_service.py); Invariant C (Live UI Default-Topic Verification: asserts active topic scope in header ribbon matches authentic Term 1 syllabus); Two-Tier 30-Track Curriculum & Archetype Matrix Evaluation Suite (e2e/curriculum_matrix/grade07_senior_matrix.spec.js through grade12_fet_matrix.spec.js, e2e/curriculum_matrix/helpers/matrixRunner.js, and e2e/curriculum_matrix/helpers/modalityAnswerDriver.js): Certified 100% pass rate (30/30 Subject-Grade tracks, 476/476 curriculum topics, 1,252 live evaluation records); High-Volume Deterministic BKT Adaptive Progression & Curriculum Dossier Pipeline (npm run test:bkt-dossiers / e2e/curriculum_matrix/bkt_dossier_pipeline.spec.js, e2e/curriculum_matrix/helpers/bktDossierWriter.js, caps-ai-backend/app/services/bkt_dossier_service.py): 100% deterministic (0 LLM tokens) high-volume curriculum audit executing 50 Practice questions + 3 complete Exams (15 exam questions) + 3 Diagnostic questions + 6 Scaffold/Elementary Micro-Drill questions across 3 student performance personas (high-performing, medium-performing, low-performing) across all 476 curriculum topics (Grades 7–12, 30 Subject-Grade tracks), certified 100% pass rate (30/30 test tracks passed in 2.6m, 1,428 chronological BKT Markdown dossiers in playwright-test/Gr{X}/{Subject}/{topic}_{performance-level}.md, 99,960 questions generated, 100.00% worked solution extraction across SymPy canonical graphs and sub-parts, 0 missing MCQ options, 0 truncated solutions, 0 double braces, automated clean-slate deletion before execution); Topic Scope & Subscription Gating Specification (e2e/engine/05_topic_scope_and_term_gating.spec.js); Real-Time Cognitive Audit Ledger (e2e/helpers/cognitiveAuditLogger.js): Exports reports/cognitive_audit/question_input_eval_log.json, question_input_eval_log.html, and test-results/cognitive-audit/cognitive_audit_summary.md; Certified 11-Participant Multi-Subject Real-World Test Suite (Set 1 through Set 11); Authentic Access Bank Vector PDF Generator (scripts/generate_authentic_pop_pdf.py); Firebase Admin SDK Targeted Pre-Flight Purge (scripts/purge_test_user_admin.py); Decoupled 4-Domain Testing Architecture (e2e/journeys/, e2e/cockpits/, e2e/engine/, e2e/visual/); Sequential Single-Window Lifecycle & On-Demand Interactive Pause (scripts/run_interactive_e2e.js & e2e/helpers/autopilotHud.js).; Rule 0d-13 (Zero-Bundling & Authoritative Curriculum Manifest Invariant): Single-source-of-truth strict manifest lookup table in caps_term_registry_data.json loaded into memory, eliminating dual registries and regex guessing across all 476 topics; Semantic Relevance Gate (scripts/audit_semantic_relevance.py & scripts/audit_playwright_dossiers.py) asserting 0 cross-subject vocabulary leaks and 100% domain grounding against curriculum_docs_auto/."
     },
     "database": {
       "primary": "Firebase Firestore",
@@ -312,18 +313,34 @@
         "subject": "Mathematics",
         "grade": "9",
         "files": [
-          "caps-ai-backend/app/utils/grade9_algebraic_expressions_generator.py",
-          "caps-ai-backend/app/utils/grade9_algebraic_equations_generator.py",
-          "caps-ai-backend/app/utils/grade9_exponents_generator.py",
-          "caps-ai-backend/app/utils/grade9_functions_generator.py",
-          "caps-ai-backend/app/utils/grade9_integers_generator.py",
-          "caps-ai-backend/app/utils/grade9_patterns_generator.py",
-          "caps-ai-backend/app/utils/grade9_whole_numbers_generator.py",
-          "caps-ai-backend/app/utils/grade9_fractions_generator.py",
-          "caps-ai-backend/app/utils/grade9_decimal_notation_generator.py",
+          "caps-ai-backend/app/utils/grade9_mathematics/whole_numbers_generator.py",
+          "caps-ai-backend/app/utils/grade9_mathematics/integers_generator.py",
+          "caps-ai-backend/app/utils/grade9_mathematics/decimal_notation_generator.py",
+          "caps-ai-backend/app/utils/grade9_mathematics/exponents_generator.py",
+          "caps-ai-backend/app/utils/grade9_mathematics/patterns_generator.py",
+          "caps-ai-backend/app/utils/grade9_mathematics/functions_generator.py",
+          "caps-ai-backend/app/utils/grade9_mathematics/algebraic_expressions_generator.py",
           "caps-ai-backend/app/utils/grade9_mathematics/factorisation_generator.py",
-          "caps-ai-backend/app/utils/grade9_mathematics/congruence_similarity_generator.py"
-        ]
+          "caps-ai-backend/app/utils/grade9_mathematics/algebraic_equations_generator.py",
+          "caps-ai-backend/app/utils/grade9_mathematics/algebraic_equations_fractions_generator.py",
+          "caps-ai-backend/app/utils/grade9_mathematics/fractions_generator.py",
+          "caps-ai-backend/app/utils/grade9_mathematics/graphs_generator.py",
+          "caps-ai-backend/app/utils/grade9_mathematics/geometry_straight_lines_generator.py",
+          "caps-ai-backend/app/utils/grade9_mathematics/geometry_2d_shapes_generator.py",
+          "caps-ai-backend/app/utils/grade9_mathematics/construction_generator.py",
+          "caps-ai-backend/app/utils/grade9_mathematics/transformation_geometry_generator.py",
+          "caps-ai-backend/app/utils/grade9_mathematics/pythagoras_generator.py",
+          "caps-ai-backend/app/utils/grade9_mathematics/area_perimeter_2d_generator.py",
+          "caps-ai-backend/app/utils/grade9_mathematics/geometry_3d_objects_generator.py",
+          "caps-ai-backend/app/utils/grade9_mathematics/measurement_3d_generator.py",
+          "caps-ai-backend/app/utils/grade9_mathematics/data_summarise_generator.py",
+          "caps-ai-backend/app/utils/grade9_mathematics/data_represent_generator.py",
+          "caps-ai-backend/app/utils/grade9_mathematics/data_interpret_generator.py",
+          "caps-ai-backend/app/utils/grade9_mathematics/probability_generator.py"
+        ],
+        "status": "built",
+        "topics_count": 24,
+        "note": "All 24 Grade 9 Mathematics topics across Terms 1 to 4 aligned 100% with South African National Curriculum Standards with dedicated 6-pillar generators, SymPy derivations, solution graphs, 3-tier hints, and native DiagramRenderer visual specs (FunctionGraph, GeoGebra right_triangle, parallel_transversal, 2D polygons, 3D nets, statistics charts, probability spinners)."
       },
       {
         "subject": "Mathematics",
@@ -417,7 +434,8 @@
         "grade": "11",
         "files": [
           "caps-ai-backend/app/utils/grade11_business_studies/",
-          "caps-ai-backend/app/utils/grade11_business_studies/marketing_production_generator.py"
+          "caps-ai-backend/app/utils/grade11_business_studies/marketing_production_generator.py",
+          "caps-ai-backend/app/utils/grade11_business_studies/term_3/human_resources_function_generator.py"
         ]
       },
       {
@@ -448,15 +466,36 @@
           "caps-ai-backend/app/utils/grade8_ems/term1_source_documents.py",
           "caps-ai-backend/app/utils/grade8_ems/term2_accounting_cycle.py",
           "caps-ai-backend/app/utils/grade8_ems/term3_management.py",
-          "caps-ai-backend/app/utils/grade8_ems/senior_phase_ems_gap_generator.py"
+          "caps-ai-backend/app/utils/grade8_ems/senior_phase_ems_gap_generator.py",
+          "caps-ai-backend/app/utils/grade8_ems/term1_government_generator.py",
+          "caps-ai-backend/app/utils/grade8_ems/term1_national_budget_generator.py",
+          "caps-ai-backend/app/utils/grade8_ems/term4_factors_of_production_generator.py",
+          "caps-ai-backend/app/utils/grade8_ems/term4_markets_generator.py"
         ]
       },
       {
         "subject": "EMS",
         "grade": "9",
         "files": [
-          "caps-ai-backend/app/utils/grade9_ems/"
-        ]
+          "caps-ai-backend/app/utils/grade9_ems/term1_economy.py",
+          "caps-ai-backend/app/utils/grade9_ems/term1_circular_flow.py",
+          "caps-ai-backend/app/utils/grade9_ems/term1_crj_cpj.py",
+          "caps-ai-backend/app/utils/grade9_ems/term1_general_ledger.py",
+          "caps-ai-backend/app/utils/grade9_ems/term2_economy.py",
+          "caps-ai-backend/app/utils/grade9_ems/term2_debtors_journal.py",
+          "caps-ai-backend/app/utils/grade9_ems/term2_sectors_of_economy.py",
+          "caps-ai-backend/app/utils/grade9_ems/term3_trade_unions.py",
+          "caps-ai-backend/app/utils/grade9_ems/term3_debtors_ledger.py",
+          "caps-ai-backend/app/utils/grade9_ems/term3_creditors_journal.py",
+          "caps-ai-backend/app/utils/grade9_ems/term3_business.py",
+          "caps-ai-backend/app/utils/grade9_ems/term3_creditors_ledger.py",
+          "caps-ai-backend/app/utils/grade9_ems/term4_business_plan.py",
+          "caps-ai-backend/app/utils/grade9_ems/term4_transactions_cash_credit.py",
+          "caps-ai-backend/app/utils/grade9_ems/assessment_generator.py"
+        ],
+        "status": "built",
+        "topics_count": 14,
+        "note": "All 14 Grade 9 EMS topics aligned with South African National Curriculum Standards with dedicated generators, 2D tabular ledger modality, authentic 3-column subsidiary ledgers, and context diagram SVG rendering."
       },
       {
         "subject": "Physical Sciences",
@@ -553,6 +592,1163 @@
         "files": [
           "caps-ai-backend/app/utils/foundational_math/number_bonds_generator.py"
         ]
+      },
+      {
+        "subject": "Technical Mathematics",
+        "grade": "12",
+        "topic": "Polynomials & Complex Numbers",
+        "files": [
+          "caps-ai-backend/app/utils/technical_mathematics/polynomials_generator.py",
+          "caps-ai-backend/app/utils/technical_mathematics/complex_numbers_generator.py",
+          "caps-ai-backend/app/utils/technical_mathematics/mensuration_calculus_generator.py"
+        ]
+      },
+      {
+        "subject": "Life Sciences",
+        "grade": "10",
+        "topic": "Cytology & Mitosis (Cells & Cell Division)",
+        "files": [
+          "caps-ai-backend/app/utils/grade10_life_sciences/cytology_mitosis_generator.py"
+        ]
+      },
+      {
+        "subject": "Life Sciences",
+        "grade": "10",
+        "topic": "Transport systems in animals (Cardiac Cycle & Valve Dynamics)",
+        "files": [
+          "caps-ai-backend/app/utils/life_sciences/ls10_transport_systems_animals_generator.py",
+          "caps-ai-backend/app/utils/life_sciences/heart_generator.py",
+          "caps-ai-backend/app/data/diagram_anchors/heart.json"
+        ],
+        "status": "built",
+        "archetypes": [
+          "heart_external_and_internal_anatomy",
+          "cardiac_cycle_and_electrical_control",
+          "open_closed_single_double_circulation",
+          "blood_vessel_histology_and_function",
+          "electrical_pacemaker_and_ecg",
+          "lymphatic_system_and_cardiovascular_diseases"
+        ]
+      },
+      {
+        "subject": "Natural Sciences",
+        "grade": "9",
+        "topic": "Circulatory and respiratory systems (Heart Anatomy)",
+        "files": [
+          "caps-ai-backend/app/utils/natural_sciences/ns9_circulatory_respiratory_generator.py",
+          "caps-ai-backend/app/utils/life_sciences/heart_generator.py",
+          "caps-ai-backend/app/data/diagram_anchors/heart.json"
+        ],
+        "status": "built",
+        "archetypes": [
+          "heart_structure_and_double_circulation",
+          "breathing_mechanics",
+          "alveolus_gaseous_exchange",
+          "heart_blood_vessel_direction",
+          "blood_vessels_comparison",
+          "pulse_rate_exercise_investigation"
+        ]
+      },
+      {
+        "file": "app/utils/natural_sciences/ns9_digestive_system_generator.py",
+        "subject": "Natural Sciences",
+        "grade": 9,
+        "topic": "Digestive system",
+        "subskills": [
+          "alimentary_canal_anatomy",
+          "mechanical_vs_chemical",
+          "enzymes_and_secretions",
+          "absorption_and_egestion",
+          "health_and_diet"
+        ],
+        "diagram": "human_digestive_system"
+      },
+      {
+        "file": "app/utils/life_sciences/ls11_animal_nutrition_generator.py",
+        "subject": "Life Sciences",
+        "grade": 11,
+        "topic": "Animal Nutrition",
+        "subskills": [
+          "villus_and_macroscopic_anatomy",
+          "dentition_dietary_adaptations",
+          "chemical_digestion_enzymes",
+          "villus_absorption_mechanisms",
+          "homeostatic_glucose_control"
+        ],
+        "diagram": "intestinal_villus"
+      },
+      {
+        "file": "app/utils/life_sciences/ls11_gaseous_exchange_generator.py",
+        "subject": "Life Sciences",
+        "grade": 11,
+        "topic": "Gaseous exchange",
+        "subskills": [
+          "alveolus_gas_exchange_anatomy",
+          "exchange_surface_requirements",
+          "breathing_ventilation_mechanics",
+          "gas_transport_mechanisms",
+          "homeostatic_co2_control"
+        ],
+        "diagram": "alveolus_gas_exchange"
+      },
+      {
+        "file": "app/utils/life_sciences/ls11_excretion_humans_generator.py",
+        "subject": "Life Sciences",
+        "grade": 11,
+        "topic": "Excretion in humans",
+        "subskills": [
+          "nephron_microstructure_anatomy",
+          "excretory_organs_and_kidney_anatomy",
+          "ultrafiltration_mechanisms",
+          "tubular_reabsorption_secretion",
+          "osmoregulation_and_adh_homeostasis"
+        ],
+        "diagram": "human_nephron"
+      },
+      {
+        "file": "app/utils/life_sciences/ls10_support_transport_plants_generator.py",
+        "subject": "Life Sciences",
+        "grade": 10,
+        "topic": "Support and transport systems in plants",
+        "subskills": [
+          "leaf_anatomy",
+          "transpiration_adaptation",
+          "vascular_transport",
+          "stomatal_mechanism",
+          "potometer_experiments",
+          "transpiration_forces"
+        ],
+        "diagram": "plant_leaf",
+        "status": "built"
+      },
+      {
+        "file": "app/utils/life_sciences/ls11_photosynthesis_generator.py",
+        "subject": "Life Sciences",
+        "grade": 11,
+        "topic": "Photosynthesis",
+        "subskills": [
+          "leaf_transverse_section",
+          "chloroplast_phases",
+          "limiting_factors",
+          "starch_test",
+          "destarching"
+        ],
+        "diagram": "plant_leaf",
+        "status": "built"
+      },
+      {
+        "file": "app/utils/life_sciences/ls11_cellular_respiration_generator.py",
+        "subject": "Life Sciences",
+        "grade": 11,
+        "topic": "Cellular respiration",
+        "subskills": [
+          "aerobic_stages",
+          "atp_yield",
+          "anaerobic_fermentation",
+          "oxygen_debt",
+          "respirometer_investigations"
+        ],
+        "status": "built"
+      },
+      {
+        "file": "app/utils/life_sciences/ls10_biospheres_to_ecosystems_generator.py",
+        "subject": "Life Sciences",
+        "grade": 10,
+        "topic": "Biospheres to ecosystems",
+        "subskills": [
+          "energy_flow",
+          "trophic_levels_10_percent",
+          "nutrient_cycles_nitrogen_carbon",
+          "south_african_biomes"
+        ],
+        "status": "built"
+      },
+      {
+        "file": "app/utils/life_sciences/ls11_population_ecology_generator.py",
+        "subject": "Life Sciences",
+        "grade": 11,
+        "topic": "Population ecology",
+        "subskills": [
+          "mark_recapture_lincoln_index",
+          "validity_assumptions",
+          "growth_curves_logistic_exponential",
+          "predator_prey_dynamics",
+          "carrying_capacity"
+        ],
+        "status": "built"
+      },
+      {
+        "file": "app/utils/life_sciences/ls12_plant_responses_environment_generator.py",
+        "subject": "Life Sciences",
+        "grade": 12,
+        "topic": "Plant responses to the environment",
+        "subskills": [
+          "phototropism_unilateral_light",
+          "geotropism_clinostat",
+          "auxin_differential_elongation",
+          "apical_dominance",
+          "synthetic_weedkillers_24d",
+          "abscisic_acid_and_gibberellins"
+        ],
+        "status": "built"
+      },
+      {
+        "file": "app/utils/natural_sciences/ns7_separating_mixtures_generator.py",
+        "subject": "Natural Sciences",
+        "grade": 7,
+        "topic": "Separating mixtures",
+        "subskills": [
+          "distillation_apparatus",
+          "chromatography_rf_calculation",
+          "filtration",
+          "separating_funnel"
+        ],
+        "diagram": "distillation_apparatus",
+        "status": "built"
+      },
+      {
+        "file": "app/utils/natural_sciences/ns7_acids_bases_neutrals_generator.py",
+        "subject": "Natural Sciences",
+        "grade": 7,
+        "topic": "Acids bases and neutral substances",
+        "subskills": [
+          "ph_scale_classification",
+          "litmus_indicators",
+          "universal_indicator",
+          "neutralization_reactions"
+        ],
+        "status": "built"
+      },
+      {
+        "file": "app/utils/natural_sciences/ns8_particle_model_matter_generator.py",
+        "subject": "Natural Sciences",
+        "grade": 8,
+        "topic": "Particle model of matter",
+        "subskills": [
+          "particle_arrangement",
+          "states_of_matter",
+          "phase_changes",
+          "diffusion_kinetics",
+          "density_calculations",
+          "thermal_expansion"
+        ],
+        "diagram": "particle_model",
+        "status": "built"
+      },
+      {
+        "file": "app/utils/natural_sciences/ns8_electric_circuits_generator.py",
+        "subject": "Natural Sciences",
+        "grade": 8,
+        "topic": "Series and parallel circuits",
+        "subskills": [
+          "circuit_schematic",
+          "series_voltage_division",
+          "parallel_branch_current",
+          "meter_connection_rules",
+          "domestic_parallel_wiring"
+        ],
+        "diagram": "electric_circuits_ns",
+        "status": "built"
+      },
+      {
+        "file": "app/utils/natural_sciences/ns9_forces_electric_cells_generator.py",
+        "subject": "Natural Sciences",
+        "grade": 9,
+        "topic": "Electric cells as energy systems and resistance",
+        "subskills": [
+          "ohms_law_calculations",
+          "factors_affecting_resistance",
+          "cells_in_series_vs_parallel",
+          "energy_consumption_kwh",
+          "electricity_cost_tariffs"
+        ],
+        "diagram": "electric_circuits_ns",
+        "status": "built"
+      },
+      {
+        "file": "app/utils/natural_sciences/ns8_solar_system_seasons_generator.py",
+        "subject": "Natural Sciences",
+        "grade": 8,
+        "topic": "The Solar System and celestial mechanics",
+        "subskills": [
+          "planetary_order",
+          "axial_tilt_seasons",
+          "solar_and_lunar_eclipses",
+          "umbra_and_penumbra",
+          "spring_and_neap_tides"
+        ],
+        "diagram": "solar_system_earth_space",
+        "status": "built"
+      },
+      {
+        "file": "app/utils/physical_sciences/ps10_waves_sound_light_generator.py",
+        "subject": "Physical Sciences",
+        "grade": 10,
+        "topic": "Waves sound and light",
+        "subskills": [
+          "wave_anatomy_diagram",
+          "wave_equation_speed",
+          "wave_period_frequency",
+          "longitudinal_sound_echo",
+          "electromagnetic_photon_energy"
+        ],
+        "diagram": "transverse_wave",
+        "status": "built"
+      },
+      {
+        "file": "app/utils/physical_sciences/ps11_acids_bases_stoichiometry_generator.py",
+        "subject": "Physical Sciences",
+        "grade": 11,
+        "topic": "Types of reaction and volumetric titrations",
+        "subskills": [
+          "titration_apparatus_diagram",
+          "titration_stoichiometry",
+          "concentration_molarity",
+          "standard_solution_preparation",
+          "indicator_equivalence_selection"
+        ],
+        "diagram": "titration_apparatus",
+        "status": "built"
+      },
+      {
+        "file": "app/utils/physical_sciences/ps12_electrochemistry_galvanic_generator.py",
+        "subject": "Physical Sciences",
+        "grade": 12,
+        "topic": "Electrochemical reactions and galvanic cells",
+        "subskills": [
+          "galvanic_cell_diagram",
+          "standard_cell_potential",
+          "cell_notation",
+          "half_reactions_oxidation_reduction",
+          "salt_bridge_functions"
+        ],
+        "diagram": "galvanic_cell",
+        "status": "built"
+      },
+      {
+        "file": "app/utils/physical_sciences/ps12_doppler_effect_generator.py",
+        "subject": "Physical Sciences",
+        "grade": 12,
+        "topic": "The Doppler effect",
+        "subskills": [
+          "doppler_wavefront_diagram",
+          "doppler_approach",
+          "doppler_recede",
+          "redshift_cosmology_expansion",
+          "medical_ultrasound_flowmeter"
+        ],
+        "diagram": "doppler_effect",
+        "status": "built"
+      },
+      {
+        "file": "app/utils/physical_sciences/ps12_vertical_projectile_motion_generator.py",
+        "subject": "Physical Sciences",
+        "grade": 12,
+        "topic": "Vertical projectile motion in one dimension",
+        "subskills": [
+          "ground_launch_motion",
+          "cliff_launch_trajectory",
+          "kinematic_graphs_analysis"
+        ],
+        "status": "built"
+      },
+      {
+        "subject": "Natural Sciences",
+        "grade": "9",
+        "status": "built",
+        "topics_count": 24,
+        "archetypes_count": 120,
+        "files": [
+          "caps-ai-backend/app/utils/natural_sciences/grade9/cells_generator.py",
+          "caps-ai-backend/app/utils/natural_sciences/grade9/human_systems_generator.py",
+          "caps-ai-backend/app/utils/natural_sciences/grade9/human_reproduction_gen.py",
+          "caps-ai-backend/app/utils/natural_sciences/grade9/circulatory_respiratory.py",
+          "caps-ai-backend/app/utils/natural_sciences/grade9/digestive_system_gen.py",
+          "caps-ai-backend/app/utils/natural_sciences/grade9/compounds_generator.py",
+          "caps-ai-backend/app/utils/natural_sciences/grade9/chemical_reactions_gen.py",
+          "caps-ai-backend/app/utils/natural_sciences/grade9/reactions_metals_oxygen.py",
+          "caps-ai-backend/app/utils/natural_sciences/grade9/reactions_nonmetals_ox.py",
+          "caps-ai-backend/app/utils/natural_sciences/grade9/acids_bases_ph_gen.py",
+          "caps-ai-backend/app/utils/natural_sciences/grade9/reactions_acids_bases.py",
+          "caps-ai-backend/app/utils/natural_sciences/grade9/reactions_acids_metals.py",
+          "caps-ai-backend/app/utils/natural_sciences/grade9/forces_generator.py",
+          "caps-ai-backend/app/utils/natural_sciences/grade9/electric_cells_gen.py",
+          "caps-ai-backend/app/utils/natural_sciences/grade9/resistance_generator.py",
+          "caps-ai-backend/app/utils/natural_sciences/grade9/series_parallel_circuits.py",
+          "caps-ai-backend/app/utils/natural_sciences/grade9/safety_electricity_gen.py",
+          "caps-ai-backend/app/utils/natural_sciences/grade9/national_grid_generator.py",
+          "caps-ai-backend/app/utils/natural_sciences/grade9/cost_electrical_energy.py",
+          "caps-ai-backend/app/utils/natural_sciences/grade9/earth_system_generator.py",
+          "caps-ai-backend/app/utils/natural_sciences/grade9/lithosphere_generator.py",
+          "caps-ai-backend/app/utils/natural_sciences/grade9/mining_resources_gen.py",
+          "caps-ai-backend/app/utils/natural_sciences/grade9/atmosphere_generator.py",
+          "caps-ai-backend/app/utils/natural_sciences/grade9/stellar_evolution_gen.py"
+        ],
+        "terms": {
+          "term1": [
+            "Cells as the basic units of life",
+            "Systems in the human body",
+            "Human reproduction",
+            "Circulatory and respiratory systems",
+            "Digestive system"
+          ],
+          "term2": [
+            "Compounds",
+            "Chemical reactions",
+            "Reactions of metals with oxygen",
+            "Reactions of non metals with oxygen",
+            "Acids bases and the pH value",
+            "Reactions of Acids and bases",
+            "Reactions of acids with a metal"
+          ],
+          "term3": [
+            "Forces",
+            "Electric cells as energy systems",
+            "Resistance",
+            "Series and parallel circuits",
+            "Safety with electricity",
+            "Energy and the national electricity grid",
+            "Cost of electrical energy"
+          ],
+          "term4": [
+            "The earth as a system",
+            "The lithosphere",
+            "Mining of mineral resources",
+            "The atmosphere",
+            "Birth life and the death of a star"
+          ]
+        },
+        "note": "All 24 Grade 9 Natural Sciences topics across Terms 1 to 4 aligned 100% with South African National Curriculum Standards with dedicated 1:1 generators, 5 ordered curriculum subskills each (120 total certified archetypes), 6-pillar contracts, multi-seed determinism, 3-tier hints, misconception tags, and dual-surface visual diagram integration."
+      },
+      {
+        "subject": "Accounting",
+        "grade": "10",
+        "status": "built",
+        "topics_count": 15,
+        "files": [
+          "caps-ai-backend/app/utils/grade10_accounting/gaap_generator.py",
+          "caps-ai-backend/app/utils/grade10_accounting/financial_info_concepts_generator.py",
+          "caps-ai-backend/app/utils/grade10_accounting/sole_trader_generator.py",
+          "caps-ai-backend/app/utils/grade10_accounting/managing_resources_generator.py",
+          "caps-ai-backend/app/utils/grade10_accounting/ethics_generator.py",
+          "caps-ai-backend/app/utils/grade10_accounting/internal_control_generator.py",
+          "caps-ai-backend/app/utils/grade10_accounting/term2/salaries_wages_generator.py",
+          "caps-ai-backend/app/utils/grade10_accounting/term2/vat_generator.py",
+          "caps-ai-backend/app/utils/grade10_accounting/sole_trader_analysis_generator.py",
+          "caps-ai-backend/app/utils/grade10_accounting/cost_accounting_generator.py",
+          "caps-ai-backend/app/utils/grade10_accounting/term2/final_accounts_generator.py",
+          "caps-ai-backend/app/utils/grade10_accounting/sole_trader_financial_statements_generator.py",
+          "caps-ai-backend/app/utils/grade10_accounting/budgeting_generator.py",
+          "caps-ai-backend/app/utils/grade10_accounting/financial_vs_managerial_generator.py",
+          "caps-ai-backend/app/utils/grade10_accounting/indigenous_bookkeeping_generator_v2.py"
+        ],
+        "note": "All 15 Grade 10 Accounting topics across Terms 1 to 4 unbundled 1:1 with dedicated Sole Trader generators (5–17 subskills per topic), completed Markdown tables in Memorandums, and zero cross-grade company leakage."
+      },
+      {
+        "subject": "Accounting",
+        "grade": "11",
+        "status": "built",
+        "topics_count": 17,
+        "files": [
+          "caps-ai-backend/app/utils/grade11_accounting/reconciliation_generator.py",
+          "caps-ai-backend/app/utils/grade11_accounting/control_accounts_generator.py",
+          "caps-ai-backend/app/utils/grade11_accounting/debtors_age_analysis_generator.py",
+          "caps-ai-backend/app/utils/grade11_accounting/asset_disposal_generator.py",
+          "caps-ai-backend/app/utils/grade11_accounting/fixed_assets_generator.py",
+          "caps-ai-backend/app/utils/grade11_accounting/accounting_equation_generator.py",
+          "caps-ai-backend/app/utils/grade11_accounting/vat_generator.py",
+          "caps-ai-backend/app/utils/grade11_accounting/term2/analysis_interpretation_generator.py",
+          "caps-ai-backend/app/utils/grade11_accounting/income_statement_generator.py",
+          "caps-ai-backend/app/utils/grade11_accounting/ethics_generator.py",
+          "caps-ai-backend/app/utils/grade11_accounting/internal_control_generator.py",
+          "caps-ai-backend/app/utils/grade11_accounting/partnership_balance_sheet_generator.py",
+          "caps-ai-backend/app/utils/grade11_accounting/budgeting_generator.py",
+          "caps-ai-backend/app/utils/grade11_accounting/cost_accounting_generator.py",
+          "caps-ai-backend/app/utils/grade11_accounting/inventory_valuation_generator.py",
+          "caps-ai-backend/app/utils/grade11_accounting/term2/clubs_nonprofit_generator.py"
+        ],
+        "note": "All 17 Grade 11 Accounting topics across Terms 1 to 4 unbundled 1:1 with dedicated Partnership, Manufacturing Ledger, and Clubs/NPO generators (5–13 subskills per topic), unwrapped bundle questions, and completed Markdown tables in Memorandums."
+      },
+      {
+        "subject": "Accounting",
+        "grade": "12",
+        "status": "built",
+        "topics_count": 17,
+        "files": [
+          "caps-ai-backend/app/utils/grade12_accounting/concepts_generator.py",
+          "caps-ai-backend/app/utils/grade12_accounting/companies_generator.py",
+          "caps-ai-backend/app/utils/grade12_accounting/financial_statements_notes_generator.py",
+          "caps-ai-backend/app/utils/grade12_accounting/accounting_equation_generator.py",
+          "caps-ai-backend/app/utils/grade12_accounting/financial_indicators_generator.py",
+          "caps-ai-backend/app/utils/grade12_accounting/term2/reconciliation_generator.py",
+          "caps-ai-backend/app/utils/grade12_accounting/cash_flow_statement_generator.py",
+          "caps-ai-backend/app/utils/grade12_accounting/control_accounts_generator.py",
+          "caps-ai-backend/app/utils/grade12_accounting/debtors_age_analysis_generator.py",
+          "caps-ai-backend/app/utils/grade12_accounting/budgets_variance_generator.py",
+          "caps-ai-backend/app/utils/grade12_accounting/cash_budget_variance_generator.py",
+          "caps-ai-backend/app/utils/grade12_accounting/term2/inventory_systems_generator.py",
+          "caps-ai-backend/app/utils/grade12_accounting/cost_accounting_generator.py",
+          "caps-ai-backend/app/utils/grade12_accounting/vat_analysis_generator.py",
+          "caps-ai-backend/app/utils/grade12_accounting/asset_disposal_generator.py",
+          "caps-ai-backend/app/utils/grade12_accounting/term2/fixed_assets_generator.py"
+        ],
+        "note": "All 17 Grade 12 Accounting topics across Terms 1 to 4 unbundled 1:1 with dedicated Company (Ltd), Cash Flow, Production Cost Statement, and Cash Budget Variance generators (5–9 subskills per topic) and completed Markdown tables in Memorandums."
+      },
+      {
+        "subject": "Mathematical Literacy",
+        "grade": "10",
+        "topic": "Conversions and time",
+        "generatorKey": "grade10_mathlit_conversions_and_time",
+        "files": [
+          "caps-ai-backend/app/utils/mathematical_literacy/conversions_time_generator.py"
+        ],
+        "archetypesCount": 52,
+        "status": "built"
+      },
+      {
+        "subject": "Mathematical Literacy",
+        "grade": "10",
+        "topic": "Measuring length weight volume and temperature",
+        "generatorKey": "grade10_mathlit_measuring_length_weight_volume_temperature",
+        "files": [
+          "caps-ai-backend/app/utils/mathematical_literacy/measuring_length_weight_volume_temperature_generator.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/measuring/common.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/measuring/length_distance.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/measuring/mass_weight.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/measuring/volume_capacity.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/measuring/temperature_integrated.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/measuring/__init__.py"
+        ],
+        "archetypesCount": 52,
+        "status": "built"
+      },
+      {
+        "subject": "Mathematical Literacy",
+        "grade": "10",
+        "topic": "Personal income expenditure and budgets",
+        "generatorKey": "grade10_mathlit_personal_income_expenditure_budgets",
+        "files": [
+          "caps-ai-backend/app/utils/mathematical_literacy/personal_income_expenditure_budgets_generator.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/budgets/common.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/budgets/income_calculations.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/budgets/expenditure_priorities.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/budgets/household_budgets.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/budgets/events_projects.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/budgets/statements_variance.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/budgets/agri_business_budgets.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/budgets/__init__.py"
+        ],
+        "archetypesCount": 52,
+        "status": "built"
+      },
+      {
+        "subject": "Mathematical Literacy",
+        "grade": "10",
+        "topic": "Numbers and calculations with numbers",
+        "generatorKey": "grade10_mathlit_numbers_and_calculations_with_numbers",
+        "files": [
+          "caps-ai-backend/app/utils/mathematical_literacy/numbers_and_calculations_with_numbers_generator.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/numbers_calculations/common.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/numbers_calculations/formats_conventions.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/numbers_calculations/order_of_operations.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/numbers_calculations/squares_roots_cubes.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/numbers_calculations/rounding_contexts.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/numbers_calculations/ratios_rates_proportions.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/numbers_calculations/percentages_applications.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/numbers_calculations/__init__.py"
+        ],
+        "archetypesCount": 52,
+        "status": "built"
+      },
+      {
+        "subject": "Mathematical Literacy",
+        "grade": "10",
+        "topic": "Banking interest and taxation",
+        "generatorKey": "grade10_mathlit_banking_interest_and_taxation",
+        "files": [
+          "caps-ai-backend/app/utils/mathematical_literacy/banking_interest_and_taxation_generator.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/banking_tax/common.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/banking_tax/bank_accounts.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/banking_tax/statements_records.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/banking_tax/fee_schedules.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/banking_tax/simple_interest_loans.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/banking_tax/compound_investments.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/banking_tax/vat_uif_taxation.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/banking_tax/__init__.py"
+        ],
+        "archetypesCount": 52,
+        "status": "built"
+      },
+      {
+        "subject": "Mathematical Literacy",
+        "grade": "10",
+        "topic": "Financial documents and tariff systems",
+        "generatorKey": "grade10_mathlit_financial_documents_and_tariff_systems",
+        "files": [
+          "caps-ai-backend/app/utils/mathematical_literacy/financial_documents_and_tariff_systems_generator.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/tariffs/common.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/tariffs/municipal_accounts.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/tariffs/electricity_tariffs.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/tariffs/water_tariffs.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/tariffs/telephone_tariffs.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/tariffs/transport_tariffs.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/tariffs/till_slips_store_accounts.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/tariffs/__init__.py"
+        ],
+        "archetypesCount": 51,
+        "status": "built"
+      },
+      {
+        "subject": "Mathematical Literacy",
+        "grade": "10",
+        "topic": "Assembly diagrams floor plans and packaging",
+        "generatorKey": "grade10_mathlit_assembly_diagrams_floor_plans_packaging",
+        "files": [
+          "caps-ai-backend/app/utils/mathematical_literacy/assembly_diagrams_floor_plans_packaging_generator.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/assembly_packaging/common.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/assembly_packaging/assembly_diagrams.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/assembly_packaging/electrical_wiring.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/assembly_packaging/floor_plan_analysis.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/assembly_packaging/scaled_plans_costs.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/assembly_packaging/packaging_arrangements.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/assembly_packaging/nets_models_pallets.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/assembly_packaging/__init__.py"
+        ],
+        "archetypesCount": 52,
+        "status": "built"
+      },
+      {
+        "subject": "Mathematical Literacy",
+        "grade": "10",
+        "topic": "Data handling",
+        "generatorKey": "grade10_mathlit_data_handling",
+        "files": [
+          "caps-ai-backend/app/utils/mathematical_literacy/data_handling_generator.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/data_handling/common.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/data_handling/collection_classification.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/data_handling/organising_tables.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/data_handling/central_tendency.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/data_handling/spread_quartiles.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/data_handling/bar_graphs_histograms.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/data_handling/pie_charts_interpretation.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/data_handling/__init__.py"
+        ],
+        "archetypesCount": 52,
+        "status": "built"
+      },
+      {
+        "subject": "Mathematical Literacy",
+        "grade": "10",
+        "topic": "Scale maps and plans",
+        "generatorKey": "grade10_mathlit_scale_maps_and_plans",
+        "files": [
+          "caps-ai-backend/app/utils/mathematical_literacy/scale_maps_and_plans_generator.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/scale_maps/common.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/scale_maps/number_scales.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/scale_maps/bar_scales_resizing.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/scale_maps/compass_directions_bearings.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/scale_maps/travel_speed_time_fuel.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/scale_maps/strip_maps_road_routes.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/scale_maps/seating_indoor_maps.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/scale_maps/__init__.py"
+        ],
+        "archetypesCount": 52,
+        "status": "built"
+      },
+      {
+        "subject": "Mathematical Literacy",
+        "grade": "10",
+        "topic": "Measurement of perimeter and area",
+        "generatorKey": "grade10_mathlit_measurement_of_perimeter_and_area",
+        "files": [
+          "caps-ai-backend/app/utils/mathematical_literacy/measurement_of_perimeter_and_area_generator.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/perimeter_area/common.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/perimeter_area/perim_polygons_circles.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/perimeter_area/perim_composite_fencing.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/perimeter_area/area_polygons_circles.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/perimeter_area/area_composite_cutouts.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/perimeter_area/area_tiling_paving_turf.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/perimeter_area/area_painting_agri_commercial.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/perimeter_area/__init__.py"
+        ],
+        "archetypesCount": 52,
+        "status": "built"
+      },
+      {
+        "subject": "Mathematical Literacy",
+        "grade": "10",
+        "topic": "Patterns relationships and representations",
+        "generatorKey": "grade10_mathlit_patterns_relationships_and_representations",
+        "files": [
+          "caps-ai-backend/app/utils/mathematical_literacy/patterns_relationships_and_representations_generator.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/patterns_relationships/common.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/patterns_relationships/story_graphs_trends.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/patterns_relationships/linear_tables_patterns.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/patterns_relationships/linear_equations_formulas.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/patterns_relationships/inverse_proportion.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/patterns_relationships/breakeven_comparisons.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/patterns_relationships/stepped_graphs_modeling.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/patterns_relationships/__init__.py"
+        ],
+        "archetypesCount": 52,
+        "status": "built"
+      },
+      {
+        "subject": "Mathematical Literacy",
+        "grade": "10",
+        "topic": "Probability",
+        "generatorKey": "grade10_mathlit_probability",
+        "files": [
+          "caps-ai-backend/app/utils/mathematical_literacy/probability_generator.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/probability/common.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/probability/probability_scale_formats.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/probability/single_stage_dice_cards.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/probability/bags_spinners_draws.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/probability/relative_frequency_experiments.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/probability/combined_events_tree_tables.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/probability/real_world_risk_weather.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/probability/__init__.py"
+        ],
+        "archetypesCount": 52,
+        "status": "built"
+      },
+      {
+        "subject": "Mathematical Literacy",
+        "grade": "11",
+        "topic": "FINANCE (TAXATION AND UIF)",
+        "generatorKey": "grade11_mathlit_finance_taxation_and_uif",
+        "files": [
+          "caps-ai-backend/app/utils/mathematical_literacy/gr11_finance_taxation_uif_generator.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr11_finance_tax/common.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr11_finance_tax/uif_calculations.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr11_finance_tax/gross_net_deductions.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr11_finance_tax/tax_brackets_paye.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr11_finance_tax/rebates_credits_paye.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr11_finance_tax/vat_calculations.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr11_finance_tax/payslip_audits_scenarios.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr11_finance_tax/__init__.py"
+        ],
+        "archetypesCount": 52,
+        "status": "built"
+      },
+      {
+        "subject": "Mathematical Literacy",
+        "grade": "11",
+        "topic": "CONVERSIONS AND TIME",
+        "files": [
+          "caps-ai-backend/app/utils/mathematical_literacy/gr11_conversions_and_time_generator.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr11_conversions_time/common.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr11_conversions_time/metric_imperial_mass.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr11_conversions_time/metric_imperial_length_speed.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr11_conversions_time/volume_cooking_conversions.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr11_conversions_time/temperature_compound_rates.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr11_conversions_time/time_formats_elapsed.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr11_conversions_time/time_zones_flight_schedules.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr11_conversions_time/__init__.py"
+        ]
+      },
+      {
+        "subject": "Mathematical Literacy",
+        "grade": "11",
+        "topic": "EXCHANGE RATES",
+        "files": [
+          "caps-ai-backend/app/utils/mathematical_literacy/gr11_exchange_rates_generator.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr11_exchange_rates/common.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr11_exchange_rates/basic_conversions.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr11_exchange_rates/sadc_african_currencies.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr11_exchange_rates/estimation_strength.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr11_exchange_rates/purchasing_power_parity.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr11_exchange_rates/bank_rates_fees.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr11_exchange_rates/travel_trade_scenarios.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr11_exchange_rates/__init__.py"
+        ]
+      },
+      {
+        "subject": "Mathematical Literacy",
+        "grade": "11",
+        "topic": "Interest banking and inflation",
+        "files": [
+          "caps-ai-backend/app/utils/mathematical_literacy/gr11_interest_banking_inflation_generator.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr11_interest_banking_inflation/common.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr11_interest_banking_inflation/simple_interest.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr11_interest_banking_inflation/compound_interest.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr11_interest_banking_inflation/bank_accounts_fees.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr11_interest_banking_inflation/hire_purchase.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr11_interest_banking_inflation/personal_loans.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr11_interest_banking_inflation/inflation_purchasing_power.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr11_interest_banking_inflation/__init__.py"
+        ]
+      },
+      {
+        "subject": "Mathematical Literacy",
+        "grade": "11",
+        "topic": "PATTERNS RELATIONSHIPS AND REPRESENTATIONS",
+        "files": [
+          "caps-ai-backend/app/utils/mathematical_literacy/gr11_patterns_relationships_generator.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr11_patterns_relationships/common.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr11_patterns_relationships/linear_patterns.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr11_patterns_relationships/inverse_proportion.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr11_patterns_relationships/constant_ratio_exponential.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr11_patterns_relationships/step_functions_tariffs.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr11_patterns_relationships/breakeven_business.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr11_patterns_relationships/twograph_comparisons.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr11_patterns_relationships/__init__.py"
+        ]
+      },
+      {
+        "subject": "Mathematical Literacy",
+        "grade": "11",
+        "topic": "PLANS AND OTHER REPRESENTATIONS",
+        "files": [
+          "caps-ai-backend/app/utils/mathematical_literacy/gr11_plans_representations_generator.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr11_plans_representations/common.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr11_plans_representations/floor_plans.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr11_plans_representations/elevation_orientations.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr11_plans_representations/design_assembly.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr11_plans_representations/scale_drawing.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr11_plans_representations/nets_folding.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr11_plans_representations/packaging_cartons.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr11_plans_representations/__init__.py"
+        ]
+      },
+      {
+        "subject": "Mathematical Literacy",
+        "grade": "11",
+        "topic": "DATA HANDLING",
+        "files": [
+          "caps-ai-backend/app/utils/mathematical_literacy/gr11_data_handling_generator.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr11_data_handling/common.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr11_data_handling/collection_sampling.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr11_data_handling/frequency_tables.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr11_data_handling/central_tendency.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr11_data_handling/quartiles_boxplots.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr11_data_handling/charts_representations.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr11_data_handling/analysis_outliers.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr11_data_handling/__init__.py"
+        ]
+      },
+      {
+        "subject": "Mathematical Literacy",
+        "grade": "11",
+        "topic": "MAPS",
+        "generatorKey": "grade11_mathlit_maps",
+        "files": [
+          "caps-ai-backend/app/utils/mathematical_literacy/gr11_maps_generator.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr11_maps/common.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr11_maps/scale_distances.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr11_maps/directions_bearings.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr11_maps/travel_speed_fuel.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr11_maps/strip_maps_tolls.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr11_maps/topographic_contours.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr11_maps/seating_stadiums.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr11_maps/__init__.py"
+        ],
+        "archetypesCount": 52,
+        "status": "built"
+      },
+      {
+        "subject": "Mathematical Literacy",
+        "grade": "11",
+        "topic": "Area and Volume",
+        "generatorKey": "grade11_mathlit_area_and_volume",
+        "files": [
+          "caps-ai-backend/app/utils/mathematical_literacy/gr11_area_volume_generator.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr11_area_volume/common.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr11_area_volume/perimeter_2d_areas.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr11_area_volume/surface_area_prisms.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr11_area_volume/surface_area_cylinders.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr11_area_volume/volume_capacity.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr11_area_volume/material_costing_packaging.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr11_area_volume/dimensions_scaling_analysis.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr11_area_volume/__init__.py"
+        ],
+        "archetypesCount": 52,
+        "status": "built"
+      },
+      {
+        "subject": "Mathematical Literacy",
+        "grade": "11",
+        "topic": "Financial documents and tariff systems",
+        "generatorKey": "grade11_mathlit_financial_documents_and_tariff_systems",
+        "files": [
+          "caps-ai-backend/app/utils/mathematical_literacy/gr11_financial_documents_tariffs_generator.py"
+        ],
+        "archetypesCount": 52,
+        "status": "built",
+        "visualCapabilities": "Tariff step graphs, municipal account water/electricity tables, Payslip IBT grids"
+      },
+      {
+        "subject": "Mathematical Literacy",
+        "grade": "11",
+        "topic": "Weight and temperature",
+        "generatorKey": "grade11_mathlit_weight_and_temperature",
+        "files": [
+          "caps-ai-backend/app/utils/mathematical_literacy/gr11_weight_and_temperature_generator.py"
+        ],
+        "archetypesCount": 52,
+        "status": "built",
+        "visualCapabilities": "BMI chart tables, Road-to-Health percentile graphs, oven temperature thermometers"
+      },
+      {
+        "subject": "Mathematical Literacy",
+        "grade": "11",
+        "topic": "Probability",
+        "generatorKey": "grade11_mathlit_probability",
+        "files": [
+          "caps-ai-backend/app/utils/mathematical_literacy/gr11_probability_generator.py"
+        ],
+        "archetypesCount": 52,
+        "status": "built",
+        "visualCapabilities": "Tree diagrams, 2-way contingency matrices, probability spinners, weather state transitions"
+      },
+      {
+        "subject": "Mathematical Literacy",
+        "grade": "12",
+        "topic": "exchange rates",
+        "generatorKey": "grade12_mathlit_exchange_rates",
+        "files": [
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_exchange_rates_generator.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_exchange_rates/common.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_exchange_rates/table_conventions.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_exchange_rates/bank_conversions.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_exchange_rates/fees_commissions.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_exchange_rates/budget_banknotes.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_exchange_rates/cross_rates.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_exchange_rates/ppp_economic_impact.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_exchange_rates/__init__.py"
+        ],
+        "archetypesCount": 52,
+        "status": "built",
+        "visualCapabilities": "Foreign exchange retail boards, buy-sell spreads, tiered fee breakdowns, Big Mac Index comparisons"
+      },
+      {
+        "subject": "Mathematical Literacy",
+        "grade": "12",
+        "topic": "Income tax",
+        "generatorKey": "grade12_mathlit_income_tax",
+        "files": [
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_income_tax_generator.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_income_tax/common.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_income_tax/foundations_taxable_income.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_income_tax/tax_brackets_calculation.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_income_tax/rebates_age_groups.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_income_tax/thresholds_effective_rate.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_income_tax/medical_tax_credits.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_income_tax/payslip_take_home_pay.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_income_tax/irp5_assessments_refunds.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_income_tax/__init__.py"
+        ],
+        "archetypesCount": 52,
+        "status": "built",
+        "visualCapabilities": "SARS 6-bracket progressive tax tables, age-tiered rebates, tax thresholds, Medical Scheme Fees Tax Credit matrices, payslip breakdowns, IRP5 code reconciliations"
+      },
+      {
+        "subject": "Mathematical Literacy",
+        "grade": "12",
+        "topic": "Financial documents and tariff systems",
+        "generatorKey": "grade12_mathlit_financial_documents_and_tariff_systems",
+        "files": [
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_financial_documents_and_tariff_systems_generator.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_financial_documents_and_tariffs/common.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_financial_documents_and_tariffs/water_sanitation_tariffs.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_financial_documents_and_tariffs/electricity_tariffs.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_financial_documents_and_tariffs/telecoms_tariffs.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_financial_documents_and_tariffs/transport_tariffs.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_financial_documents_and_tariffs/banking_fees.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_financial_documents_and_tariffs/small_business_costing_breakeven.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_financial_documents_and_tariffs/budgets_financial_statements.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_financial_documents_and_tariffs/__init__.py"
+        ],
+        "archetypesCount": 52,
+        "status": "built",
+        "visualCapabilities": "Stepped municipal water sliding scales, domestic Incline Block Tariffs (IBT), Time-of-Use rate tables, cellphone contract break-even graphs, commuter transit cost comparisons, PAYT bank fee schedules, small business cost/break-even charts, budget variance matrices"
+      },
+      {
+        "subject": "Mathematical Literacy",
+        "grade": "12",
+        "topic": "lengths perimeter area and volume",
+        "generatorKey": "grade12_mathlit_measurement_lengths_perimeter_area_volume",
+        "files": [
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_lengths_perimeter_area_volume_generator.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_measurement_lengths_perimeter_area_volume/common.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_measurement_lengths_perimeter_area_volume/lengths_perimeters.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_measurement_lengths_perimeter_area_volume/areas_tiling.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_measurement_lengths_perimeter_area_volume/surface_areas_painting.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_measurement_lengths_perimeter_area_volume/volumes_capacity.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_measurement_lengths_perimeter_area_volume/earthworks_materials.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_measurement_lengths_perimeter_area_volume/packaging_stacking.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_measurement_lengths_perimeter_area_volume/costing_projects.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_measurement_lengths_perimeter_area_volume/__init__.py"
+        ],
+        "archetypesCount": 52,
+        "status": "built",
+        "visualCapabilities": "2D perimeter & boundary layouts, tiling & turf coverage plans, 3D surface area painting nets, cylindrical geyser & culvert geometries, JoJo tank capacity & drawdown diagrams, bulk material excavation cross-sections, 3D carton box packing & pallet stacking grids, comprehensive project quotation schedules"
+      },
+      {
+        "subject": "Mathematical Literacy",
+        "grade": "12",
+        "topic": "scale and map work",
+        "generatorKey": "grade12_mathlit_scale_and_map_work",
+        "files": [
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_scale_and_map_work_generator.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_scale_and_map_work/common.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_scale_and_map_work/number_scale_calculations.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_scale_and_map_work/strip_maps_distance_charts.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_scale_and_map_work/aa_vehicle_operating_costs.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_scale_and_map_work/route_costing_multi_modal.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_scale_and_map_work/fuel_consumption_range.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_scale_and_map_work/compass_bearings_elevations.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_scale_and_map_work/journey_plans_itineraries.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_scale_and_map_work/__init__.py"
+        ],
+        "archetypesCount": 52,
+        "status": "built",
+        "visualCapabilities": "Topographical & architectural bar scales, inter-city distance matrix tables, N1/N2/N3 strip road map waypoint markers, Automobile Association (AA) fixed & running cost tables, SANRAL toll plaza schedules, bus booking timetable charts, 8-point compass rose & bearings, building elevation views (N/S/E/W), multi-drop delivery logistics diagrams"
+      },
+      {
+        "subject": "Mathematical Literacy",
+        "grade": "12",
+        "topic": "Measuring weight BMI medicine dosages",
+        "generatorKey": "grade12_mathlit_measuring_weight_bmi_medicine_dosages",
+        "files": [
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_measuring_weight_bmi_medicine_dosages_generator.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_measuring_weight_bmi_medicine_dosages/common.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_measuring_weight_bmi_medicine_dosages/adult_bmi_calculations.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_measuring_weight_bmi_medicine_dosages/child_growth_bmi_percentiles.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_measuring_weight_bmi_medicine_dosages/height_weight_percentiles.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_measuring_weight_bmi_medicine_dosages/bmr_ideal_weight.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_measuring_weight_bmi_medicine_dosages/pediatric_dosing_suspensions.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_measuring_weight_bmi_medicine_dosages/dosage_rules_bsa.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_measuring_weight_bmi_medicine_dosages/clinical_dispensing_iv_rates.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_measuring_weight_bmi_medicine_dosages/__init__.py"
+        ],
+        "archetypesCount": 52,
+        "status": "built",
+        "visualCapabilities": "WHO Adult BMI classification tables, CDC/Road-to-Health Growth Percentile Charts (girls & boys stature/weight/BMI-for-age), Harris-Benedict BMR schedules, Robinson ideal weight tables, Pediatric suspension dosing concentration diagrams, Oral dosing syringe scale markings, IV drip chamber flow rate calibration charts"
+      },
+      {
+        "subject": "Mathematical Literacy",
+        "grade": "12",
+        "topic": "Maps and plans (models)",
+        "generatorKey": "grade12_mathlit_maps_and_plans_models",
+        "files": [
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_maps_and_plans_models_generator.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_maps_and_plans_models/common.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_maps_and_plans_models/scale_selection_page_fit.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_maps_and_plans_models/architectural_models_rdp_house.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_maps_and_plans_models/nets_materials_costing.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_maps_and_plans_models/area_volume_scaling_factors.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_maps_and_plans_models/assembly_instructions_packaging.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_maps_and_plans_models/pallet_stacking_container_loading.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_maps_and_plans_models/contour_topographic_site_models.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_maps_and_plans_models/__init__.py"
+        ],
+        "archetypesCount": 52,
+        "status": "built",
+        "visualCapabilities": "Architectural scale comparison diagrams, A4/A3 drawing footprint boundaries, RDP house 2D-to-3D net layouts, pitch roof Pythagoras rafter triangles, flat-pack assembly sequence graphics, ISO pallet grid stacking schematics, 20ft/40ft shipping container load plans, stepped foam-layer contour site models"
+      },
+      {
+        "subject": "Mathematical Literacy",
+        "grade": "12",
+        "topic": "plans and scale",
+        "generatorKey": "grade12_mathlit_plans_and_scale",
+        "files": [
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_plans_and_scale_generator.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_plans_and_scale/common.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_plans_and_scale/determining_number_scale.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_plans_and_scale/bar_scale_construction_conversion.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_plans_and_scale/elevation_plans_multi_view.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_plans_and_scale/architectural_floor_plans_symbols.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_plans_and_scale/site_plans_boundaries_servitudes.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_plans_and_scale/cross_sectional_details.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_plans_and_scale/material_takeoffs_costing.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_plans_and_scale/__init__.py"
+        ],
+        "archetypesCount": 52,
+        "status": "built",
+        "visualCapabilities": "Architectural number scale ratios (1:20 to 1:500), graphic bar scale segments and calibrations, orthogonal multi-view elevations (Front/Rear/Side, N/S/E/W), SANS 10400 architectural door/window/sanitary symbols, erf cadastral site boundaries and building line setbacks, technical cross-sections (footings, DPC, slab, eaves, brandering), material takeoff bill of quantities schedules"
+      },
+      {
+        "subject": "Mathematical Literacy",
+        "grade": "12",
+        "topic": "Data handling",
+        "files": [
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_data_handling_generator.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_data_handling/common.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_data_handling/sampling_survey_bias.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_data_handling/grouped_data_ogives.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_data_handling/central_tendency_outliers.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_data_handling/quartiles_percentiles_spread.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_data_handling/boxplots_skewness_outliers.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_data_handling/scatter_plots_correlation.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_data_handling/opposing_arguments_misleading_stats.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_data_handling/__init__.py"
+        ],
+        "generatorKey": "grade12_mathlit_data_handling",
+        "archetypesCount": 52,
+        "status": "built"
+      },
+      {
+        "subject": "Mathematical Literacy",
+        "grade": "12",
+        "topic": "interest banking inflation",
+        "files": [
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_interest_banking_inflation_generator.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_interest_banking_inflation/common.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_interest_banking_inflation/loans_fundamentals_factors.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_interest_banking_inflation/amortization_table_modeling.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_interest_banking_inflation/loan_optimization_deposits_rates.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_interest_banking_inflation/vehicle_finance_balloon.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_interest_banking_inflation/investments_retirement_annuities.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_interest_banking_inflation/stokvels_communal_savings.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_interest_banking_inflation/inflation_purchasing_power.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_interest_banking_inflation/__init__.py"
+        ],
+        "generatorKey": "grade12_mathlit_interest_banking_inflation",
+        "archetypesCount": 52,
+        "status": "built"
+      },
+      {
+        "subject": "Mathematical Literacy",
+        "grade": "12",
+        "topic": "Probability",
+        "generatorKey": "grade12_mathlit_probability",
+        "files": [
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_probability_generator.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_probability/common.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_probability/scale_frequency_complements.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_probability/independent_dependent_events.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_probability/contingency_tables.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_probability/tree_diagrams_multistage.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_probability/venn_diagrams_sets.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_probability/counting_principles_lottery.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_probability/medical_risk_financial_prob.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_probability/__init__.py"
+        ],
+        "archetypesCount": 52,
+        "status": "built",
+        "visualCapabilities": "Probability scale gradients, two-way contingency tables, multi-stage tree diagrams, 2-set & 3-set Venn diagrams with intersection shading, LOTTO ball draw layouts, clinical screening false-positive risk matrices"
+      },
+      {
+        "subject": "Mathematical Literacy",
+        "grade": "12",
+        "topic": "conversions & time",
+        "generatorKey": "grade12_mathlit_conversions_and_time",
+        "files": [
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_conversions_and_time_generator.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_conversions_and_time/common.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_conversions_and_time/solid_liquid_volume.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_conversions_and_time/spread_rates_chemicals.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_conversions_and_time/building_concrete_ratios.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_conversions_and_time/cooking_imperial_units.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_conversions_and_time/travel_timetables_transit.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_conversions_and_time/speed_distance_time.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_conversions_and_time/tides_daylight_timezones.py",
+          "caps-ai-backend/app/utils/mathematical_literacy/gr12_conversions_and_time/__init__.py"
+        ],
+        "archetypesCount": 52,
+        "status": "built",
+        "visualCapabilities": "Liquid volume metric grids, spread rate coverage swatches, concrete mix wheelbarrow-to-bucket proportion bars, imperial-to-metric measuring spoons/cups, multi-modal travel timetable matrices, 24-hour clock dial diagrams, high/low tide tidal sinusoidal curve charts"
       }
     ],
     "planned": [
@@ -574,6 +1770,41 @@
       "errorsOrFailures": 0,
       "auditScript": "scripts/audit_all_generators_entropy.py",
       "lastAudited": "2026-10-15"
+    },
+    "fullPlatformArchetypeAudit": {
+      "status": "completed",
+      "certification": "Exit Code 0 — All Anti-Hollywood mechanical checks passed",
+      "totalCurriculumTopics": 465,
+      "totalArchetypesCertified": 2436,
+      "gradesAudited": [
+        "7",
+        "8",
+        "9",
+        "10",
+        "11",
+        "12"
+      ],
+      "mechanicalInvariants": {
+        "zeroHollywoodTheatrics": true,
+        "zeroBlankOrTinyScreenshots": true,
+        "zeroDuplicateScreenshotHashes": true,
+        "multiScrollVerification": true,
+        "zeroRawLatexLeaks": true,
+        "zeroPreAttemptAnswerLeaks": true,
+        "zeroBannedCapsAcronymLeaks": true,
+        "curriculumDocsGrounding": true,
+        "minProcedureLengthMultiMark": 30
+      },
+      "gatekeeperScript": "scripts/verify_no_hollywood_audit.py",
+      "htmlReportsDir": "reports/full_archetype_audit/",
+      "lastAudited": "2026-10-30"
+    },
+    "grade7_mathematics": {
+      "status": "built",
+      "topics_count": 27,
+      "total_subskills": 1350,
+      "stage_d1_status": "PASS (100% >= 50 archetypes, 0 shims)",
+      "description": "Grade 7 Mathematics 27 dedicated 50-archetype generators grounded in CAPS."
     }
   },
   "backendServices": {
@@ -748,6 +1979,24 @@
         "file": "caps-ai-backend/app/services/offline_pack_service.py",
         "status": "built",
         "description": "On-demand deterministic 30-day offline study pack bundler across all CAPS subjects and grades (7-12) with HMAC-SHA256 lease validation tokens and pre-computed 3-tier hints."
+      },
+      {
+        "name": "bkt_dossier_service",
+        "file": "caps-ai-backend/app/services/bkt_dossier_service.py",
+        "status": "built",
+        "responsibility": "High-volume deterministic BKT adaptive progression simulator executing 3 student performance personas (high-performing, medium-performing, low-performing) across 3 Diagnostic Qs, 6 Scaffold/Micro-Drill Qs, 50 Practice Qs, and 3 complete 5-question Exams per topic using live generate_variant and grade_submission with zero LLM tokens."
+      },
+      {
+        "name": "CurriculumDiagramRegistry",
+        "path": "curriculum_diagram_registry.json",
+        "description": "Authoritative registry of question diagram archetypes enforcing 6-pillar contract, seed entropy, and renderer consumption across Grades 7-12",
+        "status": "built"
+      },
+      {
+        "name": "DiagramRegistryAuditGate",
+        "path": "scripts/audit_diagram_registry.py",
+        "description": "Pre-flight audit gate validating curriculum grounding, renderer component existence, required field consumption, and evidence links",
+        "status": "built"
       }
     ],
     "planned": []
@@ -939,6 +2188,30 @@
         "route": "/api/offline/sync",
         "handler": "app/__init__.py -> offline_pack_service.sync_offline_telemetry",
         "description": "Batch telemetry synchronization endpoint for offline student attempts and concept mastery records."
+      },
+      {
+        "method": "POST",
+        "route": "/api/audit/bkt-dossier",
+        "handler": "app/__init__.py -> bkt_dossier_service.run_topic_bkt_dossier",
+        "description": "Executes deterministic high-volume BKT progression simulation (50 Practice Qs + 3 Exams + Diagnostic + Scaffold/Micro-Drills) for a given grade, subject, topic, and student performance persona."
+      },
+      {
+        "method": "GET",
+        "route": "/api/admin/vet/catalog",
+        "handler": "caps-ai-backend/app/api/admin.py:get_vetting_catalog",
+        "description": "Lists full catalog of generators, tracks, and vetting summaries for Super Admin inspection."
+      },
+      {
+        "method": "POST",
+        "route": "/api/admin/vet/generate",
+        "handler": "caps-ai-backend/app/api/admin.py:vet_generate",
+        "description": "Executes authentic deterministic generators across live seeds for Super Admin vetting."
+      },
+      {
+        "method": "POST",
+        "route": "/api/admin/vet/save-review",
+        "handler": "caps-ai-backend/app/api/admin.py:save_vetting_review",
+        "description": "Persists Super Admin certification verdicts and rubric ratings into Firestore."
       }
     ],
     "planned": []
@@ -1291,6 +2564,30 @@
         "layer": "A"
       },
       {
+        "name": "CircuitModalityRenderer",
+        "path": "src/components/workspace/modalities/CircuitModalityRenderer.jsx",
+        "description": "Interactive SVG schematic canvas for electric circuits (series/parallel resistors, cells, meters, switches, and component inspection)",
+        "layer": "A"
+      },
+      {
+        "name": "PunnettSquareModalityRenderer",
+        "path": "src/components/workspace/modalities/PunnettSquareModalityRenderer.jsx",
+        "description": "Interactive 2x2 genetics cross grid with gamete headers, offspring genotypes, and phenotypic ratio breakdowns",
+        "layer": "A"
+      },
+      {
+        "name": "BioDiagramModalityRenderer",
+        "path": "src/components/workspace/modalities/BioDiagramModalityRenderer.jsx",
+        "description": "Interactive biological cell cytology and anatomical structure schematic with dynamic SVG bank rendering, pin labeling (A, B, C, D...), structure inspector callouts, and fallback calibration notice",
+        "layer": "A"
+      },
+      {
+        "name": "FbdModalityRenderer",
+        "path": "src/components/workspace/modalities/FbdModalityRenderer.jsx",
+        "description": "Interactive Free Body Diagram vector coordinate canvas with normal force, gravitational weight, friction, and applied force vectors",
+        "layer": "A"
+      },
+      {
         "name": "PhysicalFolderTabs",
         "path": "src/components/navigation/PhysicalFolderTabs.jsx",
         "description": "Skeuo-modern folder tab navigation mimicking physical manila folders: left-slanted chamfered lips with continuous SVG accent border, 3D forward pop, slidable desktop tab shelf with scroll chevrons, and complete Senior/FET subject coverage including Mathematical Literacy.",
@@ -1442,9 +2739,392 @@
         "file": "src/components/student/OfflineStudyPackModal.jsx",
         "status": "built",
         "description": "On-demand offline pack management modal with enrolled subject checkboxes, term selector, live dynamic MB counter, and Wi-Fi only toggle."
+      },
+      {
+        "name": "GeometricNets3DViewer",
+        "path": "src/components/workspace/modalities/GeometricNets3DViewer.jsx",
+        "description": "3D Polyhedron and Geometric Nets folding interactive canvas with slider and shape transitions (cube, tetrahedron, triangular prism)",
+        "layer": "A"
+      },
+      {
+        "name": "OrganicChemistry3DViewer",
+        "path": "src/components/workspace/modalities/OrganicChemistry3DViewer.jsx",
+        "description": "Rotatable 3D CPK molecular explorer for Grade 12 organic isomers and boiling point intermolecular force comparisons",
+        "layer": "A"
+      },
+      {
+        "name": "ElectrodynamicsMotorViewer",
+        "path": "src/components/workspace/modalities/ElectrodynamicsMotorViewer.jsx",
+        "description": "Rotatable 3D AC Generator & DC Motor armature viewer with live split-ring vs slip-ring commutator oscilloscope waveforms",
+        "layer": "A"
+      },
+      {
+        "name": "InteractivePins",
+        "path": "src/components/workspace/modalities/diagram_bank/InteractivePins.jsx",
+        "description": "Reusable interactive SVG pin badge layer for biological, chemical, and physical vector diagrams with animated selection rings and touch-friendly hit targets",
+        "layer": "A"
+      },
+      {
+        "name": "MaleReproductiveSvg",
+        "path": "src/components/workspace/modalities/diagram_bank/MaleReproductiveSvg.jsx",
+        "description": "Authentic Heart-Standard sagittal pelvic cross-section of the human male reproductive system (scrotum, testis, epididymis, vas deferens, seminal vesicle, prostate gland, Cowper's gland, urethra, erectile tissue penis) for Life Sciences Grade 12 and Natural Sciences Grade 9.",
+        "layer": "A",
+        "status": "built",
+        "note": "Heart-Standard Milestone 4 component embedding publication-grade Textbook Master plate and NSC Exam Stipple line-art plate in public/diagrams/, transparent SVG pin overlay with InteractiveCallouts, calibrated diagram_anchors/male_reproductive.json, and zero hand-coded SVG clipart."
+      },
+      {
+        "name": "FemaleReproductiveSvg",
+        "path": "src/components/workspace/modalities/diagram_bank/FemaleReproductiveSvg.jsx",
+        "description": "Authentic Heart-Standard coronal anterior cross-section of the human female reproductive system (ovary, fallopian tube, uterus, myometrium, endometrium, cervix, vagina) for Life Sciences Grade 12 and Natural Sciences Grade 9.",
+        "layer": "A",
+        "status": "built",
+        "note": "Heart-Standard Milestone 4 component embedding publication-grade Textbook Master plate and NSC Exam Stipple line-art plate in public/diagrams/, transparent SVG pin overlay with InteractiveCallouts, calibrated diagram_anchors/female_reproductive.json, and zero hand-coded SVG clipart."
+      },
+      {
+        "name": "HumanNephronSvg",
+        "path": "src/components/workspace/modalities/diagram_bank/HumanNephronSvg.jsx",
+        "description": "Authentic vector microscopic nephron ultrastructure schematic with interactive pins A-F (Bowman's capsule, glomerulus, proximal tubule, Loop of Henle, distal tubule, collecting duct)",
+        "layer": "A",
+        "note": "Authentic Heart-Standard microscopic nephron ultrastructure component with Campbell/OpenStax Textbook Master plate and NSC Exam Stipple line-art plate in public/diagrams/, transparent SVG pin overlay with InteractiveCallouts, calibrated diagram_anchors/human_nephron.json, and zero hand-coded SVG clipart."
+      },
+      {
+        "name": "HumanHeartSvg",
+        "path": "src/components/workspace/modalities/diagram_bank/HumanHeartSvg.jsx",
+        "description": "Authentic vector 4-chamber internal longitudinal cross-section schematic of the human heart with interactive pins A-F (atria, ventricles, aorta, pulmonary artery)",
+        "layer": "A"
+      },
+      {
+        "name": "PlantCellSvg",
+        "path": "src/components/workspace/modalities/diagram_bank/PlantCellSvg.jsx",
+        "description": "Authentic Heart-Standard eukaryotic plant cell ultrastructure cross-section (cellulose cell wall, plasma membrane, large central vacuole with tonoplast, chloroplasts with thylakoids, nucleus, endoplasmic reticulum, Golgi apparatus, mitochondria) for Life Sciences Grade 10 and Natural Sciences Grade 9.",
+        "layer": "A",
+        "status": "built",
+        "note": "Heart-Standard Milestone 5 component embedding publication-grade Campbell Biology Textbook Master plate and NSC Exam Stipple line-art plate in public/diagrams/, transparent SVG pin overlay with InteractiveCallouts, calibrated diagram_anchors/plant_cell.json, and zero hand-coded SVG clipart."
+      },
+      {
+        "name": "AnimalCellSvg",
+        "path": "src/components/workspace/modalities/diagram_bank/AnimalCellSvg.jsx",
+        "description": "Authentic Heart-Standard eukaryotic animal cell ultrastructure (plasma membrane, cytoplasm matrix, nucleus with double envelope and nucleolus, rough/smooth endoplasmic reticulum, Golgi apparatus, centrosome with centrioles, mitochondria cristae, lysosomes) for Life Sciences Grade 10 and Natural Sciences Grade 9.",
+        "layer": "A",
+        "status": "built",
+        "note": "Heart-Standard Milestone 5 component embedding publication-grade OpenStax/LadyofHats Textbook Master plate and NSC Exam Stipple line-art plate in public/diagrams/, transparent SVG pin overlay with InteractiveCallouts, calibrated diagram_anchors/animal_cell.json, and zero hand-coded SVG clipart."
+      },
+      {
+        "name": "DiagramBankIndex",
+        "path": "src/components/workspace/modalities/diagram_bank/index.js",
+        "description": "Central registry module mapping image_type strings to banked SVG vector components with getBankedDiagramComponent resolver",
+        "layer": "A"
+      },
+      {
+        "name": "OpticsRayModalityRenderer",
+        "path": "src/components/workspace/modalities/OpticsRayModalityRenderer.jsx",
+        "description": "Procedural Snell's law refraction and total internal reflection ray diagram renderer for Physical Sciences Grade 11."
+      },
+      {
+        "name": "HumanEyeSvg",
+        "path": "src/components/workspace/modalities/diagram_bank/HumanEyeSvg.jsx",
+        "description": "Authentic Heart-Standard longitudinal cross-section of the human eye (sclera, choroid, retina, cornea, iris, lens, ciliary body, suspensory ligaments, fovea, blind spot, optic nerve) for Life Sciences Grade 12 and Natural Sciences Grade 8.",
+        "note": "Heart-Standard Milestone 3 component embedding publication-grade Textbook Master plate and NSC Exam Stipple line-art plate in public/diagrams/, transparent SVG pin overlay with InteractiveCallouts, calibrated diagram_anchors/human_eye.json, and zero hand-coded SVG clipart.",
+        "status": "built"
+      },
+      {
+        "name": "GalvanicCellSvg",
+        "path": "src/components/workspace/modalities/diagram_bank/GalvanicCellSvg.jsx",
+        "description": "Vector electrochemical apparatus schematic (anode/cathode half-cells, U-tube salt bridge, voltmeter, electron flow) for Physical Sciences Grade 12."
+      },
+      {
+        "name": "HumanDigestiveSvg",
+        "path": "src/components/workspace/modalities/diagram_bank/HumanDigestiveSvg.jsx",
+        "description": "Vector coronal anatomical schematic of the human digestive system (mouth, esophagus, stomach, liver, pancreas, intestines) for Natural Sciences Grade 9.",
+        "note": "Authentic Heart-Standard coronal alimentary canal component with anatomical Textbook Master plate and NSC Exam Stipple line-art plate in public/diagrams/, transparent SVG pin overlay with InteractiveCallouts, calibrated diagram_anchors/digestive_system.json, and zero hand-coded SVG clipart."
+      },
+      {
+        "name": "CognitiveSidecarDrawer",
+        "path": "src/components/workspace/visual_aids/CognitiveSidecarDrawer.jsx",
+        "description": "Unified 2-Tab Archetype Enhancement Companion Drawer (Tab 1: Annotated Master Atlas & Multi-Scale Context; Tab 2: Live Process Simulation & SimuLearn Worked Replay) with stage-based access governance (locked during Exam/Diagnostic modes).",
+        "layer": "D"
+      },
+      {
+        "name": "PeriodicTableAid",
+        "path": "src/components/workspace/visual_aids/PeriodicTableAid.jsx",
+        "description": "Interactive 118-element periodic table with Bohr electron shells concentric SVG, Pauling electronegativity heatmap, and valence electron configurations",
+        "layer": "D"
+      },
+      {
+        "name": "UnitCircleTrigAid",
+        "path": "src/components/workspace/visual_aids/UnitCircleTrigAid.jsx",
+        "description": "Dynamic Cartesian unit circle with rotating angle slider, exact surd ratios table, ASTC quadrant rules, and live simultaneous sine/cosine waveform traces",
+        "layer": "D"
+      },
+      {
+        "name": "BiomolecularStructureAid",
+        "path": "src/components/workspace/visual_aids/BiomolecularStructureAid.jsx",
+        "description": "Life Sciences biomolecule explorer (B-DNA, tRNA, hemoglobin, lysozyme) with direct one-click Mol* 3D Sidecar launch integration (sidecar://biomolecular-structure-viewer)",
+        "layer": "D"
+      },
+      {
+        "name": "visualAidRegistry",
+        "path": "src/components/workspace/visual_aids/visualAidRegistry.js",
+        "description": "Central catalog and topic-matching engine mapping curriculum topics, subjects, and question modalities to pedagogical visual aids",
+        "layer": "D"
+      },
+      {
+        "name": "TitrationApparatusSvg",
+        "path": "src/components/workspace/modalities/diagram_bank/TitrationApparatusSvg.jsx",
+        "description": "Vector stoichiometric acid-base titration apparatus schematic (retort stand, graduated burette, stopcock tap, conical flask, indicator solution, white tile) with interactive pins A-F for Physical Sciences Grade 12.",
+        "layer": "A"
+      },
+      {
+        "name": "PlantLeafSvg",
+        "path": "src/components/workspace/modalities/diagram_bank/PlantLeafSvg.jsx",
+        "description": "Authentic Heart-Standard 3D histological dicotyledonous leaf transverse cross-section block (cuticle, upper epidermis, columnar palisade mesophyll, spongy mesophyll, bundle sheath, xylem, phloem, lower epidermis, guard cells, stoma) for Life Sciences Grade 10 and Grade 11.",
+        "layer": "A",
+        "status": "built",
+        "note": "Heart-Standard Milestone 5 component embedding publication-grade Campbell Biology Textbook Master plate and NSC Exam Stipple line-art plate in public/diagrams/, transparent SVG pin overlay with InteractiveCallouts, calibrated diagram_anchors/plant_leaf.json, and zero hand-coded SVG clipart."
+      },
+      {
+        "name": "ThinLensRayTracingSvg",
+        "path": "src/components/workspace/modalities/ThinLensRayTracingSvg.jsx",
+        "description": "Procedural thin lens geometrical optics ray tracing component rendering converging biconvex and diverging biconcave principal rays (parallel to focus, through optical center, through focus to parallel) and real/virtual image formation for Physical Sciences Grade 11.",
+        "layer": "A"
+      },
+      {
+        "name": "HumanEarSvg",
+        "path": "src/components/workspace/modalities/diagram_bank/HumanEarSvg.jsx",
+        "description": "Authentic Heart-Standard coronal cross-section of the human ear for hearing transduction and balance equilibrium (pinna, auditory canal, tympanic membrane, malleus, incus, stapes, semicircular canals, cochlea, auditory nerve, Eustachian tube) for Life Sciences Grade 12 and Natural Sciences Grade 9.",
+        "status": "built",
+        "note": "Heart-Standard Milestone 3 component embedding publication-grade Textbook Master plate and NSC Exam Stipple line-art plate in public/diagrams/, transparent SVG pin overlay with InteractiveCallouts, calibrated diagram_anchors/human_ear.json, and zero hand-coded SVG clipart."
+      },
+      {
+        "name": "AlveolusGasExchangeSvg",
+        "path": "src/components/workspace/modalities/diagram_bank/AlveolusGasExchangeSvg.jsx",
+        "description": "Microscopic pulmonary alveolus and capillary vector schematic for respiratory gas exchange (Gr11 Life Sciences)",
+        "status": "built"
+      },
+      {
+        "name": "IntestinalVillusSvg",
+        "path": "src/components/workspace/modalities/diagram_bank/IntestinalVillusSvg.jsx",
+        "description": "Longitudinal section vector of an intestinal villus for nutrient absorption (Gr11 Life Sciences)",
+        "status": "built"
+      },
+      {
+        "name": "MitosisStagesSvg",
+        "path": "src/components/workspace/modalities/diagram_bank/MitosisStagesSvg.jsx",
+        "description": "Authentic Heart-Standard four-phase somatic mitosis sequential schematic illustrating Prophase, Metaphase, Anaphase, Telophase/Cytokinesis (2n = 4) for Life Sciences Grade 10.",
+        "status": "built",
+        "note": "Heart-Standard Milestone 5 component embedding publication-grade Textbook Master plate and NSC Exam Stipple line-art plate in public/diagrams/, transparent SVG pin overlay with InteractiveCallouts, calibrated diagram_anchors/mitosis_stages.json, and zero hand-coded SVG clipart."
+      },
+      {
+        "name": "MeiosisCrossingOverSvg",
+        "path": "src/components/workspace/modalities/diagram_bank/MeiosisCrossingOverSvg.jsx",
+        "description": "Authentic Heart-Standard Meiosis Prophase I homologous chromosome pairing (synapsis), bivalent formation, chiasma crossing over, and recombinant chromatid segregation (Gr12 Life Sciences Meiosis Paper 1).",
+        "status": "built",
+        "note": "Heart-Standard Milestone 4 component embedding publication-grade Textbook Master plate and NSC Exam Stipple line-art plate in public/diagrams/, transparent SVG pin overlay with InteractiveCallouts, calibrated diagram_anchors/meiosis_crossing_over.json, and zero hand-coded SVG clipart."
+      },
+      {
+        "name": "EndocrineSystemSvg",
+        "path": "src/components/workspace/modalities/diagram_bank/EndocrineSystemSvg.jsx",
+        "description": "Authentic Heart-Standard human endocrine glandular map (hypothalamus, pituitary gland, thyroid gland, adrenal glands, pancreas, ovaries, testes) for Life Sciences Grade 12 and Natural Sciences Grade 9.",
+        "status": "built",
+        "note": "Heart-Standard Milestone 3 component embedding publication-grade Textbook Master plate and NSC Exam Stipple line-art plate in public/diagrams/, transparent SVG pin overlay with InteractiveCallouts, calibrated diagram_anchors/endocrine_system.json, and zero hand-coded SVG clipart."
+      },
+      {
+        "name": "TransverseWaveSvg",
+        "path": "src/components/workspace/modalities/diagram_bank/TransverseWaveSvg.jsx",
+        "description": "Sinusoidal periodic transverse wave vector showing crest, trough, amplitude, wavelength, and points in phase (Gr10 Physical Sciences)",
+        "status": "built"
+      },
+      {
+        "name": "InteractiveCallouts.jsx",
+        "path": "src/components/workspace/modalities/diagram_bank/InteractiveCallouts.jsx",
+        "description": "Calculates non-overlapping elbow polyline leader lines from anatomical coordinate anchors to margin callout badges. Implements strict zero-answer-leakage assessment pin contract."
+      },
+      {
+        "name": "CardiovascularAtlasAid",
+        "path": "src/components/workspace/visual_aids/CardiovascularAtlasAid.jsx",
+        "description": "Interactive exploratory visual aid in CognitiveSidecarDrawer comparing 3D textbook coronal cross-section, directional blood flow schematic, 2D examination ink-stipple line-art, and 3-phase cardiac cycle states.",
+        "layer": "D"
+      },
+      {
+        "name": "AlveolusGasExchangeSvg.jsx",
+        "path": "src/components/workspace/modalities/diagram_bank/AlveolusGasExchangeSvg.jsx",
+        "note": "Authentic Heart-Standard pulmonary alveolus and capillary gas exchange component with microscopic Textbook Master plate and NSC Exam Stipple line-art plate in public/diagrams/, transparent SVG pin overlay with InteractiveCallouts, and calibrated diagram_anchors/alveolus_gas_exchange.json."
+      },
+      {
+        "name": "IntestinalVillusSvg.jsx",
+        "path": "src/components/workspace/modalities/diagram_bank/IntestinalVillusSvg.jsx",
+        "note": "Authentic Heart-Standard intestinal villus histology component with microscopic Textbook Master plate and NSC Exam Stipple line-art plate in public/diagrams/, transparent SVG pin overlay with InteractiveCallouts, and calibrated diagram_anchors/intestinal_villus.json."
+      },
+      {
+        "name": "GeoGebraGeometryRenderer.jsx",
+        "path": "src/components/workspace/shared/mathx/GeoGebraGeometryRenderer.jsx",
+        "description": "GeoGebra+ vector geometry engine for geometric dot/matchstick pattern sequences, 4-quadrant CAST trig diagrams, radian circular sectors with arc length callouts, and 3D isometric wireframes with 2D unfolded surface nets."
+      },
+      {
+        "name": "FunctionGraph.jsx",
+        "path": "src/components/workspace/FunctionGraph.jsx",
+        "description": "Desmos+ / GeoGebra+ multi-curve Cartesian and Argand coordinate plotter supporting linear, parabola, hyperbola, exponential, trig, and cubic functions with automated stationary/inflection points, asymptotes, tangent lines, Argand complex vectors, and trapezoidal rule numerical integration."
+      },
+      {
+        "name": "StatsAndFinancialGraphRenderer.jsx",
+        "path": "src/components/workspace/shared/mathx/StatsAndFinancialGraphRenderer.jsx",
+        "description": "GeoGebra+ statistical, probability, and financial graph renderer for 5-number Box-and-Whisker summaries, Cumulative Frequency Ogive curves with quartile drop-lines, least-squares scatter regressions, multi-stage compound interest timelines, 3-event Venn diagrams, and stepped block municipal tariffs."
+      },
+      {
+        "name": "PhysicsAndEconomicsGraphRenderer.jsx",
+        "path": "src/components/workspace/shared/mathx/PhysicsAndEconomicsGraphRenderer.jsx",
+        "description": "GeoGebra+ physics and economics graph renderer for vertical projectile kinematics motion graphs (v-t, x-t, a-t), exothermic/endothermic potential energy reaction profiles with activation energy and catalyst pathways, and EMS market supply & demand equilibrium curves."
+      },
+      {
+        "name": "SuperAdminArchetypeWorkbench.jsx",
+        "path": "src/components/admin/SuperAdminArchetypeWorkbench.jsx",
+        "note": "Authenticated platform owner studio for seed execution, diagram inspection, marking rubric evaluation, and Firestore vetting persistence."
+      },
+      {
+        "name": "atlasRenderEngine.js",
+        "path": "src/components/workspace/shared/atlas3d/atlasRenderEngine.js",
+        "description": "Three.js Paper & Ink rendering engine (#FAF8F3 paper palette, charcoal ink edges, dual Perspective/Orthographic camera rig, raycaster picker)."
+      },
+      {
+        "name": "atlasPartsKit.js",
+        "path": "src/components/workspace/shared/atlas3d/atlasPartsKit.js",
+        "description": "Reusable 3D apparatus kit (vector arrows, resistors, springs, pulleys, coordinate grids, CPK atoms)."
+      },
+      {
+        "name": "AtlasCanvas3D.jsx",
+        "path": "src/components/workspace/shared/atlas3d/AtlasCanvas3D.jsx",
+        "description": "Declarative React Three.js Paper & Ink canvas with camera rig controls and CalculationPopoverCard integration."
+      },
+      {
+        "name": "CalculationPopoverCard.jsx",
+        "path": "src/components/workspace/shared/atlas3d/CalculationPopoverCard.jsx",
+        "description": "Interactive formula-to-substitution-to-result inspection card for 3D vectors, circuit components, lattice ions, and physiological structures."
+      },
+      {
+        "name": "AtlasSyncChartSvg.jsx",
+        "path": "src/components/workspace/shared/atlas3d/AtlasSyncChartSvg.jsx",
+        "description": "Synchronized 2D companion SVG chart linked in real time to 3D Paper & Ink simulations."
+      },
+      {
+        "name": "AtomicBondingLatticeAtlasAid.jsx",
+        "path": "src/components/workspace/visual_aids/AtomicBondingLatticeAtlasAid.jsx",
+        "description": "3D Paper & Ink Bohr/orbital shells, VSEPR molecular geometry, and NaCl/Diamond/Graphite crystal lattice explorer."
+      },
+      {
+        "name": "KineticMatterStatesAtlasAid.jsx",
+        "path": "src/components/workspace/visual_aids/KineticMatterStatesAtlasAid.jsx",
+        "description": "3D Paper & Ink kinetic molecular theory particle chamber with phase transitions and heating curve."
+      },
+      {
+        "name": "CircuitPotentialAtlasAid.jsx",
+        "path": "src/components/workspace/visual_aids/CircuitPotentialAtlasAid.jsx",
+        "description": "3D Paper & Ink electric circuit potential elevation explorer with electron drift velocity slowing in resistors."
+      },
+      {
+        "name": "NewtonMechanicsAtlasAid.jsx",
+        "path": "src/components/workspace/visual_aids/NewtonMechanicsAtlasAid.jsx",
+        "description": "3D Paper & Ink inclined plane & pulley mechanics sandbox with live gravitational weight decomposition popovers."
+      },
+      {
+        "name": "KinematicsProjectileAtlasAid.jsx",
+        "path": "src/components/workspace/visual_aids/KinematicsProjectileAtlasAid.jsx",
+        "description": "3D Paper & Ink vertical projectile motion strobe tower with synchronized v-t, y-t, and a-t graphs."
+      },
+      {
+        "name": "ElectrochemistryAndTitrationAtlasAid.jsx",
+        "path": "src/components/workspace/visual_aids/ElectrochemistryAndTitrationAtlasAid.jsx",
+        "description": "3D Paper & Ink galvanic/electrolytic half-cell ion migration and acid-base titration explorer."
+      },
+      {
+        "name": "Trig3DElevationAtlasAid.jsx",
+        "path": "src/components/workspace/visual_aids/Trig3DElevationAtlasAid.jsx",
+        "description": "3D Paper & Ink two-plane trigonometry explorer unfolding horizontal bearing and vertical elevation triangles."
+      },
+      {
+        "name": "CalculusFirstPrinciplesAtlasAid.jsx",
+        "path": "src/components/workspace/visual_aids/CalculusFirstPrinciplesAtlasAid.jsx",
+        "description": "3D Paper & Ink differential calculus secant-to-tangent limit explorer and 3D optimization box folding."
+      },
+      {
+        "name": "EuclideanCircleTheoremAtlasAid.jsx",
+        "path": "src/components/workspace/visual_aids/EuclideanCircleTheoremAtlasAid.jsx",
+        "description": "3D Paper & Ink circle geometry theorem proof sandbox elevating subtended arcs and cyclic quads into Z-layers."
+      },
+      {
+        "name": "DigestivePeristalsisAtlasAid.jsx",
+        "path": "src/components/workspace/visual_aids/DigestivePeristalsisAtlasAid.jsx",
+        "description": "3D Paper & Ink alimentary canal peristalsis wave simulator and intestinal villus nutrient absorption."
+      },
+      {
+        "name": "HumanEyeAccommodationAtlasAid.jsx",
+        "path": "src/components/workspace/visual_aids/HumanEyeAccommodationAtlasAid.jsx",
+        "description": "3D Paper & Ink human eye accommodation and pupillary reflex simulator."
+      },
+      {
+        "name": "PhysiologyExchangeAtlasAid.jsx",
+        "path": "src/components/workspace/visual_aids/PhysiologyExchangeAtlasAid.jsx",
+        "description": "3D Paper & Ink alveolus gas diffusion and nephron ultrafiltration pressure gradient explorer."
+      },
+      {
+        "name": "GeneticsMeiosisAtlasAid.jsx",
+        "path": "src/components/workspace/visual_aids/GeneticsMeiosisAtlasAid.jsx",
+        "description": "3D Paper & Ink Meiosis I & II crossing-over and DNA transcription/translation explorer."
+      },
+      {
+        "name": "ParticleModelSvg.jsx",
+        "path": "src/components/workspace/modalities/diagram_bank/ParticleModelSvg.jsx",
+        "description": "Heart-Standard dual-mode particle model of matter: Static Exam Plate with calibrated letter pins and Alive Mode with molecular agitation, temperature slider, and state change heating curve zoom.",
+        "status": "built"
+      },
+      {
+        "name": "GeyserHeatingElementSvg.jsx",
+        "path": "src/components/workspace/modalities/diagram_bank/GeyserHeatingElementSvg.jsx",
+        "description": "Heart-Standard dual-mode domestic geyser heating element: Static Exam Plate with calibrated letter pins and Alive Mode with current flow, Joule heating glow, convection currents, and thermostat trip simulation.",
+        "status": "built"
+      },
+      {
+        "name": "OpticalTelescopesSvg.jsx",
+        "path": "src/components/workspace/modalities/diagram_bank/OpticalTelescopesSvg.jsx",
+        "description": "Heart-Standard dual-mode astronomical optical telescopes: Static Refracting/Reflecting ray path plates with letter pins and Alive Mode with wavefront propagation, chromatic aberration toggle, and focal convergence.",
+        "status": "built"
+      },
+      {
+        "name": "PolynomialFunctionsAtlasAid.jsx",
+        "path": "src/components/workspace/visual_aids/PolynomialFunctionsAtlasAid.jsx",
+        "description": "Dual-capacity Mathematics interactive companion (Annotated Master Atlas + Live Coefficient Sliders a, b, c, d / p, q with drifting roots, turning points f'(x)=0, inflection f''(x)=0, asymptotes, and derivative tangent scrubber at x0).",
+        "layer": "D",
+        "status": "built"
+      },
+      {
+        "name": "NumberPatternsGrowthAtlasAid.jsx",
+        "path": "src/components/workspace/visual_aids/NumberPatternsGrowthAtlasAid.jsx",
+        "description": "Dual-capacity Mathematics interactive companion for Linear and Quadratic Number Patterns (Finite Difference Table Atlas Delta_1 & Delta_2 = 2a + Live Stage Scrubber n = 1..10 decomposing constant core vs growing perimeter and plotting (n, Tn)).",
+        "layer": "D",
+        "status": "built"
+      },
+      {
+        "name": "MathLitDiagramRenderer",
+        "path": "src/components/workspace/shared/mathx/MathLitDiagramRenderer.jsx",
+        "status": "built",
+        "description": "High-fidelity vector diagram renderer for Mathematical Literacy questions (floor plans, bar scales, strip maps, seating charts, packaging cartons, mensuration 2D/3D)."
       }
     ],
-    "planned": []
+    "planned": [],
+    "MathLitAtlasAid": {
+      "path": "src/components/workspace/visual_aids/MathLitAtlasAid.jsx",
+      "status": "built",
+      "description": "Dedicated Cognitive Sidecar Visual Aid for Mathematical Literacy (Grades 10-12): Tab 1 Annotated Master Atlas, Tab 2 Interactive Scale, Tariff, and Packaging Lab."
+    },
+    "MathLitDiagramRenderer": {
+      "path": "src/components/workspace/shared/mathx/MathLitDiagramRenderer.jsx",
+      "status": "built",
+      "description": "Mathematical literacy SVG stimulus diagram renderer: floor plans, street maps, bar scales, packaging cartons, and cartesian piecewise systems."
+    },
+    "CommerceAndAccountingAtlasAid": {
+      "path": "src/components/workspace/visual_aids/CommerceAndAccountingAtlasAid.jsx",
+      "status": "built",
+      "description": "Dedicated Cognitive Sidecar Visual Aid for EMS (Gr 7-9), Accounting (Gr 10-12), and Business Studies (Gr 10-12): Tab 1 Annotated Master Atlas (Cycle, T-Accounts, PESTLE), Tab 2 Interactive Lab (A = OE + L, VAT 15%, Break-Even CVP)."
+    }
   },
   "firestoreCollections": {
     "built": [
@@ -1528,6 +3208,10 @@
       {
         "collection": "interest_submissions/{submissionId}",
         "description": "Landing page lead and expression of interest form submissions."
+      },
+      {
+        "collection": "archetype_vetting_records",
+        "description": "Stores Super Admin certification verdicts, pedagogical review notes, and component ratings per topic and seed."
       }
     ],
     "planned": []
@@ -1958,7 +3642,10 @@
     "Curriculum Matrix Multi-Track Evaluation & Cognitive Audit Invariant: Complete, zero-theater Playwright evaluation across all 30 official Senior (Grades 7–9) and FET (Grades 10–12) curriculum tracks. Every single test execution must record authentic question generation prompts, learner answer submissions, and backend marking evaluation outcomes into an inspectable JSON/HTML cognitive audit ledger (reports/cognitive_audit/question_input_eval_log.json/html) to certify end-to-end pedagogical and procedural integrity with zero simulated mocks.",
     "Curriculum Source Grounding & Consultation Law: Whenever authoring, renovating, expanding, or improving question generators (including seed entropy, archetypes, distractors, worked solutions, and marking schemas), agents must consult the authentic source documents (.md files) at fundile-tlassistant-vite\\caps-ai-backend\\curriculum_docs_auto\\ (and root curriculum_docs_auto\\) for pacing and exam weighting, and the curriculum_docs\\ folder in the project root (and caps-ai-backend\\curriculum_docs\\) for conceptual depth and syllabus completeness. All edits must be grounded in these source documents before writing code.",
     "Unified Cross-Platform DNA & Archetype Modality Contract: Ensures 100% UI and layout parity between Browser Desktop and Desktop App (isStandaloneApp()), rendering unified Header and DesktopCommandRail across both surfaces. Declutters Mobile WebAPK by eliminating fake graduation caps in favor of FundileLogo and student monogram avatars, removing redundant bottom-nav Desk buttons, embedding the Self-Paced vs. Classwork mode toggle into the persistent mobile header ribbon, and rendering dynamic phase-enrolled subjects styled with subjectPalette.js tokens. Guarantees archetype-level question determination with explicit modality ('semantic' | 'math' | 'ledger' | 'diagram' | 'arithmetic_grid'), discrete marking_schema marking points with target concepts, authoritative expected_answer, and solution_type across all 253+ generators and generator_registry.py normalization, completely eliminating frontend guessing heuristics.",
-    "Pan-African Regional Curriculum & Skeleton Routing Architecture: All incoming root traffic (/) is directed to /za (the fully live South African national curriculum platform). Skeleton landing pages for upcoming national curricula (/zw for Zimbabwe ZIMSEC, /tz for Tanzania NECTA, /ke for Kenya CBC, /gh for Ghana NaCCA/WAEC, /ng for Nigeria WAEC/JAMB) provide localized curriculum specifications, planned subject roadmaps, and early access waitlist capture via DemandCaptureForm while allowing visitors to switch to the active South African platform at any time."
+    "Pan-African Regional Curriculum & Skeleton Routing Architecture: All incoming root traffic (/) is directed to /za (the fully live South African national curriculum platform). Skeleton landing pages for upcoming national curricula (/zw for Zimbabwe ZIMSEC, /tz for Tanzania NECTA, /ke for Kenya CBC, /gh for Ghana NaCCA/WAEC, /ng for Nigeria WAEC/JAMB) provide localized curriculum specifications, planned subject roadmaps, and early access waitlist capture via DemandCaptureForm while allowing visitors to switch to the active South African platform at any time.",
+    "Scientific, Anatomical & Geographic Diagram Authenticity Law (The Heart Standard / Zero-Clip-Art Invariant): Any diagram depicting biological anatomy (cytology, organ systems, histology, botany, reproduction, genetics), geographic features (landforms, tectonic plates, rock strata, atmospheric profiles), or complex laboratory apparatus (distillation, titration, galvanic cells) MUST strictly follow the Heart architecture gold standard: high-resolution, unlabelled visual plates stored in public/diagrams/ (pure white #FFFFFF background, 0 baked labels/letters/arrows; Campbell Biology / OpenStax textbook master + NSC exam black-and-white pen-and-ink stipple line-art) overlaid with transparent SVG InteractiveCallouts (horizontal elbow pins, collision-free margin badges), server-side anchor manifests (app/data/diagram_anchors/<diagram>.json), and anti-leak security tokens (ref_1). Drawing synthetic SVG polygon/path/CSS gradient approximations in JSX to represent organic anatomy or apparatus is permanently banned.",
+    "Unified Two-Surface Diagram Doctrine (diagram_doctrine.md): Enforces strict separation between Surface 1 (Static, question-dedicated 2D exam figures on pure white #FFFFFF with zero permanent cross-grade labels and dynamic grade_mask pin isolation) and Surface 2 (Unified 2-Tab Archetype Enhancement Companion in CognitiveSidecarDrawer.jsx housing Tab 1 Annotated Master Atlas and Tab 2 Live Process Simulation & SimuLearn Replay).",
+    "Mathematics Dual-Capacity Visual Standard (diagram_doctrine.md Section 2): In Question Cards, Cartesian graphs, Euclidean geometry figures, number patterns, and 3D mensuration solids render as 100% static 2D exam figures so students deduce properties algebraically/geometrically. In the Enhancement Companion, these same concepts unlock both an Annotated Master Atlas and Live Interactive Parameter Sliders (PolynomialFunctionsAtlasAid.jsx for coefficients a, b, c, d / p, q and derivative tangent scrubbing; EuclideanCircleTheoremAtlasAid.jsx for circle proof layers; NumberPatternsGrowthAtlasAid.jsx for stage n growth decomposition)."
   ],
   "openQuestions": [],
   "planningDocuments": [
@@ -1991,6 +3678,65 @@
       "path": "fundile_ecosystem_and_admin_connectivity.md",
       "covers": "Four-Tier Ecosystem Architecture (Learner, Teacher LMS, School Admin, Superadmin), End-to-End Interconnection, and Mobile Readiness Roadmap",
       "sizeKB": 18.5
+    },
+    {
+      "name": "diagram_architecture_and_visual_aids_master_plan.md",
+      "path": "reports/topic_diagram_review.md",
+      "covers": "Comprehensive Diagram Architecture, Generated vs Banked Sourcing, 476-Topic Need Tiers, Central Registry & Visual Aids Sidecar",
+      "sizeKB": 14.5
+    },
+    {
+      "name": "science_diagrams_comprehensive_audit.md",
+      "path": "docs/science_diagrams_comprehensive_audit.md",
+      "covers": "Comprehensive Science Diagram Audit (Gr 7-12 Natural, Life & Physical Sciences), 4 Technical Architectures, Heart Quality Gap Analysis & Roadmap",
+      "sizeKB": 18.0
+    },
+    {
+      "name": "topic_archetypes_and_entropy_report.md",
+      "path": "reports/topic_archetypes_and_entropy_report.md",
+      "covers": "Comprehensive Grade-by-Grade and Topic-by-Topic Archetype & Entropy Audit (458 topics, 2,570 archetypes, 1-20 scale)",
+      "sizeKB": 1630.0
+    },
+    {
+      "name": "CURRICULUM_TOPIC_ARCHETYPES_AND_ENTROPY.md",
+      "path": "CURRICULUM_TOPIC_ARCHETYPES_AND_ENTROPY.md",
+      "covers": "Exhaustive Grade-by-Grade Topic Archetype Inventory & Generative Entropy Audit (458 topics, 2,570 archetypes across Grades 7-12)",
+      "sizeKB": 1789.0
+    },
+    {
+      "name": "diagram_doctrine.md",
+      "path": "diagram_doctrine.md",
+      "covers": "The Fundile Diagram Doctrine: Two-Surface Architecture, Mathematics Dual-Capacity Standard, Three-Category Engine Matrix, and Question-Dedicated Pin Isolation",
+      "sizeKB": 14.8
+    },
+    {
+      "name": "unified_visual_architecture_and_workspace_direction.md",
+      "path": "unified_visual_architecture_and_workspace_direction.md",
+      "covers": "Unified Visual Architecture & Workspace Direction: Paper Folio Question Ergonomics, Unified 2-Tab Enhancement Companion, and Stage-Based Access Governance",
+      "sizeKB": 12.4
     }
-  ]
+  ],
+  "lastUpdated": "2026-11-10T12:12:24.296372+00:00",
+  "version": "0.9.30",
+  "diagramArchetypesCatalog": {
+    "totalDiagramMasters": 47,
+    "totalCurriculumTracksTested": 55,
+    "totalExplicitArchetypesCertified": 58,
+    "auditStatus": "PASS (Exit Code 0)",
+    "seedStandard": "Seed 1 Direct Execution (Zero Seed-Rolling)",
+    "superAdminWorkbenchIntegration": "Built and verified",
+    "totalVisualAidsRegistered": 22
+  },
+  "adminComponents": {
+    "archetypeIteration": {
+      "status": "built",
+      "component": "src/components/admin/SuperAdminArchetypeWorkbench.jsx",
+      "description": "Super Admin linear archetype iteration mode bypassing adaptive progression across 1..N archetypes with infinite cycle seed entropy.",
+      "endpoints": [
+        "/api/admin/vet/catalog",
+        "/api/admin/vet/generate",
+        "/api/admin/vet/topic-archetypes"
+      ]
+    }
+  }
 }

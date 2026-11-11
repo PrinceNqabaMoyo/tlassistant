@@ -15,6 +15,14 @@ import random
 from typing import Any, Dict, List, Optional
 import sympy as sp
 
+SUBSKILLS = [
+    "linear_equations",
+    "verbal_to_algebraic",
+    "numerical_substitution",
+    "identify_expression_parts",
+    "collect_like_terms"
+]
+
 
 def _generate_verbal_translation_question(rng: random.Random) -> Dict[str, Any]:
     """Translates verbal statements into algebraic expressions."""
@@ -208,6 +216,133 @@ def _generate_linear_equation_question(rng: random.Random) -> Dict[str, Any]:
     }
 
 
+def _generate_parts_of_expression_question(rng: random.Random) -> Dict[str, Any]:
+    """Identifies components: variables, coefficients, constant term, number of terms."""
+    var = rng.choice(["x", "y", "m"])
+    c1 = rng.randint(2, 7)
+    c2 = rng.randint(2, 9)
+    const = rng.randint(3, 15)
+    sign = rng.choice(["+", "-"])
+
+    expr_latex = f"{c1}{var}^2 {sign} {c2}{var} + {const}"
+
+    prompt = (
+        f"Consider the algebraic expression:\n\n"
+        f"$${expr_latex}$$\n\n"
+        f"1. How many terms are in this expression?\n"
+        f"2. Write down the variable used in this expression.\n"
+        f"3. Write down the coefficient of ${var}$.\n"
+        f"4. State the constant term."
+    )
+    coef_var = f"-{c2}" if sign == "-" else f"{c2}"
+    sol = (
+        f"**Step 1:** The expression has **3 terms**: ${c1}{var}^2$, ${sign}{c2}{var}$, and $+{const}$.\n\n"
+        f"**Step 2:** The variable is **${var}$**.\n\n"
+        f"**Step 3:** The coefficient of ${var}$ is **${coef_var}$**.\n\n"
+        f"**Step 4:** The constant term is **${const}$**."
+    )
+    return {
+        "id": f"g7_math_alg_parts_{rng.randint(100000, 999999)}",
+        "question_type": "typed",
+        "prompt": prompt,
+        "prompt_latex": prompt,
+        "answer_mode": "text",
+        "correct_answer": f"3; {var}; {coef_var}; {const}",
+        "answer_latex": f"3,\\ {var},\\ {coef_var},\\ {const}",
+        "explanation": sol,
+        "canonical_solution": sol,
+        "marks": 4,
+        "term": 2,
+        "caps_weight_percent": 10,
+        "suggested_duration_mins": 3,
+        "subskill": "identify_expression_parts",
+        "learning_objective_id": "math_g7_algebra_parts",
+        "misconception_tags": ["confused_coefficient_and_exponent"],
+        "diagnostic_tags": ["algebra", "terminology"],
+        "minimum_mastery_score": 75,
+        "keywords": ["terms", "variable", "coefficient", "constant term"],
+        "marking_schema": {
+            "total_marks": 4,
+            "marking_points": [
+                {"id": "mp_1", "desc": "Number of terms (3)", "marks": 1, "editable": True},
+                {"id": "mp_2", "desc": f"Variable ({var})", "marks": 1, "editable": True},
+                {"id": "mp_3", "desc": f"Coefficient ({coef_var})", "marks": 1, "editable": True},
+                {"id": "mp_4", "desc": f"Constant ({const})", "marks": 1, "editable": True}
+            ],
+            "deductions": [],
+            "carry_forward_rule": "consequential_accuracy"
+        },
+        "hints": {
+            "tier_1": "Terms are separated by plus (+) and minus (-) signs.",
+            "tier_2": f"A coefficient is the number multiplying the variable. The constant term has no variable.",
+            "tier_3": f"Terms: 3, Variable: {var}, Coefficient of {var}: {coef_var}, Constant: {const}."
+        }
+    }
+
+
+def _generate_collect_like_terms_question(rng: random.Random) -> Dict[str, Any]:
+    """Simplifies linear expression by grouping like terms."""
+    var = rng.choice(["x", "y", "a", "b"])
+    c1 = rng.randint(3, 8)
+    c2 = rng.randint(2, 6)
+    k1 = rng.randint(2, 12)
+    k2 = rng.randint(1, 9)
+
+    tot_var = c1 + c2
+    tot_const = k1 + k2
+
+    prompt = (
+        f"Simplify the following algebraic expression by grouping and combining like terms:\n\n"
+        f"$${c1}{var} + {k1} + {c2}{var} + {k2}$$"
+    )
+    sol = (
+        f"**Step 1:** Group like terms together (variable terms and constant terms):\n\n"
+        f"$$({c1}{var} + {c2}{var}) + ({k1} + {k2})$$\n\n"
+        f"**Step 2:** Combine like terms:\n\n"
+        f"$$= {tot_var}{var} + {tot_const}$$\n\n"
+        f"$$\\therefore \\text{{Simplified expression is }} \\mathbf{{{tot_var}{var} + {tot_const}}}$$"
+    )
+    ans_str = f"{tot_var}*{var} + {tot_const}"
+    ans_latex = f"{tot_var}{var} + {tot_const}"
+    return {
+        "id": f"g7_math_alg_like_{rng.randint(100000, 999999)}",
+        "question_type": "typed",
+        "prompt": prompt,
+        "prompt_latex": prompt,
+        "answer_mode": "math",
+        "correct_answer": ans_str,
+        "answer_latex": ans_latex,
+        "answer_sympy": ans_str,
+        "explanation": sol,
+        "canonical_solution": sol,
+        "marks": 3,
+        "term": 2,
+        "caps_weight_percent": 10,
+        "suggested_duration_mins": 3,
+        "subskill": "collect_like_terms",
+        "learning_objective_id": "math_g7_algebra_like_terms",
+        "misconception_tags": ["combined_unlike_terms"],
+        "diagnostic_tags": ["algebra", "like_terms"],
+        "minimum_mastery_score": 75,
+        "keywords": ["like terms", "combine", "simplify"],
+        "marking_schema": {
+            "total_marks": 3,
+            "marking_points": [
+                {"id": "mp_1", "desc": "Grouping like terms together", "marks": 1, "editable": True},
+                {"id": "mp_2", "desc": f"Accurate variable sum {tot_var}{var}", "marks": 1, "editable": True},
+                {"id": "mp_3", "desc": f"Accurate constant sum {tot_const}", "marks": 1, "editable": True}
+            ],
+            "deductions": [],
+            "carry_forward_rule": "consequential_accuracy"
+        },
+        "hints": {
+            "tier_1": f"Only add terms with the same variable together ({c1}{var} and {c2}{var}), and constant numbers together.",
+            "tier_2": f"({c1} + {c2}){var} = {tot_var}{var}, and {k1} + {k2} = {tot_const}.",
+            "tier_3": f"{tot_var}{var} + {tot_const}."
+        }
+    }
+
+
 def generate(
     count: int = 1,
     seed: Optional[int] = None,
@@ -219,29 +354,46 @@ def generate(
     """
     Main entry point for Grade 7 Algebraic Expressions & Equations Question Generator.
     Supports atomic micro-drills:
-    - mode="elementary_translation"
-    - mode="elementary_substitution"
-    - mode="elementary_equations"
-    - mode="compound"
+    - linear_equations
+    - verbal_to_algebraic
+    - numerical_substitution
+    - identify_expression_parts
+    - collect_like_terms
     """
     rng = random.Random(seed) if seed is not None else random.Random()
     questions = []
 
+    sub_str = str(subskill or "").lower()
+
     for _ in range(count):
-        if mode == "elementary_translation" or subskill == "translation":
+        if "like" in sub_str or "collect" in sub_str or "subskill_5" in sub_str:
+            q = _generate_collect_like_terms_question(rng)
+        elif "part" in sub_str or "subskill_4" in sub_str or "identify" in sub_str:
+            q = _generate_parts_of_expression_question(rng)
+        elif "equation" in sub_str or "linear" in sub_str:
+            q = _generate_linear_equation_question(rng)
+        elif "verbal" in sub_str or "trans" in sub_str:
             q = _generate_verbal_translation_question(rng)
-        elif mode == "elementary_substitution" or subskill == "substitution":
+        elif "substitut" in sub_str:
             q = _generate_substitution_question(rng)
-        elif mode == "elementary_equations" or subskill == "equations":
+        elif mode == "elementary_translation":
+            q = _generate_verbal_translation_question(rng)
+        elif mode == "elementary_substitution":
+            q = _generate_substitution_question(rng)
+        elif mode == "elementary_equations":
             q = _generate_linear_equation_question(rng)
         else: # compound
-            picker = rng.choice(["trans", "sub", "eq"])
+            picker = rng.choice(["trans", "sub", "eq", "parts", "like"])
             if picker == "trans":
                 q = _generate_verbal_translation_question(rng)
             elif picker == "sub":
                 q = _generate_substitution_question(rng)
-            else:
+            elif picker == "eq":
                 q = _generate_linear_equation_question(rng)
+            elif picker == "parts":
+                q = _generate_parts_of_expression_question(rng)
+            else:
+                q = _generate_collect_like_terms_question(rng)
         questions.append(q)
 
     return questions

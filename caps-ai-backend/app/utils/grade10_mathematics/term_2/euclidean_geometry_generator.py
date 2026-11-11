@@ -121,6 +121,8 @@ def _build_angle_calculate(r: random.Random, difficulty: str) -> Dict[str, Any]:
     )
     if diagram:
         q["diagram_spec"] = diagram
+    if isinstance(diagram, dict):
+        diagram.setdefault("diagram_role", "context")
     return with_metadata(q, topic=TOPIC, subskill="angle_calculate", learning_objective_id=LO)
 
 
@@ -160,6 +162,8 @@ def _build_parallel_transversal(r: random.Random, difficulty: str) -> Dict[str, 
         explanation=explanation,
     )
     q["diagram_spec"] = diagram
+    if isinstance(diagram, dict):
+        diagram.setdefault("diagram_role", "context")
     return with_metadata(q, topic=TOPIC, subskill="parallel_transversal", learning_objective_id=LO)
 
 
@@ -195,6 +199,8 @@ def _build_triangle_angles(r: random.Random, difficulty: str) -> Dict[str, Any]:
         explanation=explanation,
     )
     q["diagram_spec"] = diagram
+    if isinstance(diagram, dict):
+        diagram.setdefault("diagram_role", "context")
     return with_metadata(q, topic=TOPIC, subskill="triangle_angles", learning_objective_id=LO)
 
 
@@ -227,6 +233,8 @@ def _build_isosceles_base(r: random.Random, difficulty: str) -> Dict[str, Any]:
         explanation=explanation,
     )
     q["diagram_spec"] = diagram
+    if isinstance(diagram, dict):
+        diagram.setdefault("diagram_role", "context")
     return with_metadata(q, topic=TOPIC, subskill="isosceles_base", learning_objective_id=LO)
 
 
@@ -350,6 +358,8 @@ def _build_pythagoras(r: random.Random, difficulty: str) -> Dict[str, Any]:
         explanation=explanation,
     )
     q["diagram_spec"] = diagram
+    if isinstance(diagram, dict):
+        diagram.setdefault("diagram_role", "context")
     return with_metadata(q, topic=TOPIC, subskill="pythagoras", learning_objective_id=LO)
 
 
@@ -383,6 +393,8 @@ def _build_parallelogram_props(r: random.Random, difficulty: str) -> Dict[str, A
         explanation=explanation,
     )
     q["diagram_spec"] = diagram
+    if isinstance(diagram, dict):
+        diagram.setdefault("diagram_role", "context")
     return with_metadata(q, topic=TOPIC, subskill="parallelogram_props", learning_objective_id=LO)
 
 
@@ -462,6 +474,8 @@ def _build_midpoint_theorem(r: random.Random, difficulty: str) -> Dict[str, Any]
         explanation=explanation,
     )
     q["diagram_spec"] = diagram
+    if isinstance(diagram, dict):
+        diagram.setdefault("diagram_role", "context")
     return with_metadata(q, topic=TOPIC, subskill="midpoint_theorem", learning_objective_id=LO)
 
 

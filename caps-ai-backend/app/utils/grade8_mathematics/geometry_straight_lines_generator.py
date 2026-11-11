@@ -1,243 +1,190 @@
-"""Grade 8 Mathematics — Geometry of Straight Lines (Deterministic 6-Pillar Generator).
-Authentic CAPS exam generator covering:
-- Adjacent angles on a straight line: sum to 180° [adj ∠s on str line].
-- Vertically opposite angles: are equal [vert opp ∠s].
-- Parallel lines cut by a transversal:
-  * Corresponding angles are equal [corresp ∠s, AB || CD].
-  * Alternate angles are equal [alt ∠s, AB || CD].
-  * Co-interior angles sum to 180° [co-int ∠s, AB || CD].
-- Algebraic angle equations with geometric reasons.
-Zero-Meta-Curriculum Invariant strictly enforced.
+"""
+Grade 8 Mathematics - Geometry of Straight Lines Generator (50 Semantic Archetypes).
+100% CAPS-aligned deterministic question generator.
+Adheres strictly to the 6-Pillar Generator Contract and Zero-Meta-Curriculum Invariant.
+Grounded in curriculum_docs_auto/Mathematics_Gr8/Term 2/03. Geometry of straight lines.md.
 """
 from __future__ import annotations
 
 import random
-from typing import Any, Dict, List, Optional
+from typing import Any, Callable, Dict, List, Optional
+
+from .geometry_straight_lines_archetypes_01_25 import (
+    BUILDERS_01_25,
+    arch_01_angles_on_straight_line_numerical_two_angles,
+    arch_02_angles_on_straight_line_three_angles,
+    arch_03_perpendicular_lines_adjacent_supplementary,
+    arch_04_angles_on_straight_line_algebraic_linear,
+    arch_05_angles_on_straight_line_multipliers,
+    arch_06_angles_on_straight_line_binomial_expressions,
+    arch_07_angles_on_straight_line_three_algebraic_terms,
+    arch_08_angles_on_straight_line_mixed_terms_and_constant,
+    arch_09_vertically_opposite_angles_numerical,
+    arch_10_vertically_opposite_angles_full_revolution,
+    arch_11_vertically_opposite_angles_algebraic_one_step,
+    arch_12_vertically_opposite_angles_algebraic_two_step,
+    arch_13_vertically_opposite_angles_variables_both_sides,
+    arch_14_intersecting_lines_perpendicular_and_opposite,
+    arch_15_identifying_transversal_and_angle_pairs,
+    arch_16_parallel_lines_corresponding_angles_numerical,
+    arch_17_parallel_lines_alternate_interior_angles_numerical,
+    arch_18_parallel_lines_cointerior_angles_numerical,
+    arch_19_parallel_lines_alternate_exterior_angles_numerical,
+    arch_20_parallel_lines_corresponding_angles_algebraic,
+    arch_21_parallel_lines_alternate_angles_algebraic,
+    arch_22_parallel_lines_cointerior_angles_algebraic,
+    arch_23_parallel_lines_cointerior_multipliers,
+    arch_24_parallel_lines_two_step_deduction_corresp_and_straight,
+    arch_25_parallel_lines_two_step_deduction_alt_and_opposite,
+)
+from .geometry_straight_lines_archetypes_26_50 import (
+    BUILDERS_26_50,
+    arch_26_parallel_lines_three_parallel_lines,
+    arch_27_parallel_lines_two_transversals,
+    arch_28_proving_lines_parallel_via_corresponding_angles,
+    arch_29_proving_lines_parallel_via_alternate_angles,
+    arch_30_proving_lines_parallel_via_cointerior_angles,
+    arch_31_angles_around_a_point_revolution,
+    arch_32_angles_around_a_point_algebraic,
+    arch_33_triangle_angle_sum_straight_line_proof,
+    arch_34_zig_zag_parallel_lines_auxiliary_line,
+    arch_35_parallel_lines_with_bisector_ray,
+    arch_36_perpendicular_transversal_all_right_angles,
+    arch_37_parallel_lines_with_isosceles_triangle,
+    arch_38_parallel_lines_with_right_angled_triangle,
+    arch_39_clock_hands_straight_line_angle,
+    arch_40_rhombus_or_parallelogram_cointerior_relationship,
+    arch_41_trapezium_parallel_sides_cointerior_angles,
+    arch_42_diagnosing_geometric_reason_abbreviation,
+    arch_43_diagnosing_cointerior_angle_fallacy,
+    arch_44_diagnosing_non_parallel_transversal_fallacy,
+    arch_45_complex_two_parallel_pairs_rhomboid_grid,
+    arch_46_straight_line_algebraic_fractional_angles,
+    arch_47_straight_line_with_decimal_angle_measures,
+    arch_48_reflection_of_light_ray_straight_line,
+    arch_49_surveying_compass_bearing_straight_line,
+    arch_50_geometry_of_straight_lines_capstone_synthesis,
+)
+
+BUILDERS: List[Callable[[random.Random], Dict[str, Any]]] = BUILDERS_01_25 + BUILDERS_26_50
+
+SUBSKILLS: List[str] = [
+    # 01 - 10
+    "01_angles_on_straight_line_numerical_two_angles",
+    "02_angles_on_straight_line_three_angles",
+    "03_perpendicular_lines_adjacent_supplementary",
+    "04_angles_on_straight_line_algebraic_linear",
+    "05_angles_on_straight_line_multipliers",
+    "06_angles_on_straight_line_binomial_expressions",
+    "07_angles_on_straight_line_three_algebraic_terms",
+    "08_angles_on_straight_line_mixed_terms_and_constant",
+    "09_vertically_opposite_angles_numerical",
+    "10_vertically_opposite_angles_full_revolution",
+    # 11 - 20
+    "11_vertically_opposite_angles_algebraic_one_step",
+    "12_vertically_opposite_angles_algebraic_two_step",
+    "13_vertically_opposite_angles_variables_both_sides",
+    "14_intersecting_lines_perpendicular_and_opposite",
+    "15_identifying_transversal_and_angle_pairs",
+    "16_parallel_lines_corresponding_angles_numerical",
+    "17_parallel_lines_alternate_interior_angles_numerical",
+    "18_parallel_lines_cointerior_angles_numerical",
+    "19_parallel_lines_alternate_exterior_angles_numerical",
+    "20_parallel_lines_corresponding_angles_algebraic",
+    # 21 - 30
+    "21_parallel_lines_alternate_angles_algebraic",
+    "22_parallel_lines_cointerior_angles_algebraic",
+    "23_parallel_lines_cointerior_multipliers",
+    "24_parallel_lines_two_step_deduction_corresp_and_straight",
+    "25_parallel_lines_two_step_deduction_alt_and_opposite",
+    "26_parallel_lines_three_parallel_lines",
+    "27_parallel_lines_two_transversals",
+    "28_proving_lines_parallel_via_corresponding_angles",
+    "29_proving_lines_parallel_via_alternate_angles",
+    "30_proving_lines_parallel_via_cointerior_angles",
+    # 31 - 40
+    "31_angles_around_a_point_revolution",
+    "32_angles_around_a_point_algebraic",
+    "33_triangle_angle_sum_straight_line_proof",
+    "34_zig_zag_parallel_lines_auxiliary_line",
+    "35_parallel_lines_with_bisector_ray",
+    "36_perpendicular_transversal_all_right_angles",
+    "37_parallel_lines_with_isosceles_triangle",
+    "38_parallel_lines_with_right_angled_triangle",
+    "39_clock_hands_straight_line_angle",
+    "40_rhombus_or_parallelogram_cointerior_relationship",
+    # 41 - 50
+    "41_trapezium_parallel_sides_cointerior_angles",
+    "42_diagnosing_geometric_reason_abbreviation",
+    "43_diagnosing_cointerior_angle_fallacy",
+    "44_diagnosing_non_parallel_transversal_fallacy",
+    "45_complex_two_parallel_pairs_rhomboid_grid",
+    "46_straight_line_algebraic_fractional_angles",
+    "47_straight_line_with_decimal_angle_measures",
+    "48_reflection_of_light_ray_straight_line",
+    "49_surveying_compass_bearing_straight_line",
+    "50_geometry_of_straight_lines_capstone_synthesis",
+]
+
+DISPATCH_TABLE: Dict[Any, Callable[[random.Random], Dict[str, Any]]] = {}
+
+for idx, b in enumerate(BUILDERS, start=1):
+    DISPATCH_TABLE[idx] = b
+    DISPATCH_TABLE[f"{idx:02d}"] = b
+
+for name, b in zip(SUBSKILLS, BUILDERS):
+    DISPATCH_TABLE[name] = b
+    prefix = name.split("_")[0]
+    DISPATCH_TABLE[prefix] = b
+    short_slug = "_".join(name.split("_")[1:])
+    DISPATCH_TABLE[short_slug] = b
 
 
-def _rng(seed: Optional[int] = None) -> random.Random:
-    r = random.Random()
-    if seed is not None:
-        r.seed(int(seed))
-    return r
+def get_subskills() -> List[str]:
+    return list(SUBSKILLS)
 
 
-TOPIC = "grade8_math_geometry_straight_lines"
-LO = "g8_math_geometry_lines"
+def generate(
+    count: int = 1,
+    seed: Optional[int] = None,
+    difficulty: str = "medium",
+    subskill: Optional[str] = None,
+    archetype_index: Optional[int] = None,
+    **kwargs
+) -> List[Dict[str, Any]]:
+    rng = random.Random(seed) if seed is not None else random.Random()
+    questions: List[Dict[str, Any]] = []
 
+    for _ in range(count):
+        builder: Optional[Callable[[random.Random], Dict[str, Any]]] = None
 
-def generate_straight_line_angles(r: random.Random, mode: str = "compound") -> Dict[str, Any]:
-    # Form: 2 angles on a straight line: (ax + b) and (cx + d) = 180
-    a = r.randint(2, 4)
-    c = r.randint(1, 3)
-    sum_coeff = a + c
-    
-    # Choose x_val so that total angle is realistic
-    x_val = r.randint(15, 30)
-    total_val = sum_coeff * x_val
-    remainder = 180 - total_val
-    
-    # Split remainder into b and d
-    b = r.randint(-10, 15)
-    d = remainder - b
-    
-    ang1_expr = rf"{a}x + {b}^\circ" if b >= 0 else rf"{a}x - {abs(b)}^\circ"
-    ang2_expr = rf"{c}x + {d}^\circ" if d >= 0 else rf"{c}x - {abs(d)}^\circ"
-    
-    ang1_val = a * x_val + b
-    ang2_val = c * x_val + d
-    
-    prompt = (
-        f"In the given figure, line \\(AB\\) is a straight line. "
-        f"Ray \\(OC\\) stands on line \\(AB\\) at point \\(O\\), forming adjacent angles "
-        f"\\(\\hat{{O}}_1 = {ang1_expr}\\) and \\(\\hat{{O}}_2 = {ang2_expr}\\).\n\n"
-        f"1. Write down an equation connecting \\(\\hat{{O}}_1\\) and \\(\\hat{{O}}_2\\), stating the geometric reason.\n"
-        f"2. Solve the equation for \\(x\\).\n"
-        f"3. Calculate the actual numerical size of \\(\\hat{{O}}_1\\) in degrees."
-    )
-    prompt_latex = (
-        rf"\text{{Line }} AB\text{{ is a straight line with ray }} OC. \quad "
-        rf"\hat{{O}}_1 = {ang1_expr}, \quad \hat{{O}}_2 = {ang2_expr}." "\n\n"
-        r"\text{Calculate the value of } x \text{ and the size of } \hat{O}_1 \text{ with reasons.}"
-    )
-    answer_latex = (
-        rf"\hat{{O}}_1 + \hat{{O}}_2 = 180^\circ \quad [\text{{adj }}\angle\text{{s on str line}}]" "\n"
-        rf"({ang1_expr}) + ({ang2_expr}) = 180^\circ" "\n"
-        rf"{sum_coeff}x + ({b + d})^\circ = 180^\circ \implies {sum_coeff}x = {180 - (b + d)}^\circ" "\n"
-        rf"x = {x_val}^\circ" "\n"
-        rf"\hat{{O}}_1 = {a}({x_val}) + ({b}) = {ang1_val}^\circ"
-    )
-    sample_answer = (
-        f"1. ∠O₁ + ∠O₂ = 180° (adj ∠s on str line)\n"
-        f"2. ({ang1_expr}) + ({ang2_expr}) = 180°\n"
-        f"   {sum_coeff}x + {b + d}° = 180°\n"
-        f"   {sum_coeff}x = 180° - {b + d}° = {180 - (b + d)}°\n"
-        f"   x = {180 - (b + d)}° / {sum_coeff} = {x_val}°\n"
-        f"3. ∠O₁ = {a}({x_val}°) + ({b}°) = {ang1_val}°."
-    )
-    schema = {
-        "total_marks": 5,
-        "marking_points": [
-            {"id": "mp1", "desc": "Statement: ∠O₁ + ∠O₂ = 180° with correct reason [adj ∠s on str line]", "marks": 2, "editable": True},
-            {"id": "mp2", "desc": f"Combine like terms: {sum_coeff}x + {b + d}° = 180°", "marks": 1, "editable": True},
-            {"id": "mp3", "desc": f"Solve for x = {x_val}°", "marks": 1, "editable": True},
-            {"id": "mp4", "desc": f"Substitute x to find ∠O₁ = {ang1_val}°", "marks": 1, "editable": True},
-        ],
-        "deductions": [{"rule": "omitted_geometric_reason", "penalty": 1}],
-        "carry_forward_rule": "consequential_accuracy",
-    }
-    hints = {
-        "tier_1": "Angles on a straight line always add up to 180°. State the geometric reason: [adj ∠s on str line].",
-        "tier_2": f"Set up the equation: ({ang1_expr}) + ({ang2_expr}) = 180°. Combine the x-terms and the numbers.",
-        "tier_3": f"{sum_coeff}x = {180 - (b + d)}°. Therefore x = {x_val}°. Substitute into ∠O₁: {a}({x_val}) + ({b}) = {ang1_val}°.",
-    }
-    return {
-        "id": f"g8_geo_str_line_{random.randint(100000, 999999)}",
-        "topic": TOPIC,
-        "subskill": "adjacent_angles_on_straight_line",
-        "learning_objective_id": f"{LO}_angles_on_straight_line",
-        "prompt": prompt,
-        "prompt_latex": prompt_latex,
-        "answer_latex": answer_latex,
-        "sample_answer": sample_answer,
-        "marking_schema": schema,
-        "hints": hints,
-        "misconception_tags": ["omitted_geometric_reason", "confusing_supplementary_with_complementary"],
-        "keywords": ["geometry", "straight line", "adjacent angles", "supplementary", "reasons"],
-        "term": 2,
-        "caps_weight_percent": 18,
-        "suggested_duration_mins": 5,
-        "mode": mode,
-        "difficulty": "medium",
-        "marks": 5,
-    }
+        if subskill is not None:
+            sub_key = str(subskill).strip()
+            if sub_key in DISPATCH_TABLE:
+                builder = DISPATCH_TABLE[sub_key]
+            else:
+                sub_lower = sub_key.lower()
+                for k, b in DISPATCH_TABLE.items():
+                    if isinstance(k, str) and (sub_lower in k.lower() or k.lower() in sub_lower):
+                        builder = b
+                        break
 
+        if builder is None and archetype_index is not None:
+            idx = int(archetype_index)
+            if idx in DISPATCH_TABLE:
+                builder = DISPATCH_TABLE[idx]
+            elif 1 <= idx <= len(BUILDERS):
+                builder = BUILDERS[idx - 1]
 
-def generate_parallel_lines(r: random.Random, mode: str = "compound") -> Dict[str, Any]:
-    angle_type = r.choice(["alternate", "corresponding", "co_interior"])
-    x_val = r.randint(15, 35)
-    
-    if angle_type == "alternate":
-        # ax + b = cx + d
-        a = r.randint(3, 5)
-        c = r.randint(1, a - 1)
-        diff = a - c
-        const_val = diff * x_val
-        b = r.randint(5, 20)
-        d = b + const_val
-        
-        expr1 = rf"{a}x - {b}^\circ"
-        expr2 = rf"{c}x + {d - 2*b}^\circ" if d - 2*b >= 0 else rf"{c}x - {abs(d - 2*b)}^\circ"
-        actual_ang = a * x_val - b
-        
-        rel_statement = "are equal"
-        reason_tag = "alt \\angle\\text{s, } AB \\parallel CD"
-        calc_eq = f"{a}x - {b} = {c}x + ({d - 2*b})"
-    elif angle_type == "corresponding":
-        a = r.randint(3, 5)
-        c = r.randint(1, a - 1)
-        diff = a - c
-        const_val = diff * x_val
-        b = r.randint(5, 20)
-        d = b + const_val
-        
-        expr1 = rf"{a}x - {b}^\circ"
-        expr2 = rf"{c}x + {d - 2*b}^\circ" if d - 2*b >= 0 else rf"{c}x - {abs(d - 2*b)}^\circ"
-        actual_ang = a * x_val - b
-        
-        rel_statement = "are equal"
-        reason_tag = "corresp \\angle\\text{s, } AB \\parallel CD"
-        calc_eq = f"{a}x - {b} = {c}x + ({d - 2*b})"
-    else:  # co_interior
-        a = r.randint(2, 4)
-        c = r.randint(1, 3)
-        sum_c = a + c
-        total = sum_c * x_val
-        rem = 180 - total
-        b = r.randint(-10, 15)
-        d = rem - b
-        
-        expr1 = rf"{a}x + {b}^\circ" if b >= 0 else rf"{a}x - {abs(b)}^\circ"
-        expr2 = rf"{c}x + {d}^\circ" if d >= 0 else rf"{c}x - {abs(d)}^\circ"
-        actual_ang = a * x_val + b
-        
-        rel_statement = "sum to 180°"
-        reason_tag = "co-int \\angle\\text{s, } AB \\parallel CD"
-        calc_eq = rf"({expr1}) + ({expr2}) = 180^\circ"
+        if builder is None:
+            builder = rng.choice(BUILDERS)
 
-    prompt = (
-        f"In the given figure, line \\(AB\\) is parallel to line \\(CD\\) (\\(AB \\parallel CD\\)), "
-        f"and line \\(EF\\) is a transversal cutting \\(AB\\) at \\(P\\) and \\(CD\\) at \\(Q\\).\n"
-        f"Angle \\(\\hat{{P}}_1 = {expr1}\\) and angle \\(\\hat{{Q}}_2 = {expr2}\\).\n\n"
-        f"Given that \\(\\hat{{P}}_1\\) and \\(\\hat{{Q}}_2\\) are **{angle_type.replace('_', '-')} angles**:\n"
-        f"1. State the relationship between \\(\\hat{{P}}_1\\) and \\(\\hat{{Q}}_2\\), including the full geometric reason.\n"
-        f"2. Set up an equation and solve for \\(x\\).\n"
-        f"3. Calculate the actual size of \\(\\hat{{P}}_1\\) in degrees."
-    )
-    prompt_latex = (
-        rf"AB \parallel CD \text{{ cut by transversal }} EF. \quad "
-        rf"\hat{{P}}_1 = {expr1}, \quad \hat{{Q}}_2 = {expr2} \text{{ ({angle_type.replace('_', '-')} angles)}}." "\n\n"
-        r"\text{Calculate the value of } x \text{ with full geometric reasons.}"
-    )
-    answer_latex = (
-        rf"\text{{Relationship: }} \hat{{P}}_1 \text{{ and }} \hat{{Q}}_2 {rel_statement} \quad [{reason_tag}]" "\n"
-        rf"\text{{Equation: }} {calc_eq}" "\n"
-        rf"x = {x_val}^\circ" "\n"
-        rf"\hat{{P}}_1 = {actual_ang}^\circ"
-    )
-    sample_answer = (
-        f"1. Relationship: {angle_type.replace('_', '-')} angles {rel_statement} [{reason_tag}].\n"
-        f"2. {calc_eq}\n"
-        f"   Solving for x yields: x = {x_val}°.\n"
-        f"3. ∠P₁ = {actual_ang}°."
-    )
-    schema = {
-        "total_marks": 5,
-        "marking_points": [
-            {"id": "mp1", "desc": f"Correct geometric reason stating parallel lines: [{reason_tag}]", "marks": 2, "editable": True},
-            {"id": "mp2", "desc": f"Correct algebraic equation: {calc_eq}", "marks": 1, "editable": True},
-            {"id": "mp3", "desc": f"Solve for x = {x_val}°", "marks": 1, "editable": True},
-            {"id": "mp4", "desc": f"Calculate angle ∠P₁ = {actual_ang}°", "marks": 1, "editable": True},
-        ],
-        "deductions": [{"rule": "omitted_parallel_line_names_in_reason", "penalty": 1}],
-        "carry_forward_rule": "consequential_accuracy",
-    }
-    hints = {
-        "tier_1": f"Look at the angle position (F-shape for corresponding, Z-shape for alternate, C/U-shape for co-interior). State: [{reason_tag}].",
-        "tier_2": f"Alternate and corresponding angles are EQUAL. Co-interior angles add up to 180°. Don't forget to include the parallel lines in your reason: AB || CD.",
-        "tier_3": f"Set up the equation {calc_eq} and solve for x = {x_val}°. Then substitute to find ∠P₁ = {actual_ang}°.",
-    }
-    return {
-        "id": f"g8_geo_parallel_{random.randint(100000, 999999)}",
-        "topic": TOPIC,
-        "subskill": "parallel_lines_transversals_angles",
-        "learning_objective_id": f"{LO}_parallel_lines",
-        "prompt": prompt,
-        "prompt_latex": prompt_latex,
-        "answer_latex": answer_latex,
-        "sample_answer": sample_answer,
-        "marking_schema": schema,
-        "hints": hints,
-        "misconception_tags": ["omitted_parallel_line_names_in_reason", "confusing_alternate_with_cointerior"],
-        "keywords": ["parallel lines", "transversal", "alternate angles", "corresponding angles", "co-interior angles"],
-        "term": 2,
-        "caps_weight_percent": 18,
-        "suggested_duration_mins": 5,
-        "mode": mode,
-        "difficulty": "medium",
-        "marks": 5,
-    }
+        q = builder(rng)
+        q.setdefault("grade", 8)
+        q.setdefault("subject", "Mathematics")
+        q.setdefault("topic", "Geometry of straight lines")
+        q.setdefault("term", 2)
+        q.setdefault("difficulty", difficulty)
+        questions.append(q)
 
-
-def generate(seed: Optional[int] = None, mode: str = "compound", archetype: Optional[str] = None) -> Dict[str, Any]:
-    r = _rng(seed)
-    if archetype == "straight_line":
-        return generate_straight_line_angles(r, mode=mode)
-    elif archetype == "parallel_lines" or archetype == "parallel":
-        return generate_parallel_lines(r, mode=mode)
-    else:
-        choice = r.choice(["straight_line", "parallel_lines"])
-        if choice == "straight_line":
-            return generate_straight_line_angles(r, mode=mode)
-        else:
-            return generate_parallel_lines(r, mode=mode)
+    return questions

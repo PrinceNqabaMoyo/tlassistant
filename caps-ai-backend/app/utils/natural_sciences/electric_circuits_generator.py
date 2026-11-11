@@ -154,6 +154,17 @@ def _build_series_resistance_drill(r: random.Random, difficulty: str) -> Dict[st
         mode="elementary_series_resistance",
         difficulty="easy",
         marks=2,
+        modality="circuit",
+        circuit_spec={
+            "type": "series",
+            "voltage": 12,
+            "components": [
+                {"type": "battery", "voltage": 12, "label": "12 V"},
+                {"type": "switch", "state": "closed"},
+                {"type": "ammeter", "label": "A"},
+                *[{"type": "resistor", "id": f"R{i+1}", "resistance": v, "label": f"R_{i+1} ({v} Ω)"} for i, v in enumerate(vals)]
+            ]
+        },
     )
 
 
@@ -212,6 +223,18 @@ def _build_parallel_resistance_drill(r: random.Random, difficulty: str) -> Dict[
         mode="elementary_parallel_resistance",
         difficulty="medium",
         marks=3,
+        modality="circuit",
+        circuit_spec={
+            "type": "parallel",
+            "voltage": 12,
+            "components": [
+                {"type": "battery", "voltage": 12, "label": "12 V"},
+                {"type": "switch", "state": "closed"},
+                {"type": "ammeter", "label": "A"},
+                {"type": "resistor", "id": "R1", "resistance": r2, "label": f"R₁ ({r2} Ω)"},
+                {"type": "resistor", "id": "R2", "resistance": r3, "label": f"R₂ ({r3} Ω)"}
+            ]
+        },
     )
 
 
@@ -324,6 +347,26 @@ def _build_compound_circuit(r: random.Random, difficulty: str) -> Dict[str, Any]
         mode="compound",
         difficulty="hard",
         marks=8,
+        modality="circuit",
+        circuit_spec={
+            "type": "parallel",
+            "voltage": v_total,
+            "components": [
+                {"type": "battery", "voltage": v_total, "label": f"{v_total} V"},
+                {"type": "switch", "state": "closed"},
+                {"type": "ammeter", "label": "A", "reading": i_total},
+                {"type": "resistor", "id": "R1", "resistance": r1, "label": f"R₁ ({r1} Ω)"},
+                {"type": "resistor", "id": "R2", "resistance": r2, "label": f"R₂ ({r2} Ω)"},
+                {"type": "resistor", "id": "R3", "resistance": r3, "label": f"R₃ ({r3} Ω)"}
+            ]
+        },
+        sub_parts=[
+            {"id": "part_1", "label": "1. Parallel equivalent resistance (Rp)", "marks": 2, "expected_answer": f"{rp}"},
+            {"id": "part_2", "label": "2. Total circuit resistance (Rtotal)", "marks": 1, "expected_answer": f"{r_total}"},
+            {"id": "part_3", "label": "3. Total circuit current (Itotal)", "marks": 2, "expected_answer": f"{i_total}"},
+            {"id": "part_4", "label": "4. Parallel potential difference (Vp)", "marks": 1, "expected_answer": f"{vp}"},
+            {"id": "part_5", "label": "5. Current through R2 (I2)", "marks": 2, "expected_answer": f"{fmt_sa(i2)}"}
+        ],
     )
 
 

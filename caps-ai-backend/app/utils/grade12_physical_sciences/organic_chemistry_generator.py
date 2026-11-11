@@ -50,6 +50,7 @@ IUPAC_COMPOUNDS = [
         "series": "Ester",
         "functional_group": "Ester group (-COO-)",
         "chain_length": 3,
+        "substituents": "ethyl group from ethanol + propanoate chain from propanoic acid",
         "alcohol_part": "ethanol",
         "acid_part": "propanoic acid",
         "intermolecular": "Dipole-dipole forces and London forces",
@@ -183,6 +184,7 @@ def _build_iupac_drill(r: random.Random) -> Dict[str, Any]:
     return {
         "id": f"g12_ps_org_iupac_{r.randint(10000, 99999)}",
         "type": "compound",
+        "modality": "organic_chemistry",
         "prompt": prompt,
         "correct_answer": comp["name"],
         "worked_solution": sol,
@@ -230,6 +232,16 @@ def _build_isomers_drill(r: random.Random) -> Dict[str, Any]:
     return {
         "id": f"g12_ps_org_isomers_{r.randint(10000, 99999)}",
         "type": "compound",
+        "modality": "organic_chemistry",
+        "diagram_spec": {
+            "kind": "organic_structure",
+            "diagram_role": "context",
+            "title": f"Structural Isomers: {pair['compound_A']} vs {pair['compound_B']}",
+            "name": pair["compound_A"],
+            "name_b": pair["compound_B"],
+            "formula": pair["molecular_formula"],
+            "isomer_type": pair["type"],
+        },
         "prompt": prompt,
         "correct_answer": pair["type"],
         "worked_solution": sol,
@@ -294,6 +306,7 @@ def _build_physical_properties_drill(r: random.Random) -> Dict[str, Any]:
     return {
         "id": f"g12_ps_org_phys_prop_{r.randint(10000, 99999)}",
         "type": "essay_reasoning",
+        "modality": "organic_chemistry",
         "prompt": prompt,
         "correct_answer": "Higher boiling point due to stronger intermolecular forces requiring more energy to overcome",
         "worked_solution": sol,
@@ -343,6 +356,7 @@ def _build_reactions_drill(r: random.Random) -> Dict[str, Any]:
     return {
         "id": f"g12_ps_org_rxn_{r.randint(10000, 99999)}",
         "type": "compound",
+        "modality": "organic_chemistry",
         "prompt": prompt,
         "correct_answer": rxn["name"],
         "worked_solution": sol,

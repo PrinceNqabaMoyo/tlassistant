@@ -1,0 +1,117 @@
+﻿=== science corpus: files carrying LaTeX ===
+   LifeSciences_Gr10\Syllabus.md                              hits=59
+   LifeSciences_Gr10\01. Cells the basic units of life.md     hits=159
+   LifeSciences_Gr11\Syllabus.md                              hits=80
+   LifeSciences_Gr11\02. Biodiversity of plants.md            hits=104
+   LifeSciences_Gr11\03. Biodiversity of animals.md           hits=81
+   LifeSciences_Gr11\01. Photosynthesis.md                    hits=235
+   LifeSciences_Gr11\02. Animal Nutrition.md                  hits=112
+   LifeSciences_Gr11\03. Cellular respiration.md              hits=150
+   LifeSciences_Gr11\02. Excretion in humans.md               hits=204
+   LifeSciences_Gr11\03. Population ecology.md                hits=236
+   LifeSciences_Gr12\03. Meiosis.md                           hits=147
+   LifeSciences_Gr12\04. Genetics and inheritance.md          hits=854
+   LifeSciences_Gr12\01. Human Reproduction.md                hits=227
+   LifeSciences_Gr12\01. Human responses to the environment.m hits=205
+   LifeSciences_Gr12\03. Plant responses to the environment.m hits=156
+   LifeSciences_Gr12\04. The human endocrine system and homeo hits=256
+   LifeSciences_Gr12\03. Human evolution.md                   hits=271
+  Life Sciences      files= 35 files_with_latex= 34 total_hits=3754
+   NaturalSciences_Gr7\Syllabus.md                            hits=87
+   NaturalSciences_Gr7\03. Sexual reproduction.md             hits=45
+   NaturalSciences_Gr7\02. Potential and kinetic energy.md    hits=175
+   NaturalSciences_Gr7\03. Heat Energy transfer.md            hits=79
+   NaturalSciences_Gr7\01. Relationship of the moon to the ea hits=139
+   NaturalSciences_Gr8\Syllabus.md                            hits=173
+   NaturalSciences_Gr8\02. Interactions and interdependence w hits=95
+   NaturalSciences_Gr8\01. Atoms.md                           hits=424
+   NaturalSciences_Gr8\02. Particle model of matter.md        hits=515
+   NaturalSciences_Gr8\03. Microorganisms.md                  hits=86
+   NaturalSciences_Gr8\01. Energy transfer in electrical syst hits=68
+   NaturalSciences_Gr8\04. Visible light.md                   hits=97
+   NaturalSciences_Gr8\01. Beyond the solar system.md         hits=221
+   NaturalSciences_Gr8\01. The Solar System.md                hits=47
+   NaturalSciences_Gr9\Syllabus.md                            hits=358
+   NaturalSciences_Gr9\02. Systems in the human body.md       hits=43
+   NaturalSciences_Gr9\03. Human reproduction.md              hits=97
+   NaturalSciences_Gr9\04. Circulatory and respiratory system hits=48
+   NaturalSciences_Gr9\01. Chemical reactions.md              hits=103
+   NaturalSciences_Gr9\01. Compounds.md                       hits=239
+   NaturalSciences_Gr9\02. Reactions of metals with oxygen.md hits=188
+   NaturalSciences_Gr9\04. Acids bases and the pH value.md    hits=127
+   NaturalSciences_Gr9\05. Resistance.md                      hits=196
+   NaturalSciences_Gr9\01. Forces.md                          hits=379
+   NaturalSciences_Gr9\02. Series and parallel circuits.md    hits=129
+   NaturalSciences_Gr9\03. Cost of electrical energy.md       hits=849
+   NaturalSciences_Gr9\03. Safety with electricity.md         hits=62
+   NaturalSciences_Gr9\04. Birth life and the death of a star hits=89
+   NaturalSciences_Gr9\02. The lithosphere.md                 hits=77
+   NaturalSciences_Gr9\03. Mining of mineral resources.md     hits=154
+   NaturalSciences_Gr9\04. The atmosphere.md                  hits=67
+  Natural Sciences   files= 70 files_with_latex= 61 total_hits=5798
+   PhysicalSciences_Gr10\Syllabus.md                          hits=492
+   PhysicalSciences_Gr10\01. Skills for science.md            hits=776
+   PhysicalSciences_Gr10\04. The atom.md                      hits=942
+   PhysicalSciences_Gr10\08. Transverse waves.md              hits=645
+   PhysicalSciences_Gr10\09. Longitudinal waves.md            hits=161
+   PhysicalSciences_Gr10\10. Sound.md                         hits=607
+   PhysicalSciences_Gr10\11. Electromagnetic radiation.md     hits=397
+   PhysicalSciences_Gr10\06. Electric circuits.md             hits=637
+   PhysicalSciences_Gr10\04. Motion in one dimension.md       hits=3095
+   PhysicalSciences_Gr10\02. Units of measurement applied.md  hits=115
+   PhysicalSciences_Gr11\Syllabus.md                          hits=482
+   PhysicalSciences_Gr11\01. Vectors in two dimensions.md     hits=376
+   PhysicalSciences_Gr11\02. Atomic combinations.md           hits=242
+   PhysicalSciences_Gr11\03. Intermolecular forces.md         hits=115
+   PhysicalSciences_Gr11\04. Ideal gases.md                   hits=2381
+   PhysicalSciences_Gr11\01. Newton's laws.md                 hits=5333
+   PhysicalSciences_Gr11\02. Geometrical optics.md            hits=1773
+   PhysicalSciences_Gr11\03. 2D and 3D wavefronts.md          hits=714
+   PhysicalSciences_Gr11\04. Electrostatics.md                hits=673
+   PhysicalSciences_Gr11\05. Electromagnetism.md              hits=1068
+   PhysicalSciences_Gr11\01. Electric circuits.md             hits=1484
+   PhysicalSciences_Gr11\02. Energy and chemical change.md    hits=68
+   PhysicalSciences_Gr11\03. Types of reaction.md             hits=3387
+   PhysicalSciences_Gr11\04. Quantitative aspects of chemical hits=3719
+   PhysicalSciences_Gr12\Syllabus.md                          hits=542
+   PhysicalSciences_Gr12\01. Momentum and Impulse.md          hits=2420
+   PhysicalSciences_Gr12\02. Vertical projectile motion in on hits=1528
+   PhysicalSciences_Gr12\03. Work energy and power.md         hits=1631
+   PhysicalSciences_Gr12\04. Organic molecules.md             hits=3989
+   PhysicalSciences_Gr12\01. Rate and Extent of Reaction.md   hits=243
+   PhysicalSciences_Gr12\02. Chemical equilibrium.md          hits=2207
+   PhysicalSciences_Gr12\04. The Doppler effect.md            hits=623
+   PhysicalSciences_Gr12\01. Electrodynamics.md               hits=52
+   PhysicalSciences_Gr12\02. Electric circuits.md             hits=1168
+   PhysicalSciences_Gr12\03. Optical phenomena and properties hits=221
+  Physical Sciences  files= 58 files_with_latex= 53 total_hits=44487
+
+=== harvested science output: every string field ===
+  units scanned=13637  units containing LaTeX=6
+    field marking_points hits=9
+    field sample_answer  hits=9
+    field explanation    hits=9
+    field kind           hits=0
+    field title          hits=0
+    field prompt         hits=0
+    field learning_objective_id hits=0
+    field question_family_id hits=0
+    field retry_variant  hits=0
+    field difficulties   hits=0
+    field guidelines     hits=0
+    field options        hits=0
+    field correct        hits=0
+    field correct_index  hits=0
+    field pair           hits=0
+    [marking_points] 'Forward force (F_{ {applied}}) = 600 { N}'
+    [marking_points] 'Resultant Force (F_{ {net}})'
+    [sample_answer] 'Forward force (F_{ {applied}}) = 600 { N} Friction force (F_f) = 200 { N} Mass of Car B (m) = 1200 { kg} Resultant Force (F_{ {net}})'
+    [explanation] 'Forward force (F_{ {applied}}) = 600 { N} Friction force (F_f) = 200 { N} Mass of Car B (m) = 1200 { kg} Resultant Force (F_{ {net}})'
+    [marking_points] 'Total mass (m_{ {total}}) = 1200 { kg} + 1200 { kg} = 2400 { kg}'
+    [sample_answer] 'Total mass (m_{ {total}}) = 1200 { kg} + 1200 { kg} = 2400 { kg} Total braking force (F) = 9600 { N} Initial velocity (v_i) = 20 { m} {s}-1 Final velo'
+    [explanation] 'Total mass (m_{ {total}}) = 1200 { kg} + 1200 { kg} = 2400 { kg} Total braking force (F) = 9600 { N} Initial velocity (v_i) = 20 { m} {s}-1 Final velo'
+    [marking_points] 'Forward force (F_{ {applied}}) = 600 { N}'
+    [marking_points] 'Resultant Force (F_{ {net}})'
+    [sample_answer] 'Forward force (F_{ {applied}}) = 600 { N} Friction force (F_f) = 200 { N} Mass of Car B (m) = 1200 { kg} Resultant Force (F_{ {net}})'
+    [explanation] 'Forward force (F_{ {applied}}) = 600 { N} Friction force (F_f) = 200 { N} Mass of Car B (m) = 1200 { kg} Resultant Force (F_{ {net}})'
+    [marking_points] 'Total mass (m_{ {total}}) = 1200 { kg} + 1200 { kg} = 2400 { kg}'

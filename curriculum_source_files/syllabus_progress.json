@@ -1,0 +1,155 @@
+{
+  "completed_files": {
+    "Accounting_Gr10/Syllabus.md": {
+      "status": "completed",
+      "completed_at": "2026-09-19 19:44:18",
+      "pages": 18
+    },
+    "Accounting_Gr11/Syllabus.md": {
+      "status": "completed",
+      "completed_at": "2026-09-19 19:47:39",
+      "pages": 19
+    },
+    "Accounting_Gr12/Syllabus.md": {
+      "status": "completed",
+      "completed_at": "2026-09-19 19:50:33",
+      "pages": 18
+    },
+    "BusinessStudies_Gr10/Syllabus.md": {
+      "status": "completed",
+      "completed_at": "2026-09-19 19:53:33",
+      "pages": 18
+    },
+    "BusinessStudies_Gr11/Syllabus.md": {
+      "status": "completed",
+      "completed_at": "2026-09-19 19:56:13",
+      "pages": 18
+    },
+    "BusinessStudies_Gr12/Syllabus.md": {
+      "status": "completed",
+      "completed_at": "2026-09-19 19:59:10",
+      "pages": 19
+    },
+    "EMS_Gr7/Syllabus.md": {
+      "status": "completed",
+      "completed_at": "2026-09-19 20:00:32",
+      "pages": 7
+    },
+    "EMS_Gr8/Syllabus.md": {
+      "status": "completed",
+      "completed_at": "2026-09-19 20:01:39",
+      "pages": 7
+    },
+    "EMS_Gr9/Syllabus.md": {
+      "status": "completed",
+      "completed_at": "2026-09-19 20:02:45",
+      "pages": 7
+    },
+    "LifeSciences_Gr10/Syllabus.md": {
+      "status": "completed",
+      "completed_at": "2026-09-19 20:05:31",
+      "pages": 17
+    },
+    "LifeSciences_Gr11/Syllabus.md": {
+      "status": "completed",
+      "completed_at": "2026-09-19 20:08:07",
+      "pages": 15
+    },
+    "LifeSciences_Gr12/Syllabus.md": {
+      "status": "completed",
+      "completed_at": "2026-09-19 20:09:56",
+      "pages": 12
+    },
+    "MathematicalLiteracy_Gr10/Syllabus.md": {
+      "status": "completed",
+      "completed_at": "2026-09-19 20:10:06",
+      "pages": 1
+    },
+    "MathematicalLiteracy_Gr11/Syllabus.md": {
+      "status": "completed",
+      "completed_at": "2026-09-19 20:10:18",
+      "pages": 1
+    },
+    "MathematicalLiteracy_Gr12/Syllabus.md": {
+      "status": "completed",
+      "completed_at": "2026-09-19 20:10:29",
+      "pages": 1
+    },
+    "Mathematics_Gr10/Syllabus.md": {
+      "status": "completed",
+      "completed_at": "2026-09-19 20:12:00",
+      "pages": 9
+    },
+    "Mathematics_Gr11/Syllabus.md": {
+      "status": "completed",
+      "completed_at": "2026-09-19 20:13:40",
+      "pages": 10
+    },
+    "Mathematics_Gr12/Syllabus.md": {
+      "status": "completed",
+      "completed_at": "2026-09-19 20:16:30",
+      "pages": 11
+    },
+    "Mathematics_Gr7/Syllabus.md": {
+      "status": "completed",
+      "completed_at": "2026-09-19 20:22:24",
+      "pages": 35
+    },
+    "Mathematics_Gr8/Syllabus.md": {
+      "status": "completed",
+      "completed_at": "2026-09-19 20:30:37",
+      "pages": 43
+    },
+    "Mathematics_Gr9/Syllabus.md": {
+      "status": "completed",
+      "completed_at": "2026-09-19 20:36:29",
+      "pages": 35
+    },
+    "NaturalSciences_Gr7/Syllabus.md": {
+      "status": "completed",
+      "completed_at": "2026-09-19 20:40:18",
+      "pages": 18
+    },
+    "NaturalSciences_Gr8/Syllabus.md": {
+      "status": "completed",
+      "completed_at": "2026-09-19 20:45:00",
+      "pages": 21
+    },
+    "NaturalSciences_Gr9/Syllabus.md": {
+      "status": "completed",
+      "completed_at": "2026-09-19 20:49:28",
+      "pages": 29
+    },
+    "PhysicalSciences_Gr10/Syllabus.md": {
+      "status": "completed",
+      "completed_at": "2026-09-19 20:57:20",
+      "pages": 46
+    },
+    "PhysicalSciences_Gr11/Syllabus.md": {
+      "status": "completed",
+      "completed_at": "2026-09-19 21:02:46",
+      "pages": 37
+    },
+    "PhysicalSciences_Gr12/Syllabus.md": {
+      "status": "completed",
+      "completed_at": "2026-09-19 21:09:40",
+      "pages": 45
+    },
+    "TechnicalMathematics_Gr10/Syllabus.md": {
+      "status": "completed",
+      "completed_at": "2026-09-19 21:11:09",
+      "pages": 8
+    },
+    "TechnicalMathematics_Gr11/Syllabus.md": {
+      "status": "completed",
+      "completed_at": "2026-09-19 21:12:27",
+      "pages": 8
+    },
+    "TechnicalMathematics_Gr12/Syllabus.md": {
+      "status": "completed",
+      "completed_at": "2026-09-19 21:13:26",
+      "pages": 6
+    }
+  },
+  "last_updated": "2026-09-19 21:13:26"
+}

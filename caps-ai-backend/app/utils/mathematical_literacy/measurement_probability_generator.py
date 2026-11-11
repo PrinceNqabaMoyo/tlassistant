@@ -161,10 +161,10 @@ def _build_daily_probability_drill(r: random.Random) -> Dict[str, Any]:
     decimal_rain = round(rain_chance / 100.0, 2)
 
     prompt = (
-        rf"The South African Weather Service forecasts a {rain_chance}\% chance of rain in Durban on Saturday.\n\n"
-        rf"1. Express the probability of rain as a decimal fraction.\n"
-        rf"2. What is the probability that it will NOT rain on Saturday, expressed as a percentage?\n"
-        rf"3. On a probability scale from 0 (impossible) to 1 (certain), describe the likelihood of rain on Saturday."
+        f"The South African Weather Service forecasts a {rain_chance}% chance of rain in Durban on Saturday.\n\n"
+        f"1. Express the probability of rain as a decimal fraction.\n"
+        f"2. What is the probability that it will NOT rain on Saturday, expressed as a percentage?\n"
+        f"3. On a probability scale from 0 (impossible) to 1 (certain), describe the likelihood of rain on Saturday."
     )
 
     if rain_chance < 40:
@@ -175,9 +175,9 @@ def _build_daily_probability_drill(r: random.Random) -> Dict[str, Any]:
         desc = "Likely (high probability)"
 
     sample_ans = (
-        rf"1. Decimal fraction = {rain_chance} / 100 = {_fmt_sa(decimal_rain)}.\n"
-        rf"2. Probability of no rain = 100% - {rain_chance}% = {no_rain_chance}%.\n"
-        rf"3. Likelihood: {desc}."
+        f"1. Decimal fraction = {rain_chance} / 100 = {_fmt_sa(decimal_rain)}.\n"
+        f"2. Probability of no rain = 100% - {rain_chance}% = {no_rain_chance}%.\n"
+        f"3. Likelihood: {desc}."
     )
 
     return {

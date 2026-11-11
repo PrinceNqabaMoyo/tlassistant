@@ -1,0 +1,79 @@
+{
+  "diagram": "galvanic_cell",
+  "view": "textbook",
+  "viewBox": "0 0 600 480",
+  "anchors": {
+    "electron_flow": {
+      "name": "External Circuit (Electron Flow)",
+      "anchor": [215, 85],
+      "default_box": [60, 48],
+      "side": "left",
+      "grades": ["g12"],
+      "acceptable": ["External circuit", "Conducting wire", "Electron flow from anode to cathode", "Wire"],
+      "description": "Metallic conductor carrying electrons through the external circuit from the oxidised anode (Zn) to the cathode (Cu)."
+    },
+    "salt_bridge": {
+      "name": "Salt Bridge",
+      "anchor": [248, 165],
+      "default_box": [60, 165],
+      "side": "left",
+      "grades": ["g12"],
+      "acceptable": ["Salt bridge", "U-tube salt bridge"],
+      "description": "Inverted U-tube filled with a saturated inert electrolyte (such as KCl or KNO₃) that completes the circuit and maintains electrical neutrality in both half-cells by ion migration."
+    },
+    "anode_electrode": {
+      "name": "Zinc Anode (Negative Electrode)",
+      "anchor": [160, 235],
+      "default_box": [60, 275],
+      "side": "left",
+      "grades": ["g12"],
+      "acceptable": ["Anode", "Zinc electrode", "Negative electrode", "Zn anode", "Zn electrode"],
+      "description": "Negative electrode where oxidation occurs (Zn(s) → Zn²⁺(aq) + 2e⁻), causing the metal strip to decrease in mass over time."
+    },
+    "anode_electrolyte": {
+      "name": "Zinc Sulfate Electrolyte (ZnSO₄(aq))",
+      "anchor": [195, 355],
+      "default_box": [60, 415],
+      "side": "left",
+      "grades": ["g12"],
+      "acceptable": ["Anode electrolyte", "Zinc sulfate solution", "ZnSO4(aq)", "Zn2+ solution", "Aqueous ZnSO4"],
+      "description": "Aqueous half-cell solution (1 mol·dm⁻³ at standard conditions) containing Zn²⁺ ions into which oxidised cations dissolve."
+    },
+    "voltmeter": {
+      "name": "High-Resistance Voltmeter",
+      "anchor": [300, 73],
+      "default_box": [540, 75],
+      "side": "right",
+      "grades": ["g12"],
+      "acceptable": ["Voltmeter", "High-resistance voltmeter"],
+      "description": "High-resistance instrument connected across the two electrodes to measure the potential difference (emf / E°cell) between the half-cells."
+    },
+    "cathode_electrode": {
+      "name": "Copper Cathode (Positive Electrode)",
+      "anchor": [440, 235],
+      "default_box": [540, 195],
+      "side": "right",
+      "grades": ["g12"],
+      "acceptable": ["Cathode", "Copper electrode", "Positive electrode", "Cu cathode", "Cu electrode"],
+      "description": "Positive electrode where reduction occurs (Cu²⁺(aq) + 2e⁻ → Cu(s)), causing solid copper to plate onto the electrode and increase its mass."
+    },
+    "porous_plug": {
+      "name": "Porous Cotton Wool Plug",
+      "anchor": [371, 334],
+      "default_box": [540, 305],
+      "side": "right",
+      "grades": ["g12"],
+      "acceptable": ["Cotton wool plug", "Porous plug", "Glass wool plug"],
+      "description": "Permeable barrier at the ends of the salt bridge that allows mobile ions to migrate while preventing bulk mixing of the half-cell electrolytes."
+    },
+    "cathode_electrolyte": {
+      "name": "Copper(II) Sulfate Electrolyte (CuSO₄(aq))",
+      "anchor": [410, 365],
+      "default_box": [540, 395],
+      "side": "right",
+      "grades": ["g12"],
+      "acceptable": ["Cathode electrolyte", "Copper(II) sulfate solution", "CuSO4(aq)", "Cu2+ solution", "Aqueous CuSO4"],
+      "description": "Blue aqueous half-cell solution containing Cu²⁺ ions that are reduced and deposited onto the cathode surface."
+    }
+  }
+}

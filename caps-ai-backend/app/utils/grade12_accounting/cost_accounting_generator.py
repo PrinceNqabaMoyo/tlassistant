@@ -436,6 +436,15 @@ BUILDERS = {
 }
 
 
+SUBSKILLS = [
+    "production_cost_statement",
+    "elementary_prime_cost",
+    "elementary_factory_overhead",
+    "elementary_wip_adjustment",
+    "elementary_break_even_calc",
+]
+
+
 def generate(
     subskill: Optional[str] = None,
     difficulty: str = "hard",
@@ -446,13 +455,14 @@ def generate(
 ) -> Dict[str, Any]:
     """Generates deterministic Grade 12 Accounting Cost Accounting questions."""
     base_seed = 42 if seed is None else int(seed)
-    chosen_mode = mode if mode in BUILDERS else ("compound" if subskill is None else subskill)
-    builder = BUILDERS.get(chosen_mode, _build_compound_production_cost)
+    r_pick = _rng(base_seed)
 
     questions = []
     for i in range(max(1, count)):
         r = _rng(base_seed * 1000 + i)
-        q = builder(r)
+        chosen = subskill if (subskill in BUILDERS and subskill != "compound") else r_pick.choice(SUBSKILLS)
+        q = BUILDERS[chosen](r)
+        q["subskill"] = chosen
         q["seed"] = base_seed * 1000 + i
         questions.append(q)
 

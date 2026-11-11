@@ -25,6 +25,13 @@ TOPIC_ID = "grade8_ems"
 SUBTOPIC_ID = "term1_general_ledger"
 CURRICULUM_REFERENCE = "Term 1 > General Ledger and Trial Balance of a Service Business"
 
+SUBSKILLS = [
+    "dead_clic_rules",
+    "posting_crj_cpj",
+    "balancing_ledger_accounts",
+    "trial_balance_preparation",
+]
+
 
 def _with_metadata(
     item: Dict[str, Any],
@@ -102,7 +109,7 @@ def _build_dead_clic_drill(r: random.Random, mode: str = "scaffold") -> Dict[str
         "id": f"g8_gl_deadclic_{r.randint(1000, 9999)}",
         "title": "DEAD CLIC Double-Entry Rules",
         "question_type": "table_completion",
-        "prompt": "Apply the double-entry rule mnemonic **DEAD CLIC** to determine the behavior of the following General Ledger accounts.",
+        "prompt": "Complete the table below to classify each General Ledger account and determine its normal balance side and side to record an increase.",
         "headers": headers,
         "rows": rows,
         "correct_map": correct_map,
@@ -369,27 +376,36 @@ def _build_trial_balance_drill(r: random.Random, mode: str = "scaffold") -> Dict
 # Public Dispatcher
 # --------------------------------------------------------------------------- #
 BUILDERS = {
+    "dead_clic_rules": _build_dead_clic_drill,
     "dead_clic": _build_dead_clic_drill,
+    "posting_crj_cpj": _build_balancing_drill,
+    "balancing_ledger_accounts": _build_balancing_drill,
     "balancing_accounts": _build_balancing_drill,
+    "trial_balance_preparation": _build_trial_balance_drill,
     "trial_balance": _build_trial_balance_drill,
     "concepts": _build_dead_clic_drill,
 }
 
 
 def generate(
-    subskill: str = "dead_clic",
+    subskill: str = "mixed",
     difficulty: str = "medium",
     count: int = 1,
     mode: str = "scaffold",
     seed: Optional[int] = None,
     **kwargs: Any,
 ) -> List[Dict[str, Any]]:
-    r = _rng(seed)
-    builder = BUILDERS.get(subskill, _build_dead_clic_drill)
+    base_seed = int(seed) if seed is not None else 42
     questions = []
     for i in range(max(1, count)):
-        sub_seed = None if seed is None else seed * 100 + i
+        sub_seed = base_seed + i * 19
         sub_r = _rng(sub_seed)
+        if subskill in ("mixed", "all", "", None, "concepts"):
+            chosen_sub = SUBSKILLS[(base_seed + i) % len(SUBSKILLS)]
+        else:
+            chosen_sub = subskill if subskill in BUILDERS else SUBSKILLS[(base_seed + i) % len(SUBSKILLS)]
+        builder = BUILDERS[chosen_sub]
         q = builder(sub_r, mode=mode)
+        q["subskill"] = chosen_sub
         questions.append(q)
     return questions

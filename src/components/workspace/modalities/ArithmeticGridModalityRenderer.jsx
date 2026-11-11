@@ -40,6 +40,7 @@ export default function ArithmeticGridModalityRenderer({
 
     const [quotientInput, setQuotientInput] = useState('');
     const [remainderInput, setRemainderInput] = useState('0');
+    const [workingRows, setWorkingRows] = useState(['', '']);
     const [showSteps, setShowSteps] = useState(false);
     const [revealedModel, setRevealedModel] = useState(false);
     const [savedLearnerInput, setSavedLearnerInput] = useState(null);
@@ -48,6 +49,7 @@ export default function ArithmeticGridModalityRenderer({
     useEffect(() => {
         setQuotientInput('');
         setRemainderInput('0');
+        setWorkingRows(['', '']);
         setShowSteps(false);
         setRevealedModel(false);
         setSavedLearnerInput(null);
@@ -130,21 +132,58 @@ export default function ArithmeticGridModalityRenderer({
                     </button>
                 </div>
 
-                {/* Division Bracket Visualization */}
-                <div className="bg-slate-50/80 rounded-xl p-4 border border-slate-200/70 flex flex-col items-center justify-center space-y-4">
-                    {/* Quotient Display / Bracket Container */}
-                    <div className="font-mono text-lg select-text inline-block">
-                        {/* Quotient Line */}
-                        <div className="flex justify-end pr-2 text-[#13519C] font-bold text-xl tracking-widest min-h-[28px]">
-                            {quotientInput ? quotientInput : <span className="text-slate-300">? ? ?</span>}
+                {/* Paper-Mimicking Division Bracket & Bring-Down Working Pad */}
+                <div className="bg-slate-50/80 rounded-xl p-4 sm:p-5 border border-slate-200/70 flex flex-col items-center justify-center space-y-4">
+                    <div className="font-mono text-lg select-text inline-block min-w-[220px]">
+                        {/* Editable Quotient Line */}
+                        <div className="flex justify-end pl-10 mb-1">
+                            <input
+                                type="text"
+                                aria-label="Quotient on bracket"
+                                value={quotientInput}
+                                onChange={(e) => setQuotientInput(e.target.value)}
+                                placeholder="Quotient..."
+                                className="w-36 text-right px-2 py-0.5 rounded border border-dashed border-[#13519C]/50 bg-white text-[#13519C] font-bold text-lg tracking-widest focus:outline-none focus:border-[#13519C]"
+                            />
                         </div>
 
-                        {/* Radical Line */}
-                        <div className="flex items-center">
-                            <span className="text-slate-700 font-bold pr-2">{divisor}</span>
-                            <div className="border-t-2 border-l-2 border-slate-800 pl-3 pr-4 py-1 text-slate-900 font-black tracking-widest bg-white shadow-2xs rounded-tr-lg">
+                        {/* Divisor )‾‾‾‾‾‾‾‾ Dividend */}
+                        <div className="flex items-center justify-end">
+                            <span className="text-slate-700 font-bold pr-2 text-xl">{divisor}</span>
+                            <div className="border-t-2 border-l-2 border-slate-800 pl-4 pr-5 py-1.5 text-slate-900 font-black tracking-widest bg-white shadow-2xs rounded-tr-lg min-w-[144px] text-right text-xl">
                                 {dividend}
                             </div>
+                        </div>
+
+                        {/* Learner Bring-Down & Subtraction Working Lines (Mimics Exercise Book) */}
+                        <div className="mt-2 pl-10 space-y-1.5">
+                            {workingRows.map((rowVal, rIdx) => (
+                                <div key={rIdx} className="flex items-center gap-1.5">
+                                    <span className="text-[10px] text-slate-400 w-4 text-right">{rIdx % 2 === 0 ? '−' : '='}</span>
+                                    <input
+                                        type="text"
+                                        data-testid={`input-division-step-${rIdx}`}
+                                        value={rowVal}
+                                        onChange={(e) => {
+                                            const next = [...workingRows];
+                                            next[rIdx] = e.target.value;
+                                            setWorkingRows(next);
+                                        }}
+                                        placeholder={rIdx === 0 ? 'Subtract product...' : 'Bring down / remainder...'}
+                                        className={`w-36 text-right px-2 py-0.5 text-sm font-mono bg-white border border-slate-200 rounded focus:outline-none focus:border-[#13519C] ${
+                                            rIdx % 2 === 0 ? 'border-b-2 border-b-slate-400' : ''
+                                        }`}
+                                    />
+                                </div>
+                            ))}
+                            <button
+                                type="button"
+                                data-testid="btn-add-division-row"
+                                onClick={() => setWorkingRows([...workingRows, ''])}
+                                className="text-[11px] font-sans font-semibold text-[#13519C] hover:underline pl-5 cursor-pointer"
+                            >
+                                + Add bring-down line
+                            </button>
                         </div>
 
                         {/* Step Breakdown (if expanded) */}

@@ -90,7 +90,16 @@ def _generate_gr10_mechanical_energy(r: random.Random, seed: Optional[int], idx:
         }
         marks = 7
 
-    return {
+        d_spec = {
+            "diagram_role": "context",
+            "kind": "track_profile",
+            "points": [
+                {"label": "A", "height_m": height, "pos": 0},
+                {"label": "B", "height_m": 0, "pos": 20},
+            ],
+            "mass_kg": mass,
+        }
+        return {
         "id": qid,
         "question_id": qid,
         "term": 3,
@@ -98,6 +107,7 @@ def _generate_gr10_mechanical_energy(r: random.Random, seed: Optional[int], idx:
         "suggested_duration_mins": 8,
         "mode": mode,
         "question_type": "short_answer",
+        "diagram_spec": d_spec,
         "question": prompt,
         "correct_answer": ans_str,
         "sample_answer": ans_str,
@@ -221,6 +231,19 @@ def _generate_gr12_work_energy_theorem(r: random.Random, seed: Optional[int], id
         }
         marks = 13
 
+    d_spec = {
+        "diagram_role": "context",
+        "kind": "free_body_diagram",
+        "mass_kg": mass,
+        "angle_deg": angle_deg,
+        "forces": [
+            {"name": "F_N", "label": "Normal Force", "dir": "up"},
+            {"name": "F_g", "label": "Gravity", "dir": "down"},
+            {"name": "F_app", "label": "Applied Force", "magnitude": applied_force},
+            {"name": "f_k", "label": "Friction", "magnitude": friction_force, "dir": "left"},
+        ],
+    }
+
     return {
         "id": qid,
         "question_id": qid,
@@ -229,6 +252,7 @@ def _generate_gr12_work_energy_theorem(r: random.Random, seed: Optional[int], id
         "suggested_duration_mins": 14,
         "mode": mode,
         "question_type": "short_answer",
+        "diagram_spec": d_spec,
         "question": prompt,
         "correct_answer": ans_str,
         "sample_answer": ans_str,

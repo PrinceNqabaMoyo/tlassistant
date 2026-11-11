@@ -1,5 +1,12 @@
 import React from 'react';
 import JXG from 'jsxgraph';
+import GeoGebraGeometryRenderer from './GeoGebraGeometryRenderer';
+import FunctionGraph from '../../FunctionGraph';
+import StatsAndFinancialGraphRenderer from './StatsAndFinancialGraphRenderer';
+import PhysicsAndEconomicsGraphRenderer from './PhysicsAndEconomicsGraphRenderer';
+import MathLitDiagramRenderer from './MathLitDiagramRenderer';
+import { getBankedDiagramComponent } from '../../modalities/diagram_bank';
+import { cleanSvgText } from './SvgRichLabel';
 
 const { JSXGraph } = JXG;
 
@@ -135,7 +142,7 @@ function renderRightTriangle(spec, { id, interactive, selectedEdge, graded, corr
             fillOpacity: 0.12,
             strokeColor: COLORS.angle,
             fixed: true,
-            name: ang.label || '',
+            name: cleanSvgText(ang.label || ''),
             label: { fontSize: 15, strokeColor: COLORS.angle },
             highlight: false,
         });
@@ -319,7 +326,7 @@ function renderTriangle(spec, { id }) {
                 highlight: false,
             });
             edges.push({ from, to, seg });
-            const label = (spec.side_labels || {})[`${from}${to}`] || (spec.side_labels || {})[`${to}${from}`] || '';
+            const label = cleanSvgText((spec.side_labels || {})[`${from}${to}`] || (spec.side_labels || {})[`${to}${from}`] || '');
             if (label) {
                 const a = pts[from];
                 const b = pts[to];
@@ -370,6 +377,15 @@ function renderTriangle(spec, { id }) {
         return neighbors;
     };
 
+    // Helper to order two neighbor arms around vertex v so JSXGraph always draws the interior (<180°) angle
+    const orderInteriorArms = (armA, vertex, armB) => {
+        const pv = pts[vertex] || [0, 0];
+        const pa = pts[armA] || [0, 0];
+        const pb = pts[armB] || [0, 0];
+        const cross = (pa[0] - pv[0]) * (pb[1] - pv[1]) - (pa[1] - pv[1]) * (pb[0] - pv[0]);
+        return cross >= 0 ? [P[armA], P[vertex], P[armB]] : [P[armB], P[vertex], P[armA]];
+    };
+
     // Right angle square (supports single vertex string or array of vertices)
     const rightAngleVerts = Array.isArray(spec.right_angle_at)
         ? spec.right_angle_at
@@ -378,27 +394,34 @@ function renderTriangle(spec, { id }) {
         if (!P[v]) return;
         const adj = getConnectedNeighbors(v);
         if (adj.length >= 2) {
-            board.create('angle', [P[adj[0]], P[v], P[adj[1]]], {
+            board.create('angle', orderInteriorArms(adj[0], v, adj[1]), {
                 type: 'square', radius: 0.4, fillColor: COLORS.hint, fillOpacity: 0.5,
                 strokeColor: COLORS.hint, fixed: true, name: '', withLabel: false, highlight: false,
             });
         }
     });
 
+    // Track vertices that already have explicit angle arcs in spec.angles so we never double-render
+    const explicitAngleVerts = new Set(
+        (spec.angles || [])
+            .map((ang) => (ang.arms && ang.arms.length >= 3 ? ang.arms[1] : ang.vertex))
+            .filter(Boolean)
+    );
+
     // Angle arcs and labels
     const angleVals = spec.angle_values || {};
     const angleLabels = spec.angle_labels || {};
     verts.forEach((v) => {
-        if (!P[v]) return;
+        if (!P[v] || explicitAngleVerts.has(v)) return;
         const adj = getConnectedNeighbors(v);
         if (adj.length < 2) return;
         const hasLabel = angleLabels[v];
         const hasValue = angleVals[v] !== undefined;
         if (hasLabel || hasValue) {
-            const ang = board.create('angle', [P[adj[0]], P[v], P[adj[1]]], {
+            board.create('angle', orderInteriorArms(adj[0], v, adj[1]), {
                 radius: 0.7, fillColor: COLORS.angle, fillOpacity: 0.12,
                 strokeColor: COLORS.angle, fixed: true,
-                name: angleLabels[v] || '',
+                name: cleanSvgText(angleLabels[v] || ''),
                 label: { fontSize: 14, strokeColor: COLORS.angle },
                 highlight: false,
             });
@@ -409,13 +432,13 @@ function renderTriangle(spec, { id }) {
     (spec.angles || []).forEach((ang) => {
         const arms = ang.arms || [];
         if (arms.length >= 3 && P[arms[0]] && P[arms[1]] && P[arms[2]]) {
-            board.create('angle', [P[arms[0]], P[arms[1]], P[arms[2]]], {
+            board.create('angle', orderInteriorArms(arms[0], arms[1], arms[2]), {
                 radius: ang.radius || 0.7,
                 fillColor: COLORS.angle,
                 fillOpacity: 0.12,
                 strokeColor: COLORS.angle,
                 fixed: true,
-                name: ang.label || '',
+                name: cleanSvgText(ang.label || ''),
                 label: { fontSize: 14, strokeColor: COLORS.angle },
                 highlight: false,
             });
@@ -488,7 +511,7 @@ function renderQuadrilateral(spec, { id }) {
             highlight: false,
         });
         edges.push({ from, to, seg });
-        const label = (spec.side_labels || {})[`${from}${to}`] || '';
+        const label = cleanSvgText((spec.side_labels || {})[`${from}${to}`] || '');
         if (label) {
             const a = pts[from];
             const b = pts[to];
@@ -540,19 +563,22 @@ function renderQuadrilateral(spec, { id }) {
         });
     });
 
-    // Angle arcs and labels
+    // Angle arcs and labels (use actual polygon neighbor vertices in interior CCW order)
     const angleLabels = spec.angle_labels || {};
-    verts.forEach((v) => {
-        if (!P[v]) return;
-        const adj = verts.filter((n) => n !== v);
-        if (adj.length < 2) return;
-        const prev = adj[0];
-        const next = adj[1];
-        if (angleLabels[v]) {
-            board.create('angle', [P[prev], P[v], P[next]], {
+    verts.forEach((v, idx) => {
+        if (!P[v] || verts.length < 3) return;
+        const prev = verts[(idx - 1 + verts.length) % verts.length];
+        const next = verts[(idx + 1) % verts.length];
+        if (angleLabels[v] && P[prev] && P[next]) {
+            const pv = pts[v] || [0, 0];
+            const pa = pts[prev] || [0, 0];
+            const pb = pts[next] || [0, 0];
+            const cross = (pa[0] - pv[0]) * (pb[1] - pv[1]) - (pa[1] - pv[1]) * (pb[0] - pv[0]);
+            const ordered = cross >= 0 ? [P[prev], P[v], P[next]] : [P[next], P[v], P[prev]];
+            board.create('angle', ordered, {
                 radius: 0.7, fillColor: COLORS.angle, fillOpacity: 0.12,
                 strokeColor: COLORS.angle, fixed: true,
-                name: angleLabels[v],
+                name: cleanSvgText(angleLabels[v]),
                 label: { fontSize: 14, strokeColor: COLORS.angle },
                 highlight: false,
             });
@@ -826,7 +852,7 @@ function renderCircleGeometry(spec, { id, interactive, selectedEdge, graded, cor
                 fillOpacity: 0.12,
                 strokeColor: COLORS.angle,
                 fixed: true,
-                name: ang.label || '',
+                name: cleanSvgText(ang.label || ''),
                 label: { fontSize: 13, strokeColor: COLORS.angle },
                 highlight: false,
             });
@@ -859,12 +885,14 @@ const DiagramRenderer = ({
     onSelectEdge,
     graded = false,
     correctEdge = null,
+    allowViewSwitch = false,
 }) => {
     const boxRef = React.useRef(null);
     const boardRef = React.useRef(null);
     const idRef = React.useRef(`jxgbox-${++_boardSeq}`);
     const selectRef = React.useRef(onSelectEdge);
     selectRef.current = onSelectEdge;
+    const [activePin, setActivePin] = React.useState(null);
 
     const specKey = React.useMemo(() => JSON.stringify(spec || {}), [spec]);
 
@@ -908,43 +936,200 @@ const DiagramRenderer = ({
 
     if (!spec) return null;
 
-    const isRightTriangle = spec.kind === 'right_triangle';
-    const isNumberLine = spec.kind === 'number_line';
-    const isDotPattern = spec.kind === 'dot_pattern';
-    const isCircleGeometry = ['circle_subtended_angle', 'circle_cyclic_quad', 'circle_tangent_secant'].includes(spec.kind);
-    const isGeometry = ['triangle', 'quadrilateral', 'angle_diagram', 'parallel_transversal'].includes(spec.kind) || isCircleGeometry;
-    if (!isRightTriangle && !isNumberLine && !isDotPattern && !isGeometry) return null;
+    const normalizedKind = (spec.kind || spec.diagram_type || spec.type || '').toLowerCase();
+    const kindAliases = {
+        'bar_chart': 'bar_graph',
+        'double_bar_chart': 'double_bar_graph',
+        'boxplot': 'box_and_whisker',
+        '2d_net': 'rectangular_prism_net',
+        '3d_solid': 'mensuration_3d',
+    };
+    const effectiveKind = kindAliases[normalizedKind] || normalizedKind;
+    const normalizedSpec = { ...spec, kind: effectiveKind };
 
-    if (isDotPattern) {
+    const mathLitKinds = [
+        'inline_svg', 'floor_plan', 'bar_scale', 'graphic_scale', 'compass_rose',
+        'bearing_map', 'elevation_compass', 'elevation_view', 'strip_map', 'grid_map',
+        'seating_plan', 'packaging_packing', 'packaging_cartons', 'mensuration_2d',
+        'mensuration_3d', '2d_polygon', 'cartesian_system'
+    ];
+    if (mathLitKinds.includes(effectiveKind) || spec.svg || spec.svg_data) {
+        return <MathLitDiagramRenderer spec={normalizedSpec} />;
+    }
+
+    const bankedKey = spec.image_type || spec.master || spec.diagram_id || (spec.kind !== 'bio_diagram' ? spec.kind : null);
+    const BankedDiagramComponent = getBankedDiagramComponent(bankedKey);
+    if (BankedDiagramComponent) {
+        const isContextOnly = spec.diagram_role === 'context' || spec.role === 'context';
         return (
-            <div className="flex flex-col items-center rounded-xl border border-slate-200 bg-white p-4">
-                <p className="text-sm font-medium text-slate-700">
-                    Pattern family: <span className="capitalize">{spec.family}</span>
-                </p>
-                {spec.count_rule ? (
-                    <p className="mt-1 text-sm text-slate-600">
-                        Count rule: <span className="font-mono">{spec.count_rule}</span>
-                    </p>
-                ) : null}
-                <p className="mt-2 text-xs text-slate-400">Figure {spec.figure_index}</p>
-                {spec.caption ? <p className="mt-1 text-xs text-slate-400">{spec.caption}</p> : null}
+            <div data-testid="banked-diagram-container" className="flex flex-col items-center w-full max-w-full my-2">
+                <BankedDiagramComponent
+                    pins={isContextOnly ? [] : (Array.isArray(spec.pins) ? spec.pins : [])}
+                    landmarks={Array.isArray(spec.landmarks) ? spec.landmarks : []}
+                    labels={isContextOnly ? [] : (Array.isArray(spec.labels) ? spec.labels : [])}
+                    activePin={activePin}
+                    onSelectPin={(pinId) => {
+                        setActivePin(pinId);
+                        if (typeof onSelectEdge === 'function') onSelectEdge(pinId);
+                    }}
+                    view={spec.view}
+                    defaultView={spec.defaultView || spec.view || 'textbook'}
+                    allowViewSwitch={allowViewSwitch}
+                    gradeMask={spec.grade_mask || 'g9'}
+                    state={spec.state || 'static'}
+                    viewBox={spec.viewBox || '0 0 600 480'}
+                    {...spec}
+                />
             </div>
         );
     }
 
+    if (
+        [
+            'dot_pattern',
+            'cartesian_point',
+            'radian_sector',
+            'cube_net',
+            'rectangular_prism_net',
+            'triangular_prism_net',
+            'square_pyramid_net',
+            'cylinder_net',
+            'solid_3d',
+        ].includes(effectiveKind)
+    ) {
+        return <GeoGebraGeometryRenderer spec={normalizedSpec} />;
+    }
+
+    if (
+        [
+            'function_graph',
+            'argand_diagram',
+            'trapezoidal_rule',
+            'circle_geometry',
+            'linear_programming',
+        ].includes(effectiveKind) || Boolean(spec.params && spec.type && !effectiveKind)
+    ) {
+        return <FunctionGraph spec={normalizedSpec} />;
+    }
+
+    if (
+        [
+            'box_and_whisker',
+            'statistics_box_and_ogive',
+            'ogive',
+            'cumulative_frequency',
+            'scatter_plot_regression',
+            'scatter_plot',
+            'timeline_finance',
+            'venn_3_sets',
+            'venn_diagram',
+            'contingency_table',
+            'contingency_table_and_tree',
+            'tree_diagram',
+            'step_tariff',
+            'break_even',
+            'probability_spinner',
+            'function_flow',
+            'flow_diagram',
+            'bar_graph',
+            'double_bar_graph',
+            'histogram',
+            'frequency_polygon',
+            'line_graph',
+            'broken_line_graph',
+            'pie_chart',
+        ].includes(effectiveKind)
+    ) {
+        return <StatsAndFinancialGraphRenderer spec={normalizedSpec} />;
+    }
+
+    if (
+        [
+            'motion_graph',
+            'reaction_energy_profile',
+            'kc_equilibrium_graph',
+            'maxwell_boltzmann',
+            'supply_demand',
+            'circular_flow',
+            'production_chain',
+            'promissory_note',
+            'source_document',
+            'sankey_energy',
+            'grid_paper',
+            'organogram',
+            'porters_five_forces',
+            'process_flow',
+            'food_chain',
+            'concept_map',
+            'ph_scale',
+            'micrograph_scale_view',
+            'organic_structure',
+        ].includes(effectiveKind)
+    ) {
+        return <PhysicsAndEconomicsGraphRenderer spec={normalizedSpec} />;
+    }
+
+    const isRightTriangle = spec.kind === 'right_triangle';
+    const isNumberLine = spec.kind === 'number_line';
+    const isCircleGeometry = ['circle_subtended_angle', 'circle_cyclic_quad', 'circle_tangent_secant'].includes(spec.kind);
+    const isGeometry = ['triangle', 'quadrilateral', 'angle_diagram', 'parallel_transversal'].includes(spec.kind) || isCircleGeometry;
+    if (!isRightTriangle && !isNumberLine && !isGeometry) return null;
+
     const boxStyle = isNumberLine
-        ? { width: 400, height: 120, position: 'relative', overflow: 'hidden', userSelect: 'none' }
-        : { width: 320, height: 250, position: 'relative', overflow: 'hidden', userSelect: 'none' };
+        ? { width: 520, maxWidth: '100%', height: 150, position: 'relative', overflow: 'hidden', userSelect: 'none' }
+        : { width: 520, maxWidth: '100%', height: 360, position: 'relative', overflow: 'hidden', userSelect: 'none' };
+
+    const selectableEdges = interactive && Array.isArray(spec.sides)
+        ? spec.sides.map((s) => s.edge).filter(Boolean)
+        : [];
 
     return (
-        <div className="flex flex-col items-center">
+        <div
+            data-testid="geogebra-diagram-board"
+            className="flex flex-col items-center w-full max-w-full rounded-xl border border-slate-200 bg-white shadow-sm overflow-hidden my-2"
+        >
+            <div className="w-full flex items-center justify-between px-3.5 py-2 bg-slate-50 border-b border-slate-200 text-xs">
+                <div className="flex items-center gap-2">
+                    <span className="inline-block w-2 h-2 rounded-full bg-blue-600" />
+                    <span className="font-semibold text-slate-700 uppercase tracking-wider">
+                        Euclidean & Circle Geometry ({spec.kind.replace(/_/g, ' ')})
+                    </span>
+                </div>
+                {spec.caption ? (
+                    <span className="font-mono text-slate-500 truncate max-w-[260px]">{spec.caption}</span>
+                ) : (
+                    <span className="font-mono text-slate-500">Precision Vector Board</span>
+                )}
+            </div>
             <div
                 id={idRef.current}
                 ref={boxRef}
-                className="jxgbox rounded-xl border border-slate-200 bg-white"
+                className="jxgbox bg-white my-1"
                 style={boxStyle}
             />
-            {spec.caption ? <p className="mt-1 text-xs text-slate-400">{spec.caption}</p> : null}
+            {selectableEdges.length > 0 && (
+                <div className="mb-2.5 flex flex-wrap items-center justify-center gap-2" data-testid="diagram-edge-selector">
+                    {selectableEdges.map((edge) => {
+                        const isSelected = selectedEdge === edge;
+                        return (
+                            <button
+                                key={edge}
+                                type="button"
+                                data-testid={`btn-diagram-edge-${edge}`}
+                                onClick={() => !graded && selectRef.current && selectRef.current(edge)}
+                                className={`px-3 py-1 rounded-lg text-xs font-mono font-bold border transition cursor-pointer ${
+                                    isSelected
+                                        ? 'bg-[#13519C] text-white border-[#13519C] shadow-2xs'
+                                        : 'bg-white text-slate-700 border-slate-200 hover:bg-blue-50 hover:border-[#13519C]/50'
+                                }`}
+                            >
+                                Side {edge}
+                            </button>
+                        );
+                    })}
+                </div>
+            )}
+            {spec.caption ? <p className="mb-2 text-xs text-slate-500">{spec.caption}</p> : null}
         </div>
     );
 };

@@ -138,6 +138,42 @@ def make_typed(
     }
 
 
+def _normalise_text_parts(
+    text_parts: Optional[List[str]], blanks: List[str], prompt: str
+) -> List[str]:
+    """Coerce authored segments into the shape WordBankQuestionUI expects.
+
+    The UI renders ``parts[i]`` followed by the blank slot ``blanks[i]`` for every
+    non-final element, so ``text_parts`` MUST be exactly ``len(blanks) + 1`` long.
+
+    Authoring files commonly write one segment *before* and one segment *after*
+    every blank, which produces ``2 * len(blanks)`` (or ``2 * len(blanks) + 1`` when
+    a lone trailing "." is also given) segments. Rendered literally, those extra
+    segments become *phantom blanks*. Fold each trailing separator into the
+    following prefix so the visible sentence is preserved:
+
+        ["The ", " does X.", "The ", " does Y.", "The ", " does Z."]
+        -> ["The ", " does X.The ", " does Y.The ", " does Z."]
+    """
+    parts = list(text_parts) if text_parts else [prompt] + [""] * len(blanks)
+    want = len(blanks) + 1
+    if len(parts) == want:
+        return parts
+    n = len(blanks)
+    if n and len(parts) in (2 * n, 2 * n + 1):
+        # parts layout: prefix0, sep0, prefix1, sep1, ... prefixN-1, sepN-1 [, tail]
+        merged: List[str] = [parts[0]]
+        for i in range(1, 2 * n - 1, 2):
+            merged.append(parts[i] + parts[i + 1])
+        # The final segment (and any lone trailing separator) belongs to the last part.
+        merged.append("".join(parts[2 * n - 1:]))
+        if len(merged) == want:
+            return merged
+    if len(parts) > want:
+        return parts[: want - 1] + ["".join(parts[want - 1:])]
+    return parts + [""] * (want - len(parts))
+
+
 def make_wordbank(
     *,
     prefix: str,
@@ -163,7 +199,7 @@ def make_wordbank(
     hint_text = hint or explanation
     # Structured blanks for frontend WordBankQuestionUI compatibility
     structured_blanks = [{"id": str(b), "label": str(b)} for b in blanks]
-    resolved_text_parts = list(text_parts) if text_parts else [prompt] + [""] * len(blanks)
+    resolved_text_parts = _normalise_text_parts(text_parts, blanks, prompt)
     return {
         "id": make_id(f"{prefix}_wb"),
         "question_type": "word_bank",
@@ -354,16 +390,311 @@ def sample_pool(r: random.Random, pool: List[Dict[str, Any]], count: int) -> Lis
     return [item() if callable(item) else dict(item) for item in chosen]
 
 
+# --- archetype derivation from already-authored content ---------------------
+
+_BLANK_MARKERS = ("\u2026", "...", "_____")
+
+
+def _eval_pool(pool: Optional[List[Any]]) -> List[Dict[str, Any]]:
+    out: List[Dict[str, Any]] = []
+    for f in (pool or []):
+        try:
+            out.append(f() if callable(f) else dict(f))
+        except Exception:
+            continue
+    return out
+
+
+def _derive_prefix(q: Dict[str, Any]) -> str:
+    _id = str(q.get("id") or "g10")
+    for tok in ("_mcq_", "_typed_", "_wb_", "_match_", "_cross_", "_essay_"):
+        if tok in _id:
+            return _id.split(tok)[0]
+    return _id.rsplit("_", 1)[0] or "g10"
+
+
+def _correct_option(q: Dict[str, Any]) -> Optional[str]:
+    try:
+        return q["options"][int(q["correct_index"])]
+    except (KeyError, IndexError, ValueError, TypeError):
+        return None
+
+
+def _wb_kwargs(q: Dict[str, Any]) -> Optional[Dict[str, Any]]:
+    prompt = q.get("prompt", "")
+    marker = next((m for m in _BLANK_MARKERS if m in prompt), None)
+    if not marker:
+        return None
+    parts = prompt.split(marker)
+    if len(parts) != 2:
+        return None
+    ans = _correct_option(q)
+    if not ans or len(ans) > 30:
+        return None
+    return dict(
+        prefix=_derive_prefix(q),
+        prompt=prompt.replace(marker, " ______ "),
+        pool=list(q["options"]),
+        blanks=["1"],
+        correct_map={"1": ans},
+        text_parts=[parts[0].rstrip() + " ", " " + parts[1].strip()],
+        explanation=q.get("explanation", ""),
+        visual_aid_key=q.get("visual_aid_key"),
+        guidelines=q.get("guidelines"),
+    )
+
+
+def _collect_pairs(concepts: List[Dict[str, Any]]) -> List[tuple]:
+    """Extract (prompt, correct_answer, explanation) tuples from concept MCQs."""
+    pairs: List[tuple] = []
+    seen = set()
+    for q in concepts:
+        ans = _correct_option(q)
+        p = q.get("prompt", "")
+        if not ans or not p or ans in seen:
+            continue
+        seen.add(ans)
+        pairs.append((p, ans, q.get("explanation", "")))
+    return pairs
+
+
+def _match_kwargs_list(concepts: List[Dict[str, Any]], prefix: str) -> List[Dict[str, Any]]:
+    """Build several matching variants by sub-sampling the (prompt, answer) pairs.
+
+    Entropy: each variant picks a different subset of pairs and shuffles the B
+    column, so different seeds yield genuinely different matching questions.
+    """
+    pairs = _collect_pairs(concepts)
+    pairs_ok = [(p, a) for p, a, _ in pairs if len(a) <= 28]
+    if len(pairs_ok) < 3:
+        return []
+    import random
+    sizes = [s for s in (4, 5, 6, 3) if s <= len(pairs_ok)]
+    if not sizes:
+        return []
+    leads = [
+        "Match each description in Column A with the correct term in Column B",
+        "Pair each CAPS description with its defining term",
+        "Match the following definitions to their terms",
+        "Match each concept to the description that best fits",
+    ]
+    out: List[Dict[str, Any]] = []
+    variants = max(6, min(10, len(pairs_ok)))
+    for vi in range(variants):
+        n = sizes[vi % len(sizes)]
+        rr = random.Random(f"{prefix}|match|{vi}|{n}")
+        chosen = rr.sample(pairs_ok, n)
+        col_a = [p for p, _ in chosen]
+        col_b_full = [a for _, a in chosen]
+        col_b = list(col_b_full)
+        rr.shuffle(col_b)
+        correct_pairs = {p: a for p, a in chosen}
+        lead = leads[vi % len(leads)]
+        out.append(dict(
+            prefix=prefix,
+            prompt=f"{lead}. ({n} items)  Descriptions: " + ", ".join(p[:40] for p, _ in chosen),
+            column_a=col_a,
+            column_b=col_b,
+            correct_pairs=correct_pairs,
+            explanation="Match each CAPS description to its defining term.",
+            marks=n,
+        ))
+    return out
+
+
+def _cw_kwargs_list(concepts: List[Dict[str, Any]], prefix: str) -> List[Dict[str, Any]]:
+    """Build several crossword variants by sub-sampling a single-token vocab.
+
+    Preferred tokens are one-word answers (>=4 letters). If a topic's answers
+    are mostly multi-word, fall back to the longest alphabetic word inside each
+    answer so every topic still yields a real crossword instead of silently
+    falling back to the mixed pool.
+    """
+    pairs = _collect_pairs(concepts)
+    seen: set = set()
+    vocab: List[tuple] = []
+
+    def _add(token: str, clue: str) -> None:
+        u = token.upper()
+        if len(token) < 4 or not token.isalpha() or u in seen:
+            return
+        seen.add(u)
+        vocab.append((u, clue))
+
+    # Pass 1: pure single-word answers. Punctuation-only differences (HIV/AIDS,
+    # Risk-taker) may be stripped, but a real space disqualifies the token --
+    # stripping 'Counterfeiting/imitations' used to glue both words together
+    # into an un-grid-able 23-letter monster.
+    for p, ans, expl in pairs:
+        a = ans.strip()
+        if " " not in a and "/" not in a and "-" not in a:
+            tok = re.sub(r"[^A-Za-z]", "", a)
+            if tok.isalpha():
+                _add(tok, expl or a)
+        elif " " not in a:
+            _add(max(re.split(r"[/\-]", a), key=len).strip(), expl or a)
+    # Pass 2 (fallback): longest word inside multi-word answers.
+    if len(vocab) < 6:
+        for p, ans, expl in pairs:
+            words = [w for w in re.findall(r"[A-Za-z]{4,}", ans)]
+            if not words:
+                continue
+            _add(max(words, key=len), expl or ans)
+    if len(vocab) < 4:
+        return []
+    import random
+    sizes = [s for s in (6, 7, 5, 8) if s <= len(vocab)]
+    if not sizes:
+        return []
+    leads = [
+        "Crossword of key CAPS terms",
+        "Fill in the business-studies vocabulary",
+        "Crossword puzzle for this topic",
+        "Complete the grid with the correct business terms",
+    ]
+    out: List[Dict[str, Any]] = []
+    variants = max(4, min(8, len(vocab)))
+    for vi in range(variants):
+        n = sizes[vi % len(sizes)]
+        rr = random.Random(f"{prefix}|cw|{vi}|{n}")
+        chosen = rr.sample(vocab, n)
+        words = [w for w, _ in chosen]
+        clues = {w: c for w, c in chosen}
+        grid = max(12, max(len(w) for w in words) + 2)
+        lead = leads[vi % len(leads)]
+        out.append(dict(
+            prefix=prefix,
+            prompt=f"{lead} ({n} words).",
+            words=words,
+            clues=clues,
+            grid_size=grid,
+            explanation="Each answer is a key term; the clue is its definition.",
+            marks=n,
+        ))
+    return out
+
+
+def _cw_kwargs(concepts: List[Dict[str, Any]], prefix: str) -> Optional[Dict[str, Any]]:
+    lst = _cw_kwargs_list(concepts, prefix)
+    return lst[0] if lst else None
+
+
+def _essay_kwargs(q: Dict[str, Any]) -> Optional[Dict[str, Any]]:
+    mps = [m for m in (q.get("marking_points") or []) if m]
+    if not mps:
+        return None
+    marks = int(q.get("marks") or len(mps))
+    per = max(1, marks // len(mps))
+    rubric = [{"criterion": f"Point {i + 1}", "description": mp, "marks": per} for i, mp in enumerate(mps)]
+    rubric[-1]["marks"] += marks - sum(c["marks"] for c in rubric)
+    sample = q.get("sample_answer") or q.get("explanation") or " ".join(mps)
+    return dict(
+        prefix=_derive_prefix(q),
+        prompt=q["prompt"],
+        rubric=rubric,
+        sample_answer=sample,
+        marks=marks,
+        min_words=max(80, marks * 15),
+        max_words=max(200, marks * 30),
+        visual_aid_key=q.get("visual_aid_key"),
+        guidelines=q.get("guidelines"),
+    )
+
+
+def _ensure_derived_pools(pools: Dict[str, List[Any]]) -> None:
+    """Fill any missing rich-format pool by deriving it from core content."""
+    if not any(k in pools and pools.get(k) for k in ("concepts", "discussion", "application")):
+        return
+    concepts = _eval_pool(pools.get("concepts"))
+    prefix = _derive_prefix(concepts[0]) if concepts else "g10"
+    typed = [q for q in _eval_pool(pools.get("discussion")) + _eval_pool(pools.get("application"))
+             if q.get("question_type") == "typed" and q.get("marking_points")]
+
+    if not pools.get("word_bank"):
+        facs = [lambda kw=kw: make_wordbank(**kw) for q in concepts for kw in [_wb_kwargs(q)] if kw]
+        if facs:
+            pools["word_bank"] = facs
+    if not pools.get("matching"):
+        facs = [lambda kw=kw: make_matching(**kw) for kw in _match_kwargs_list(concepts, prefix)]
+        if facs:
+            pools["matching"] = facs
+    if not pools.get("crossword"):
+        kws = _cw_kwargs_list(concepts, prefix)
+        if kws:
+            pools["crossword"] = [lambda kw=kw: make_crossword(**kw) for kw in kws]
+    if not pools.get("essay"):
+        facs = [lambda kw=kw: make_essay(**kw) for q in typed for kw in [_essay_kwargs(q)] if kw]
+        if facs:
+            pools["essay"] = facs
+
+
+def _harvest_pools(pools: Dict[str, List[Any]], topic_key: str) -> None:
+    """Append authentic exam questions harvested from the curriculum .md docs.
+
+    Typed drills join the discussion pool; MCQ blocks are converted to the
+    raw G10 concept-dict shape and joined to concepts. Fully deterministic
+    (pure file parsing, cached) and silently no-ops when no doc matches.
+    """
+    try:
+        from ..bs_docs_harvester import harvest_items
+        grade = int(str(topic_key)[5:7])
+        items = harvest_items(grade, topic_key)
+    except Exception:
+        return
+    prefix = str(topic_key)
+    for it in items:
+        if it.get("kind") == "mcq":
+            opts = list(it["options"])
+            try:
+                ci = int(it["correct_index"])
+                assert 0 <= ci < len(opts)
+            except (KeyError, ValueError, TypeError, AssertionError):
+                continue
+            raw = {
+                "id": make_id(f"{prefix}_mcq"),
+                "question_type": "mcq",
+                "prompt": it["prompt"],
+                "options": opts,
+                "correct_index": str(ci),
+                "explanation": it.get("explanation", ""),
+                "marks": int(it.get("marks", 1) or 1),
+            }
+            pools.setdefault("concepts", []).append(lambda q=raw: dict(q))
+        else:
+            mps = list(it.get("marking_points") or [])
+            if not mps:
+                continue
+            raw = make_typed(
+                prefix=prefix,
+                prompt=it["prompt"],
+                marking_points=mps,
+                sample_answer=it.get("sample_answer", ""),
+                marks=it.get("marks"),
+                guidelines=it.get("guidelines"),
+            )
+            pools.setdefault("discussion", []).append(lambda q=raw: dict(q))
+
+
 def build_generate(pools_builder):
     """Return a `generate(subskill, difficulty, count, seed=None, **kw)` function.
 
     `pools_builder(r)` must return a dict mapping subskill-key -> list of
     factory callables. A 'mixed' key is auto-derived from the union if absent.
+
+    If a topic declares only the core pools (concepts / application /
+    discussion) the richer formats (word_bank / matching / crossword / essay)
+    are DERIVED from that already-grounded CAPS content so the topic still
+    serves every archetype instead of silently falling back to MCQ. Topics that
+    hand-author these pools (see market/macro/business-sectors) are left as-is.
     """
 
     def generate(subskill: str = "concepts", difficulty: str = "medium", count: int = 1, seed: Optional[int] = None, **_kw) -> List[Dict[str, Any]]:
         r = rng(seed)
         pools = pools_builder(r)
+        topic_key = str(_kw.get("topic") or _kw.get("topic_key") or "")
+        if topic_key.startswith("grade1") and "_bs_" in topic_key:
+            _harvest_pools(pools, topic_key)
+        _ensure_derived_pools(pools)
         if "mixed" not in pools:
             union: List[Any] = []
             for key, items in pools.items():

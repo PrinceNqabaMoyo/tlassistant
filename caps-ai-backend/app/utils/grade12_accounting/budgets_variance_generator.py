@@ -312,22 +312,29 @@ def _build_variance(r: random.Random) -> Dict[str, Any]:
     prompt = (
         f"**{company}** — Cash Budget Variance Analysis for {month} {year}.\n\n"
         f"Compare the budgeted and actual figures below. For each item, calculate the "
-        f"variance and state whether it is Favourable or Unfavourable.\n\n"
-        f"| Item | Budgeted (R) | Actual (R) | Variance (R) | Fav/Unfav |\n"
-        f"|------|-------------|-----------|-------------|----------|\n"
+        f"variance and state whether it is Favourable or Unfavourable."
     )
-    for i, item in enumerate(items):
-        prompt += f"| {item} | {_fmt(budgeted[i])} | {_fmt(actual[i])} | ? | ? |\n"
-
+    headers = ["Item", "Budgeted (R)", "Actual (R)", "Variance (R)", "Fav / Unfav"]
+    rows = []
     correct_map = {}
     for i, item in enumerate(items):
-        correct_map[f"variance_{i}"] = str(variances[i])
-        correct_map[f"fav_unfav_{i}"] = fav_unfav[i]
+        rows.append([
+            item,
+            f"R{_fmt(budgeted[i])}",
+            f"R{_fmt(actual[i])}",
+            f"{{r{i}_c3}}",
+            f"{{r{i}_c4}}",
+        ])
+        correct_map[f"r{i}_c3"] = str(variances[i])
+        correct_map[f"r{i}_c4"] = fav_unfav[i]
 
     return {
         "id": _make_id("budget_variance"),
-        "question_type": "structured",
+        "question_type": "table_fill",
         "question_text": prompt,
+        "headers": headers,
+        "rows": rows,
+        "correct_map": correct_map,
         "correct_answer": correct_map,
         "sample_answer": f"Sales variance: R{_fmt(variances[0])} ({fav_unfav[0]})",
         "marks": 4,
@@ -389,21 +396,70 @@ def generate(
     r = _rng(seed)
     questions: List[Dict[str, Any]] = []
 
+    def _build_debtors_collection_company(r_sub):
+        co = _pick_entity(r_sub)
+        m1_cred = r_sub.choice([400000, 500000, 600000])
+        m2_cred = r_sub.choice([480000, 600000, 720000])
+        coll_from_m1 = int(m1_cred * 0.50)
+        coll_from_m2 = int(m2_cred * 0.30 * 0.95)
+        tot_coll = coll_from_m1 + coll_from_m2
+        return {
+            "question_type": "table_fill",
+            "subskill": "company_debtors_collection_schedule",
+            "question_text": (
+                f"**{co}** collects **30%** of credit sales in the month of sale (less **5% settlement discount**) "
+                f"and **50%** in the month after sale. Complete the Month 2 collection schedule."
+            ),
+            "headers": ["Credit Sales Month", "Credit Sales (R)", "Month 2 Collection (R)"],
+            "rows": [
+                ["Month 1 Credit Sales (50% collected in Month 2)", f"R{m1_cred:,}", "{r0_c2}"],
+                ["Month 2 Credit Sales (30% less 5% discount)", f"R{m2_cred:,}", "{r1_c2}"],
+                ["Total Cash from Debtors in Month 2", "", "{r2_c2}"],
+            ],
+            "correct_map": {"r0_c2": coll_from_m1, "r1_c2": coll_from_m2, "r2_c2": tot_coll},
+            "marks": 5,
+            "worked_solution": f"Month 1 (50%) = `R{coll_from_m1:,}`; Month 2 (28.5%) = `R{coll_from_m2:,}`; Total = `R{tot_coll:,}`.",
+        }
+
+    def _build_creditors_payment_company(r_sub):
+        co = _pick_entity(r_sub)
+        sales = r_sub.choice([600000, 750000, 900000])
+        cos = int(sales * (100 / 150))
+        cred_purch = int(cos * 0.80)
+        paid_m2 = int(cred_purch * 0.95)
+        return {
+            "question_type": "table_fill",
+            "subskill": "company_creditors_payment_schedule",
+            "question_text": (
+                f"**{co}** applies a **50% mark-up on cost**. **80%** of stock is purchased on credit, and creditors are paid in the following month "
+                f"less a **5% early settlement discount**. Complete the schedule for sales of **R{sales:,}**."
+            ),
+            "headers": ["Creditors Payment Calculation", "Amount (R)"],
+            "rows": [
+                [f"Cost of Sales (Sales R{sales:,} at 50% mark-up on cost)", "{r0_c1}"],
+                ["Credit purchases (80% of Cost of Sales)", "{r1_c1}"],
+                ["Cash paid to creditors (less 5% settlement discount)", "{r2_c1}"],
+            ],
+            "correct_map": {"r0_c1": cos, "r1_c1": cred_purch, "r2_c1": paid_m2},
+            "marks": 5,
+            "worked_solution": f"Cost of Sales = `R{cos:,}`; Credit Purchases = `R{cred_purch:,}`; Cash Paid (95%) = `R{paid_m2:,}`.",
+        }
+
     builders = {
         "elementary_projected_income": _build_projected_income,
         "elementary_cash_budget": _build_cash_budget,
         "elementary_variance": _build_variance,
+        "company_debtors_collection_schedule": _build_debtors_collection_company,
+        "company_creditors_payment_schedule": _build_creditors_payment_company,
     }
+    keys = list(builders.keys())
 
     for _ in range(count):
         sub_seed = r.randint(1, 1_000_000_000)
         sub_r = _rng(sub_seed)
-
-        if mode == "compound":
-            questions.extend(_build_compound(sub_r))
-        elif mode in builders:
-            questions.append(builders[mode](sub_r))
-        else:
-            questions.extend(_build_compound(sub_r))
+        chosen = subskill if (subskill in builders) else r.choice(keys)
+        q = builders[chosen](sub_r)
+        q["subskill"] = chosen
+        questions.append(q)
 
     return questions

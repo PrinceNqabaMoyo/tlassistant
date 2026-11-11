@@ -1,5 +1,8 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { CheckCircle2, AlertCircle, Sparkles } from 'lucide-react';
+import DiagramRenderer from '../shared/mathx/DiagramRenderer';
+import MathText from '../shared/mathx/MathText';
+import { extractQuestionParts } from '../shared/mathx/MathAnswerArea';
 
 function extractMarkingPoints(question) {
     if (!question) return [];
@@ -87,13 +90,18 @@ export default function RubricModalityRenderer({
     isChecking,
     showDynamicScaffold,
     onToggleScaffold,
+    hideStimulusDiagram = false,
 }) {
     if (!question) return null;
 
     const [selectedKeywords, setSelectedKeywords] = useState([]);
     const [learnerExplanation, setLearnerExplanation] = useState('');
+    const [partResponses, setPartResponses] = useState([]);
     const [revealedModel, setRevealedModel] = useState(false);
     const [savedLearnerState, setSavedLearnerState] = useState(null);
+
+    const subParts = useMemo(() => extractQuestionParts(question), [question]);
+    const isMultiPart = subParts.length > 1;
 
     // Dynamic marking points
     const markingPoints = useMemo(() => extractMarkingPoints(question), [question]);
@@ -123,9 +131,10 @@ export default function RubricModalityRenderer({
     useEffect(() => {
         setSelectedKeywords([]);
         setLearnerExplanation('');
+        setPartResponses(subParts.length > 1 ? subParts.map(() => '') : []);
         setRevealedModel(false);
         setSavedLearnerState(null);
-    }, [question?.id]);
+    }, [question?.id, subParts.length]);
 
     const toggleKeyword = (kw) => {
         if (revealedModel) return;
@@ -139,18 +148,24 @@ export default function RubricModalityRenderer({
             setSavedLearnerState({
                 keywords: [...selectedKeywords],
                 explanation: learnerExplanation,
+                partResponses: [...partResponses],
             });
             if (Array.isArray(modelKeywords) && modelKeywords.length > 0) {
                 setSelectedKeywords([...modelKeywords]);
             }
             if (modelExplanation) {
                 setLearnerExplanation(modelExplanation);
+                if (isMultiPart) {
+                    const splitModel = String(modelExplanation).split(/\n+/).filter(Boolean);
+                    setPartResponses(subParts.map((p, idx) => p.expected_answer || splitModel[idx] || modelExplanation));
+                }
             }
             setRevealedModel(true);
         } else {
             if (savedLearnerState) {
                 setSelectedKeywords(savedLearnerState.keywords || []);
                 setLearnerExplanation(savedLearnerState.explanation || '');
+                setPartResponses(savedLearnerState.partResponses || []);
             }
             setRevealedModel(false);
         }
@@ -158,9 +173,13 @@ export default function RubricModalityRenderer({
 
     const handleCheckSubmission = () => {
         if (onCheck) {
+            const combinedExplanation = isMultiPart
+                ? partResponses.map((r, i) => `(${String.fromCharCode(97 + i)}) ${r}`).join('\n')
+                : learnerExplanation;
             onCheck({
                 keywords: selectedKeywords,
-                explanation: learnerExplanation
+                explanation: combinedExplanation,
+                parts: isMultiPart ? partResponses : undefined
             });
         }
     };
@@ -198,6 +217,10 @@ export default function RubricModalityRenderer({
                         Restore My Response
                     </button>
                 </div>
+            )}
+
+            {!hideStimulusDiagram && (question.diagram_spec?.kind || question.graph) && (
+                <DiagramRenderer spec={question.diagram_spec || question.graph} />
             )}
 
             {/* Dynamic Rubric Scaffold Guidance */}
@@ -286,26 +309,72 @@ export default function RubricModalityRenderer({
                 </div>
             )}
 
-            {/* Written Analysis Input */}
-            <div className="space-y-2">
-                <label className="block text-xs font-bold text-slate-700 uppercase tracking-wide">
-                    Your Applied Analysis &amp; Explanation:
-                </label>
-                <textarea
-                    rows={4}
-                    data-testid="input-rubric-explanation"
-                    value={learnerExplanation}
-                    onChange={(e) => {
-                        if (!revealedModel) setLearnerExplanation(e.target.value);
-                    }}
-                    placeholder="Formulate your analytical response referencing the required criteria and concepts..."
-                    className={`w-full p-3 rounded-xl border text-xs leading-relaxed outline-none transition ${
-                        revealedModel
-                            ? 'bg-amber-50/90 border-amber-400 text-amber-950 font-medium ring-1 ring-amber-300'
-                            : 'bg-white border-slate-200 focus:border-brand-blue focus:ring-1 focus:ring-brand-blue'
-                    }`}
-                />
-            </div>
+            {/* Written Analysis Input (Multi-part lettered a, b, c OR single analytical box) */}
+            {isMultiPart ? (
+                <div className="space-y-3" data-testid="container-rubric-multipart">
+                    <label className="block text-xs font-bold text-slate-700 uppercase tracking-wide">
+                        Your Responses by Sub-Question:
+                    </label>
+                    {subParts.map((part, idx) => {
+                        const letter = part.letter || String.fromCharCode(97 + idx);
+                        return (
+                            <div key={part.id || idx} className="p-3.5 rounded-xl border border-slate-200 bg-white space-y-2 shadow-2xs">
+                                <div className="flex items-center justify-between text-xs font-semibold text-slate-700">
+                                    <span className="flex items-center gap-2">
+                                        <span className="inline-flex items-center justify-center w-6 h-5 rounded-md bg-blue-100 text-[#13519C] font-mono font-bold text-xs shrink-0">
+                                            ({letter})
+                                        </span>
+                                        <MathText text={part.label} />
+                                    </span>
+                                    {part.marks && (
+                                        <span className="text-slate-400 font-mono text-[11px] shrink-0">
+                                            [{part.marks} mark{part.marks > 1 ? 's' : ''}]
+                                        </span>
+                                    )}
+                                </div>
+                                <textarea
+                                    rows={2}
+                                    data-testid={idx === 0 ? "input-rubric-explanation" : `input-rubric-part-${idx}`}
+                                    value={partResponses[idx] || ''}
+                                    onChange={(e) => {
+                                        if (revealedModel) return;
+                                        const next = [...partResponses];
+                                        next[idx] = e.target.value;
+                                        setPartResponses(next);
+                                        setLearnerExplanation(next.join('\n'));
+                                    }}
+                                    placeholder={`Write your answer for (${letter})...`}
+                                    className={`w-full p-2.5 rounded-lg border text-xs leading-relaxed outline-none transition ${
+                                        revealedModel
+                                            ? 'bg-amber-50/90 border-amber-400 text-amber-950 font-medium'
+                                            : 'bg-slate-50/50 border-slate-200 focus:bg-white focus:border-brand-blue focus:ring-1 focus:ring-brand-blue'
+                                    }`}
+                                />
+                            </div>
+                        );
+                    })}
+                </div>
+            ) : (
+                <div className="space-y-2">
+                    <label className="block text-xs font-bold text-slate-700 uppercase tracking-wide">
+                        Your Applied Analysis &amp; Explanation:
+                    </label>
+                    <textarea
+                        rows={4}
+                        data-testid="input-rubric-explanation"
+                        value={learnerExplanation}
+                        onChange={(e) => {
+                            if (!revealedModel) setLearnerExplanation(e.target.value);
+                        }}
+                        placeholder="Formulate your analytical response referencing the required criteria and concepts..."
+                        className={`w-full p-3 rounded-xl border text-xs leading-relaxed outline-none transition ${
+                            revealedModel
+                                ? 'bg-amber-50/90 border-amber-400 text-amber-950 font-medium ring-1 ring-amber-300'
+                                : 'bg-white border-slate-200 focus:border-brand-blue focus:ring-1 focus:ring-brand-blue'
+                        }`}
+                    />
+                </div>
+            )}
 
             {/* Marking Points Achievement Ledger (After Evaluation) */}
             {Boolean(result) && (

@@ -1,200 +1,187 @@
-"""Grade 8 Mathematics — Surface Area & Volume of 3D Objects (Deterministic 6-Pillar Generator).
-Authentic CAPS exam generator covering:
-- Surface Area of rectangular prisms: SA = 2(lb + lh + bh) and triangular prisms.
-- Volume of rectangular prisms: V = l * b * h.
-- Volume of triangular prisms: V = 1/2 * b * h_triangle * H_prism.
-- Unit conversions: cm^3 to litres and ml (1 cm^3 = 1 ml, 1 000 cm^3 = 1 litre).
-Zero-Meta-Curriculum Invariant strictly enforced.
+"""Grade 8 Mathematics — Surface Area and Volume of 3D Objects Generator.
+Grounded strictly in:
+  curriculum_docs_auto/Mathematics_Gr8/Term 4/01. Surface area and volume of 3D objects.md
+
+Expanded to 50 distinct semantic archetypes covering:
+  - Surface area and volume concepts and distinctions.
+  - Cubes: surface area (closed, open), side from SA, volume, side from volume (cube root).
+  - Rectangular prisms: surface area (closed, open, perimeter formula), volume, missing dimensions.
+  - Triangular prisms: right-angled, isosceles, equilateral base SA and Volume; missing dimensions.
+  - Unfoldings: surface area of cubes, rectangular prisms, triangular prisms from flat face layouts.
+  - Conversions: cm³ <-> mm³, m³ <-> cm³, mixed unit addition.
+  - Capacity: ml, litres, kilolitres; fish tanks, pools, hollow containers with wall thickness.
+  - Water displacement: submerged stones, water level rises.
+  - Scaling: doubling dimensions (SA ×4, Vol ×8), tripling dimensions (Vol ×27).
+  - Synthesis: same volume different SA; composite shapes (cube glued to prism, L-shaped steps).
+  - Practical contexts: room painting, packaging cubes in cartons, tap flow rates.
+
+Strictly zero-LLM, deterministic execution, 100% CAPS compliant.
 """
 from __future__ import annotations
 
 import random
-from typing import Any, Dict, List, Optional
+from typing import Any, Callable, Dict, List, Optional
+
+from .measurement_3d_archetypes_01_25 import (
+    arch_01_concept_surface_area_vs_volume_definition_distinction,
+    arch_02_cube_surface_area_given_side_length,
+    arch_03_cube_surface_area_open_top_five_faces,
+    arch_04_cube_find_side_length_from_surface_area,
+    arch_05_cube_volume_given_side_length,
+    arch_06_cube_find_side_length_from_volume_cube_root,
+    arch_07_rectangular_prism_surface_area_integer_dimensions,
+    arch_08_rectangular_prism_surface_area_open_top_box,
+    arch_09_rectangular_prism_surface_area_base_perimeter_formula,
+    arch_10_rectangular_prism_volume_integer_dimensions,
+    arch_11_rectangular_prism_find_height_given_volume_length_breadth,
+    arch_12_rectangular_prism_find_breadth_given_volume_length_height,
+    arch_13_triangular_prism_right_angled_base_surface_area,
+    arch_14_triangular_prism_isosceles_base_surface_area,
+    arch_15_triangular_prism_equilateral_base_surface_area,
+    arch_16_triangular_prism_right_angled_base_volume,
+    arch_17_triangular_prism_isosceles_base_volume,
+    arch_18_triangular_prism_find_height_given_volume_and_base_area,
+    arch_19_triangular_prism_find_triangle_height_given_volume_and_base_length,
+    arch_20_triangular_prism_distinguish_triangle_height_vs_prism_height,
+    arch_21_net_of_cube_calculate_surface_area_from_faces,
+    arch_22_net_of_rectangular_prism_calculate_surface_area_from_faces,
+    arch_23_net_of_triangular_prism_calculate_surface_area_from_faces,
+    arch_24_convert_cubic_cm_to_cubic_mm,
+    arch_25_convert_cubic_mm_to_cubic_cm,
+)
+from .measurement_3d_archetypes_26_50 import (
+    arch_26_convert_cubic_m_to_cubic_cm,
+    arch_27_convert_cubic_cm_to_cubic_m,
+    arch_28_convert_mixed_cubic_units_addition,
+    arch_29_capacity_definition_and_relation_to_volume,
+    arch_30_convert_cubic_cm_to_millilitres,
+    arch_31_convert_cubic_cm_to_litres,
+    arch_32_convert_litres_to_cubic_cm,
+    arch_33_convert_cubic_m_to_kilolitres,
+    arch_34_convert_kilolitres_to_litres,
+    arch_35_capacity_fish_tank_volume_in_litres,
+    arch_36_capacity_swimming_pool_volume_in_kilolitres,
+    arch_37_internal_vs_external_dimensions_wall_thickness,
+    arch_38_hollow_container_capacity_given_wall_thickness,
+    arch_39_water_displacement_by_submerged_solid_object,
+    arch_40_water_level_rise_in_rectangular_container_from_added_object,
+    arch_41_doubling_side_of_cube_effect_on_surface_area_fourfold,
+    arch_42_doubling_side_of_cube_effect_on_volume_eightfold,
+    arch_43_tripling_dimensions_of_rectangular_prism_effect_on_volume,
+    arch_44_same_volume_different_surface_areas_comparison_table,
+    arch_45_composite_object_cube_glued_to_rectangular_prism_volume,
+    arch_46_composite_object_cube_glued_to_rectangular_prism_surface_area,
+    arch_47_composite_object_l_shaped_prism_volume,
+    arch_48_cost_of_painting_walls_and_ceiling_of_room_surface_area,
+    arch_49_packaging_number_of_small_cubes_fitting_into_large_box,
+    arch_50_rate_of_filling_tank_with_water_given_tap_flow_rate,
+)
+
+ARCHETYPE_MAP: Dict[str, Callable[[random.Random], Dict[str, Any]]] = {
+    "01_concept_surface_area_vs_volume_definition_distinction": arch_01_concept_surface_area_vs_volume_definition_distinction,
+    "02_cube_surface_area_given_side_length": arch_02_cube_surface_area_given_side_length,
+    "03_cube_surface_area_open_top_five_faces": arch_03_cube_surface_area_open_top_five_faces,
+    "04_cube_find_side_length_from_surface_area": arch_04_cube_find_side_length_from_surface_area,
+    "05_cube_volume_given_side_length": arch_05_cube_volume_given_side_length,
+    "06_cube_find_side_length_from_volume_cube_root": arch_06_cube_find_side_length_from_volume_cube_root,
+    "07_rectangular_prism_surface_area_integer_dimensions": arch_07_rectangular_prism_surface_area_integer_dimensions,
+    "08_rectangular_prism_surface_area_open_top_box": arch_08_rectangular_prism_surface_area_open_top_box,
+    "09_rectangular_prism_surface_area_base_perimeter_formula": arch_09_rectangular_prism_surface_area_base_perimeter_formula,
+    "10_rectangular_prism_volume_integer_dimensions": arch_10_rectangular_prism_volume_integer_dimensions,
+    "11_rectangular_prism_find_height_given_volume_length_breadth": arch_11_rectangular_prism_find_height_given_volume_length_breadth,
+    "12_rectangular_prism_find_breadth_given_volume_length_height": arch_12_rectangular_prism_find_breadth_given_volume_length_height,
+    "13_triangular_prism_right_angled_base_surface_area": arch_13_triangular_prism_right_angled_base_surface_area,
+    "14_triangular_prism_isosceles_base_surface_area": arch_14_triangular_prism_isosceles_base_surface_area,
+    "15_triangular_prism_equilateral_base_surface_area": arch_15_triangular_prism_equilateral_base_surface_area,
+    "16_triangular_prism_right_angled_base_volume": arch_16_triangular_prism_right_angled_base_volume,
+    "17_triangular_prism_isosceles_base_volume": arch_17_triangular_prism_isosceles_base_volume,
+    "18_triangular_prism_find_height_given_volume_and_base_area": arch_18_triangular_prism_find_height_given_volume_and_base_area,
+    "19_triangular_prism_find_triangle_height_given_volume_and_base_length": arch_19_triangular_prism_find_triangle_height_given_volume_and_base_length,
+    "20_triangular_prism_distinguish_triangle_height_vs_prism_height": arch_20_triangular_prism_distinguish_triangle_height_vs_prism_height,
+    "21_net_of_cube_calculate_surface_area_from_faces": arch_21_net_of_cube_calculate_surface_area_from_faces,
+    "22_net_of_rectangular_prism_calculate_surface_area_from_faces": arch_22_net_of_rectangular_prism_calculate_surface_area_from_faces,
+    "23_net_of_triangular_prism_calculate_surface_area_from_faces": arch_23_net_of_triangular_prism_calculate_surface_area_from_faces,
+    "24_convert_cubic_cm_to_cubic_mm": arch_24_convert_cubic_cm_to_cubic_mm,
+    "25_convert_cubic_mm_to_cubic_cm": arch_25_convert_cubic_mm_to_cubic_cm,
+    "26_convert_cubic_m_to_cubic_cm": arch_26_convert_cubic_m_to_cubic_cm,
+    "27_convert_cubic_cm_to_cubic_m": arch_27_convert_cubic_cm_to_cubic_m,
+    "28_convert_mixed_cubic_units_addition": arch_28_convert_mixed_cubic_units_addition,
+    "29_capacity_definition_and_relation_to_volume": arch_29_capacity_definition_and_relation_to_volume,
+    "30_convert_cubic_cm_to_millilitres": arch_30_convert_cubic_cm_to_millilitres,
+    "31_convert_cubic_cm_to_litres": arch_31_convert_cubic_cm_to_litres,
+    "32_convert_litres_to_cubic_cm": arch_32_convert_litres_to_cubic_cm,
+    "33_convert_cubic_m_to_kilolitres": arch_33_convert_cubic_m_to_kilolitres,
+    "34_convert_kilolitres_to_litres": arch_34_convert_kilolitres_to_litres,
+    "35_capacity_fish_tank_volume_in_litres": arch_35_capacity_fish_tank_volume_in_litres,
+    "36_capacity_swimming_pool_volume_in_kilolitres": arch_36_capacity_swimming_pool_volume_in_kilolitres,
+    "37_internal_vs_external_dimensions_wall_thickness": arch_37_internal_vs_external_dimensions_wall_thickness,
+    "38_hollow_container_capacity_given_wall_thickness": arch_38_hollow_container_capacity_given_wall_thickness,
+    "39_water_displacement_by_submerged_solid_object": arch_39_water_displacement_by_submerged_solid_object,
+    "40_water_level_rise_in_rectangular_container_from_added_object": arch_40_water_level_rise_in_rectangular_container_from_added_object,
+    "41_doubling_side_of_cube_effect_on_surface_area_fourfold": arch_41_doubling_side_of_cube_effect_on_surface_area_fourfold,
+    "42_doubling_side_of_cube_effect_on_volume_eightfold": arch_42_doubling_side_of_cube_effect_on_volume_eightfold,
+    "43_tripling_dimensions_of_rectangular_prism_effect_on_volume": arch_43_tripling_dimensions_of_rectangular_prism_effect_on_volume,
+    "44_same_volume_different_surface_areas_comparison_table": arch_44_same_volume_different_surface_areas_comparison_table,
+    "45_composite_object_cube_glued_to_rectangular_prism_volume": arch_45_composite_object_cube_glued_to_rectangular_prism_volume,
+    "46_composite_object_cube_glued_to_rectangular_prism_surface_area": arch_46_composite_object_cube_glued_to_rectangular_prism_surface_area,
+    "47_composite_object_l_shaped_prism_volume": arch_47_composite_object_l_shaped_prism_volume,
+    "48_cost_of_painting_walls_and_ceiling_of_room_surface_area": arch_48_cost_of_painting_walls_and_ceiling_of_room_surface_area,
+    "49_packaging_number_of_small_cubes_fitting_into_large_box": arch_49_packaging_number_of_small_cubes_fitting_into_large_box,
+    "50_rate_of_filling_tank_with_water_given_tap_flow_rate": arch_50_rate_of_filling_tank_with_water_given_tap_flow_rate,
+}
+
+SUBSKILLS: List[str] = list(ARCHETYPE_MAP.keys())
 
 
-def _rng(seed: Optional[int] = None) -> random.Random:
-    r = random.Random()
-    if seed is not None:
-        r.seed(int(seed))
-    return r
+def generate_grade8_measurement_3d_question(
+    seed: Optional[int] = None,
+    difficulty: str = "medium",
+    mode: str = "compound",
+    subskill: Optional[str] = None,
+) -> Dict[str, Any]:
+    rng = random.Random(seed)
+
+    target_subskill = subskill
+    if not target_subskill or target_subskill not in ARCHETYPE_MAP:
+        if mode and mode.startswith("elementary_"):
+            candidate = mode[len("elementary_"):]
+            if candidate in ARCHETYPE_MAP:
+                target_subskill = candidate
+            else:
+                for k in ARCHETYPE_MAP:
+                    if candidate in k:
+                        target_subskill = k
+                        break
+
+    if not target_subskill or target_subskill not in ARCHETYPE_MAP:
+        target_subskill = rng.choice(SUBSKILLS)
+
+    generator_fn = ARCHETYPE_MAP[target_subskill]
+    q_data = generator_fn(rng)
+
+    q_data["subject"] = "mathematics"
+    q_data["grade"] = "grade-8"
+    q_data["topic"] = "Surface area and volume of 3D objects"
+    q_data["term"] = 4
+    q_data["caps_weight_percent"] = 10
+    q_data["suggested_duration_mins"] = 3
+    q_data["difficulty"] = difficulty
+    q_data["mode"] = mode
+    q_data["subskill"] = target_subskill
+
+    if "marking_schema" not in q_data:
+        m = q_data.get("marks", 3)
+        q_data["marking_schema"] = {
+            "total_marks": m,
+            "marking_points": [
+                {"id": "mp_1", "desc": "Correct surface area or volume formula statement", "marks": 1, "editable": True},
+                {"id": "mp_2", "desc": "Accurate calculation and conversion with correct units", "marks": m - 1, "editable": True},
+            ],
+            "deductions": [{"rule": "omitted_units", "penalty": 1}],
+            "carry_forward_rule": "consequential_accuracy",
+        }
+
+    return q_data
 
 
-def _fmt_sa(val: float | int, places: int = 2) -> str:
-    if isinstance(val, int) or (isinstance(val, float) and val.is_integer()):
-        return str(int(val))
-    s = f"{val:.{places}f}".rstrip("0").rstrip(".")
-    return s.replace(".", "{,}")
-
-
-TOPIC = "grade8_math_measurement_3d"
-LO = "g8_math_measurement_3d"
-
-
-def generate_rectangular_prism(r: random.Random, mode: str = "compound") -> Dict[str, Any]:
-    l = r.randint(10, 25)
-    b = r.randint(6, 15)
-    h = r.randint(4, 12)
-    
-    # Volume and Surface Area
-    volume_cm3 = l * b * h
-    volume_litres = volume_cm3 / 1000.0
-    
-    sa_cm2 = 2 * (l * b + l * h + b * h)
-    
-    vol_litres_str = _fmt_sa(volume_litres, 3)
-    
-    prompt = (
-        f"A closed rectangular container has length \\(l = {l}\\text{{ cm}}\\), "
-        f"breadth \\(b = {b}\\text{{ cm}}\\), and height \\(h = {h}\\text{{ cm}}\\).\n\n"
-        f"1. Write down the formula for the total surface area of a rectangular prism.\n"
-        f"2. Calculate the total surface area of the container in \\(\\text{{cm}}^2\\).\n"
-        f"3. Calculate the volume (capacity) of the container in \\(\\text{{cm}}^3\\).\n"
-        f"4. Convert the volume into litres, given that \\(1\\text{{ litre}} = 1\\,000\\text{{ cm}}^3\\)."
-    )
-    prompt_latex = (
-        rf"\text{{Rectangular Prism: }} l = {l}\text{{ cm}}, \quad b = {b}\text{{ cm}}, \quad h = {h}\text{{ cm}}." "\n\n"
-        r"\text{Calculate total surface area } (SA), \text{ volume } (V), \text{ and capacity in litres.}"
-    )
-    answer_latex = (
-        r"\text{1. } SA = 2(l \times b + l \times h + b \times h)" "\n"
-        rf"\text{{2. }} SA = 2(({l})({b}) + ({l})({h}) + ({b})({h})) = 2({l*b} + {l*h} + {b*h}) = 2({l*b + l*h + b*h}) = {sa_cm2}\text{{ cm}}^2" "\n"
-        rf"\text{{3. }} V = l \times b \times h = {l} \times {b} \times {h} = {volume_cm3}\text{{ cm}}^3" "\n"
-        rf"\text{{4. Capacity}} = \frac{{{volume_cm3}}}{{1\,000}} = {vol_litres_str}\text{{ litres}}"
-    )
-    sample_answer = (
-        f"1. Surface area formula: SA = 2(lb + lh + bh)\n"
-        f"2. SA = 2({l} x {b} + {l} x {h} + {b} x {h}) = 2({l*b} + {l*h} + {b*h}) = 2({l*b + l*h + b*h}) = {sa_cm2} cm².\n"
-        f"3. Volume: V = l x b x h = {l} x {b} x {h} = {volume_cm3} cm³.\n"
-        f"4. Capacity in litres = {volume_cm3} / 1 000 = {vol_litres_str} litres."
-    )
-    schema = {
-        "total_marks": 5,
-        "marking_points": [
-            {"id": "mp1", "desc": "State surface area formula: SA = 2(lb + lh + bh)", "marks": 1, "editable": True},
-            {"id": "mp2", "desc": f"Correct surface area calculation: {sa_cm2} cm² with units", "marks": 2, "editable": True},
-            {"id": "mp3", "desc": f"Correct volume calculation: {volume_cm3} cm³ with units", "marks": 1, "editable": True},
-            {"id": "mp4", "desc": f"Accurate conversion to litres: {vol_litres_str} litres", "marks": 1, "editable": True},
-        ],
-        "deductions": [{"rule": "omitted_units", "penalty": 1}],
-        "carry_forward_rule": "consequential_accuracy",
-    }
-    hints = {
-        "tier_1": "Surface area has 6 faces (3 pairs of equal rectangles). Volume is base area multiplied by height: l x b x h.",
-        "tier_2": "SA = 2(lb + lh + bh). Capacity in litres = volume in cm³ divided by 1 000.",
-        "tier_3": f"SA = 2({l*b} + {l*h} + {b*h}) = {sa_cm2} cm². V = {l} x {b} x {h} = {volume_cm3} cm³. Litres = {vol_litres_str} L.",
-    }
-    return {
-        "id": f"g8_meas_rect_{random.randint(100000, 999999)}",
-        "topic": TOPIC,
-        "subskill": "rectangular_prism_surface_area_volume",
-        "learning_objective_id": f"{LO}_rectangular_prism",
-        "prompt": prompt,
-        "prompt_latex": prompt_latex,
-        "answer_latex": answer_latex,
-        "sample_answer": sample_answer,
-        "marking_schema": schema,
-        "hints": hints,
-        "misconception_tags": ["confusing_surface_area_with_volume", "capacity_conversion_by_100_instead_of_1000"],
-        "keywords": ["surface area", "volume", "capacity", "rectangular prism", "litres"],
-        "term": 3,
-        "caps_weight_percent": 15,
-        "suggested_duration_mins": 6,
-        "mode": mode,
-        "difficulty": "medium",
-        "marks": 5,
-    }
-
-
-def generate_triangular_prism(r: random.Random, mode: str = "compound") -> Dict[str, Any]:
-    # Right-angled triangular base: sides a, b, hypotenuse c
-    triples = [(3, 4, 5), (6, 8, 10), (5, 12, 13)]
-    a, b, c = r.choice(triples)
-    scale = r.choice([1, 2])
-    a, b, c = a * scale, b * scale, c * scale
-    
-    prism_length = r.randint(10, 20)
-    
-    # Area of triangular base = 1/2 * a * b
-    base_area = int(0.5 * a * b)
-    volume_cm3 = base_area * prism_length
-    
-    # Surface area = 2 * (base_area) + (perimeter of triangle * prism_length)
-    tri_perimeter = a + b + c
-    lateral_area = tri_perimeter * prism_length
-    total_sa = 2 * base_area + lateral_area
-    
-    prompt = (
-        f"A right-angled triangular prism has a base with perpendicular sides \\(a = {a}\\text{{ cm}}\\) "
-        f"and \\(b = {b}\\text{{ cm}}\\), and hypotenuse \\(c = {c}\\text{{ cm}}\\). "
-        f"The length of the prism is \\(H = {prism_length}\\text{{ cm}}\\).\n\n"
-        f"1. Calculate the area of the triangular base in \\(\\text{{cm}}^2\\).\n"
-        f"2. Calculate the volume of the triangular prism in \\(\\text{{cm}}^3\\).\n"
-        f"3. Calculate the total surface area of the prism by summing the areas of the 2 triangular bases and 3 rectangular faces."
-    )
-    prompt_latex = (
-        rf"\text{{Triangular Prism: Base perpendicular sides }} a = {a}\text{{ cm}}, \, b = {b}\text{{ cm}}, \, c = {c}\text{{ cm}}; \, H = {prism_length}\text{{ cm}}." "\n\n"
-        r"\text{Calculate base area, volume } (V = \text{Base Area} \times H), \text{ and total surface area } (SA)."
-    )
-    answer_latex = (
-        rf"\text{{1. Base Area}} = \frac{{1}}{{2}} \times {a} \times {b} = {base_area}\text{{ cm}}^2" "\n"
-        rf"\text{{2. Volume}} = \text{{Base Area}} \times H = {base_area} \times {prism_length} = {volume_cm3}\text{{ cm}}^3" "\n"
-        rf"\text{{3. }} SA = 2(\text{{Base Area}}) + (a + b + c) \times H = 2({base_area}) + ({tri_perimeter})({prism_length}) = {2*base_area} + {lateral_area} = {total_sa}\text{{ cm}}^2"
-    )
-    sample_answer = (
-        f"1. Area of triangular base = 1/2 x base x height = 1/2 x {a} x {b} = {base_area} cm².\n"
-        f"2. Volume = Area of base x height of prism = {base_area} x {prism_length} = {volume_cm3} cm³.\n"
-        f"3. Total Surface Area:\n"
-        f"   - Two triangular ends = 2 x {base_area} = {2*base_area} cm².\n"
-        f"   - Three rectangular faces = ({a} + {b} + {c}) x {prism_length} = {tri_perimeter} x {prism_length} = {lateral_area} cm².\n"
-        f"   - Total SA = {2*base_area} + {lateral_area} = {total_sa} cm²."
-    )
-    schema = {
-        "total_marks": 5,
-        "marking_points": [
-            {"id": "mp1", "desc": f"Calculate triangular base area: {base_area} cm²", "marks": 1, "editable": True},
-            {"id": "mp2", "desc": f"Calculate volume: {volume_cm3} cm³", "marks": 2, "editable": True},
-            {"id": "mp3", "desc": f"Calculate lateral area: {lateral_area} cm²", "marks": 1, "editable": True},
-            {"id": "mp4", "desc": f"Calculate total surface area: {total_sa} cm²", "marks": 1, "editable": True},
-        ],
-        "deductions": [{"rule": "omitted_units", "penalty": 1}],
-        "carry_forward_rule": "consequential_accuracy",
-    }
-    hints = {
-        "tier_1": "The base is a right-angled triangle: Area = 1/2 x a x b. The volume is Base Area x Prism Length.",
-        "tier_2": "Total surface area has 5 faces: 2 triangular bases + 3 rectangular sides: SA = 2(1/2 x a x b) + (a + b + c) x H.",
-        "tier_3": f"Base area = {base_area} cm². Volume = {base_area} x {prism_length} = {volume_cm3} cm³. Total SA = {total_sa} cm².",
-    }
-    return {
-        "id": f"g8_meas_tri_{random.randint(100000, 999999)}",
-        "topic": TOPIC,
-        "subskill": "triangular_prism_surface_area_volume",
-        "learning_objective_id": f"{LO}_triangular_prism",
-        "prompt": prompt,
-        "prompt_latex": prompt_latex,
-        "answer_latex": answer_latex,
-        "sample_answer": sample_answer,
-        "marking_schema": schema,
-        "hints": hints,
-        "misconception_tags": ["forgetting_half_in_triangle_area", "omitting_one_of_the_rectangular_faces"],
-        "keywords": ["triangular prism", "surface area", "volume", "base area"],
-        "term": 3,
-        "caps_weight_percent": 15,
-        "suggested_duration_mins": 6,
-        "mode": mode,
-        "difficulty": "medium",
-        "marks": 5,
-    }
-
-
-def generate(seed: Optional[int] = None, mode: str = "compound", archetype: Optional[str] = None) -> Dict[str, Any]:
-    r = _rng(seed)
-    if archetype == "rectangular":
-        return generate_rectangular_prism(r, mode=mode)
-    elif archetype == "triangular":
-        return generate_triangular_prism(r, mode=mode)
-    else:
-        choice = r.choice(["rectangular", "triangular"])
-        if choice == "rectangular":
-            return generate_rectangular_prism(r, mode=mode)
-        else:
-            return generate_triangular_prism(r, mode=mode)
+generate = generate_grade8_measurement_3d_question

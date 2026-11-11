@@ -24,6 +24,12 @@ runStep('0. Generator Preservation & Inventory Audit', 'python scripts/audit_gen
 // 1. Selector purity and Anti-Hollywood verification
 runStep('1. E2E Mechanical Selector & Skip Audit', 'python scripts/audit_e2e_specs.py');
 
+// 1b. Central Diagram Registry & Spec Consumption Audit (Phase 3 Contract)
+runStep('1b. Diagram Registry & Contract Audit', 'python scripts/audit_diagram_registry.py');
+
+// 1c. Complete diagrams.md 386-Item Coverage Gate (Zero Gaps / Zero Duplicates)
+runStep('1c. Complete diagrams.md 386-Item Coverage Gate', 'python scripts/audit_diagrams_md_coverage.py');
+
 // 2. Cross-spec import and syntax discovery
 runStep('2. Playwright Multi-Suite Test Discovery', 'npx playwright test --list');
 

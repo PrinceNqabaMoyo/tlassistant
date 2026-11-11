@@ -289,7 +289,10 @@ def generate(
         sub_seed = r.randint(1, 1_000_000_000)
         sub_r = random.Random(sub_seed)
 
-        if subskill == "electrostatics_gr10" or mode == "elementary_charge_conservation":
+        if subskill in ("ac_dc_generator_motor_apparatus", "ac_generator", "dc_motor", "electrodynamics"):
+            from app.utils.physical_sciences.physical_sciences_builders import build_ac_dc_generator_motor_apparatus_question
+            q = build_ac_dc_generator_motor_apparatus_question(seed=sub_seed, grade=12, mode=mode)
+        elif subskill == "electrostatics_gr10" or mode == "elementary_charge_conservation":
             q = _generate_gr10_electrostatics(sub_r, sub_seed, i, mode)
         elif subskill == "coulomb_law" or mode == "elementary_coulomb_force":
             q = _generate_gr11_coulombs_law(sub_r, sub_seed, i, mode)

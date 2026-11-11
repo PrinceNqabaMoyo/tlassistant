@@ -44,6 +44,12 @@ def make_science_question(
     mode: str = "compound",
     difficulty: str = "hard",
     marks: Optional[int] = None,
+    modality: Optional[str] = None,
+    circuit_spec: Optional[Dict[str, Any]] = None,
+    diagram_spec: Optional[Dict[str, Any]] = None,
+    punnett_spec: Optional[Dict[str, Any]] = None,
+    fbd_spec: Optional[Dict[str, Any]] = None,
+    sub_parts: Optional[List[Dict[str, Any]]] = None,
 ) -> Dict[str, Any]:
     """Factory creating fully normalized 6-pillar CAPS Natural Sciences questions."""
     total_marks = marks if marks is not None else marking_schema.get("total_marks", 5)
@@ -55,7 +61,7 @@ def make_science_question(
         "tier_3": hints.get("breakdown") or hints.get("tier_3") or f"Worked calculation: {answer_latex}",
     }
 
-    return {
+    q = {
         "id": make_id(prefix),
         "question_id": make_id(prefix),
         "topic": topic,
@@ -77,3 +83,20 @@ def make_science_question(
         "difficulty": difficulty,
         "marks": total_marks,
     }
+
+    if modality:
+        q["modality"] = modality
+    if circuit_spec:
+        q["circuit_spec"] = circuit_spec
+    if diagram_spec:
+        if isinstance(diagram_spec, dict) and "diagram_role" not in diagram_spec:
+            diagram_spec["diagram_role"] = "identify" if (diagram_spec.get("target_pin") or diagram_spec.get("pins")) else "context"
+        q["diagram_spec"] = diagram_spec
+    if punnett_spec:
+        q["punnett_spec"] = punnett_spec
+    if fbd_spec:
+        q["fbd_spec"] = fbd_spec
+    if sub_parts:
+        q["sub_parts"] = sub_parts
+
+    return q

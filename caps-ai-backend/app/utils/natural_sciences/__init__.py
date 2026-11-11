@@ -1,34 +1,31 @@
-"""Senior Phase Natural Sciences (Grades 7–9) deterministic 6-pillar question generators."""
-from __future__ import annotations
-
-from app.utils.natural_sciences.chemical_reactions_generator import (
-    generate as generate_chemical_reactions,
-)
-from app.utils.natural_sciences.electric_circuits_generator import (
-    generate as generate_electric_circuits,
-)
-from app.utils.natural_sciences.senior_phase_astronomy_generator import (
-    generate as generate_astronomy,
-)
-from app.utils.natural_sciences.term1_life_and_living_generator import (
-    generate as generate_life_and_living,
-)
-from app.utils.natural_sciences.term2_matter_materials_generator import (
-    generate as generate_matter_and_materials,
-)
-from app.utils.natural_sciences.term3_energy_change_forces_generator import (
-    generate as generate_energy_and_forces,
-)
-from app.utils.natural_sciences.term4_planet_earth_beyond_generator import (
-    generate as generate_planet_earth_beyond,
-)
-
-__all__ = [
-    "generate_chemical_reactions",
-    "generate_electric_circuits",
-    "generate_astronomy",
-    "generate_life_and_living",
-    "generate_matter_and_materials",
-    "generate_energy_and_forces",
-    "generate_planet_earth_beyond",
-]
+"""Senior Phase Natural Sciences."""
+from . import ns7_biosphere_generator
+from . import ns7_biodiversity_generator
+from . import ns7_sexual_reproduction_generator
+from . import ns7_variation_generator
+from . import ns7_properties_of_materials_generator
+from . import ns7_periodic_table_generator
+from . import ns7_sources_of_energy_generator
+from . import ns7_potential_kinetic_energy_generator
+from . import ns7_energy_transfer_generator
+from . import ns7_heat_transfer_generator
+from . import ns7_heat_insulation_generator
+from . import ns7_moon_earth_generator
+from . import ns7_sun_earth_generator
+from . import ns7_astronomy_history_generator
+from . import ns7_separating_mixtures_generator
+from . import ns7_acids_bases_neutrals_generator
+from . import ns8_particle_model_matter_generator
+from . import ns8_electric_circuits_generator
+from . import ns8_solar_system_seasons_generator
+from . import ns9_digestive_system_generator
+from . import ns9_human_reproduction_generator
+from . import ns9_cells_units_of_life_generator
+from . import ns9_forces_electric_cells_generator
+from . import chemical_reactions_generator
+from . import electric_circuits_generator
+from . import senior_phase_astronomy_generator
+from . import term1_life_and_living_generator
+from . import term2_matter_materials_generator
+from . import term3_energy_change_forces_generator
+from . import term4_planet_earth_beyond_generator

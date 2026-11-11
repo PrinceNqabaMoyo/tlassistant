@@ -34,7 +34,7 @@ def _build_next_terms(r, difficulty: str) -> Dict[str, Any]:
         step(from_expr=sp.Symbol("T_n"), to_expr=expr, op="write general term", rule="T_n = a + (n-1)d", common_errors=["off_by_one_in_n"]),
     ]
     sol = solution(goal="find next terms", chain_type="expression", var="n", steps=steps, final_expr=next_vals)
-    q = make_short(prefix=TOPIC, prompt_latex=f"\\text{{Write down the next {terms_needed} terms: }} {seq_str}; \\ldots",
+    q = make_short(prefix=TOPIC, prompt_latex=f"Write down the next {terms_needed} terms: ${seq_str}; \\ldots$",
                    answer_expr=next_vals, answer_mode="expression", marks=2, canonical_solution=sol,
                    explanation=f"The common difference is {d}. Each term increases by {d}.",
                    hint=f"Find d by subtracting consecutive terms, then add {d} repeatedly.")
@@ -61,7 +61,7 @@ def _build_common_difference(r, difficulty: str) -> Dict[str, Any]:
         ans = "none"
         explanation = "The differences between consecutive terms are not constant, so there is no common difference."
         misconception = ["assumed_linear_when_quadratic"]
-    q = make_short(prefix=TOPIC, prompt_latex=f"\\text{{Find the common difference: }} {seq_str}; \\ldots",
+    q = make_short(prefix=TOPIC, prompt_latex=f"Find the common difference: ${seq_str}; \\ldots$",
                    answer_expr=ans, answer_mode="expression", marks=1,
                    explanation=explanation, hint="Subtract consecutive terms. If the result is always the same, that is d.")
     return with_metadata(q, topic=TOPIC, subskill="common_difference",
@@ -83,7 +83,7 @@ def _build_general_term(r, difficulty: str) -> Dict[str, Any]:
         step(from_expr=sp.Eq(sp.Symbol("T_n"), a + (n - 1) * d), to_expr=sp.Eq(sp.Symbol("T_n"), ans), op="simplify", rule="expand brackets", common_errors=["sign_error"]),
     ]
     sol = solution(goal="find general term", chain_type="expression", var="n", steps=steps, final_expr=ans)
-    q = make_short(prefix=TOPIC, prompt_latex=f"\\text{{Find the general formula $T_n$ for: }} {seq_str}; \\ldots",
+    q = make_short(prefix=TOPIC, prompt_latex=f"Find the general formula $T_n$ for: ${seq_str}; \\ldots$",
                    answer_expr=ans, answer_mode="expression", marks=2, canonical_solution=sol,
                    explanation=f"a = {a}, d = {d}, so T_n = {a} + (n-1)({d}) = {to_latex(ans)}",
                    hint="Use T_n = a + (n-1)d, then simplify.")
@@ -105,7 +105,7 @@ def _build_term_from_n(r, difficulty: str) -> Dict[str, Any]:
         step(from_expr=None, to_expr=sp.Integer(ans), op="evaluate", rule="arithmetic", common_errors=["sign_error"]),
     ]
     sol = solution(goal="evaluate term", chain_type="expression", var="n", steps=steps, final_expr=sp.Integer(ans))
-    q = make_short(prefix=TOPIC, prompt_latex=f"\\text{{Given $T_n = {to_latex(formula)}$, find $T_{{{pos}}}$.}}",
+    q = make_short(prefix=TOPIC, prompt_latex=f"Given $T_n = {to_latex(formula)}$, find $T_{{{pos}}}$.",
                    answer_expr=sp.Integer(ans), answer_mode="value", marks=1, canonical_solution=sol,
                    explanation=f"T_{{{pos}}} = {a} + ({pos}-1)({d}) = {ans}",
                    hint="Substitute the position number into the formula.")
@@ -130,7 +130,7 @@ def _build_n_from_term(r, difficulty: str) -> Dict[str, Any]:
         step(from_expr=eq, to_expr=sp.Eq(n, ans), op="solve for n", rule="linear equation", common_errors=["off_by_one_in_n"]),
     ]
     sol = solution(goal="find position", chain_type="equation", var="n", steps=steps, final_expr=ans)
-    q = make_short(prefix=TOPIC, prompt_latex=f"\\text{{Given $T_n = {to_latex(formula)}$, find $n$ if $T_n = {target_val}$.}}",
+    q = make_short(prefix=TOPIC, prompt_latex=f"Given $T_n = {to_latex(formula)}$, find $n$ if $T_n = {target_val}$.",
                    answer_expr=ans, answer_mode="value", marks=2, canonical_solution=sol,
                    explanation=f"{a} + (n-1)({d}) = {target_val}  =>  n = {target_n}",
                    hint="Set the formula equal to the given term value and solve for n.")
@@ -150,7 +150,7 @@ def _build_missing_terms(r, difficulty: str) -> Dict[str, Any]:
     shown = [str(v) if i != missing_pos - 1 else "\\ldots" for i, v in enumerate(terms)]
     seq_str = "; ".join(shown)
     ans = sp.Integer(terms[missing_pos - 1])
-    q = make_short(prefix=TOPIC, prompt_latex=f"\\text{{Find the missing term: }} {seq_str}",
+    q = make_short(prefix=TOPIC, prompt_latex=f"Find the missing term: ${seq_str}$",
                    answer_expr=ans, answer_mode="value", marks=1,
                    explanation=f"The missing term is T_{{{missing_pos}}} = {a} + ({missing_pos}-1)({d}) = {ans}",
                    hint="Use the general formula or find the common difference.")
@@ -165,13 +165,13 @@ def _build_diagram_pattern(r, difficulty: str) -> Dict[str, Any]:
     family = r.choice(["tables", "matchsticks", "stadium"])
     if family == "tables":
         a, d = 4, 2
-        desc = "\\text{Each table seats 4 people. When joined, each extra table adds 2 seats.}"
+        desc = "Each table seats 4 people. When joined, each extra table adds 2 seats."
     elif family == "matchsticks":
         a, d = 3, 2
-        desc = "\\text{A row of 1 square uses 3 matchsticks on the bottom/top. Each extra square adds 2 matchsticks.}"
+        desc = "A row of 1 square uses 3 matchsticks on the bottom/top. Each extra square adds 2 matchsticks."
     else:
         a, d = 500, 250
-        desc = "\\text{A stadium has 500 seats in row 1. Each subsequent row has 250 more seats.}"
+        desc = "A stadium has 500 seats in row 1. Each subsequent row has 250 more seats."
     formula = sp.expand(a + (n - 1) * d)
     ans = formula
     steps = [
@@ -180,7 +180,7 @@ def _build_diagram_pattern(r, difficulty: str) -> Dict[str, Any]:
         step(from_expr=sp.Symbol("T_n"), to_expr=sp.Eq(sp.Symbol("T_n"), formula), op="write formula", rule="T_n = a + (n-1)d", common_errors=["off_by_one_in_n"]),
     ]
     sol = solution(goal="find general formula from pattern", chain_type="expression", var="n", steps=steps, final_expr=ans)
-    q = make_short(prefix=TOPIC, prompt_latex=f"{desc} \\quad \\text{{Find $T_n$ for figure $n$.}}",
+    q = make_short(prefix=TOPIC, prompt_latex=f"{desc} Find $T_n$ for figure $n$.",
                    answer_expr=ans, answer_mode="expression", marks=2, canonical_solution=sol,
                    explanation=f"a = {a}, d = {d}, so T_n = {to_latex(formula)}",
                    hint="Find the number of items for figure 1, 2, 3. The difference gives d.")
@@ -197,7 +197,7 @@ def _build_letter_sequence(r, difficulty: str) -> Dict[str, Any]:
     pos = r.randint(20, 100)
     idx = (pos - 1) % pattern_len
     ans = letters[idx]
-    q = make_short(prefix=TOPIC, prompt_latex=f"\\text{{The pattern {pattern_str}{pattern_str}{pattern_str}\\ldots continues. What is the {pos}th letter?}}",
+    q = make_short(prefix=TOPIC, prompt_latex=f"The pattern ${pattern_str}{pattern_str}{pattern_str}\\ldots$ continues. What is the {pos}th letter?",
                    answer_expr=ans, answer_mode="expression", marks=1,
                    explanation=f"The pattern repeats every {pattern_len} letters. {pos} mod {pattern_len} = {(pos % pattern_len) or pattern_len}, so the letter is '{ans}'.",
                    hint="Divide the position by the pattern length and look at the remainder.")
@@ -240,7 +240,7 @@ def _build_linear_param(r, difficulty: str) -> Dict[str, Any]:
         step(from_expr=None, to_expr=sp.Eq(k, ans), op="solve for k", rule="linear equation in k", common_errors=["sign_error"]),
     ]
     sol = solution(goal="find k for linear sequence", chain_type="equation", var="k", steps=steps, final_expr=ans)
-    q = make_steps(prefix=TOPIC, prompt_latex=f"\\text{{The sequence with terms $T_1 = {to_latex(t1)}$, $T_2 = {to_latex(t2)}$, $T_3 = {to_latex(t3)}$ is linear. Find $k$.}}",
+    q = make_steps(prefix=TOPIC, prompt_latex=f"The sequence with terms $T_1 = {to_latex(t1)}$, $T_2 = {to_latex(t2)}$, $T_3 = {to_latex(t3)}$ is linear. Find $k$.",
                    canonical_solution=sol, marks=3,
                    explanation="For a linear sequence, the difference between consecutive terms must be constant.",
                    hint="Set T_2 - T_1 = T_3 - T_2 and solve for k.")
@@ -257,7 +257,7 @@ def _build_word_problem(r, difficulty: str) -> Dict[str, Any]:
         d = r.randint(20, 100)
         target_week = r.randint(10, 30)
         total_saved = _term(a, d, target_week)
-        prompt = f"\\text{{You save R{a} in week 1 and increase your savings by R{d} each week. How much have you saved after {target_week} weeks?}}"
+        prompt = f"You save R{a} in week 1 and increase your savings by R{d} each week. How much have you saved after {target_week} weeks?"
         formula = sp.expand(a + (n - 1) * d)
         # Sum = target_week/2 * (2a + (target_week-1)d)
         ans = sp.Rational(target_week, 1) * (2 * a + (target_week - 1) * d) // 2
@@ -273,7 +273,7 @@ def _build_word_problem(r, difficulty: str) -> Dict[str, Any]:
         d = r.randint(150, 300)
         target_row = r.randint(10, 20)
         ans = _term(a, d, target_row)
-        prompt = f"\\text{{A stadium has {a} seats in row 1. Each row has {d} more seats than the previous. How many seats in row {target_row}?}}"
+        prompt = f"A stadium has {a} seats in row 1. Each row has {d} more seats than the previous. How many seats in row {target_row}?"
         formula = sp.expand(a + (n - 1) * d)
         steps = [
             step(from_expr=sp.Symbol("a"), to_expr=sp.Integer(a), op="identify a", rule="T_1 = a", common_errors=["used_term_value_as_position"]),
@@ -286,7 +286,7 @@ def _build_word_problem(r, difficulty: str) -> Dict[str, Any]:
         d = r.randint(10, 30)
         target_gb = r.randint(15, 30)
         ans = _term(a, d, target_gb)
-        prompt = f"\\text{{A data plan costs R{a} for 1 GB. Each extra GB costs R{d} more. Find the cost for {target_gb} GB.}}"
+        prompt = f"A data plan costs R{a} for 1 GB. Each extra GB costs R{d} more. Find the cost for {target_gb} GB."
         formula = sp.expand(a + (n - 1) * d)
         steps = [
             step(from_expr=sp.Symbol("a"), to_expr=sp.Integer(a), op="identify a", rule="cost for 1 GB", common_errors=["used_term_value_as_position"]),

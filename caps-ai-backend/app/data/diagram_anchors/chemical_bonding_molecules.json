@@ -1,0 +1,173 @@
+{
+  "diagram": "chemical_bonding_molecules",
+  "view": "textbook",
+  "viewBox": "0 0 600 480",
+  "anchors": {
+    "lone_pair_orbital": {
+      "name": "Non-Bonding Lone Pair of Electrons",
+      "anchor": [
+        115,
+        88
+      ],
+      "default_box": [
+        60,
+        45
+      ],
+      "side": "left",
+      "grades": [
+        "g10",
+        "g11"
+      ],
+      "acceptable": [
+        "Lone pair",
+        "Non-bonding electron pair",
+        "Unshared electron pair"
+      ],
+      "description": "Pair of valence electrons on the oxygen atom not shared with another atom, exerting strong VSEPR repulsion that bends H₂O."
+    },
+    "polar_covalent_bond": {
+      "name": "Polar O–H Covalent Bond (Intramolecular)",
+      "anchor": [
+        115,
+        140
+      ],
+      "default_box": [
+        60,
+        195
+      ],
+      "side": "left",
+      "grades": [
+        "g8",
+        "g9",
+        "g10",
+        "g11"
+      ],
+      "acceptable": [
+        "Covalent bond",
+        "Polar covalent bond",
+        "Intramolecular bond",
+        "Shared electron pair"
+      ],
+      "description": "Strong intramolecular bond formed by the unequal sharing of an electron pair between oxygen and hydrogen atoms."
+    },
+    "intermolecular_hydrogen_bond": {
+      "name": "Intermolecular Hydrogen Bond",
+      "anchor": [
+        195,
+        148
+      ],
+      "default_box": [
+        60,
+        245
+      ],
+      "side": "left",
+      "grades": [
+        "g11"
+      ],
+      "acceptable": [
+        "Hydrogen bond",
+        "Intermolecular force",
+        "Hydrogen bonding",
+        "IMF"
+      ],
+      "description": "Strong dipole-dipole intermolecular attraction between a δ⁺ hydrogen atom on one H₂O molecule and a lone pair on a neighboring oxygen atom."
+    },
+    "ionic_crystal_lattice": {
+      "name": "Ionic Crystal Lattice (Na⁺ and Cl⁻ Ions)",
+      "anchor": [
+        175,
+        345
+      ],
+      "default_box": [
+        60,
+        420
+      ],
+      "side": "left",
+      "grades": [
+        "g8",
+        "g9",
+        "g10",
+        "g11"
+      ],
+      "acceptable": [
+        "Ionic lattice",
+        "Crystal lattice",
+        "NaCl lattice",
+        "Ionic bond",
+        "Alternating cations and anions"
+      ],
+      "description": "Regular 3D cubic crystal lattice of alternating small Na⁺ cations and larger Cl⁻ anions held together by strong electrostatic forces."
+    },
+    "tetrahedral_central_carbon": {
+      "name": "Central Carbon Atom (Tetrahedral Geometry)",
+      "anchor": [
+        418,
+        134
+      ],
+      "default_box": [
+        540,
+        105
+      ],
+      "side": "right",
+      "grades": [
+        "g8",
+        "g9",
+        "g10",
+        "g11"
+      ],
+      "acceptable": [
+        "Central carbon atom",
+        "Carbon atom",
+        "Tetrahedral molecule",
+        "CH4 molecule"
+      ],
+      "description": "Central carbon atom bonded to four hydrogen atoms in a symmetrical tetrahedral VSEPR geometry (bond angle 109,5°)."
+    },
+    "positive_metal_kernels": {
+      "name": "Positive Metal Kernels (Metallic Cations)",
+      "anchor": [
+        420,
+        345
+      ],
+      "default_box": [
+        540,
+        260
+      ],
+      "side": "right",
+      "grades": [
+        "g10",
+        "g11"
+      ],
+      "acceptable": [
+        "Positive metal kernels",
+        "Metal cations",
+        "Metallic lattice",
+        "Positively charged metal ions"
+      ],
+      "description": "Ordered array of positively charged metal atomic kernels immersed in a sea of delocalised valence electrons."
+    },
+    "delocalised_electron_sea": {
+      "name": "Sea of Delocalised Valence Electrons",
+      "anchor": [
+        392,
+        368
+      ],
+      "default_box": [
+        540,
+        375
+      ],
+      "side": "right",
+      "grades": [
+        "g10",
+        "g11"
+      ],
+      "acceptable": [
+        "Sea of delocalised electrons",
+        "Delocalised electrons",
+        "Free electrons",
+        "Mobile valence electrons"
+      ],
+      "description": "Mobile valence electrons free to move throughout the metallic lattice, accounting for high electrical and thermal conductivity."
+    }
+  }
+}

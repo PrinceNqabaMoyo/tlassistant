@@ -372,6 +372,15 @@ def generate_questions(
         )
     )
 
+    for _q in definition_pool: _q["subskill"] = "internal_control_definition"
+    for _q in processes_pool: _q["subskill"] = "control_processes"
+    for _q in stock_pool: _q["subskill"] = "trading_stock_controls"
+    for _q in debtors_pool: _q["subskill"] = "debtors_controls"
+    for _q in creditors_pool: _q["subskill"] = "creditors_controls"
+    for _q in fixed_assets_pool: _q["subskill"] = "fixed_assets_controls"
+    for _q in consumables_pool: _q["subskill"] = "consumables_controls"
+    for _q in cash_pool: _q["subskill"] = "cash_and_petty_cash_controls"
+    for _q in activity_pool: _q["subskill"] = "internal_control_matching_table"
     pools_by_subskill = {
         "definition": definition_pool,
         "processes": processes_pool,

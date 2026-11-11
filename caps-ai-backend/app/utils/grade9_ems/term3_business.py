@@ -95,6 +95,26 @@ def _generate_business_functions(rng, mode, seed=None):
                 "2_concept": "This function protects the business reputation and builds goodwill.",
                 "3_breakdown": "It is called Public Relations (PR)."
             }
+        },
+        {
+            "prompt": "Explain how the **Purchasing / Procurement function** manages operational supply risk to ensure production is not halted.",
+            "sample_answer": "By maintaining backup supplier contracts, holding buffer safety stock, and monitoring supplier lead times.",
+            "ideal_answer": "The Purchasing function mitigates supply chain risks by diversifying supplier sources, maintaining safety stock, and conducting regular vendor quality audits.",
+            "hint_sections": {
+                "1_nudge": "What happens if a single supplier goes bankrupt or fails to deliver raw materials on time?",
+                "2_concept": "Purchasing manages risk through dual-sourcing, buffer stock, and supplier quality audits.",
+                "3_breakdown": "Mention multiple suppliers and buffer stock."
+            }
+        },
+        {
+            "prompt": "Explain how the **Financial function** manages cash flow risk to protect the business from insolvency.",
+            "sample_answer": "By compiling monthly cash flow budgets, enforcing strict credit control on debtors, and maintaining contingency reserves.",
+            "ideal_answer": "The Financial function manages liquidity risk by preparing cash budgets, monitoring debtor payment terms, and controlling unnecessary operational expenses.",
+            "hint_sections": {
+                "1_nudge": "How does a business make sure it always has cash to pay wages and suppliers?",
+                "2_concept": "Cash budgets and debtor control ensure sufficient liquidity.",
+                "3_breakdown": "Mention cash budgets and debtor payment terms."
+            }
         }
     ]
     
@@ -105,12 +125,18 @@ def _generate_business_functions(rng, mode, seed=None):
     
     item = {
         "id": f"ems9_bus_{rng.randint(1000, 9999)}",
-        "topic": "Functions of a Business & Trade Unions",
-        "question_type": "standard",
+        "topic": "Functions of a Business",
+        "question_type": "typed",
+        "modality": "semantic",
         "prompt": q["prompt"],
         "marks": 2,
-        "sample_answer": q["sample_answer"],
+        "sample_answer": f"{q['sample_answer']}. Role: {q['ideal_answer']}",
         "ideal_answer": q["ideal_answer"],
+        "worked_solution": (
+            f"Explanation and Marking Rubric (2 marks total):\n"
+            f"1. Identification: {q['sample_answer']} [1 mark].\n"
+            f"2. Functional Justification: {q['ideal_answer']} is responsible for aligning departmental activities with broader organizational objectives [1 mark]."
+        ),
         "marking_points": ["Correct identification of the function or role of trade unions."],
         "hint_sections": q["hint_sections"],
         "guidelines": ["Award full marks for clear understanding of the core concepts."],

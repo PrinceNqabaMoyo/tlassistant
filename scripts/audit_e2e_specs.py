@@ -267,7 +267,7 @@ def main():
     else:
         for root, _, files in os.walk(e2e_dir):
             for f in files:
-                if f.endswith(".spec.js") or f == "runParticipantSet.js":
+                if f.endswith(".spec.js") or f in {"runParticipantSet.js", "matrixRunner.js", "modalityAnswerDriver.js"}:
                     files_to_audit.append(Path(root) / f)
 
     files_to_audit.sort()

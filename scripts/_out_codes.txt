@@ -1,0 +1,52 @@
+science .md files scanned = 163
+code-sweep matches        = 553 distinct 227
+  already caught by ES rule = 152
+  ONLY the code sweep       = 401  <-- these are deleted by mistake
+
+top 45 tokens deleted by the code sweep:
+token          count  ES-covered
+CO2               80          NO
+NH3               52          NO
+HG1               50          NO
+SO2               31          NO
+CH4               18          NO
+PH7               12          NO
+HNO3              12          NO
+CH3               11          NO
+CH3COO            10          NO
+WFPC2              7          NO
+KNO3               6          NO
+AX2                6          NO
+SO4                6          NO
+NO2                5          NO
+CH2                5          NO
+MCO3               4          NO
+NO3                4          NO
+ESGC7              3         yes
+AX3                3          NO
+AX4                3          NO
+SG1                3          NO
+CH3CH              3          NO
+ESG4K              2         yes
+ESG79              2         yes
+ESG7B              2         yes
+ESG7C              2         yes
+ESG7J              2         yes
+ESG7P              2         yes
+ESG7S              2         yes
+ESG7X              2         yes
+CD4                2          NO
+MLX01              2          NO
+PNO3               2          NO
+AX6                2          NO
+BB55               2          NO
+MNO3               2          NO
+ESG4W              1         yes
+ESGC8              1         yes
+ESGC9              1         yes
+ESG32              1         yes
+ESG33              1         yes
+ESG34              1         yes
+ESG35              1         yes
+ESG36              1         yes
+ESG37              1         yes

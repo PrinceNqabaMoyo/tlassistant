@@ -73,6 +73,7 @@ const WorkingPad = ({
                         <span className="w-6 shrink-0 text-xs text-slate-400 self-center text-right">{idx + 1}</span>
                         <input
                             ref={(el) => registerInput?.(`line-${idx}`, el)}
+                            data-testid={`input-math-step-${idx}`}
                             value={line}
                             onChange={(e) => updateLine(idx, e.target.value)}
                             onKeyDown={(e) => handleKeyDown(idx, e)}
@@ -90,6 +91,7 @@ const WorkingPad = ({
             })}
             <button
                 type="button"
+                data-testid="btn-add-math-line"
                 onClick={() => onChange([...lines, ''])}
                 className="text-xs font-semibold text-[#13519C] hover:text-blue-800 font-sans cursor-pointer"
             >

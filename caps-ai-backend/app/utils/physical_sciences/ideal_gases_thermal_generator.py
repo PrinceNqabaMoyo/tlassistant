@@ -271,8 +271,17 @@ def generate(
         sub_seed = r.randint(1, 1_000_000_000)
         sub_r = random.Random(sub_seed)
 
-        if grade_num in ("8", "10") or subskill in ("kinetic_theory", "states_of_matter", "particle_model"):
-            q = _generate_gr8_10_kinetic_theory(sub_r, sub_seed, i, mode)
+        if subskill in ("particle_diagram", "particle_model"):
+            from app.utils.natural_sciences.natural_sciences_builders import build_particle_model_question
+            gr_int = int(grade_num) if grade_num in ("8", "10") else 10
+            q = build_particle_model_question(sub_seed, grade=gr_int, mode=mode)
+        elif grade_num in ("8", "10") or subskill in ("kinetic_theory", "states_of_matter"):
+            if (sub_seed + i) % 2 == 0:
+                from app.utils.natural_sciences.natural_sciences_builders import build_particle_model_question
+                gr_int = int(grade_num) if grade_num in ("8", "10") else 10
+                q = build_particle_model_question(sub_seed, grade=gr_int, mode=mode)
+            else:
+                q = _generate_gr8_10_kinetic_theory(sub_r, sub_seed, i, mode)
         else:
             q = _generate_gr11_ideal_gas_calculations(sub_r, sub_seed, i, mode)
 

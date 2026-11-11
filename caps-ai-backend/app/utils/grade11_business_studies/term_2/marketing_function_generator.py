@@ -97,7 +97,7 @@ def _concept_pool(r: random.Random) -> List[Dict[str, Any]]:
         }, subskill='concepts', learning_objective_id=LO_PRICE, question_family_id='pricing_technique_penetration', concept_id='penetration_pricing', concept_group='pricing', misconception_tags=['confuses_penetration_with_skimming'], diagnostic_tags=['classification', 'pricing']),
         with_metadata({
             'title': 'Direct vs indirect distribution',
-            'prompt': 'When a manufacturer sells directly to consumers with no intermediaries, this is a … channel of distribution.',
+            'prompt': 'When a manufacturer sells straight to consumers with no intermediaries, this is a … channel of distribution.',
             'options': ['indirect', 'direct', 'reverse', 'horizontal'],
             'correct_index': 1,
             'explanation': 'A direct channel of distribution is when the manufacturer sells directly to consumers without intermediaries.',

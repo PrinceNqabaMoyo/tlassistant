@@ -64,7 +64,7 @@ NAMES_DATABASE: Dict[str, Dict[str, List[str]]] = {
             "Palesa", "Refilwe", "Mpho", "Dineo", "Naledi", "Puleng", "Lerato",
             "Bokang", "Kelebogile", "Dimakatso", "Tshegofatso", "Matshepo",
             "Rethabile", "Malebo", "Mmabatho", "Boitumelo", "Keneilwe",
-            "Motselisi", "Lesego", "Pontsho", "Kagiso"
+            "Motselisi", "Lesego", "Oratile", "Kagiso"
         ],
         "male": [
             "Kagiso", "Tebogo", "Lesedi", "Thato", "Katlego", "Kabelo", "Tshepo",
@@ -140,7 +140,7 @@ NAMES_DATABASE: Dict[str, Dict[str, List[str]]] = {
         "female": [
             "Claire", "Kirsten", "Lauren", "Shannon", "Gillian", "Penelope",
             "Bridget", "Heather", "Samantha", "Fiona", "Gemma", "Tracey",
-            "Wendy", "Alison", "Rowena", "Chloe"
+            "Wendy", "Alison", "Rowena", "Megan"
         ],
         "male": [
             "Bradley", "Craig", "Ross", "Liam", "Callum", "Gareth", "Trevor",
@@ -162,7 +162,7 @@ NAMES_DATABASE: Dict[str, Dict[str, List[str]]] = {
         "male": [
             "Farhan", "Rajiv", "Aarav", "Tariq", "Bilal", "Kaveer", "Devash",
             "Rohan", "Sanjeev", "Cassim", "Zaheer", "Vikram", "Dinesh",
-            "Hamza", "Imran", "Harish", "Sanjay"
+            "Hamza", "Zaheer", "Harish", "Sanjay"
         ],
         "surnames": [
             "Naidoo", "Govender", "Pillay", "Chetty", "Moodley", "Reddy",

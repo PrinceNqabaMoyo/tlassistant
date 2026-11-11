@@ -1,16 +1,9 @@
-import React, { useState, useRef, useEffect, useMemo } from 'react';
-import { 
-  Box, 
-  RotateCw, 
-  Maximize2, 
-  Sparkles, 
-  Eye, 
-  CheckCircle2, 
-  Play, 
-  Pause,
-  Layers,
-  Compass
-} from 'lucide-react';
+import React, { useState, useMemo, useCallback } from 'react';
+import * as THREE from 'three';
+import { Box, Layers, CheckCircle2 } from 'lucide-react';
+import AtlasCanvas3D from '../shared/atlas3d/AtlasCanvas3D';
+import CalculationPopoverCard from '../shared/atlas3d/CalculationPopoverCard';
+import { createPaperMaterial, addInkEdges } from '../shared/atlas3d/atlasRenderEngine';
 
 const POLYHEDRA = {
   cube: {
@@ -18,9 +11,10 @@ const POLYHEDRA = {
     faces: 6,
     vertices: 8,
     edges: 12,
-    baseSize: 100,
-    eulerValid: true,
     formula: 'F(6) + V(8) - E(12) = 2',
+    saFormula: 'TSA = 6 s^2',
+    volFormula: 'V = s^3',
+    defaultDims: { s: 4, l: 4, b: 4, h: 4 },
     description: '6 congruent square faces meeting at 90° right angles.',
   },
   rectangular_prism: {
@@ -28,9 +22,10 @@ const POLYHEDRA = {
     faces: 6,
     vertices: 8,
     edges: 12,
-    baseSize: 110,
-    eulerValid: true,
     formula: 'F(6) + V(8) - E(12) = 2',
+    saFormula: 'TSA = 2(lb + lh + bh)',
+    volFormula: 'V = l \\cdot b \\cdot h',
+    defaultDims: { s: 4, l: 6, b: 4, h: 3 },
     description: '3 pairs of opposite identical rectangular faces.',
   },
   triangular_prism: {
@@ -38,9 +33,10 @@ const POLYHEDRA = {
     faces: 5,
     vertices: 6,
     edges: 9,
-    baseSize: 100,
-    eulerValid: true,
     formula: 'F(5) + V(6) - E(9) = 2',
+    saFormula: 'TSA = 2\\!\\left(\\tfrac{1}{2}bh_{\\triangle}\\right) + P_{\\triangle} \\cdot H',
+    volFormula: 'V = \\left(\\tfrac{1}{2} b h_{\\triangle}\\right) \\cdot H',
+    defaultDims: { s: 4, l: 5, b: 4, h: 3 },
     description: '2 parallel triangular bases connected by 3 rectangular sides.',
   },
   square_pyramid: {
@@ -48,9 +44,10 @@ const POLYHEDRA = {
     faces: 5,
     vertices: 5,
     edges: 8,
-    baseSize: 100,
-    eulerValid: true,
     formula: 'F(5) + V(5) - E(8) = 2',
+    saFormula: 'TSA = b^2 + 4\\!\\left(\\tfrac{1}{2} b h_{\\text{slant}}\\right)',
+    volFormula: 'V = \\tfrac{1}{3} b^2 h_{\\perp}',
+    defaultDims: { s: 4, l: 4, b: 4, h: 4 },
     description: '1 square base with 4 triangular faces meeting at the apex.',
   },
   tetrahedron: {
@@ -58,105 +55,250 @@ const POLYHEDRA = {
     faces: 4,
     vertices: 4,
     edges: 6,
-    baseSize: 100,
-    eulerValid: true,
     formula: 'F(4) + V(4) - E(6) = 2',
+    saFormula: 'TSA = \\sqrt{3}\\, s^2',
+    volFormula: 'V = \\frac{s^3}{6\\sqrt{2}}',
+    defaultDims: { s: 4, l: 4, b: 4, h: 4 },
     description: '4 equilateral triangular faces. Platonic solid.',
   },
 };
 
 export default function GeometricNets3DViewer({
   defaultShape = 'cube',
+  activeQuestion = null,
+  grade = null,
   onFoldComplete = () => {},
 }) {
-  const [activeShape, setActiveShape] = useState(defaultShape);
-  const [foldProgress, setFoldProgress] = useState(0.35); // 0 = 2D flat, 1 = 3D folded
-  const [rotation, setRotation] = useState({ x: -25, y: 35 });
-  const [isAutoRotating, setIsAutoRotating] = useState(false);
-  const [highlightMode, setHighlightMode] = useState('all'); // 'all' | 'faces' | 'vertices' | 'edges'
-  const isDraggingRef = useRef(false);
-  const lastMousePosRef = useRef({ x: 0, y: 0 });
-  const animationFrameRef = useRef(null);
+  const inferredShape = useMemo(() => {
+    const qTxt = `${activeQuestion?.question_text || ''} ${activeQuestion?.prompt || ''} ${activeQuestion?.archetype || ''}`.toLowerCase();
+    if (qTxt.includes('triangular prism')) return 'triangular_prism';
+    if (qTxt.includes('rectangular prism') || qTxt.includes('cuboid')) return 'rectangular_prism';
+    if (qTxt.includes('square pyramid') || qTxt.includes('square-based pyramid') || qTxt.includes('pyramid')) return 'square_pyramid';
+    if (qTxt.includes('tetrahedron') || qTxt.includes('triangular pyramid')) return 'tetrahedron';
+    if (qTxt.includes('cube') || qTxt.includes('hexahedron')) return 'cube';
+    return defaultShape;
+  }, [activeQuestion, defaultShape]);
+
+  const [activeShape, setActiveShape] = useState(inferredShape);
+  React.useEffect(() => {
+    setActiveShape(inferredShape);
+  }, [inferredShape]);
+  const isGrade7 = Number(grade) === 7 || Number(activeQuestion?.grade) === 7;
+  const [foldProgress, setFoldProgress] = useState(0.55); // 0 = 2D flat net, 1 = 3D folded solid
+  const [scaleDim, setScaleDim] = useState(4.0); // side length in cm
+  const [selectedCalcId, setSelectedCalcId] = useState('surface_area');
 
   const shapeData = POLYHEDRA[activeShape] || POLYHEDRA.cube;
 
-  // Auto-rotation loop
-  useEffect(() => {
-    if (isAutoRotating) {
-      const step = () => {
-        setRotation(prev => ({
-          x: prev.x,
-          y: (prev.y + 0.5) % 360,
-        }));
-        animationFrameRef.current = requestAnimationFrame(step);
-      };
-      animationFrameRef.current = requestAnimationFrame(step);
-    } else if (animationFrameRef.current) {
-      cancelAnimationFrame(animationFrameRef.current);
+  const mensurationMath = useMemo(() => {
+    const s = scaleDim;
+    const l = s * 1.4;
+    const b = s;
+    const h = s * 0.85;
+
+    let tsa = 6 * s * s;
+    let vol = s * s * s;
+    let saSub = `6(${s.toFixed(1)})^2`;
+    let volSub = `(${s.toFixed(1)})^3`;
+
+    if (activeShape === 'rectangular_prism') {
+      tsa = 2 * (l * b + l * h + b * h);
+      vol = l * b * h;
+      saSub = `2((${l.toFixed(1)})(${b.toFixed(1)}) + (${l.toFixed(1)})(${h.toFixed(1)}) + (${b.toFixed(1)})(${h.toFixed(1)}))`;
+      volSub = `(${l.toFixed(1)})(${b.toFixed(1)})(${h.toFixed(1)})`;
+    } else if (activeShape === 'triangular_prism') {
+      const triH = (Math.sqrt(3) / 2) * b;
+      const baseArea = 0.5 * b * triH;
+      tsa = 2 * baseArea + 3 * b * l;
+      vol = baseArea * l;
+      saSub = `2(${baseArea.toFixed(1)}) + 3(${b.toFixed(1)})(${l.toFixed(1)})`;
+      volSub = `(${baseArea.toFixed(1)})(${l.toFixed(1)})`;
+    } else if (activeShape === 'square_pyramid') {
+      const slant = Math.sqrt((b / 2) * (b / 2) + h * h);
+      tsa = b * b + 2 * b * slant;
+      vol = (1 / 3) * b * b * h;
+      saSub = `(${b.toFixed(1)})^2 + 4(\\tfrac{1}{2})(${b.toFixed(1)})(${slant.toFixed(2)})`;
+      volSub = `\\tfrac{1}{3}(${b.toFixed(1)})^2(${h.toFixed(1)})`;
+    } else if (activeShape === 'tetrahedron') {
+      tsa = Math.sqrt(3) * s * s;
+      vol = (s * s * s) / (6 * Math.sqrt(2));
+      saSub = `\\sqrt{3}(${s.toFixed(1)})^2`;
+      volSub = `\\frac{(${s.toFixed(1)})^3}{6\\sqrt{2}}`;
     }
-    return () => {
-      if (animationFrameRef.current) cancelAnimationFrame(animationFrameRef.current);
+
+    return { s, l, b, h, tsa, vol, saSub, volSub };
+  }, [activeShape, scaleDim]);
+
+  const calculationsMap = useMemo(() => {
+    const { tsa, vol, saSub, volSub } = mensurationMath;
+    return {
+      surface_area: {
+        id: 'surface_area',
+        symbol: 'TSA',
+        label: `${shapeData.name} — Total Surface Area (Sum of 2D Net Faces)`,
+        color: '#2B5B84',
+        badgeText: `TSA = ${tsa.toFixed(1)} cm²`,
+        formula: shapeData.saFormula,
+        substitution: `TSA = ${saSub}`,
+        result: `TSA = ${tsa.toFixed(2)}\\text{ cm}^2 \\text{ (${shapeData.faces} faces)}`,
+        meaning: `Unfolding the 3D solid flat (0%) proves that Total Surface Area is simply the sum of the areas of all ${shapeData.faces} individual 2D faces in the net.`,
+      },
+      volume_calc: {
+        id: 'volume_calc',
+        symbol: 'V',
+        label: `${shapeData.name} — Enclosed 3D Volume`,
+        color: '#D97706',
+        badgeText: `V = ${vol.toFixed(1)} cm³`,
+        formula: shapeData.volFormula,
+        substitution: `V = ${volSub}`,
+        result: `V = ${vol.toFixed(2)}\\text{ cm}^3`,
+        meaning: `Folding the net to 100% encloses 3D space. Notice Euler's Polyhedron Theorem holds throughout: ${shapeData.formula}.`,
+      },
     };
-  }, [isAutoRotating]);
+  }, [mensurationMath, shapeData]);
 
-  // Pointer drag to orbit 3D model
-  const handlePointerDown = (e) => {
-    isDraggingRef.current = true;
-    lastMousePosRef.current = { x: e.clientX, y: e.clientY };
-  };
+  const activeCalculation = calculationsMap[selectedCalcId] || calculationsMap.surface_area;
 
-  const handlePointerMove = (e) => {
-    if (!isDraggingRef.current) return;
-    const dx = e.clientX - lastMousePosRef.current.x;
-    const dy = e.clientY - lastMousePosRef.current.y;
-    lastMousePosRef.current = { x: e.clientX, y: e.clientY };
+  const buildScene = useCallback(({ scene }) => {
+    const root = new THREE.Group();
+    scene.add(root);
 
-    setRotation(prev => ({
-      x: Math.max(-85, Math.min(85, prev.x - dy * 0.5)),
-      y: (prev.y + dx * 0.5) % 360,
-    }));
-  };
+    const w = activeShape === 'rectangular_prism' ? 1.35 : 1.05;
+    const d = 1.05;
+    const h = activeShape === 'rectangular_prism' ? 0.85 : 1.05;
+    const foldRad = foldProgress * (Math.PI / 2);
 
-  const handlePointerUp = () => {
-    isDraggingRef.current = false;
-  };
+    const makeFacePlate = (fw, fd, colorHex, interactiveId = 'surface_area') => {
+      const geo = new THREE.BoxGeometry(fw, 0.04, fd);
+      const mesh = new THREE.Mesh(geo, createPaperMaterial(colorHex, { opacity: 0.92, transparent: true }));
+      addInkEdges(mesh, 0x1E1B18, 0.85);
+      mesh.userData = { interactiveId };
+      return mesh;
+    };
 
-  // Fold angle calculation (0 to 90 degrees)
-  const foldAngle = foldProgress * 90;
-  const isFullyFolded = foldProgress >= 0.98;
-  const isFullyFlat = foldProgress <= 0.05;
+    if (activeShape === 'cube' || activeShape === 'rectangular_prism') {
+      // Softened pastel textbook palette (#93C5FD, #BFDBFE, #C7D2FE, #A7F3D0, #FDE68A, #FECACA)
+      const base = makeFacePlate(w, d, 0x60A5FA, 'surface_area');
+      base.position.set(0, 0.02, 0);
+      root.add(base);
+
+      // Front hinge (+z edge)
+      const frontPivot = new THREE.Group();
+      frontPivot.position.set(0, 0.02, d / 2);
+      frontPivot.rotation.x = -foldRad;
+      const frontFace = makeFacePlate(w, h, 0x93C5FD, 'surface_area');
+      frontFace.position.set(0, 0, h / 2);
+      frontPivot.add(frontFace);
+      root.add(frontPivot);
+
+      // Back hinge (-z edge)
+      const backPivot = new THREE.Group();
+      backPivot.position.set(0, 0.02, -d / 2);
+      backPivot.rotation.x = foldRad;
+      const backFace = makeFacePlate(w, h, 0xA5B4FC, 'surface_area');
+      backFace.position.set(0, 0, -h / 2);
+      backPivot.add(backFace);
+      root.add(backPivot);
+
+      // Left hinge (-x edge)
+      const leftPivot = new THREE.Group();
+      leftPivot.position.set(-w / 2, 0.02, 0);
+      leftPivot.rotation.z = -foldRad;
+      const leftFace = makeFacePlate(h, d, 0x6EE7B7, 'volume_calc');
+      leftFace.position.set(-h / 2, 0, 0);
+      leftPivot.add(leftFace);
+      root.add(leftPivot);
+
+      // Right hinge (+x edge) + Top lid hinged to Right face
+      const rightPivot = new THREE.Group();
+      rightPivot.position.set(w / 2, 0.02, 0);
+      rightPivot.rotation.z = foldRad;
+      const rightFace = makeFacePlate(h, d, 0xFCD34D, 'volume_calc');
+      rightFace.position.set(h / 2, 0, 0);
+      rightPivot.add(rightFace);
+
+      const topPivot = new THREE.Group();
+      topPivot.position.set(h, 0, 0);
+      topPivot.rotation.z = foldRad;
+      const topFace = makeFacePlate(w, d, 0xFCA5A5, 'volume_calc');
+      topFace.position.set(w / 2, 0, 0);
+      topPivot.add(topFace);
+      rightPivot.add(topPivot);
+
+      root.add(rightPivot);
+    } else {
+      // Pyramid / Prism hinged triangular flaps (softened palette)
+      const base = makeFacePlate(1.2, 1.2, 0x60A5FA, 'surface_area');
+      base.position.set(0, 0.02, 0);
+      root.add(base);
+
+      const makeTriFlap = (colorHex) => {
+        const shape = new THREE.Shape();
+        shape.moveTo(-0.6, 0);
+        shape.lineTo(0.6, 0);
+        shape.lineTo(0, 1.05);
+        shape.closePath();
+        const geo = new THREE.ShapeGeometry(shape);
+        geo.rotateX(Math.PI / 2);
+        const mesh = new THREE.Mesh(
+          geo,
+          createPaperMaterial(colorHex, { side: THREE.DoubleSide, opacity: 0.9, transparent: true })
+        );
+        addInkEdges(mesh, 0x1E1B18, 0.85);
+        mesh.userData = { interactiveId: 'volume_calc' };
+        return mesh;
+      };
+
+      const maxTilt = activeShape === 'triangular_prism' ? Math.PI / 2 : 1.05;
+      const tilt = foldProgress * maxTilt;
+
+      const dirs = [
+        { pos: [0, 0.03, 0.6], rotY: 0, color: 0xFCD34D },
+        { pos: [0, 0.03, -0.6], rotY: Math.PI, color: 0x6EE7B7 },
+        { pos: [0.6, 0.03, 0], rotY: Math.PI / 2, color: 0xFCA5A5 },
+        { pos: [-0.6, 0.03, 0], rotY: -Math.PI / 2, color: 0xC4B5FD },
+      ];
+      dirs.slice(0, activeShape === 'tetrahedron' ? 3 : 4).forEach((cfg) => {
+        const pivot = new THREE.Group();
+        pivot.position.set(...cfg.pos);
+        pivot.rotation.y = cfg.rotY;
+        pivot.rotation.x = -tilt;
+        pivot.add(makeTriFlap(cfg.color));
+        root.add(pivot);
+      });
+    }
+
+    return { interactiveObjects: [root] };
+  }, [activeShape, foldProgress]);
 
   return (
-    <div className="w-full bg-slate-900 text-white rounded-2xl overflow-hidden border border-slate-700 shadow-xl flex flex-col select-none">
-      {/* Top Header / Mode Bar */}
-      <div className="px-4 py-3 bg-slate-800/90 border-b border-slate-700 flex flex-wrap items-center justify-between gap-2">
+    <div data-testid="geometric-nets-canvas" className="w-full bg-white text-slate-800 rounded-2xl overflow-hidden border border-slate-200 shadow-sm flex flex-col select-none space-y-3 p-3.5">
+      {/* Header & Shape Selector */}
+      <div className="flex flex-wrap items-center justify-between gap-2">
         <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-lg bg-blue-600/30 text-blue-400 border border-blue-500/40 flex items-center justify-center">
+          <div className="w-8 h-8 rounded-lg bg-blue-50 text-blue-700 border border-blue-200 flex items-center justify-center">
             <Box className="w-4 h-4" />
           </div>
           <div>
-            <h3 className="text-sm font-bold tracking-tight text-white flex items-center gap-1.5" style={{ fontFamily: 'Afacad, sans-serif' }}>
-              Dynamic 2D-to-3D Folding Net
-              <span className="px-2 py-0.5 rounded-full text-[10px] font-mono bg-blue-500/20 text-blue-300 border border-blue-500/30">
-                AI Blackboard SOTA
-              </span>
+            <h3 className="text-sm font-bold tracking-tight text-slate-900 flex items-center gap-1.5">
+              3D Hinged Polyhedron Net & Surface Area Unfolder
             </h3>
-            <p className="text-[11px] text-slate-400">
-              Extrude flat nets into rotatable 3D polyhedra • Real-time Euler verification
+            <p className="text-[11px] text-slate-500">
+              Fold 2D nets into 3D solids • Inspect Surface Area (TSA), Volume (V) & Euler&apos;s Formula
             </p>
           </div>
         </div>
 
-        {/* Shape Selector Chips */}
         <div className="flex items-center gap-1 overflow-x-auto scrollbar-none py-1">
           {Object.entries(POLYHEDRA).map(([key, item]) => (
             <button
               key={key}
+              data-testid={`btn-net-shape-${key}`}
               onClick={() => setActiveShape(key)}
-              className={`px-2.5 py-1 rounded-lg text-xs font-medium transition-all ${
+              className={`px-2.5 py-1 rounded-lg text-xs font-semibold transition-all ${
                 activeShape === key
-                  ? 'bg-blue-600 text-white shadow-xs'
-                  : 'bg-slate-700/60 text-slate-300 hover:bg-slate-700 hover:text-white'
+                  ? 'bg-[#2B5B84] text-white shadow-xs'
+                  : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
               }`}
             >
               {item.name.split(' ')[0]}
@@ -165,229 +307,32 @@ export default function GeometricNets3DViewer({
         </div>
       </div>
 
-      {/* Main 3D Canvas Viewport */}
-      <div 
-        className="relative w-full h-[360px] sm:h-[420px] bg-radial from-slate-800 to-slate-950 flex items-center justify-center overflow-hidden cursor-grab active:cursor-grabbing"
-        onPointerDown={handlePointerDown}
-        onPointerMove={handlePointerMove}
-        onPointerUp={handlePointerUp}
-        onPointerLeave={handlePointerUp}
-        style={{ perspective: '900px' }}
-      >
-        {/* Subtle 3D Grid floor */}
-        <div 
-          className="absolute inset-0 pointer-events-none opacity-20"
-          style={{
-            backgroundImage: 'radial-gradient(circle, #3b82f6 1px, transparent 1px)',
-            backgroundSize: '24px 24px',
-          }}
-        />
-
-        {/* Status Pills Overlay */}
-        <div className="absolute top-3 left-3 flex flex-col gap-1.5 z-10 pointer-events-none">
-          <div className="px-2.5 py-1 rounded-full bg-slate-900/80 backdrop-blur-md border border-slate-700/70 text-[11px] font-mono text-slate-300 flex items-center gap-1.5">
-            <Compass className="w-3.5 h-3.5 text-blue-400" />
-            <span>Rot: X:{Math.round(rotation.x)}° Y:{Math.round(rotation.y)}°</span>
-          </div>
-          <div className="px-2.5 py-1 rounded-full bg-slate-900/80 backdrop-blur-md border border-slate-700/70 text-[11px] font-mono text-emerald-400 flex items-center gap-1.5">
-            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
-            <span>State: {isFullyFolded ? '3D Solid (Folded)' : isFullyFlat ? '2D Flat Net' : `Folding ${Math.round(foldProgress * 100)}%`}</span>
-          </div>
-        </div>
-
-        {/* Orbit / Reset Controls Overlay */}
-        <div className="absolute top-3 right-3 flex items-center gap-1.5 z-10">
-          <button
-            onClick={() => setIsAutoRotating(!isAutoRotating)}
-            className={`p-1.5 rounded-lg border text-xs font-medium transition-all ${
-              isAutoRotating
-                ? 'bg-blue-600 border-blue-400 text-white'
-                : 'bg-slate-800/90 border-slate-700 text-slate-300 hover:text-white'
-            }`}
-            title={isAutoRotating ? 'Pause rotation' : 'Auto-rotate'}
-          >
-            {isAutoRotating ? <Pause className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5" />}
-          </button>
-          <button
-            onClick={() => setRotation({ x: -25, y: 35 })}
-            className="p-1.5 rounded-lg bg-slate-800/90 border border-slate-700 text-slate-300 hover:text-white text-xs font-medium"
-            title="Reset view"
-          >
-            <RotateCw className="w-3.5 h-3.5" />
-          </button>
-        </div>
-
-        {/* 3D Polyhedron / Net Model */}
-        <div
-          className="relative transition-transform duration-75 ease-out"
-          style={{
-            transformStyle: 'preserve-3d',
-            transform: `rotateX(${rotation.x}deg) rotateY(${rotation.y}deg)`,
-            width: '100px',
-            height: '100px',
-          }}
-        >
-          {/* CUBE & RECTANGULAR PRISM RENDERING */}
-          {(activeShape === 'cube' || activeShape === 'rectangular_prism') && (
-            <div className="relative w-full h-full" style={{ transformStyle: 'preserve-3d' }}>
-              {/* Face 1: Base (Bottom) */}
-              <div 
-                className={`absolute inset-0 bg-blue-500/80 border-2 ${highlightMode === 'edges' ? 'border-amber-400' : 'border-blue-300'} flex items-center justify-center font-bold text-white text-xs shadow-inner transition-colors`}
-                style={{
-                  transform: 'translateZ(0px)',
-                  boxShadow: '0 0 15px rgba(59, 130, 246, 0.4)',
-                }}
-              >
-                Base
-              </div>
-
-              {/* Face 2: Front (folds UP from bottom edge of Base) */}
-              <div
-                className={`absolute inset-0 bg-cyan-500/75 border-2 ${highlightMode === 'edges' ? 'border-amber-400' : 'border-cyan-300'} flex items-center justify-center font-bold text-white text-xs transition-colors`}
-                style={{
-                  transformOrigin: 'top',
-                  transform: `translateY(100px) rotateX(${-foldAngle}deg)`,
-                }}
-              >
-                Front
-              </div>
-
-              {/* Face 3: Back (folds UP from top edge of Base) */}
-              <div
-                className={`absolute inset-0 bg-indigo-500/75 border-2 ${highlightMode === 'edges' ? 'border-amber-400' : 'border-indigo-300'} flex items-center justify-center font-bold text-white text-xs transition-colors`}
-                style={{
-                  transformOrigin: 'bottom',
-                  transform: `translateY(-100px) rotateX(${foldAngle}deg)`,
-                }}
-              >
-                Back
-              </div>
-
-              {/* Face 4: Left (folds UP from left edge of Base) */}
-              <div
-                className={`absolute inset-0 bg-emerald-500/75 border-2 ${highlightMode === 'edges' ? 'border-amber-400' : 'border-emerald-300'} flex items-center justify-center font-bold text-white text-xs transition-colors`}
-                style={{
-                  transformOrigin: 'right',
-                  transform: `translateX(-100px) rotateY(${-foldAngle}deg)`,
-                }}
-              >
-                Left
-              </div>
-
-              {/* Face 5: Right (folds UP from right edge of Base) */}
-              <div
-                className={`absolute inset-0 bg-amber-500/75 border-2 ${highlightMode === 'edges' ? 'border-amber-400' : 'border-amber-300'} flex items-center justify-center font-bold text-white text-xs transition-colors`}
-                style={{
-                  transformOrigin: 'left',
-                  transform: `translateX(100px) rotateY(${foldAngle}deg)`,
-                }}
-              >
-                {/* Face 6: Top (attached to Right face and folds 90 deg inward) */}
-                <div
-                  className={`absolute inset-0 bg-rose-500/75 border-2 ${highlightMode === 'edges' ? 'border-amber-400' : 'border-rose-300'} flex items-center justify-center font-bold text-white text-xs transition-colors`}
-                  style={{
-                    transformOrigin: 'left',
-                    transform: `translateX(100px) rotateY(${foldAngle}deg)`,
-                  }}
-                >
-                  Top
-                </div>
-                Right
-              </div>
-            </div>
-          )}
-
-          {/* SQUARE-BASED PYRAMID RENDERING */}
-          {(activeShape === 'square_pyramid' || activeShape === 'tetrahedron' || activeShape === 'triangular_prism') && (
-            <div className="relative w-full h-full" style={{ transformStyle: 'preserve-3d' }}>
-              {/* Base */}
-              <div 
-                className="absolute inset-0 bg-blue-600/80 border-2 border-blue-300 flex items-center justify-center font-bold text-white text-xs"
-                style={{ transform: 'translateZ(0px)' }}
-              >
-                Base
-              </div>
-
-              {/* Triangular Flap 1 (North) */}
-              <div
-                className="absolute inset-0 flex items-center justify-center"
-                style={{
-                  transformOrigin: 'bottom',
-                  transform: `translateY(-100px) rotateX(${foldProgress * 65}deg)`,
-                  clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)',
-                  backgroundColor: 'rgba(234, 88, 12, 0.8)',
-                  border: '1px solid #fdba74',
-                }}
-              >
-                <span className="text-[10px] font-bold mt-6">N</span>
-              </div>
-
-              {/* Triangular Flap 2 (South) */}
-              <div
-                className="absolute inset-0 flex items-center justify-center"
-                style={{
-                  transformOrigin: 'top',
-                  transform: `translateY(100px) rotateX(${-foldProgress * 65}deg)`,
-                  clipPath: 'polygon(50% 100%, 0% 0%, 100% 0%)',
-                  backgroundColor: 'rgba(16, 185, 129, 0.8)',
-                  border: '1px solid #86efac',
-                }}
-              >
-                <span className="text-[10px] font-bold mb-6">S</span>
-              </div>
-
-              {/* Triangular Flap 3 (West) */}
-              <div
-                className="absolute inset-0 flex items-center justify-center"
-                style={{
-                  transformOrigin: 'right',
-                  transform: `translateX(-100px) rotateY(${-foldProgress * 65}deg)`,
-                  clipPath: 'polygon(0% 50%, 100% 0%, 100% 100%)',
-                  backgroundColor: 'rgba(168, 85, 247, 0.8)',
-                  border: '1px solid #d8b4fe',
-                }}
-              >
-                <span className="text-[10px] font-bold mr-6">W</span>
-              </div>
-
-              {/* Triangular Flap 4 (East) */}
-              <div
-                className="absolute inset-0 flex items-center justify-center"
-                style={{
-                  transformOrigin: 'left',
-                  transform: `translateX(100px) rotateY(${foldProgress * 65}deg)`,
-                  clipPath: 'polygon(100% 50%, 0% 0%, 0% 100%)',
-                  backgroundColor: 'rgba(236, 72, 153, 0.8)',
-                  border: '1px solid #fbcfe8',
-                }}
-              >
-                <span className="text-[10px] font-bold ml-6">E</span>
-              </div>
-            </div>
-          )}
-        </div>
-      </div>
-
-      {/* Interactive Controls & Euler Formula Dashboard */}
-      <div className="p-4 bg-slate-800 border-t border-slate-700 flex flex-col gap-3">
-        {/* The Folding Net Extrusion Slider */}
-        <div className="flex flex-col gap-1.5">
+      {/* Fold Slider & Scale Dimension Control */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+        <div className="bg-slate-50 p-2.5 rounded-lg border border-slate-200/80 flex flex-col gap-1">
           <div className="flex items-center justify-between text-xs">
-            <span className="font-semibold text-slate-300 flex items-center gap-1.5">
-              <Layers className="w-3.5 h-3.5 text-blue-400" />
-              Fold Extrusion Gesture:
+            <span className="font-semibold text-slate-700 flex items-center gap-1">
+              <Layers className="w-3.5 h-3.5 text-[#2B5B84]" />
+              Hinge Fold Angle:
             </span>
             <div className="flex items-center gap-2 font-mono text-[11px]">
-              <button 
+              <button
+                type="button"
+                data-testid="btn-fold-flat"
                 onClick={() => setFoldProgress(0)}
-                className="text-slate-400 hover:text-white underline cursor-pointer"
+                className="text-slate-500 hover:text-slate-900 underline cursor-pointer"
               >
                 Flat 2D (0%)
               </button>
-              <span className="text-blue-400 font-bold">{Math.round(foldProgress * 100)}%</span>
-              <button 
-                onClick={() => setFoldProgress(1)}
-                className="text-slate-400 hover:text-white underline cursor-pointer"
+              <span className="text-[#2B5B84] font-bold">{Math.round(foldProgress * 100)}%</span>
+              <button
+                type="button"
+                data-testid="btn-fold-folded"
+                onClick={() => {
+                  setFoldProgress(1);
+                  onFoldComplete(shapeData);
+                }}
+                className="text-slate-500 hover:text-slate-900 underline cursor-pointer"
               >
                 Folded 3D (100%)
               </button>
@@ -395,6 +340,7 @@ export default function GeometricNets3DViewer({
           </div>
           <input
             type="range"
+            data-testid="slider-net-fold"
             min="0"
             max="1"
             step="0.01"
@@ -404,59 +350,70 @@ export default function GeometricNets3DViewer({
               setFoldProgress(val);
               if (val >= 0.98) onFoldComplete(shapeData);
             }}
-            className="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-blue-500"
+            className="w-full accent-[#2B5B84] cursor-pointer h-1.5"
           />
         </div>
 
-        {/* Live Euler Formula Inspector: F + V - E = 2 */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-1">
-          <div 
-            onClick={() => setHighlightMode(highlightMode === 'faces' ? 'all' : 'faces')}
-            className={`p-2.5 rounded-xl border cursor-pointer transition-all ${
-              highlightMode === 'faces' 
-                ? 'bg-blue-600/30 border-blue-400 text-white' 
-                : 'bg-slate-900/60 border-slate-700/80 text-slate-300 hover:border-slate-600'
-            }`}
-          >
-            <div className="text-[10px] text-slate-400 uppercase tracking-wider font-semibold">Faces (F)</div>
-            <div className="text-lg font-bold font-mono text-blue-400">{shapeData.faces}</div>
-            <div className="text-[10px] text-slate-400">2D polygonal surfaces</div>
+        <label className="bg-slate-50 p-2.5 rounded-lg border border-slate-200/80 flex flex-col gap-1">
+          <div className="flex justify-between text-xs font-semibold text-slate-700">
+            <span>Base Edge Dimension (s)</span>
+            <span className="font-mono font-bold text-amber-700">{scaleDim.toFixed(1)} cm</span>
           </div>
+          <input
+            type="range"
+            min="2"
+            max="10"
+            step="0.5"
+            value={scaleDim}
+            onChange={(e) => setScaleDim(parseFloat(e.target.value))}
+            className="w-full accent-amber-600 cursor-pointer h-1.5"
+          />
+        </label>
+      </div>
 
-          <div 
-            onClick={() => setHighlightMode(highlightMode === 'vertices' ? 'all' : 'vertices')}
-            className={`p-2.5 rounded-xl border cursor-pointer transition-all ${
-              highlightMode === 'vertices' 
-                ? 'bg-emerald-600/30 border-emerald-400 text-white' 
-                : 'bg-slate-900/60 border-slate-700/80 text-slate-300 hover:border-slate-600'
-            }`}
-          >
-            <div className="text-[10px] text-slate-400 uppercase tracking-wider font-semibold">Vertices (V)</div>
-            <div className="text-lg font-bold font-mono text-emerald-400">{shapeData.vertices}</div>
-            <div className="text-[10px] text-slate-400">Corner intersections</div>
-          </div>
+      {/* True Three.js 3D Viewport */}
+      <AtlasCanvas3D
+        testId="geometric-nets-3d-stage"
+        height={290}
+        buildScene={buildScene}
+        selectedId={selectedCalcId}
+        onSelect={(id) => {
+          if (id) setSelectedCalcId(id);
+        }}
+        badgeItems={Object.values(calculationsMap)}
+        subtitle="Drag the Hinge Fold slider between 0% (Flat 2D Net) and 100% (Closed 3D Solid) • Click faces for TSA & Volume formulas"
+      />
 
-          <div 
-            onClick={() => setHighlightMode(highlightMode === 'edges' ? 'all' : 'edges')}
-            className={`p-2.5 rounded-xl border cursor-pointer transition-all ${
-              highlightMode === 'edges' 
-                ? 'bg-amber-600/30 border-amber-400 text-white' 
-                : 'bg-slate-900/60 border-slate-700/80 text-slate-300 hover:border-slate-600'
-            }`}
-          >
-            <div className="text-[10px] text-slate-400 uppercase tracking-wider font-semibold">Edges (E)</div>
-            <div className="text-lg font-bold font-mono text-amber-400">{shapeData.edges}</div>
-            <div className="text-[10px] text-slate-400">Fold line boundaries</div>
-          </div>
+      {/* Calculation Popover */}
+      <CalculationPopoverCard
+        calculation={activeCalculation}
+        allCalculations={Object.values(calculationsMap)}
+        onSelectCalculation={setSelectedCalcId}
+      />
 
-          <div className="p-2.5 rounded-xl bg-purple-950/40 border border-purple-500/40 text-purple-200">
-            <div className="text-[10px] text-purple-300 uppercase tracking-wider font-semibold">Euler Check</div>
-            <div className="text-sm font-bold font-mono text-purple-300 pt-0.5">{shapeData.formula}</div>
-            <div className="text-[10px] text-purple-400 flex items-center gap-1">
-              <CheckCircle2 className="w-3 h-3 text-emerald-400 inline" /> Valid Polyhedron
+      {/* Live Faces, Vertices & Edges Inspector (Euler Check hidden for Grade 7 per syllabus) */}
+      <div className={`grid grid-cols-3 ${isGrade7 ? '' : 'sm:grid-cols-4'} gap-2 pt-1`}>
+        <div className="p-2.5 rounded-xl border bg-slate-50 border-slate-200">
+          <div className="text-[10px] text-slate-500 uppercase tracking-wider font-semibold">Faces (F)</div>
+          <div className="text-base font-bold font-mono text-[#2B5B84]">{shapeData.faces}</div>
+        </div>
+        <div className="p-2.5 rounded-xl border bg-slate-50 border-slate-200">
+          <div className="text-[10px] text-slate-500 uppercase tracking-wider font-semibold">Vertices (V)</div>
+          <div className="text-base font-bold font-mono text-emerald-700">{shapeData.vertices}</div>
+        </div>
+        <div className="p-2.5 rounded-xl border bg-slate-50 border-slate-200">
+          <div className="text-[10px] text-slate-500 uppercase tracking-wider font-semibold">Edges (E)</div>
+          <div className="text-base font-bold font-mono text-amber-700">{shapeData.edges}</div>
+        </div>
+        {!isGrade7 && (
+          <div className="p-2.5 rounded-xl bg-indigo-50 border border-indigo-200">
+            <div className="text-[10px] text-indigo-700 uppercase tracking-wider font-semibold">Euler Check</div>
+            <div className="text-xs font-bold font-mono text-indigo-900 pt-0.5">{shapeData.formula}</div>
+            <div className="text-[10px] text-emerald-700 flex items-center gap-1">
+              <CheckCircle2 className="w-3 h-3 text-emerald-600 inline" /> Valid Solid
             </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );

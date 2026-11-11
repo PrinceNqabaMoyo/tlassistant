@@ -103,6 +103,9 @@ export default defineConfig({
         manualChunks(id) {
           const normId = id.replace(/\\/g, '/');
           if (normId.includes('node_modules/')) {
+            if (normId.includes('three')) {
+              return 'vendor-three';
+            }
             if (normId.includes('jsxgraph')) {
               return 'vendor-jsxgraph';
             }

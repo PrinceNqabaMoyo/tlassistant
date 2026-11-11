@@ -56,6 +56,7 @@ import PrivacyStatementView from './components/ui/PrivacyStatementView';
 import LearnerAppContainer from './components/student/LearnerAppContainer';
 import Header from './components/ui/Header';
 import PersonaSwitcherModal from './components/dev/PersonaSwitcherModal';
+import UniversalWorkspaceHarness from './components/dev/UniversalWorkspaceHarness';
 import { MOCK_FACULTY, MOCK_SCHOOL_PARENTS, getTeacherById } from './data/mock/mockEnvironment';
 import studentStore from './services/studentStore';
 import { buildApiUrl } from './utils/apiBaseUrl';
@@ -720,6 +721,11 @@ export default function App() {
       setActivePersona((prev) => prev ? { ...prev, role: mode } : null);
     }
   }, [activePersona]);
+
+  const handleOpenArchetypeWorkbench = useCallback(() => {
+    handleSetSuperAdminMode('admin');
+    setAdminView('archetypeVetting');
+  }, [handleSetSuperAdminMode, setAdminView]);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -1421,6 +1427,10 @@ export default function App() {
 
   // --- Other Handlers ---
 
+  if (typeof window !== 'undefined' && window.location.search.includes('harness=universal_workspace')) {
+    return <UniversalWorkspaceHarness />;
+  }
+
   // Show splash screen first
   if (showSplash) {
     return <SplashScreen onComplete={handleSplashComplete} />;
@@ -1447,6 +1457,7 @@ export default function App() {
               brandPalette={brandPalette}
               setBrandPalette={setBrandPalette}
               onOpenPersonaSwitcher={() => setShowPersonaSwitcher(true)}
+              onOpenArchetypeWorkbench={handleOpenArchetypeWorkbench}
             />
           </div>
           <div className="flex-1 min-h-0">
@@ -1578,6 +1589,7 @@ export default function App() {
             brandPalette={brandPalette}
             setBrandPalette={setBrandPalette}
             onOpenPersonaSwitcher={() => setShowPersonaSwitcher(true)}
+            onOpenArchetypeWorkbench={handleOpenArchetypeWorkbench}
           />
         </div>
         <div className="flex-1 min-h-0">

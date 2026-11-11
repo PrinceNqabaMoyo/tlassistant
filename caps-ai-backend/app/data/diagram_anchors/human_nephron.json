@@ -1,0 +1,179 @@
+{
+  "master": "human_nephron",
+  "view": "renal_microstructure_section",
+  "viewBox": "0 0 600 480",
+  "anchors": {
+    "afferent_arteriole": {
+      "name": "Afferent Arteriole",
+      "synonyms": [
+        "afferent arteriole",
+        "vas afferens"
+      ],
+      "anchor": [
+        165,
+        130
+      ],
+      "default_box": [
+        60,
+        60
+      ],
+      "side": "left",
+      "grades": [
+        "g11"
+      ],
+      "description": "Branch of the renal interlobular artery with a wide lumen bringing high-pressure oxygenated blood into the glomerulus."
+    },
+    "glomerulus": {
+      "name": "Glomerulus (Capillary Knot)",
+      "synonyms": [
+        "glomerulus",
+        "glomerular capillaries",
+        "glomerular knot"
+      ],
+      "anchor": [
+        205,
+        140
+      ],
+      "default_box": [
+        60,
+        140
+      ],
+      "side": "left",
+      "grades": [
+        "g9",
+        "g11"
+      ],
+      "description": "High hydrostatic pressure capillary bed where blood plasma is forced through podocyte filtration slits during non-selective ultrafiltration."
+    },
+    "efferent_arteriole": {
+      "name": "Efferent Arteriole",
+      "synonyms": [
+        "efferent arteriole",
+        "vas efferens"
+      ],
+      "anchor": [
+        180,
+        96
+      ],
+      "default_box": [
+        540,
+        60
+      ],
+      "side": "left",
+      "grades": [
+        "g11"
+      ],
+      "description": "Arteriole leading away from glomerulus with a narrower lumen than afferent arteriole, maintaining essential high filtration pressure."
+    },
+    "bowmans_capsule": {
+      "name": "Bowman's Capsule (Glomerular Capsule)",
+      "synonyms": [
+        "bowmans capsule",
+        "bowman's capsule",
+        "glomerular capsule",
+        "malpighian capsule"
+      ],
+      "anchor": [
+        200,
+        175
+      ],
+      "default_box": [
+        60,
+        220
+      ],
+      "side": "left",
+      "grades": [
+        "g9",
+        "g11"
+      ],
+      "description": "Double-walled cup lined with specialized podocyte cells collecting the glomerular filtrate (water, glucose, urea, ions, amino acids)."
+    },
+    "proximal_convoluted_tubule": {
+      "name": "Proximal Convoluted Tubule (PCT)",
+      "synonyms": [
+        "proximal convoluted tubule",
+        "pct",
+        "proximal tubule"
+      ],
+      "anchor": [
+        290,
+        118
+      ],
+      "default_box": [
+        540,
+        120
+      ],
+      "side": "right",
+      "grades": [
+        "g9",
+        "g11"
+      ],
+      "description": "Lined with microvillar brush border and rich in mitochondria for active tubular reabsorption of 100% of glucose and amino acids, and ~70% of Na+ and water."
+    },
+    "loop_of_henle": {
+      "name": "Loop of Henle (Hairpin Loop)",
+      "synonyms": [
+        "loop of henle",
+        "henle's loop",
+        "hairpin loop",
+        "nephron loop"
+      ],
+      "anchor": [
+        305,
+        392
+      ],
+      "default_box": [
+        60,
+        410
+      ],
+      "side": "left",
+      "grades": [
+        "g9",
+        "g11"
+      ],
+      "description": "Extends deep into renal medulla establishing a hypertonic medullary osmotic gradient via the countercurrent multiplier mechanism."
+    },
+    "distal_convoluted_tubule": {
+      "name": "Distal Convoluted Tubule (DCT)",
+      "synonyms": [
+        "distal convoluted tubule",
+        "dct",
+        "distal tubule"
+      ],
+      "anchor": [
+        385,
+        130
+      ],
+      "default_box": [
+        540,
+        190
+      ],
+      "side": "right",
+      "grades": [
+        "g11"
+      ],
+      "description": "Site of selective tubular reabsorption and active tubular secretion (H+, K+, creatinine); aldosterone regulates Na+ reabsorption."
+    },
+    "collecting_duct": {
+      "name": "Collecting Duct",
+      "synonyms": [
+        "collecting duct",
+        "collecting tubule"
+      ],
+      "anchor": [
+        436,
+        260
+      ],
+      "default_box": [
+        540,
+        260
+      ],
+      "side": "right",
+      "grades": [
+        "g9",
+        "g11"
+      ],
+      "description": "Channels urine towards renal pelvis; ADH (anti-diuretic hormone) regulates water permeability via aquaporins to concentrate urine during osmoregulation."
+    }
+  }
+}

@@ -10,9 +10,11 @@ from . import (
     term3_debtors_ledger,
     term3_business,
     term3_trade_unions,
+    term3_creditors_ledger,
+    term4_business_plan,
+    term4_transactions_cash_credit,
     assessment_generator,
 )
-from . import assessment_generator
 
 def generate_topic_questions(subtopic, subskill="concepts", difficulty="medium", count=1, mode="scaffold", seed=None, **kwargs):
     generators = {
@@ -27,6 +29,9 @@ def generate_topic_questions(subtopic, subskill="concepts", difficulty="medium",
         'term3_debtors_ledger': term3_debtors_ledger.generate,
         'term3_business': term3_business.generate,
         'term3_trade_unions': term3_trade_unions.generate,
+        'term3_creditors_ledger': term3_creditors_ledger.generate,
+        'term4_business_plan': term4_business_plan.generate,
+        'term4_transactions_cash_credit': term4_transactions_cash_credit.generate,
     }
 
     if subtopic not in generators:

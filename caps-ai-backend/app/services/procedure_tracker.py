@@ -30,8 +30,10 @@ def parse_line(text: str) -> Optional[Any]:
     """Parse a single working line into a SymPy ``Eq`` or expression.
 
     Tolerant of common learner notation: implicit multiplication (``2x``),
-    ``^`` for powers, comma decimals (``0,5``). Returns ``None`` if unparseable.
+    ``^`` for powers, comma decimals (``0,5``), and mixed numbers (``1 3/10``).
+    Returns ``None`` if unparseable.
     """
+    import re
     if text is None:
         return None
     s = str(text).strip()
@@ -42,6 +44,23 @@ def parse_line(text: str) -> Optional[Any]:
     # Comma decimal -> dot, but only between digits (avoid touching tuples).
     s = _decomma(s)
     s = s.replace("\u00d7", "*").replace("\u00f7", "/")
+    # Convert mixed numbers like "1 3/10" or "-2 1/4" into "(1 + 3/10)" or "-(2 + 1/4)"
+    s = re.sub(
+        r"(?<![A-Za-z0-9_.])(-?)(\d+)\s+(\d+)\s*/\s*(\d+)(?![A-Za-z0-9_.])",
+        lambda m: f"{m.group(1)}({m.group(2)} + ({m.group(3)})/({m.group(4)}))",
+        s,
+    )
+    # Also support LaTeX mixed fraction "1\frac{3}{10}"
+    s = re.sub(
+        r"(-?)(\d+)\s*\\(?:d?frac)\{(\d+)\}\{(\d+)\}",
+        lambda m: f"{m.group(1)}({m.group(2)} + ({m.group(3)})/({m.group(4)}))",
+        s,
+    )
+    s = re.sub(
+        r"\\(?:d?frac)\{([^{}]+)\}\{([^{}]+)\}",
+        r"((\1)/(\2))",
+        s,
+    )
     try:
         if "=" in s:
             lhs, rhs = s.split("=", 1)

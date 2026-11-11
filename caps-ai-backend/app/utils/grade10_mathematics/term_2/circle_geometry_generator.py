@@ -11,6 +11,8 @@ Implements the Universal 6-Pillar Generator Architecture Contract:
 5. Deterministic 3-Tier Pre-Baked Hints (Nudge -> Geometric Rule -> Worked Step)
 6. Modality-Appropriate Representation (KaTeX, South African comma decimals, JSXGraph Diagram Spec)
 """
+
+# Diagram contract: all diagrams emitted specify diagram_role: "context" | "identify"
 from __future__ import annotations
 
 import math

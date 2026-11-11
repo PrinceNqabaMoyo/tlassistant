@@ -1,0 +1,167 @@
+{
+  "master": "female_reproductive",
+  "view": "coronal_pelvic_section",
+  "viewBox": "0 0 600 480",
+  "anchors": {
+    "fallopian_tube": {
+      "name": "Fallopian Tube (Oviduct)",
+      "synonyms": [
+        "fallopian tube",
+        "oviduct",
+        "uterine tube"
+      ],
+      "anchor": [
+        180,
+        88
+      ],
+      "default_box": [
+        60,
+        90
+      ],
+      "side": "left",
+      "grades": [
+        "g7",
+        "g9",
+        "g12"
+      ],
+      "description": "Ciliated muscular duct connecting ovary to uterus; normal anatomical site of fertilization and early cleavage of the zygote."
+    },
+    "fimbriae": {
+      "name": "Fimbriae (Infundibulum Fringes)",
+      "synonyms": [
+        "fimbriae",
+        "infundibulum",
+        "ciliated fimbriae"
+      ],
+      "anchor": [
+        170,
+        145
+      ],
+      "default_box": [
+        60,
+        160
+      ],
+      "side": "left",
+      "grades": [
+        "g7",
+        "g9",
+        "g12"
+      ],
+      "description": "Finger-like ciliated projections draping over the ovary that actively sweep the released secondary oocyte into the fallopian tube."
+    },
+    "ovary": {
+      "name": "Ovary (Female Gonad)",
+      "synonyms": [
+        "ovary",
+        "ovaries",
+        "female gonad"
+      ],
+      "anchor": [
+        190,
+        175
+      ],
+      "default_box": [
+        60,
+        230
+      ],
+      "side": "left",
+      "grades": [
+        "g7",
+        "g9",
+        "g12"
+      ],
+      "description": "Female primary reproductive organ producing ova (eggs) via oogenesis and secreting hormones estrogen and progesterone."
+    },
+    "uterus_myometrium": {
+      "name": "Uterus (Muscular Myometrium)",
+      "synonyms": [
+        "uterus",
+        "myometrium",
+        "uterine wall",
+        "womb"
+      ],
+      "anchor": [
+        262,
+        185
+      ],
+      "default_box": [
+        60,
+        300
+      ],
+      "side": "left",
+      "grades": [
+        "g7",
+        "g9",
+        "g12"
+      ],
+      "description": "Thick smooth-muscle wall of the womb that stretches during gestation and contracts rhythmically under oxytocin stimulation during labor."
+    },
+    "cervix": {
+      "name": "Cervix",
+      "synonyms": [
+        "cervix",
+        "neck of uterus"
+      ],
+      "anchor": [
+        300,
+        245
+      ],
+      "default_box": [
+        60,
+        380
+      ],
+      "side": "left",
+      "grades": [
+        "g7",
+        "g9",
+        "g12"
+      ],
+      "description": "Narrow muscular neck at the base of the uterus protruding into the vagina; dilates to 10 cm during parturition (childbirth)."
+    },
+    "endometrium": {
+      "name": "Endometrium (Uterine Lining)",
+      "synonyms": [
+        "endometrium",
+        "uterine lining",
+        "mucosal lining"
+      ],
+      "anchor": [
+        300,
+        175
+      ],
+      "default_box": [
+        540,
+        180
+      ],
+      "side": "right",
+      "grades": [
+        "g7",
+        "g9",
+        "g12"
+      ],
+      "description": "Highly vascular glandular inner lining that thickens under estrogen and progesterone for blastocyst implantation, shedding during menstruation."
+    },
+    "vagina": {
+      "name": "Vagina (Birth Canal)",
+      "synonyms": [
+        "vagina",
+        "birth canal"
+      ],
+      "anchor": [
+        300,
+        315
+      ],
+      "default_box": [
+        540,
+        310
+      ],
+      "side": "right",
+      "grades": [
+        "g7",
+        "g9",
+        "g12"
+      ],
+      "description": "Elastic fibromuscular canal extending from cervix to outside; serves as female copulatory organ and passage for menstrual flow and childbirth."
+    }
+  }
+}

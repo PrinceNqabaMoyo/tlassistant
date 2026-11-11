@@ -1,3 +1,21 @@
+"""Grade 8 Mathematics — Whole Numbers Generator.
+Grounded in: curriculum_docs_auto/Mathematics_Gr8/Term 1/01. Whole numbers.md
+
+Covers CAPS subskills:
+  1. commutative: Commutative property of addition and multiplication.
+  2. associative: Associative property of addition and multiplication.
+  3. distributive: Distributive property of multiplication over addition and subtraction.
+  4. prime_factorization: Expressing whole numbers as products of prime factors.
+  5. lcm_hcf: Calculating LCM and HCF using prime factorizations.
+"""
+SUBSKILLS = [
+    'commutative',
+    'associative',
+    'distributive',
+    'prime_factorization',
+    'lcm_hcf',
+]
+
 import random
 import time
 from typing import Any, Dict, List, Optional, Tuple
@@ -1078,7 +1096,12 @@ def generate_grade8_whole_numbers_question(
     }
 
     if subskill not in supported_subskills:
-        subskill = 'commutative'
+        for s_cand in supported_subskills:
+            if s_cand in subskill or subskill in s_cand:
+                subskill = s_cand
+                break
+        else:
+            subskill = 'commutative'
 
     if difficulty not in {'easy', 'medium', 'hard'}:
         difficulty = 'easy'

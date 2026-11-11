@@ -4,6 +4,8 @@ Covers official CAPS Term 3 Euclidean proofs:
 - Similar Triangles (AAA, sides in proportion) and Pythagoras integration.
 - Supports full compound exam questions and atomic elementary sub-drills for adaptive deconstruction.
 """
+
+# Diagram contract: all diagrams emitted specify diagram_role: "context" | "identify"
 from __future__ import annotations
 
 import math

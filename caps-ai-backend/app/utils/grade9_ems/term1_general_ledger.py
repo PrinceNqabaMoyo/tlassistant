@@ -144,6 +144,7 @@ def _generate_bank_ledger(rng: random.Random, mode: str = "scaffold") -> Dict[st
         "id": f"ems9_gl_bank_{rng.randint(1000, 9999)}",
         "title": "General Ledger - Bank Account",
         "question_type": "table_completion",
+        "modality": "ledger",
         "prompt": prompt,
         "headers": headers,
         "rows": rows,
@@ -279,6 +280,7 @@ def _generate_trading_stock_ledger(rng: random.Random, mode: str = "scaffold") -
         "id": f"ems9_gl_stock_{rng.randint(1000, 9999)}",
         "title": "General Ledger - Trading Stock Account",
         "question_type": "table_completion",
+        "modality": "ledger",
         "prompt": prompt,
         "headers": headers,
         "rows": rows,
@@ -335,10 +337,30 @@ def _generate_trial_balance_trading(rng: random.Random, mode: str = "scaffold") 
     debits_known = drawings + trading_stock + debtors_control + cost_of_sales + salaries + stationery
     bank_debit = total_credit - debits_known
 
+    account_balances = [
+        {"account": "Capital (B1)", "amount": capital},
+        {"account": "Drawings (B2)", "amount": drawings},
+        {"account": "Trading Stock (B3)", "amount": trading_stock},
+        {"account": "Debtors Control (B4)", "amount": debtors_control},
+        {"account": "Bank (B5)", "amount": bank_debit},
+        {"account": "Creditors Control (B6)", "amount": creditors_control},
+        {"account": "Sales (N1)", "amount": sales},
+        {"account": "Cost of Sales (N2)", "amount": cost_of_sales},
+        {"account": "Rent Income (N3)", "amount": rent_income},
+        {"account": "Salaries (N4)", "amount": salaries},
+        {"account": "Stationery (N5)", "amount": stationery},
+    ]
+    shuffled_balances = list(account_balances)
+    rng.shuffle(shuffled_balances)
+    balances_text = "\n".join([f"• **{b['account']}**: R{b['amount']:,}" for b in shuffled_balances])
+
     prompt = (
-        f"Prepare the **Trial Balance** of **{scenario['entrepreneur']}'s Trading Store** on 31 May 2026. "
-        f"Classify each account into the Balance Sheet Accounts Section (B) or Nominal Accounts Section (N), "
-        f"place balances in the correct Debit or Credit column, and calculate totals."
+        f"The following account balances were extracted from the General Ledger of **{scenario['entrepreneur']}'s Trading Store** on 31 May 2026:\n\n"
+        f"{balances_text}\n\n"
+        f"**Required:**\n"
+        f"Compile the **Trial Balance** on 31 May 2026 by placing each account under the correct section "
+        f"(Balance Sheet Accounts Section [B] or Nominal Accounts Section [N]) and entering the balance in the correct Debit or Credit column. "
+        f"Verify that total debits equal total credits."
     )
 
     headers = ["Fol", "Account Name", "Debit (R)", "Credit (R)"]
@@ -395,6 +417,8 @@ def _generate_trial_balance_trading(rng: random.Random, mode: str = "scaffold") 
         "id": f"ems9_tb_trading_{rng.randint(1000, 9999)}",
         "title": "Trial Balance of a Trading Business",
         "question_type": "table_completion",
+        "modality": "ledger",
+        "account_balances": account_balances,
         "prompt": prompt,
         "headers": headers,
         "rows": rows,

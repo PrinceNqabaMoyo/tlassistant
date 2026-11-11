@@ -1,183 +1,471 @@
+"""Grade 8 EMS — Forms of Ownership (Deterministic 6-Pillar Generator).
+Grounded strictly in: curriculum_docs_auto/EMS_Gr8/Term 3/01. Forms of ownership.md
+
+Covers CAPS subskills:
+  1. sole_trader_characteristics: 1 owner, personal capital, unlimited liability, full profit retention, easy formation.
+  2. partnerships_characteristics: 2-20 partners, partnership agreement, pooled resources, shared profits, joint and several liability.
+  3. close_corporation_characteristics: 1-10 members, Founding Statement (CK1), CC suffix, separate legal entity, limited liability.
+  4. companies_private_vs_public: (Pty) Ltd vs Ltd, shareholders, limited liability, board of directors, prospectus, JSE trading.
+  5. smme_and_sustainable_job_creation: Role of SMMEs in job creation, poverty reduction, and sustainable use of natural resources.
+  6. liability_and_legal_persona_comparison: Limited vs unlimited liability, separate legal entity, and continuity of existence.
+
+Zero-LLM, 100% deterministic, authentic South African context.
+"""
+from __future__ import annotations
+
 import random
-from app.utils.ems_namelist import get_ems_scenario
+from typing import Any, Dict, List, Optional
+from app.utils.ems_namelist import get_ems_scenario, NAMES, AREAS
 
-def _rng(seed=None):
-    return random.Random(seed)
+SUBSKILLS = [
+    "sole_trader_characteristics",
+    "partnerships_characteristics",
+    "close_corporation_characteristics",
+    "companies_private_vs_public",
+    "smme_and_sustainable_job_creation",
+    "liability_and_legal_persona_comparison",
+]
 
-TOPIC_ID = 'grade8_ems'
-SUBTOPIC_ID = 'term3_ownership'
-CURRICULUM_REFERENCE = 'Term 3 > Forms of Ownership'
+TOPIC_KEY = "grade8_ems_ownership"
+LO = "g8_ems_ownership"
+
+
+def _rng(seed: Optional[int] = None) -> random.Random:
+    return random.Random(seed) if seed is not None else random.Random()
+
 
 def _with_metadata(
-    item,
+    item: Dict[str, Any],
     *,
-    subskill,
-    learning_objective_id,
-    question_family_id,
-    concept_id=None,
-    concept_group=None,
-    scenario_family_id=None,
-    retry_variant='core',
-    curriculum_reference=CURRICULUM_REFERENCE,
-    misconception_tags=None,
-    diagnostic_tags=None,
-    answer_structure_tags=None,
-    minimum_mastery_score=None,
-):
+    subskill: str,
+    learning_objective_id: str,
+    question_family_id: str,
+    concept_id: Optional[str] = None,
+    concept_group: str = "ownership",
+    misconception_tags: Optional[List[str]] = None,
+    diagnostic_tags: Optional[List[str]] = None,
+) -> Dict[str, Any]:
     enriched = dict(item)
     enriched.update({
-        'topic_id': TOPIC_ID,
-        'subtopic_id': SUBTOPIC_ID,
-        'subskill': subskill,
-        'learning_objective_id': learning_objective_id,
-        'concept_id': concept_id,
-        'concept_group': concept_group,
-        'question_family_id': question_family_id,
-        'scenario_family_id': scenario_family_id,
-        'retry_variant': retry_variant,
-        'difficulty_band': item.get('difficulties', ['easy', 'medium', 'hard']),
-        'curriculum_reference': curriculum_reference,
-        'misconception_tags': misconception_tags or [],
-        'diagnostic_tags': diagnostic_tags or [],
-        'answer_structure_tags': answer_structure_tags or [],
+        "topic_id": "grade8_ems",
+        "subtopic_id": "term3_ownership",
+        "subskill": subskill,
+        "learning_objective_id": learning_objective_id,
+        "concept_id": concept_id or subskill,
+        "concept_group": concept_group,
+        "question_family_id": question_family_id,
+        "curriculum_reference": "Term 3 > Forms of Ownership",
+        "misconception_tags": misconception_tags or [],
+        "diagnostic_tags": diagnostic_tags or ["entrepreneurship", "ownership"],
     })
-    if minimum_mastery_score is not None:
-        enriched['minimum_mastery_score'] = minimum_mastery_score
     return enriched
 
-def _mcq_question(rng, item, mode="scaffold"):
-    mode_norm = str(mode or "").strip().lower()
-    correct_option = item['options'][item['correct_index']]
-    
-    question = {
-        'id': f"g8_ems_mcq_{rng.randint(1000, 999999)}",
-        'title': item.get('title', 'Concept check'),
-        'question_type': 'mcq',
-        'prompt': item['prompt'],
-        'options': item['options'],
-        'correct_index': str(item['correct_index']),
-        'explanation': item['explanation'],
-        'marks': item.get('marks', 1),
-        'sample_answer': correct_option,
-        'ideal_answer': correct_option,
-        'marking_points': [correct_option],
-        **{k: v for k, v in item.items() if k not in ['prompt', 'options', 'correct_index', 'explanation', 'title', 'marks', 'hint_sections', 'guidelines', 'teaching_note']}
-    }
-    
-    if mode_norm == "scaffold":
-        if 'hint_sections' in item: question['hint_sections'] = item['hint_sections']
-        if 'guidelines' in item: question['guidelines'] = item['guidelines']
-        if 'teaching_note' in item: question['teaching_note'] = item.get('teaching_note', item['explanation'])
-        
-    return question
 
-def _typed_question(rng, item, mode="scaffold"):
-    mode_norm = str(mode or "").strip().lower()
-    question = {
-        'id': f"g8_ems_typed_{rng.randint(1000, 999999)}",
-        'title': item.get('title', 'Written response'),
-        'question_type': 'typed',
-        'prompt': item['prompt'],
-        'marks': item['marks'],
-        'marking_points': item['marking_points'],
-        'sample_answer': item['sample_answer'],
-        'ideal_answer': item.get('ideal_answer', item['sample_answer']),
-        **{k: v for k, v in item.items() if k not in ['prompt', 'marks', 'marking_points', 'sample_answer', 'ideal_answer', 'hint_sections', 'guidelines', 'teaching_note', 'title']}
-    }
-    
-    if mode_norm == "scaffold":
-        if 'hint_sections' in item: question['hint_sections'] = item['hint_sections']
-        if 'guidelines' in item: question['guidelines'] = item['guidelines']
-        if 'teaching_note' in item: question['teaching_note'] = item.get('teaching_note', '')
-        
-    return question
+def _gen_sole_trader(rng: random.Random) -> Dict[str, Any]:
+    scenario = get_ems_scenario(rng)
+    owner = scenario["entrepreneur"]
 
-def _concept_pool(rng):
-    scenario = get_ems_scenario()
-    
-    return [
-        _with_metadata({
-            'title': 'Unlimited Liability',
-            'prompt': f"{scenario['entrepreneur']} owns a business as a sole trader. If the business goes bankrupt and cannot pay its debts, what will happen to {scenario['entrepreneur']}'s personal assets?",
-            'options': [
-                "They are fully protected by law.", 
-                "They may be seized and sold to pay off the business's debts.", 
-                "Only the business's assets can be sold to pay the debt.", 
-                "The government will pay off the debts on their behalf."
+    cases = [
+        (
+            f"{owner} runs a small {scenario['business_type']} in {scenario['area']} as a sole trader. If the business incurs large debts that cannot be paid from its bank account, what does the law dictate regarding {owner}'s personal possessions?",
+            "The owner has unlimited liability; personal assets can be seized and sold to settle business debts.",
+            "A sole trader has unlimited liability because there is no legal separation between the owner and the business.",
+            [
+                "The owner has unlimited liability; personal assets can be seized and sold to settle business debts.",
+                "The owner has limited liability; only the money initially invested in the business can be lost.",
+                "The government will automatically absorb the business debt under SMME development schemes.",
+                "Suppliers are legally prohibited from claiming any money outside the business premises.",
             ],
-            'correct_index': 1,
-            'explanation': "A sole trader has unlimited liability. This means there is no legal separation between the owner and the business, so the owner's personal assets are at risk to cover business debts.",
-            'difficulties': ['easy', 'medium'],
-            'marks': 2,
-            'hint_sections': {
-                '1_nudge': 'Think about the term "unlimited liability". What does "unlimited" mean for the owner\'s personal belongings?',
-                '2_concept': 'In a sole trader, the owner and the business are considered the same legal entity.',
-                '3_breakdown': 'Because they are the same legal entity, the owner is personally responsible for all debts of the business.'
-            },
-            'guidelines': ['Identify the meaning and consequence of unlimited liability.']
-        }, subskill='concepts', learning_objective_id='lo_unlimited_liability', question_family_id='liability_classification', concept_id='unlimited_liability', concept_group='ownership', misconception_tags=['confuses_limited_with_unlimited'], diagnostic_tags=['classification', 'ownership']),
-        
-        _with_metadata({
-            'title': 'Partnerships',
-            'prompt': "Which form of ownership requires a minimum of two people and a maximum of twenty people who share the risks and profits?",
-            'options': [
-                "Sole trader", 
-                "Partnership", 
-                "Private Company", 
-                "Public Company"
+        ),
+        (
+            f"Which of the following is a primary ADVANTAGE of operating a business as a sole trader?",
+            "Quick decision-making and the owner retains 100% of all profits",
+            "Because there is only one owner, decisions can be made immediately without consulting partners, and all profits belong directly to the owner.",
+            [
+                "Quick decision-making and the owner retains 100% of all profits",
+                "The business continues to exist indefinitely even if the owner passes away",
+                "Large amounts of capital can easily be raised by issuing shares to the public",
+                "The owner enjoys limited liability protecting all personal belongings",
             ],
-            'correct_index': 1,
-            'explanation': "A partnership is formed by 2 to 20 people who pool their resources together and share the profits and risks.",
-            'difficulties': ['easy'],
-            'marks': 1,
-            'hint_sections': {
-                '1_nudge': 'Which form of ownership is defined by "partners" working together?',
-                '2_concept': 'Sole trader is one person. Companies can have many shareholders.',
-                '3_breakdown': 'A partnership specifically has between 2 and 20 owners (partners).'
-            },
-            'guidelines': ['Identify the ownership form based on the number of owners.']
-        }, subskill='concepts', learning_objective_id='lo_partnership', question_family_id='partnership_definition', concept_id='partnership', concept_group='ownership', misconception_tags=['confuses_partnership_and_company'], diagnostic_tags=['definition', 'ownership']),
+        ),
     ]
+    prompt, correct_ans, explanation, options = rng.choice(cases)
+    rng.shuffle(options)
+    c_idx = options.index(correct_ans)
+    correct_letter = chr(65 + c_idx)
+    full_ans = f"{correct_letter}. {correct_ans}"
+    sol = f"**{full_ans}** [2 marks]\n\n**Explanation:** {explanation}"
 
-def _discussion_pool(rng):
-    scenario = get_ems_scenario()
-    
-    return [
-        _with_metadata({
-            'title': 'Sole Trader Advantages',
-            'prompt': f"{scenario['entrepreneur']} wants to start a small {scenario['business_type']} business in {scenario['area']}. Explain two advantages of starting this business as a sole trader. (4 marks)",
-            'marks': 4,
-            'marking_points': [
-                "It is easy and cheap to establish (very few legal requirements).",
-                "The owner makes all the decisions quickly without needing to consult others.",
-                "The owner keeps all the profits.",
-                "Personal contact with customers is easier."
+    return _with_metadata({
+        "id": f"g8_ems_sole_{rng.randint(100000, 999999)}",
+        "title": "Sole Trader Characteristics",
+        "question_type": "mcq",
+        "topic": "Forms of ownership",
+        "subskill": "sole_trader_characteristics",
+        "learning_objective_id": f"{LO}_sole_trader",
+        "prompt": prompt,
+        "question": prompt,
+        "options": options,
+        "correct_index": str(c_idx),
+        "correct_answer": full_ans,
+        "sample_answer": full_ans,
+        "worked_solution": sol,
+        "explanation": sol,
+        "marks": 2,
+        "hints": {
+            "tier_1": "Consider how many people own a sole trader and who is responsible for the debts.",
+            "tier_2": "A sole trader has 1 owner and unlimited liability.",
+            "tier_3": f"Correct answer is {correct_ans}.",
+        },
+        "misconception_tags": ["confuses_sole_trader_liability"],
+    }, subskill="sole_trader_characteristics", learning_objective_id=f"{LO}_sole_trader", question_family_id="sole_trader_drill")
+
+
+def _gen_partnerships(rng: random.Random) -> Dict[str, Any]:
+    scenario = get_ems_scenario(rng)
+    owner = scenario["entrepreneur"]
+    partner = scenario["competitor"]
+
+    cases = [
+        (
+            f"{owner} and {partner} decide to pool their savings and technical skills to start a joint enterprise in {scenario['area']}. Under South African law, what are the minimum and maximum number of partners permitted in a standard partnership?",
+            "Minimum 2, Maximum 20",
+            "A partnership requires at least 2 people to form an agreement and is generally capped at 20 partners.",
+            [
+                "Minimum 2, Maximum 20",
+                "Minimum 1, Maximum 10",
+                "Minimum 2, Maximum 50",
+                "Minimum 7, Maximum unlimited",
             ],
-            'sample_answer': "One advantage is that the owner receives all the profits generated by the business. A second advantage is that decision-making is very fast because the owner does not have to consult with any partners or shareholders.",
-            'difficulties': ['medium', 'hard'],
-            'hint_sections': {
-                '1_nudge': 'Think about what is great about being the only boss of a business.',
-                '2_concept': 'If you are the only owner, what happens to the money made? Who do you have to ask before making a change?',
-                '3_breakdown': 'You keep 100% of the profits and you can make decisions immediately.'
-            },
-            'guidelines': ['Provide two distinct advantages of the sole trader form of ownership.'],
-            'teaching_note': 'Ensure learners do not mention limited liability, as sole traders have unlimited liability.'
-        }, subskill='discussion', learning_objective_id='lo_sole_trader_advantages', question_family_id='sole_trader_essay', concept_id='sole_trader', concept_group='ownership', misconception_tags=['confuses_advantages_of_ownership'], diagnostic_tags=['essay', 'ownership'])
+        ),
+        (
+            f"Before trading, {owner} and {partner} draw up a written legal document outlining how profits will be divided, responsibilities allocated, and disputes resolved. This document is known as the:",
+            "Partnership Agreement (Articles of Partnership)",
+            "A partnership agreement is a formal contract drawn up by the partners governing capital contributions, profit sharing, and operational duties.",
+            [
+                "Partnership Agreement (Articles of Partnership)",
+                "Prospectus",
+                "Founding Statement (CK1)",
+                "Memorandum of Incorporation",
+            ],
+        ),
+        (
+            f"In a standard partnership, if one partner signs a large business loan and disappears, what is the legal liability of the remaining partner?",
+            "Joint and several unlimited liability; the remaining partner is personally liable for the full debt",
+            "Partners share joint and several liability, meaning each partner can be held personally responsible for all financial debts incurred by any partner in the name of the business.",
+            [
+                "Joint and several unlimited liability; the remaining partner is personally liable for the full debt",
+                "The remaining partner is only liable for their own initial percentage contribution",
+                "The partnership automatically converts into a Close Corporation with limited liability",
+                "The bank cannot claim payment because both partners must be present",
+            ],
+        ),
     ]
+    prompt, correct_ans, explanation, options = rng.choice(cases)
+    rng.shuffle(options)
+    c_idx = options.index(correct_ans)
+    correct_letter = chr(65 + c_idx)
+    full_ans = f"{correct_letter}. {correct_ans}"
+    sol = f"**{full_ans}** [2 marks]\n\n**Explanation:** {explanation}"
 
-def generate(subskill="concepts", difficulty="medium", count=1, mode="scaffold", seed=None, **kwargs):
+    return _with_metadata({
+        "id": f"g8_ems_part_{rng.randint(100000, 999999)}",
+        "title": "Partnerships Characteristics",
+        "question_type": "mcq",
+        "topic": "Forms of ownership",
+        "subskill": "partnerships_characteristics",
+        "learning_objective_id": f"{LO}_partnerships",
+        "prompt": prompt,
+        "question": prompt,
+        "options": options,
+        "correct_index": str(c_idx),
+        "correct_answer": full_ans,
+        "sample_answer": full_ans,
+        "worked_solution": sol,
+        "explanation": sol,
+        "marks": 2,
+        "hints": {
+            "tier_1": "Recall the legal framework for partnerships: number of partners and liability.",
+            "tier_2": "A partnership has 2-20 owners who share joint and several unlimited liability.",
+            "tier_3": f"Correct answer is {correct_ans}.",
+        },
+        "misconception_tags": ["confuses_partnership_rules"],
+    }, subskill="partnerships_characteristics", learning_objective_id=f"{LO}_partnerships", question_family_id="partnerships_drill")
+
+
+def _gen_close_corporation(rng: random.Random) -> Dict[str, Any]:
+    scenario = get_ems_scenario(rng)
+    owner = scenario["entrepreneur"]
+
+    cases = [
+        (
+            f"A group of entrepreneurs in {scenario['area']} operate a business registered as 'Ubuntu Logistics CC'. What does 'CC' stand for, and what is the maximum number of members permitted?",
+            "Close Corporation; maximum of 10 members",
+            "A Close Corporation (CC) is owned by 1 to 10 members, registered using a Founding Statement (CK1).",
+            [
+                "Close Corporation; maximum of 10 members",
+                "Commercial Company; maximum of 50 members",
+                "Co-operative Community; maximum of 20 members",
+                "Credit Corporation; unlimited number of members",
+            ],
+        ),
+        (
+            f"Which of the following is a key legal feature of a Close Corporation (CC) that protects the personal assets of its members?",
+            "It is a separate legal entity with limited liability for its members",
+            "A CC possesses its own legal personality. Debts belong to the corporation, not to the members personally (limited liability), provided there is no reckless or fraudulent trading.",
+            [
+                "It is a separate legal entity with limited liability for its members",
+                "Members have unlimited liability and must surrender personal property",
+                "The CC is exempt from paying any South African corporate income taxes",
+                "Members can freely sell public shares on the Johannesburg Stock Exchange",
+            ],
+        ),
+    ]
+    prompt, correct_ans, explanation, options = rng.choice(cases)
+    rng.shuffle(options)
+    c_idx = options.index(correct_ans)
+    correct_letter = chr(65 + c_idx)
+    full_ans = f"{correct_letter}. {correct_ans}"
+    sol = f"**{full_ans}** [2 marks]\n\n**Explanation:** {explanation}"
+
+    return _with_metadata({
+        "id": f"g8_ems_cc_{rng.randint(100000, 999999)}",
+        "title": "Close Corporation Characteristics",
+        "question_type": "mcq",
+        "topic": "Forms of ownership",
+        "subskill": "close_corporation_characteristics",
+        "learning_objective_id": f"{LO}_cc",
+        "prompt": prompt,
+        "question": prompt,
+        "options": options,
+        "correct_index": str(c_idx),
+        "correct_answer": full_ans,
+        "sample_answer": full_ans,
+        "worked_solution": sol,
+        "explanation": sol,
+        "marks": 2,
+        "hints": {
+            "tier_1": "Recall the meaning of CC and how many members can own it.",
+            "tier_2": "A Close Corporation has 1-10 members and limited liability.",
+            "tier_3": f"Correct answer is {correct_ans}.",
+        },
+        "misconception_tags": ["confuses_cc_and_companies"],
+    }, subskill="close_corporation_characteristics", learning_objective_id=f"{LO}_cc", question_family_id="cc_drill")
+
+
+def _gen_companies(rng: random.Random) -> Dict[str, Any]:
+    scenario = get_ems_scenario(rng)
+
+    cases = [
+        (
+            "What is the key difference in capital raising between a Private Company ((Pty) Ltd) and a Public Company (Ltd)?",
+            "A Public Company can invite the general public to buy shares on the stock exchange (JSE), whereas a Private Company cannot offer shares to the public.",
+            "Public companies issue a prospectus and invite the public to purchase shares on the JSE. Private companies raise capital privately from invited shareholders and their shares are not traded publicly.",
+            [
+                "A Public Company can invite the general public to buy shares on the stock exchange (JSE), whereas a Private Company cannot offer shares to the public.",
+                "A Private Company has unlimited liability, while a Public Company has limited liability.",
+                "A Private Company requires a minimum of 50 shareholders, while a Public Company requires only 1.",
+                "A Public Company is managed by the government, while a Private Company is managed by sole traders.",
+            ],
+        ),
+        (
+            "Before a Public Company (Ltd) can issue shares to the public to raise millions of Rand in capital, what legal document must it publish providing full details of its financial health and operational plans?",
+            "A Prospectus",
+            "A prospectus is a legally mandated document inviting the public to subscribe for shares, disclosing audited financial records, risks, and director details.",
+            [
+                "A Prospectus",
+                "A Partnership Agreement",
+                "A Duplicate Receipt",
+                "A Till Register Roll",
+            ],
+        ),
+        (
+            "What does the principle of 'continuity of existence' mean for a registered company ((Pty) Ltd or Ltd)?",
+            "The business continues to exist as an ongoing legal entity even if a shareholder dies, retires, or sells their shares",
+            "Because a registered company has its own legal personality, its life is not tied to the lifespan of its owners; it enjoys perpetual continuity.",
+            [
+                "The business continues to exist as an ongoing legal entity even if a shareholder dies, retires, or sells their shares",
+                "The company must operate 24 hours a day without closing its doors",
+                "The company cannot change its original business name under any circumstance",
+                "All company profits must be paid out to shareholders on a continuous weekly basis",
+            ],
+        ),
+    ]
+    prompt, correct_ans, explanation, options = rng.choice(cases)
+    rng.shuffle(options)
+    c_idx = options.index(correct_ans)
+    correct_letter = chr(65 + c_idx)
+    full_ans = f"{correct_letter}. {correct_ans}"
+    sol = f"**{full_ans}** [2 marks]\n\n**Explanation:** {explanation}"
+
+    return _with_metadata({
+        "id": f"g8_ems_comp_{rng.randint(100000, 999999)}",
+        "title": "Companies: Private vs Public",
+        "question_type": "mcq",
+        "topic": "Forms of ownership",
+        "subskill": "companies_private_vs_public",
+        "learning_objective_id": f"{LO}_companies",
+        "prompt": prompt,
+        "question": prompt,
+        "options": options,
+        "correct_index": str(c_idx),
+        "correct_answer": full_ans,
+        "sample_answer": full_ans,
+        "worked_solution": sol,
+        "explanation": sol,
+        "marks": 2,
+        "hints": {
+            "tier_1": "Recall the difference between (Pty) Ltd and Ltd regarding public share trading.",
+            "tier_2": "Public companies sell shares to anyone via the JSE using a prospectus.",
+            "tier_3": f"Correct answer is {correct_ans}.",
+        },
+        "misconception_tags": ["confuses_pty_ltd_with_ltd"],
+    }, subskill="companies_private_vs_public", learning_objective_id=f"{LO}_companies", question_family_id="companies_drill")
+
+
+def _gen_smme_job_creation(rng: random.Random) -> Dict[str, Any]:
+    scenario = get_ems_scenario(rng)
+    owner = scenario["entrepreneur"]
+
+    cases = [
+        (
+            f"In South Africa, small, medium, and micro enterprises (SMMEs) like {owner}'s service shop play a crucial role in the national economy by:",
+            "Creating sustainable employment opportunities and equipping workers with practical skills",
+            "SMMEs account for the majority of employment creation in local communities, alleviating poverty and building entrepreneurial skills.",
+            [
+                "Creating sustainable employment opportunities and equipping workers with practical skills",
+                "Replacing all large commercial banks with informal cash lenders",
+                "Eliminating the need for South Africa to trade with international partners",
+                "Ensuring that no businesses ever pay VAT or company income taxes",
+            ],
+        ),
+        (
+            "How do responsible businesses ensure the SUSTAINABLE use of natural resources in their operations?",
+            "By conserving water and electricity, minimizing waste, and utilizing renewable resources wherever possible",
+            "Sustainable use of resources means meeting present economic needs without depleting or damaging the environment for future generations.",
+            [
+                "By conserving water and electricity, minimizing waste, and utilizing renewable resources wherever possible",
+                "By consuming raw materials as rapidly as possible to maximize immediate short-term profit",
+                "By dumping manufacturing by-products into local municipal drainage systems",
+                "By operating only during the night to avoid daylight environmental regulations",
+            ],
+        ),
+    ]
+    prompt, correct_ans, explanation, options = rng.choice(cases)
+    rng.shuffle(options)
+    c_idx = options.index(correct_ans)
+    correct_letter = chr(65 + c_idx)
+    full_ans = f"{correct_letter}. {correct_ans}"
+    sol = f"**{full_ans}** [2 marks]\n\n**Explanation:** {explanation}"
+
+    return _with_metadata({
+        "id": f"g8_ems_smme_{rng.randint(100000, 999999)}",
+        "title": "SMMEs & Sustainable Job Creation",
+        "question_type": "mcq",
+        "topic": "Forms of ownership",
+        "subskill": "smme_and_sustainable_job_creation",
+        "learning_objective_id": f"{LO}_smme",
+        "prompt": prompt,
+        "question": prompt,
+        "options": options,
+        "correct_index": str(c_idx),
+        "correct_answer": full_ans,
+        "sample_answer": full_ans,
+        "worked_solution": sol,
+        "explanation": sol,
+        "marks": 2,
+        "hints": {
+            "tier_1": "Think about why small businesses are vital for addressing unemployment in South Africa.",
+            "tier_2": "SMMEs create local jobs and sustainable practices protect the environment for future generations.",
+            "tier_3": f"Correct answer is {correct_ans}.",
+        },
+        "misconception_tags": ["underestimates_smme_role"],
+    }, subskill="smme_and_sustainable_job_creation", learning_objective_id=f"{LO}_smme", question_family_id="smme_drill")
+
+
+def _gen_liability_comparison(rng: random.Random) -> Dict[str, Any]:
+    scenario = get_ems_scenario(rng)
+
+    cases = [
+        (
+            "Which pair of business forms BOTH have UNLIMITED liability, meaning the owners' personal assets can be seized to pay business debts?",
+            "Sole Trader and Partnership",
+            "Both sole traders and partnerships lack separate legal personality; their owners bear unlimited liability.",
+            [
+                "Sole Trader and Partnership",
+                "Close Corporation and Private Company",
+                "Public Company and Partnership",
+                "Close Corporation and Sole Trader",
+            ],
+        ),
+        (
+            "Which of the following forms of ownership is recognized by South African law as a SEPARATE LEGAL ENTITY from its owners?",
+            "Private Company ((Pty) Ltd)",
+            "Companies and Close Corporations have separate legal personality (legal entity), unlike Sole Traders and Partnerships.",
+            [
+                "Private Company ((Pty) Ltd)",
+                "Sole Trader",
+                "Standard Partnership",
+                "Informal Tuckshop Syndicate",
+            ],
+        ),
+    ]
+    prompt, correct_ans, explanation, options = rng.choice(cases)
+    rng.shuffle(options)
+    c_idx = options.index(correct_ans)
+    correct_letter = chr(65 + c_idx)
+    full_ans = f"{correct_letter}. {correct_ans}"
+    sol = f"**{full_ans}** [2 marks]\n\n**Explanation:** {explanation}"
+
+    return _with_metadata({
+        "id": f"g8_ems_liab_comp_{rng.randint(100000, 999999)}",
+        "title": "Liability & Legal Persona Comparison",
+        "question_type": "mcq",
+        "topic": "Forms of ownership",
+        "subskill": "liability_and_legal_persona_comparison",
+        "learning_objective_id": f"{LO}_comparison",
+        "prompt": prompt,
+        "question": prompt,
+        "options": options,
+        "correct_index": str(c_idx),
+        "correct_answer": full_ans,
+        "sample_answer": full_ans,
+        "worked_solution": sol,
+        "explanation": sol,
+        "marks": 2,
+        "hints": {
+            "tier_1": "Distinguish between businesses where owners are personally liable vs those with separate legal personality.",
+            "tier_2": "Sole traders and partnerships have unlimited liability. CCs and companies have limited liability and separate legal personality.",
+            "tier_3": f"Correct answer is {correct_ans}.",
+        },
+        "misconception_tags": ["confuses_legal_persona"],
+    }, subskill="liability_and_legal_persona_comparison", learning_objective_id=f"{LO}_comparison", question_family_id="comparison_drill")
+
+
+def generate(subskill: str = "mixed", difficulty: str = "medium", count: int = 1, mode: str = "scaffold", seed: Optional[int] = None, **kwargs) -> Any:
     rng = _rng(seed)
-    
-    if subskill == "discussion":
-        pool = _discussion_pool(rng)
+    sub = str(subskill or "mixed").strip().lower()
+
+    generators = {
+        "sole_trader_characteristics": _gen_sole_trader,
+        "partnerships_characteristics": _gen_partnerships,
+        "close_corporation_characteristics": _gen_close_corporation,
+        "companies_private_vs_public": _gen_companies,
+        "smme_and_sustainable_job_creation": _gen_smme_job_creation,
+        "liability_and_legal_persona_comparison": _gen_liability_comparison,
+    }
+
+    if sub in generators:
+        fn = generators[sub]
+        results = [fn(rng) for _ in range(count)]
+    elif sub == "concepts":
+        concept_fns = [_gen_sole_trader, _gen_partnerships, _gen_close_corporation, _gen_companies]
+        results = [rng.choice(concept_fns)(rng) for _ in range(count)]
     else:
-        pool = _concept_pool(rng)
-        
-    selected = [q for q in pool if difficulty in q['difficulty_band']]
-    if not selected: selected = pool
-    chosen = rng.sample(selected, min(count, len(selected)))
-    
-    if subskill == "discussion":
-        return [_typed_question(rng, item, mode=mode) for item in chosen]
-    else:
-        return [_mcq_question(rng, item, mode=mode) for item in chosen]
+        # Mixed: sample across all 6 subskills
+        all_fns = list(generators.values())
+        results = [rng.choice(all_fns)(rng) for _ in range(count)]
+
+    if count == 1 and len(results) == 1:
+        return results[0]
+    return results

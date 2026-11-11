@@ -1,0 +1,159 @@
+{
+  "diagram": "earth_lithosphere_layers",
+  "view": "textbook",
+  "viewBox": "0 0 600 480",
+  "anchors": {
+    "atmosphere_layer": {
+      "name": "Atmosphere (Gaseous Envelope)",
+      "anchor": [
+        142,
+        118
+      ],
+      "default_box": [
+        60,
+        95
+      ],
+      "side": "left",
+      "grades": [
+        "g7",
+        "g9"
+      ],
+      "acceptable": [
+        "Atmosphere",
+        "Troposphere and stratosphere",
+        "Gaseous layer"
+      ],
+      "description": "Thin outer layer of gases (primarily nitrogen and oxygen) surrounding Earth and retained by gravity."
+    },
+    "biosphere_continents": {
+      "name": "Biosphere & Continental Landmass",
+      "anchor": [
+        195,
+        325
+      ],
+      "default_box": [
+        60,
+        335
+      ],
+      "side": "left",
+      "grades": [
+        "g7",
+        "g9"
+      ],
+      "acceptable": [
+        "Biosphere",
+        "Continental crust",
+        "Continent",
+        "Living systems"
+      ],
+      "description": "Global ecological zone integrating all living organisms and their interactions with the lithosphere, hydrosphere, and atmosphere."
+    },
+    "hydrosphere_ocean": {
+      "name": "Hydrosphere (Oceans & Surface Water)",
+      "anchor": [
+        165,
+        220
+      ],
+      "default_box": [
+        60,
+        210
+      ],
+      "side": "left",
+      "grades": [
+        "g7",
+        "g9"
+      ],
+      "acceptable": [
+        "Hydrosphere",
+        "Ocean",
+        "Liquid water layer"
+      ],
+      "description": "Combined mass of water found on, under, and above the surface of the Earth, dominated by global oceans."
+    },
+    "earth_crust_lithosphere": {
+      "name": "Crust (Outermost Rocky Lithosphere)",
+      "anchor": [
+        385,
+        88
+      ],
+      "default_box": [
+        540,
+        85
+      ],
+      "side": "right",
+      "grades": [
+        "g9"
+      ],
+      "acceptable": [
+        "Crust",
+        "Lithosphere",
+        "Earth's crust",
+        "Continental and oceanic crust"
+      ],
+      "description": "Thin, brittle outermost solid rock shell of the Earth that together with the rigid upper mantle forms the lithosphere."
+    },
+    "silicate_mantle": {
+      "name": "Mantle (Silicate Magma & Asthenosphere)",
+      "anchor": [
+        412,
+        175
+      ],
+      "default_box": [
+        540,
+        185
+      ],
+      "side": "right",
+      "grades": [
+        "g9"
+      ],
+      "acceptable": [
+        "Mantle",
+        "Upper and lower mantle",
+        "Asthenosphere"
+      ],
+      "description": "Thick middle layer of hot, dense silicate rock beneath the crust where slow convection currents drive plate tectonics."
+    },
+    "liquid_outer_core": {
+      "name": "Liquid Outer Core (Molten Iron & Nickel)",
+      "anchor": [
+        365,
+        215
+      ],
+      "default_box": [
+        540,
+        285
+      ],
+      "side": "right",
+      "grades": [
+        "g9"
+      ],
+      "acceptable": [
+        "Outer core",
+        "Liquid outer core",
+        "Molten core"
+      ],
+      "description": "Molten metallic layer of iron and nickel surrounding the inner core whose convection generates Earth's magnetic field."
+    },
+    "solid_inner_core": {
+      "name": "Solid Inner Core",
+      "anchor": [
+        310,
+        235
+      ],
+      "default_box": [
+        540,
+        385
+      ],
+      "side": "right",
+      "grades": [
+        "g9"
+      ],
+      "acceptable": [
+        "Inner core",
+        "Solid inner core",
+        "Central core"
+      ],
+      "description": "Extremely hot, dense solid sphere of iron and nickel at the center of the Earth kept solid by immense pressure."
+    }
+  }
+}

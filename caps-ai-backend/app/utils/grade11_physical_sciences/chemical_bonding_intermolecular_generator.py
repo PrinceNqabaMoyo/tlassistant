@@ -13,6 +13,11 @@ from __future__ import annotations
 import random
 from typing import Any, Dict, List, Optional
 
+try:
+    from app.utils.physical_sciences.physical_sciences_builders import build_chemical_bonding_molecules_question
+except ImportError:
+    from ..physical_sciences.physical_sciences_builders import build_chemical_bonding_molecules_question
+
 TOPIC = "grade11_physical_sciences_chemistry"
 LO = "phys11_chemical_bonding_imf"
 
@@ -155,14 +160,22 @@ def _build_imf_drill(r: random.Random) -> Dict[str, Any]:
 
 def generate(subskill: Optional[str] = None, difficulty: str = "medium", count: int = 1, seed: Optional[int] = None, **kwargs) -> List[Dict[str, Any]]:
     r = _rng(seed)
-    generators = [_build_vsepr_drill, _build_imf_drill]
-    if subskill == "vsepr":
-        generators = [_build_vsepr_drill]
-    elif subskill == "imf":
-        generators = [_build_imf_drill]
-
+    base_seed = seed if seed is not None else r.randint(1, 1_000_000)
     questions = []
-    for _ in range(count):
-        gen_fn = r.choice(generators)
-        questions.append(gen_fn(r))
+    for i in range(count):
+        s_i = base_seed + i
+        if subskill == "vsepr":
+            questions.append(_build_vsepr_drill(_rng(s_i)))
+        elif subskill == "imf":
+            questions.append(_build_imf_drill(_rng(s_i)))
+        elif subskill in ("diagram", "chemical_bonding_molecules", "molecular_geometry"):
+            questions.append(build_chemical_bonding_molecules_question(s_i, grade=11))
+        else:
+            choice_idx = s_i % 3
+            if choice_idx == 0:
+                questions.append(_build_vsepr_drill(_rng(s_i)))
+            elif choice_idx == 1:
+                questions.append(_build_imf_drill(_rng(s_i)))
+            else:
+                questions.append(build_chemical_bonding_molecules_question(s_i, grade=11))
     return questions

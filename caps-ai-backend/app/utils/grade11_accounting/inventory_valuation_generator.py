@@ -460,13 +460,110 @@ def _build_compound_inventory_valuation(r: random.Random) -> Dict[str, Any]:
 # ============================================================================
 # PUBLIC DISPATCHER & REGISTRY INTERFACE
 # ============================================================================
+def _build_periodic_cost_of_sales_schedule(r: random.Random) -> Dict[str, Any]:
+    open_st = r.randint(45, 85) * 1000
+    purch = r.randint(180, 290) * 1000
+    ret = r.randint(8, 18) * 1000
+    carr = r.randint(10, 22) * 1000
+    close_st = r.randint(50, 95) * 1000
+    net_purch = purch - ret
+    avail = open_st + net_purch + carr
+    cos = avail - close_st
+    worked = (
+        f"**Periodic Inventory System — Cost of Sales Schedule**\n\n"
+        f"- Opening stock: `R{open_st:,}`\n"
+        f"- Net purchases: `R{purch:,} - R{ret:,} = R{net_purch:,}`\n"
+        f"- Add carriage on purchases: `R{carr:,}`\n"
+        f"- Goods available for sale: `R{avail:,}`\n"
+        f"- Less closing stock: `(R{close_st:,})`\n"
+        f"- **Cost of Sales**: `R{cos:,}`"
+    )
+    return {
+        "question_type": "table_fill",
+        "subskill": "periodic_cost_of_sales_schedule",
+        "question_text": (
+            f"Under the **Periodic Inventory System**, calculate the **Cost of Sales** given:\n"
+            f"- Opening stock: **R{open_st:,}**\n"
+            f"- Gross purchases: **R{purch:,}** (Returns to suppliers: **R{ret:,}**)\n"
+            f"- Carriage on purchases: **R{carr:,}**\n"
+            f"- Closing stock per physical count: **R{close_st:,}**"
+        ),
+        "headers": ["Periodic Cost of Sales Line Item", "Amount (R)"],
+        "rows": [
+            ["Opening stock", f"R{open_st:,}"],
+            ["Net purchases (Gross purchases less returns)", "{r1_c1}"],
+            ["Carriage on purchases", f"R{carr:,}"],
+            ["Cost of goods available for sale", "{r3_c1}"],
+            ["Less: Closing stock", f"(R{close_st:,})"],
+            ["Cost of Sales", "{r5_c1}"],
+        ],
+        "correct_map": {"r1_c1": net_purch, "r3_c1": avail, "r5_c1": cos},
+        "marks": 6,
+        "worked_solution": worked,
+        "canonical_solution": worked,
+    }
+
+
+def _build_periodic_vs_perpetual_comparison(r: random.Random) -> Dict[str, Any]:
+    return {
+        "question_type": "table_fill",
+        "subskill": "periodic_vs_perpetual_comparison_table",
+        "question_text": "Complete the table comparing the **Perpetual** and **Periodic** inventory systems by entering the correct account name used in each system.",
+        "headers": ["Transaction", "Perpetual System Account", "Periodic System Account"],
+        "rows": [
+            ["Purchase of merchandise for resale", "{r0_c1}", "{r0_c2}"],
+            ["Freight / carriage paid on goods bought", "{r1_c1}", "{r1_c2}"],
+            ["Defective goods returned to supplier", "{r2_c1}", "{r2_c2}"],
+        ],
+        "correct_map": {
+            "r0_c1": "Trading Stock",
+            "r0_c2": "Purchases",
+            "r1_c1": "Trading Stock",
+            "r1_c2": "Carriage on Purchases",
+            "r2_c1": "Trading Stock",
+            "r2_c2": "Creditors Allowances",
+        },
+        "marks": 6,
+        "worked_solution": (
+            "**Perpetual vs Periodic Account Mapping**\n\n"
+            "- Purchases of stock: **Trading Stock** (Perpetual) vs **Purchases** (Periodic)\n"
+            "- Carriage on purchases: **Trading Stock** (Perpetual) vs **Carriage on Purchases** (Periodic)\n"
+            "- Goods returned to supplier: **Trading Stock** (Perpetual) vs **Creditors Allowances** (Periodic)"
+        ),
+    }
+
+
+def _build_stock_holding_and_turnover_table(r: random.Random) -> Dict[str, Any]:
+    open_s = 60000
+    close_s = 80000
+    avg_s = 70000
+    cos = r.choice([280000, 350000, 420000])
+    turnover = round(cos / avg_s, 1)
+    return {
+        "question_type": "table_fill",
+        "subskill": "stock_turnover_and_average_inventory",
+        "question_text": f"Given Opening Stock **R{open_s:,}**, Closing Stock **R{close_s:,}**, and Cost of Sales **R{cos:,}**, calculate Average Stock and Stock Turnover Rate.",
+        "headers": ["Inventory Efficiency Metric", "Formula", "Answer"],
+        "rows": [
+            ["Average Inventory (R)", "(Opening Stock + Closing Stock) ÷ 2", "{r0_c2}"],
+            ["Stock Turnover Rate (times per year)", "Cost of Sales ÷ Average Inventory", "{r1_c2}"],
+        ],
+        "correct_map": {"r0_c2": avg_s, "r1_c2": turnover},
+        "marks": 4,
+        "worked_solution": f"Average Stock = `R{avg_s:,}`; Stock Turnover Rate = `R{cos:,} ÷ R{avg_s:,} = {turnover} times per year`.",
+    }
+
+
 BUILDERS = {
-    "compound": _build_compound_inventory_valuation,
-    "inventory_valuation": _build_compound_inventory_valuation,
     "fifo_and_weighted_average": _build_compound_inventory_valuation,
     "elementary_fifo_closing_stock": _build_elementary_fifo_closing_stock,
     "elementary_weighted_avg_unit_cost": _build_elementary_weighted_avg_unit_cost,
+    "periodic_cost_of_sales_schedule": _build_periodic_cost_of_sales_schedule,
+    "periodic_vs_perpetual_comparison_table": _build_periodic_vs_perpetual_comparison,
+    "stock_turnover_and_average_inventory": _build_stock_holding_and_turnover_table,
 }
+
+SUBSKILLS = list(BUILDERS.keys())
 
 
 def generate(
@@ -479,20 +576,17 @@ def generate(
 ) -> Dict[str, Any]:
     """Generates deterministic Grade 11 Accounting Inventory Valuation questions."""
     base_seed = 42 if seed is None else int(seed)
-
-    if mode in BUILDERS and mode != "compound":
-        target_mode = mode
-    elif subskill in BUILDERS:
-        target_mode = subskill
-    else:
-        target_mode = "compound"
-
-    builder = BUILDERS.get(target_mode, _build_compound_inventory_valuation)
+    r_main = _rng(base_seed)
 
     questions = []
     for i in range(max(1, count)):
         r = _rng(base_seed * 1000 + i)
-        q = builder(r)
+        if subskill and subskill in BUILDERS:
+            chosen = subskill
+        else:
+            chosen = r_main.choice(SUBSKILLS)
+        q = BUILDERS[chosen](r)
+        q["subskill"] = chosen
         q["seed"] = base_seed * 1000 + i
         questions.append(q)
 

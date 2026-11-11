@@ -24,6 +24,13 @@ Ground truth for Fundile's question generators, guardrails, and diagnostic calib
 
 ---
 
+## Reading Figure Descriptions (Diagram Description → Design Law)
+
+<!-- RULE-ANCHOR: diagram_description_design_law -->
+Blocks such as `>DIAGRAM[ … ]`, `Figure N.N: …`, `**Diagram N**`, `### Graph N: …` or narrated measurements are **text stand-ins for images** lost in PDF → Markdown conversion. When extracting parameters for a generator, record them as a **figure spec** (type: map / plan / data_graph / function_graph / document_bill / instrument / probability_figure / decorative_photo, plus dimensions, scale, data, labels) for the generator to draw as a `diagram_spec`. Do not hand them on as prompt prose. See `diagram_doctrine.md` §9.
+
+---
+
 ## Directory Navigation Format
 
 All topic markdown files follow this strict path structure:

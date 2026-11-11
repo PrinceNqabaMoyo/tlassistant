@@ -1,0 +1,151 @@
+{
+  "master": "alveolus_gas_exchange",
+  "view": "microscopic_diffusion_section",
+  "viewBox": "0 0 600 480",
+  "anchors": {
+    "alveolar_lumen": {
+      "name": "Alveolar Lumen (Air Space)",
+      "synonyms": [
+        "alveolar lumen",
+        "alveolus air space",
+        "alveolar space",
+        "alveolus lumen",
+        "air space"
+      ],
+      "anchor": [
+        290,
+        240
+      ],
+      "default_box": [
+        60,
+        240
+      ],
+      "side": "left",
+      "grades": [
+        "g9",
+        "g11",
+        "g8"
+      ],
+      "description": "High oxygen partial pressure (pO2) air space inside the terminal alveolus receiving inhaled atmospheric air."
+    },
+    "alveolar_epithelium": {
+      "name": "Alveolar Squamous Epithelium",
+      "synonyms": [
+        "alveolar epithelium",
+        "squamous epithelium",
+        "type i pneumocyte",
+        "alveolar wall"
+      ],
+      "anchor": [
+        208,
+        165
+      ],
+      "default_box": [
+        60,
+        160
+      ],
+      "side": "left",
+      "grades": [
+        "g9",
+        "g11",
+        "g8"
+      ],
+      "description": "Extremely thin, single-layer squamous epithelial barrier ensuring a short diffusion path for rapid gas exchange."
+    },
+    "capillary_endothelium": {
+      "name": "Pulmonary Capillary Endothelium",
+      "synonyms": [
+        "capillary endothelium",
+        "endothelial cell",
+        "capillary wall",
+        "endothelium"
+      ],
+      "anchor": [
+        412,
+        222
+      ],
+      "default_box": [
+        540,
+        275
+      ],
+      "side": "right",
+      "grades": [
+        "g9",
+        "g11",
+        "g8"
+      ],
+      "description": "Single layer of flattened endothelial cells lining the pulmonary capillary, closely apposed to the alveolar wall."
+    },
+    "red_blood_cell": {
+      "name": "Red Blood Cell (Erythrocyte)",
+      "synonyms": [
+        "red blood cell",
+        "erythrocyte",
+        "rbc"
+      ],
+      "anchor": [
+        448,
+        225
+      ],
+      "default_box": [
+        540,
+        200
+      ],
+      "side": "right",
+      "grades": [
+        "g9",
+        "g11",
+        "g8"
+      ],
+      "description": "Biconcave disc rich in hemoglobin that binds oxygen to form oxyhemoglobin, flowing in single file through narrow capillaries."
+    },
+    "o2_diffusion": {
+      "name": "Oxygen Diffusion Direction",
+      "synonyms": [
+        "oxygen diffusion",
+        "o2 diffusion",
+        "diffusion of oxygen",
+        "o2 uptake"
+      ],
+      "anchor": [
+        368,
+        312
+      ],
+      "default_box": [
+        540,
+        340
+      ],
+      "side": "right",
+      "grades": [
+        "g9",
+        "g11",
+        "g8"
+      ],
+      "description": "Oxygen diffuses down its partial pressure gradient from high pO2 in alveolar air into deoxygenated blood plasma and red blood cells."
+    },
+    "co2_diffusion": {
+      "name": "Carbon Dioxide Diffusion Direction",
+      "synonyms": [
+        "carbon dioxide diffusion",
+        "co2 diffusion",
+        "diffusion of carbon dioxide",
+        "co2 elimination"
+      ],
+      "anchor": [
+        308,
+        304
+      ],
+      "default_box": [
+        60,
+        320
+      ],
+      "side": "left",
+      "grades": [
+        "g9",
+        "g11",
+        "g8"
+      ],
+      "description": "Carbon dioxide diffuses down its partial pressure gradient from high pCO2 in pulmonary arterial capillary blood into the alveolar space for exhalation."
+    }
+  }
+}

@@ -1,5 +1,5 @@
 import random
-from app.utils.ems_namelist import NAMES, AREAS
+from app.utils.ems_namelist import NAMES, AREAS, get_ems_scenario
 
 def _rng(seed=None):
     return random.Random(seed)
@@ -28,7 +28,7 @@ def _with_metadata(
     enriched.update({
         'topic_id': TOPIC_ID,
         'subtopic_id': SUBTOPIC_ID,
-        'subskill': subskill,
+        'subskill': question_family_id or subskill,
         'learning_objective_id': learning_objective_id,
         'concept_id': concept_id,
         'concept_group': concept_group,
@@ -47,88 +47,6 @@ def _with_metadata(
     if minimum_mastery_score is not None:
         enriched['minimum_mastery_score'] = minimum_mastery_score
     return enriched
-
-def _mcq_question(rng, item, mode="scaffold"):
-    mode_norm = str(mode or "").strip().lower()
-    correct_option = item['options'][item['correct_index']]
-    question = {
-        'id': f"g7_ems_prod_mcq_{rng.randint(1000, 999999)}",
-        'title': item.get('title', 'The Production Process'),
-        'question_type': 'mcq',
-        'prompt': item['prompt'],
-        'options': item['options'],
-        'correct_index': str(item['correct_index']),
-        'explanation': item['explanation'],
-        'marks': item.get('marks', 2),
-        'sample_answer': correct_option,
-        'ideal_answer': correct_option,
-        'marking_points': [correct_option],
-        'term': 3,
-        'caps_weight_percent': 15,
-        'suggested_duration_mins': 12,
-        'marking_schema': {
-            'total_marks': item.get('marks', 2),
-            'marking_points': [
-                {'id': 'mp_1', 'desc': f"Correct option selection: {correct_option}", 'marks': item.get('marks', 2), 'editable': True}
-            ]
-        },
-        **{k: v for k, v in item.items() if k not in ['prompt', 'options', 'correct_index', 'explanation', 'title', 'marks', 'hint_sections', 'guidelines', 'teaching_note', 'hints']}
-    }
-    
-    # Pre-baked 3-Tier hints
-    if 'hints' in item:
-        question['hints'] = item['hints']
-    elif 'hint_sections' in item:
-        question['hints'] = {
-            'tier_1': item['hint_sections'][0]['text'] if len(item['hint_sections']) > 0 else "Focus on the primary, secondary, and tertiary stages of production.",
-            'tier_2': item['hint_sections'][1]['text'] if len(item['hint_sections']) > 1 else "Primary extracts, Secondary manufactures/processes, Tertiary distributes or sells.",
-            'tier_3': f"The correct answer is: {correct_option}"
-        }
-    else:
-        question['hints'] = {
-            'tier_1': "Review the key stages of economic activity.",
-            'tier_2': "Primary extracts raw materials, secondary processes/manufactures, and tertiary provides retail or services.",
-            'tier_3': f"The correct answer is: {correct_option}"
-        }
-
-    if mode_norm == "scaffold":
-        if 'hint_sections' in item: question['hint_sections'] = item['hint_sections']
-        if 'guidelines' in item: question['guidelines'] = item['guidelines']
-        if 'teaching_note' in item: question['teaching_note'] = item.get('teaching_note', item['explanation'])
-    return question
-
-def _typed_question(rng, item, mode="scaffold"):
-    mode_norm = str(mode or "").strip().lower()
-    question = {
-        'id': f"g7_ems_prod_typed_{rng.randint(1000, 999999)}",
-        'title': item.get('title', 'Production Process Analysis'),
-        'question_type': 'typed',
-        'prompt': item['prompt'],
-        'marks': item['marks'],
-        'marking_points': item['marking_points'],
-        'sample_answer': item['sample_answer'],
-        'ideal_answer': item.get('ideal_answer', item['sample_answer']),
-        'term': 3,
-        'caps_weight_percent': 15,
-        'suggested_duration_mins': 15,
-        'marking_schema': {
-            'total_marks': item['marks'],
-            'marking_points': [
-                {'id': f'mp_{i+1}', 'desc': pt, 'marks': 1, 'editable': True} for i, pt in enumerate(item['marking_points'])
-            ]
-        },
-        'hints': item.get('hints', {
-            'tier_1': "Identify the specific sector and stage of production described in the question.",
-            'tier_2': "State clearly the inputs used, the transformation process involved, and the final outputs produced.",
-            'tier_3': item['sample_answer']
-        }),
-        **{k: v for k, v in item.items() if k not in ['prompt', 'marks', 'marking_points', 'sample_answer', 'ideal_answer', 'hint_sections', 'guidelines', 'teaching_note', 'title', 'hints']}
-    }
-    if mode_norm == "scaffold":
-        if 'hint_sections' in item: question['hint_sections'] = item['hint_sections']
-        if 'guidelines' in item: question['guidelines'] = item['guidelines']
-        if 'teaching_note' in item: question['teaching_note'] = item.get('teaching_note', '')
-    return question
 
 def _build_sectors_questions(rng):
     scenarios = [
@@ -174,6 +92,15 @@ def _build_sectors_questions(rng):
     return [
         _with_metadata({
             'title': 'Economic Sectors in Production',
+            'diagram_spec': {
+        "diagram_role": "context",
+                'kind': 'production_chain',
+                'raw': sc['raw'],
+                'primary': sc['primary'],
+                'secondary': sc['secondary'],
+                'tertiary': sc['tertiary'],
+                'product': sc['product']
+            },
             'prompt': (
                 f"{sc['name']} in {sc['area']} operates {sc['secondary']} that converts {sc['raw']} "
                 f"into {sc['product']}. Into which sector of the economy does this business fall?"
@@ -228,27 +155,49 @@ def _build_sectors_questions(rng):
     ]
 
 def _build_inputs_outputs_questions(rng):
+    sc = get_ems_scenario(rng)
     batches = [
         {
-            "business": "A local bakery",
-            "inputs": ["Flour", "Yeast", "Water", "Baker's labour", "Electric ovens"],
-            "process": ["Mixing ingredients", "Kneading dough", "Baking in ovens"],
-            "outputs": ["Loaves of fresh bread", "Breadcrumbs"],
-            "waste": "Empty flour sacks and burnt crusts"
+            'business': f"{sc['entrepreneur']}'s Bakery in {sc['area']}",
+            'inputs': ['Flour', 'Yeast', 'Water', "Baker's labour", 'Electric ovens'],
+            'process': ['Mixing ingredients', 'Kneading dough', 'Baking in ovens'],
+            'outputs': ['Loaves of fresh bread', 'Breadcrumbs'],
+            'waste': 'Empty flour sacks and burnt crusts'
         },
         {
-            "business": "A school uniform factory",
-            "inputs": ["Cotton fabric", "Buttons", "Sewing machine operators", "Industrial sewing machines"],
-            "process": ["Pattern cutting", "Stitching seams", "Attaching buttons and ironing"],
-            "outputs": ["Completed school shirts and skirts"],
-            "waste": "Off-cut fabric scraps"
+            'business': f"{f"{sc['entrepreneur']} Enterprises"} (a school uniform manufacturer in {sc['area']})",
+            'inputs': ['Cotton fabric', 'Buttons', 'Sewing machine operators', 'Industrial sewing machines'],
+            'process': ['Pattern cutting', 'Stitching seams', 'Attaching buttons and ironing'],
+            'outputs': ['Completed school shirts and skirts'],
+            'waste': 'Off-cut fabric scraps'
         },
         {
-            "business": "A fruit juice packaging plant",
-            "inputs": ["Fresh oranges", "Purified water", "Cardboard cartons", "Factory workers", "Juicing presses"],
-            "process": ["Washing fruit", "Pressing juice", "Pasteurisation and bottling"],
-            "outputs": ["Sealed 1-litre orange juice cartons"],
-            "waste": "Orange peel and pulp"
+            'business': f"{sc['entrepreneur']}'s Fruit Juice Plant in {sc['area']}",
+            'inputs': ['Fresh oranges', 'Purified water', 'Cardboard cartons', 'Factory workers', 'Juicing presses'],
+            'process': ['Washing fruit', 'Pressing juice', 'Pasteurisation and bottling'],
+            'outputs': ['Sealed 1-litre orange juice cartons'],
+            'waste': 'Orange peel and pulp'
+        },
+        {
+            'business': f"{f"{sc['entrepreneur']} Enterprises"} (a wooden furniture workshop in {sc['area']})",
+            'inputs': ['Pine timber boards', 'Wood glue and varnish', 'Carpenters', 'Table saws and sanders'],
+            'process': ['Measuring and cutting wood', 'Assembling joints', 'Sanding and varnishing'],
+            'outputs': ['Handcrafted dining tables and chairs'],
+            'waste': 'Wood shavings and sawdust'
+        },
+        {
+            'business': f"{sc['entrepreneur']}'s Dairy Creamery in {sc['area']}",
+            'inputs': ["Raw cow's milk", 'Starter cultures', 'Cream separators', 'Pasteurisers'],
+            'process': ['Separating cream', 'Churning and fermenting', 'Moulding and packaging'],
+            'outputs': ['Blocks of cheddar cheese and butter'],
+            'waste': 'Liquid whey by-product'
+        },
+        {
+            'business': f"{f"{sc['entrepreneur']} Enterprises"} (a brick manufacturing yard in {sc['area']})",
+            'inputs': ['Clay', 'Sand', 'Water', 'Kiln operators', 'Mixing pugmills'],
+            'process': ['Extruding clay into brick shapes', 'Sun drying', 'Firing in high-heat kilns'],
+            'outputs': ['Fired building bricks and paving stones'],
+            'waste': 'Cracked unusable brick fragments'
         }
     ]
     b = rng.choice(batches)
@@ -282,6 +231,7 @@ def _build_inputs_outputs_questions(rng):
     ]
 
 def _build_productivity_questions(rng):
+    scenario = get_ems_scenario(rng)
     workers_1 = rng.choice([4, 5, 6])
     hours_1 = 8
     output_1 = workers_1 * hours_1 * rng.choice([5, 6, 8])
@@ -325,7 +275,7 @@ def _build_productivity_questions(rng):
         _with_metadata({
             'title': 'Impact of Technology on Productivity',
             'prompt': (
-                f"Explain how investing in automated machinery allows a business to increase productivity "
+                f"A factory in {scenario['area']} operated by {scenario['entrepreneur']} considers machinery upgrades. Explain how investing in automated machinery allows a business to increase productivity "
                 f"and contribute to South Africa's economic growth. (4 marks)"
             ),
             'marks': 4,
@@ -351,11 +301,12 @@ def _build_productivity_questions(rng):
     ]
 
 def _build_resources_questions(rng):
+    scenario = get_ems_scenario(rng)
     return [
         _with_metadata({
             'title': 'Sustainable Resource Use in Production',
             'prompt': (
-                "Which pair correctly identifies a RENEWABLE resource and a NON-RENEWABLE resource used in industrial production?"
+                f"A manufacturing plant in {scenario['area']} evaluates resource inputs. Which pair correctly identifies a RENEWABLE resource and a NON-RENEWABLE resource used in industrial production?"
             ),
             'options': [
                 "Renewable: Pine timber from planted forests | Non-renewable: Coal burned in power stations",
@@ -379,39 +330,168 @@ def _build_resources_questions(rng):
         }, subskill='elementary_resources', learning_objective_id='lo_ems_sustainability', question_family_id='resource_types', concept_id='sustainability')
     ]
 
-def generate(subskill="compound", difficulty="medium", count=1, mode="scaffold", seed=None, **kwargs):
-    rng = _rng(seed)
-    subskill_str = str(subskill or "compound").strip().lower()
+
+
+SUBSKILLS = ['sector_id', 'sector_chain', 'in_out_id', 'prod_ratio', 'tech_impact', 'resource_types']
+
+
+
+SUBSKILLS = ['sector_id', 'sector_chain', 'in_out_id', 'prod_ratio', 'tech_impact', 'resource_types']
+
+def _mcq_question(rng, item, mode="scaffold"):
+    mode_norm = str(mode or "").strip().lower()
+    correct_option = item['options'][item['correct_index']]
+    explanation = item.get('explanation') or f"The correct option is: {correct_option}."
+    sample_answer = correct_option
     
-    if subskill_str == "elementary_sectors":
-        pool = _build_sectors_questions(rng)
-    elif subskill_str == "elementary_inputs_outputs":
-        pool = _build_inputs_outputs_questions(rng)
-    elif subskill_str == "elementary_productivity":
-        pool = _build_productivity_questions(rng)
-    elif subskill_str == "elementary_resources":
-        pool = _build_resources_questions(rng)
+    # 3-tier hints
+    if 'hints' in item:
+        hints = item['hints']
+    elif 'hint_sections' in item and len(item['hint_sections']) >= 3:
+        hints = {
+            'tier_1': item['hint_sections'][0]['text'],
+            'tier_2': item['hint_sections'][1]['text'],
+            'tier_3': item['hint_sections'][2]['text']
+        }
     else:
-        # Compound: Mix across all areas
-        pool = (
-            _build_sectors_questions(rng) +
-            _build_inputs_outputs_questions(rng) +
-            _build_productivity_questions(rng) +
-            _build_resources_questions(rng)
-        )
-        
-    selected = [q for q in pool if difficulty in q['difficulty_band']]
-    if not selected:
-        selected = pool
-    chosen = rng.sample(selected, min(count, len(selected)))
+        hints = {
+            'tier_1': "Carefully review the economic definitions and scenarios presented.",
+            'tier_2': explanation,
+            'tier_3': f"The correct answer is: {correct_option}."
+        }
+
+    marks = item.get('marks', 2)
+    question = {
+        'id': f"g7_ems_mcq_{rng.randint(1000, 999999)}",
+        'title': item.get('title', 'Concept check'),
+        'question_type': 'mcq',
+        'prompt': item['prompt'],
+        'options': item['options'],
+        'correct_index': str(item['correct_index']),
+        'explanation': explanation,
+        'worked_solution': explanation,
+        'canonical_solution': explanation,
+        'solution': explanation,
+        'marks': marks,
+        'total_marks': marks,
+        'sample_answer': sample_answer,
+        'ideal_answer': sample_answer,
+        'correct_answer': sample_answer,
+        'marking_points': [correct_option],
+        'modality': 'math',
+        'solution_type': 'mcq',
+        'hints': hints,
+        'marking_schema': {
+            'total_marks': marks,
+            'marking_points': [
+                {'id': 'mp_1', 'desc': f"Correct option selection: {correct_option}", 'marks': marks, 'editable': True}
+            ]
+        },
+        **{k: v for k, v in item.items() if k not in ['prompt', 'options', 'correct_index', 'explanation', 'title', 'marks', 'hint_sections', 'guidelines', 'teaching_note', 'hints']}
+    }
+    if mode_norm == "scaffold":
+        if 'hint_sections' in item: question['hint_sections'] = item['hint_sections']
+        if 'guidelines' in item: question['guidelines'] = item['guidelines']
+        if 'teaching_note' in item: question['teaching_note'] = item.get('teaching_note', explanation)
+    return question
+
+def _typed_question(rng, item, mode="scaffold"):
+    mode_norm = str(mode or "").strip().lower()
+    memo = item.get('sample_answer') or item.get('explanation') or "\n".join(item.get('marking_points', []))
+    marks = item.get('marks', 3)
+    mps = item.get('marking_points', [memo])
     
+    # 3-tier hints
+    if 'hints' in item:
+        hints = item['hints']
+    elif 'hint_sections' in item and len(item['hint_sections']) >= 3:
+        hints = {
+            'tier_1': item['hint_sections'][0]['text'],
+            'tier_2': item['hint_sections'][1]['text'],
+            'tier_3': item['hint_sections'][2]['text']
+        }
+    else:
+        hints = {
+            'tier_1': "Structure your answer clearly, addressing all parts of the question prompt.",
+            'tier_2': "Identify the core economic principles, definitions, or calculations required.",
+            'tier_3': f"Model solution points:\n{memo}"
+        }
+
+    question = {
+        'id': f"g7_ems_typed_{rng.randint(1000, 999999)}",
+        'title': item.get('title', 'Written response'),
+        'question_type': 'typed',
+        'prompt': item['prompt'],
+        'marks': marks,
+        'total_marks': marks,
+        'marking_points': mps,
+        'sample_answer': memo,
+        'ideal_answer': item.get('ideal_answer', memo),
+        'correct_answer': memo,
+        'explanation': memo,
+        'worked_solution': memo,
+        'canonical_solution': memo,
+        'solution': memo,
+        'modality': 'semantic',
+        'solution_type': 'marking_points',
+        'hints': hints,
+        'marking_schema': {
+            'total_marks': marks,
+            'marking_points': [
+                {'id': f"mp_{idx + 1}", 'desc': str(p), 'marks': 1, 'editable': True}
+                for idx, p in enumerate(mps)
+            ],
+            'carry_forward_rule': 'consequential_accuracy'
+        },
+        **{k: v for k, v in item.items() if k not in ['prompt', 'marks', 'marking_points', 'sample_answer', 'ideal_answer', 'hint_sections', 'guidelines', 'teaching_note', 'title', 'hints', 'explanation']}
+    }
+    if mode_norm == "scaffold":
+        if 'hint_sections' in item: question['hint_sections'] = item['hint_sections']
+        if 'guidelines' in item: question['guidelines'] = item['guidelines']
+        if 'teaching_note' in item: question['teaching_note'] = item.get('teaching_note', '')
+    return question
+
+def _get_all_pool_items(rng):
+    pool = []
+    import sys
+    mod = sys.modules[__name__]
+    for fn_name in ['_concept_pool', '_discussion_pool', '_build_sectors_questions', '_build_inputs_outputs_questions', '_build_productivity_questions', '_build_resources_questions', '_build_savings_pool']:
+        if hasattr(mod, fn_name):
+            try:
+                res = getattr(mod, fn_name)(rng)
+                if isinstance(res, list): pool.extend(res)
+                elif isinstance(res, dict): pool.extend(res.values())
+            except Exception:
+                pass
+    return pool
+
+def generate(subskill=None, difficulty="medium", count=1, mode="scaffold", seed=None, **kwargs):
+    rng = _rng(seed)
+    all_items = _get_all_pool_items(rng)
+    fam_map = {}
+    for it in all_items:
+        key = it.get('question_family_id') or it.get('subskill') or it.get('title')
+        if key and key not in fam_map:
+            fam_map[key] = it
+
+    target_sub = str(subskill or "").strip().lower()
+    if target_sub in fam_map:
+        item = fam_map[target_sub]
+        fn = _mcq_question if 'options' in item else _typed_question
+        return [fn(rng, item, mode=mode)]
+
+    # Substring / partial match on subskill
+    if target_sub and target_sub not in ("concepts", "discussion", "compound", "all", "mixed", "auto", "default", "none"):
+        for k, it in fam_map.items():
+            if target_sub in str(k).lower():
+                fn = _mcq_question if 'options' in it else _typed_question
+                return [fn(rng, it, mode=mode)]
+
+    # If count requested, generate count distinct questions cycling through SUBSKILLS
     results = []
-    for item in chosen:
-        if 'options' in item:
-            results.append(_mcq_question(rng, item, mode=mode))
-        else:
-            results.append(_typed_question(rng, item, mode=mode))
-            
-    if count == 1 and len(results) == 1:
-        return results[0]
+    for i in range(count):
+        sub_key = SUBSKILLS[i % len(SUBSKILLS)]
+        item = fam_map.get(sub_key, all_items[i % len(all_items)])
+        fn = _mcq_question if 'options' in item else _typed_question
+        results.append(fn(rng, item, mode=mode))
     return results

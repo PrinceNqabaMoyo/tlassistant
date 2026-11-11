@@ -80,7 +80,7 @@ def _generate_cost_of_sales_drill(r: random.Random, mode: str = "scaffold") -> D
 
     prompt = (
         f"**{scenario['entrepreneur']}'s {scenario['business_type']}** applies a fixed mark-up on cost.\n"
-        f"Use the CAPS calculation principle (**What I WANT / What I HAVE**) to calculate the missing values in the table below.\n\n"
+        f"Use the standard calculation principle (**What I WANT / What I HAVE**) to calculate the missing values in the table below.\n\n"
         f"• Mark-up percentage for Items 1 and 2: **{markup}% on cost**\n"
         f"• For Item 3, calculate the mark-up percentage achieved."
     )
@@ -136,7 +136,18 @@ def _generate_cost_of_sales_drill(r: random.Random, mode: str = "scaffold") -> D
         "correct_map": correct_map,
         "cell_hints": cell_hints,
         "marks": 10,
-        "sample_answer": f"Item 1: SP=R{sp1}; Item 2: CP=R{cp2}; Item 3: Mark-up={markup3}%",
+        "modality": "ledger",
+        "sample_answer": (
+            f"Calculations using What I WANT / What I HAVE formula:\\n"
+            f"Item 1: Selling Price = Cost Price x (100 + Mark-up%)/100 = R{cp1:,} x {100+markup}/100 = R{sp1:,}. Gross Profit = R{sp1 - cp1:,}.\\n"
+            f"Item 2: Cost Price = Selling Price x 100/(100 + Mark-up%) = R{sp2:,} x 100/{100+markup} = R{cp2:,}. Gross Profit = R{sp2 - cp2:,}.\\n"
+            f"Item 3: Mark-up % = (Gross Profit / Cost Price) x 100 = (R{profit3:,} / R{cp3:,}) x 100 = {markup3}%."
+        ),
+        "worked_solution": (
+            f"Formula 1 (Find SP): \\text{{SP}} = \\text{{CP}} \\times \\frac{{100 + \\text{{Mark-up \\%}}}}{{100}} = \\text{{R }}{cp1:,} \\times \\frac{{{100+markup}}}{{100}} = \\text{{R }}{sp1:,}.\\n"
+            f"Formula 2 (Find CP): \\text{{CP}} = \\text{{SP}} \\times \\frac{{100}}{{100 + \\text{{Mark-up \\%}}}} = \\text{{R }}{sp2:,} \\times \\frac{{100}}{{{100+markup}}} = \\text{{R }}{cp2:,}.\\n"
+            f"Formula 3 (Find Mark-up %): \\text{{Mark-up \\%}} = \\frac{{\\text{{Gross Profit}}}}{{\\text{{Cost Price}}}} \\times 100 = \\frac{{\\text{{R }}{profit3:,}}}{{\\text{{R }}{cp3:,}}} \\times 100 = {markup3}\\%."
+        ),
         "ideal_answer": "Complete calculations using the 'What I WANT / What I HAVE' formula.",
         "hint_sections": {
             "1_nudge": "Place what you WANT at the top of the fraction and what you HAVE at the bottom.",
@@ -245,6 +256,7 @@ def _generate_trading_equation_drill(r: random.Random, mode: str = "scaffold") -
         "id": f"ems9_eq_trading_{r.randint(1000, 9999)}",
         "title": "Trading Cycle Accounting Equation",
         "question_type": "table_completion",
+        "modality": "ledger",
         "prompt": prompt,
         "headers": headers,
         "rows": rows,
@@ -416,6 +428,7 @@ def _generate_crj_trading(rng: random.Random, mode: str = "scaffold") -> List[Di
         "id": f"ems9_crj_{rng.randint(1000, 9999)}",
         "title": "Cash Receipts Journal (Trading Business)",
         "question_type": "table_completion",
+        "modality": "ledger",
         "prompt": f"Complete the Cash Receipts Journal for **{business_name}** for {month}. The business uses a fixed mark-up of {markup_percentage}% on cost.",
         "transactions": transactions,
         "headers": headers,
@@ -504,6 +517,7 @@ def _generate_cpj_trading(rng: random.Random, mode: str = "scaffold") -> List[Di
         "id": f"ems9_cpj_{rng.randint(1000, 9999)}",
         "title": "Cash Payments Journal (Trading Business)",
         "question_type": "table_completion",
+        "modality": "ledger",
         "prompt": f"Complete the Cash Payments Journal for **{business_name}** for {month}.",
         "transactions": transactions,
         "headers": headers,

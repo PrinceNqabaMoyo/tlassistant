@@ -6,6 +6,8 @@ Covers official CAPS Examination standards (Paper 1, Question 6 / 7: 10–15 mar
 Supports full 10-mark compound exam questions and atomic 3-mark / 4-mark elementary sub-drills for adaptive scaffolding.
 Zero-LLM: 100% deterministic Python & SymPy calculations with South African comma decimals ({,}).
 """
+
+# Diagram contract: all diagrams emitted specify diagram_role: "context" | "identify"
 from __future__ import annotations
 
 import math

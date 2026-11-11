@@ -98,6 +98,19 @@ def _generate_wave_equation_question(r: random.Random, seed: Optional[int], idx:
         "mode": mode,
         "topic": TOPIC,
         "question_type": "short_answer",
+        "modality": "bio_diagram",
+        "diagram_spec": {
+            "diagram_role": "identify" if locals().get("target_pin_letter") or locals().get("target_pin") else "context",
+            "image_type": "transverse_wave",
+            "labels": [
+                {"id": "A", "name": "Crest 1 (Maximum positive displacement)", "x": 25, "y": 18},
+                {"id": "B", "name": "Trough 1 (Maximum negative displacement)", "x": 50, "y": 78},
+                {"id": "C", "name": f"Amplitude (A = {_fmt_sa(wavelength/2)} m)", "x": 32, "y": 35},
+                {"id": "D", "name": f"Wavelength (λ = {_fmt_sa(wavelength)} m)", "x": 50, "y": 15},
+                {"id": "E", "name": "Crest 2 (Point in phase with Crest 1)", "x": 75, "y": 18},
+                {"id": "F", "name": "Equilibrium / Rest position line", "x": 88, "y": 48},
+            ]
+        },
         "question": prompt,
         "correct_answer": ans_str,
         "sample_answer": ans_str,
@@ -159,6 +172,19 @@ def _generate_sound_echo_question(r: random.Random, seed: Optional[int], idx: in
         "mode": mode,
         "topic": TOPIC,
         "question_type": "short_answer",
+        "modality": "bio_diagram",
+        "diagram_spec": {
+            "diagram_role": "identify" if locals().get("target_pin_letter") or locals().get("target_pin") else "context",
+            "image_type": "transverse_wave",
+            "labels": [
+                {"id": "A", "name": "Crest 1 (Maximum positive displacement)", "x": 25, "y": 18},
+                {"id": "B", "name": "Trough 1 (Maximum negative displacement)", "x": 50, "y": 78},
+                {"id": "C", "name": f"Amplitude (A = {_fmt_sa(wavelength/2)} m)", "x": 32, "y": 35},
+                {"id": "D", "name": f"Wavelength (λ = {_fmt_sa(wavelength)} m)", "x": 50, "y": 15},
+                {"id": "E", "name": "Crest 2 (Point in phase with Crest 1)", "x": 75, "y": 18},
+                {"id": "F", "name": "Equilibrium / Rest position line", "x": 88, "y": 48},
+            ]
+        },
         "question": prompt,
         "correct_answer": ans_str,
         "sample_answer": ans_str,
@@ -221,6 +247,19 @@ def _generate_photon_energy_question(r: random.Random, seed: Optional[int], idx:
         "mode": mode,
         "topic": TOPIC,
         "question_type": "short_answer",
+        "modality": "bio_diagram",
+        "diagram_spec": {
+            "diagram_role": "identify" if locals().get("target_pin_letter") or locals().get("target_pin") else "context",
+            "image_type": "transverse_wave",
+            "labels": [
+                {"id": "A", "name": "Crest 1 (Maximum positive displacement)", "x": 25, "y": 18},
+                {"id": "B", "name": "Trough 1 (Maximum negative displacement)", "x": 50, "y": 78},
+                {"id": "C", "name": f"Amplitude (A = {_fmt_sa(wavelength/2)} m)", "x": 32, "y": 35},
+                {"id": "D", "name": f"Wavelength (λ = {_fmt_sa(wavelength)} m)", "x": 50, "y": 15},
+                {"id": "E", "name": "Crest 2 (Point in phase with Crest 1)", "x": 75, "y": 18},
+                {"id": "F", "name": "Equilibrium / Rest position line", "x": 88, "y": 48},
+            ]
+        },
         "question": prompt,
         "correct_answer": ans_str,
         "sample_answer": ans_str,
@@ -252,28 +291,5 @@ def generate(
     **kwargs: Any,
 ) -> List[Dict[str, Any]]:
     """Master generator for Grade 10 Physical Sciences Waves, Sound & Light."""
-    r = random.Random(seed) if seed is not None else random.Random()
-    questions: List[Dict[str, Any]] = []
-
-    for i in range(count):
-        sub_seed = r.randint(1, 1_000_000_000)
-        sub_r = random.Random(sub_seed)
-
-        if subskill in ("waves", "transverse", "frequency") or mode == "elementary_wave_speed":
-            q = _generate_wave_equation_question(sub_r, sub_seed, i, mode)
-        elif subskill in ("sound", "echo", "longitudinal") or mode == "elementary_sound_echo":
-            q = _generate_sound_echo_question(sub_r, sub_seed, i, mode)
-        elif subskill in ("em_radiation", "photons", "light") or mode == "elementary_photon_energy":
-            q = _generate_photon_energy_question(sub_r, sub_seed, i, mode)
-        else:
-            chosen = sub_r.choice(["wave_eq", "echo", "photon"])
-            if chosen == "wave_eq":
-                q = _generate_wave_equation_question(sub_r, sub_seed, i, mode)
-            elif chosen == "echo":
-                q = _generate_sound_echo_question(sub_r, sub_seed, i, mode)
-            else:
-                q = _generate_photon_energy_question(sub_r, sub_seed, i, mode)
-
-        questions.append(q)
-
-    return questions
+    from app.utils.physical_sciences.ps10_waves_sound_light_generator import generate as ps_waves
+    return ps_waves(subskill=subskill, difficulty=difficulty, count=count, seed=seed, mode=mode, grade=grade, **kwargs)

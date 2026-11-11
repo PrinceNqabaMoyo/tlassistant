@@ -20,11 +20,21 @@ def _rng(seed: Optional[int]) -> random.Random:
     return random.Random(seed) if seed is not None else random.Random()
 
 
+SUBSKILLS = [
+    'flow_diagram_reverse_input',
+    'flow_diagram_forward',
+    'table_of_values_completion',
+    'linear_vs_nonlinear_graph',
+    'graph_dependent_variable',
+    'graph_reading_total'
+]
+
+
 # ============================================================================
 # ARCHETYPE 1: Flow Diagrams (Exam Q4.3)
 # ============================================================================
 
-def _generate_flow_diagram_question(rng: random.Random) -> Dict[str, Any]:
+def _generate_flow_diagram_question(rng: random.Random, force_reverse: Optional[bool] = None) -> Dict[str, Any]:
     """
     Input/output algebraic flow diagram with rule: y = m*x + c or y = m*x - c.
     Exam Q4.3: Rule 3x - 2.
@@ -49,7 +59,7 @@ def _generate_flow_diagram_question(rng: random.Random) -> Dict[str, Any]:
 
     # Sub-case: reverse calculation (find unknown input x given output y)
     # or forward calculation (find unknown output y given input x)
-    is_reverse = rng.choice([True, False])
+    is_reverse = force_reverse if force_reverse is not None else rng.choice([True, False])
 
     if is_reverse:
         target_x = rng.randint(3, 9)
@@ -191,19 +201,11 @@ def _generate_table_of_values_question(rng: random.Random) -> Dict[str, Any]:
     x_missing = x_vals[missing_idx]
     y_missing = y_vals[missing_idx]
 
-    table_rows = [
-        f"\\(x\\) & 1 & 2 & 3 & 4 & {x_missing} \\\\",
-        f"\\(y\\) & {y_vals[0]} & {y_vals[1]} & {y_vals[2]} & {y_vals[3]} & ? \\\\"
-    ]
-    table_latex = (
-        "\\begin{array}{|c|c|c|c|c|c|}\n\\hline\n"
-        + "\n\\hline\n".join(table_rows)
-        + "\n\\hline\n\\end{array}"
-    )
-
     prompt = (
         f"Study the table of values below which follows a consistent linear rule:\n\n"
-        f"\\[\n{table_latex}\n\\]\n\n"
+        f"| \\(x\\) | 1 | 2 | 3 | 4 | {x_missing} |\n"
+        f"| :---: | :---: | :---: | :---: | :---: | :---: |\n"
+        f"| \\(y\\) | {y_vals[0]} | {y_vals[1]} | {y_vals[2]} | {y_vals[3]} | ? |\n\n"
         f"Determine the missing output value \\(y\\) when \\(x = {x_missing}\\)."
     )
 
@@ -262,78 +264,139 @@ def _generate_table_of_values_question(rng: random.Random) -> Dict[str, Any]:
 # ARCHETYPE 3: Line Graph Interpretation (Exam Q6.1)
 # ============================================================================
 
-def _generate_line_graph_question(rng: random.Random) -> Dict[str, Any]:
+def _generate_line_graph_question(rng: random.Random, target_subskill: Optional[str] = None) -> Dict[str, Any]:
     """
     Interpretation of real-world line graphs.
-    Exam Q6.1: Absenteeism graph across months.
-    Questions:
+    Dynamic multi-seed scenarios:
     - Linear vs non-linear
     - Dependent vs independent variable
     - Reading values / total calculation
     """
-    scenarios = [
-        {
-            "context": "A line graph records the average daily temperature in Bloemfontein recorded on the first day of each month from January to June: Jan (30°C), Feb (28°C), Mar (24°C), Apr (19°C), May (14°C), Jun (9°C).",
-            "sub_type": "dependent_variable",
-            "prompt": (
-                "A line graph displays the average daily temperature recorded over consecutive months of the year.\n\n"
-                "Which axis (horizontal or vertical) and which variable represents the **dependent variable**?"
-            ),
-            "correct": "Vertical axis (Temperature)",
-            "options": [
-                "Vertical axis (Temperature)",
-                "Horizontal axis (Months of the year)",
-                "Neither axis",
-                "Both axes simultaneously"
-            ],
-            "explanation": "In authentic Cartesian graphs, the independent variable (time / months) is placed on the horizontal axis (x-axis), while the dependent variable (the quantity measured, temperature) is placed on the vertical axis (y-axis).",
-            "subskill": "graph_dependent_variable",
-            "h1": "Ask yourself: which variable depends on the other? Does the month depend on temperature, or does temperature depend on the month?",
-            "h2": "The dependent variable is the measured quantity plotted on the vertical y-axis.",
-            "h3": "The vertical axis (Temperature) represents the dependent variable."
-        },
-        {
-            "context": "A student monitors a plant's growth. The graph curves upwards with weekly heights: Week 1 (2 cm), Week 2 (5 cm), Week 3 (10 cm), Week 4 (18 cm).",
-            "sub_type": "linear_or_nonlinear",
-            "prompt": (
-                "The line graph representing a growing seedling shows heights: Week 1 (2 cm), Week 2 (5 cm), Week 3 (10 cm), Week 4 (18 cm).\n\n"
-                "Is this graph **linear** or **non-linear**, and what is the mathematical reason?"
-            ),
-            "correct": "Non-linear, because the rate of change is not constant (it does not form a single straight line)",
-            "options": [
-                "Non-linear, because the rate of change is not constant (it does not form a single straight line)",
-                "Linear, because all the height values are positive",
-                "Linear, because the points are connected by line segments",
-                "Non-linear, because the time cannot be measured"
-            ],
-            "explanation": "A graph is linear only if it has a constant rate of change and forms a single continuous straight line. Here the differences between consecutive weeks are 3 cm, 5 cm, and 8 cm (changing rate of growth), making it non-linear.",
-            "subskill": "linear_vs_nonlinear_graph",
-            "h1": "Look at the differences between consecutive values: 5 - 2 = 3, 10 - 5 = 5, 18 - 10 = 8.",
-            "h2": "A linear graph must have a constant difference (constant gradient) forming a single straight line.",
-            "h3": "The graph is non-linear because the rate of change is not constant."
-        },
-        {
-            "context": "Exam Q6.1 absenteeism scenario",
-            "sub_type": "reading_and_summing",
-            "prompt": (
-                "A line graph tracks learner absenteeism in a Grade 7 class over five terms/cycles:\n"
-                "Term 1: 12 days, Term 2: 8 days, Term 3: 15 days, Term 4: 5 days.\n\n"
-                "Calculate the total number of absent days recorded across the four terms."
-            ),
-            "correct": "40",
-            "options": ["40", "35", "45", "50"],
-            "explanation": "Total days absent = 12 + 8 + 15 + 5 = 40 days.",
-            "subskill": "graph_reading_total",
-            "h1": "Add the values recorded for all four terms.",
-            "h2": "12 + 8 + 15 + 5.",
-            "h3": "12 + 8 = 20; 20 + 15 = 35; 35 + 5 = 40."
-        }
+    # Subskill 1: Dependent vs independent variable
+    dep_scenarios = [
+        ("the average daily temperature recorded over consecutive months of the year in Bloemfontein", "Temperature (°C)", "Months of the year", "vertical", "horizontal"),
+        ("the distance travelled by a long-distance bus from Durban to Johannesburg over time", "Distance travelled (km)", "Time elapsed (hours)", "vertical", "horizontal"),
+        ("the volume of water remaining in a municipal reservoir in Gqeberha over several weeks of drought", "Water volume (megalitres)", "Time (weeks)", "vertical", "horizontal"),
+        ("the total cost charged for electricity usage based on the number of kilowatt-hours consumed", "Total electricity cost (Rands)", "Units consumed (kWh)", "vertical", "horizontal"),
+        ("the height of a sunflower recorded each week after germination", "Height of sunflower (cm)", "Time (weeks)", "vertical", "horizontal"),
+        ("the heart rate of an athlete monitored during a 30-minute training session", "Heart rate (beats per minute)", "Exercise duration (minutes)", "vertical", "horizontal")
     ]
+    ctx_desc, dep_var, indep_var, dep_axis, indep_axis = rng.choice(dep_scenarios)
+    dep_prompt = (
+        f"A line graph displays {ctx_desc}.\n\n"
+        f"Which axis ({dep_axis} or {indep_axis}) and which variable represents the **dependent variable**?"
+    )
+    dep_correct = f"{dep_axis.capitalize()} axis ({dep_var})"
+    dep_options = [
+        f"{dep_axis.capitalize()} axis ({dep_var})",
+        f"{indep_axis.capitalize()} axis ({indep_var})",
+        "Neither axis (both are independent)",
+        "Both axes simultaneously"
+    ]
+    dep_scen = {
+        "subskill": "graph_dependent_variable",
+        "sub_type": "dependent_variable",
+        "prompt": dep_prompt,
+        "correct": dep_correct,
+        "options": dep_options,
+        "explanation": f"In authentic Cartesian graphs, the independent variable ({indep_var}) is placed on the horizontal axis (x-axis), while the dependent variable ({dep_var}) is placed on the vertical axis (y-axis).",
+        "h1": f"Ask yourself: which variable depends on the other? Does {dep_var} depend on {indep_var}?",
+        "h2": f"The dependent variable is the measured quantity plotted on the vertical y-axis.",
+        "h3": f"The {dep_axis} axis ({dep_var}) represents the dependent variable."
+    }
 
-    scen = rng.choice(scenarios)
+    # Subskill 2: Linear vs non-linear
+    is_linear = rng.choice([True, False])
+    if is_linear:
+        d = rng.choice([3, 4, 5, 8, 10, 15])
+        s = rng.choice([2, 5, 10, 12])
+        w = [s, s + d, s + 2 * d, s + 3 * d]
+        obj = rng.choice(["a delivery cyclist riding at constant speed", "water being poured at a steady rate into a cylindrical container", "a savings balance with equal weekly deposits"])
+        unit = rng.choice(["km", "cm", "Rands"])
+        ln_prompt = (
+            f"A line graph tracking {obj} records values across 4 consecutive stages: Stage 1 ({w[0]} {unit}), Stage 2 ({w[1]} {unit}), Stage 3 ({w[2]} {unit}), Stage 4 ({w[3]} {unit}).\n\n"
+            f"Is this graph **linear** or **non-linear**, and what is the mathematical reason?"
+        )
+        ln_correct = f"Linear, because the rate of change is constant ({d} {unit} per stage, forming a single straight line)"
+        ln_options = [
+            f"Linear, because the rate of change is constant ({d} {unit} per stage, forming a single straight line)",
+            f"Non-linear, because the numbers are increasing",
+            f"Linear, simply because the points are joined by line segments",
+            f"Non-linear, because the starting value is not zero"
+        ]
+        ln_expl = f"A graph is linear when the rate of change is constant and forms a single continuous straight line. The difference between every consecutive stage is exactly {d} {unit} ({w[1]}-{w[0]} = {w[2]}-{w[1]} = {w[3]}-{w[2]} = {d}), so the relationship is linear."
+    else:
+        diffs = rng.choice([(2, 5, 9), (3, 7, 12), (1, 4, 10), (4, 10, 18)])
+        s = rng.choice([2, 5, 8])
+        w = [s, s + diffs[0], s + diffs[0] + diffs[1], s + diffs[0] + diffs[1] + diffs[2]]
+        obj = rng.choice(["a growing maize seedling", "a bacteria culture multiplying in a petri dish", "a vehicle accelerating from rest"])
+        unit = rng.choice(["cm", "cells", "km/h"])
+        ln_prompt = (
+            f"A line graph tracking {obj} records values across 4 consecutive stages: Stage 1 ({w[0]} {unit}), Stage 2 ({w[1]} {unit}), Stage 3 ({w[2]} {unit}), Stage 4 ({w[3]} {unit}).\n\n"
+            f"Is this graph **linear** or **non-linear**, and what is the mathematical reason?"
+        )
+        ln_correct = f"Non-linear, because the rate of change is not constant (differences are {diffs[0]}, {diffs[1]}, and {diffs[2]} {unit})"
+        ln_options = [
+            f"Non-linear, because the rate of change is not constant (differences are {diffs[0]}, {diffs[1]}, and {diffs[2]} {unit})",
+            f"Linear, because all the measured values are positive",
+            f"Linear, because the graph slopes upwards",
+            f"Non-linear, because time cannot be plotted on the x-axis"
+        ]
+        ln_expl = f"A graph is linear only if it has a constant rate of change and forms a single continuous straight line. Here the differences between consecutive stages are {diffs[0]} {unit}, {diffs[1]} {unit}, and {diffs[2]} {unit} (changing rate of growth), making it non-linear."
+    ln_scen = {
+        "subskill": "linear_vs_nonlinear_graph",
+        "sub_type": "linear_or_nonlinear",
+        "prompt": ln_prompt,
+        "correct": ln_correct,
+        "options": ln_options,
+        "explanation": ln_expl,
+        "h1": "Look at the differences between consecutive values at each stage.",
+        "h2": "A linear graph must have a constant difference (constant gradient) forming a single straight line.",
+        "h3": ln_correct
+    }
+
+    # Subskill 3: Reading values and summing
+    scenarios_total = [
+        ("learner absenteeism in a Grade 7 class over four terms", "days", ["Term 1", "Term 2", "Term 3", "Term 4"]),
+        ("monthly rainfall recorded at a weather station in Polokwane over four months", "mm", ["January", "February", "March", "April"]),
+        ("the number of library books borrowed by Grade 7 learners over four weeks", "books", ["Week 1", "Week 2", "Week 3", "Week 4"]),
+        ("the mass of recyclable plastic collected by a school green club over four cycles", "kg", ["Cycle 1", "Cycle 2", "Cycle 3", "Cycle 4"])
+    ]
+    tot_ctx, tot_unit, labels = rng.choice(scenarios_total)
+    vals = [rng.randint(6, 28) for _ in range(4)]
+    total_val = sum(vals)
+    val_strs = [f"{labels[i]}: {vals[i]} {tot_unit}" for i in range(4)]
+    rd_prompt = (
+        f"A line graph tracks {tot_ctx}:\n"
+        f"{', '.join(val_strs)}.\n\n"
+        f"Calculate the total number of {tot_unit} recorded across all four periods."
+    )
+    rd_correct = str(total_val)
+    wrongs = [str(total_val + offset) for offset in [-5, 5, -10, 10, -2, 3] if total_val + offset != total_val]
+    rng.shuffle(wrongs)
+    rd_options = [rd_correct] + wrongs[:3]
+    rd_expl = f"Total {tot_unit} = {' + '.join(str(v) for v in vals)} = {total_val} {tot_unit}."
+    rd_scen = {
+        "subskill": "graph_reading_total",
+        "sub_type": "reading_and_summing",
+        "prompt": rd_prompt,
+        "correct": rd_correct,
+        "options": rd_options,
+        "explanation": rd_expl,
+        "h1": f"Add the values recorded for all four periods: {' + '.join(str(v) for v in vals)}.",
+        "h2": f"Sum all values carefully: {vals[0]} + {vals[1]} = {vals[0]+vals[1]}.",
+        "h3": f"Final sum is {total_val}."
+    }
+
+    scenarios = [dep_scen, ln_scen, rd_scen]
+    if target_subskill:
+        matched = [s for s in scenarios if s.get("subskill") == target_subskill or s.get("sub_type") == target_subskill]
+        scen = matched[0] if matched else rng.choice(scenarios)
+    else:
+        scen = rng.choice(scenarios)
+
     options = list(scen["options"])
     rng.shuffle(options)
-
     return {
         "id": f"g7_math_graph_interp_{rng.randint(100000, 999999)}",
         "question_type": "mcq",
@@ -391,28 +454,36 @@ def generate(
     """
     Main entry point for Grade 7 Functions, Relationships & Graphs Generator.
     Supports atomic micro-drills:
-    - mode="elementary_flow_diagram": Input/output flow diagrams
-    - mode="elementary_table": Table of values and rule deduction
-    - mode="elementary_graphs": Line graph interpretation (linear/nonlinear, variables)
-    - mode="compound": Full authentic exam mix
+    - flow_diagram_reverse_input
+    - flow_diagram_forward
+    - table_of_values_completion
+    - linear_vs_nonlinear_graph
+    - graph_dependent_variable
+    - graph_reading_total
     """
     rng = _rng(seed)
     questions = []
 
-    for _ in range(count):
-        if mode == "elementary_flow_diagram" or subskill == "flow_diagram":
-            q = _generate_flow_diagram_question(rng)
-        elif mode == "elementary_table" or subskill == "table":
-            q = _generate_table_of_values_question(rng)
-        elif mode == "elementary_graphs" or subskill == "graphs":
-            q = _generate_line_graph_question(rng)
-        else: # compound: pick across all archetypes
-            archetype = rng.choice([
-                lambda: _generate_flow_diagram_question(rng),
-                lambda: _generate_table_of_values_question(rng),
-                lambda: _generate_line_graph_question(rng)
-            ])
-            q = archetype()
-        questions.append(q)
+    target_sub = str(subskill or "").strip().lower()
+
+    def _build_one(sub_name: str) -> Dict[str, Any]:
+        if "reverse" in sub_name:
+            return _generate_flow_diagram_question(rng, force_reverse=True)
+        if "forward" in sub_name or "flow" in sub_name:
+            return _generate_flow_diagram_question(rng, force_reverse=False)
+        if "table" in sub_name:
+            return _generate_table_of_values_question(rng)
+        if "linear" in sub_name or "graph" in sub_name or "dependent" in sub_name or "reading" in sub_name:
+            return _generate_line_graph_question(rng, target_subskill=sub_name)
+        return _generate_flow_diagram_question(rng)
+
+    if target_sub and target_sub not in ("compound", "all", "mixed", "auto", "default", "none"):
+        for _ in range(count):
+            questions.append(_build_one(target_sub))
+        return questions
+
+    for i in range(count):
+        sub = SUBSKILLS[i % len(SUBSKILLS)]
+        questions.append(_build_one(sub))
 
     return questions

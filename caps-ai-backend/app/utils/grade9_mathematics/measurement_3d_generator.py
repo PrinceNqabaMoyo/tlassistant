@@ -5,7 +5,7 @@ Covers:
   - Surface Area and Volume of Right Triangular and Rectangular Prisms
   - Capacity and Unit Conversions (cm^3 to ml/litres, m^3 to kilolitres)
 
-Follows South African CAPS curriculum specifications and the 6-Pillar Generator Contract.
+Follows South African national curriculum specifications and the 6-Pillar Generator Contract.
 Strictly zero-LLM, deterministic execution.
 """
 from __future__ import annotations
@@ -142,9 +142,18 @@ def generate_grade9_measurement_3d_question(
             f"2. Give your answer correct to two decimal places."
         )
         sample_answer = rf"\text{{Total SA}} = 2\pi r^2 + 2\pi rh = 2\pi({radius})^2 + 2\pi({radius})({height}) \approx {sa_str}\text{{ cm}}^2"
+        diag_cyl = {
+            "kind": "cylinder_net",
+            "polyhedron_type": "cylinder",
+            "radius": radius,
+            "height": height,
+        }
+
         return {
             "id": f"g9_meas3d_sa_{random.randint(100000, 999999)}",
             "subject": "mathematics",
+            "modality": "diagram",
+            "diagram_spec": diag_cyl,
             "grade": "grade-9",
             "topic": "Measurement of 3D Objects",
             "subskill": "surface_area_cylinder",
@@ -204,6 +213,9 @@ def generate_grade9_measurement_3d_question(
         return {
             "id": f"g9_meas3d_open_{random.randint(100000, 999999)}",
             "subject": "mathematics",
+            "modality": "diagram",
+            "diagram_spec": {
+        "diagram_role": "context","kind": "cylinder_net", "polyhedron_type": "cylinder", "radius": int(radius), "height": height},
             "grade": "grade-9",
             "topic": "Measurement of 3D Objects",
             "subskill": "open_cylinder_capacity",
@@ -254,9 +266,19 @@ def generate_grade9_measurement_3d_question(
             f"2. Calculate the volume of the triangular prism."
         )
         sample_answer = rf"\text{{Base Area}} = \frac{{1}}{{2}}({base_tri})({height_tri}) = {int(tri_area)}\text{{ cm}}^2;\ V = {int(tri_area)} \times {length_prism} = {vol_str}\text{{ cm}}^3"
+        diag_tri = {
+            "kind": "triangular_prism_net",
+            "polyhedron_type": "triangular_prism",
+            "base": base_tri,
+            "height": height_tri,
+            "length": length_prism,
+        }
+
         return {
             "id": f"g9_meas3d_tri_{random.randint(100000, 999999)}",
             "subject": "mathematics",
+            "modality": "diagram",
+            "diagram_spec": diag_tri,
             "grade": "grade-9",
             "topic": "Measurement of 3D Objects",
             "subskill": "volume_triangular_prism",
@@ -291,10 +313,12 @@ def generate_grade9_measurement_3d_question(
 
 
 def generate(
+    subskill: Optional[str] = None,
     count: int = 1,
     seed: Optional[int] = None,
     difficulty: str = "medium",
     mode: str = "compound",
+    **kwargs: Any,
 ) -> List[Dict[str, Any]]:
     base_seed = seed if seed is not None else 42
     return [

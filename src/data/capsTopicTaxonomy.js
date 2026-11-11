@@ -216,6 +216,11 @@ export const CAPS_TOPIC_TAXONOMY = {
         name: 'Stoichiometry and Quantitative Chemistry',
         term: 2,
         subtopics: ['Mole concept and molar mass', 'Empirical and molecular formulae', 'Concentration and molar gas volume', 'Stoichiometric calculations with limiting reagents']
+      },
+      {
+        name: 'Geometrical Optics',
+        term: 2,
+        subtopics: ['Refraction and Snell\'s Law', 'Critical angle and total internal reflection', 'Convex and concave lenses']
       }
     ],
     '12': [
@@ -233,6 +238,11 @@ export const CAPS_TOPIC_TAXONOMY = {
         name: 'Electrodynamics and Electricity',
         term: 3,
         subtopics: ['AC and DC generators', 'Electric motors and Fleming\'s left hand rule', 'Alternating current and rms voltage/current', 'Internal resistance and series-parallel networks']
+      },
+      {
+        name: 'Electrochemical Reactions',
+        term: 3,
+        subtopics: ['Galvanic cells and standard cell notation', 'Electrolytic cells', 'Standard reduction potentials and emf calculation']
       }
     ]
   },
@@ -291,6 +301,11 @@ export const CAPS_TOPIC_TAXONOMY = {
         name: 'Genetics and Inheritance',
         term: 1,
         subtopics: ['DNA and RNA structure and replication', 'Protein synthesis (transcription and translation)', 'Meiosis and chromosomal mutations', 'Mendelian monohybrid and dihybrid crosses', 'Pedigree diagrams and genetic counseling']
+      },
+      {
+        name: 'Human Responses to the Environment',
+        term: 2,
+        subtopics: ['Human eye anatomy and accommodation', 'Pupillary mechanism', 'Human ear and hearing', 'Endocrine system and homeostasis']
       },
       {
         name: 'Evolution',
@@ -360,6 +375,11 @@ export const CAPS_TOPIC_TAXONOMY = {
       }
     ],
     '9': [
+      {
+        name: 'Systems in the Human Body',
+        term: 1,
+        subtopics: ['Digestive system and nutrition', 'Circulatory and respiratory systems', 'Musculoskeletal and excretory systems']
+      },
       {
         name: 'Matter and Materials',
         term: 2,

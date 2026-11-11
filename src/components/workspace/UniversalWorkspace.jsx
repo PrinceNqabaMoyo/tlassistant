@@ -18,21 +18,29 @@ import {
     CheckSquare,
     ChevronDown,
     ChevronUp,
-    Activity
+    Activity,
+    RotateCcw,
+    Play
 } from 'lucide-react';
 import MathText from './shared/mathx/MathText';
+import DiagramRenderer from './shared/mathx/DiagramRenderer';
+import { getBankedDiagramComponent } from './modalities/diagram_bank';
 import MathModalityRenderer from './modalities/MathModalityRenderer';
 import LedgerModalityRenderer from './modalities/LedgerModalityRenderer';
 import RubricModalityRenderer from './modalities/RubricModalityRenderer';
 import DiagramModalityRenderer from './modalities/DiagramModalityRenderer';
 import ArithmeticGridModalityRenderer from './modalities/ArithmeticGridModalityRenderer';
+import CircuitModalityRenderer from './modalities/CircuitModalityRenderer';
+import PunnettSquareModalityRenderer from './modalities/PunnettSquareModalityRenderer';
+import BioDiagramModalityRenderer from './modalities/BioDiagramModalityRenderer';
+import FbdModalityRenderer from './modalities/FbdModalityRenderer';
+import OpticsRayModalityRenderer from './modalities/OpticsRayModalityRenderer';
 import MasteryDial from '../student/MasteryDial';
 import TopicScopeModal from '../curriculum/TopicScopeModal';
 import studentStore from '../../services/studentStore';
 
-const GeometricNets3DViewer = React.lazy(() => import('./modalities/GeometricNets3DViewer'));
-const ElectrodynamicsMotorViewer = React.lazy(() => import('./modalities/ElectrodynamicsMotorViewer'));
-const OrganicChemistry3DViewer = React.lazy(() => import('./modalities/OrganicChemistry3DViewer'));
+import CognitiveSidecarDrawer from './visual_aids/CognitiveSidecarDrawer';
+import { getAvailableVisualAids } from './visual_aids/visualAidRegistry';
 const SuperAdminProgressResetModal = React.lazy(() => import('../admin/SuperAdminProgressResetModal'));
 const SimuLearnPlayer = React.lazy(() => import('../simulearn/SimuLearnPlayer'));
 const PostExamTriageModal = React.lazy(() => import('../exam/PostExamTriageModal'));
@@ -69,44 +77,55 @@ const PostExamTriageModal = React.lazy(() => import('../exam/PostExamTriageModal
  */
 function formatTextWithMarkBadges(text) {
     if (!text || typeof text !== 'string') return text;
-    // Match mark tokens: [M], [A], [CA], [X marks], [X mark], [1], [2]
-    const parts = text.split(/(\[(?:M|A|CA|\d+\s*(?:marks?|mark)?|\d+)\])/g);
-    if (parts.length === 1) return <MathText text={text} />;
+    // Normalize **...** around math delimiters and clean cryptic SS[M] / SS[A] codes
+    const cleanedText = text
+        .replace(/\bSS\[(M|A|CA)\]/g, '[$1]')
+        .replace(/\*\*([^*\n]*?(\$\$[\s\S]*?\$\$|\\\[[\s\S]*?\\\]|\$[^\$\n]+?\$|\\\([\s\S]*?\\\))[^*\n]*?)\*\*/g, '$1');
+
+    // Protect LaTeX math formulas from being corrupted by mark badge matching (e.g. \sqrt[3]{...})
+    const MATH_REGEX = /(\$\$[\s\S]*?\$\$|\\\[[\s\S]*?\\\]|\$[^\$\n]+?\$|\\\([\s\S]*?\\\))/g;
+    const mathTokens = cleanedText.split(MATH_REGEX);
 
     return (
         <span>
-            {parts.map((part, pIdx) => {
-                if (part === '[M]') {
-                    return (
-                        <span key={pIdx} className="inline-flex items-center px-1.5 py-0.2 mx-1 rounded bg-indigo-100 text-indigo-800 text-[11px] font-mono font-bold border border-indigo-200">
-                            [M] Method
-                        </span>
-                    );
+            {mathTokens.map((segment, sIdx) => {
+                if (segment.match(/^(\$\$|\\\[|\$|\\\()/)) {
+                    return <MathText key={`m-${sIdx}`} text={segment} />;
                 }
-                if (part === '[A]') {
-                    return (
-                        <span key={pIdx} className="inline-flex items-center px-1.5 py-0.2 mx-1 rounded bg-emerald-100 text-emerald-800 text-[11px] font-mono font-bold border border-emerald-200">
-                            [A] Accuracy
-                        </span>
-                    );
-                }
-                if (part === '[CA]') {
-                    return (
-                        <span key={pIdx} className="inline-flex items-center px-1.5 py-0.2 mx-1 rounded bg-purple-100 text-purple-800 text-[11px] font-mono font-bold border border-purple-200">
-                            [CA] Consequential
-                        </span>
-                    );
-                }
-                const markNumMatch = part.match(/^\[(\d+)\s*(?:marks?|mark)?\]$/i);
-                if (markNumMatch) {
-                    const mCount = markNumMatch[1];
-                    return (
-                        <span key={pIdx} className="inline-flex items-center px-1.5 py-0.2 mx-1 rounded bg-blue-100 text-[#13519C] text-[11px] font-mono font-bold border border-blue-200">
-                            [{mCount} mark{Number(mCount) > 1 ? 's' : ''}]
-                        </span>
-                    );
-                }
-                return <MathText key={pIdx} text={part} />;
+                const parts = segment.split(/(\[(?:M|A|CA|\d+\s*(?:marks?|mark)?)\])/g);
+                return parts.map((part, pIdx) => {
+                    if (part === '[M]') {
+                        return (
+                            <span key={`${sIdx}-${pIdx}`} className="inline-flex items-center px-1.5 py-0.2 mx-1 rounded bg-indigo-100 text-indigo-800 text-[11px] font-mono font-bold border border-indigo-200">
+                                [M] Method
+                            </span>
+                        );
+                    }
+                    if (part === '[A]') {
+                        return (
+                            <span key={`${sIdx}-${pIdx}`} className="inline-flex items-center px-1.5 py-0.2 mx-1 rounded bg-emerald-100 text-emerald-800 text-[11px] font-mono font-bold border border-emerald-200">
+                                [A] Accuracy
+                            </span>
+                        );
+                    }
+                    if (part === '[CA]') {
+                        return (
+                            <span key={`${sIdx}-${pIdx}`} className="inline-flex items-center px-1.5 py-0.2 mx-1 rounded bg-purple-100 text-purple-800 text-[11px] font-mono font-bold border border-purple-200">
+                                [CA] Consequential
+                            </span>
+                        );
+                    }
+                    const markNumMatch = part.match(/^\[(\d+)\s*(?:marks?|mark)?\]$/i);
+                    if (markNumMatch) {
+                        const mCount = markNumMatch[1];
+                        return (
+                            <span key={`${sIdx}-${pIdx}`} className="inline-flex items-center px-1.5 py-0.2 mx-1 rounded bg-blue-100 text-[#13519C] text-[11px] font-mono font-bold border border-blue-200">
+                                [{mCount} mark{Number(mCount) > 1 ? 's' : ''}]
+                            </span>
+                        );
+                    }
+                    return <MathText key={`${sIdx}-${pIdx}`} text={part} />;
+                });
             })}
         </span>
     );
@@ -121,13 +140,38 @@ function renderFormattedPrompt(promptText) {
         );
     }
 
-    const lines = promptText.split(/\r?\n/);
+    const cleanText = String(promptText)
+        .replace(/\\r\\n/g, '\n')
+        .replace(/\\n/g, '\n')
+        .replace(/\\{3,}\s*/g, '\n\n');
+    const lines = cleanText.split(/\r?\n/);
     const blocks = [];
     let currentTable = null;
+    let currentMathBlock = null;
 
     for (let i = 0; i < lines.length; i++) {
         const rawLine = lines[i];
         const trimmed = rawLine.trim();
+
+        // Check if inside a multi-line display math block
+        if (currentMathBlock) {
+            currentMathBlock.push(rawLine);
+            if (trimmed.endsWith('\\]') || trimmed.endsWith('$$') || trimmed.includes('\\]') || (trimmed.startsWith('$$') && trimmed.length > 2)) {
+                blocks.push({ type: 'math', raw: currentMathBlock.join('\n') });
+                currentMathBlock = null;
+            }
+            continue;
+        }
+
+        if ((trimmed.startsWith('\\[') && !trimmed.endsWith('\\]')) || 
+            (trimmed.startsWith('$$') && trimmed.slice(2).indexOf('$$') === -1)) {
+            if (currentTable) {
+                blocks.push({ type: 'table', lines: currentTable });
+                currentTable = null;
+            }
+            currentMathBlock = [rawLine];
+            continue;
+        }
 
         // Check if line is part of a markdown table (starts and contains pipe, or is separator line)
         const isTableLine = trimmed.startsWith('|') && trimmed.endsWith('|') && trimmed.includes('|');
@@ -145,6 +189,10 @@ function renderFormattedPrompt(promptText) {
             }
             blocks.push({ type: 'text', raw: rawLine, trimmed });
         }
+    }
+
+    if (currentMathBlock) {
+        blocks.push({ type: 'math', raw: currentMathBlock.join('\n') });
     }
 
     if (currentTable) {
@@ -180,10 +228,12 @@ function renderFormattedPrompt(promptText) {
                             const right = col.endsWith(':');
                             if (left && right) alignments.push('center');
                             else if (right) alignments.push('right');
-                            else alignments.push('left');
+                            else if (left) alignments.push('left');
+                            else alignments.push('center');
                         });
                     }
 
+                    const isTallyColumn = headers.map((h) => /\btall(?:y|ies)\b/i.test(String(h)));
                     const rows = [];
                     for (let r = dataStartIndex; r < tableLines.length; r++) {
                         const rowCols = tableLines[r]
@@ -202,16 +252,16 @@ function renderFormattedPrompt(promptText) {
                                     <thead className="bg-slate-100 text-slate-700 font-bold uppercase tracking-wider text-[11px]">
                                         <tr>
                                             {headers.map((h, hIdx) => {
-                                                const align = alignments[hIdx] || 'left';
+                                                const align = alignments[hIdx] || 'center';
                                                 return (
                                                     <th
                                                         key={hIdx}
                                                         className={`px-3.5 py-2.5 ${
                                                             align === 'right'
                                                                 ? 'text-right'
-                                                                : align === 'center'
-                                                                    ? 'text-center'
-                                                                    : 'text-left'
+                                                                : align === 'left'
+                                                                    ? 'text-left'
+                                                                    : 'text-center'
                                                         }`}
                                                     >
                                                         <MathText text={h} />
@@ -225,20 +275,22 @@ function renderFormattedPrompt(promptText) {
                                     {rows.map((row, rIdx) => (
                                         <tr key={rIdx} className="odd:bg-white even:bg-slate-50/70 hover:bg-blue-50/40 transition-colors">
                                             {row.map((cell, cIdx) => {
-                                                const align = alignments[cIdx] || 'left';
-                                                const isNumeric = /^(R|\$|-|\+)?\s*\d/.test(cell.trim());
+                                                const align = alignments[cIdx] || 'center';
+                                                const trimmedCell = String(cell || '').trim();
+                                                const tallyMatch = isTallyColumn[cIdx] ? trimmedCell.match(/^(\d+)(?:\s*marks?)?$/i) : null;
+                                                const isTallyDigit = Boolean(tallyMatch);
                                                 return (
                                                     <td
                                                         key={cIdx}
                                                         className={`px-3.5 py-2 text-slate-800 ${
-                                                            align === 'right' || isNumeric
+                                                            align === 'right'
                                                                 ? 'text-right font-mono font-medium'
-                                                                : align === 'center'
-                                                                    ? 'text-center font-mono'
-                                                                    : 'text-left'
+                                                                : align === 'left'
+                                                                    ? 'text-left'
+                                                                    : 'text-center font-mono'
                                                         }`}
                                                     >
-                                                        <MathText text={cell} />
+                                                        <MathText text={isTallyDigit ? `[TALLY:${tallyMatch[1]}]` : cell} />
                                                     </td>
                                                 );
                                             })}
@@ -246,6 +298,14 @@ function renderFormattedPrompt(promptText) {
                                     ))}
                                 </tbody>
                             </table>
+                        </div>
+                    );
+                }
+
+                if (block.type === 'math') {
+                    return (
+                        <div key={idx} className="my-3 overflow-x-auto text-center py-1">
+                            <MathText text={block.raw} />
                         </div>
                     );
                 }
@@ -263,10 +323,10 @@ function renderFormattedPrompt(promptText) {
                     return <hr key={idx} className="my-2 border-t border-blue-200/80" />;
                 }
 
-                // Section header (e.g. "Required:", "Information:", "Transactions:", "The following balances...")
+                // Section header (e.g. "Required:", "Information:", "Transactions:", "#### REQUIRED:", "### Part 1")
                 const isHeading =
-                    /^(required|information|transactions|balances|instructions|note|statement|details):?$/i.test(line) ||
-                    (/^(\*\*|#+)?[A-Z][A-Za-z0-9\s—\-&]+:?(\*\*)?$/.test(line) && line.length < 50);
+                    /^(?:#+\s*)?(?:\*\*)?(required|information|transactions|balances|instructions|note|statement|details|part\s+\d+[^:]*):?(?:\*\*)?$/i.test(line) ||
+                    (/^(\*\*|#+\s*)?[A-Z][A-Za-z0-9\s—\-&()]+:?(\*\*)?$/.test(line) && line.length < 65);
 
                 if (isHeading) {
                     return (
@@ -323,6 +383,36 @@ function extractMemorandumContent(question) {
     if (!question) return '';
     const sections = [];
 
+    // 0. For MCQs: Always display the explicit Option Letter + Full Option Text first!
+    const mcqOpts = Array.isArray(question.options_latex) && question.options_latex.length > 0
+        ? question.options_latex
+        : (Array.isArray(question.options) && question.options.length > 0 ? question.options : null);
+
+    if (mcqOpts) {
+        let optIdx = -1;
+        const parsedIdx = parseInt(question.correct_index, 10);
+        if (!isNaN(parsedIdx) && parsedIdx >= 0 && parsedIdx < mcqOpts.length) {
+            optIdx = parsedIdx;
+        } else {
+            const targetAns = question.correct_answer ?? question.sample_answer ?? question.ideal_answer;
+            if (targetAns !== undefined && targetAns !== null) {
+                const caStr = String(targetAns).trim();
+                optIdx = mcqOpts.findIndex((o) => String(o).trim() === caStr || String(o).trim().startsWith(`${caStr}.`) || String(o).trim().startsWith(`${caStr})`));
+                if (optIdx === -1 && /^[A-D]$/i.test(caStr)) {
+                    optIdx = caStr.toUpperCase().charCodeAt(0) - 65;
+                }
+            }
+        }
+        if (optIdx >= 0 && optIdx < mcqOpts.length) {
+            const letter = String.fromCharCode(65 + optIdx);
+            const rawOptText = String(mcqOpts[optIdx]).replace(/^[A-D][.)]\s*/i, '').trim();
+            sections.push(`**Correct Answer:** **${letter}.** ${rawOptText} [A]`);
+        } else if (question.correct_answer || question.sample_answer || question.ideal_answer) {
+            const fallbackAns = question.correct_answer || question.sample_answer || question.ideal_answer;
+            sections.push(`**Correct Answer:** ${fallbackAns} [A]`);
+        }
+    }
+
     // 1. Step-by-step mathematical / logical procedure (Canonical SymPy solution)
     if (question.canonical_solution && typeof question.canonical_solution === 'object') {
         const cs = question.canonical_solution;
@@ -348,6 +438,23 @@ function extractMemorandumContent(question) {
         sections.push(formattedSteps);
     }
 
+    // 1b. Multi-part questions (Gen 3, Maths 3, 4, EMS 20): Format sub-parts with answer leading
+    const subPartsList = Array.isArray(question.sub_questions) ? question.sub_questions : (Array.isArray(question.parts) ? question.parts : null);
+    if (subPartsList && subPartsList.length > 0) {
+        const formattedParts = subPartsList.map((p, idx) => {
+            const partLabel = p.part || p.id || String.fromCharCode(97 + idx);
+            const ans = p.answer || p.correct_answer || p.expected_answer || p.sample_answer || '';
+            const marks = p.marks ? ` [${p.marks} mark${p.marks > 1 ? 's' : ''}]` : '';
+            const working = p.working || p.explanation || p.solution || p.steps || '';
+            let partBlock = `**(${partLabel})** ${ans ? `**Answer:** ${ans}${marks}` : ''}`;
+            if (working) {
+                partBlock += `\n\n*Working / Explanation:*\n${typeof working === 'object' ? JSON.stringify(working) : working}`;
+            }
+            return partBlock;
+        });
+        sections.push(formattedParts.join('\n\n---\n\n'));
+    }
+
     // 2. Primary narrative/semantic solution or worked solution
     const primarySolution = (
         (typeof question.worked_solution === 'string' && question.worked_solution.trim() && question.worked_solution) ||
@@ -356,10 +463,24 @@ function extractMemorandumContent(question) {
         (typeof question.ideal_answer === 'string' && question.ideal_answer.trim() && question.ideal_answer) ||
         (typeof question.memo === 'string' && question.memo.trim() && question.memo) ||
         (typeof question.explanation === 'string' && question.explanation.trim() && question.explanation) ||
-        (question.correct_answer ? `**Expected Answer:** ${question.correct_answer}` : '')
+        (typeof question.sample_answer === 'string' && question.sample_answer.trim() && `**Model Answer:** ${question.sample_answer}`) ||
+        (!mcqOpts && question.correct_answer ? `**Expected Answer:** ${question.correct_answer}` : '') ||
+        (!mcqOpts && question.expected_answer !== undefined && question.expected_answer !== null ? `**Expected Answer:** ${typeof question.expected_answer === 'object' ? JSON.stringify(question.expected_answer) : question.expected_answer}` : '')
     );
     if (primarySolution && !sections.includes(primarySolution)) {
         sections.push(primarySolution);
+    }
+
+    // 2b. Ensure non-MCQ questions always explicitly state the Final Answer if not already shown
+    if (!mcqOpts && !question.canonical_solution?.final_latex) {
+        const explicitFinal = question.answer_latex || question.correct_answer || question.expected_answer || question.sample_answer;
+        if (explicitFinal && typeof explicitFinal !== 'object') {
+            const finalStr = String(explicitFinal).trim();
+            const joinedSoFar = sections.join('\n');
+            if (finalStr && !joinedSoFar.includes(finalStr)) {
+                sections.push(`**Final Answer:** ${finalStr} [A]`);
+            }
+        }
     }
 
     // 3. Official CAPS Marking Points Allocation & Schema Breakdown (Semantic / Logic Solutions)
@@ -420,6 +541,7 @@ export default function UniversalWorkspace({
     evaluativeScore = 0,
     initialProgressionMode,
     onProgressionModeChange,
+    forceShowMemo = false,
 }) {
     const subjectTitle = typeof subject === 'string' ? subject : subject?.name || 'Subject';
     const normalizedSubId = String(subjectTitle).toLowerCase().replace(/\s+/g, '_');
@@ -460,18 +582,32 @@ export default function UniversalWorkspace({
     const [showGuidelines, setShowGuidelines] = useState(false);
     const [diagnosticIndex, setDiagnosticIndex] = useState(1); // 1, 2, or 3 of 3-question diagnostic cluster
     const [diagnosticScores, setDiagnosticScores] = useState([]);
+    const [diagnosticDebrief, setDiagnosticDebrief] = useState(null);
+    const [examUnlockedDismissed, setExamUnlockedDismissed] = useState(false);
     const [activeHintTier, setActiveHintTier] = useState(1);
     const [examTimer, setExamTimer] = useState(600); // 10 minutes in seconds
     const [showMasteryDial, setShowMasteryDial] = useState(false);
     const [showSimuLearn, setShowSimuLearn] = useState(false);
     const [showTriageModal, setShowTriageModal] = useState(false);
     const [remedialRepaired, setRemedialRepaired] = useState(false);
-    const [showFullMemo, setShowFullMemo] = useState(false);
+    const [showFullMemo, setShowFullMemo] = useState(forceShowMemo);
+    useEffect(() => {
+        setShowFullMemo(Boolean(forceShowMemo));
+    }, [forceShowMemo]);
+    const [isSidecarOpen, setIsSidecarOpen] = useState(false);
+    const [activeSidecarAidId, setActiveSidecarAidId] = useState(null);
+    const [sidecarCompanionTab, setSidecarCompanionTab] = useState('atlas');
 
     // Resolve canonical SimuLearn script based on subject and topic
     const getSimuLearnKey = () => {
         const s = String(normalizedSubId).toLowerCase();
         const t = String(topic || '').toLowerCase();
+        const img = String(question?.diagram_spec?.image_type || question?.diagram?.master || question?.diagram_meta?.master || '').toLowerCase();
+        if (img === 'alveolus_gas_exchange' || t.includes('gaseous exchange') || t.includes('alveol')) return 'alveolus_gas_exchange';
+        if (img === 'particle_model' || img === 'particle_model_matter' || t.includes('particle model') || t.includes('states of matter')) return 'particle_model_matter';
+        if (img === 'geyser_heating_element' || t.includes('geyser') || t.includes('heat transfer')) return 'geyser_heating_element';
+        if (img === 'optical_telescopes' || t.includes('telescope') || t.includes('visible light')) return 'optical_telescopes';
+        if (img === 'human_heart' || img === 'heart' || t.includes('heart') || t.includes('cardiac') || t.includes('transport system') || t.includes('circulat')) return 'cardiac_cycle';
         if (s.includes('acc') || s.includes('ems') || t.includes('crj') || t.includes('vat')) return 'accounting_crj_vat';
         if (s.includes('phys') || s.includes('chem') || t.includes('kinematic')) return 'physics_kinematics_dx';
         if (s.includes('life')) return 'lifesci_genetics_punnett';
@@ -482,15 +618,36 @@ export default function UniversalWorkspace({
     // Desktop ergonomics: during active problem solving, keep question surface clean & full-width.
     const isAnswered = isChecked || Boolean(result);
 
-    // Synchronize mode whenever subject changes
+    // Synchronize mode whenever subject or mastery status changes
+    const prevStatusRef = React.useRef(subData.status);
     useEffect(() => {
         if (isDiagnosticRequired) {
             setProgressionMode('diagnostic');
             setShowHints(false);
             setDiagnosticIndex(1);
             setDiagnosticScores([]);
+            setDiagnosticDebrief(null);
+            prevStatusRef.current = 'diagnostic_required';
+            return;
         }
-    }, [normalizedSubId, isDiagnosticRequired]);
+        if (subData.prerequisiteGapDetected && progressionMode !== 'scaffold') {
+            setProgressionMode('scaffold');
+        } else if (prevStatusRef.current !== subData.status) {
+            if (subData.status === 'exam_ready') {
+                if (progressionMode === 'practice') {
+                    // Learner unlocked Exam Mode while practicing: do not auto-force timed exam
+                    setExamUnlockedDismissed(false);
+                } else if (progressionMode !== 'assessment') {
+                    setProgressionMode('assessment');
+                }
+            } else if (subData.status === 'practice') {
+                setProgressionMode('practice');
+            } else if (subData.status === 'scaffold') {
+                setProgressionMode('scaffold');
+            }
+        }
+        prevStatusRef.current = subData.status;
+    }, [normalizedSubId, isDiagnosticRequired, subData.status, subData.prerequisiteGapDetected, progressionMode]);
 
     useEffect(() => {
         setIsChecked(false);
@@ -500,7 +657,11 @@ export default function UniversalWorkspace({
         setShowMasteryDial(false);
         setShowFullMemo(false);
         setRemedialRepaired(false);
-    }, [question?.id]);
+        setDiagnosticDebrief(null);
+        if (typeof window !== 'undefined') {
+            window.__FUNDILE_ACTIVE_QUESTION__ = question || null;
+        }
+    }, [question]);
 
     // Exam countdown timer
     useEffect(() => {
@@ -528,20 +689,48 @@ export default function UniversalWorkspace({
             const rawScore = typeof evalResult?.score === 'number' 
                 ? evalResult.score 
                 : (typeof result?.score === 'number' ? result.score : null);
-            const rawTotal = evalResult?.total || result?.total || question?.marks || 10;
-            const currentItemPct = (rawScore !== null && rawScore >= 0) 
+            const rawTotal = evalResult?.max_score ?? evalResult?.total ?? result?.max_score ?? result?.total ?? question?.marks ?? 10;
+            const currentItemPct = (rawScore !== null && rawScore >= 0 && rawTotal > 0) 
                 ? Math.round((rawScore / rawTotal) * 100) 
-                : 85;
+                : (evalResult?.is_correct ? 100 : 0);
             
             if (diagnosticIndex >= 3) {
                 // Completed the full 3-question diagnostic probe! Aggregate all 3 items.
                 const allScores = [...diagnosticScores, currentItemPct];
                 const aggregatedScorePct = Math.round(allScores.reduce((acc, val) => acc + val, 0) / allScores.length);
-                studentStore.completeDiagnostic(normalizedSubId, aggregatedScorePct);
+                const updated = studentStore.completeDiagnostic(normalizedSubId, aggregatedScorePct);
                 setGateNotice(null);
+                const targetMode =
+                    updated?.status === 'exam_ready' ? 'assessment' :
+                    updated?.status === 'practice' ? 'practice' : 'scaffold';
+                const targetTitle =
+                    targetMode === 'assessment' ? '3. Exam Mode (Fast-Track)' :
+                    targetMode === 'practice' ? '2. Practice Mode' : '1. Guided Scaffold';
+                const rationale =
+                    targetMode === 'assessment'
+                        ? 'Outstanding baseline! You demonstrated total mastery across foundational definitions, procedural rules, and synthesis problem solving. You have fast-tracked straight to the timed examination.'
+                        : targetMode === 'practice'
+                        ? 'Strong baseline! You demonstrated solid foundational comprehension. You have unlocked unassisted Practice Mode to sharpen your speed and procedural consistency.'
+                        : 'Diagnostic calibrated. You will start with 1. Guided Scaffold, utilizing 3-tier hints and step-by-step SimuLearn worked solutions to build solid procedural mastery.';
+                setDiagnosticDebrief({
+                    scorePct: aggregatedScorePct,
+                    itemScores: allScores,
+                    targetMode,
+                    targetTitle,
+                    rationale
+                });
             } else {
                 setDiagnosticScores((prev) => [...prev, currentItemPct]);
             }
+        }
+    };
+
+    const handleProceedFromDiagnostic = (targetMode) => {
+        setDiagnosticDebrief(null);
+        setProgressionMode(targetMode);
+        if (onProgressionModeChange) onProgressionModeChange(targetMode);
+        if (onNext) {
+            onNext({ stage: targetMode, diagnosticStep: 1 });
         }
     };
 
@@ -575,9 +764,13 @@ export default function UniversalWorkspace({
     };
 
     const handleCalibrateBaseline = (startingScore = 55) => {
-        studentStore.completeDiagnostic(normalizedSubId, startingScore);
+        const updated = studentStore.completeDiagnostic(normalizedSubId, startingScore);
         setGateNotice(null);
-        setProgressionMode(startingScore >= 60 ? 'practice' : 'scaffold');
+        setDiagnosticDebrief(null);
+        const nextMode =
+            updated?.status === 'exam_ready' ? 'assessment' :
+            updated?.status === 'practice' ? 'practice' : 'scaffold';
+        setProgressionMode(nextMode);
     };
 
     // Extract deterministic 3-tier hints
@@ -591,50 +784,66 @@ export default function UniversalWorkspace({
     // Determine cognitive modality from question payload or subject domain
     const modality = (() => {
         const topLower = String(topic || '').toLowerCase();
-        const subLower = String(subjectTitle || '').toLowerCase();
 
         // 1. SOTA Visual Modalities (AI Blackboard showcase)
         if (
             question?.modality === 'geometric_nets' ||
-            topLower.includes('geometry of 3d') ||
-            topLower.includes('geometric net') ||
-            topLower.includes('3d object') ||
-            topLower.includes('platonic solid')
+            Boolean(question?.diagram_spec?.kind?.includes('net'))
         ) return 'geometric_nets';
+        if (question?.modality === 'electrodynamics') return 'electrodynamics';
+        if (question?.modality === 'organic_chemistry') return 'organic_chemistry';
+
+        // 2. Science Visual Modalities
+        if (
+            question?.modality === 'circuit' ||
+            Boolean(question?.circuit_spec)
+        ) return 'circuit';
 
         if (
-            question?.modality === 'electrodynamics' ||
-            topLower.includes('electrodynamics') ||
-            topLower.includes('ac generator') ||
-            topLower.includes('dc motor') ||
-            topLower.includes('armature')
-        ) return 'electrodynamics';
+            question?.modality === 'punnett_square' ||
+            question?.modality === 'punnett' ||
+            Boolean(question?.punnett_spec)
+        ) return 'punnett_square';
 
         if (
-            question?.modality === 'organic_chemistry' ||
-            topLower.includes('organic chemistry') ||
-            topLower.includes('isomer') ||
-            topLower.includes('homologous series')
-        ) return 'organic_chemistry';
+            question?.modality === 'bio_diagram' ||
+            question?.modality === 'biological_labeling' ||
+            Boolean(question?.diagram_spec?.image_type) ||
+            Boolean(question?.diagram?.master) ||
+            Boolean(question?.diagram_meta?.master)
+        ) return 'bio_diagram';
 
-        // 2. Fundamental & Standard Modalities
+        if (
+            question?.modality === 'free_body_diagram' ||
+            Boolean(question?.fbd_spec)
+        ) return 'free_body_diagram';
+
+        if (
+            question?.modality === 'optics_ray' ||
+            Boolean(question?.optics_spec)
+        ) return 'optics_ray';
+
+        // 3. Fundamental & Standard Modalities
         if (
             question?.modality === 'arithmetic_grid' || 
-            question?.arithmetic_grid || 
-            question?.subskill === 'long_division' ||
-            topLower.includes('whole numbers') ||
+            Boolean(question?.arithmetic_grid) || 
             topLower.includes('long division')
         ) return 'arithmetic_grid';
-        if (question?.modality === 'ledger' || question?.journal || question?.table_schema) return 'ledger';
-        if (question?.options || question?.options_latex || question?.question_type === 'mcq') return 'math';
-        if (question?.modality === 'diagram' || question?.diagram_spec || question?.diagram) return 'diagram';
 
-        // 3. Explicit Archetype Semantic Modality
+        if (question?.modality === 'ledger' || question?.journal || question?.table_schema || Boolean(question?.headers && question?.rows)) return 'ledger';
+        const isExplicitInteractiveDiagram = question?.question_type === 'diagram_select' || Boolean(question?.correct_edge) || question?.modality === 'diagram';
+        const isContextDiagram = question?.diagram_role === 'context' || question?.diagram_spec?.role === 'context' || question?.diagram_spec?.diagram_role === 'context' || ['supply_demand', 'circular_flow', 'production_chain'].includes(question?.diagram_spec?.kind);
+        if (isExplicitInteractiveDiagram && !isContextDiagram) return 'diagram';
+        if (question?.options || question?.options_latex || question?.question_type === 'mcq') return 'math';
+
+        // 3. Respect explicit backend modality when normalized ('math', 'semantic', 'rubric')
+        if (question?.modality === 'math') return 'math';
+        if (question?.modality === 'semantic' || question?.modality === 'rubric') return 'semantic';
+
+        // 4. Fallback heuristic when modality is not explicitly set on question
         if (
-            question?.modality === 'semantic' ||
-            question?.modality === 'rubric' ||
-            ['rubric', 'essay', 'short_answer', 'typed', 'conceptual'].includes(question?.question_type) ||
-            Boolean(question?.content_rubric || question?.marking_points || question?.marking_schema?.marking_points)
+            ['rubric', 'essay', 'short_answer', 'conceptual'].includes(question?.question_type) ||
+            Boolean(question?.content_rubric || question?.marking_points)
         ) {
             return 'semantic';
         }
@@ -642,6 +851,34 @@ export default function UniversalWorkspace({
         if (question?.modality) return question.modality;
         return 'math';
     })();
+
+    // Calculate available cognitive visual aids for this topic and modality
+    const availableAids = React.useMemo(() => {
+        return getAvailableVisualAids(normalizedSubId, topic, modality, question);
+    }, [normalizedSubId, topic, modality, question]);
+    const primaryAid = availableAids[0];
+
+    // Never auto-open the visual aid drawer on question load (Maths #28, #29, #31).
+    // Visual aids are strictly user-invoked and gated by progression stage.
+    useEffect(() => {
+        setIsSidecarOpen(false);
+        if (modality === 'geometric_nets') setActiveSidecarAidId('aid_geometric_nets_3d');
+        else if (modality === 'electrodynamics') setActiveSidecarAidId('aid_electrodynamics_motor');
+        else if (modality === 'organic_chemistry') setActiveSidecarAidId('aid_organic_chemistry_3d');
+        else if (availableAids.length > 0 && (!activeSidecarAidId || !availableAids.some(a => a.id === activeSidecarAidId))) {
+            setActiveSidecarAidId(availableAids[0].id);
+        }
+    }, [modality, question?.id, availableAids]);
+
+    const effectivePrerequisiteBanner = prerequisiteBanner || (
+        subData.prerequisiteGapDetected
+            ? {
+                target_grade: Math.max(7, (Number(grade) || 10) - 1),
+                target_topic: topic || 'Foundational Micro-Drill',
+                explanation: `Repeated difficulty detected in ${topic || 'current topic'}. A 5-minute foundational micro-drill is recommended to rebuild the prerequisite schema.`
+            }
+            : null
+    );
 
     // Extract authentic prompt text across all backend generator schemas
     const promptText = question?.prompt || question?.question || question?.question_text || question?.instruction || question?.prompt_latex || '';
@@ -652,7 +889,7 @@ export default function UniversalWorkspace({
         <div className={isEmbedded ? "w-full h-full relative font-sans" : "min-h-screen bg-slate-50 relative font-sans"}>
             
             {/* ── UNIFIED 1-LINE WORKSPACE HEADER (Prominent Question & Answer Layout) ── */}
-            <div className="bg-white rounded-xl border border-slate-200/90 px-3.5 py-2 flex flex-wrap items-center justify-between gap-2.5 shadow-2xs text-xs font-sans">
+            <div className="sticky top-0 z-30 bg-white/95 backdrop-blur-xs rounded-xl border border-slate-200/90 px-3.5 py-2 flex flex-wrap items-center justify-between gap-2.5 shadow-xs text-xs font-sans">
                 
                 {/* Left: Studio Navigation & Topic Scope Selector */}
                 <div className="flex items-center gap-2 min-w-0">
@@ -679,6 +916,18 @@ export default function UniversalWorkspace({
                         <span className="truncate">{topic || 'Problem Solving'}</span>
                         <ChevronDown className="w-3 h-3 text-slate-500 shrink-0" />
                     </button>
+
+                    {question?.subskill && (
+                        <span data-testid="badge-subskill-header" className="hidden sm:inline-flex items-center px-2 py-0.5 rounded-full bg-slate-100 text-slate-700 border border-slate-300 font-mono text-[10px] font-medium truncate max-w-[180px]">
+                            {question.subskill}
+                        </span>
+                    )}
+
+                    {showFullMemo && (
+                        <span data-testid="badge-memo-unlocked-header" className="px-2 py-0.5 rounded-full bg-blue-600 text-white font-mono text-[10px] font-bold shadow-2xs flex items-center gap-1 shrink-0 animate-in fade-in">
+                            <span>📖 Memo Unlocked</span>
+                        </span>
+                    )}
 
                     {isDiagnosticRequired && (
                         <div className="flex items-center gap-1.5 shrink-0">
@@ -800,6 +1049,47 @@ export default function UniversalWorkspace({
                         )
                     )}
 
+                    {/* Exploratory Visual Aids are available in Scaffold & Practice (or Periodic Table / Exam Data Sheet in Exam Mode) */}
+                    {availableAids.length > 0 && (progressionMode === 'scaffold' || progressionMode === 'practice' || primaryAid?.id?.includes('periodic_table')) && (
+                        <button
+                            type="button"
+                            data-testid="btn-toggle-visual-aid"
+                            onClick={() => {
+                                setSidecarCompanionTab('atlas');
+                                setIsSidecarOpen((prev) => !prev);
+                            }}
+                            className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-lg text-xs font-bold transition cursor-pointer ${
+                                isSidecarOpen
+                                    ? 'bg-[#13519C] text-white shadow-2xs'
+                                    : 'bg-indigo-50 text-indigo-900 border border-indigo-200 hover:bg-indigo-100'
+                            }`}
+                            title={`Open Archetype Enhancement Companion: ${primaryAid?.title || 'Visual Aid'}`}
+                        >
+                            <Sparkles className="w-3 h-3 text-indigo-500" />
+                            <span className="hidden sm:inline">Companion:</span>
+                            <span>{primaryAid?.shortTitle || 'Explore'}</span>
+                        </button>
+                    )}
+
+                    {question?.calculator_allowed === false && (
+                        <span data-testid="badge-no-calculator" className="hidden sm:inline-flex items-center gap-1 px-2 py-0.5 rounded-lg bg-rose-50 text-rose-700 border border-rose-200 font-mono text-[10px] font-bold">
+                            <span>🚫 No Calculator</span>
+                        </span>
+                    )}
+
+                    {progressionMode !== 'assessment' && (
+                        <button
+                            type="button"
+                            data-testid="btn-top-simulearn"
+                            onClick={() => setShowSimuLearn(true)}
+                            className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-lg text-xs font-bold transition cursor-pointer bg-purple-50 text-purple-900 border border-purple-200 hover:bg-purple-100 shadow-2xs"
+                            title="Watch SimuLearn Step-by-Step Interactive Process Replay"
+                        >
+                            <Play className="w-3 h-3 text-purple-600 fill-purple-600" />
+                            <span>SimuLearn</span>
+                        </button>
+                    )}
+
                     <div className="flex items-center gap-2 pl-1 border-l border-slate-200 text-xs">
                         <span className="font-bold text-amber-700 font-mono">
                             {question?.marks || 6} Marks
@@ -891,22 +1181,22 @@ export default function UniversalWorkspace({
             )}
 
             {/* Prerequisite Regression Banner (If triggered) */}
-            {prerequisiteBanner && (
+            {effectivePrerequisiteBanner && (
                 <div data-testid="banner-prerequisite-gap" className="mt-2 rounded-2xl border border-amber-300 bg-amber-50/80 p-4 space-y-2 text-xs shadow-xs font-sans">
                     <div className="flex items-center gap-2">
                         <GitBranch className="w-4 h-4 text-amber-600" />
                         <span className="font-bold text-slate-900" style={{ fontFamily: 'Afacad, sans-serif' }}>
-                            Prerequisite Gap Identified (Grade {prerequisiteBanner.target_grade})
+                            Prerequisite Gap Identified (Grade {effectivePrerequisiteBanner.target_grade})
                         </span>
                     </div>
                     <p className="text-slate-600 leading-relaxed">
-                        {prerequisiteBanner.explanation || 'Step down recommended to master foundational rules.'}
+                        {effectivePrerequisiteBanner.explanation || 'Step down recommended to master foundational rules.'}
                     </p>
                     <div className="flex flex-wrap items-center gap-3 pt-1">
                         <button
                             type="button"
                             data-testid="btn-start-micro-drill"
-                            onClick={() => onStartMicroDrill && onStartMicroDrill(prerequisiteBanner)}
+                            onClick={() => onStartMicroDrill && onStartMicroDrill(effectivePrerequisiteBanner)}
                             className="text-xs font-bold text-[#13519C] hover:underline flex items-center gap-1 cursor-pointer"
                         >
                             Start 5-Min Prerequisite Drill →
@@ -923,12 +1213,14 @@ export default function UniversalWorkspace({
                 </div>
             )}
 
-            {/* ── MAIN QUESTION WORKSPACE (Front and Center Prominence) ── */}
+            {/* ── MAIN QUESTION WORKSPACE (Front and Center Prominence — Paper Folio Surface) ── */}
             <div className="mt-3 w-full space-y-4">
                 <div 
                     data-testid="question-surface"
+                    data-question-id={question?.id || ''}
+                    data-modality={modality}
                     data-source={question?.source || (question ? 'deterministic_generator' : 'none')}
-                    className="rounded-2xl border border-slate-200 bg-white p-4 sm:p-6 space-y-4 shadow-xs font-sans"
+                    className="rounded-2xl border border-[#EAE5DC] bg-[#FAF8F3] p-4 sm:p-6 space-y-4 shadow-xs font-sans text-[#1E2022]"
                 >
 
                         {/* Question Prompt */}
@@ -943,14 +1235,137 @@ export default function UniversalWorkspace({
                                 {generationError}
                             </div>
                         ) : (
-                            <div className="rounded-xl border border-slate-200/90 bg-slate-50/70 p-4 sm:p-5 shadow-2xs font-sans transition-all space-y-3">
-                                <div className="pb-2 border-b border-slate-200/70">
-                                    <span className="text-xs font-bold text-slate-800 uppercase tracking-wider font-mono">
+                            <div data-testid="question-card" className="rounded-xl border border-[#EAE5DC] bg-[#FAF8F3] p-4 sm:p-5 shadow-2xs font-sans transition-all space-y-3 text-[#1E2022]">
+                                <div className="pb-2 border-b border-[#EAE5DC]">
+                                    <span className="text-xs font-bold text-[#1E2022] uppercase tracking-wider font-mono">
                                         Question
                                     </span>
                                 </div>
 
                                 {renderFormattedPrompt(promptText)}
+
+                                {/* Stimulus Diagram / Graph / Apparatus inside the Question Card (Maths #27, #30 & NS #14) */}
+                                {(() => {
+                                    const bioSpec = question?.diagram_spec || question?.diagram || question?.diagram_meta || {};
+                                    const bioType = String(bioSpec.image_type || bioSpec.master || '').toLowerCase();
+                                    const BankedComp = bioType ? getBankedDiagramComponent(bioType) : null;
+                                    if (modality === 'bio_diagram' && BankedComp) {
+                                        const isContextOnly = bioSpec.diagram_role === 'context' || bioSpec.role === 'context' || question?.diagram_role === 'context';
+                                        const rawPins = Array.isArray(bioSpec.pins) ? bioSpec.pins : [];
+                                        const pins = isContextOnly ? [] : rawPins;
+                                        const landmarks = Array.isArray(bioSpec.landmarks) ? bioSpec.landmarks : [];
+                                        const labels = isContextOnly ? [] : (Array.isArray(bioSpec.labels) && bioSpec.labels.length > 0)
+                                            ? bioSpec.labels
+                                            : (pins.length > 0 ? pins.map((p) => ({ id: p.pin, name: p.name || `Pin ${p.pin}` })) : []);
+                                        return (
+                                            <div data-testid="bio-diagram-canvas" className="mt-3 p-4 bg-white rounded-xl border border-slate-200 shadow-2xs flex flex-col items-center space-y-2">
+                                                <BankedComp
+                                                    {...bioSpec}
+                                                    pins={pins}
+                                                    landmarks={landmarks}
+                                                    labels={labels}
+                                                    state={bioSpec.state || 'static'}
+                                                    viewBox={bioSpec.viewBox || '0 0 600 480'}
+                                                    gradeMask={bioSpec.grade_mask || `g${grade || 7}`}
+                                                    anodeMetal={bioSpec.anode_metal}
+                                                    cathodeMetal={bioSpec.cathode_metal}
+                                                    voltmeterReading={bioSpec.voltmeter_reading}
+                                                />
+                                            </div>
+                                        );
+                                    }
+                                    if (modality === 'circuit') {
+                                        return (
+                                            <div className="mt-3">
+                                                <CircuitModalityRenderer question={question} topic={topic} stimulusOnly={true} />
+                                            </div>
+                                        );
+                                    }
+                                    if (modality === 'free_body_diagram') {
+                                        return (
+                                            <div className="mt-3">
+                                                <FbdModalityRenderer question={question} topic={topic} stimulusOnly={true} />
+                                            </div>
+                                        );
+                                    }
+                                    if (modality === 'optics_ray') {
+                                        return (
+                                            <div className="mt-3">
+                                                <OpticsRayModalityRenderer question={question} topic={topic} stimulusOnly={true} />
+                                            </div>
+                                        );
+                                    }
+                                    const mathDiagSpec = question?.diagram_spec || question?.diagram || question?.graph || question?.function_graph;
+                                    const isInteractiveEdgeSelect = question?.question_type === 'diagram_select' || Boolean(question?.correct_edge);
+                                    if (mathDiagSpec && !isInteractiveEdgeSelect && modality !== 'bio_diagram') {
+                                        return (
+                                            <div data-testid="question-stimulus-diagram" className="mt-3 p-3 bg-white rounded-xl border border-slate-200 shadow-2xs flex justify-center">
+                                                <DiagramRenderer spec={mathDiagSpec} interactive={false} />
+                                            </div>
+                                        );
+                                    }
+                                    return null;
+                                })()}
+
+                                {/* Transactions Stimulus for Accounting & EMS */}
+                                {Array.isArray(question?.transactions) && question.transactions.length > 0 && (
+                                    <div data-testid="question-transactions-stimulus" className="mt-3 p-3.5 bg-white rounded-xl border border-blue-200/80 shadow-2xs space-y-2">
+                                        <div className="flex items-center gap-2 pb-1.5 border-b border-slate-100">
+                                            <span className="w-5 h-5 rounded-md bg-blue-50 text-[#13519C] flex items-center justify-center text-xs font-bold font-mono">
+                                                📝
+                                            </span>
+                                            <span className="text-xs font-bold text-slate-800 uppercase tracking-wide font-sans">
+                                                Transactions / Information
+                                            </span>
+                                            <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-blue-50 text-[#13519C] font-mono">
+                                                {question.transactions.length} {question.transactions.length === 1 ? 'item' : 'items'}
+                                            </span>
+                                        </div>
+                                        <div className="space-y-1.5 text-xs sm:text-sm text-slate-700">
+                                            {question.transactions.map((tx, txIdx) => {
+                                                const txText = typeof tx === 'object' ? (tx.text || tx.description || JSON.stringify(tx)) : String(tx);
+                                                const hasExplicitDay = typeof tx === 'object' && tx?.day;
+                                                return (
+                                                    <div key={txIdx} className="flex items-start gap-2 bg-slate-50/80 p-2.5 rounded-lg border border-slate-200/60 shadow-2xs">
+                                                        <span className="font-semibold text-[#13519C] shrink-0 font-mono text-xs mt-0.5">
+                                                            {hasExplicitDay ? `Day ${tx.day}:` : `•`}
+                                                        </span>
+                                                        <div className="leading-relaxed flex-1">
+                                                            <MathText text={txText} />
+                                                        </div>
+                                                    </div>
+                                                );
+                                            })}
+                                        </div>
+                                    </div>
+                                )}
+
+                                {/* Account Balances Stimulus for Trial Balance & Ledgers */}
+                                {Array.isArray(question?.account_balances) && question.account_balances.length > 0 && (
+                                    <div data-testid="question-balances-stimulus" className="mt-3 p-3.5 bg-white rounded-xl border border-indigo-200/80 shadow-2xs space-y-2">
+                                        <div className="flex items-center gap-2 pb-1.5 border-b border-slate-100">
+                                            <span className="w-5 h-5 rounded-md bg-indigo-50 text-indigo-700 flex items-center justify-center text-xs font-bold font-mono">
+                                                ⚖️
+                                            </span>
+                                            <span className="text-xs font-bold text-slate-800 uppercase tracking-wide font-sans">
+                                                Account Balances
+                                            </span>
+                                            <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-indigo-50 text-indigo-700 font-mono">
+                                                {question.account_balances.length} accounts
+                                            </span>
+                                        </div>
+                                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-slate-700">
+                                            {question.account_balances.map((b, bIdx) => (
+                                                <div key={bIdx} className="flex items-center justify-between bg-slate-50/80 p-2 rounded-lg border border-slate-200/50">
+                                                    <span className="font-medium text-slate-800">{typeof b === 'object' ? (b.account || b.name) : String(b)}</span>
+                                                    {typeof b === 'object' && b.amount !== undefined && (
+                                                        <span className="font-mono font-semibold text-slate-900">{typeof b.amount === 'number' ? `R${b.amount.toLocaleString()}` : b.amount}</span>
+                                                    )}
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                )}
 
                                 {Array.isArray(question?.guidelines) && question.guidelines.length > 0 && (
                                     <div className="rounded-xl border border-slate-200 bg-white p-3 space-y-2 mt-3 font-sans shadow-2xs">
@@ -1025,6 +1440,7 @@ export default function UniversalWorkspace({
                                         isChecking={isChecking}
                                         showDynamicScaffold={showHints}
                                         onToggleScaffold={() => setShowHints((prev) => !prev)}
+                                        hideStimulusDiagram={true}
                                     />
                                 )}
                                 {modality === 'diagram' && (
@@ -1036,6 +1452,7 @@ export default function UniversalWorkspace({
                                         isChecking={isChecking}
                                         showDynamicScaffold={showHints}
                                         onToggleScaffold={() => setShowHints((prev) => !prev)}
+                                        hideStimulusDiagram={true}
                                     />
                                 )}
                                 {modality === 'arithmetic_grid' && (
@@ -1049,56 +1466,20 @@ export default function UniversalWorkspace({
                                         onToggleScaffold={() => setShowHints((prev) => !prev)}
                                     />
                                 )}
-                                {modality === 'geometric_nets' && (
-                                    <div className="space-y-4">
-                                        <React.Suspense fallback={<div className="h-64 flex items-center justify-center bg-slate-100 rounded-xl animate-pulse"><Loader2 className="w-6 h-6 animate-spin text-[#13519C]" /></div>}>
-                                            <GeometricNets3DViewer />
-                                        </React.Suspense>
-                                        <MathModalityRenderer
-                                            question={question}
-                                            topic={topic}
-                                            onCheck={handleCheckWrapper}
-                                            result={result}
-                                            isChecking={isChecking}
-                                            showDynamicScaffold={showHints}
-                                            onToggleScaffold={() => setShowHints((prev) => !prev)}
-                                        />
-                                    </div>
+                                {modality === 'circuit' && (
+                                    <CircuitModalityRenderer
+                                        question={question}
+                                        topic={topic}
+                                        onCheck={handleCheckWrapper}
+                                        result={result}
+                                        isChecking={isChecking}
+                                        showDynamicScaffold={showHints}
+                                        onToggleScaffold={() => setShowHints((prev) => !prev)}
+                                        hideStimulusDiagram={true}
+                                    />
                                 )}
-                                {modality === 'electrodynamics' && (
-                                    <div className="space-y-4">
-                                        <React.Suspense fallback={<div className="h-64 flex items-center justify-center bg-slate-100 rounded-xl animate-pulse"><Loader2 className="w-6 h-6 animate-spin text-[#13519C]" /></div>}>
-                                            <ElectrodynamicsMotorViewer />
-                                        </React.Suspense>
-                                        <MathModalityRenderer
-                                            question={question}
-                                            topic={topic}
-                                            onCheck={handleCheckWrapper}
-                                            result={result}
-                                            isChecking={isChecking}
-                                            showDynamicScaffold={showHints}
-                                            onToggleScaffold={() => setShowHints((prev) => !prev)}
-                                        />
-                                    </div>
-                                )}
-                                {modality === 'organic_chemistry' && (
-                                    <div className="space-y-4">
-                                        <React.Suspense fallback={<div className="h-64 flex items-center justify-center bg-slate-100 rounded-xl animate-pulse"><Loader2 className="w-6 h-6 animate-spin text-[#13519C]" /></div>}>
-                                            <OrganicChemistry3DViewer />
-                                        </React.Suspense>
-                                        <MathModalityRenderer
-                                            question={question}
-                                            topic={topic}
-                                            onCheck={handleCheckWrapper}
-                                            result={result}
-                                            isChecking={isChecking}
-                                            showDynamicScaffold={showHints}
-                                            onToggleScaffold={() => setShowHints((prev) => !prev)}
-                                        />
-                                    </div>
-                                )}
-                                {modality === 'math' && (
-                                    <MathModalityRenderer
+                                {modality === 'punnett_square' && (
+                                    <PunnettSquareModalityRenderer
                                         question={question}
                                         topic={topic}
                                         onCheck={handleCheckWrapper}
@@ -1108,10 +1489,61 @@ export default function UniversalWorkspace({
                                         onToggleScaffold={() => setShowHints((prev) => !prev)}
                                     />
                                 )}
+                                {modality === 'bio_diagram' && (
+                                    <BioDiagramModalityRenderer
+                                        question={question}
+                                        topic={topic}
+                                        onCheck={handleCheckWrapper}
+                                        result={result}
+                                        isChecking={isChecking}
+                                        showDynamicScaffold={showHints}
+                                        onToggleScaffold={() => setShowHints((prev) => !prev)}
+                                        hideStimulusDiagram={true}
+                                    />
+                                )}
+                                {modality === 'free_body_diagram' && (
+                                    <FbdModalityRenderer
+                                        question={question}
+                                        topic={topic}
+                                        onCheck={handleCheckWrapper}
+                                        result={result}
+                                        isChecking={isChecking}
+                                        showDynamicScaffold={showHints}
+                                        onToggleScaffold={() => setShowHints((prev) => !prev)}
+                                        hideStimulusDiagram={true}
+                                    />
+                                )}
+                                {modality === 'optics_ray' && (
+                                    <OpticsRayModalityRenderer
+                                        question={question}
+                                        topic={topic}
+                                        onCheck={handleCheckWrapper}
+                                        result={result}
+                                        isChecking={isChecking}
+                                        showDynamicScaffold={showHints}
+                                        onToggleScaffold={() => setShowHints((prev) => !prev)}
+                                        hideStimulusDiagram={true}
+                                    />
+                                )}
+                                {(modality === 'math' ||
+                                  modality === 'geometric_nets' ||
+                                  modality === 'electrodynamics' ||
+                                  modality === 'organic_chemistry') && (
+                                    <MathModalityRenderer
+                                        question={question}
+                                        topic={topic}
+                                        onCheck={handleCheckWrapper}
+                                        result={result}
+                                        isChecking={isChecking}
+                                        showDynamicScaffold={showHints}
+                                        onToggleScaffold={() => setShowHints((prev) => !prev)}
+                                        hideStimulusDiagram={true}
+                                    />
+                                )}
 
                                 {/* Verified Consequential Marks Banner */}
                                 {(isChecked || Boolean(result)) && (
-                                    <div className="p-3 bg-emerald-50 border border-emerald-300 rounded-xl flex flex-wrap items-center justify-between gap-2 text-xs text-emerald-900 shadow-2xs animate-in fade-in">
+                                    <div data-testid="banner-marks-awarded" className="p-3 bg-emerald-50 border border-emerald-300 rounded-xl flex flex-wrap items-center justify-between gap-2 text-xs text-emerald-900 shadow-2xs animate-in fade-in">
                                         <div className="flex items-center gap-2">
                                             <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
                                             <span>
@@ -1125,7 +1557,7 @@ export default function UniversalWorkspace({
                                                     <span>Concept Repaired</span>
                                                 </div>
                                             ) : (
-                                                (progressionMode === 'assessment' && isChecked && ((result?.score ?? 0) < (result?.total ?? question?.marks ?? 6))) && (
+                                                (progressionMode === 'assessment' && (isChecked || Boolean(result)) && ((result?.score ?? 0) < (result?.total ?? result?.max_score ?? question?.marks ?? 6))) && (
                                                     <button
                                                         type="button"
                                                         data-testid="btn-open-triage-modal"
@@ -1139,16 +1571,7 @@ export default function UniversalWorkspace({
                                                 )
                                             )}
 
-                                            {(question?.solution ||
-                                              question?.worked_solution ||
-                                              question?.memo ||
-                                              question?.model_answer ||
-                                              question?.canonical_solution ||
-                                              question?.explanation ||
-                                              question?.ideal_answer ||
-                                              question?.correct_answer ||
-                                              (Array.isArray(question?.steps) && question.steps.length > 0) ||
-                                              (Array.isArray(question?.guidelines) && question.guidelines.length > 0)) && (
+                                            {Boolean(question) && (
                                                 <button
                                                     type="button"
                                                     data-testid="btn-view-full-memo"
@@ -1162,6 +1585,115 @@ export default function UniversalWorkspace({
                                                     <span>{showFullMemo ? 'Hide Solution Memo' : '📖 View Memorandum'}</span>
                                                 </button>
                                             )}
+                                        </div>
+                                    </div>
+                                )}
+
+                                {/* 🎯 Diagnostic Calibration Complete Milestone Card */}
+                                {diagnosticDebrief && (
+                                    <div data-testid="diagnostic-debrief-card" className="p-4 sm:p-5 rounded-xl border border-blue-300 bg-blue-50/90 text-slate-900 shadow-xs space-y-3 animate-in fade-in">
+                                        <div className="flex items-start justify-between gap-3">
+                                            <div className="flex items-center gap-2.5">
+                                                <div className="w-9 h-9 rounded-xl bg-[#13519C] text-white flex items-center justify-center font-bold text-base shadow-2xs shrink-0">
+                                                    🎯
+                                                </div>
+                                                <div>
+                                                    <div className="flex items-center gap-2">
+                                                        <h4 className="font-bold text-slate-900 text-sm sm:text-base" style={{ fontFamily: 'Afacad, sans-serif' }}>
+                                                            Diagnostic Calibration Complete!
+                                                        </h4>
+                                                        <span className="px-2 py-0.5 rounded-full bg-blue-100 text-[#13519C] font-mono font-bold text-[11px] border border-blue-200">
+                                                            {diagnosticDebrief.scorePct}% Baseline
+                                                        </span>
+                                                    </div>
+                                                    <p className="text-xs text-slate-600 mt-0.5">
+                                                        3-Question Cluster Evaluated: Foundations, Operations, and Synthesis items analyzed.
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <span className="text-xs font-mono font-bold text-slate-500 hidden sm:inline">
+                                                {diagnosticDebrief.itemScores.join('% • ')}%
+                                            </span>
+                                        </div>
+
+                                        <div className="p-3 bg-white rounded-lg border border-blue-200/80 text-xs text-slate-700 space-y-1.5 leading-relaxed">
+                                            <div className="flex items-center gap-2 font-semibold text-slate-900">
+                                                <span className="text-emerald-600 font-bold">✓ Calibrated Path:</span>
+                                                <span className="font-bold text-[#13519C]">{diagnosticDebrief.targetTitle}</span>
+                                            </div>
+                                            <p className="text-slate-600">
+                                                {diagnosticDebrief.rationale}
+                                            </p>
+                                        </div>
+
+                                        <div className="flex flex-wrap items-center justify-end gap-2.5 pt-1">
+                                            <button
+                                                type="button"
+                                                data-testid="btn-proceed-calibrated-stage"
+                                                onClick={() => handleProceedFromDiagnostic(diagnosticDebrief.targetMode)}
+                                                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold bg-[#13519C] hover:bg-[#0F4280] text-white transition shadow-xs cursor-pointer active:scale-98"
+                                            >
+                                                <span>
+                                                    {diagnosticDebrief.targetMode === 'assessment'
+                                                        ? 'Launch Timed Exam (10 min) ⏱️'
+                                                        : `Proceed to ${diagnosticDebrief.targetTitle}`}
+                                                </span>
+                                                <ArrowRight className="w-3.5 h-3.5" />
+                                            </button>
+                                        </div>
+                                    </div>
+                                )}
+
+                                {/* 🎓 Exam Mode Unlocked Milestone Card (Optional Switching in Practice Mode) */}
+                                {progressionMode === 'practice' && currentFormative >= 80 && !examUnlockedDismissed && (
+                                    <div data-testid="banner-exam-unlocked" className="p-4 sm:p-5 rounded-xl border border-rose-300 bg-rose-50/90 text-rose-950 shadow-xs space-y-3 animate-in fade-in">
+                                        <div className="flex items-start justify-between gap-3">
+                                            <div className="flex items-center gap-2.5">
+                                                <div className="w-9 h-9 rounded-xl bg-rose-600 text-white flex items-center justify-center font-bold text-base shadow-2xs shrink-0">
+                                                    🎓
+                                                </div>
+                                                <div>
+                                                    <h4 className="font-bold text-slate-900 text-sm sm:text-base" style={{ fontFamily: 'Afacad, sans-serif' }}>
+                                                        Exam Mode Unlocked! ({currentFormative}% Topic Mastery Achieved)
+                                                    </h4>
+                                                    <p className="text-xs text-slate-600 mt-0.5">
+                                                        You have mastered the foundational and practice competencies for this topic. You are fully prepared to take the 10-minute Timed Exam.
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <button
+                                                type="button"
+                                                onClick={() => setExamUnlockedDismissed(true)}
+                                                className="text-slate-400 hover:text-slate-600 font-bold text-xs cursor-pointer p-1"
+                                                title="Dismiss notification"
+                                            >
+                                                ✕
+                                            </button>
+                                        </div>
+
+                                        <div className="flex flex-wrap items-center gap-3 pt-1 border-t border-rose-200/70">
+                                            <button
+                                                type="button"
+                                                data-testid="btn-start-timed-exam"
+                                                onClick={() => {
+                                                    setExamUnlockedDismissed(true);
+                                                    handleModeSwitch('assessment');
+                                                    if (onNext) onNext({ stage: 'assessment' });
+                                                }}
+                                                className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs shadow-xs transition cursor-pointer active:scale-98"
+                                            >
+                                                <Clock className="w-3.5 h-3.5" />
+                                                <span>Start Timed Exam (10 min) ⏱️</span>
+                                            </button>
+                                            <button
+                                                type="button"
+                                                data-testid="btn-keep-practicing"
+                                                onClick={() => setExamUnlockedDismissed(true)}
+                                                className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-white hover:bg-slate-50 border border-slate-300 text-slate-700 font-bold text-xs shadow-2xs transition cursor-pointer active:scale-98"
+                                            >
+                                                <RotateCcw className="w-3.5 h-3.5 text-slate-500" />
+                                                <span>Keep Practicing at My Own Pace 🔁</span>
+                                            </button>
                                         </div>
                                     </div>
                                 )}
@@ -1215,15 +1747,23 @@ export default function UniversalWorkspace({
                                                  setIsComparing(false);
                                                  setShowHints(false);
                                                  setShowFullMemo(false);
-                                                 if (isDiagnosticRequired && diagnosticIndex < 3) {
-                                                     setDiagnosticIndex((prev) => prev + 1);
+                                                 if (diagnosticDebrief) {
+                                                     handleProceedFromDiagnostic(diagnosticDebrief.targetMode);
+                                                     return;
                                                  }
-                                                 onNext();
+                                                 const nextDiagStep = isDiagnosticRequired && diagnosticIndex < 3 ? diagnosticIndex + 1 : 1;
+                                                 const nextStage = isDiagnosticRequired && diagnosticIndex < 3 ? 'diagnostic' : progressionMode;
+                                                 if (isDiagnosticRequired && diagnosticIndex < 3) {
+                                                     setDiagnosticIndex(nextDiagStep);
+                                                 }
+                                                 onNext({ stage: nextStage, diagnosticStep: nextDiagStep });
                                             }}
                                             className="ml-auto flex items-center gap-2 px-5 py-2 rounded-xl text-xs font-bold bg-[#FF9100] text-white hover:bg-amber-600 transition shadow-xs cursor-pointer active:scale-98"
                                         >
                                             <span>
-                                                {isDiagnosticRequired && diagnosticIndex < 3
+                                                {diagnosticDebrief
+                                                    ? (diagnosticDebrief.targetMode === 'assessment' ? 'Launch Timed Exam ⏱️' : `Proceed to ${diagnosticDebrief.targetTitle}`)
+                                                    : isDiagnosticRequired && diagnosticIndex < 3
                                                     ? `Next Diagnostic Item (${diagnosticIndex + 1} of 3)`
                                                     : 'Next Problem'}
                                             </span>
@@ -1267,6 +1807,10 @@ export default function UniversalWorkspace({
                     <SimuLearnPlayer
                         isOpen={showSimuLearn}
                         archetypeKey={getSimuLearnKey()}
+                        activeQuestion={question}
+                        subject={subjectTitle}
+                        grade={grade}
+                        topic={topic}
                         onClose={() => setShowSimuLearn(false)}
                         onComplete={() => setShowSimuLearn(false)}
                     />
@@ -1298,6 +1842,22 @@ export default function UniversalWorkspace({
                     />
                 )}
             </React.Suspense>
+
+            {/* Cognitive Visual Aid & SimuLearn Companion Drawer */}
+            <CognitiveSidecarDrawer
+                isOpen={isSidecarOpen}
+                onClose={() => setIsSidecarOpen(false)}
+                availableAids={availableAids}
+                activeAidId={activeSidecarAidId}
+                onSelectAid={(aidId) => setActiveSidecarAidId(aidId)}
+                activeQuestion={question}
+                grade={grade}
+                subject={subjectTitle}
+                topic={topic}
+                simuLearnKey={getSimuLearnKey()}
+                initialCompanionTab={sidecarCompanionTab}
+                progressionMode={progressionMode}
+            />
 
         </div>
     );

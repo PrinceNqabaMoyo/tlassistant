@@ -1,0 +1,88 @@
+{
+  "diagram": "particle_model",
+  "view": "textbook",
+  "viewBox": "0 0 600 480",
+  "anchors": {
+    "melting_endothermic": {
+      "name": "Melting (Solid to Liquid)",
+      "anchor": [237, 105],
+      "default_box": [60, 90],
+      "side": "left",
+      "grades": ["g8", "g10"],
+      "acceptable": ["Melting", "Fusion"],
+      "description": "Endothermic phase transition in which a solid absorbs thermal energy, increasing particle kinetic energy until particles overcome their fixed lattice positions to form a liquid."
+    },
+    "intermolecular_forces": {
+      "name": "Strong Intermolecular Lattice Forces",
+      "anchor": [161, 265],
+      "default_box": [60, 185],
+      "side": "left",
+      "grades": ["g10"],
+      "acceptable": ["Intermolecular forces", "Strong forces of attraction", "Attractive forces", "Cohesive forces"],
+      "description": "Strong electrostatic forces of attraction holding particles closely packed in fixed equilibrium positions within the solid crystalline lattice."
+    },
+    "solid_lattice": {
+      "name": "Solid State (Regular Crystalline Lattice)",
+      "anchor": [179, 283],
+      "default_box": [60, 280],
+      "side": "left",
+      "grades": ["g8", "g10"],
+      "acceptable": ["Solid", "Solid state", "Solid phase", "Crystalline solid"],
+      "description": "Particles are closely packed in a regular, fixed geometric lattice with minimal spaces between them and vibrate only about fixed positions."
+    },
+    "freezing_solidification": {
+      "name": "Freezing / Solidification (Liquid to Solid)",
+      "anchor": [237, 375],
+      "default_box": [60, 385],
+      "side": "left",
+      "grades": ["g8", "g10"],
+      "acceptable": ["Freezing", "Solidification", "Crystallisation"],
+      "description": "Exothermic phase transition in which a liquid loses thermal energy, slowing particle movement until strong attractive forces lock particles into a fixed solid lattice."
+    },
+    "evaporation_boiling": {
+      "name": "Evaporation / Boiling (Liquid to Gas)",
+      "anchor": [363, 105],
+      "default_box": [540, 90],
+      "side": "right",
+      "grades": ["g8", "g10"],
+      "acceptable": ["Evaporation", "Boiling", "Vaporisation"],
+      "description": "Endothermic phase transition in which liquid particles gain sufficient kinetic energy to completely overcome intermolecular attractions and escape into the gas phase."
+    },
+    "gas_dispersed": {
+      "name": "Gas State (Widely Spaced High-Speed Particles)",
+      "anchor": [414, 221],
+      "default_box": [540, 175],
+      "side": "right",
+      "grades": ["g8", "g10"],
+      "acceptable": ["Gas", "Gas state", "Gaseous state", "Gaseous phase"],
+      "description": "Particles are very far apart with negligible intermolecular forces, moving rapidly and randomly in all directions while colliding elastically with the container walls."
+    },
+    "empty_vacuum_space": {
+      "name": "Large Intermolecular Empty Spaces",
+      "anchor": [421, 259],
+      "default_box": [540, 245],
+      "side": "right",
+      "grades": ["g10"],
+      "acceptable": ["Empty space", "Large spaces between particles", "Intermolecular space", "Vacuum between particles"],
+      "description": "Large empty spaces between widely dispersed gas particles that allow gases to be easily compressed under applied pressure."
+    },
+    "liquid_cluster": {
+      "name": "Liquid State (Disordered Close-Packed Particles)",
+      "anchor": [301, 282],
+      "default_box": [540, 315],
+      "side": "right",
+      "grades": ["g8", "g10"],
+      "acceptable": ["Liquid", "Liquid state", "Liquid phase"],
+      "description": "Particles remain closely packed with small spaces between them but are disorderly arranged and can slide past one another to take the shape of their container."
+    },
+    "condensation_exothermic": {
+      "name": "Condensation (Gas to Liquid)",
+      "anchor": [363, 375],
+      "default_box": [540, 395],
+      "side": "right",
+      "grades": ["g8", "g10"],
+      "acceptable": ["Condensation"],
+      "description": "Exothermic phase transition in which gas particles lose kinetic energy upon cooling and are drawn together by attractive forces to form a liquid."
+    }
+  }
+}

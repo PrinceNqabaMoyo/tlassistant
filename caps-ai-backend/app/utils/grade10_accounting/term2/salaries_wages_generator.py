@@ -1868,15 +1868,15 @@ def generate_questions(
     resolved_subskill = subskill_aliases.get(subskill_norm, subskill_norm)
 
     # Build pools
-    salary_scale_pool = _gen_salary_scale(r)
-    gross_wage_pool = _gen_gross_wage(r)
-    deductions_pool = _gen_deductions(r)
-    employer_pool = _gen_employer_contributions(r)
-    ethics_pool = _gen_ethics(r)
-    glossary_pool = _gen_glossary_matching(r)
-    salary_journal_pool = _gen_salary_journal(r)
-    wage_journal_pool = _gen_wage_journal(r)
-    general_ledger_pool = _gen_general_ledger(r)
+    salary_scale_pool = [{**q, "_sw_subskill": "salary_scales"} for q in _gen_salary_scale(r)]
+    gross_wage_pool = [{**q, "_sw_subskill": "gross_wage"} for q in _gen_gross_wage(r)]
+    deductions_pool = [{**q, "_sw_subskill": "deductions"} for q in _gen_deductions(r)]
+    employer_pool = [{**q, "_sw_subskill": "employer_contributions"} for q in _gen_employer_contributions(r)]
+    ethics_pool = [{**q, "_sw_subskill": "payroll_ethics_and_controls"} for q in _gen_ethics(r)]
+    glossary_pool = [{**q, "_sw_subskill": "payroll_glossary_matching"} for q in _gen_glossary_matching(r)]
+    salary_journal_pool = [{**q, "_sw_subskill": "salary_journal"} for q in _gen_salary_journal(r)]
+    wage_journal_pool = [{**q, "_sw_subskill": "wage_journal"} for q in _gen_wage_journal(r)]
+    general_ledger_pool = [{**q, "_sw_subskill": "general_ledger_payroll"} for q in _gen_general_ledger(r)]
 
     all_pools = {
         "salary_scales": salary_scale_pool,
@@ -1917,7 +1917,7 @@ def generate_questions(
                 q = r.choice(pool)
                 q_copy = dict(q)
                 q_copy["difficulty"] = difficulty_norm
-                q_copy["subskill"] = subskill
+                q_copy["subskill"] = q_copy.pop("_sw_subskill", None) or (resolved_subskill if resolved_subskill != "mixed" else "salary_journal")
                 _validate_salaries_wages_question(question=q_copy, subskill=resolved_subskill)
                 q_copy.pop("recommended_difficulties", None)
                 signature = _prompt_signature(q_copy)

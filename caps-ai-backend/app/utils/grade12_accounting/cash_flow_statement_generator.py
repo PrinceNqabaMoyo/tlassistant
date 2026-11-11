@@ -678,14 +678,31 @@ def generate(
     **kwargs: Any,
 ) -> Dict[str, Any]:
     """Generates deterministic Grade 12 Accounting Cash Flow Statement questions."""
+    from app.utils.grade12_accounting.cash_flow_generator import (
+        _make_cash_flow_question,
+        _make_dividends_paid_note,
+        _make_taxation_paid_note,
+        _make_fixed_assets_backcalc,
+    )
     base_seed = 42 if seed is None else int(seed)
-    chosen_mode = mode if mode in BUILDERS else ("compound" if subskill is None else subskill)
-    builder = BUILDERS.get(chosen_mode, _build_compound_cash_flow_statement)
+    r_pick = _rng(base_seed)
+
+    all_builders = {
+        "cash_flow_statement_full": _build_compound_cash_flow_statement,
+        "elementary_taxation_paid": _build_taxation_paid_drill,
+        "elementary_dividends_paid": _build_dividends_paid_drill,
+        "elementary_working_capital": _build_working_capital_drill,
+        "cf_reconciliation_and_statement": lambda r: _make_cash_flow_question(r=r, difficulty=difficulty, mode=""),
+        "cf_fixed_assets_additions_backcalc": lambda r: _make_fixed_assets_backcalc(r=r, difficulty=difficulty, mode=""),
+    }
+    keys = list(all_builders.keys())
 
     questions = []
     for i in range(max(1, count)):
         r = _rng(base_seed * 1000 + i)
-        q = builder(r)
+        chosen = subskill if (subskill in all_builders) else r_pick.choice(keys)
+        q = all_builders[chosen](r)
+        q["subskill"] = chosen
         q["seed"] = base_seed * 1000 + i
         questions.append(q)
 

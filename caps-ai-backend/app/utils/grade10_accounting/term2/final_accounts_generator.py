@@ -284,7 +284,7 @@ def generate_questions(
                 q = r.choice(candidate_pool)
                 q_copy = dict(q)
                 q_copy["difficulty"] = difficulty
-                q_copy["subskill"] = subskill
+                q_copy["subskill"] = (resolved_subskill if resolved_subskill != "mixed" else str(((q_copy.get("scenario_validation") or {}).get("family") or "year_end_adjustments")))
                 _validate_final_accounts_question(question=q_copy, subskill=resolved_subskill)
                 signature = _prompt_signature(q_copy)
                 if signature in used_signatures:

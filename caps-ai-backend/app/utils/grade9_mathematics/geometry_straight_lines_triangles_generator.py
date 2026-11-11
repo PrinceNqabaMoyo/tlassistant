@@ -88,8 +88,28 @@ def generate_exterior_angle_triangle(r: random.Random, mode: str = "compound") -
         "tier_2": "Equation: Ext Angle = Int Angle 1 + Int Angle 2. Reason: [ext ∠ of △].",
         "tier_3": f"{sum_coeff}x + {ext_const} = {a}x + {b + ang_b}. Group x terms on left: {c}x = {c * x_val}. Therefore x = {x_val}°.",
     }
+    diag_ext = {
+        "kind": "triangle",
+        "diagram_role": "context",
+        "points": {
+            "B": [0.0, 0.0],
+            "C": [4.5, 0.0],
+            "A": [2.8, 3.2],
+            "D": [6.2, 0.0],
+        },
+        "vertices": ["A", "B", "C", "D"],
+        "vertex_labels": {
+            "A": f"A ({a}x + {b}°)",
+            "B": f"B ({ang_b}°)",
+            "C": f"ACD = {sum_coeff}x + {ext_const}°",
+            "D": "D",
+        },
+        "triangles": [["A", "B", "C"]],
+        "segments": [["C", "D"]],
+    }
     return {
         "id": f"g9_geo_ext_ang_{random.randint(100000, 999999)}",
+        "diagram_spec": diag_ext,
         "topic": TOPIC,
         "subskill": "exterior_angle_of_triangle_theorems",
         "learning_objective_id": f"{LO}_exterior_angle",
@@ -156,8 +176,26 @@ def generate_isosceles_triangle_rider(r: random.Random, mode: str = "compound") 
         "tier_2": "The sum of all three angles inside any triangle is 180° [∠ sum of △]. Let ∠Q = ∠R = x.",
         "tier_3": f"{vertex_ang}° + 2x = 180°. 2x = {180 - vertex_ang}°. Therefore x = {base_ang}°.",
     }
+    diag_iso = {
+        "kind": "triangle",
+        "diagram_role": "context",
+        "points": {
+            "Q": [0.0, 0.0],
+            "R": [4.0, 0.0],
+            "P": [2.0, 3.5],
+        },
+        "vertices": ["P", "Q", "R"],
+        "vertex_labels": {
+            "P": f"P ({vertex_ang}°)",
+            "Q": "Q",
+            "R": "R",
+        },
+        "equal_sides": [["P", "Q"], ["P", "R"]],
+        "triangles": [["P", "Q", "R"]],
+    }
     return {
         "id": f"g9_geo_iso_{random.randint(100000, 999999)}",
+        "diagram_spec": diag_iso,
         "topic": TOPIC,
         "subskill": "isosceles_triangle_angle_theorems",
         "learning_objective_id": f"{LO}_isosceles_angles",
