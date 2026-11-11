@@ -1,177 +1,257 @@
-"""Natural Sciences Grade 7 Term 2: Separating Mixtures Generator.
-
-Covers:
-- Physical separation techniques: Simple distillation, filtration, evaporation, paper chromatography, and separating funnels.
-- Simple distillation apparatus: Round-bottom flask, Liebig condenser (counter-current cooling water flow), thermometer, receiving flask.
-- Chromatography: Stationary phase (filter paper), mobile phase (solvent), and Rf (retention factor) calculations.
-- Practical applications: Desalination of seawater, crude oil fractional distillation, and wastewater treatment.
-
-Strictly complies with the 6-Pillar Generator Contract.
+"""Grade 7 Natural Sciences: Term 2 - Separating Mixtures Generator (50 Semantic Archetypes).
+100% Aligned with South African National Curriculum Standards.
+Grounded directly in curriculum_docs_auto/NaturalSciences_Gr7/Term 2/PDF - Separating mixtures.md.
+Adheres strictly to the 6-Pillar Generator Contract and Zero-Meta-Curriculum Invariant.
 """
-
 from __future__ import annotations
-
 import random
-from typing import Any, Dict, List, Optional
+from typing import Any, Callable, Dict, List, Optional
 
-SUBSKILLS = [
-    "apparatus_identification",
-    "thermal_separation_principle",
-    "cooling_water_flow",
-    "elementary_rf_calc",
-    "chromatography_separation"
+from .ns7_separating_mixtures_archetypes_01_25 import (
+    arch_01_mixture_definition_physical_combination,
+    arch_02_types_of_mixtures_solid_solid,
+    arch_03_suspension_definition_and_properties,
+    arch_04_solution_definition_solute_solvent,
+    arch_05_suspension_vs_solution_comparison,
+    arch_06_miscible_vs_immiscible_liquids,
+    arch_07_emulsions_and_layer_separation,
+    arch_08_gas_gas_mixtures_air_composition,
+    arch_09_solid_gas_liquid_gas_mixtures,
+    arch_10_hand_sorting_principles_and_uses,
+    arch_11_sieving_particle_size_separation,
+    arch_12_magnetic_separation_iron_sand,
+    arch_13_magnetic_separation_industrial_scrap,
+    arch_14_filtration_residue_and_filtrate,
+    arch_15_filtration_insoluble_solid_liquid,
+    arch_16_filtration_apparatus_setup,
+    arch_17_sedimentation_and_settling_principle,
+    arch_18_decanting_technique_and_limits,
+    arch_19_centrifuging_speed_separation,
+    arch_20_evaporation_recovering_solute,
+    arch_21_rate_of_evaporation_factors,
+    arch_22_crystallisation_from_solution,
+    arch_23_simple_distillation_apparatus_parts,
+    arch_24_simple_distillation_water_flow_direction,
+    arch_25_simple_distillation_pure_water_recovery,
+)
+
+from .ns7_separating_mixtures_archetypes_26_50 import (
+    arch_26_fractional_distillation_differing_boiling_points,
+    arch_27_fractional_distillation_crude_oil,
+    arch_28_fractionating_column_condensation_cycles,
+    arch_29_paper_chromatography_baseline_pencil,
+    arch_30_paper_chromatography_solvent_level,
+    arch_31_paper_chromatography_pigment_separation,
+    arch_32_paper_chromatography_interpreting_spots,
+    arch_33_paper_chromatography_forensic_ink_match,
+    arch_34_paper_chromatography_retention_factor_rf,
+    arch_35_separating_funnel_immiscible_liquids,
+    arch_36_multi_step_separation_sand_salt_water,
+    arch_37_multi_step_separation_iron_salt_sand,
+    arch_38_separating_sawdust_and_sand_flotation,
+    arch_39_water_purification_municipal_steps,
+    arch_40_water_treatment_flocculation_coagulation,
+    arch_41_water_treatment_disinfection_chlorine,
+    arch_42_desalination_reverse_osmosis_distillation,
+    arch_43_separation_at_source_waste_management,
+    arch_44_mechanical_recycling_trommel_screens,
+    arch_45_eddy_current_separators_aluminium,
+    arch_46_optical_sensor_sorting_near_infrared,
+    arch_47_air_classification_winnowing_density,
+    arch_48_evaluating_separation_efficiency_percentage,
+    arch_49_troubleshooting_separation_method_errors,
+    arch_50_designing_separation_strategy_novel_mixture,
+)
+
+BUILDERS: List[Callable[[random.Random], Dict[str, Any]]] = [
+    # 01 - 09: Concepts & Types of Mixtures
+    arch_01_mixture_definition_physical_combination,
+    arch_02_types_of_mixtures_solid_solid,
+    arch_03_suspension_definition_and_properties,
+    arch_04_solution_definition_solute_solvent,
+    arch_05_suspension_vs_solution_comparison,
+    arch_06_miscible_vs_immiscible_liquids,
+    arch_07_emulsions_and_layer_separation,
+    arch_08_gas_gas_mixtures_air_composition,
+    arch_09_solid_gas_liquid_gas_mixtures,
+    # 10 - 19: Mechanical Separation & Filtration
+    arch_10_hand_sorting_principles_and_uses,
+    arch_11_sieving_particle_size_separation,
+    arch_12_magnetic_separation_iron_sand,
+    arch_13_magnetic_separation_industrial_scrap,
+    arch_14_filtration_residue_and_filtrate,
+    arch_15_filtration_insoluble_solid_liquid,
+    arch_16_filtration_apparatus_setup,
+    arch_17_sedimentation_and_settling_principle,
+    arch_18_decanting_technique_and_limits,
+    arch_19_centrifuging_speed_separation,
+    # 20 - 25: Evaporation, Distillation & Thermal Separation
+    arch_20_evaporation_recovering_solute,
+    arch_21_rate_of_evaporation_factors,
+    arch_22_crystallisation_from_solution,
+    arch_23_simple_distillation_apparatus_parts,
+    arch_24_simple_distillation_water_flow_direction,
+    arch_25_simple_distillation_pure_water_recovery,
+    # 26 - 34: Fractional Distillation & Chromatography
+    arch_26_fractional_distillation_differing_boiling_points,
+    arch_27_fractional_distillation_crude_oil,
+    arch_28_fractionating_column_condensation_cycles,
+    arch_29_paper_chromatography_baseline_pencil,
+    arch_30_paper_chromatography_solvent_level,
+    arch_31_paper_chromatography_pigment_separation,
+    arch_32_paper_chromatography_interpreting_spots,
+    arch_33_paper_chromatography_forensic_ink_match,
+    arch_34_paper_chromatography_retention_factor_rf,
+    # 35 - 42: Multi-Step Separation & Water Purification
+    arch_35_separating_funnel_immiscible_liquids,
+    arch_36_multi_step_separation_sand_salt_water,
+    arch_37_multi_step_separation_iron_salt_sand,
+    arch_38_separating_sawdust_and_sand_flotation,
+    arch_39_water_purification_municipal_steps,
+    arch_40_water_treatment_flocculation_coagulation,
+    arch_41_water_treatment_disinfection_chlorine,
+    arch_42_desalination_reverse_osmosis_distillation,
+    # 43 - 50: Sorting Waste & Separation Strategy
+    arch_43_separation_at_source_waste_management,
+    arch_44_mechanical_recycling_trommel_screens,
+    arch_45_eddy_current_separators_aluminium,
+    arch_46_optical_sensor_sorting_near_infrared,
+    arch_47_air_classification_winnowing_density,
+    arch_48_evaluating_separation_efficiency_percentage,
+    arch_49_troubleshooting_separation_method_errors,
+    arch_50_designing_separation_strategy_novel_mixture,
 ]
 
-from app.utils.natural_sciences.natural_sciences_builders import build_distillation_apparatus_question
+SUBSKILLS: List[str] = [
+    # 01 - 09
+    "01_mixture_definition_physical_combination",
+    "02_types_of_mixtures_solid_solid",
+    "03_suspension_definition_and_properties",
+    "04_solution_definition_solute_solvent",
+    "05_suspension_vs_solution_comparison",
+    "06_miscible_vs_immiscible_liquids",
+    "07_emulsions_and_layer_separation",
+    "08_gas_gas_mixtures_air_composition",
+    "09_solid_gas_liquid_gas_mixtures",
+    # 10 - 19
+    "10_hand_sorting_principles_and_uses",
+    "11_sieving_particle_size_separation",
+    "12_magnetic_separation_iron_sand",
+    "13_magnetic_separation_industrial_scrap",
+    "14_filtration_residue_and_filtrate",
+    "15_filtration_insoluble_solid_liquid",
+    "16_filtration_apparatus_setup",
+    "17_sedimentation_and_settling_principle",
+    "18_decanting_technique_and_limits",
+    "19_centrifuging_speed_separation",
+    # 20 - 25
+    "20_evaporation_recovering_solute",
+    "21_rate_of_evaporation_factors",
+    "22_crystallisation_from_solution",
+    "23_simple_distillation_apparatus_parts",
+    "24_simple_distillation_water_flow_direction",
+    "25_simple_distillation_pure_water_recovery",
+    # 26 - 34
+    "26_fractional_distillation_differing_boiling_points",
+    "27_fractional_distillation_crude_oil",
+    "28_fractionating_column_condensation_cycles",
+    "29_paper_chromatography_baseline_pencil",
+    "30_paper_chromatography_solvent_level",
+    "31_paper_chromatography_pigment_separation",
+    "32_paper_chromatography_interpreting_spots",
+    "33_paper_chromatography_forensic_ink_match",
+    "34_paper_chromatography_retention_factor_rf",
+    # 35 - 42
+    "35_separating_funnel_immiscible_liquids",
+    "36_multi_step_separation_sand_salt_water",
+    "37_multi_step_separation_iron_salt_sand",
+    "38_separating_sawdust_and_sand_flotation",
+    "39_water_purification_municipal_steps",
+    "40_water_treatment_flocculation_coagulation",
+    "41_water_treatment_disinfection_chlorine",
+    "42_desalination_reverse_osmosis_distillation",
+    # 43 - 50
+    "43_separation_at_source_waste_management",
+    "44_mechanical_recycling_trommel_screens",
+    "45_eddy_current_separators_aluminium",
+    "46_optical_sensor_sorting_near_infrared",
+    "47_air_classification_winnowing_density",
+    "48_evaluating_separation_efficiency_percentage",
+    "49_troubleshooting_separation_method_errors",
+    "50_designing_separation_strategy_novel_mixture",
+]
+
+DISPATCH_TABLE: Dict[Any, Callable[[random.Random], Dict[str, Any]]] = {
+    s: b for s, b in zip(SUBSKILLS, BUILDERS)
+}
+
+# 1-based integer and padded string aliases
+for idx, b in enumerate(BUILDERS, 1):
+    DISPATCH_TABLE[idx] = b
+    DISPATCH_TABLE[f"{idx:02d}"] = b
+
+# Backward compatibility aliases for legacy subskill names
+DISPATCH_TABLE["methods_hand_sorting"] = arch_10_hand_sorting_principles_and_uses
+DISPATCH_TABLE["methods_sieving_filtration"] = arch_11_sieving_particle_size_separation
+DISPATCH_TABLE["methods_evaporation_distillation"] = arch_20_evaporation_recovering_solute
+DISPATCH_TABLE["chromatography"] = arch_31_paper_chromatography_pigment_separation
+DISPATCH_TABLE["recycling_waste_management"] = arch_43_separation_at_source_waste_management
 
 
-def _fmt_sa(val: float | int, decimals: int = 1) -> str:
-    if isinstance(val, int) or val == int(val):
-        return str(int(val))
-    s = f"{val:.{decimals}f}".rstrip("0").rstrip(".")
-    return s.replace(".", ",")
-
-
-def _make_id(prefix: str, seed: Optional[int], idx: int) -> str:
-    s_val = seed if seed is not None else random.randint(1000, 9999)
-    return f"{prefix}_{s_val}_{idx}"
-
-
-def _generate_chromatography_and_separation(r: random.Random, seed: Optional[int], idx: int, mode: str) -> Dict[str, Any]:
-    """Paper chromatography and separation of complex mixtures."""
-    mixture_type = r.choice(["black ink marker pigment", "chlorophyll plant extract", "food dye coloring"])
-    solvent = r.choice(["water", "ethanol", "acetone"])
-    qid = _make_id("ns7_chromatography", seed, idx)
-
-    # Procedural distances in mm: solvent front and dye spots
-    dist_solvent = r.choice([50, 60, 80, 100])
-    dist_spot_a = int(dist_solvent * r.choice([0.25, 0.30, 0.40]))
-    dist_spot_b = int(dist_solvent * r.choice([0.60, 0.70, 0.80]))
-    rf_a = dist_spot_a / dist_solvent
-    rf_b = dist_spot_b / dist_solvent
-
-    if mode == "elementary_rf_calc":
-        prompt = (
-            f"A paper chromatography experiment was conducted to separate pigments in a {mixture_type} using {solvent}.\n"
-            f"- Distance travelled by solvent front: ${dist_solvent}\\text{{ mm}}$\n"
-            f"- Distance travelled by Pigment A: ${dist_spot_a}\\text{{ mm}}$\n\n"
-            f"Calculate the retention factor ($R_f$ value) of Pigment A using the formula:\n"
-            f"\\[ R_f = \\frac{{\\text{{distance moved by solute}}}}{{\\text{{distance moved by solvent front}}}} \\]"
-        )
-        ans_str = f"Rf = {_fmt_sa(rf_a, 2)}"
-        memo = (
-            f"1. Formula: $R_f = \\frac{{\\text{{distance moved by solute}}}}{{\\text{{distance moved by solvent front}}}}$ [M]\n"
-            f"2. Substitution: $R_f = \\frac{{{dist_spot_a}}}{{{dist_solvent}}} = {_fmt_sa(rf_a, 2)}$ [A]"
-        )
-        hints = {
-            "tier_1": "Divide the distance moved by the dye spot by the distance moved by the solvent front.",
-            "tier_2": f"Calculate: {dist_spot_a} / {dist_solvent} = {rf_a:.2f}.",
-            "tier_3": f"Rf = {_fmt_sa(rf_a, 2)}.",
-        }
-        marks = 2
-        misconceptions = ["rf_inverted_ratio", "omitted_formula_substitution"]
-    else:
-        # Full compound question: Chromatography + Distillation + Immiscible liquids
-        prompt = (
-            f"Grade 7 learners investigated methods to separate different mixtures in the science laboratory.\n\n"
-            f"1. A paper chromatography strip of {mixture_type} showed two distinct spots: Spot A moved ${dist_spot_a}\\text{{ mm}}$ "
-            f"and Spot B moved ${dist_spot_b}\\text{{ mm}}$ while the solvent front moved ${dist_solvent}\\text{{ mm}}$.\n"
-            f"   Calculate the $R_f$ value of Spot B.\n"
-            f"2. Explain why Spot B travelled further up the chromatography paper than Spot A.\n"
-            f"3. Name the most suitable physical separation technique to separate:\n"
-            f"   a) Cooking oil and water.\n"
-            f"   b) Pure drinking water from salty sea water.\n"
-            f"   c) Sand and copper sulphate solution."
-        )
-        ans_str = (
-            f"1. Rf = {_fmt_sa(rf_b, 2)}; "
-            f"2. Spot B is more soluble in the mobile solvent phase and has weaker attraction (adhesion) to the stationary paper phase; "
-            f"3. a) Separating funnel; b) Simple distillation; c) Filtration."
-        )
-        memo = (
-            f"1. Rf calculation for Spot B [2]:\n"
-            f"   $$R_f = \\frac{{{dist_spot_b}\\text{{ mm}}}}{{{dist_solvent}\\text{{ mm}}}} = {_fmt_sa(rf_b, 2)}$$ [2]\n"
-            f"2. Solubility and affinity explanation [2]: Pigment B moved further because it is more soluble in the mobile solvent phase [1] "
-            f"and has less affinity/adhesion to the cellulose fibres of the stationary paper phase compared to Pigment A [1].\n"
-            f"3. Separation methods [3]:\n"
-            f"   a) Cooking oil and water: **Separating funnel** (immiscible liquids with different densities) [1].\n"
-            f"   b) Pure water from sea water: **Simple distillation** [1].\n"
-            f"   c) Sand from copper sulphate: **Filtration** [1]."
-        )
-        hints = {
-            "tier_1": "Rf is spot distance divided by solvent distance. More soluble dyes travel further.",
-            "tier_2": f"Rf = {dist_spot_b} / {dist_solvent} = {rf_b:.2f}. Oil and water don't mix (use a separating funnel). Salt water needs distillation to collect pure water.",
-            "tier_3": f"1. Rf = {_fmt_sa(rf_b, 2)}. 2. Greater solubility in solvent. 3. a) Separating funnel, b) Distillation, c) Filtration.",
-        }
-        marks = 7
-        misconceptions = ["confused_filtration_with_distillation", "separating_funnel_density_confusion"]
-
-    return {
-        "id": qid,
-        "question_id": qid,
-        "prompt": prompt,
-        "term": 2,
-        "caps_weight_percent": 18,
-        "suggested_duration_mins": 8,
-        "mode": mode,
-        "question_type": "short_answer",
-        "question": prompt,
-        "question_text": prompt,
-        "correct_answer": ans_str,
-        "sample_answer": ans_str,
-        "worked_solution": memo,
-        "explanation": memo,
-        "marks": marks,
-        "hints": hints,
-        "misconception_tags": misconceptions,
-        "marking_schema": {
-            "total_marks": marks,
-            "marking_points": [
-                {"id": "mp_1", "desc": "Rf value calculation and substitution", "marks": 2, "editable": True},
-                {"id": "mp_2", "desc": "Chromatography differential solubility mechanism", "marks": 2, "editable": True},
-                {"id": "mp_3", "desc": "Correct matching of physical separation techniques", "marks": 3, "editable": True},
-            ],
-            "deductions": [],
-            "carry_forward_rule": "consequential_accuracy",
-        },
-    }
+def get_subskills() -> List[str]:
+    """Returns the list of 50 semantic subskill archetype IDs."""
+    return list(SUBSKILLS)
 
 
 def generate(
-    subskill: str = "mixed",
-    difficulty: str = "medium",
     count: int = 1,
     seed: Optional[int] = None,
+    difficulty: str = "medium",
     mode: str = "compound",
-    **kwargs: Any,
+    subskill: Optional[str] = None,
+    archetype_index: Optional[int] = None,
+    **kwargs: Any
 ) -> List[Dict[str, Any]]:
-    """Master entry point for Grade 7 Separating Mixtures."""
-    r = random.Random(seed) if seed is not None else random.Random()
+    """
+    Main entry point for Grade 7 Natural Sciences: Separating Mixtures Generator.
+    Supports exact archetype dispatch via subskill or archetype_index, and compound mode.
+    """
+    rng = random.Random(seed) if seed is not None else random.Random()
     questions: List[Dict[str, Any]] = []
-    raw_grade = str(kwargs.get("grade", 7)).replace("grade_", "").replace("g", "").strip()
-    gr_int = int(raw_grade) if raw_grade.isdigit() else 7
 
-    for i in range(count):
-        sub_seed = r.randint(1, 1_000_000_000)
-        sub_r = random.Random(sub_seed)
+    for _ in range(count):
+        builder: Optional[Callable[[random.Random], Dict[str, Any]]] = None
 
-        if subskill in ("apparatus_identification", "thermal_separation_principle", "cooling_water_flow", "distillation", "distillation_apparatus"):
-            q = build_distillation_apparatus_question(sub_seed, grade=gr_int, mode=mode, subskill=subskill)
-        elif subskill in ("elementary_rf_calc", "rf_calculation") or mode == "elementary_rf_calc":
-            q = _generate_chromatography_and_separation(sub_r, sub_seed, i, mode="elementary_rf_calc")
-        elif subskill in ("chromatography", "chromatography_separation"):
-            q = _generate_chromatography_and_separation(sub_r, sub_seed, i, mode="compound")
-        else:
-            # Deterministic subskill cycling between distillation apparatus diagram and chromatography/separation
-            if (sub_seed + i) % 2 == 0:
-                q = build_distillation_apparatus_question(sub_seed, grade=gr_int, mode=mode)
+        if subskill is not None:
+            sub_key = str(subskill).strip()
+            if sub_key in DISPATCH_TABLE:
+                builder = DISPATCH_TABLE[sub_key]
             else:
-                q = _generate_chromatography_and_separation(sub_r, sub_seed, i, mode)
+                sub_lower = sub_key.lower()
+                for k, b in DISPATCH_TABLE.items():
+                    if isinstance(k, str) and (sub_lower in k.lower() or k.lower() in sub_lower):
+                        builder = b
+                        break
 
+        if builder is None and archetype_index is not None:
+            try:
+                idx = int(archetype_index)
+                if idx in DISPATCH_TABLE:
+                    builder = DISPATCH_TABLE[idx]
+                elif 1 <= idx <= len(BUILDERS):
+                    builder = BUILDERS[idx - 1]
+            except (ValueError, TypeError):
+                pass
+
+        if builder is None:
+            builder = rng.choice(BUILDERS)
+
+        q = builder(rng)
+        q.setdefault("grade", 7)
+        q.setdefault("subject", "Natural Sciences")
+        q.setdefault("topic", "Separating mixtures")
+        q.setdefault("term", 2)
+        q.setdefault("difficulty", difficulty)
         questions.append(q)
 
     return questions
-
-
-def generate_variant(seed: int, mode: str = "practice", **kwargs: Any) -> List[Dict[str, Any]]:
-    return generate(count=1, seed=seed, mode=mode, **kwargs)

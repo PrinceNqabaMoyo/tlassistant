@@ -1,256 +1,159 @@
 """Grade 7 Natural Sciences: Term 4 - Relationship of the Moon to the Earth Generator.
 100% Aligned with South African National Curriculum Standards.
 Grounded directly in curriculum_docs_auto/NaturalSciences_Gr7/Term 4/01. Relationship of the moon to the earth.md.
+50 Distinct Semantic Archetypes (01 to 50).
 """
 from __future__ import annotations
-import random
-from typing import Any, Dict, List, Optional
 
-SUBSKILLS = [
-    "moon_orbit_and_revolution_period",
-    "lunar_phases_sequence_and_causes",
-    "ocean_tides_spring_and_neap",
-    "lunar_and_solar_eclipses_mechanics",
-    "gravity_and_weight_on_the_moon"
-]
+import random
+from typing import Any, Callable, Dict, List, Optional
+
+from .ns7_moon_earth_archetypes_01_25 import (
+    arch_01_moon_revolution_period,
+    arch_02_moon_synchronous_rotation,
+    arch_03_near_side_vs_far_side_observation,
+    arch_04_moon_distance_and_elliptical_orbit,
+    arch_05_moon_surface_regolith_and_craters,
+    arch_06_moon_absence_of_atmosphere,
+    arch_07_moon_temperature_extremes,
+    arch_08_lunar_phases_cause_geometry,
+    arch_09_lunar_phase_new_moon,
+    arch_10_lunar_phase_waxing_crescent,
+    arch_11_lunar_phase_first_quarter,
+    arch_12_lunar_phase_waxing_gibbous,
+    arch_13_lunar_phase_full_moon,
+    arch_14_lunar_phase_waning_gibbous,
+    arch_15_lunar_phase_third_quarter,
+    arch_16_lunar_phase_waning_crescent,
+    arch_17_lunar_phase_full_cycle_sequence,
+    arch_18_lunar_illumination_reflected_sunlight,
+    arch_19_relative_positions_sun_earth_moon,
+    arch_20_solar_eclipse_alignment_order,
+    arch_21_solar_eclipse_umbra_penumbra_shadows,
+    arch_22_solar_eclipse_angular_size_ratio,
+    arch_23_total_vs_partial_solar_eclipse_zones,
+    arch_24_solar_eclipse_path_of_totality,
+    arch_25_solar_eclipse_safety_and_pinhole_projection,
+)
+from .ns7_moon_earth_archetypes_26_50 import (
+    arch_26_lunar_eclipse_alignment_order,
+    arch_27_lunar_eclipse_earth_shadow_types,
+    arch_28_lunar_eclipse_red_blood_moon_refraction,
+    arch_29_lunar_eclipse_night_hemisphere_visibility,
+    arch_30_eclipse_scarcity_orbital_plane_tilt,
+    arch_31_gravity_definition_non_contact_attraction,
+    arch_32_gravity_factors_mass_and_distance,
+    arch_33_gravity_keeps_moon_in_orbit,
+    arch_34_mass_concept_invariance_kg,
+    arch_35_weight_concept_gravitational_force_newtons,
+    arch_36_weight_calculation_earth_gravity,
+    arch_37_weight_calculation_moon_gravity,
+    arch_38_weight_comparison_earth_vs_moon_ratio,
+    arch_39_bathroom_scale_vs_beam_balance_physics,
+    arch_40_astronaut_motion_reduced_gravity,
+    arch_41_ocean_tides_gravitational_pull_cause,
+    arch_42_two_high_and_two_low_tides_daily,
+    arch_43_tidal_cycle_period_24_hours_50_minutes,
+    arch_44_spring_tides_syzygy_alignment,
+    arch_45_spring_tides_maximum_tidal_range,
+    arch_46_neap_tides_quadrature_right_angle,
+    arch_47_neap_tides_minimum_tidal_range,
+    arch_48_tide_table_interpretation_and_predictions,
+    arch_49_coastal_tides_maritime_and_ecological_impact,
+    arch_50_moon_earth_comprehensive_diagnostic_autopsy,
+)
 
 CURRICULUM_DOC = "curriculum_docs_auto/NaturalSciences_Gr7/Term 4/01. Relationship of the moon to the earth.md"
 
-def _rng(seed: Optional[int]) -> random.Random:
-    return random.Random(seed) if seed is not None else random.Random()
+ARCHETYPE_BUILDERS: Dict[str, Callable[[random.Random], Dict[str, Any]]] = {
+    "01_moon_revolution_period": arch_01_moon_revolution_period,
+    "02_moon_synchronous_rotation": arch_02_moon_synchronous_rotation,
+    "03_near_side_vs_far_side_observation": arch_03_near_side_vs_far_side_observation,
+    "04_moon_distance_and_elliptical_orbit": arch_04_moon_distance_and_elliptical_orbit,
+    "05_moon_surface_regolith_and_craters": arch_05_moon_surface_regolith_and_craters,
+    "06_moon_absence_of_atmosphere": arch_06_moon_absence_of_atmosphere,
+    "07_moon_temperature_extremes": arch_07_moon_temperature_extremes,
+    "08_lunar_phases_cause_geometry": arch_08_lunar_phases_cause_geometry,
+    "09_lunar_phase_new_moon": arch_09_lunar_phase_new_moon,
+    "10_lunar_phase_waxing_crescent": arch_10_lunar_phase_waxing_crescent,
+    "11_lunar_phase_first_quarter": arch_11_lunar_phase_first_quarter,
+    "12_lunar_phase_waxing_gibbous": arch_12_lunar_phase_waxing_gibbous,
+    "13_lunar_phase_full_moon": arch_13_lunar_phase_full_moon,
+    "14_lunar_phase_waning_gibbous": arch_14_lunar_phase_waning_gibbous,
+    "15_lunar_phase_third_quarter": arch_15_lunar_phase_third_quarter,
+    "16_lunar_phase_waning_crescent": arch_16_lunar_phase_waning_crescent,
+    "17_lunar_phase_full_cycle_sequence": arch_17_lunar_phase_full_cycle_sequence,
+    "18_lunar_illumination_reflected_sunlight": arch_18_lunar_illumination_reflected_sunlight,
+    "19_relative_positions_sun_earth_moon": arch_19_relative_positions_sun_earth_moon,
+    "20_solar_eclipse_alignment_order": arch_20_solar_eclipse_alignment_order,
+    "21_solar_eclipse_umbra_penumbra_shadows": arch_21_solar_eclipse_umbra_penumbra_shadows,
+    "22_solar_eclipse_angular_size_ratio": arch_22_solar_eclipse_angular_size_ratio,
+    "23_total_vs_partial_solar_eclipse_zones": arch_23_total_vs_partial_solar_eclipse_zones,
+    "24_solar_eclipse_path_of_totality": arch_24_solar_eclipse_path_of_totality,
+    "25_solar_eclipse_safety_and_pinhole_projection": arch_25_solar_eclipse_safety_and_pinhole_projection,
+    "26_lunar_eclipse_alignment_order": arch_26_lunar_eclipse_alignment_order,
+    "27_lunar_eclipse_earth_shadow_types": arch_27_lunar_eclipse_earth_shadow_types,
+    "28_lunar_eclipse_red_blood_moon_refraction": arch_28_lunar_eclipse_red_blood_moon_refraction,
+    "29_lunar_eclipse_night_hemisphere_visibility": arch_29_lunar_eclipse_night_hemisphere_visibility,
+    "30_eclipse_scarcity_orbital_plane_tilt": arch_30_eclipse_scarcity_orbital_plane_tilt,
+    "31_gravity_definition_non_contact_attraction": arch_31_gravity_definition_non_contact_attraction,
+    "32_gravity_factors_mass_and_distance": arch_32_gravity_factors_mass_and_distance,
+    "33_gravity_keeps_moon_in_orbit": arch_33_gravity_keeps_moon_in_orbit,
+    "34_mass_concept_invariance_kg": arch_34_mass_concept_invariance_kg,
+    "35_weight_concept_gravitational_force_newtons": arch_35_weight_concept_gravitational_force_newtons,
+    "36_weight_calculation_earth_gravity": arch_36_weight_calculation_earth_gravity,
+    "37_weight_calculation_moon_gravity": arch_37_weight_calculation_moon_gravity,
+    "38_weight_comparison_earth_vs_moon_ratio": arch_38_weight_comparison_earth_vs_moon_ratio,
+    "39_bathroom_scale_vs_beam_balance_physics": arch_39_bathroom_scale_vs_beam_balance_physics,
+    "40_astronaut_motion_reduced_gravity": arch_40_astronaut_motion_reduced_gravity,
+    "41_ocean_tides_gravitational_pull_cause": arch_41_ocean_tides_gravitational_pull_cause,
+    "42_two_high_and_two_low_tides_daily": arch_42_two_high_and_two_low_tides_daily,
+    "43_tidal_cycle_period_24_hours_50_minutes": arch_43_tidal_cycle_period_24_hours_50_minutes,
+    "44_spring_tides_syzygy_alignment": arch_44_spring_tides_syzygy_alignment,
+    "45_spring_tides_maximum_tidal_range": arch_45_spring_tides_maximum_tidal_range,
+    "46_neap_tides_quadrature_right_angle": arch_46_neap_tides_quadrature_right_angle,
+    "47_neap_tides_minimum_tidal_range": arch_47_neap_tides_minimum_tidal_range,
+    "48_tide_table_interpretation_and_predictions": arch_48_tide_table_interpretation_and_predictions,
+    "49_coastal_tides_maritime_and_ecological_impact": arch_49_coastal_tides_maritime_and_ecological_impact,
+    "50_moon_earth_comprehensive_diagnostic_autopsy": arch_50_moon_earth_comprehensive_diagnostic_autopsy,
+}
 
-def _build_moon_orbit(rng: random.Random) -> Dict[str, Any]:
-    intros = [
-        "The Moon is Earth's only natural satellite, gravitationally bound in an elliptical path.",
-        "Night sky observers across southern Africa record the Moon's orbital movement against background constellations.",
-        "Astronomers measure the cyclical phases of the Moon as it completes its orbit around the Earth."
-    ]
-    prompt = (
-        f"{rng.choice(intros)}\n\n"
-        f"Approximately how long does it take for the Moon to complete ONE full orbit (revolution) around the Earth, "
-        "and does the Moon emit its own light?"
-    )
-    correct_opt = "Approximately 28 days (one month): The Moon does not emit light; it reflects sunlight."
-    options = [
-        correct_opt,
-        "Exactly 365.25 days: The Moon burns nuclear fuel like a small star.",
-        "Exactly 24 hours: The Moon generates light from hot volcanic magma.",
-        "Approximately 12 hours: The Moon is completely transparent to cosmic rays."
-    ]
-    rng.shuffle(options)
-    sol = (
-        "Moon Orbital Mechanics:\n"
-        "1. The Moon revolves around Earth in an elliptical orbit taking approximately 27.3 to 29.5 days (~28 days / 1 lunar cycle).\n"
-        "2. The Moon is a non-luminous rocky body that does not generate its own light; it reflects light from the Sun."
-    )
-    return {
-        "id": f"ns7_moon_orb_{rng.randint(100000, 999999)}",
-        "question_type": "mcq",
-        "prompt": prompt,
-        "options": options,
-        "correct_answer": correct_opt,
-        "sample_answer": correct_opt,
-        "worked_solution": sol,
-        "explanation": sol,
-        "canonical_solution": sol,
-        "marks": 2,
-        "subskill": "moon_orbit_and_revolution_period",
-        "question_family_id": "moon_orbit_and_revolution_period",
-        "hints": {
-            "tier_1": "Think about the word 'month' which comes from 'moon'.",
-            "tier_2": "The Moon takes ~28 days to orbit and reflects sunlight.",
-            "tier_3": "Approximately 28 days, and it reflects sunlight."
-        },
-        "misconception_tags": ["moon_luminous_body_fallacy"]
-    }
+SUBSKILLS: List[str] = list(ARCHETYPE_BUILDERS.keys())
 
-def _build_lunar_phases(rng: random.Random) -> Dict[str, Any]:
-    phases = [
-        ("New Moon", "the Moon is situated between the Earth and the Sun, with its unlit dark side facing Earth", "zero illumination visible from Earth"),
-        ("First Quarter", "half of the visible lunar surface is illuminated on the western side one week after New Moon", "half disc illuminated"),
-        ("Full Moon", "the Earth is situated between the Sun and Moon, with the fully illuminated lunar surface facing Earth", "complete illuminated disc visible"),
-        ("Third (Last) Quarter", "half of the visible lunar surface is illuminated on the eastern side three weeks after New Moon", "waning half disc illuminated")
-    ]
-    phase_name, desc, view = rng.choice(phases)
-    prompt = f"Which phase of the Moon occurs when {desc}?"
-    correct_opt = phase_name
-    distractors = [p[0] for p in phases if p[0] != phase_name]
-    options = [correct_opt] + distractors
-    rng.shuffle(options)
-    sol = (
-        f"Step 1: Understand lunar phases cause:\n"
-        f"Lunar phases are caused by changing angles between Earth, Moon, and Sun as the Moon orbits Earth.\n\n"
-        f"Conclusion: '{desc}' describes the {phase_name}."
-    )
-    return {
-        "id": f"ns7_moon_phase_{rng.randint(100000, 999999)}",
-        "question_type": "mcq",
-        "prompt": prompt,
-        "options": options,
-        "correct_answer": correct_opt,
-        "sample_answer": correct_opt,
-        "worked_solution": sol,
-        "explanation": sol,
-        "canonical_solution": sol,
-        "marks": 2,
-        "subskill": "lunar_phases_sequence_and_causes",
-        "question_family_id": "lunar_phases_sequence_and_causes",
-        "hints": {
-            "tier_1": "Is the illuminated face completely visible (Full), invisible (New), or half visible (Quarter)?",
-            "tier_2": "Look at the alignment of Earth, Moon, and Sun.",
-            "tier_3": f"This corresponds to the {phase_name}."
-        },
-        "misconception_tags": ["earth_shadow_moon_phases_myth"]
-    }
 
-def _build_ocean_tides(rng: random.Random) -> Dict[str, Any]:
-    tides = [
-        ("Spring tides (highest high tides and lowest low tides)", "the Sun, Moon, and Earth align in a straight line (syzygy) during New Moon and Full Moon, combining their gravitational pulls"),
-        ("Neap tides (lowest tidal range with moderate high and low tides)", "the Sun and Moon are positioned at right angles (90°) relative to Earth during First and Third Quarter moons, partially cancelling each other's gravitational pull")
-    ]
-    tide_type, cause = rng.choice(tides)
-    prompt = f"What causes **{tide_type}** in Earth's oceans?"
-    correct_opt = f"They occur because {cause}."
-    alt_tide = tides[1] if tide_type == tides[0][0] else tides[0]
-    options = [
-        correct_opt,
-        f"They occur because {alt_tide[1]}.",
-        "They are caused strictly by undersea earthquakes and volcanic eruptions.",
-        "They are caused by strong municipal water pumping stations in coastal cities."
-    ]
-    rng.shuffle(options)
-    sol = (
-        f"Tidal Mechanics:\n"
-        f"- Spring tides: Occur twice a month at New/Full Moon when Sun and Moon gravity combine in line -> maximum tidal range.\n"
-        f"- Neap tides: Occur twice a month at Quarter Moons when Sun and Moon pull at 90° -> minimum tidal range.\n\n"
-        f"Conclusion: {tide_type} occurs because {cause}."
-    )
-    return {
-        "id": f"ns7_moon_tide_{rng.randint(100000, 999999)}",
-        "question_type": "mcq",
-        "prompt": prompt,
-        "options": options,
-        "correct_answer": correct_opt,
-        "sample_answer": correct_opt,
-        "worked_solution": sol,
-        "explanation": sol,
-        "canonical_solution": sol,
-        "marks": 2,
-        "subskill": "ocean_tides_spring_and_neap",
-        "question_family_id": "ocean_tides_spring_and_neap",
-        "hints": {
-            "tier_1": "Spring tides have the biggest tidal range; neap tides have the smallest.",
-            "tier_2": "Spring tides align in a line (New/Full Moon); neap tides pull at 90 degrees.",
-            "tier_3": f"{tide_type} occurs because {cause}."
-        },
-        "misconception_tags": ["spring_season_spring_tide_confusion"]
-    }
+def generate(
+    subskill: Optional[str] = None,
+    count: int = 1,
+    seed: Optional[int] = None,
+    **kwargs: Any,
+) -> List[Dict[str, Any]]:
+    """Generate questions for Relationship of the Moon to the Earth.
 
-def _build_eclipses(rng: random.Random) -> Dict[str, Any]:
-    eclipses = [
-        ("A Solar Eclipse", "the Moon passes directly between the Earth and the Sun, casting a shadow (umbra/penumbra) on Earth and blocking sunlight", "Daytime during New Moon"),
-        ("A Lunar Eclipse", "the Earth passes directly between the Sun and the Moon, casting Earth's shadow across the lunar surface", "Nighttime during Full Moon")
-    ]
-    ecl_type, mech, timing = rng.choice(eclipses)
-    prompt = f"Explain the astronomical geometry of **{ecl_type}**."
-    correct_opt = f"{ecl_type} occurs when {mech} ({timing})."
-    alt_ecl = eclipses[1] if ecl_type == eclipses[0][0] else eclipses[0]
-    options = [
-        correct_opt,
-        f"{ecl_type} occurs when {alt_ecl[1]} ({alt_ecl[2]}).",
-        "It occurs when the Sun explodes and shrinks for two hours.",
-        "It happens when clouds completely cover all seven continents simultaneously."
-    ]
-    rng.shuffle(options)
-    sol = (
-        f"Eclipse Mechanics:\n"
-        f"- Solar Eclipse: Sun - Moon - Earth. The Moon casts its shadow on Earth.\n"
-        f"- Lunar Eclipse: Sun - Earth - Moon. The Earth casts its shadow on the Moon.\n\n"
-        f"Conclusion: {ecl_type} occurs when {mech}."
-    )
-    return {
-        "id": f"ns7_moon_ecl_{rng.randint(100000, 999999)}",
-        "question_type": "mcq",
-        "prompt": prompt,
-        "options": options,
-        "correct_answer": correct_opt,
-        "sample_answer": correct_opt,
-        "worked_solution": sol,
-        "explanation": sol,
-        "canonical_solution": sol,
-        "marks": 2,
-        "subskill": "lunar_and_solar_eclipses_mechanics",
-        "question_family_id": "lunar_and_solar_eclipses_mechanics",
-        "hints": {
-            "tier_1": "Which body is in the middle: the Moon (solar eclipse) or the Earth (lunar eclipse)?",
-            "tier_2": "Solar eclipse = Moon blocks the Sun; Lunar eclipse = Earth shadows the Moon.",
-            "tier_3": f"{ecl_type} occurs when {mech}."
-        },
-        "misconception_tags": ["solar_lunar_eclipse_inversion"]
-    }
+    Returns a list of question dicts adhering to the 6-pillar contract.
+    """
+    rng = random.Random(seed) if seed is not None else random.Random()
+    results: List[Dict[str, Any]] = []
 
-def _build_gravity_and_weight(rng: random.Random) -> Dict[str, Any]:
-    earth_mass = rng.choice([60, 72, 84, 90])
-    prompt = (
-        f"An astronaut has a mass of {earth_mass} kg on Earth. The Moon has approximately 1/6th of Earth's gravity.\n\n"
-        f"What will the astronaut's **mass** and approximate **weight** be on the surface of the Moon? (Take Earth gravity g = 10 N/kg)."
-    )
-    earth_wt = earth_mass * 10
-    moon_wt = earth_wt / 6
-    correct_opt = f"Mass: {earth_mass} kg (unchanged) | Weight: approximately {moon_wt:.0f} N (1/6th of Earth weight)"
-    options = [
-        correct_opt,
-        f"Mass: {earth_mass/6:.1f} kg | Weight: {earth_wt} N",
-        f"Mass: 0 kg | Weight: 0 N (zero gravity exists on the Moon)",
-        f"Mass: {earth_mass * 6} kg | Weight: {moon_wt:.0f} N"
-    ]
-    rng.shuffle(options)
-    sol = (
-        f"Step 1: Understand Mass vs Weight:\n"
-        f"- Mass is the amount of matter in an object, measured in kilograms (kg). It never changes regardless of location: Mass = {earth_mass} kg.\n"
-        f"- Weight is the gravitational force acting on that mass, measured in Newtons (N): W = m × g.\n\n"
-        f"Step 2: Calculate Moon Weight:\n"
-        f"Earth weight = {earth_mass} kg × 10 N/kg = {earth_wt} N.\n"
-        f"Moon weight = {earth_wt} / 6 = approximately {moon_wt:.0f} N."
-    )
-    return {
-        "id": f"ns7_moon_wt_{rng.randint(100000, 999999)}",
-        "question_type": "mcq",
-        "prompt": prompt,
-        "options": options,
-        "correct_answer": correct_opt,
-        "sample_answer": correct_opt,
-        "worked_solution": sol,
-        "explanation": sol,
-        "canonical_solution": sol,
-        "marks": 2,
-        "subskill": "gravity_and_weight_on_the_moon",
-        "question_family_id": "gravity_and_weight_on_the_moon",
-        "hints": {
-            "tier_1": "Mass is the amount of matter and never changes. Weight is gravitational force.",
-            "tier_2": f"Mass stays the same ({earth_mass} kg); weight is divided by 6.",
-            "tier_3": f"Mass is {earth_mass} kg and weight is ~{moon_wt:.0f} N."
-        },
-        "misconception_tags": ["mass_weight_confusion", "moon_zero_gravity_myth"]
-    }
+    for _ in range(max(1, count)):
+        chosen_subskill = subskill
+        if not chosen_subskill or chosen_subskill not in ARCHETYPE_BUILDERS:
+            chosen_subskill = rng.choice(SUBSKILLS)
+        builder = ARCHETYPE_BUILDERS[chosen_subskill]
+        q = builder(rng)
+        # Ensure common metadata
+        q.setdefault("grade", 7)
+        q.setdefault("subject", "Natural Sciences")
+        q.setdefault("term", 4)
+        q.setdefault("topic", "Relationship of the moon to the earth")
+        results.append(q)
 
-def generate(subskill: Optional[str] = None, count: int = 1, seed: Optional[int] = None, **kwargs: Any) -> List[Dict[str, Any]]:
-    rng = _rng(seed)
-    target = str(subskill or "").strip().lower()
-    builders = {
-        "moon_orbit_and_revolution_period": _build_moon_orbit,
-        "lunar_phases_sequence_and_causes": _build_lunar_phases,
-        "ocean_tides_spring_and_neap": _build_ocean_tides,
-        "lunar_and_solar_eclipses_mechanics": _build_eclipses,
-        "gravity_and_weight_on_the_moon": _build_gravity_and_weight
-    }
-    if target in builders:
-        return [builders[target](rng) for _ in range(count)]
-    for k, fn in builders.items():
-        if target and target in k:
-            return [fn(rng) for _ in range(count)]
-    res = []
-    for i in range(count):
-        sub = SUBSKILLS[i % len(SUBSKILLS)]
-        res.append(builders[sub](rng))
-    return res
+    return results
+
+
+def generate_question(
+    subskill: Optional[str] = None,
+    seed: Optional[int] = None,
+    **kwargs: Any,
+) -> Dict[str, Any]:
+    """Single question generation entry point."""
+    return generate(subskill=subskill, count=1, seed=seed, **kwargs)[0]

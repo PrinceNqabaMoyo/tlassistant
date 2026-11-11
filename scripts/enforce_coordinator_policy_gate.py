@@ -100,16 +100,20 @@ def validate_staged_generators() -> bool:
 
     for uf in util_files:
         stem = Path(uf).stem
-        # Extract grade from file path if present (e.g. grade9_mathematics -> 9)
-        grade_match = re.search(r"grade(\d+)", uf.lower())
+        # Extract grade from file path if present (e.g. grade9_mathematics, ns7_biosphere -> 9, 7)
+        grade_match = re.search(r"(?:grade|ns|ls|gr|phys)(\d+)", uf.lower())
         target_grade = int(grade_match.group(1)) if grade_match else None
 
-        # Strip _archetypes_01_25, _archetypes_26_50, _svg, _generator, _part1, _part2
+        # Strip subject-grade prefixes like ns7_, ns8_, ns9_, ls10_, ls11_, ls12_, gr11_, gr12_
+        stem = re.sub(r"^(?:ns|ls|gr|phys)\d+_", "", stem)
+
+        # Strip _archetypes_01_25, _archetypes_26_50, _svg, _generator, _gen, _part1, _part2
         for suffix in (
             "_archetypes_01_25",
             "_archetypes_26_50",
             "_svg",
             "_generator",
+            "_gen",
             "_part1",
             "_part2",
         ):

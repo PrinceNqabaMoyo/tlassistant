@@ -1,263 +1,159 @@
 """Grade 7 Natural Sciences: Term 4 - Historical Development of Astronomy Generator.
 100% Aligned with South African National Curriculum Standards.
 Grounded directly in curriculum_docs_auto/NaturalSciences_Gr7/Term 4/02. Historical development of astronomy.md.
+50 Distinct Semantic Archetypes (01 to 50).
 """
 from __future__ import annotations
-import random
-from typing import Any, Dict, List, Optional
 
-SUBSKILLS = [
-    "indigenous_african_astronomy_and_star_lore",
-    "galileo_and_the_telescope_revolution",
-    "optical_vs_radio_telescopes",
-    "south_african_large_telescope_salt",
-    "square_kilometre_array_ska_karoo"
-]
+import random
+from typing import Any, Callable, Dict, List, Optional
+
+from .ns7_astronomy_history_archetypes_01_25 import (
+    arch_01_indigenous_african_astronomy_heritage,
+    arch_02_xhosa_traditional_calendar_isilimela_pleiades,
+    arch_03_sotho_tswana_starlore_selemela_agriculture,
+    arch_04_san_bushman_starlore_milky_way_ashes,
+    arch_05_san_bushman_celestial_hunters_magellanic_clouds,
+    arch_06_venus_morning_evening_star_ikhwezi,
+    arch_07_southern_cross_crux_and_pointers_navigation,
+    arch_08_sirius_inkwenkwezi_agricultural_calendar,
+    arch_09_ancient_african_observatories_adams_calendar,
+    arch_10_ancient_african_observatories_nabta_playa,
+    arch_11_cultural_interpretations_shooting_stars_meteors,
+    arch_12_cultural_interpretations_comets_celestial_messengers,
+    arch_13_geocentric_model_aristotle_ptolemy_earth_centred,
+    arch_14_ptolemaic_epicycles_explaining_planetary_motion,
+    arch_15_heliocentric_model_copernicus_sun_centred,
+    arch_16_apparent_retrograde_motion_mars_perspective,
+    arch_17_tycho_brahe_naked_eye_astronomical_measurements,
+    arch_18_keplers_first_law_elliptical_orbits,
+    arch_19_keplers_second_law_orbital_speeds_perihelion_aphelion,
+    arch_20_keplers_third_law_orbital_period_distance_ratio,
+    arch_21_invention_of_optical_telescope_hans_lippershey,
+    arch_22_galileo_galilei_systematic_telescopic_observations,
+    arch_23_galilean_moons_of_jupiter_revolution,
+    arch_24_phases_of_venus_proving_heliocentrism,
+    arch_25_lunar_craters_and_imperfection_of_celestial_bodies,
+)
+from .ns7_astronomy_history_archetypes_26_50 import (
+    arch_26_sunspots_observation_solar_rotation,
+    arch_27_saturns_rings_early_telescopic_puzzles,
+    arch_28_galileos_conflict_with_inquisition_house_arrest,
+    arch_29_isaac_newton_law_of_universal_gravitation,
+    arch_30_newton_explaining_keplers_elliptical_orbits,
+    arch_31_invention_of_reflecting_telescope_newton_mirrors,
+    arch_32_refracting_telescopes_lenses_chromatic_aberration,
+    arch_33_reflecting_telescopes_concave_mirrors_advantages,
+    arch_34_optical_vs_radio_telescopes_comparison,
+    arch_35_radio_astronomy_history_karl_jansky,
+    arch_36_radio_waves_penetrating_interstellar_dust,
+    arch_37_south_african_astronomy_heritage_royal_observatory,
+    arch_38_sutherland_karoo_ideal_astronomical_site,
+    arch_39_south_african_large_telescope_salt_specifications,
+    arch_40_salt_hexagonal_primary_mirror_technology,
+    arch_41_hartraao_hartbeeshoek_radio_astronomy,
+    arch_42_meerkat_radio_telescope_karoo_precursor,
+    arch_43_square_kilometre_array_ska_global_scientific_collaboration,
+    arch_44_ska_scientific_goals_cosmic_origins_dark_ages,
+    arch_45_space_telescopes_hubble_avoiding_atmospheric_distortion,
+    arch_46_james_webb_space_telescope_infrared_astronomy,
+    arch_47_ground_vs_space_based_observatories_tradeoffs,
+    arch_48_multispectral_astronomy_visible_radio_xray,
+    arch_49_astronomy_careers_and_stem_skills_south_africa,
+    arch_50_astronomy_history_comprehensive_diagnostic_autopsy,
+)
 
 CURRICULUM_DOC = "curriculum_docs_auto/NaturalSciences_Gr7/Term 4/02. Historical development of astronomy.md"
 
-def _rng(seed: Optional[int]) -> random.Random:
-    return random.Random(seed) if seed is not None else random.Random()
+ARCHETYPE_BUILDERS: Dict[str, Callable[[random.Random], Dict[str, Any]]] = {
+    "01_indigenous_african_astronomy_heritage": arch_01_indigenous_african_astronomy_heritage,
+    "02_xhosa_traditional_calendar_isilimela_pleiades": arch_02_xhosa_traditional_calendar_isilimela_pleiades,
+    "03_sotho_tswana_starlore_selemela_agriculture": arch_03_sotho_tswana_starlore_selemela_agriculture,
+    "04_san_bushman_starlore_milky_way_ashes": arch_04_san_bushman_starlore_milky_way_ashes,
+    "05_san_bushman_celestial_hunters_magellanic_clouds": arch_05_san_bushman_celestial_hunters_magellanic_clouds,
+    "06_venus_morning_evening_star_ikhwezi": arch_06_venus_morning_evening_star_ikhwezi,
+    "07_southern_cross_crux_and_pointers_navigation": arch_07_southern_cross_crux_and_pointers_navigation,
+    "08_sirius_inkwenkwezi_agricultural_calendar": arch_08_sirius_inkwenkwezi_agricultural_calendar,
+    "09_ancient_african_observatories_adams_calendar": arch_09_ancient_african_observatories_adams_calendar,
+    "10_ancient_african_observatories_nabta_playa": arch_10_ancient_african_observatories_nabta_playa,
+    "11_cultural_interpretations_shooting_stars_meteors": arch_11_cultural_interpretations_shooting_stars_meteors,
+    "12_cultural_interpretations_comets_celestial_messengers": arch_12_cultural_interpretations_comets_celestial_messengers,
+    "13_geocentric_model_aristotle_ptolemy_earth_centred": arch_13_geocentric_model_aristotle_ptolemy_earth_centred,
+    "14_ptolemaic_epicycles_explaining_planetary_motion": arch_14_ptolemaic_epicycles_explaining_planetary_motion,
+    "15_heliocentric_model_copernicus_sun_centred": arch_15_heliocentric_model_copernicus_sun_centred,
+    "16_apparent_retrograde_motion_mars_perspective": arch_16_apparent_retrograde_motion_mars_perspective,
+    "17_tycho_brahe_naked_eye_astronomical_measurements": arch_17_tycho_brahe_naked_eye_astronomical_measurements,
+    "18_keplers_first_law_elliptical_orbits": arch_18_keplers_first_law_elliptical_orbits,
+    "19_keplers_second_law_orbital_speeds_perihelion_aphelion": arch_19_keplers_second_law_orbital_speeds_perihelion_aphelion,
+    "20_keplers_third_law_orbital_period_distance_ratio": arch_20_keplers_third_law_orbital_period_distance_ratio,
+    "21_invention_of_optical_telescope_hans_lippershey": arch_21_invention_of_optical_telescope_hans_lippershey,
+    "22_galileo_galilei_systematic_telescopic_observations": arch_22_galileo_galilei_systematic_telescopic_observations,
+    "23_galilean_moons_of_jupiter_revolution": arch_23_galilean_moons_of_jupiter_revolution,
+    "24_phases_of_venus_proving_heliocentrism": arch_24_phases_of_venus_proving_heliocentrism,
+    "25_lunar_craters_and_imperfection_of_celestial_bodies": arch_25_lunar_craters_and_imperfection_of_celestial_bodies,
+    "26_sunspots_observation_solar_rotation": arch_26_sunspots_observation_solar_rotation,
+    "27_saturns_rings_early_telescopic_puzzles": arch_27_saturns_rings_early_telescopic_puzzles,
+    "28_galileos_conflict_with_inquisition_house_arrest": arch_28_galileos_conflict_with_inquisition_house_arrest,
+    "29_isaac_newton_law_of_universal_gravitation": arch_29_isaac_newton_law_of_universal_gravitation,
+    "30_newton_explaining_keplers_elliptical_orbits": arch_30_newton_explaining_keplers_elliptical_orbits,
+    "31_invention_of_reflecting_telescope_newton_mirrors": arch_31_invention_of_reflecting_telescope_newton_mirrors,
+    "32_refracting_telescopes_lenses_chromatic_aberration": arch_32_refracting_telescopes_lenses_chromatic_aberration,
+    "33_reflecting_telescopes_concave_mirrors_advantages": arch_33_reflecting_telescopes_concave_mirrors_advantages,
+    "34_optical_vs_radio_telescopes_comparison": arch_34_optical_vs_radio_telescopes_comparison,
+    "35_radio_astronomy_history_karl_jansky": arch_35_radio_astronomy_history_karl_jansky,
+    "36_radio_waves_penetrating_interstellar_dust": arch_36_radio_waves_penetrating_interstellar_dust,
+    "37_south_african_astronomy_heritage_royal_observatory": arch_37_south_african_astronomy_heritage_royal_observatory,
+    "38_sutherland_karoo_ideal_astronomical_site": arch_38_sutherland_karoo_ideal_astronomical_site,
+    "39_south_african_large_telescope_salt_specifications": arch_39_south_african_large_telescope_salt_specifications,
+    "40_salt_hexagonal_primary_mirror_technology": arch_40_salt_hexagonal_primary_mirror_technology,
+    "41_hartraao_hartbeeshoek_radio_astronomy": arch_41_hartraao_hartbeeshoek_radio_astronomy,
+    "42_meerkat_radio_telescope_karoo_precursor": arch_42_meerkat_radio_telescope_karoo_precursor,
+    "43_square_kilometre_array_ska_global_scientific_collaboration": arch_43_square_kilometre_array_ska_global_scientific_collaboration,
+    "44_ska_scientific_goals_cosmic_origins_dark_ages": arch_44_ska_scientific_goals_cosmic_origins_dark_ages,
+    "45_space_telescopes_hubble_avoiding_atmospheric_distortion": arch_45_space_telescopes_hubble_avoiding_atmospheric_distortion,
+    "46_james_webb_space_telescope_infrared_astronomy": arch_46_james_webb_space_telescope_infrared_astronomy,
+    "47_ground_vs_space_based_observatories_tradeoffs": arch_47_ground_vs_space_based_observatories_tradeoffs,
+    "48_multispectral_astronomy_visible_radio_xray": arch_48_multispectral_astronomy_visible_radio_xray,
+    "49_astronomy_careers_and_stem_skills_south_africa": arch_49_astronomy_careers_and_stem_skills_south_africa,
+    "50_astronomy_history_comprehensive_diagnostic_autopsy": arch_50_astronomy_history_comprehensive_diagnostic_autopsy,
+}
 
-def _build_indigenous_astronomy(rng: random.Random) -> Dict[str, Any]:
-    lores = [
-        ("the Pleiades star cluster (known as 'Isilimela' in isiXhosa / isiZulu and 'Selemela' in Sesotho)", "the onset of the agricultural plowing and planting season in spring"),
-        ("the Southern Cross (Crux) and its two pointer stars (Alpha and Beta Centauri)", "a celestial navigational compass indicating true south across the African veld at night"),
-        ("the morning star (Venus / 'iKhwezi')", "signalling the approaching dawn for rural herders and early morning travelers")
-    ]
-    celest, role = rng.choice(lores)
-    prompt = (
-        f"In indigenous South African astronomical knowledge systems, **{celest}** was traditionally used as a celestial calendar for:\n\n"
-        f"Which practical cultural or agricultural purpose?"
-    )
-    correct_opt = f"Signalling {role}."
-    options = [
-        correct_opt,
-        "Determining which minerals to mine in deep shafts.",
-        "Predicting modern satellite internet coverage.",
-        "Guaranteed warning of undersea tsunamis in the Atlantic ocean."
-    ]
-    rng.shuffle(options)
-    sol = (
-        f"Indigenous Knowledge Systems (IKS) in Astronomy:\n"
-        f"Long before modern telescopes, African indigenous communities observed patterns in celestial movements "
-        f"to manage agriculture, navigation, and ceremonies.\n\n"
-        f"Conclusion: {celest} was used for signalling {role}."
-    )
-    return {
-        "id": f"ns7_astro_iks_{rng.randint(100000, 999999)}",
-        "question_type": "mcq",
-        "prompt": prompt,
-        "options": options,
-        "correct_answer": correct_opt,
-        "sample_answer": correct_opt,
-        "worked_solution": sol,
-        "explanation": sol,
-        "canonical_solution": sol,
-        "marks": 2,
-        "subskill": "indigenous_african_astronomy_and_star_lore",
-        "question_family_id": "indigenous_african_astronomy_and_star_lore",
-        "hints": {
-            "tier_1": "Think about traditional farming and seasonal stars like Isilimela (Pleiades).",
-            "tier_2": "Stars were used to mark planting seasons and guide night navigation.",
-            "tier_3": f"It was used for signalling {role}."
-        },
-        "misconception_tags": ["iks_astronomy_dismissal_bias"]
-    }
+SUBSKILLS: List[str] = list(ARCHETYPE_BUILDERS.keys())
 
-def _build_galileo_revolution(rng: random.Random) -> Dict[str, Any]:
-    intros = [
-        "In 1609, Italian astronomer **Galileo Galilei** turned an optical refracting telescope toward the planets.",
-        "During the scientific revolution of the 17th century, **Galileo Galilei** used optical lenses to observe the night sky.",
-        "When **Galileo Galilei** constructed his astronomical telescope in 1609, he made pioneering celestial observations."
-    ]
-    prompt = (
-        f"{rng.choice(intros)}\n\n"
-        f"Which major observational discovery provided definitive evidence supporting Nicolaus Copernicus's heliocentric (Sun-centred) model of the solar system?"
-    )
-    correct_opt = "He discovered four large moons orbiting Jupiter, proving that not all celestial bodies revolve around the Earth."
-    options = [
-        correct_opt,
-        "He discovered human footprints and artificial roads on the Moon.",
-        "He proved that the Sun is made of solid cold granite.",
-        "He showed that Earth is completely stationary at the exact center of the universe."
-    ]
-    rng.shuffle(options)
-    sol = (
-        "Galilean Discoveries (1609-1610):\n"
-        "Galileo discovered the four largest moons of Jupiter (Io, Europa, Ganymede, Callisto). "
-        "This disproved the ancient geocentric Ptolemaic model (which held that everything revolved strictly around Earth) "
-        "and provided empirical proof supporting Copernicus's heliocentric model."
-    )
-    return {
-        "id": f"ns7_astro_gal_{rng.randint(100000, 999999)}",
-        "question_type": "mcq",
-        "prompt": prompt,
-        "options": options,
-        "correct_answer": correct_opt,
-        "sample_answer": correct_opt,
-        "worked_solution": sol,
-        "explanation": sol,
-        "canonical_solution": sol,
-        "marks": 2,
-        "subskill": "galileo_and_the_telescope_revolution",
-        "question_family_id": "galileo_and_the_telescope_revolution",
-        "hints": {
-            "tier_1": "Think about Jupiter's moons.",
-            "tier_2": "Seeing moons orbit Jupiter proved that not everything revolves around Earth.",
-            "tier_3": "He discovered Jupiter's moons, proving bodies can orbit other planets."
-        },
-        "misconception_tags": ["geocentric_galileo_confusion"]
-    }
 
-def _build_optical_vs_radio(rng: random.Random) -> Dict[str, Any]:
-    intros = [
-        "Astronomers modernly employ multiple types of telescopes operating across the electromagnetic spectrum.",
-        "When scanning distant galaxies and celestial bodies, scientists utilize both optical and radio telescopes.",
-        "In modern astronomical observatories, different telescope designs capture different wavelengths of electromagnetic radiation."
-    ]
-    prompt = (
-        f"{rng.choice(intros)}\n\n"
-        f"Which statement correctly distinguishes an **optical telescope** from a **radio telescope**?"
-    )
-    correct_opt = "Optical telescopes collect visible light rays using glass lenses or mirrors; radio telescopes collect long-wavelength radio waves using curved metal dish antennae."
-    options = [
-        correct_opt,
-        "Optical telescopes listen to radio music; radio telescopes shoot visible laser beams into deep space.",
-        "Radio telescopes can only operate inside dark underwater submarines.",
-        "Both telescopes collect only audible sound waves made by exploding stars."
-    ]
-    rng.shuffle(options)
-    sol = (
-        "Types of Astronomical Telescopes:\n"
-        "- Optical Telescopes: Capture visible electromagnetic light using glass refractive lenses or primary parabolic mirrors.\n"
-        "- Radio Telescopes: Detect invisible, long-wavelength radio emissions from celestial objects using curved parabolic metal dishes."
-    )
-    return {
-        "id": f"ns7_astro_types_{rng.randint(100000, 999999)}",
-        "question_type": "mcq",
-        "prompt": prompt,
-        "options": options,
-        "correct_answer": correct_opt,
-        "sample_answer": correct_opt,
-        "worked_solution": sol,
-        "explanation": sol,
-        "canonical_solution": sol,
-        "marks": 2,
-        "subskill": "optical_vs_radio_telescopes",
-        "question_family_id": "optical_vs_radio_telescopes",
-        "hints": {
-            "tier_1": "Optical = visible light; Radio = radio wave frequencies.",
-            "tier_2": "Optical uses lenses/mirrors; radio uses metal dish antennae.",
-            "tier_3": "Optical collects visible light; radio collects radio waves."
-        },
-        "misconception_tags": ["radio_telescope_sound_wave_myth"]
-    }
+def generate(
+    subskill: Optional[str] = None,
+    count: int = 1,
+    seed: Optional[int] = None,
+    **kwargs: Any,
+) -> List[Dict[str, Any]]:
+    """Generate questions for Historical Development of Astronomy.
 
-def _build_salt_sutherland(rng: random.Random) -> Dict[str, Any]:
-    intros = [
-        "The **Southern African Large Telescope (SALT)** situated in the Northern Cape is the largest single optical telescope in the Southern Hemisphere.",
-        "In astronomical science, South Africa hosts the giant **SALT (Southern African Large Telescope)** observatory plateau.",
-        "Engineers and astrophysicists selected the semi-arid Karoo plateau to construct the primary mirror array of **SALT**."
-    ]
-    prompt = (
-        f"{rng.choice(intros)}\n\n"
-        f"Give at least THREE geographical and atmospheric reasons why Sutherland in the Karoo was selected as the optimal location for this world-class optical observatory. (4 marks)"
-    )
-    sample_answer = (
-        "1. Dark skies with minimal light pollution: Sutherland has a tiny population and strict lighting bylaws, ensuring dark skies free from city glare.\n"
-        "2. Arid climate and low cloud cover: The Karoo has very low rainfall, resulting in cloudless nights for over 75% of the year.\n"
-        "3. High elevation: Sutherland sits at approximately 1 800 metres above sea level, placing the telescope above low-lying atmospheric haze and moisture.\n"
-        "4. Clean, stable air: Stable atmospheric conditions ensure minimal optical distortion (atmospheric seeing)."
-    )
-    sol = (
-        "Marking Rubric (4 marks total, any 4 points):\n"
-        "1. Absence of city light pollution / dark skies (1 mark).\n"
-        "2. Dry Karoo climate / high number of cloudless clear nights (1 mark).\n"
-        "3. High altitude (1 800 m) above atmospheric moisture and haze (1 mark).\n"
-        "4. Stable, unpolluted atmosphere reducing twinkling/distortion (1 mark)."
-    )
-    return {
-        "id": f"ns7_astro_salt_{rng.randint(100000, 999999)}",
-        "question_type": "paragraph",
-        "prompt": prompt,
-        "sample_answer": sample_answer,
-        "worked_solution": sol,
-        "explanation": sol,
-        "canonical_solution": sol,
-        "marks": 4,
-        "subskill": "south_african_large_telescope_salt",
-        "question_family_id": "south_african_large_telescope_salt",
-        "hints": {
-            "tier_1": "Why is the Karoo good for looking at stars through a giant mirror?",
-            "tier_2": "Think about darkness, lack of city lights, clear cloudless skies, and high elevation.",
-            "tier_3": "Mention zero light pollution, cloudless Karoo nights, high altitude, and clean stable air."
-        },
-        "misconception_tags": ["telescope_city_center_fallacy"]
-    }
+    Returns a list of question dicts adhering to the 6-pillar contract.
+    """
+    rng = random.Random(seed) if seed is not None else random.Random()
+    results: List[Dict[str, Any]] = []
 
-def _build_ska_karoo(rng: random.Random) -> Dict[str, Any]:
-    intros = [
-        "Near Carnarvon in the Northern Cape, South Africa's 64-dish **MeerKAT radio telescope array** is fully operational and gathering world-class astrophysics data as the core precursor to the international **Square Kilometre Array (SKA-Mid)**.",
-        "In the radio-quiet Karoo Astronomy Advantage Area, the completed and operational **MeerKAT telescope array** represents the first phase of the global **Square Kilometre Array (SKA)**.",
-        "Astronomers worldwide currently observe pulsars, cosmic magnetism, and distant hydrogen gas using South Africa's operational 64-antenna **MeerKAT array**, the operational cornerstone of the **Square Kilometre Array (SKA)**."
-    ]
-    prompt = (
-        f"{rng.choice(intros)}\n\n"
-        f"What is the primary scientific purpose and architectural design of the **Square Kilometre Array (SKA)**?"
-    )
-    correct_opt = "The world's largest and most sensitive radio telescope array, combining thousands of interconnected antennae to explore the early universe."
-    options = [
-        correct_opt,
-        "A nuclear weapons testing site hidden under the desert sands.",
-        "A commercial space airport designed for luxury passenger flights to Mars.",
-        "A coal-burning power station that supplies electricity to deep-space probes."
-    ]
-    rng.shuffle(options)
-    sol = (
-        "The Square Kilometre Array (SKA) Project:\n"
-        "The SKA is a massive international scientific mega-project co-hosted by South Africa (Karoo) and Australia. "
-        "It connects thousands of mid-frequency radio dish antennae to create an effective collecting area of one square kilometre, "
-        "enabling scientists to study the formation of the first stars, dark energy, and cosmic magnetism."
-    )
-    return {
-        "id": f"ns7_astro_ska_{rng.randint(100000, 999999)}",
-        "question_type": "mcq",
-        "prompt": prompt,
-        "options": options,
-        "correct_answer": correct_opt,
-        "sample_answer": correct_opt,
-        "worked_solution": sol,
-        "explanation": sol,
-        "canonical_solution": sol,
-        "marks": 2,
-        "subskill": "square_kilometre_array_ska_karoo",
-        "question_family_id": "square_kilometre_array_ska_karoo",
-        "hints": {
-            "tier_1": "It is an international radio telescope project in the Karoo.",
-            "tier_2": "It uses thousands of dish antennae to study the early universe.",
-            "tier_3": "The world's largest radio telescope array exploring the early universe."
-        },
-        "misconception_tags": ["ska_optical_confusion"]
-    }
+    for _ in range(max(1, count)):
+        chosen_subskill = subskill
+        if not chosen_subskill or chosen_subskill not in ARCHETYPE_BUILDERS:
+            chosen_subskill = rng.choice(SUBSKILLS)
+        builder = ARCHETYPE_BUILDERS[chosen_subskill]
+        q = builder(rng)
+        # Ensure common metadata
+        q.setdefault("grade", 7)
+        q.setdefault("subject", "Natural Sciences")
+        q.setdefault("term", 4)
+        q.setdefault("topic", "Historical development of astronomy")
+        results.append(q)
 
-def generate(subskill: Optional[str] = None, count: int = 1, seed: Optional[int] = None, **kwargs: Any) -> List[Dict[str, Any]]:
-    rng = _rng(seed)
-    target = str(subskill or "").strip().lower()
-    builders = {
-        "indigenous_african_astronomy_and_star_lore": _build_indigenous_astronomy,
-        "galileo_and_the_telescope_revolution": _build_galileo_revolution,
-        "optical_vs_radio_telescopes": _build_optical_vs_radio,
-        "south_african_large_telescope_salt": _build_salt_sutherland,
-        "square_kilometre_array_ska_karoo": _build_ska_karoo
-    }
-    if target in builders:
-        return [builders[target](rng) for _ in range(count)]
-    for k, fn in builders.items():
-        if target and target in k:
-            return [fn(rng) for _ in range(count)]
-    res = []
-    for i in range(count):
-        sub = SUBSKILLS[i % len(SUBSKILLS)]
-        res.append(builders[sub](rng))
-    return res
+    return results
+
+
+def generate_question(
+    subskill: Optional[str] = None,
+    seed: Optional[int] = None,
+    **kwargs: Any,
+) -> Dict[str, Any]:
+    """Single question generation entry point."""
+    return generate(subskill=subskill, count=1, seed=seed, **kwargs)[0]
