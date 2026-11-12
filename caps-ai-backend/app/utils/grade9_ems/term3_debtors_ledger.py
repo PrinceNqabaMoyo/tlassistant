@@ -1,127 +1,109 @@
+"""Grade 9 EMS Term 3: Credit Transactions (Debtors 2).
+
+Deterministic 50-archetype question generator grounded in SA curriculum standards.
+Grounded strictly in:
+- curriculum_docs_auto/EMS_Gr9/Term 3/01. Credit transactions (Debtors 2).md
+- curriculum_docs/EMS_Gr9/Term 3/9-Credit transactions Debtors (2).md
+"""
+from __future__ import annotations
+
 import random
+from typing import Any, Callable, Dict, List, Optional
 
-def _rng(seed=None):
-    if seed is not None:
-        return random.Random(seed)
-    return random.Random()
+from .term3_debtors_ledger_archetypes_01_25 import (
+    ARCHETYPE_BUILDERS_01_25,
+    CURRICULUM_REFERENCE,
+    SUBTOPIC_ID,
+    TOPIC_ID,
+    TOPIC_NAME,
+)
+from .term3_debtors_ledger_archetypes_26_50 import ARCHETYPE_BUILDERS_26_50
 
-def _with_metadata(item, subskill, learning_objective_id, question_family_id, concept_id, concept_group, diagnostic_tags):
-    item['subskill'] = subskill
-    item['learning_objective_id'] = learning_objective_id
-    item['question_family_id'] = question_family_id
-    item['concept_id'] = concept_id
-    item['concept_group'] = concept_group
-    item['diagnostic_tags'] = diagnostic_tags
-    return item
+ARCHETYPE_BUILDERS: Dict[str, Callable[[random.Random, str], Dict[str, Any]]] = {}
+ARCHETYPE_BUILDERS.update(ARCHETYPE_BUILDERS_01_25)
+ARCHETYPE_BUILDERS.update(ARCHETYPE_BUILDERS_26_50)
 
-def _generate_debtors_ledger(rng, mode, seed=None):
-    businesses = ["Trader Joes", "Quick Mart", "Smart Shopper", "Elite Electronics", "Soweto General Dealers", "Durban Retailers"]
-    months = ["March 2026", "June 2026", "September 2026", "November 2026"]
-    debtors = ["S. Sithole", "B. Khumalo", "N. Dlamini", "T. Naidoo", "P. Van der Merwe", "L. Mthembu"]
-    
-    business_name = rng.choice(businesses)
-    month = rng.choice(months)
-    debtor_name = rng.choice(debtors)
-    debtor_fol = "D1"
-    
-    opening_bal = rng.randint(8, 25) * 100
-    sale_amt = rng.randint(12, 35) * 100
-    return_amt = rng.randint(2, 6) * 100
-    receipt_amt = rng.randint(6, 18) * 100
-    
-    bal1 = opening_bal
-    bal2 = bal1 + sale_amt
-    bal3 = bal2 - return_amt
-    bal4 = bal3 - receipt_amt
-    
-    transactions = [
-        f"1st: Account rendered balance brought forward: R{bal1:,}.",
-        f"12th: Sold goods on credit to {debtor_name}, R{sale_amt:,}. Issued duplicate invoice 101 (DJ).",
-        f"17th: Issued Credit Note 35 to {debtor_name} for damaged goods returned, R{return_amt:,} (DAJ).",
-        f"25th: Received payment of R{receipt_amt:,} from {debtor_name} in partial settlement of account. Issued duplicate receipt 88 (CRJ)."
-    ]
+ORDERED_SUBSKILLS: List[str] = list(ARCHETYPE_BUILDERS.keys())
+SUBSKILLS: List[str] = list(ORDERED_SUBSKILLS)
 
-    data_rows = [
-        ["1", "Account rendered", "b/d", "", "", str(bal1)],
-        ["12", "Invoice 101", "DJ", str(sale_amt), "", str(bal2)],
-        ["17", "Credit Note 35", "DAJ", "", str(return_amt), str(bal3)],
-        ["25", "Receipt 88", "CRJ", "", str(receipt_amt), str(bal4)],
-    ]
-    
-    correct_map = {}
-    ui_rows = []
-    cell_hints = {}
-    
-    for i, row in enumerate(data_rows):
-        ui_row = []
-        for j, val in enumerate(row):
-            coord = f"t0_r{i}_c{j}"
-            correct_map[coord] = val
-            is_empty = (val == "")
-            is_opening = (i == 0 and j in [0, 1, 2, 5])
-            ui_row.append({
-                "coordinate": coord,
-                "value": val if (mode == "scaffold" or is_opening) else "",
-                "type": "given" if is_opening else ("must_be_empty" if is_empty else "required"),
-                "editable": not is_opening,
-            })
-        ui_rows.append(ui_row)
+DISPATCH_TABLE: Dict[str, Callable[[random.Random, str], Dict[str, Any]]] = dict(ARCHETYPE_BUILDERS)
+for idx, skill_name in enumerate(ORDERED_SUBSKILLS, start=1):
+    DISPATCH_TABLE[str(idx)] = ARCHETYPE_BUILDERS[skill_name]
+    DISPATCH_TABLE[f"{idx:02d}"] = ARCHETYPE_BUILDERS[skill_name]
 
-    headers = ["Date", "Details", "Fol", "Debit (+)", "Credit (-)", "Balance"]
-    
-    cell_hints["t0_r1_c3"] = f"Credit sale from DJ: Debit column increases debtor's balance by R{sale_amt:,}."
-    cell_hints["t0_r1_c5"] = f"New Balance = Previous Balance (R{bal1:,}) + Debit (R{sale_amt:,}) = R{bal2:,}."
-    cell_hints["t0_r2_c4"] = f"Allowance / return from DAJ: Credit column decreases debtor's balance by R{return_amt:,}."
-    cell_hints["t0_r2_c5"] = f"New Balance = Previous Balance (R{bal2:,}) - Credit (R{return_amt:,}) = R{bal3:,}."
-    cell_hints["t0_r3_c4"] = f"Payment received from CRJ: Credit column decreases debtor's balance by R{receipt_amt:,}."
-    cell_hints["t0_r3_c5"] = f"New Balance = Previous Balance (R{bal3:,}) - Credit (R{receipt_amt:,}) = R{bal4:,}."
-    
-    item = {
-        "id": f"ems9_dl_{rng.randint(1000, 9999)}",
-        "topic": f"Debtors Ledger - {debtor_name} ({debtor_fol})",
-        "question_type": "table_completion",
-        "modality": "ledger",
-        "prompt": f"Complete the **Debtors Ledger** account for **{debtor_name} ({debtor_fol})** in the books of **{business_name}** for {month}. Starting balance: R{opening_bal:,}.",
-        "transactions": transactions,
-        "headers": headers,
-        "rows": ui_rows,
-        "journal": {
-            "journal_type": "debtors_ledger",
-            "headers": headers,
-            "rows": ui_rows
-        },
-        "editable_cols": [0, 1, 2, 3, 4, 5],
-        "correct_map": correct_map,
-        "cell_hints": cell_hints,
-        "marks": 16,
-        "sample_answer": f"Final balance owed by {debtor_name} on Sept 25: R{bal4:,} (Debit balance). Reconciles with Debtors Control (B4) in the General Ledger.",
-        "ideal_answer": "Complete 3-column Debtors Ledger account showing accurate entries for DJ (Debit +), DAJ (Credit -), and CRJ (Credit -).",
-        "worked_solution": (
-            f"Step 1: Balance b/d on Day 1 is R{bal1:,}.\n"
-            f"Step 2: On Day 12, credit sale of R{sale_amt:,} (DJ) is entered in Debit (+) -> Balance becomes R{bal1:,} + R{sale_amt:,} = R{bal2:,}.\n"
-            f"Step 3: On Day 17, goods returned R{return_amt:,} (DAJ) entered in Credit (-) -> Balance becomes R{bal2:,} - R{return_amt:,} = R{bal3:,}.\n"
-            f"Step 4: On Day 25, payment R{receipt_amt:,} (CRJ) entered in Credit (-) -> Balance becomes R{bal3:,} - R{receipt_amt:,} = R{bal4:,}."
-        ),
-        "marking_points": [
-            f"Day 12: Invoice 101 (DJ) in Debit (+), Balance R{bal2:,}",
-            f"Day 17: Credit Note 35 (DAJ) in Credit (-), Balance R{bal3:,}",
-            f"Day 25: Receipt 88 (CRJ) in Credit (-), Balance R{bal4:,}",
-            f"Accurate running balances throughout."
-        ],
-        "hint_sections": {
-            "1_nudge": "A debtor is an asset. Debits (+) INCREASE what they owe us. Credits (-) DECREASE what they owe us.",
-            "2_concept": "Sales (DJ) increase the debt. Allowances/returns (DAJ) and payments (CRJ) decrease the debt.",
-            "3_breakdown": f"Bal = R{bal1:,} + R{sale_amt:,} (DJ) - R{return_amt:,} (DAJ) - R{receipt_amt:,} (CRJ) = R{bal4:,}."
-        },
-        "guidelines": ["Check that the balance updates correctly after each transaction."],
-        "teaching_note": "Learners often put payments or returns on the debit side by mistake."
-    }
-    return [_with_metadata(item, subskill='dl', learning_objective_id='lo_dl', question_family_id='dl_table', concept_id='dl_posting', concept_group='ledger', diagnostic_tags=['tabular', 'accounting'])]
+# Legacy caller aliases preserved for full backward compatibility
+DISPATCH_TABLE["dl"] = ARCHETYPE_BUILDERS["08_debtors_ledger_full_account_d1_table"]
+DISPATCH_TABLE["debtors_ledger"] = ARCHETYPE_BUILDERS["08_debtors_ledger_full_account_d1_table"]
+DISPATCH_TABLE["debtors_list"] = ARCHETYPE_BUILDERS["15_debtors_list_compile_from_3_accounts_table"]
+DISPATCH_TABLE["debtors_control"] = ARCHETYPE_BUILDERS["24_complete_debtors_control_t_account_table"]
+DISPATCH_TABLE["credit_limit"] = ARCHETYPE_BUILDERS["50_capstone_dl_control_gl_and_accounting_equation_audit_table"]
 
-def generate(subskill="dl", difficulty="medium", count=1, mode="scaffold", seed=None, **kwargs):
-    rng = _rng(seed)
-    pool = _generate_debtors_ledger(rng, mode, seed=seed)
-    selected = pool
-    if count < len(selected):
-        selected = rng.sample(selected, count)
-    return selected
+BUILDERS = DISPATCH_TABLE
+
+
+def get_subskills() -> List[str]:
+    """Return ordered list of all 50 semantic subskill identifiers."""
+    return list(ORDERED_SUBSKILLS)
+
+
+def _resolve_builder(subskill: Optional[str], rng: random.Random) -> Callable[[random.Random, str], Dict[str, Any]]:
+    if subskill and subskill not in ("all", "compound", "default", "mixed"):
+        key = str(subskill).strip()
+        if key.startswith("elementary_"):
+            elem_key = key[len("elementary_"):]
+            if elem_key in DISPATCH_TABLE:
+                return DISPATCH_TABLE[elem_key]
+        if key in DISPATCH_TABLE:
+            return DISPATCH_TABLE[key]
+        low = key.lower()
+        for k, fn in ARCHETYPE_BUILDERS.items():
+            if low in k.lower():
+                return fn
+    return ARCHETYPE_BUILDERS[rng.choice(ORDERED_SUBSKILLS)]
+
+
+def generate(
+    subskill: Optional[str] = None,
+    difficulty: str = "medium",
+    count: int = 1,
+    mode: str = "scaffold",
+    seed: Optional[int] = None,
+    **kwargs: Any,
+) -> List[Dict[str, Any]]:
+    """Generate Grade 9 EMS Credit transactions (Debtors 2) questions."""
+    base_seed = seed if seed is not None else random.randint(1, 10**6)
+    target_sub = subskill or kwargs.get("archetype") or kwargs.get("subskill")
+    if target_sub is None and kwargs.get("archetype_index") is not None:
+        target_sub = str(kwargs["archetype_index"])
+    if target_sub is None and mode and mode.startswith("elementary_"):
+        target_sub = mode
+
+    results: List[Dict[str, Any]] = []
+    for idx in range(max(1, int(count))):
+        item_rng = random.Random(int(base_seed) + idx * 7919)
+        builder = _resolve_builder(target_sub, item_rng)
+        q = builder(item_rng, mode)
+        q["difficulty"] = difficulty
+        q["mode"] = mode
+        q["topic"] = TOPIC_NAME
+        q["subtopic"] = SUBTOPIC_ID
+        results.append(q)
+    return results
+
+
+def generate_question(
+    subskill: Optional[str] = None,
+    difficulty: str = "medium",
+    mode: str = "scaffold",
+    seed: Optional[int] = None,
+    **kwargs: Any,
+) -> Dict[str, Any]:
+    """Generate a single Grade 9 EMS Credit transactions (Debtors 2) question."""
+    return generate(
+        subskill=subskill,
+        difficulty=difficulty,
+        count=1,
+        mode=mode,
+        seed=seed,
+        **kwargs,
+    )[0]

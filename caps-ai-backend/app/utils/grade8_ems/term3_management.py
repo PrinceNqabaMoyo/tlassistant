@@ -1,465 +1,198 @@
-"""Grade 8 EMS — Levels and Functions of Management.
-Grounded strictly in: curriculum_docs_auto/EMS_Gr8/Term 3/02. Levels and functions of management.md
+"""Grade 8 EMS - Term 3: Levels and functions of management (50-Archetype Deterministic Generator).
 
-Covers CAPS subskills:
-  1. elementary_levels: Top, Middle, Lower/First-line management roles and hierarchy.
-  2. elementary_tasks: POLC management tasks (Planning, Organising, Leading, Controlling).
-  3. elementary_styles: Autocratic, Democratic/Participative, and Laissez-faire management styles.
-  4. elementary_characteristics: Qualities and ethical traits of an effective manager.
-
-Zero-LLM, 100% deterministic, authentic South African context.
+Grounded strictly in curriculum_docs_auto/EMS_Gr8/Term 3/02. Levels and functions of management.md
+and EMS_Gr8/Syllabus.md.
+Zero-LLM, deterministic, full South African National Curriculum Standards alignment.
 """
-SUBSKILLS = [
-    "elementary_levels",
-    "elementary_tasks",
-    "elementary_styles",
-    "elementary_characteristics",
-]
+from __future__ import annotations
+
 import random
-from app.utils.ems_namelist import NAMES, AREAS
+from typing import Any, Callable, Dict, List, Optional
 
-def _rng(seed=None):
-    return random.Random(seed)
+from .management_archetypes_01_25 import BUILDERS_01_25
+from .management_archetypes_26_50 import BUILDERS_26_50
 
-TOPIC_ID = 'grade8_ems'
-SUBTOPIC_ID = 'term3_management'
-CURRICULUM_REFERENCE = 'Term 3 > Entrepreneurship: Levels and Functions of Management'
+TOPIC_ID = "grade8_ems"
+SUBTOPIC_ID = "term3_management"
+CURRICULUM_REFERENCE = "Term 3 > Entrepreneurship: Levels and Functions of Management"
+TOPIC_KEY = "grade8_ems_management"
+LO = "g8_ems_management"
 
-def _with_metadata(
-    item,
-    *,
-    subskill,
-    learning_objective_id,
-    question_family_id,
-    concept_id=None,
-    concept_group="management",
-    scenario_family_id=None,
-    retry_variant='core',
-    curriculum_reference=CURRICULUM_REFERENCE,
-    misconception_tags=None,
-    diagnostic_tags=None,
-    answer_structure_tags=None,
-    minimum_mastery_score=None,
-):
-    enriched = dict(item)
-    enriched.update({
-        'topic_id': TOPIC_ID,
-        'subtopic_id': SUBTOPIC_ID,
-        'subskill': subskill,
-        'learning_objective_id': learning_objective_id,
-        'concept_id': concept_id,
-        'concept_group': concept_group,
-        'question_family_id': question_family_id,
-        'scenario_family_id': scenario_family_id,
-        'retry_variant': retry_variant,
-        'difficulty_band': item.get('difficulties', ['easy', 'medium', 'hard']),
-        'curriculum_reference': curriculum_reference,
-        'misconception_tags': misconception_tags or [],
-        'diagnostic_tags': diagnostic_tags or [],
-        'answer_structure_tags': answer_structure_tags or [],
-        'term': 3,
-        'caps_weight_percent': 20,
-        'suggested_duration_mins': 15,
-    })
-    if minimum_mastery_score is not None:
-        enriched['minimum_mastery_score'] = minimum_mastery_score
-    return enriched
+ARCHETYPE_BUILDERS: Dict[str, Callable[[random.Random], Dict[str, Any]]] = {
+    **BUILDERS_01_25,
+    **BUILDERS_26_50,
+}
 
-def _mcq_question(rng, item, mode="scaffold"):
-    mode_norm = str(mode or "").strip().lower()
-    c_idx = int(item['correct_index'])
-    correct_option = item['options'][c_idx]
-    correct_letter = chr(65 + c_idx)
-    marks = item.get('marks', 1)
-    ans_text = f"{correct_letter}. {correct_option}"
-    worked_sol = f"**{ans_text}** [{marks} mark{'s' if marks > 1 else ''}]\n\n{item.get('explanation', '')}"
+SUBSKILLS: List[str] = list(ARCHETYPE_BUILDERS.keys())
+ORDERED_SUBSKILLS: List[str] = list(SUBSKILLS)
 
-    question = {
-        'worked_solution': worked_sol,
-        'canonical_solution': worked_sol,
-        'id': f"g8_ems_mgmt_mcq_{rng.randint(1000, 999999)}",
-        'title': item.get('title', 'Levels and Functions of Management'),
-        'question_type': 'mcq',
-        'prompt': item['prompt'],
-        'options': item['options'],
-        'correct_index': str(item['correct_index']),
-        'explanation': item['explanation'],
-        'marks': item.get('marks', 2),
-        'sample_answer': ans_text,
-        'ideal_answer': ans_text,
-        'marking_points': [f'Selects correct option: {ans_text}'],
-        'term': 3,
-        'caps_weight_percent': 20,
-        'suggested_duration_mins': 12,
-        'marking_schema': {
-            'total_marks': item.get('marks', 2),
-            'marking_points': [
-                {'id': 'mp_1', 'desc': f"Correct option selection: {correct_option}", 'marks': item.get('marks', 2), 'editable': True}
-            ]
-        },
-        **{k: v for k, v in item.items() if k not in ['prompt', 'options', 'correct_index', 'explanation', 'title', 'marks', 'hint_sections', 'guidelines', 'teaching_note', 'hints']}
-    }
-    
-    if 'hints' in item:
-        question['hints'] = item['hints']
-    elif 'hint_sections' in item:
-        question['hints'] = {
-            'tier_1': item['hint_sections'][0]['text'] if len(item['hint_sections']) > 0 else "Focus on management hierarchy and core tasks.",
-            'tier_2': item['hint_sections'][1]['text'] if len(item['hint_sections']) > 1 else "Recall POLC: Planning, Organising, Leading, and Controlling.",
-            'tier_3': f"The correct answer is: {correct_option}"
-        }
-    else:
-        question['hints'] = {
-            'tier_1': "Identify the level of authority and specific management function.",
-            'tier_2': "Top = strategic vision, Middle = departmental coordination, Lower = direct team supervision.",
-            'tier_3': f"The correct answer is: {correct_option}"
-        }
+_LEGACY_ALIASES: Dict[str, List[str]] = {
+    "elementary_levels": [
+        "02_three_levels_of_management_pyramid_diagram",
+        "03_top_management_titles_and_strategic_horizon",
+        "04_middle_management_departmental_bridging_role",
+        "05_lower_first_line_management_operational_tasks",
+        "06_management_levels_classification_table",
+        "29_chain_of_command_and_communication_flow_diagram",
+        "31_comparing_time_horizons_and_scope_table",
+        "32_managing_across_business_functions_overview",
+        "44_feedback_loop_bottom_up_to_top_management",
+    ],
+    "levels": [
+        "02_three_levels_of_management_pyramid_diagram",
+        "03_top_management_titles_and_strategic_horizon",
+        "04_middle_management_departmental_bridging_role",
+        "05_lower_first_line_management_operational_tasks",
+        "06_management_levels_classification_table",
+        "31_comparing_time_horizons_and_scope_table",
+    ],
+    "elementary_tasks": [
+        "07_polc_four_management_tasks_overview",
+        "08_planning_task_definition_and_forecasting",
+        "09_planning_vs_budget_forecast_calculation",
+        "10_organising_task_delegation_and_resource_allocation",
+        "11_span_of_control_and_organising_ratio_calculation",
+        "12_leading_task_communication_and_staff_motivation",
+        "13_controlling_task_standards_and_corrective_action",
+        "14_controlling_variance_calculation_actual_vs_budget",
+        "15_polc_management_tasks_scenario_table",
+        "16_polc_interdependence_why_all_four_matter",
+        "33_marketing_manager_polc_application",
+        "34_production_manager_quality_and_safety_control",
+        "35_finance_manager_cash_budget_and_controlling",
+    ],
+    "tasks": [
+        "07_polc_four_management_tasks_overview",
+        "08_planning_task_definition_and_forecasting",
+        "10_organising_task_delegation_and_resource_allocation",
+        "12_leading_task_communication_and_staff_motivation",
+        "13_controlling_task_standards_and_corrective_action",
+        "15_polc_management_tasks_scenario_table",
+    ],
+    "elementary_styles": [
+        "17_management_styles_three_types_overview",
+        "18_autocratic_style_features_pros_and_cons",
+        "19_democratic_participatory_style_features_and_buy_in",
+        "20_permissive_laissez_faire_free_rein_delegation",
+        "21_management_styles_situational_matching_table",
+        "38_comparing_autocratic_democratic_permissive_table",
+        "39_blended_adaptive_leadership_by_situation",
+    ],
+    "styles": [
+        "17_management_styles_three_types_overview",
+        "18_autocratic_style_features_pros_and_cons",
+        "19_democratic_participatory_style_features_and_buy_in",
+        "20_permissive_laissez_faire_free_rein_delegation",
+        "21_management_styles_situational_matching_table",
+        "38_comparing_autocratic_democratic_permissive_table",
+    ],
+    "elementary_characteristics": [
+        "22_characteristics_of_a_good_manager_nine_traits",
+        "23_good_manager_taking_responsibility_vs_blaming_staff",
+        "24_good_manager_people_skills_and_keeping_staff_happy",
+        "25_management_traits_matching_scenario_table",
+        "26_good_manager_punctuality_and_organisation",
+        "27_good_manager_qualified_and_industry_knowledge",
+        "28_good_manager_positive_attitude_and_extra_effort",
+        "40_ethical_conduct_and_setting_good_example",
+        "41_conflict_resolution_and_people_skills_case",
+    ],
+    "characteristics": [
+        "22_characteristics_of_a_good_manager_nine_traits",
+        "23_good_manager_taking_responsibility_vs_blaming_staff",
+        "24_good_manager_people_skills_and_keeping_staff_happy",
+        "25_management_traits_matching_scenario_table",
+        "26_good_manager_punctuality_and_organisation",
+        "40_ethical_conduct_and_setting_good_example",
+    ],
+    "concepts": SUBSKILLS[:20],
+    "discussion": [
+        "04_middle_management_departmental_bridging_role",
+        "16_polc_interdependence_why_all_four_matter",
+        "18_autocratic_style_features_pros_and_cons",
+        "20_permissive_laissez_faire_free_rein_delegation",
+        "23_good_manager_taking_responsibility_vs_blaming_staff",
+        "24_good_manager_people_skills_and_keeping_staff_happy",
+        "39_blended_adaptive_leadership_by_situation",
+        "46_poor_management_warning_signs_and_fixes",
+        "50_comprehensive_management_pyramid_polc_and_style_synthesis",
+    ],
+    "application": [
+        "02_three_levels_of_management_pyramid_diagram",
+        "06_management_levels_classification_table",
+        "09_planning_vs_budget_forecast_calculation",
+        "11_span_of_control_and_organising_ratio_calculation",
+        "14_controlling_variance_calculation_actual_vs_budget",
+        "15_polc_management_tasks_scenario_table",
+        "21_management_styles_situational_matching_table",
+        "25_management_traits_matching_scenario_table",
+        "29_chain_of_command_and_communication_flow_diagram",
+        "31_comparing_time_horizons_and_scope_table",
+        "34_production_manager_quality_and_safety_control",
+        "35_finance_manager_cash_budget_and_controlling",
+        "37_departmental_staffing_and_shift_scheduling_calc",
+        "42_productivity_efficiency_output_per_worker_calc",
+        "43_overtime_cost_control_and_planning_calc",
+        "45_management_level_and_polc_matrix_table",
+        "48_team_incentive_bonus_and_leading_motivation_calc",
+        "49_management_misconception_error_audit_table",
+        "50_comprehensive_management_pyramid_polc_and_style_synthesis",
+    ],
+}
 
-    if mode_norm == "scaffold":
-        if 'hint_sections' in item: question['hint_sections'] = item['hint_sections']
-        if 'guidelines' in item: question['guidelines'] = item['guidelines']
-        if 'teaching_note' in item: question['teaching_note'] = item.get('teaching_note', item['explanation'])
-    return question
 
-def _typed_question(rng, item, mode="scaffold"):
-    mode_norm = str(mode or "").strip().lower()
-    question = {
-        'id': f"g8_ems_mgmt_typed_{rng.randint(1000, 999999)}",
-        'title': item.get('title', 'Management Analysis'),
-        'question_type': 'typed',
-        'prompt': item['prompt'],
-        'marks': item['marks'],
-        'marking_points': item['marking_points'],
-        'sample_answer': item['sample_answer'],
-        'ideal_answer': item.get('ideal_answer', item['sample_answer']),
-        'term': 3,
-        'caps_weight_percent': 20,
-        'suggested_duration_mins': 15,
-        'marking_schema': {
-            'total_marks': item['marks'],
-            'marking_points': [
-                {'id': f'mp_{i+1}', 'desc': pt, 'marks': 1, 'editable': True} for i, pt in enumerate(item['marking_points'])
-            ]
-        },
-        'hints': item.get('hints', {
-            'tier_1': "Review the four management tasks (POLC) or leadership styles.",
-            'tier_2': "Structure your answer with clear definitions and business examples.",
-            'tier_3': item['sample_answer']
-        }),
-        **{k: v for k, v in item.items() if k not in ['prompt', 'marks', 'marking_points', 'sample_answer', 'ideal_answer', 'hint_sections', 'guidelines', 'teaching_note', 'title', 'hints']}
-    }
-    if mode_norm == "scaffold":
-        if 'hint_sections' in item: question['hint_sections'] = item['hint_sections']
-        if 'guidelines' in item: question['guidelines'] = item['guidelines']
-        if 'teaching_note' in item: question['teaching_note'] = item.get('teaching_note', '')
-    return question
-
-def _build_levels_questions(rng):
-    name = rng.choice(NAMES)
-    area = rng.choice(AREAS)
-    
-    scenarios = [
-        {
-            "role": f"Managing Director (Chief Executive Officer)",
-            "task": "sets 5-year strategic expansion targets and formulates major company policies",
-            "level": "Top level management",
-            "wrong": ["Middle level management", "Lower / First-line management", "Non-managerial operations"]
-        },
-        {
-            "role": f"Regional Marketing and Sales Manager",
-            "task": "coordinates the promotional campaign between branch stores and ensures advertising targets are met",
-            "level": "Middle level management",
-            "wrong": ["Top level management", "Lower / First-line management", "Executive board level"]
-        },
-        {
-            "role": f"Factory Floor Shift Supervisor",
-            "task": "oversees daily assembly shifts, ensures workers wear safety gear, and monitors hourly output quotas",
-            "level": "Lower / First-line management",
-            "wrong": ["Top level management", "Middle level management", "Executive committee level"]
-        }
-    ]
-    sc = rng.choice(scenarios)
-    options = [sc['level']] + sc['wrong']
-    rng.shuffle(options)
-    correct_idx = options.index(sc['level'])
-
-    return [
-        _with_metadata({
-            'title': 'Identifying Levels of Management',
-            'prompt': (
-                f"At a nationwide retail enterprise in {area}, {name} serves as the {sc['role']}. "
-                f"In this role, {name} {sc['task']}. Which level of management does this position represent?"
-            ),
-            'options': options,
-            'correct_index': correct_idx,
-            'explanation': (
-                f"{sc['role']} is part of {sc['level']} because the responsibilities involve {sc['task']}."
-            ),
-            'difficulties': ['easy', 'medium'],
-            'marks': 2,
-            'hints': {
-                'tier_1': "Identify whether this role makes company-wide strategic decisions, manages a department, or supervises daily work.",
-                'tier_2': "Top = overall business direction. Middle = departmental managers. Lower/first-line = direct supervisors of workers.",
-                'tier_3': f"A {sc['role']} belongs to {sc['level']}."
-            },
-            'misconception_tags': ['top_vs_middle_confusion', 'middle_vs_lower_confusion']
-        }, subskill='elementary_levels', learning_objective_id='lo_ems_mgmt_levels', question_family_id='level_id', concept_id='hierarchy')
-    ]
-
-def _build_tasks_questions(rng):
-    name = rng.choice(NAMES)
-    
-    tasks = [
-        {
-            "task_name": "Planning",
-            "action": f"{name} drafts the annual financial budget, establishes sales targets, and sets the schedule for product launches for the upcoming year.",
-            "desc": "Setting goals ahead of time and determining the actions needed to achieve them."
-        },
-        {
-            "task_name": "Organising",
-            "action": f"{name} allocates staff into four specialized project teams, purchases new packaging equipment, and assigns specific responsibilities to each team leader.",
-            "desc": "Arranging and allocating resources, equipment, and people so that planned work can be carried out efficiently."
-        },
-        {
-            "task_name": "Leading",
-            "action": f"{name} holds weekly team briefings to inspire staff, resolves interpersonal disputes between workers, and motivates employees to exceed performance quotas.",
-            "desc": "Guiding, motivating, directing, and inspiring employees to work towards business goals."
-        },
-        {
-            "task_name": "Controlling",
-            "action": f"{name} inspects finished products for defects, compares actual monthly sales figures against projected targets, and implements corrective procedures for variances.",
-            "desc": "Monitoring actual performance, checking against set standards, and correcting deviations."
-        }
-    ]
-    t = rng.choice(tasks)
-    all_names = ["Planning", "Organising", "Leading", "Controlling"]
-    rng.shuffle(all_names)
-    correct_idx = all_names.index(t['task_name'])
-
-    return [
-        _with_metadata({
-            'title': 'Management Tasks (POLC)',
-            'prompt': (
-                f"Consider the following management scenario:\n\n"
-                f"\"{t['action']}\"\n\n"
-                f"Which of the four core management tasks is being performed here?"
-            ),
-            'options': all_names,
-            'correct_index': correct_idx,
-            'explanation': (
-                f"This activity describes {t['task_name']}, which involves: {t['desc']}"
-            ),
-            'difficulties': ['easy', 'medium'],
-            'marks': 2,
-            'hints': {
-                'tier_1': "Recall the 4 management tasks: Planning, Organising, Leading, and Controlling (POLC).",
-                'tier_2': f"Is the manager setting future targets (Planning), assigning resources (Organising), motivating people (Leading), or checking results (Controlling)?",
-                'tier_3': f"The correct task is {t['task_name']}."
-            },
-            'misconception_tags': ['planning_vs_controlling_confusion', 'organising_vs_leading_confusion']
-        }, subskill='elementary_tasks', learning_objective_id='lo_ems_mgmt_polc', question_family_id='polc_task_id', concept_id='management_functions'),
-
-        _with_metadata({
-            'title': 'Explaining the Four Core Management Tasks',
-            'prompt': (
-                "Name the FOUR main management tasks and briefly explain what each task entails. (4 marks)"
-            ),
-            'marks': 4,
-            'marking_points': [
-                "Planning: Deciding ahead of time what to do and setting goals and action steps.",
-                "Organising: Allocating resources, staff, and assigning responsibilities.",
-                "Leading: Guiding, motivating, and directing employees to achieve goals.",
-                "Controlling: Checking actual performance against targets and taking corrective action."
-            ],
-            'sample_answer': (
-                "The four core management tasks are:\n"
-                "1. Planning: Setting business goals and outlining the steps to achieve them.\n"
-                "2. Organising: Grouping activities, allocating resources, and assigning tasks to workers.\n"
-                "3. Leading: Motivating, directing, and guiding employees to perform effectively.\n"
-                "4. Controlling: Measuring actual performance against targets and taking corrective action."
-            ),
-            'difficulties': ['medium', 'hard'],
-            'hints': {
-                'tier_1': "Use the POLC acronym: P - Planning, O - Organising, L - Leading, C - Controlling.",
-                'tier_2': "Provide a clear 1-sentence definition for each of the four components.",
-                'tier_3': "Planning (setting goals), Organising (allocating tasks), Leading (motivating people), Controlling (monitoring results)."
-            },
-            'misconception_tags': ['incomplete_polc_explanation']
-        }, subskill='elementary_tasks', learning_objective_id='lo_ems_mgmt_tasks_essay', question_family_id='polc_essay', concept_id='polc_complete')
-    ]
-
-def _build_styles_questions(rng):
-    name = rng.choice(NAMES)
-    
-    styles = [
-        {
-            "name": "Autocratic management style",
-            "scenario": f"{name} makes all business decisions alone without asking employees for input, issues strict commands, and closely supervises workers without allowing questions.",
-            "desc": "A dictating style where the manager makes all decisions unilaterally and requires strict compliance."
-        },
-        {
-            "name": "Democratic / Participatory management style",
-            "scenario": f"{name} regularly consults employees during staff meetings, encourages team members to propose innovative solutions, and takes group feedback into account before finalizing decisions.",
-            "desc": "A participatory style where managers consult the team, encourage open discussion, and involve workers in decision-making."
-        },
-        {
-            "name": "Laissez-faire / Permissive management style",
-            "scenario": f"{name} delegates broad project objectives to highly skilled graphic designers, granting them complete freedom to choose their working hours and methods without micromanagement.",
-            "desc": "A free-rein style where managers delegate authority and give experienced staff freedom to decide how to complete work."
-        }
-    ]
-    st = rng.choice(styles)
-    all_styles = [
-        "Autocratic management style",
-        "Democratic / Participatory management style",
-        "Laissez-faire / Permissive management style",
-        "Bureaucratic government style"
-    ]
-    rng.shuffle(all_styles)
-    correct_idx = all_styles.index(st['name'])
-
-    return [
-        _with_metadata({
-            'title': 'Management and Leadership Styles',
-            'prompt': (
-                f"Evaluate the following management approach:\n\n"
-                f"\"{st['scenario']}\"\n\n"
-                f"Which management style does {name} practice?"
-            ),
-            'options': all_styles,
-            'correct_index': correct_idx,
-            'explanation': (
-                f"{st['name']} is demonstrated here because: {st['desc']}"
-            ),
-            'difficulties': ['easy', 'medium'],
-            'marks': 2,
-            'hints': {
-                'tier_1': "Observe whether decisions are dictated (autocratic), made through teamwork (democratic), or left to employees (laissez-faire).",
-                'tier_2': "Autocratic = boss dictates; Democratic = team participates; Laissez-faire = complete freedom/delegation.",
-                'tier_3': f"The described style is {st['name']}."
-            },
-            'misconception_tags': ['autocratic_vs_democratic_confusion', 'laissez_faire_misunderstanding']
-        }, subskill='elementary_styles', learning_objective_id='lo_ems_mgmt_styles', question_family_id='mgmt_style_id', concept_id='leadership_styles'),
-
-        _with_metadata({
-            'title': 'Comparing Autocratic and Democratic Management Styles',
-            'prompt': (
-                "Contrast the AUTOCRATIC management style with the DEMOCRATIC management style. "
-                "In your answer, identify one situation where an autocratic style is appropriate. (4 marks)"
-            ),
-            'marks': 4,
-            'marking_points': [
-                "Autocratic: Manager dictates decisions without consulting employees and demands strict obedience.",
-                "Democratic: Manager encourages participation, consults the team, and values worker feedback.",
-                "Difference in worker morale: Democratic fosters higher morale and creativity, while autocratic can lower job satisfaction.",
-                "Appropriate situation: Autocratic is necessary in crises, emergencies, or strictly timed safety procedures where immediate action is required."
-            ],
-            'sample_answer': (
-                "In an autocratic style, the manager makes all decisions alone and dictates tasks without consultation. "
-                "In a democratic style, the manager involves employees and encourages shared decision-making. "
-                "An autocratic style is appropriate during an emergency or crisis (e.g. a fire evacuation or strict factory safety compliance) "
-                "where urgent, decisive leadership is required without time for team debate."
-            ),
-            'difficulties': ['medium', 'hard'],
-            'hints': {
-                'tier_1': "Define how decisions are made in each style and provide a crisis example for autocratic management.",
-                'tier_2': "Autocratic = no consultation; Democratic = shared consultation. Crises or safety emergencies require autocratic commands.",
-                'tier_3': "Point 1: Autocratic dictates. Point 2: Democratic consults. Point 3: Autocratic is suitable in emergencies."
-            },
-            'misconception_tags': ['autocratic_vs_democratic_confusion']
-        }, subskill='elementary_styles', learning_objective_id='lo_ems_mgmt_comparison', question_family_id='mgmt_comparison', concept_id='style_comparison')
-    ]
-
-def _build_characteristics_questions(rng):
-    scenarios = [
-        {
-            "ctx": "A regional retail supermarket chain (e.g. Sindi's Supermarket)",
-            "correct": "Demonstrates strong interpersonal people skills, high ethical integrity, and efficient inventory coordination",
-            "distractors": [
-                "Dictates orders aggressively without listening and ignores staff grievances",
-                "Abandons all store oversight to unguided casual workers and refuses accountability",
-                "Cuts employee safety equipment to artificially boost monthly branch profit"
-            ]
-        },
-        {
-            "ctx": "A bustling furniture manufacturing workshop (e.g. Sipho's Woodcrafts)",
-            "correct": "Communicates clear workshop targets, resolves technical bottlenecks calmly, and enforces workplace safety protocols",
-            "distractors": [
-                "Micro-manages every single cut while refusing to share production schedules",
-                "Blames factory floor workers publicly whenever machinery maintenance is neglected",
-                "Ignores South African labor standards and forces excessive unpaid overtime"
-            ]
-        },
-        {
-            "ctx": "A technology delivery and courier enterprise (e.g. Lerato's Express Logistics)",
-            "correct": "Adapts delivery schedules flexibly, supports driver well-being, and inspires trust through transparent financial reporting",
-            "distractors": [
-                "Penalizes drivers arbitrarily without reviewing vehicle GPS logs or road conditions",
-                "Keeps company vehicle maintenance records completely secret from dispatchers",
-                "Changes customer pricing terms verbally without formal receipts or contracts"
-            ]
-        }
-    ]
-    sc = rng.choice(scenarios)
-    options = [sc["correct"]] + sc["distractors"]
-    rng.shuffle(options)
-    corr_idx = options.index(sc["correct"])
-    return [
-        _with_metadata({
-            'title': 'Characteristics of a Good Manager',
-            'prompt': (
-                f"In the context of {sc['ctx']}, which combination of traits best represents the qualities of an effective and trustworthy business manager?"
-            ),
-            'options': options,
-            'correct_index': corr_idx,
-            'explanation': (
-                "Effective managers demonstrate strong people skills, ethical trustworthiness, organizational competence, "
-                "and responsibility for their team's performance."
-            ),
-            'difficulties': ['easy', 'medium'],
-            'marks': 2,
-            'hints': {
-                'tier_1': "Identify positive leadership qualities that build a productive and motivated workforce.",
-                'tier_2': "Good managers communicate well, take responsibility, maintain integrity, and organize resources.",
-                'tier_3': "Strong interpersonal skills, integrity, and efficient organization are the core qualities."
-            },
-            'misconception_tags': ['bad_leadership_assumptions']
-        }, subskill='elementary_characteristics', learning_objective_id='lo_ems_good_manager_traits', question_family_id='manager_traits', concept_id='manager_qualities')
-    ]
-
-def generate(subskill="compound", difficulty="medium", count=1, mode="scaffold", seed=None, **kwargs):
-    rng = _rng(seed)
-    subskill_str = str(subskill or "compound").strip().lower()
-    
-    if subskill_str == "elementary_levels":
-        pool = _build_levels_questions(rng)
-    elif subskill_str == "elementary_tasks":
-        pool = _build_tasks_questions(rng)
-    elif subskill_str == "elementary_styles":
-        pool = _build_styles_questions(rng)
-    elif subskill_str == "elementary_characteristics":
-        pool = _build_characteristics_questions(rng)
-    else:
-        # Compound
-        pool = (
-            _build_levels_questions(rng) +
-            _build_tasks_questions(rng) +
-            _build_styles_questions(rng) +
-            _build_characteristics_questions(rng)
-        )
-        
-    selected = [q for q in pool if difficulty in q['difficulty_band']]
-    if not selected:
-        selected = pool
-    chosen = rng.sample(selected, min(count, len(selected)))
-    
-    results = []
-    for item in chosen:
-        if 'options' in item:
-            results.append(_mcq_question(rng, item, mode=mode))
+def generate_question(
+    subskill: Optional[str] = None,
+    seed: Optional[int] = None,
+    **kwargs: Any,
+) -> Dict[str, Any]:
+    rng = random.Random(seed)
+    target = (subskill or "").strip()
+    if not target or target in ("mixed", "compound", "default"):
+        target = rng.choice(SUBSKILLS)
+    elif target in _LEGACY_ALIASES:
+        target = rng.choice(_LEGACY_ALIASES[target])
+    elif target.startswith("elementary_"):
+        candidate = target[len("elementary_"):]
+        if candidate in ARCHETYPE_BUILDERS:
+            target = candidate
+        elif candidate in _LEGACY_ALIASES:
+            target = rng.choice(_LEGACY_ALIASES[candidate])
         else:
-            results.append(_typed_question(rng, item, mode=mode))
-            
-    if count == 1 and len(results) == 1:
-        return results[0]
-    return results
+            target = rng.choice(SUBSKILLS)
+    elif target not in ARCHETYPE_BUILDERS:
+        matches = [k for k in SUBSKILLS if target in k]
+        target = rng.choice(matches) if matches else rng.choice(SUBSKILLS)
+
+    q = ARCHETYPE_BUILDERS[target](rng)
+    difficulty = kwargs.get("difficulty")
+    if difficulty:
+        q["difficulty"] = difficulty
+    mode = kwargs.get("mode")
+    if mode:
+        q["mode"] = mode
+    return q
+
+
+def generate(
+    subskill: str = "compound",
+    difficulty: str = "medium",
+    count: int = 1,
+    mode: str = "scaffold",
+    seed: Optional[int] = None,
+    **kwargs: Any,
+) -> List[Dict[str, Any]]:
+    base_rng = random.Random(seed)
+    out: List[Dict[str, Any]] = []
+    for i in range(max(1, int(count))):
+        item_seed = (seed + i * 1009) if seed is not None else base_rng.randint(1, 10**8)
+        out.append(
+            generate_question(
+                subskill=subskill,
+                seed=item_seed,
+                difficulty=difficulty,
+                mode=mode,
+                **kwargs,
+            )
+        )
+    return out

@@ -1,267 +1,130 @@
-"""Grade 8 EMS — The National Budget (Deterministic 6-Pillar Generator).
-Grounded strictly in: curriculum_docs_auto/EMS_Gr8/Term 1/02. The National Budget.md
+"""Grade 8 EMS - Term 1: The National Budget (50-Archetype Deterministic Generator).
 
-Covers CAPS subskills:
-  1. direct_vs_indirect_taxes: Income Tax (PAYE) vs VAT, fuel levy, excise/sin taxes.
-  2. government_expenditure_categories: Education, health, housing/infrastructure, social development grants, safety & security.
-  3. budget_balance_and_national_debt: Revenue vs expenditure, budget deficit, state borrowing, and servicing national debt.
-  4. role_of_national_treasury: Minister of Finance, National Treasury, and the annual budget speech.
-
-Zero-LLM, 100% deterministic, authentic South African context.
+Grounded strictly in curriculum_docs_auto/EMS_Gr8/Term 1/02. The National Budget.md
+and EMS_Gr8/Syllabus.md.
+Zero-LLM, deterministic, full South African National Curriculum Standards alignment.
 """
 from __future__ import annotations
 
 import random
-from typing import Any, Dict, List, Optional
-from app.utils.ems_namelist import get_ems_scenario, AREAS
+from typing import Any, Callable, Dict, List, Optional
 
-SUBSKILLS = [
-    "direct_vs_indirect_taxes",
-    "government_expenditure_categories",
-    "budget_balance_and_national_debt",
-    "role_of_national_treasury",
-]
+from .national_budget_archetypes_01_25 import BUILDERS_01_25
+from .national_budget_archetypes_26_50 import BUILDERS_26_50
 
 TOPIC_KEY = "grade8_ems_national_budget"
 LO = "g8_ems_national_budget"
 
+ARCHETYPE_BUILDERS: Dict[str, Callable[[random.Random], Dict[str, Any]]] = {
+    **BUILDERS_01_25,
+    **BUILDERS_26_50,
+}
 
-def _rng(seed: Optional[int] = None) -> random.Random:
-    return random.Random(seed) if seed is not None else random.Random()
+SUBSKILLS: List[str] = list(ARCHETYPE_BUILDERS.keys())
+ORDERED_SUBSKILLS: List[str] = list(SUBSKILLS)
 
-
-def _gen_direct_vs_indirect(rng: random.Random) -> Dict[str, Any]:
-    scenario = get_ems_scenario(rng)
-    tax_cases = [
-        (
-            f"When {scenario['entrepreneur']} earns income from running a registered business and pays Personal Income Tax directly to SARS,",
-            "Direct tax",
-            "Direct tax is paid straight by the individual or entity earning the income directly to the South African Revenue Service (SARS).",
-            ["Direct tax", "Indirect tax", "Customs duty", "Municipal tariff"],
-        ),
-        (
-            f"When customers buy products from a retail shop in {scenario['area']} and pay 15% Value-Added Tax (VAT) included in the retail price,",
-            "Indirect tax",
-            "VAT is an indirect tax because the shop acts as an intermediary collecting the tax on behalf of SARS; the consumer bears the economic burden indirectly.",
-            ["Indirect tax", "Direct tax", "Corporate income tax", "Capital gains tax"],
-        ),
-        (
-            f"When motorists in {scenario['area']} buy petrol or diesel and pay the fuel levy and Road Accident Fund (RAF) levy built into the fuel price,",
-            "Indirect tax",
-            "The fuel levy is an indirect tax added to the purchase price of goods rather than levied directly on a person's income.",
-            ["Indirect tax", "Direct tax", "PAYE tax", "Donations tax"],
-        ),
-        (
-            f"When a company deducts Pay-As-You-Earn (PAYE) each month from an employee's salary and pays it over to SARS,",
-            "Direct tax",
-            "PAYE is a direct tax on personal earnings, paid directly from the worker's taxable salary to the government.",
-            ["Direct tax", "Indirect tax", "Excise duty", "Value-Added Tax"],
-        ),
-    ]
-    stmt, tax_type, explanation, options = rng.choice(tax_cases)
-    rng.shuffle(options)
-    c_idx = options.index(tax_type)
-    correct_letter = chr(65 + c_idx)
-
-    prompt = (
-        f"{stmt} what type of taxation is this classified as under South African public finance?"
-    )
-    ans = f"{correct_letter}. {tax_type}"
-    sol = (
-        f"**{ans}** [2 marks]\n\n"
-        f"**Explanation:** {explanation}"
-    )
-    return {
-        "id": f"g8_bud_tax_{rng.randint(100000, 999999)}",
-        "question_type": "mcq",
-        "topic": "The National Budget",
-        "subskill": "direct_vs_indirect_taxes",
-        "learning_objective_id": f"{LO}_tax_types",
-        "archetype": "tax_type_classification",
-        "prompt": prompt,
-        "question": prompt,
-        "options": options,
-        "correct_index": str(c_idx),
-        "correct_answer": ans,
-        "sample_answer": ans,
-        "worked_solution": sol,
-        "explanation": sol,
-        "canonical_solution": sol,
-        "marks": 2,
-        "hints": {
-            "tier_1": "Direct tax is paid directly on income or profits (e.g. Income tax/PAYE).",
-            "tier_2": "Indirect tax is added onto the price of goods and services (e.g. VAT, excise duties).",
-            "tier_3": f"Correct answer is {tax_type}.",
-        },
-        "misconception_tags": ["confuses_direct_with_indirect_tax"],
-    }
-
-
-def _gen_expenditure_categories(rng: random.Random) -> Dict[str, Any]:
-    scenario = get_ems_scenario(rng)
-    expenditures = [
-        (
-            "Building new primary and secondary schools, providing textbooks, and paying teachers' salaries in South Africa.",
-            "Education and basic learning",
-            ["Education and basic learning", "Defense and military", "Transport and freight", "Foreign affairs"],
-            "Education",
-        ),
-        (
-            "Distributing Old Age pensions, Child Support Grants, and Disability Grants to vulnerable citizens through SASSA.",
-            "Social Development and Grants",
-            ["Social Development and Grants", "Trade and industry", "Agriculture and forestry", "Environmental protection"],
-            "Social development",
-        ),
-        (
-            "Constructing public clinics and regional hospitals, procuring vaccines, and employing doctors and nurses.",
-            "Healthcare and medical services",
-            ["Healthcare and medical services", "Tourism and marketing", "Postal communication", "Mining exploration"],
-            "Healthcare",
-        ),
-        (
-            "Upgrading the South African Police Service (SAPS), courts, and correctional services to fight crime.",
-            "Peace and Safety & Security",
-            ["Peace and Safety & Security", "Recreation and arts", "Housing developments", "Water irrigation"],
-            "Safety and Security",
-        ),
-    ]
-    action, category, options, short_name = rng.choice(expenditures)
-    rng.shuffle(options)
-    c_idx = options.index(category)
-    correct_letter = chr(65 + c_idx)
-
-    prompt = (
-        f"In the South African National Budget, government revenue is allocated across major expenditure functional categories.\n\n"
-        f"Under which primary category of government expenditure does the following spending fall:\n"
-        f"\"{action}\"?"
-    )
-    ans = f"{correct_letter}. {category}"
-    sol = (
-        f"**{ans}** [2 marks]\n\n"
-        f"**Explanation:** Allocations for {action.lower()} fall under **{category}** in the National Budget."
-    )
-    return {
-        "id": f"g8_bud_exp_{rng.randint(100000, 999999)}",
-        "question_type": "mcq",
-        "topic": "The National Budget",
-        "subskill": "government_expenditure_categories",
-        "learning_objective_id": f"{LO}_expenditure",
-        "archetype": "budget_expenditure_allocation",
-        "prompt": prompt,
-        "question": prompt,
-        "options": options,
-        "correct_index": str(c_idx),
-        "correct_answer": ans,
-        "sample_answer": ans,
-        "worked_solution": sol,
-        "explanation": sol,
-        "canonical_solution": sol,
-        "marks": 2,
-        "hints": {
-            "tier_1": f"Look at the purpose of the funds: {short_name}.",
-            "tier_2": f"Select the matching functional area from the budget options.",
-            "tier_3": f"Answer is {category}.",
-        },
-        "misconception_tags": ["misclassifying_government_expenditure"],
-    }
+_LEGACY_ALIASES: Dict[str, List[str]] = {
+    "direct_vs_indirect_taxes": [
+        "05_direct_tax_definition_and_incidence",
+        "06_indirect_tax_definition_and_shifting",
+        "07_direct_vs_indirect_taxes_classification_table",
+        "08_paye_personal_income_tax_bracket_calculation",
+        "09_corporate_business_income_tax_calculation",
+        "10_vat_15_percent_forward_calculation",
+        "11_vat_15_percent_reverse_extraction",
+        "12_vat_zero_rated_basic_foodstuffs_equity",
+        "13_sin_tax_excise_purpose_and_price_impact",
+        "14_fuel_levy_and_road_accident_fund_mechanism",
+        "38_indirect_tax_household_monthly_burden_calc",
+    ],
+    "government_expenditure_categories": [
+        "18_education_spending_allocation_and_growth_impact",
+        "19_health_expenditure_free_child_and_clinic_care",
+        "20_housing_expenditure_rdp_low_cost_settlements",
+        "21_social_welfare_grants_and_hivaids_family_support",
+        "22_transport_infrastructure_roads_rail_ports_raf",
+        "23_safety_security_and_justice_budget_pillars",
+        "24_budget_functional_expenditure_matching_table",
+        "25_national_budget_sector_bar_chart_diagram",
+        "26_emergency_fund_contingency_reserve_purpose",
+        "31_reducing_economic_inequality_five_mechanisms_table",
+    ],
+    "budget_balance_and_national_debt": [
+        "15_government_borrowing_bonds_and_interest_cost",
+        "17_budget_deficit_vs_budget_surplus_calculation",
+        "36_debt_servicing_crowding_out_social_spending",
+        "44_revenue_and_expenditure_balancing_audit_table",
+        "45_budget_pie_share_and_percentage_comparison_diagram",
+    ],
+    "role_of_national_treasury": [
+        "01_definition_and_purpose_of_national_budget",
+        "02_minister_of_finance_and_national_treasury_roles",
+        "03_sars_tax_collection_and_fiscal_year_schedule",
+        "27_japanese_2011_tsunami_supply_chain_and_reserve_lesson",
+        "39_conditional_grants_to_provinces_and_municipalities",
+        "41_fiscal_allocation_trade_offs_opportunity_cost",
+        "42_emergency_drought_or_flood_reallocation_calc",
+    ],
+    "concepts": SUBSKILLS[:20],
+    "discussion": [
+        "12_vat_zero_rated_basic_foodstuffs_equity",
+        "27_japanese_2011_tsunami_supply_chain_and_reserve_lesson",
+        "28_fiscal_policy_growth_tax_base_virtuous_cycle_diagram",
+        "32_school_nutrition_programme_human_capital_benefit",
+        "33_free_basic_water_and_electricity_poverty_alleviation",
+        "35_tax_base_expansion_vs_increasing_tax_rates",
+        "40_tax_evasion_vs_tax_avoidance_civic_impact",
+        "47_smme_tax_compliance_and_formalisation_incentive",
+        "50_comprehensive_national_budget_policy_synthesis",
+    ],
+    "application": [
+        "07_direct_vs_indirect_taxes_classification_table",
+        "10_vat_15_percent_forward_calculation",
+        "11_vat_15_percent_reverse_extraction",
+        "17_budget_deficit_vs_budget_surplus_calculation",
+        "25_national_budget_sector_bar_chart_diagram",
+        "29_subsidies_on_basic_goods_brown_bread_milk",
+        "30_public_works_epwp_job_creation_calculation",
+        "36_debt_servicing_crowding_out_social_spending",
+        "38_indirect_tax_household_monthly_burden_calc",
+        "44_revenue_and_expenditure_balancing_audit_table",
+        "45_budget_pie_share_and_percentage_comparison_diagram",
+        "50_comprehensive_national_budget_policy_synthesis",
+    ],
+}
 
 
-def _gen_budget_balance_and_debt(rng: random.Random) -> Dict[str, Any]:
-    revenue_bn = rng.randint(1700, 2100)
-    expenditure_bn = revenue_bn + rng.randint(200, 380)
-    deficit_bn = expenditure_bn - revenue_bn
+def generate_question(
+    subskill: Optional[str] = None,
+    seed: Optional[int] = None,
+    **kwargs: Any,
+) -> Dict[str, Any]:
+    rng = random.Random(seed)
+    target = (subskill or "").strip()
+    if not target or target in ("mixed", "compound", "default"):
+        target = rng.choice(SUBSKILLS)
+    elif target in _LEGACY_ALIASES:
+        target = rng.choice(_LEGACY_ALIASES[target])
+    elif target.startswith("elementary_"):
+        candidate = target[len("elementary_"):]
+        if candidate in ARCHETYPE_BUILDERS:
+            target = candidate
+        elif candidate in _LEGACY_ALIASES:
+            target = rng.choice(_LEGACY_ALIASES[candidate])
+        else:
+            target = rng.choice(SUBSKILLS)
+    elif target not in ARCHETYPE_BUILDERS:
+        matches = [k for k in SUBSKILLS if target in k]
+        target = rng.choice(matches) if matches else rng.choice(SUBSKILLS)
 
-    prompt = (
-        f"The Minister of Finance presents the annual National Budget to Parliament with the following projected figures:\n"
-        f"- Projected Government Tax Revenue: **R{revenue_bn} billion**\n"
-        f"- Projected Government Total Expenditure: **R{expenditure_bn} billion**\n\n"
-        f"1. Is the government running a budget surplus or a budget deficit? Calculate the exact amount in Rands.\n"
-        f"2. How must the government fund this shortfall, and what economic consequence does this have for South Africa's national debt?"
-    )
-    ans = (
-        f"1. Budget deficit of R{deficit_bn} billion;\n"
-        f"2. The government must borrow money (issue government bonds / take international loans), which increases national debt and debt-servicing costs."
-    )
-    sol = (
-        f"**Model Answer** [4 marks]:\n\n"
-        f"1. **Budget Deficit** [2 marks]:\n"
-        f"   Expenditure (R{expenditure_bn} bn) exceeds Revenue (R{revenue_bn} bn).\n"
-        f"   Deficit = R{expenditure_bn} billion - R{revenue_bn} billion = **R{deficit_bn} billion**.\n\n"
-        f"2. **Funding and National Debt** [2 marks]:\n"
-        f"   The state funds the deficit through borrowing (selling government bonds) [1 mark]. "
-        f"   This increases the country's **national debt** and raises future interest payments (debt-service costs) [1 mark]."
-    )
-    return {
-        "id": f"g8_bud_bal_{rng.randint(100000, 999999)}",
-        "question_type": "paragraph",
-        "topic": "The National Budget",
-        "subskill": "budget_balance_and_national_debt",
-        "learning_objective_id": f"{LO}_balance_debt",
-        "archetype": "budget_deficit_and_debt",
-        "prompt": prompt,
-        "question": prompt,
-        "correct_answer": ans,
-        "sample_answer": ans,
-        "worked_solution": sol,
-        "explanation": sol,
-        "canonical_solution": sol,
-        "marks": 4,
-        "marking_schema": {
-            "total_marks": 4,
-            "marking_points": [
-                {"id": "mp1", "desc": f"Correct deficit identification and calculation of R{deficit_bn} billion", "marks": 2, "editable": True},
-                {"id": "mp2", "desc": "Identification of government borrowing / bond issues", "marks": 1, "editable": True},
-                {"id": "mp3", "desc": "Consequence: increase in national debt and debt servicing costs", "marks": 1, "editable": True},
-            ],
-            "deductions": [],
-            "carry_forward_rule": "consequential_accuracy",
-        },
-        "hints": {
-            "tier_1": f"When spending exceeds revenue, it is a deficit: {expenditure_bn} - {revenue_bn}.",
-            "tier_2": "The shortfall must be borrowed from financial markets.",
-            "tier_3": f"Deficit = R{deficit_bn} billion. Borrowing adds to national debt.",
-        },
-        "misconception_tags": ["confusing_surplus_and_deficit", "omitting_debt_interest_costs"],
-    }
-
-
-def _gen_national_treasury(rng: random.Random) -> Dict[str, Any]:
-    prompt = (
-        "In South Africa, which government department is tasked with preparing the annual National Budget, "
-        "managing public finances, and allocating revenue to provincial and national departments?"
-    )
-    options = ["The National Treasury", "The Reserve Bank (SARB)", "The Auditor-General", "The Department of Trade and Industry"]
-    c_idx = 0
-    ans = "A. The National Treasury"
-    sol = (
-        "**A. The National Treasury** [2 marks]\n\n"
-        "**Explanation:** The **National Treasury**, led by the Minister of Finance, is responsible for preparing the National Budget, "
-        "managing government spending, and coordinating fiscal policy under the Public Finance Management Act (PFMA)."
-    )
-    return {
-        "id": f"g8_bud_trs_{rng.randint(100000, 999999)}",
-        "question_type": "mcq",
-        "topic": "The National Budget",
-        "subskill": "role_of_national_treasury",
-        "learning_objective_id": f"{LO}_treasury_role",
-        "archetype": "treasury_role_check",
-        "prompt": prompt,
-        "question": prompt,
-        "options": options,
-        "correct_index": "0",
-        "correct_answer": ans,
-        "sample_answer": ans,
-        "worked_solution": sol,
-        "explanation": sol,
-        "canonical_solution": sol,
-        "marks": 2,
-        "hints": {
-            "tier_1": "The department led by the Minister of Finance.",
-            "tier_2": "Responsible for government finances (Treasury).",
-            "tier_3": "Correct answer is The National Treasury.",
-        },
-        "misconception_tags": ["confusing_treasury_with_reserve_bank"],
-    }
+    q = ARCHETYPE_BUILDERS[target](rng)
+    difficulty = kwargs.get("difficulty")
+    if difficulty:
+        q["difficulty"] = difficulty
+    mode = kwargs.get("mode")
+    if mode:
+        q["mode"] = mode
+    return q
 
 
 def generate(
@@ -270,22 +133,9 @@ def generate(
     count: int = 1,
     **kwargs: Any,
 ) -> List[Dict[str, Any]]:
-    rng = _rng(seed)
-    generators = {
-        "direct_vs_indirect_taxes": _gen_direct_vs_indirect,
-        "government_expenditure_categories": _gen_expenditure_categories,
-        "budget_balance_and_national_debt": _gen_budget_balance_and_debt,
-        "role_of_national_treasury": _gen_national_treasury,
-    }
-
-    results: List[Dict[str, Any]] = []
-    if subskill in generators:
-        for _ in range(count):
-            results.append(generators[subskill](rng))
-        return results
-
-    keys = list(generators.keys())
-    for i in range(count):
-        chosen = keys[i % len(keys)]
-        results.append(generators[chosen](rng))
-    return results
+    base_rng = random.Random(seed)
+    out: List[Dict[str, Any]] = []
+    for i in range(max(1, int(count))):
+        item_seed = (seed + i * 1009) if seed is not None else base_rng.randint(1, 10**8)
+        out.append(generate_question(subskill=subskill, seed=item_seed, **kwargs))
+    return out

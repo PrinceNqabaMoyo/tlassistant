@@ -1,282 +1,119 @@
+"""Grade 8 EMS - Cash Receipts Journal 2 & Cash Payments Journal Generator.
+
+100% Deterministic & Curriculum-Backed. Satisfies the 6-Pillar Generator Contract.
+Grounded in curriculum_docs_auto/EMS_Gr8/Term 2/
+03. Cash receipts journal for a services business 2.md and
+04. Cash payments journal for a services business.md.
+50 Distinct Semantic Archetypes (01 to 50).
+"""
+from __future__ import annotations
+
 import random
-from app.utils.ems_namelist import get_ems_scenario
+from typing import Any, Callable, Dict, List, Optional
 
-def _rng(seed=None):
-    return random.Random(seed)
+from .cpj_crj_archetypes_01_25 import BUILDERS_01_25, SUBTOPIC_ID, TOPIC_NAME
+from .cpj_crj_archetypes_26_50 import BUILDERS_26_50
 
-TOPIC_ID = 'grade8_ems'
-SUBTOPIC_ID = 'term3_cpj_and_crj'
-CURRICULUM_REFERENCE = 'Term 3 > Cash Payments Journal of a services business'
+TOPIC_ID = "grade8_ems"
+CURRICULUM_REFERENCE = "Term 2 > Cash Payments Journal & Combined CRJ/CPJ of a services business"
 
-def _with_metadata(
-    item,
-    *,
-    subskill,
-    learning_objective_id,
-    question_family_id,
-    concept_id=None,
-    concept_group=None,
-    scenario_family_id=None,
-    retry_variant='core',
-    curriculum_reference=CURRICULUM_REFERENCE,
-    misconception_tags=None,
-    diagnostic_tags=None,
-    answer_structure_tags=None,
-    minimum_mastery_score=None,
-):
-    enriched = dict(item)
-    enriched.update({
-        'topic_id': TOPIC_ID,
-        'subtopic_id': SUBTOPIC_ID,
-        'subskill': subskill,
-        'learning_objective_id': learning_objective_id,
-        'concept_id': concept_id,
-        'concept_group': concept_group,
-        'question_family_id': question_family_id,
-        'scenario_family_id': scenario_family_id,
-        'retry_variant': retry_variant,
-        'difficulty_band': item.get('difficulties', ['easy', 'medium', 'hard']),
-        'curriculum_reference': curriculum_reference,
-        'misconception_tags': misconception_tags or [],
-        'diagnostic_tags': diagnostic_tags or [],
-        'answer_structure_tags': answer_structure_tags or [],
-    })
-    if minimum_mastery_score is not None:
-        enriched['minimum_mastery_score'] = minimum_mastery_score
-    return enriched
+ARCHETYPE_BUILDERS: Dict[str, Callable[[random.Random], Dict[str, Any]]] = {
+    **BUILDERS_01_25,
+    **BUILDERS_26_50,
+}
 
-def _cpj_table_pool(rng, mode="scaffold"):
-    """
-    Generates tabular CPJ questions.
-    Grade 8 CPJ columns: Doc No, Day, Name of Payee, Bank, Wages, Stationery, Sundry Accounts Amount, Sundry Accounts Details.
-    """
-    scenario = get_ems_scenario(rng)
-    business_name = f"{scenario['entrepreneur']}'s {scenario['business_type']}"
-    month = "July 2024"
-    
-    transactions = []
-    data_rows = []
-    cell_hints = {}
-    
-    # Row 1: Pay Wages
-    wages_amount = rng.randint(5, 15) * 100
-    transactions.append(f"Day 7: Cashed Cheque 101 to pay the weekly workers, R{wages_amount}.")
-    data_rows.append(["101", "7", "Cash", str(wages_amount), str(wages_amount), "", "", ""])
-    
-    cell_hints["r0_c0"] = "Expectation: The document number. Location: Transaction states 'Cheque 101'."
-    cell_hints["r0_c1"] = "Expectation: The day of the transaction. Location: 'Day 7'."
-    cell_hints["r0_c2"] = "Expectation: Name of payee. Connection: When cashing a cheque to pay wages, the payee is usually 'Cash'."
-    cell_hints["r0_c3"] = f"Expectation: Bank amount. Connection: Every payment goes through Bank. Amount is R{wages_amount}."
-    cell_hints["r0_c4"] = f"Expectation: Wages amount. Connection: The payment was for workers, so write R{wages_amount} in the Wages column."
-    cell_hints["r0_c5"] = "Expectation: Stationery amount. Connection: Leave blank."
-    cell_hints["r0_c6"] = "Expectation: Sundry amount. Connection: Already recorded in Wages, so leave blank."
-    cell_hints["r0_c7"] = "Expectation: Sundry details. Connection: Leave blank."
+SUBSKILLS: List[str] = list(ARCHETYPE_BUILDERS.keys())
+ORDERED_SUBSKILLS: List[str] = SUBSKILLS
 
-    # Row 2: Buy Equipment & Stationery from a single cheque
-    stat_amt = rng.randint(1, 5) * 100
-    equip_amt = rng.randint(20, 50) * 100
-    total_amt = stat_amt + equip_amt
-    transactions.append(f"Day 12: Issued Cheque 102 to {scenario['competitor']} for a new computer (R{equip_amt}) and printing paper (R{stat_amt}).")
-    data_rows.append(["102", "12", scenario['competitor'], str(total_amt), "", str(stat_amt), str(equip_amt), "Equipment"])
-    
-    cell_hints["r1_c0"] = "Expectation: Document number. Location: 'Cheque 102'."
-    cell_hints["r1_c1"] = "Expectation: Day. Location: 'Day 12'."
-    cell_hints["r1_c2"] = f"Expectation: Name of Payee. Location: Cheque was issued to '{scenario['competitor']}'."
-    cell_hints["r1_c3"] = f"Expectation: Bank amount. Formula: Total of both items = {stat_amt} + {equip_amt} = R{total_amt}."
-    cell_hints["r1_c4"] = "Expectation: Wages. Connection: Leave blank."
-    cell_hints["r1_c5"] = f"Expectation: Stationery. Connection: Printing paper is stationery. Write R{stat_amt}."
-    cell_hints["r1_c6"] = f"Expectation: Sundry amount. Connection: The remaining R{equip_amt} for the computer goes here."
-    cell_hints["r1_c7"] = "Expectation: Sundry details. Connection: A computer is classified as 'Equipment'."
+_LEGACY_ALIASES: Dict[str, str] = {
+    "cpj": "27_cpj_three_transaction_wages_equipment_drawings",
+    "cpj_table_completion": "29_cpj_five_transaction_comprehensive_journal",
+    "combined_crj_cpj_journal_selection": "41_combined_crj_cpj_transaction_classification_table",
+    "cpj_split_cheque_allocation": "22_cpj_split_payment_two_analysis_columns",
+    "cpj_drawings_vs_wages_analysis": "24_cpj_owner_drawings_vs_staff_wages",
+    "crj_cpj_bank_balance_effect": "45_combined_crj_cpj_closing_bank_balance",
+    "cpj_source_cheque_counterfoil": "04_cpj_source_doc_cheque_counterfoil_and_eft",
+    "cpj_bank_credit_entry": "09_cpj_bank_column_total_payment_credit_rule",
+    "cpj_analysis_columns": "12_cpj_dedicated_analysis_columns_selection",
+    "crj_cpj_comparison": "40_crj_vs_cpj_structural_comparison_table",
+    "crj_cpj_bank_balance_calc": "46_combined_opening_bank_plus_crj_minus_cpj",
+}
 
-    # Row 3: Drawings
-    draw_amt = rng.randint(2, 9) * 100
-    transactions.append(f"Day 25: {scenario['entrepreneur']} withdrew cash via ATM for personal use, R{draw_amt}. (Use BS1 as document number for Bank Statement)")
-    data_rows.append(["BS1", "25", scenario['entrepreneur'], str(draw_amt), "", "", str(draw_amt), "Drawings"])
-    
-    cell_hints["r2_c0"] = "Expectation: Document number. Location: Transaction instructs to use 'BS1'."
-    cell_hints["r2_c1"] = "Expectation: Day. Location: 'Day 25'."
-    cell_hints["r2_c2"] = f"Expectation: Name of payee. Location: The owner {scenario['entrepreneur']} took the money."
-    cell_hints["r2_c3"] = f"Expectation: Bank amount. Connection: Money left the bank account, R{draw_amt}."
-    cell_hints["r2_c4"] = "Expectation: Wages. Connection: Leave blank."
-    cell_hints["r2_c5"] = "Expectation: Stationery. Connection: Leave blank."
-    cell_hints["r2_c6"] = f"Expectation: Sundry amount. Connection: Personal use is not wages or stationery. Write R{draw_amt}."
-    cell_hints["r2_c7"] = "Expectation: Sundry details. Connection: Money taken for personal use is called 'Drawings'."
-
-    ui_rows = []
-    correct_map = {}
-    for i, row in enumerate(data_rows):
-        ui_row = []
-        for j, val in enumerate(row):
-            correct_map[f"r{i}_c{j}"] = val
-            ui_row.append({"value": "", "cell_id": f"r{i}_c{j}", "editable": True})
-        ui_rows.append(ui_row)
-
-    headers = ["Doc No", "Day", "Name of Payee", "Bank", "Wages", "Stationery", "Sundry Amount", "Sundry Details"]
-    
-    editable_cols = [0, 1, 2, 3, 4, 5, 6, 7]
-
-    memo_lines = ["**Cash Payments Journal Memorandum (Cell-by-Cell Solution)** [24 marks]:\n"]
-    for r_idx, tx in enumerate(transactions):
-        memo_lines.append(f"**Transaction {r_idx + 1} ({tx.split(':')[0]}):** {tx.split(': ', 1)[-1]}")
-        for c_idx, h in enumerate(headers):
-            key = f"{r_idx}_{c_idx}"
-            val = correct_map.get(key, "")
-            hint = cell_hints.get(key, "")
-            if val:
-                memo_lines.append(f"- **{h}**: `{val}`" + (f" ({hint})" if hint else ""))
-            else:
-                memo_lines.append(f"- **{h}**: `[Leave blank]` (No entry required)")
-        memo_lines.append("")
-    worked_sol = "\n".join(memo_lines)
-
-    item = {
-        "id": f"ems_cpj_{random.randint(1000, 9999)}",
-        "topic": "Cash Payments Journal",
-        "question_type": "journal",
-        "prompt": f"Use the following transactions to complete the Cash Payments Journal of {business_name} for {month}. Leave cells blank if they do not require an entry.\n\nTransactions:\n" + "\n".join(f"- {tx}" for tx in transactions),
-        "transactions": transactions,
-        "journal": {
-            "journal_type": "cpj",
-            "headers": headers,
-            "rows": ui_rows
-        },
-        "editable_cols": editable_cols,
-        "correct_map": correct_map,
-        "cell_hints": cell_hints,
-        'marks': 24, # 3 rows * 8 columns
-        'sample_answer': (
-            "Complete Cash Payments Journal with columns Doc No, Day, Name of Payee, Bank, "
-            "Wages, Stationery, Sundry Amount, and Sundry Details correctly balanced and cross-checked."
-        ),
-        'ideal_answer': (
-            "Complete Cash Payments Journal with columns Doc No, Day, Name of Payee, Bank, "
-            "Wages, Stationery, Sundry Amount, and Sundry Details correctly balanced and cross-checked."
-        ),
-        'worked_solution': worked_sol,
-        'canonical_solution': {
-            'steps': [
-                "Step 1: Enter document numbers (cheque counterfoil/EFT) and payees in details.",
-                "Step 2: Enter the full payment amount into the Bank column as funds leave the business.",
-                "Step 3: Analyze each payment into dedicated expense columns (Stationery, Material costs) or Sundry Accounts.",
-                "Step 4: Verify horizontal line balancing: Total Bank column must equal the sum of all analysis columns plus Sundry Accounts."
-            ],
-            'final_answer': 'Complete and balanced Cash Payments Journal'
-        },
-        'marking_points': ['Correctly recorded doc numbers, payees, and allocated amounts to Bank and correct analysis columns.'],
-        'hint_sections': {
-            '1_nudge': 'The CPJ is used to record all money PAID out by the business.',
-            '2_concept': 'Every single payment must have an amount in the Bank column. Then, you distribute that exact amount into the analysis columns (like Wages or Stationery).',
-            '3_breakdown': 'If an item does not have its own dedicated analysis column, it must go to the Sundry Accounts with the correct account name.'
-        },
-        'guidelines': ['Check that Bank = Sum of all analysis columns for each row.'],
-        'teaching_note': 'Grade 8 learners often split Bank amounts incorrectly when buying multiple items on one cheque.'
-    }
-    
-    return [_with_metadata(item, subskill='cpj', learning_objective_id='lo_cpj_practical', question_family_id='cpj_table', concept_id='cpj_practical', concept_group='journals', diagnostic_tags=['tabular', 'accounting'])]
-
-SUBSKILLS = [
-    "cpj_table_completion",
-    "combined_crj_cpj_journal_selection",
-    "cpj_split_cheque_allocation",
-    "cpj_drawings_vs_wages_analysis",
-    "crj_cpj_bank_balance_effect",
-]
+DISPATCH_TABLE: Dict[Any, Callable[[random.Random], Dict[str, Any]]] = {}
+for idx, (sid, fn) in enumerate(ARCHETYPE_BUILDERS.items(), start=1):
+    DISPATCH_TABLE[sid] = fn
+    DISPATCH_TABLE[idx] = fn
+    DISPATCH_TABLE[f"{idx:02d}"] = fn
+    DISPATCH_TABLE[str(idx)] = fn
+for alias, target in _LEGACY_ALIASES.items():
+    DISPATCH_TABLE[alias] = ARCHETYPE_BUILDERS[target]
 
 
-def _build_combined_crj_cpj_subskills(rng, mode="scaffold"):
-    scenario = get_ems_scenario(rng)
-    bname = f"{scenario['entrepreneur']}'s {scenario['business_type']}"
-    cap_amt = rng.randint(15, 45) * 1000
-    fee_amt = rng.randint(25, 65) * 100
-    rent_amt = rng.randint(35, 80) * 100
-    equip_amt = rng.randint(40, 95) * 100
-    net_bank = cap_amt + fee_amt - rent_amt - equip_amt
-
-    # Subskill 2: Combined CRJ & CPJ Journal Selection & Allocation Table
-    q_comb = _with_metadata({
-        "id": f"ems_crj_cpj_comb_{rng.randint(1000, 9999)}",
-        "topic": "Cash Payments Journal",
-        "question_type": "journal",
-        "modality": "ledger",
-        "solution_type": "tabular_cells",
-        "prompt": (
-            f"Classify and record the following cash transactions of {bname} into either the "
-            f"Cash Receipts Journal (CRJ) or Cash Payments Journal (CPJ) and state the main analysis/sundry account:\n"
-            f"1. Day 2: Owner {scenario['entrepreneur']} deposited R{cap_amt} capital into the business bank account (Receipt 01).\n"
-            f"2. Day 8: Paid monthly workshop rent via EFT, R{rent_amt} (EFT 14).\n"
-            f"3. Day 15: Rendered services for cash to clients, R{fee_amt} (CRR 09).\n"
-            f"4. Day 22: Bought tools and equipment via EFT, R{equip_amt} (EFT 15)."
-        ),
-        "transactions": [
-            f"Day 2: Owner deposited R{cap_amt} capital (Receipt 01).",
-            f"Day 8: Paid monthly rent via EFT, R{rent_amt} (EFT 14).",
-            f"Day 15: Cash received for services rendered, R{fee_amt} (CRR 09).",
-            f"Day 22: Bought equipment via EFT, R{equip_amt} (EFT 15).",
-        ],
-        "headers": ["Day", "Journal (CRJ / CPJ)", "Account Credited / Debited", "Bank Amount (R)"],
-        "rows": [
-            [{"cell_id": "r0_c0", "value": "2", "editable": False}, {"cell_id": "r0_c1", "value": "", "expected": "CRJ", "editable": True}, {"cell_id": "r0_c2", "value": "Capital", "editable": False}, {"cell_id": "r0_c3", "value": "", "expected": str(cap_amt), "editable": True}],
-            [{"cell_id": "r1_c0", "value": "8", "editable": False}, {"cell_id": "r1_c1", "value": "", "expected": "CPJ", "editable": True}, {"cell_id": "r1_c2", "value": "Rent Expense", "editable": False}, {"cell_id": "r1_c3", "value": "", "expected": str(rent_amt), "editable": True}],
-            [{"cell_id": "r2_c0", "value": "15", "editable": False}, {"cell_id": "r2_c1", "value": "", "expected": "CRJ", "editable": True}, {"cell_id": "r2_c2", "value": "Current Income", "editable": False}, {"cell_id": "r2_c3", "value": "", "expected": str(fee_amt), "editable": True}],
-            [{"cell_id": "r3_c0", "value": "22", "editable": False}, {"cell_id": "r3_c1", "value": "", "expected": "CPJ", "editable": True}, {"cell_id": "r3_c2", "value": "Equipment", "editable": False}, {"cell_id": "r3_c3", "value": "", "expected": str(equip_amt), "editable": True}],
-        ],
-        "correct_map": {
-            "r0_c1": "CRJ", "r0_c3": str(cap_amt),
-            "r1_c1": "CPJ", "r1_c3": str(rent_amt),
-            "r2_c1": "CRJ", "r2_c3": str(fee_amt),
-            "r3_c1": "CPJ", "r3_c3": str(equip_amt),
-        },
-        "marks": 8,
-        "sample_answer": f"Day 2: CRJ R{cap_amt}; Day 8: CPJ R{rent_amt}; Day 15: CRJ R{fee_amt}; Day 22: CPJ R{equip_amt}",
-        "worked_solution": (
-            f"1. Day 2: **CRJ**, Capital, **R{cap_amt}** [2 marks]\n"
-            f"2. Day 8: **CPJ**, Rent expense, **R{rent_amt}** [2 marks]\n"
-            f"3. Day 15: **CRJ**, Current income, **R{fee_amt}** [2 marks]\n"
-            f"4. Day 22: **CPJ**, Equipment, **R{equip_amt}** [2 marks]\n\n"
-            f"Cash receipts (Day 2 Capital R{cap_amt}, Day 15 Current Income R{fee_amt}) are entered in the CRJ. Cash payments (Day 8 Rent R{rent_amt}, Day 22 Equipment R{equip_amt}) are entered in the CPJ."
-        ),
-    }, subskill="combined_crj_cpj_journal_selection", learning_objective_id="lo_crj_cpj_comb", question_family_id="combined_crj_cpj_journal_selection")
-
-    # Subskill 5: Net Bank Balance Calculation from CRJ Total and CPJ Total
-    q_bank = _with_metadata({
-        "id": f"ems_crj_cpj_bank_{rng.randint(1000, 9999)}",
-        "topic": "Cash Payments Journal",
-        "question_type": "math_short",
-        "modality": "math",
-        "prompt": (
-            f"At the end of the month, the Cash Receipts Journal (CRJ) of {bname} shows a Bank column total of R{cap_amt + fee_amt}, "
-            f"and the Cash Payments Journal (CPJ) shows a Bank column total of R{rent_amt + equip_amt}. "
-            f"Calculate the closing cash balance in the business Bank account (in R)."
-        ),
-        "marks": 3,
-        "expected_answer": str(net_bank),
-        "correct_answer": str(net_bank),
-        "sample_answer": f"R{net_bank}",
-        "worked_solution": f"Closing Bank Balance = Total Cash Receipts (CRJ) - Total Cash Payments (CPJ) = R{cap_amt + fee_amt} - R{rent_amt + equip_amt} = R{net_bank}.",
-    }, subskill="crj_cpj_bank_balance_effect", learning_objective_id="lo_crj_cpj_bank", question_family_id="crj_cpj_bank_balance_effect")
-
-    cpj_list = _cpj_table_pool(rng, mode)
-    q_cpj1 = dict(cpj_list[0], subskill="cpj_table_completion")
-    q_cpj2 = dict(cpj_list[0], subskill="cpj_split_cheque_allocation")
-    q_cpj3 = dict(cpj_list[0], subskill="cpj_drawings_vs_wages_analysis")
-    return {
-        "cpj_table_completion": q_cpj1,
-        "combined_crj_cpj_journal_selection": q_comb,
-        "cpj_split_cheque_allocation": q_cpj2,
-        "cpj_drawings_vs_wages_analysis": q_cpj3,
-        "crj_cpj_bank_balance_effect": q_bank,
-    }
+def get_subskills() -> List[str]:
+    """Return ordered list of all 50 semantic CPJ & Combined CRJ/CPJ subskill IDs."""
+    return list(ORDERED_SUBSKILLS)
 
 
-def generate(subskill="mixed", difficulty="medium", count=1, mode="scaffold", seed=None, **kwargs):
-    base_seed = int(seed) if seed is not None else 42
-    results = []
-    for i in range(max(1, count)):
-        rng = _rng(base_seed + i * 23)
-        sub_map = _build_combined_crj_cpj_subskills(rng, mode=mode)
-        if subskill in sub_map:
-            chosen_key = subskill
-        else:
-            chosen_key = SUBSKILLS[(base_seed + i) % len(SUBSKILLS)]
-        results.append(sub_map[chosen_key])
+def _resolve_subskill(
+    subskill: Optional[str],
+    mode: str,
+    archetype_index: Optional[int],
+    seed_offset: int,
+) -> str:
+    if archetype_index is not None:
+        return SUBSKILLS[int(archetype_index) % len(SUBSKILLS)]
+
+    cand = str(subskill or "").strip()
+    if not cand or cand.lower() in {"mixed", "compound", "all"}:
+        if mode.startswith("elementary_") and mode[len("elementary_"):] in ARCHETYPE_BUILDERS:
+            return mode[len("elementary_"):]
+        return SUBSKILLS[seed_offset % len(SUBSKILLS)]
+
+    if cand.startswith("elementary_"):
+        cand = cand[len("elementary_"):]
+    if cand in ARCHETYPE_BUILDERS:
+        return cand
+    if cand.lower() in _LEGACY_ALIASES:
+        return _LEGACY_ALIASES[cand.lower()]
+    if cand in DISPATCH_TABLE:
+        idx = int(cand) - 1
+        return SUBSKILLS[idx % len(SUBSKILLS)]
+    return SUBSKILLS[seed_offset % len(SUBSKILLS)]
+
+
+def generate(
+    subskill: Optional[str] = "mixed",
+    difficulty: str = "medium",
+    count: int = 1,
+    mode: str = "scaffold",
+    seed: Optional[int] = None,
+    archetype_index: Optional[int] = None,
+    **kwargs: Any,
+) -> List[Dict[str, Any]]:
+    """Generate Cash Payments Journal & Combined CRJ/CPJ questions across 50 semantic archetypes."""
+    base_seed = int(seed) if seed is not None else random.randint(1, 1_000_000_000)
+    results: List[Dict[str, Any]] = []
+    topic_override = kwargs.get("topic")
+
+    for i in range(max(1, int(count))):
+        sub_rng = random.Random(base_seed + i * 31)
+        chosen = _resolve_subskill(subskill, mode, archetype_index, base_seed + i)
+        q = ARCHETYPE_BUILDERS[chosen](sub_rng)
+        q.setdefault("grade", 8)
+        q.setdefault("subject", "Economic and Management Sciences")
+        q["topic"] = topic_override or q.get("topic") or TOPIC_NAME
+        q.setdefault("term", 2)
+        q.setdefault("difficulty", difficulty)
+        q["mode"] = mode
+        results.append(q)
+
     return results
+
+
+def generate_question(
+    subskill: Optional[str] = None,
+    seed: Optional[int] = None,
+    **kwargs: Any,
+) -> Dict[str, Any]:
+    """Single-question entry point for Cash Payments Journal & Combined CRJ/CPJ."""
+    return generate(subskill=subskill, count=1, seed=seed, **kwargs)[0]

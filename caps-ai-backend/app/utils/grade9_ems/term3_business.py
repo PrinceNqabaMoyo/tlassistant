@@ -1,153 +1,129 @@
+"""Grade 9 EMS — Term 3: Functions of a Business (50-Archetype Deterministic Generator).
+
+Grounded strictly in curriculum_docs_auto/EMS_Gr9/Term 4/04. Functions of a business.md,
+curriculum_docs/EMS_Gr9/Term 3/11-Functions of a Business.md, and EMS_Gr9/Syllabus.md.
+Zero-LLM, 100% deterministic, aligned with South African National Curriculum Standards.
+"""
+from __future__ import annotations
+
 import random
+from typing import Any, Callable, Dict, List, Optional
 
-def _rng(seed=None):
-    if seed is not None:
-        return random.Random(seed)
-    return random.Random()
+from .term3_business_archetypes_01_25 import BUILDERS_01_25
+from .term3_business_archetypes_26_50 import BUILDERS_26_50
 
-def _with_metadata(item, subskill, learning_objective_id, question_family_id, concept_id, concept_group, diagnostic_tags):
-    item['subskill'] = subskill
-    item['learning_objective_id'] = learning_objective_id
-    item['question_family_id'] = question_family_id
-    item['concept_id'] = concept_id
-    item['concept_group'] = concept_group
-    item['diagnostic_tags'] = diagnostic_tags
-    return item
+TOPIC_ID = "grade9_ems"
+SUBTOPIC_ID = "term3_business"
+CURRICULUM_REFERENCE = "Term 3 > Entrepreneurship: Functions of a Business"
 
-def _generate_business_functions(rng, mode, seed=None):
-    questions = [
-        {
-            "prompt": "Which business function is responsible for finding, hiring, training, and managing employees?",
-            "sample_answer": "Human Resources (HR)",
-            "ideal_answer": "The Human Resources function.",
-            "hint_sections": {
-                "1_nudge": "Think about the department that deals with the 'people' in the business.",
-                "2_concept": "This function handles recruitment, training, and employee well-being.",
-                "3_breakdown": "It is called Human Resources or HR."
-            }
-        },
-        {
-            "prompt": "Which business function is responsible for acquiring capital, managing cash flow, and preparing financial statements?",
-            "sample_answer": "Financial Function",
-            "ideal_answer": "The Financial function.",
-            "hint_sections": {
-                "1_nudge": "Think about the department responsible for tracking money and budgets.",
-                "2_concept": "This function ensures the business has enough funds to operate and stay solvent.",
-                "3_breakdown": "It is called the Financial function."
-            }
-        },
-        {
-            "prompt": "Which business function is responsible for transforming raw materials into finished goods and maintaining quality control?",
-            "sample_answer": "Production Function",
-            "ideal_answer": "The Production or Operations function.",
-            "hint_sections": {
-                "1_nudge": "Think about the factory floor where goods are physically manufactured.",
-                "2_concept": "This function combines labour, machinery, and raw inputs to create goods.",
-                "3_breakdown": "It is called the Production function."
-            }
-        },
-        {
-            "prompt": "Which business function is responsible for market research, advertising, product pricing, and distribution (the 4 Ps)?",
-            "sample_answer": "Marketing Function",
-            "ideal_answer": "The Marketing function.",
-            "hint_sections": {
-                "1_nudge": "Think about how customers learn about products and decide to buy them.",
-                "2_concept": "This function manages Product, Price, Place, and Promotion.",
-                "3_breakdown": "It is called the Marketing function."
-            }
-        },
-        {
-            "prompt": "Which business function handles data processing, filing, record-keeping, and office communications?",
-            "sample_answer": "Administration Function",
-            "ideal_answer": "The Administration function.",
-            "hint_sections": {
-                "1_nudge": "Think about secretarial, clerical, and general office information management.",
-                "2_concept": "This function collects, files, and retrieves critical documents and reports.",
-                "3_breakdown": "It is called the Administration function."
-            }
-        },
-        {
-            "prompt": "Which business function sets organizational goals, formulates strategy, leads staff, and coordinates all other business activities?",
-            "sample_answer": "General Management",
-            "ideal_answer": "The General Management function.",
-            "hint_sections": {
-                "1_nudge": "Think about top executives and managers who guide the overall company direction.",
-                "2_concept": "This function performs planning, organizing, leading, and controlling (POLC).",
-                "3_breakdown": "It is called General Management."
-            }
-        },
-        {
-            "prompt": "Which business function is responsible for buying raw materials, machinery, and office supplies at the best quality and price?",
-            "sample_answer": "Purchasing / Procurement Function",
-            "ideal_answer": "The Purchasing or Procurement function.",
-            "hint_sections": {
-                "1_nudge": "Think about the department that orders goods from external suppliers.",
-                "2_concept": "This function negotiates terms, delivery dates, and prices with vendors.",
-                "3_breakdown": "It is called Purchasing or Procurement."
-            }
-        },
-        {
-            "prompt": "Which business function is responsible for creating a positive public image, handling media relations, and corporate social responsibility (CSR)?",
-            "sample_answer": "Public Relations (PR) Function",
-            "ideal_answer": "The Public Relations function.",
-            "hint_sections": {
-                "1_nudge": "Think about how a company communicates with the public, journalists, and local community.",
-                "2_concept": "This function protects the business reputation and builds goodwill.",
-                "3_breakdown": "It is called Public Relations (PR)."
-            }
-        },
-        {
-            "prompt": "Explain how the **Purchasing / Procurement function** manages operational supply risk to ensure production is not halted.",
-            "sample_answer": "By maintaining backup supplier contracts, holding buffer safety stock, and monitoring supplier lead times.",
-            "ideal_answer": "The Purchasing function mitigates supply chain risks by diversifying supplier sources, maintaining safety stock, and conducting regular vendor quality audits.",
-            "hint_sections": {
-                "1_nudge": "What happens if a single supplier goes bankrupt or fails to deliver raw materials on time?",
-                "2_concept": "Purchasing manages risk through dual-sourcing, buffer stock, and supplier quality audits.",
-                "3_breakdown": "Mention multiple suppliers and buffer stock."
-            }
-        },
-        {
-            "prompt": "Explain how the **Financial function** manages cash flow risk to protect the business from insolvency.",
-            "sample_answer": "By compiling monthly cash flow budgets, enforcing strict credit control on debtors, and maintaining contingency reserves.",
-            "ideal_answer": "The Financial function manages liquidity risk by preparing cash budgets, monitoring debtor payment terms, and controlling unnecessary operational expenses.",
-            "hint_sections": {
-                "1_nudge": "How does a business make sure it always has cash to pay wages and suppliers?",
-                "2_concept": "Cash budgets and debtor control ensure sufficient liquidity.",
-                "3_breakdown": "Mention cash budgets and debtor payment terms."
-            }
-        }
-    ]
-    
-    if seed is not None:
-        q = questions[int(seed) % len(questions)]
-    else:
-        q = rng.choice(questions)
-    
-    item = {
-        "id": f"ems9_bus_{rng.randint(1000, 9999)}",
-        "topic": "Functions of a Business",
-        "question_type": "typed",
-        "modality": "semantic",
-        "prompt": q["prompt"],
-        "marks": 2,
-        "sample_answer": f"{q['sample_answer']}. Role: {q['ideal_answer']}",
-        "ideal_answer": q["ideal_answer"],
-        "worked_solution": (
-            f"Explanation and Marking Rubric (2 marks total):\n"
-            f"1. Identification: {q['sample_answer']} [1 mark].\n"
-            f"2. Functional Justification: {q['ideal_answer']} is responsible for aligning departmental activities with broader organizational objectives [1 mark]."
-        ),
-        "marking_points": ["Correct identification of the function or role of trade unions."],
-        "hint_sections": q["hint_sections"],
-        "guidelines": ["Award full marks for clear understanding of the core concepts."],
-        "teaching_note": "Learners should be able to name all 8 business functions."
-    }
-    return [_with_metadata(item, subskill='business_functions', learning_objective_id='lo_bus_func', question_family_id='bus_func_q', concept_id='bus_func', concept_group='business', diagnostic_tags=['semantic', 'ems'])]
+ARCHETYPE_BUILDERS: Dict[str, Callable[[random.Random], Dict[str, Any]]] = {
+    **BUILDERS_01_25,
+    **BUILDERS_26_50,
+}
 
-def generate(subskill="business_functions", difficulty="medium", count=1, mode="scaffold", seed=None, **kwargs):
-    rng = _rng(seed)
-    pool = _generate_business_functions(rng, mode, seed=seed)
-    selected = pool
-    if count < len(selected):
-        selected = rng.sample(selected, count)
-    return selected
+SUBSKILLS: List[str] = list(ARCHETYPE_BUILDERS.keys())
+ORDERED_SUBSKILLS: List[str] = list(SUBSKILLS)
+DISPATCH_TABLE: Dict[str, Callable[[random.Random], Dict[str, Any]]] = dict(ARCHETYPE_BUILDERS)
+
+_LEGACY_ALIASES: Dict[str, List[str]] = {
+    "business_functions": SUBSKILLS,
+    "concepts": SUBSKILLS[:25],
+    "discussion": [
+        "05_planning_and_organising_in_general_management",
+        "08_administration_importance_for_decision_making",
+        "16_financial_own_vs_borrowed_capital_comparison",
+        "20_publicity_crisis_communication_and_csr",
+        "27_general_management_strategic_and_succession_risks",
+        "29_purchasing_supplier_failure_and_stock_shortage_risk",
+        "33_marketing_reputation_and_unsold_inventory_risk",
+        "36_human_resources_staff_turnover_and_skills_shortage_risk",
+        "39_small_micro_enterprise_multi_hat_owner_challenge",
+        "50_holistic_eight_functions_and_risk_governance_synthesis",
+    ],
+    "application": [
+        "02_eight_business_functions_classification_table",
+        "04_three_levels_of_management_hierarchy_svg",
+        "11_production_function_input_process_output_svg",
+        "12_production_quality_control_and_unit_cost_calc",
+        "14_marketing_mix_four_ps_classification_table",
+        "18_human_resources_sa_labour_legislation_table",
+        "24_eight_functions_organisational_ecosystem_svg",
+        "25_ntuli_beauty_style_scenario_function_identification",
+        "30_purchasing_reorder_point_and_buffer_stock_calculation",
+        "32_production_defect_rate_and_scrap_loss_calculation",
+        "35_financial_working_capital_and_cash_shortfall_calc",
+        "38_function_risk_mitigation_matching_table",
+        "42_purchasing_bulk_discount_vs_storage_cost_calculation",
+        "43_marketing_promotional_campaign_roi_calculation",
+        "44_hr_training_investment_and_productivity_gain_calc",
+        "45_risk_impact_vs_likelihood_matrix_svg",
+        "46_cross_function_problem_solving_product_recall_case",
+        "47_insurable_vs_non_insurable_business_risks_table",
+    ],
+}
+
+
+def get_subskills() -> List[str]:
+    return list(SUBSKILLS)
+
+
+def _resolve_target(rng: random.Random, subskill: Optional[str]) -> str:
+    target = (subskill or "").strip()
+    if not target or target in ("mixed", "compound", "default", "all", "auto"):
+        return rng.choice(SUBSKILLS)
+    if target in ARCHETYPE_BUILDERS:
+        return target
+    if target in _LEGACY_ALIASES:
+        return rng.choice(_LEGACY_ALIASES[target])
+    if target.startswith("elementary_"):
+        candidate = target[len("elementary_"):]
+        if candidate in ARCHETYPE_BUILDERS:
+            return candidate
+        if candidate in _LEGACY_ALIASES:
+            return rng.choice(_LEGACY_ALIASES[candidate])
+        matches = [k for k in SUBSKILLS if candidate in k]
+        return rng.choice(matches) if matches else rng.choice(SUBSKILLS)
+    matches = [k for k in SUBSKILLS if target in k]
+    return rng.choice(matches) if matches else rng.choice(SUBSKILLS)
+
+
+def generate_question(
+    subskill: Optional[str] = None,
+    seed: Optional[int] = None,
+    **kwargs: Any,
+) -> Dict[str, Any]:
+    rng = random.Random(seed)
+    requested = kwargs.get("archetype") or subskill
+    target = _resolve_target(rng, requested)
+    q = ARCHETYPE_BUILDERS[target](rng)
+    difficulty = kwargs.get("difficulty")
+    if difficulty:
+        q["difficulty"] = difficulty
+    mode = kwargs.get("mode")
+    if mode:
+        q["mode"] = mode
+    return q
+
+
+def generate(
+    subskill: str = "business_functions",
+    difficulty: str = "medium",
+    count: int = 1,
+    mode: str = "scaffold",
+    seed: Optional[int] = None,
+    **kwargs: Any,
+) -> List[Dict[str, Any]]:
+    base_rng = random.Random(seed)
+    out: List[Dict[str, Any]] = []
+    for i in range(max(1, int(count))):
+        item_seed = (seed + i * 1009) if seed is not None else base_rng.randint(1, 10**8)
+        out.append(
+            generate_question(
+                subskill=subskill,
+                seed=item_seed,
+                difficulty=difficulty,
+                mode=mode,
+                **kwargs,
+            )
+        )
+    return out

@@ -2068,6 +2068,18 @@
         "ast_purity": "100%",
         "policy_gate": "PASS",
         "completed_at": "2026-11-12T07:27:37.252405+00:00"
+      },
+      "batch6_ems_gr7_8_9": {
+        "status": "PASS",
+        "total_topics": 40,
+        "total_archetypes": 2000,
+        "synthetic_shims": 0,
+        "diagram_leaks": 0,
+        "diagrams_rendered": 262,
+        "two_d_tables_rendered": 531,
+        "ast_purity": "100%",
+        "policy_gate": "PASS",
+        "completed_at": "2026-11-12T07:57:54.136008+00:00"
       }
     },
     "grade7_mathematics": {
@@ -3987,7 +3999,7 @@
       "sizeKB": 12.4
     }
   ],
-  "lastUpdated": "2026-11-12T07:27:37.252405+00:00",
+  "lastUpdated": "2026-11-12T07:57:54.136008+00:00",
   "version": "0.9.35",
   "diagramArchetypesCatalog": {
     "totalDiagramMasters": 47,

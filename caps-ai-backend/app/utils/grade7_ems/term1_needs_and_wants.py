@@ -1,286 +1,165 @@
-"""Grade 7 EMS: Term 1 - Needs and Wants Generator.
-100% Aligned with South African National Curriculum Standards.
-Grounded directly in curriculum_docs_auto/EMS_Gr7/Term 1/02. Needs and Wants.md.
-Adheres strictly to the 6-Pillar Generator Contract.
+"""
+Grade 7 EMS — Term 1: Needs and Wants (50 Semantic Archetype Dispatcher).
+Grounded in curriculum_docs_auto/EMS_Gr7/Term 1/02. Needs and Wants.md.
 """
 from __future__ import annotations
 
 import random
-from typing import Any, Dict, List, Optional
-from app.utils.ems_namelist import get_ems_scenario, get_random_need_and_want, NAMES, AREAS
+from typing import Any, Callable, Dict, List, Optional
 
-SUBSKILLS = [
-    "primary_vs_secondary_needs",
-    "needs_vs_wants_classification",
-    "the_basic_economic_problem",
-    "community_service_delivery_needs",
-    "scarcity_and_choice_evaluation"
-]
+from .term1_needs_and_wants_archetypes_01_25 import BUILDERS_01_25
+from .term1_needs_and_wants_archetypes_26_50 import BUILDERS_26_50
 
 CURRICULUM_DOC = "curriculum_docs_auto/EMS_Gr7/Term 1/02. Needs and Wants.md"
+TOPIC_NAME = "Needs and Wants"
+
+ARCHETYPE_BUILDERS: Dict[str, Callable[[random.Random], Dict[str, Any]]] = {
+    **BUILDERS_01_25,
+    **BUILDERS_26_50,
+}
+
+SUBSKILLS: List[str] = list(ARCHETYPE_BUILDERS.keys())
+ORDERED_SUBSKILLS: List[str] = SUBSKILLS
+
+_LEGACY_POOLS: Dict[str, List[str]] = {
+    "primary_vs_secondary_needs": [
+        "01_needs_definition_survival",
+        "05_primary_needs_survival_list",
+        "06_secondary_needs_wellbeing",
+        "07_primary_vs_secondary_table",
+        "08_prioritising_primary_over_secondary",
+        "09_needs_of_individuals",
+        "10_family_emotional_social_needs",
+    ],
+    "needs_vs_wants_classification": [
+        "02_wants_definition_desires",
+        "03_needs_vs_wants_distinction",
+        "04_needs_vs_wants_table",
+        "36_luxury_wants_vs_basic_necessities",
+        "39_needs_evolution_with_technology",
+        "40_maslow_basic_to_higher_hierarchy",
+        "47_consumer_rights_vs_want_advertising",
+    ],
+    "the_basic_economic_problem": [
+        "14_unlimited_wants_advertising_effect",
+        "15_limited_resources_scarcity_definition",
+        "16_basic_economic_problem_statement",
+        "21_natural_resources_land_examples",
+        "22_labour_human_effort_skills",
+        "23_capital_physical_vs_money",
+        "24_entrepreneurship_role_innovation",
+        "25_four_factors_of_production_table",
+        "26_factors_of_production_remuneration_table",
+        "49_needs_wants_resource_chain_diagram",
+    ],
+    "community_service_delivery_needs": [
+        "11_community_needs_infrastructure",
+        "12_country_national_needs",
+        "13_four_levels_of_needs_table",
+        "27_business_meets_community_needs",
+        "28_government_public_goods_provision",
+        "29_municipal_service_delivery_priorities",
+        "30_service_delivery_protests_causes",
+        "31_rural_vs_urban_community_needs",
+        "42_public_vs_private_provision_table",
+        "44_sharing_and_community_ubuntu",
+        "48_disaster_disrupts_basic_needs",
+    ],
+    "scarcity_and_choice_evaluation": [
+        "17_scarcity_choice_budget_calculation",
+        "18_opportunity_cost_tradeoff",
+        "19_scarce_time_allocation_choice",
+        "20_scarce_water_household_conservation",
+        "32_agricultural_food_security_land",
+        "33_arable_land_crop_yield_calculation",
+        "34_renewable_vs_nonrenewable_resources",
+        "35_sustainable_resource_management",
+        "37_utility_and_priority_ranking",
+        "38_household_income_vs_wants_ratio",
+        "41_entrepreneur_spots_unmet_need",
+        "43_inflation_impact_on_basic_needs",
+        "45_government_budget_tradeoff_country",
+        "46_scarcity_price_signal_supply",
+        "50_economic_problem_synthesis_essay",
+    ],
+    "concepts": [
+        s
+        for s in SUBSKILLS
+        if not s.startswith(("08_", "17_", "19_", "20_", "33_", "37_", "38_", "43_", "45_"))
+    ],
+    "application": [
+        "04_needs_vs_wants_table",
+        "07_primary_vs_secondary_table",
+        "08_prioritising_primary_over_secondary",
+        "13_four_levels_of_needs_table",
+        "17_scarcity_choice_budget_calculation",
+        "19_scarce_time_allocation_choice",
+        "20_scarce_water_household_conservation",
+        "25_four_factors_of_production_table",
+        "26_factors_of_production_remuneration_table",
+        "31_rural_vs_urban_community_needs",
+        "33_arable_land_crop_yield_calculation",
+        "37_utility_and_priority_ranking",
+        "38_household_income_vs_wants_ratio",
+        "42_public_vs_private_provision_table",
+        "43_inflation_impact_on_basic_needs",
+        "45_government_budget_tradeoff_country",
+    ],
+    "discussion": [
+        "03_needs_vs_wants_distinction",
+        "10_family_emotional_social_needs",
+        "12_country_national_needs",
+        "16_basic_economic_problem_statement",
+        "24_entrepreneurship_role_innovation",
+        "29_municipal_service_delivery_priorities",
+        "30_service_delivery_protests_causes",
+        "32_agricultural_food_security_land",
+        "35_sustainable_resource_management",
+        "41_entrepreneur_spots_unmet_need",
+        "48_disaster_disrupts_basic_needs",
+        "50_economic_problem_synthesis_essay",
+    ],
+}
+
+DISPATCH_TABLE: Dict[Any, Callable[[random.Random], Dict[str, Any]]] = dict(ARCHETYPE_BUILDERS)
+for _idx, _sub_key in enumerate(SUBSKILLS, start=1):
+    DISPATCH_TABLE[_idx] = ARCHETYPE_BUILDERS[_sub_key]
+    DISPATCH_TABLE[str(_idx)] = ARCHETYPE_BUILDERS[_sub_key]
+    DISPATCH_TABLE[f"{_idx:02d}"] = ARCHETYPE_BUILDERS[_sub_key]
 
 
-def _rng(seed: Optional[int]) -> random.Random:
-    return random.Random(seed) if seed is not None else random.Random()
+def get_subskills() -> List[str]:
+    return list(SUBSKILLS)
 
 
-def _build_primary_vs_secondary(rng: random.Random) -> Dict[str, Any]:
-    scenario = get_ems_scenario(rng)
-    person = scenario["entrepreneur"]
-    area = scenario["area"]
+def _resolve_pool(
+    subskill: Optional[str],
+    mode: str,
+    archetype_index: Optional[int],
+) -> List[Callable[[random.Random], Dict[str, Any]]]:
+    if archetype_index is not None and archetype_index in DISPATCH_TABLE:
+        return [DISPATCH_TABLE[archetype_index]]
 
-    pairs = [
-        ("clean drinking water from a municipal tap", "an expensive gaming console", "water is essential for physiological survival, whereas a gaming console is non-essential entertainment"),
-        ("a basic warm blanket in winter", "designer label sneakers", "warmth protects health and life, whereas designer shoes are luxury desires"),
-        ("nutritious maize meal and vegetables", "imported soft drinks and candy", "food provides essential bodily nutrition, whereas candy is a non-essential luxury preference"),
-        ("safe shelter with a roof", "a home theatre entertainment system", "shelter protects against the elements for survival, whereas home theatre is for comfort and luxury")
-    ]
-    need_item, want_item, rationale = rng.choice(pairs)
+    if subskill and subskill.startswith("elementary_"):
+        subskill = subskill[len("elementary_"):]
 
-    prompt = (
-        f"{person} from {area} receives a household stipend and must choose between buying "
-        f"**{need_item}** and **{want_item}**.\n\n"
-        f"Classify which item is a **primary need** and explain the economic difference."
-    )
-    correct_opt = f"Primary need: {need_item}; because {rationale}."
-    distractors = [
-        f"Primary need: {want_item}; because luxuries motivate people to work harder in the economy.",
-        f"Both are secondary needs; because modern consumers in South Africa require both equally to live.",
-        f"Both are wants; because primary needs only exist in traditional subsistence societies."
-    ]
-    options = [correct_opt] + distractors
-    rng.shuffle(options)
+    if subskill in DISPATCH_TABLE:
+        return [DISPATCH_TABLE[subskill]]
 
-    sol = (
-        f"Step 1: Define Primary Needs:\n"
-        f"Primary needs are things that are strictly essential for human physical survival (food, clean water, basic shelter, basic clothing).\n\n"
-        f"Step 2: Define Secondary Needs & Wants:\n"
-        f"Wants are desires for goods and services that are not essential for survival but improve comfort, status, or enjoyment.\n\n"
-        f"Step 3: Evaluate items:\n"
-        f"- {need_item} is essential to sustain life -> Primary need.\n"
-        f"- {want_item} is for entertainment/comfort -> Want.\n\n"
-        f"Conclusion: {correct_opt}"
-    )
-    return {
-        "id": f"g7_ems_needs_prim_{rng.randint(100000, 999999)}",
-        "question_type": "mcq",
-        "prompt": prompt,
-        "options": options,
-        "correct_answer": correct_opt,
-        "sample_answer": correct_opt,
-        "worked_solution": sol,
-        "explanation": sol,
-        "canonical_solution": sol,
-        "marks": 2,
-        "total_marks": 2,
-        "subskill": "primary_vs_secondary_needs",
-        "question_family_id": "primary_vs_secondary_needs",
-        "curriculum_reference": "Term 1 > Needs and Wants > Categorizing Needs",
-        "hints": {
-            "tier_1": "Would a person's life or health be immediately threatened without this item?",
-            "tier_2": "Primary needs = survival (food, water, shelter). Wants = luxuries and comfort.",
-            "tier_3": f"Correct: {correct_opt}"
-        }
-    }
+    if subskill:
+        key_lower = subskill.strip().lower()
+        if key_lower in _LEGACY_POOLS:
+            return [ARCHETYPE_BUILDERS[k] for k in _LEGACY_POOLS[key_lower] if k in ARCHETYPE_BUILDERS]
+        for k in SUBSKILLS:
+            if k.endswith(key_lower) or key_lower in k:
+                return [ARCHETYPE_BUILDERS[k]]
 
+    if mode and mode.startswith("elementary_"):
+        target = mode[len("elementary_"):]
+        if target in DISPATCH_TABLE:
+            return [DISPATCH_TABLE[target]]
 
-def _build_needs_vs_wants_classification(rng: random.Random) -> Dict[str, Any]:
-    scenario = get_ems_scenario(rng)
-    person = scenario["entrepreneur"]
-    area = scenario["area"]
-
-    item_lists = [
-        ([("Access to basic healthcare", "Need"), ("Cell phone with internet", "Want"), ("Maize meal and milk", "Need"), ("Jacuzzi bath", "Want")], 0),
-        ([("Clean running tap water", "Need"), ("Designer sports shoes", "Want"), ("Warm school jersey", "Need"), ("Playstation console", "Want")], 0),
-        ([("Hygienic sanitation and clean toilet", "Need"), ("Luxury overseas holiday", "Want"), ("Basic bread and fruit", "Need"), ("Large flat-screen television", "Want")], 0)
-    ]
-    items, need_idx = rng.choice(item_lists)
-
-    prompt = (
-        f"In an EMS class in {area}, {person} prepares a budget table. Study the following numbered items:\n"
-        f"1. {items[0][0]}\n"
-        f"2. {items[1][0]}\n"
-        f"3. {items[2][0]}\n"
-        f"4. {items[3][0]}\n\n"
-        f"Which numbered item is strictly classified as a primary **survival need**?"
-    )
-    correct_opt = f"Item {need_idx + 1} only"
-    distractors = [f"Item {i + 1} only" for i in range(4) if i != need_idx] + ["None of the four items"]
-    options = [correct_opt] + distractors[:3]
-    rng.shuffle(options)
-
-    sol = (
-        f"Classification from Curriculum Reference:\n"
-        f"- 1. {items[0][0]}: {items[0][1]}\n"
-        f"- 2. {items[1][0]}: {items[1][1]}\n"
-        f"- 3. {items[2][0]}: {items[2][1]}\n"
-        f"- 4. {items[3][0]}: {items[3][1]}\n\n"
-        f"The survival need is Item {need_idx + 1} only ({items[need_idx][0]}). Survival needs are essentials required to stay alive, whereas wants can be postponed."
-    )
-    return {
-        "id": f"g7_ems_needs_class_{rng.randint(100000, 999999)}",
-        "question_type": "mcq",
-        "prompt": prompt,
-        "options": options,
-        "correct_answer": correct_opt,
-        "sample_answer": correct_opt,
-        "worked_solution": sol,
-        "explanation": sol,
-        "canonical_solution": sol,
-        "marks": 2,
-        "total_marks": 2,
-        "subskill": "needs_vs_wants_classification",
-        "question_family_id": "needs_vs_wants_classification",
-        "curriculum_reference": "Term 1 > Needs and Wants > Classification Exercise: Needs vs Wants",
-        "hints": {
-            "tier_1": "Look for the item that directly preserves life, health, or hygiene.",
-            "tier_2": "Luxuries and electronic entertainment are wants, not survival needs.",
-            "tier_3": f"Correct: {correct_opt}"
-        }
-    }
-
-
-def _build_basic_economic_problem(rng: random.Random) -> Dict[str, Any]:
-    scenario = get_ems_scenario(rng)
-    person = scenario["entrepreneur"]
-    area = scenario["area"]
-    budget = rng.choice([500, 1000, 1500, 2500])
-
-    prompt = (
-        f"{person}'s family in {area} has a monthly household income of R{budget}, but their total list of desired goods, "
-        f"services, and groceries costs R{budget * 2}.\n\n"
-        f"Explain the **basic economic problem** illustrated by this situation in terms of resources and wants."
-    )
-    sample_ans = (
-        "The basic economic problem arises because human needs and wants are unlimited, while the resources (money/income) "
-        "available to satisfy them are limited and scarce. This scarcity forces the household to make choices and prioritise."
-    )
-    sol = (
-        f"1. Core Definition [2]: The fundamental economic problem is that human wants are **unlimited**, "
-        f"while productive resources (money, income of R{budget}, land, labour, capital) are **limited** or scarce [2].\n"
-        f"2. Consequence of Scarcity [2]: Because resources cannot satisfy every desire, individuals and societies must make "
-        f"**choices** to prioritise essential needs over discretionary wants [2]."
-    )
-    return {
-        "id": f"g7_ems_needs_econ_prob_{rng.randint(100000, 999999)}",
-        "question_type": "short_answer",
-        "prompt": prompt,
-        "correct_answer": sample_ans,
-        "sample_answer": sample_ans,
-        "worked_solution": sol,
-        "explanation": sol,
-        "canonical_solution": sol,
-        "marks": 4,
-        "total_marks": 4,
-        "subskill": "the_basic_economic_problem",
-        "question_family_id": "the_basic_economic_problem",
-        "curriculum_reference": "Term 1 > Needs and Wants > The Economic Problem",
-        "hints": {
-            "tier_1": "Focus on the two key contrasting words: 'unlimited' vs 'limited'.",
-            "tier_2": "Unlimited human wants versus limited (scarce) resources.",
-            "tier_3": "Scarcity of resources forces people and communities to make choices."
-        }
-    }
-
-
-def _build_community_service_delivery(rng: random.Random) -> Dict[str, Any]:
-    scenario = get_ems_scenario(rng)
-    town = scenario["area"]
-
-    facilities = [
-        ("clinics and healthcare centres", "curing illnesses and preserving life"),
-        ("clean municipal water piping and sanitation", "preventing waterborne diseases like cholera"),
-        ("primary schools and learning materials", "providing foundational literacy and numeracy"),
-        ("refuse removal and waste disposal", "maintaining environmental hygiene in townships")
-    ]
-    fac, purpose = rng.choice(facilities)
-
-    prompt = (
-        f"The local municipality governing {town} has a limited annual development budget. "
-        f"Community leaders argue that allocating funds towards **{fac}** must take priority over building a sports entertainment stadium.\n\n"
-        f"Justify this decision based on the difference between basic community needs and recreational wants."
-    )
-    sample_ans = (
-        f"{fac} satisfies an essential primary community need ({purpose}) necessary for survival and public health. "
-        f"A stadium is a secondary want that should only be funded after basic survival infrastructure is secured."
-    )
-    sol = (
-        f"1. Service delivery priority [2]: Municipalities are constitutionally obligated to satisfy basic primary needs first [1]. "
-        f"{fac} directly addresses public survival and well-being ({purpose}) [1].\n"
-        f"2. Contrast with secondary wants [2]: Recreational facilities like stadiums improve quality of life (wants) [1], "
-        f"but must not take precedence over essential life-supporting infrastructure when resources are scarce [1]."
-    )
-    return {
-        "id": f"g7_ems_needs_serv_{rng.randint(100000, 999999)}",
-        "question_type": "short_answer",
-        "prompt": prompt,
-        "correct_answer": sample_ans,
-        "sample_answer": sample_ans,
-        "worked_solution": sol,
-        "explanation": sol,
-        "canonical_solution": sol,
-        "marks": 4,
-        "total_marks": 4,
-        "subskill": "community_service_delivery_needs",
-        "question_family_id": "community_service_delivery_needs",
-        "curriculum_reference": "Term 1 > Needs and Wants > Service Delivery",
-        "hints": {
-            "tier_1": "Why must clean water or healthcare come before entertainment facilities?",
-            "tier_2": "Survival and public health are primary needs. Entertainment and sports stadiums are secondary wants.",
-            "tier_3": "Basic service delivery preserves life and health; wants only improve leisure."
-        }
-    }
-
-
-def _build_scarcity_and_choice(rng: random.Random) -> Dict[str, Any]:
-    scenario = get_ems_scenario(rng)
-    person = scenario["entrepreneur"]
-    area = scenario["area"]
-    stipend = rng.choice([200, 300, 400, 500])
-
-    prompt = (
-        f"{person} has R{stipend} pocket money in {area}. {person} can either buy a required mathematics textbook "
-        f"for R{stipend} or a trendy branded cap for R{stipend}. {person} chooses the textbook.\n\n"
-        f"What is the economic term for the branded cap that {person} had to give up, and why was this choice made?"
-    )
-    correct_opt = "Opportunity cost; because the textbook satisfies an educational need while the cap is a discretionary want."
-    distractors = [
-        "Depreciation; because the cap would lose its monetary value immediately.",
-        "Liabilities; because buying clothing creates a debt to the store.",
-        "Capital; because educational books represent financial interest."
-    ]
-    options = [correct_opt] + distractors
-    rng.shuffle(options)
-
-    sol = (
-        f"Step 1: Identify the economic concept:\n"
-        f"When scarce resources force a choice between alternatives, the value of the next best alternative given up is the **opportunity cost**.\n\n"
-        f"Step 2: Apply to scenario:\n"
-        f"- Option chosen: Mathematics textbook (essential educational need).\n"
-        f"- Alternative sacrificed: Branded cap (opportunity cost).\n\n"
-        f"Conclusion: {correct_opt}"
-    )
-    return {
-        "id": f"g7_ems_needs_choice_{rng.randint(100000, 999999)}",
-        "question_type": "mcq",
-        "prompt": prompt,
-        "options": options,
-        "correct_answer": correct_opt,
-        "sample_answer": correct_opt,
-        "worked_solution": sol,
-        "explanation": sol,
-        "canonical_solution": sol,
-        "marks": 2,
-        "total_marks": 2,
-        "subskill": "scarcity_and_choice_evaluation",
-        "question_family_id": "scarcity_and_choice_evaluation",
-        "curriculum_reference": "Term 1 > Needs and Wants > Critical Thinking and Analysis",
-        "hints": {
-            "tier_1": "What do we call the alternative benefit you sacrifice when making a decision?",
-            "tier_2": "The next best forgone option is the opportunity cost.",
-            "tier_3": f"Correct: {correct_opt}"
-        }
-    }
+    return [ARCHETYPE_BUILDERS[k] for k in SUBSKILLS]
 
 
 def generate(
@@ -289,34 +168,26 @@ def generate(
     difficulty: str = "medium",
     mode: str = "compound",
     subskill: Optional[str] = None,
-    **kwargs: Any
+    archetype_index: Optional[int] = None,
+    **kwargs: Any,
 ) -> List[Dict[str, Any]]:
-    """Main entry point for Grade 7 Needs and Wants generator."""
-    rng = _rng(seed)
-    questions = []
+    rng = random.Random(seed) if seed is not None else random.Random()
+    pool = _resolve_pool(subskill=subskill, mode=mode, archetype_index=archetype_index)
+    n = max(1, int(count))
+    results: List[Dict[str, Any]] = []
+    for _ in range(n):
+        builder = pool[0] if len(pool) == 1 else rng.choice(pool)
+        item = builder(rng)
+        item["mode"] = mode or "compound"
+        if difficulty in ("easy", "medium", "hard") and item.get("difficulty") not in ("easy", "medium", "hard"):
+            item["difficulty"] = difficulty
+        results.append(item)
+    return results
 
-    target_sub = str(subskill or "").strip().lower()
 
-    def _build_one(sub_name: str) -> Dict[str, Any]:
-        if "prim" in sub_name or "second" in sub_name:
-            return _build_primary_vs_secondary(rng)
-        elif "class" in sub_name or "categor" in sub_name:
-            return _build_needs_vs_wants_classification(rng)
-        elif "econ" in sub_name or "problem" in sub_name:
-            return _build_basic_economic_problem(rng)
-        elif "serv" in sub_name or "communit" in sub_name or "deliver" in sub_name:
-            return _build_community_service_delivery(rng)
-        elif "scarc" in sub_name or "choice" in sub_name or "opportun" in sub_name:
-            return _build_scarcity_and_choice(rng)
-        return _build_primary_vs_secondary(rng)
-
-    if target_sub and target_sub not in ("compound", "all", "mixed", "auto", "default", "none"):
-        for _ in range(count):
-            questions.append(_build_one(target_sub))
-        return questions
-
-    for i in range(count):
-        sub = SUBSKILLS[i % len(SUBSKILLS)]
-        questions.append(_build_one(sub))
-
-    return questions
+def generate_question(
+    subskill: Optional[str] = None,
+    seed: Optional[int] = None,
+    **kwargs: Any,
+) -> Dict[str, Any]:
+    return generate(count=1, seed=seed, subskill=subskill, **kwargs)[0]

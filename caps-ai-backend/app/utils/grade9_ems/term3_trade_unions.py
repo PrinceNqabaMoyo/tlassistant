@@ -1,276 +1,108 @@
-"""Grade 9 EMS — Trade Unions in South Africa.
-100% Deterministic & SymPy/math backed. Satisfies the 6-Pillar Generator Contract.
-Directly aligns with `curriculum_docs_auto/EMS_Gr9/Term 1/01. Trade Unions.md`.
-Covers:
-- Concept and historical development of trade unions in South Africa (COSATU, primary sector exploitation)
-- Roles vs Responsibilities of trade unions (collective bargaining, peaceful action, secret balloting)
-- Constitutional & Labour Relations Act (LRA) worker rights, CCMA dispute resolution
-- Effect of trade unions on businesses and sustainable economic growth
+"""Grade 9 EMS — Term 3: Trade Unions (50-Archetype Deterministic Generator).
+
+Grounded strictly in curriculum_docs_auto/EMS_Gr9/Term 1/01. Trade Unions.md,
+curriculum_docs/EMS_Gr9/Term 3/8-Trade unions.md, and EMS_Gr9/Syllabus.md.
+Zero-LLM, 100% deterministic, aligned with South African National Curriculum Standards.
 """
 from __future__ import annotations
 
 import random
-from typing import Any, Dict, List, Optional
+from typing import Any, Callable, Dict, List, Optional
 
-
-def _rng(seed: Optional[int] = None) -> random.Random:
-    r = random.Random()
-    if seed is not None:
-        r.seed(int(seed))
-    return r
-
+from .term3_trade_unions_archetypes_01_25 import BUILDERS_01_25
+from .term3_trade_unions_archetypes_26_50 import BUILDERS_26_50
 
 TOPIC_ID = "grade9_ems"
 SUBTOPIC_ID = "term3_trade_unions"
 CURRICULUM_REFERENCE = "Term 3 > The Economy: Trade Unions"
 
-
-def _with_metadata(
-    item: Dict[str, Any],
-    *,
-    subskill: str,
-    learning_objective_id: str,
-    question_family_id: str,
-    concept_id: Optional[str] = None,
-    concept_group: Optional[str] = None,
-    misconception_tags: Optional[List[str]] = None,
-    diagnostic_tags: Optional[List[str]] = None,
-) -> Dict[str, Any]:
-    enriched = dict(item)
-    enriched.update({
-        "topic_id": TOPIC_ID,
-        "subtopic_id": SUBTOPIC_ID,
-        "subskill": subskill,
-        "learning_objective_id": learning_objective_id,
-        "concept_id": concept_id or subskill,
-        "concept_group": concept_group or "trade_unions",
-        "question_family_id": question_family_id,
-        "curriculum_reference": CURRICULUM_REFERENCE,
-        "misconception_tags": misconception_tags or [],
-        "diagnostic_tags": diagnostic_tags or ["economics", "labour_relations"],
-    })
-    return enriched
-
-
-def _roles_vs_responsibilities_drill(rng: random.Random, mode: str = "scaffold") -> Dict[str, Any]:
-    items_pool = [
-        {"action": "Organise industrial action and strikes", "category": "Role", "reason": "It is a power/function of a union to mobilize workers"},
-        {"action": "Ensure that industrial action is lawful and peaceful", "category": "Responsibility", "reason": "Unions have a duty to keep protests non-violent and within the LRA"},
-        {"action": "Negotiate with employers through collective bargaining", "category": "Role", "reason": "It is a core representative role to negotiate terms"},
-        {"action": "Make reasonable and realistic wage demands on employers", "category": "Responsibility", "reason": "Demands must not bankrupt the employer or cost jobs"},
-        {"action": "Provide legal advice and representation during disputes", "category": "Role", "reason": "Unions exist to represent members in CCMA/court"},
-        {"action": "Make major strike decisions based on a secret vote by all members", "category": "Responsibility", "reason": "Unions must maintain democratic internal accountability"},
-        {"action": "Try to attract new members to join the union", "category": "Role", "reason": "Growing union membership strengthens collective voice"},
-        {"action": "Never force or intimidate anyone into joining a union", "category": "Responsibility", "reason": "Freedom of association is guaranteed by the Constitution"},
-    ]
-
-    selected = rng.sample(items_pool, 4)
-    headers = ["No.", "Trade Union Action / Practice", "Category (Role vs Responsibility)", "Justification"]
-    rows = []
-    correct_map: Dict[str, str] = {}
-    cell_hints: Dict[str, str] = {}
-
-    for idx, itm in enumerate(selected):
-        c_cat = f"t0_r{idx}_c2"
-        correct_map[c_cat] = itm["category"]
-        cell_hints[c_cat] = f"Is '{itm['action']}' a power/function (Role) or an obligation/duty (Responsibility)?"
-
-        rows.append([
-            {"coordinate": f"t0_r{idx}_c0", "value": str(idx + 1), "type": "given", "editable": False},
-            {"coordinate": f"t0_r{idx}_c1", "value": itm["action"], "type": "given", "editable": False},
-            {"coordinate": c_cat, "value": itm["category"] if mode == "scaffold" else "", "type": "required", "editable": True},
-            {"coordinate": f"t0_r{idx}_c3", "value": itm["reason"], "type": "given", "editable": False},
-        ])
-
-    item = {
-        "id": f"ems9_union_roles_resp_{rng.randint(1000, 9999)}",
-        "title": "Trade Union Roles vs Responsibilities",
-        "question_type": "table_completion",
-        "modality": "ledger",
-        "prompt": f"In {rng.choice(['the South African mining and energy sector', 'commercial retail and transport logistics', 'heavy manufacturing and assembly industries', 'public education and healthcare services'])}, distinguish between the **Roles** (functions/powers) and **Responsibilities** (duties/obligations) of trade unions in the workplace.",
-        "headers": headers,
-        "rows": rows,
-        "correct_map": correct_map,
-        "cell_hints": cell_hints,
-        "marks": 8,
-        "sample_answer": f"1: {selected[0]['category']}; 2: {selected[1]['category']}; 3: {selected[2]['category']}; 4: {selected[3]['category']}",
-        "ideal_answer": "Accurate distinction between union rights/powers (Roles) and ethical/legal duties (Responsibilities).",
-        "hint_sections": {
-            "1_nudge": "A ROLE is what a union does to empower workers. A RESPONSIBILITY is a duty to act lawfully and ethically.",
-            "2_concept": "Under South Africa's Labour Relations Act (LRA), unions have rights (like striking) and responsibilities (strikes must be peaceful).",
-            "3_breakdown": f"Check each row: Is it an entitlement or a duty?"
-        },
-        "marking_schema": {
-            "total_marks": 8,
-            "marking_points": [
-                {"id": f"mp_{i}", "desc": f"Categorisation for '{itm['action'][:30]}...'", "marks": 2, "editable": True}
-                for i, itm in enumerate(selected)
-            ],
-            "deductions": [],
-            "carry_forward_rule": "consequential_accuracy",
-        },
-        "misconception_tags": ["confused_union_role_with_responsibility"],
-    }
-    return _with_metadata(
-        item,
-        subskill="roles_vs_responsibilities",
-        learning_objective_id="lo_g9_union_roles_resp",
-        question_family_id="union_roles_resp_table",
-        misconception_tags=["confused_union_role_with_responsibility"],
-    )
-
-
-def _concept_pool(rng: random.Random) -> List[Dict[str, Any]]:
-    return [
-        _with_metadata({
-            'id': f'ems9_tu_def_{rng.randint(1000, 9999)}',
-            'title': 'Trade Union Definition',
-            'question_type': 'mcq',
-            'modality': 'math',
-            'prompt': 'What is the main purpose of a trade union?',
-            'options': [
-                'To make profits for business owners',
-                'To protect and promote the interests of workers',
-                'To replace government in labour regulation',
-                'To prevent businesses from hiring new employees'
-            ],
-            'correct_index': 1,
-            'explanation': 'A trade union is an organisation formed by workers to protect and promote their interests, including negotiating better wages and working conditions.',
-            'marks': 2,
-            'hint_sections': {'1_nudge': 'Trade unions represent employees against employer exploitation.'},
-        }, subskill='concepts', learning_objective_id='lo_trade_union_purpose', question_family_id='trade_union_definition'),
-        _with_metadata({
-            'id': f'ems9_tu_cosatu_{rng.randint(1000, 9999)}',
-            'title': 'COSATU Federation',
-            'question_type': 'mcq',
-            'modality': 'math',
-            'prompt': 'What does the acronym COSATU stand for in South African labour history?',
-            'options': [
-                'Congress of South African Trade Unions',
-                'Council of South African Trade Unions',
-                'Committee of South African Trade Unions',
-                'Coalition of South African Trade Unions'
-            ],
-            'correct_index': 0,
-            'explanation': 'COSATU is the Congress of South African Trade Unions, the largest trade union federation in South Africa.',
-            'marks': 2,
-            'hint_sections': {'1_nudge': 'It starts with Congress and represents South African Trade Unions.'},
-        }, subskill='concepts', learning_objective_id='lo_cosatu', question_family_id='cosatu_name'),
-        _with_metadata({
-            'id': f'ems9_tu_ccma_{rng.randint(1000, 9999)}',
-            'title': 'CCMA in Dispute Resolution',
-            'question_type': 'mcq',
-            'modality': 'math',
-            'prompt': 'What is the role of the CCMA (Commission for Conciliation, Mediation and Arbitration)?',
-            'options': [
-                'To manage the finances of trade unions',
-                'To act as an independent third party settling workplace disputes between employers and employees',
-                'To represent employers in salary negotiations',
-                'To arrest workers who participate in strikes'
-            ],
-            'correct_index': 1,
-            'explanation': 'The CCMA is an independent statutory dispute resolution body established by the Labour Relations Act to resolve workplace disputes through conciliation and arbitration.',
-            'marks': 2,
-            'hint_sections': {'1_nudge': 'CCMA is an independent third party that mediates labour disputes.'},
-        }, subskill='concepts', learning_objective_id='lo_ccma', question_family_id='ccma_dispute_resolution'),
-        _with_metadata({
-            'id': f'ems9_tu_s23_{rng.randint(1000, 9999)}',
-            'title': 'Freedom of Association (Section 23)',
-            'question_type': 'mcq',
-            'modality': 'math',
-            'prompt': 'Which constitutional right is protected under Section 23 of the South African Constitution regarding labour relations?',
-            'options': [
-                'Every worker has the right to form and join a trade union, and to participate in lawful union activities and strikes.',
-                'Employers have the right to dismiss any employee who joins a trade union without compensation.',
-                'Trade unions have the right to force all company employees to pay monthly union membership fees.',
-                'The government has the right to determine all private company worker wage levels annually.'
-            ],
-            'correct_index': 0,
-            'explanation': 'Section 23 of the South African Constitution guarantees the right to fair labour practices, including freedom of association to form and join trade unions and engage in collective bargaining.',
-            'marks': 2,
-            'hint_sections': {'1_nudge': 'Section 23 protects the democratic right to join a union and strike.'},
-        }, subskill='concepts', learning_objective_id='lo_section23_rights', question_family_id='section23_constitution'),
-        _with_metadata({
-            'id': f'ems9_tu_strike_{rng.randint(1000, 9999)}',
-            'title': 'Protected vs Unprotected Strikes',
-            'question_type': 'mcq',
-            'modality': 'math',
-            'prompt': 'What makes a worker strike in South Africa legally PROTECTED under the Labour Relations Act (LRA)?',
-            'options': [
-                'The dispute was referred to the CCMA, a certificate of non-resolution was issued, and 48 hours written notice was given to the employer.',
-                'The workers walked off the job immediately after a dispute without consulting union leadership or the CCMA.',
-                'The workers blocked access to factory gates using physical violence and property destruction.',
-                'The political opposition party authorized the strike on social media without a ballot.'
-            ],
-            'correct_index': 0,
-            'explanation': 'For a strike to be protected, procedures in the LRA must be strictly followed: conciliation by CCMA or bargaining council, 30-day waiting period, and at least 48 hours written notice.',
-            'marks': 2,
-            'hint_sections': {'1_nudge': 'Protected strikes must follow CCMA dispute referral and notice rules.'},
-        }, subskill='concepts', learning_objective_id='lo_protected_strikes', question_family_id='protected_strikes_lra'),
-        _with_metadata({
-            'id': f'ems9_tu_forum_{rng.randint(1000, 9999)}',
-            'title': 'Collective Bargaining Forums',
-            'question_type': 'mcq',
-            'modality': 'math',
-            'prompt': 'What is the primary function of a Bargaining Council in South African industrial sectors?',
-            'options': [
-                'To bring registered trade unions and employer organizations together to negotiate collective agreements on wages and working conditions across an entire industry.',
-                'To replace company HR departments and manage daily payroll calculations.',
-                'To determine corporate income tax rates for manufacturing businesses.',
-                'To loan investment capital to new entrepreneurial start-ups.'
-            ],
-            'correct_index': 0,
-            'explanation': 'Bargaining councils are statutory bodies formed by registered trade unions and employer organizations to negotiate industry-wide wages, resolve disputes, and manage employee benefit funds.',
-            'marks': 2,
-            'hint_sections': {'1_nudge': 'Bargaining councils negotiate sector-wide collective agreements.'},
-        }, subskill='concepts', learning_objective_id='lo_bargaining_council', question_family_id='bargaining_councils'),
-    ]
-
-
-def _discussion_pool(rng: random.Random) -> List[Dict[str, Any]]:
-    return [
-        _with_metadata({
-            'id': f'ems9_tu_roles_{rng.randint(1000, 9999)}',
-            'title': 'Roles of Trade Unions',
-            'question_type': 'typed',
-            'modality': 'semantic',
-            'prompt': 'Discuss three roles and responsibilities of trade unions in South Africa. (6 marks)',
-            'marks': 6,
-            'marking_points': [
-                "Protecting workers' rights and interests.",
-                "Negotiating wages and working conditions through collective bargaining.",
-                "Providing support to workers during disputes or disciplinary hearings.",
-                "Promoting skills development and training for members.",
-                "Engaging in socio-economic policy discussions.",
-            ],
-            'sample_answer': "Trade unions protect workers' rights, engage in collective bargaining to negotiate wages and safe conditions, and represent members during workplace disputes at the CCMA.",
-            'hint_sections': {'1_nudge': 'Mention collective bargaining, dispute support, and worker protection.'},
-        }, subskill='discussion', learning_objective_id='lo_union_roles', question_family_id='union_roles_essay'),
-        _with_metadata({
-            'id': f'ems9_tu_growth_{rng.randint(1000, 9999)}',
-            'title': 'Sustainable Economic Growth',
-            'question_type': 'typed',
-            'modality': 'semantic',
-            'prompt': 'Explain how trade unions contribute to sustainable economic growth and development in South Africa. (6 marks)',
-            'marks': 6,
-            'marking_points': [
-                "They prevent worker exploitation, creating a fair distribution of national wealth.",
-                "They promote worker education, training, and skills development.",
-                "They foster healthy dialogue between employers and employees under the rule of law.",
-                "Businesses that respect workers build stable, productive workforces for long-term growth.",
-            ],
-            'sample_answer': "Trade unions empower workers to avoid exploitation, ensuring economic benefits are shared equitably. They advocate for worker training and skills development, and maintain healthy workplace dialogue under the Labour Relations Act, creating a stable and productive economic climate.",
-            'hint_sections': {'1_nudge': 'Focus on skills development, fair wage distribution, and democratic workplaces.'},
-        }, subskill='discussion', learning_objective_id='lo_union_growth', question_family_id='union_sustainable_growth'),
-    ]
-
-
-BUILDERS = {
-    "roles_vs_responsibilities": lambda rng, mode: [_roles_vs_responsibilities_drill(rng, mode)],
-    "elementary_roles": lambda rng, mode: [_roles_vs_responsibilities_drill(rng, mode)],
-    "discussion": lambda rng, mode: _discussion_pool(rng),
-    "concepts": lambda rng, mode: _concept_pool(rng),
+ARCHETYPE_BUILDERS: Dict[str, Callable[[random.Random], Dict[str, Any]]] = {
+    **BUILDERS_01_25,
+    **BUILDERS_26_50,
 }
+
+SUBSKILLS: List[str] = list(ARCHETYPE_BUILDERS.keys())
+ORDERED_SUBSKILLS: List[str] = list(SUBSKILLS)
+DISPATCH_TABLE: Dict[str, Callable[[random.Random], Dict[str, Any]]] = dict(ARCHETYPE_BUILDERS)
+
+_LEGACY_ALIASES: Dict[str, List[str]] = {
+    "roles_vs_responsibilities": [
+        "17_roles_vs_responsibilities_classification_table",
+    ],
+    "elementary_roles": [
+        "18_collective_bargaining_purpose_and_process",
+        "19_union_lobbying_government_on_labour_policy",
+        "20_worker_education_training_and_legal_representation",
+        "21_shop_steward_workplace_representation_role",
+    ],
+    "concepts": SUBSKILLS[:20],
+    "discussion": [
+        "11_post_1994_labour_law_transformation",
+        "28_employer_lockout_defensive_industrial_action",
+        "34_reasonable_vs_unreasonable_wage_demands_tradeoff",
+        "40_benefits_of_trade_unions_to_businesses",
+        "41_challenges_posed_by_unions_to_businesses",
+        "42_economic_effects_of_strikes_on_gdp_and_communities",
+        "44_equitable_wealth_distribution_and_consumer_spending",
+        "50_holistic_sa_labour_relations_sustainable_economy_synthesis",
+    ],
+    "application": [
+        "03_major_sa_trade_unions_and_sectors_matching_table",
+        "05_four_worker_categories_classification_table",
+        "17_roles_vs_responsibilities_classification_table",
+        "24_ccma_and_lra_dispute_escalation_diagram",
+        "26_forms_of_industrial_action_classification_table",
+        "31_no_work_no_pay_principle_and_wage_calculation",
+        "32_wage_increase_percentage_and_payroll_cost_calc",
+        "33_lost_output_and_productivity_cost_during_strike_svg",
+        "39_union_subscriptions_percentage_dues_calculation",
+        "45_peaceful_industrial_dialogue_and_investor_confidence",
+        "46_employer_vs_employee_rights_balance_table",
+        "47_case_study_sa_mining_wage_deadlock_resolution",
+    ],
+}
+
+
+def get_subskills() -> List[str]:
+    return list(SUBSKILLS)
+
+
+def _resolve_target(rng: random.Random, subskill: Optional[str]) -> str:
+    target = (subskill or "").strip()
+    if not target or target in ("mixed", "compound", "default", "all", "auto"):
+        return rng.choice(SUBSKILLS)
+    if target in ARCHETYPE_BUILDERS:
+        return target
+    if target in _LEGACY_ALIASES:
+        return rng.choice(_LEGACY_ALIASES[target])
+    if target.startswith("elementary_"):
+        candidate = target[len("elementary_"):]
+        if candidate in ARCHETYPE_BUILDERS:
+            return candidate
+        if candidate in _LEGACY_ALIASES:
+            return rng.choice(_LEGACY_ALIASES[candidate])
+        matches = [k for k in SUBSKILLS if candidate in k]
+        return rng.choice(matches) if matches else rng.choice(SUBSKILLS)
+    matches = [k for k in SUBSKILLS if target in k]
+    return rng.choice(matches) if matches else rng.choice(SUBSKILLS)
+
+
+def generate_question(
+    subskill: Optional[str] = None,
+    seed: Optional[int] = None,
+    **kwargs: Any,
+) -> Dict[str, Any]:
+    rng = random.Random(seed)
+    requested = kwargs.get("archetype") or subskill
+    target = _resolve_target(rng, requested)
+    q = ARCHETYPE_BUILDERS[target](rng)
+    difficulty = kwargs.get("difficulty")
+    if difficulty:
+        q["difficulty"] = difficulty
+    mode = kwargs.get("mode")
+    if mode:
+        q["mode"] = mode
+    return q
 
 
 def generate(
@@ -281,17 +113,17 @@ def generate(
     seed: Optional[int] = None,
     **kwargs: Any,
 ) -> List[Dict[str, Any]]:
-    rng = _rng(seed)
-    builder = BUILDERS.get(subskill)
-    if builder is not None:
-        pool = builder(rng, mode)
-    else:
-        pool = _concept_pool(rng) + [_roles_vs_responsibilities_drill(rng, mode)] + _discussion_pool(rng)
-
-    if count == 1 and seed is not None:
-        selected = [pool[int(seed) % len(pool)]]
-    elif count < len(pool):
-        selected = rng.sample(pool, count)
-    else:
-        selected = pool
-    return selected
+    base_rng = random.Random(seed)
+    out: List[Dict[str, Any]] = []
+    for i in range(max(1, int(count))):
+        item_seed = (seed + i * 1009) if seed is not None else base_rng.randint(1, 10**8)
+        out.append(
+            generate_question(
+                subskill=subskill,
+                seed=item_seed,
+                difficulty=difficulty,
+                mode=mode,
+                **kwargs,
+            )
+        )
+    return out
