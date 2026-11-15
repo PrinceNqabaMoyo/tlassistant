@@ -26,6 +26,13 @@ from app.utils.grade11_mathematics._math_common import (
     step,
     to_latex,
 )
+from app.utils.grade11_mathematics.probability_contingency_archetypes_01_25 import (
+    ARCHETYPE_BUILDERS_01_25,
+)
+from app.utils.grade11_mathematics.probability_contingency_archetypes_26_50 import (
+    ARCHETYPE_BUILDERS_26_50,
+    tree_2_svg,
+)
 
 TOPIC = "grade11_math_probability"
 LO = "math11_probability_contingency"
@@ -110,17 +117,6 @@ def _build_contingency_table_drill(r, difficulty: str) -> Dict[str, Any]:
         "breakdown": f"1. $x = {m_tot} - {a} = {b}$.\n2. Number of licensed females is {c}.\n3. $P(F \\cap L) = \\frac{{{c}}}{{{total}}} = \\frac{{{p_fem_lic_frac.numerator}}}{{{p_fem_lic_frac.denominator}}}$.",
     }
 
-    diag = {
-        "kind": "contingency_table",
-        "rows": ["Male", "Female", "Total"],
-        "cols": ["Licensed", "Unlicensed", "Total"],
-        "matrix": [
-            [a, "x", m_tot],
-            [c, d, f_tot],
-            [l_tot, nl_tot, total],
-        ],
-    }
-
     return make_math_question(
         prefix="prob_table",
         topic=TOPIC,
@@ -134,7 +130,6 @@ def _build_contingency_table_drill(r, difficulty: str) -> Dict[str, Any]:
         canonical_solution=canonical,
         marking_schema=marking_schema,
         hints=hints,
-        diagram_spec=diag,
         misconception_tags=["divided_by_subtotal_instead_of_grand_total", "row_column_confusion"],
         keywords=["contingency table", "joint probability", "marginal totals", "probability"],
         term=3,
@@ -517,7 +512,7 @@ def _build_compound_probability_exam(r, difficulty: str) -> Dict[str, Any]:
     hints = {
         "nudge": "Use the table totals to solve for $p$ and $q$, the addition rule for $P(F \\cup L)$, and $P(M \\cap L) = P(M) \\times P(L)$ to test independence.",
         "concept": (
-            "Key CAPS Probability rules:\n"
+            "Key Probability rules:\n"
             "• Addition rule: $P(A \\cup B) = P(A) + P(B) - P(A \\cap B)$\n"
             "• Independence condition: $P(A \\cap B) = P(A) \\times P(B)$\n"
             "• Dependent sampling without replacement reduces both numerator and denominator in the second draw."
@@ -530,30 +525,22 @@ def _build_compound_probability_exam(r, difficulty: str) -> Dict[str, Any]:
         ),
     }
 
+    diag_svg = tree_2_svg(
+        p_b1=f"{n_b}/{n_t}",
+        p_b2=f"{n_g}/{n_t}",
+        p_b1_b1=f"{n_b-1}/{n_t-1}",
+        p_b1_b2=f"{n_g}/{n_t-1}",
+        p_b2_b1=f"{n_b}/{n_t-1}",
+        p_b2_b2=f"{n_g-1}/{n_t-1}",
+        lbl1="Boy",
+        lbl2="Girl",
+        title="Selection Tree Diagram (Without Replacement)",
+    )
     diag = {
-        "kind": "contingency_table_and_tree",
-        "table": {
-            "rows": ["Male", "Female", "Total"],
-            "cols": ["Licensed", "Unlicensed", "Total"],
-            "matrix": [
-                [a_val, b_val, m_tot],
-                [c_val, d_val, f_tot],
-                [l_tot, nl_tot, total_learners],
-            ],
-        },
-        "tree": {
-            "root": "Selection",
-            "branches_stage1": [
-                {"choice": "Boy", "prob": f"{n_b}/{n_t}"},
-                {"choice": "Girl", "prob": f"{n_g}/{n_t}"},
-            ],
-            "branches_stage2": [
-                {"parent": "Boy", "choice": "Boy", "prob": f"{n_b-1}/{n_t-1}"},
-                {"parent": "Boy", "choice": "Girl", "prob": f"{n_g}/{n_t-1}"},
-                {"parent": "Girl", "choice": "Boy", "prob": f"{n_b}/{n_t-1}"},
-                {"parent": "Girl", "choice": "Girl", "prob": f"{n_g-1}/{n_t-1}"},
-            ],
-        },
+        "kind": "inline_svg",
+        "svg": diag_svg,
+        "title": "Selection Tree Diagram",
+        "diagram_role": "context",
     }
 
     return make_math_question(
@@ -576,7 +563,7 @@ def _build_compound_probability_exam(r, difficulty: str) -> Dict[str, Any]:
             "divided_by_subtotal_instead_of_grand_total",
             "forgot_to_subtract_intersection_in_union",
         ],
-        keywords=["contingency table", "independent events", "tree diagram", "without replacement", "NSC Paper 1"],
+        keywords=["contingency table", "independent events", "tree diagram", "without replacement", "Paper 1"],
         term=3,
         caps_weight_percent=15,
         suggested_duration_mins=15,
@@ -586,34 +573,52 @@ def _build_compound_probability_exam(r, difficulty: str) -> Dict[str, Any]:
 
 
 # --------------------------------------------------------------------------- #
-# Public Dispatcher & API
+# Public Dispatcher & API (50-Archetype Contract)
 # --------------------------------------------------------------------------- #
-BUILDERS = {
-    "compound": _build_compound_probability_exam,
-    "elementary_contingency_table": _build_contingency_table_drill,
-    "elementary_mutually_exclusive_test": _build_mutually_exclusive_drill,
-    "elementary_independent_events": _build_independent_events_drill,
+ARCHETYPE_BUILDERS = {
+    **ARCHETYPE_BUILDERS_01_25,
+    **ARCHETYPE_BUILDERS_26_50,
 }
+ORDERED_SUBSKILLS = sorted(ARCHETYPE_BUILDERS.keys())
+SUBSKILLS = ORDERED_SUBSKILLS
+
+DISPATCH_TABLE = dict(ARCHETYPE_BUILDERS)
+DISPATCH_TABLE["compound"] = _build_compound_probability_exam
+DISPATCH_TABLE["elementary_contingency_table"] = _build_contingency_table_drill
+DISPATCH_TABLE["elementary_mutually_exclusive_test"] = _build_mutually_exclusive_drill
+DISPATCH_TABLE["elementary_independent_events"] = _build_independent_events_drill
+
+BUILDERS = DISPATCH_TABLE
+
+
+def get_subskills() -> List[str]:
+    """Returns the ordered list of all 50 semantic subskills."""
+    return list(ORDERED_SUBSKILLS)
 
 
 def generate(
     subskill: Optional[str] = None,
-    difficulty: str = "hard",
+    difficulty: str = "medium",
     count: int = 1,
     seed: Optional[int] = None,
-    mode: str = "compound",
+    mode: Optional[str] = None,
     **kwargs: Any,
 ) -> Dict[str, Any]:
     """Generates deterministic Grade 11 Probability questions meeting the 6-pillar contract."""
     base_seed = 42 if seed is None else int(seed)
-    chosen_mode = mode if mode in BUILDERS else ("compound" if subskill is None else subskill)
-    builder = BUILDERS.get(chosen_mode, _build_compound_probability_exam)
+
+    target = subskill or mode
+    if not target or target not in DISPATCH_TABLE:
+        target = ORDERED_SUBSKILLS[base_seed % len(ORDERED_SUBSKILLS)] if ORDERED_SUBSKILLS else "compound"
+
+    builder = DISPATCH_TABLE.get(target, _build_compound_probability_exam)
 
     questions = []
     for i in range(max(1, count)):
-        r = rng(base_seed * 1000 + i)
+        run_seed = base_seed * 1000 + i
+        r = rng(run_seed)
         q = builder(r, difficulty)
-        q["seed"] = base_seed * 1000 + i
+        q["seed"] = run_seed
         questions.append(q)
 
     return {"questions": questions}

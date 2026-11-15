@@ -201,7 +201,7 @@ def make_mcq(
         "hint_trigger": hint_text,
         "hints": {
             "tier_1": hint or "Carefully examine all given options and definitions.",
-            "tier_2": explanation or "Apply the governing CAPS property or rule to eliminate invalid choices.",
+            "tier_2": explanation or "Apply the governing mathematical property or rule to eliminate invalid choices.",
             "tier_3": f"Notice that {explanation}" if explanation else "Work backwards from each option to find the unique match.",
         },
         "guidelines": list(guidelines or []),
@@ -294,7 +294,7 @@ def make_steps(
         "hint_trigger": hint or "",
         "hints": {
             "tier_1": hint or "Identify the first logical step and required factorisation or expansion.",
-            "tier_2": explanation or "Apply NSC procedure rules: each line must be mathematically equivalent to the previous line.",
+            "tier_2": explanation or "Apply standard procedure rules: each line must be mathematically equivalent to the previous line.",
             "tier_3": f"Key transition: {explanation}" if explanation else "Complete each intermediate step systematically before writing the final simplified line.",
         },
         "guidelines": list(guidelines or []),

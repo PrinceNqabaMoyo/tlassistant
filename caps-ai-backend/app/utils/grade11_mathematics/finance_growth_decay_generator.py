@@ -24,6 +24,13 @@ from app.utils.grade11_mathematics._math_common import (
     step,
     to_latex,
 )
+from app.utils.grade11_mathematics.finance_growth_decay_archetypes_01_25 import (
+    ARCHETYPE_BUILDERS_01_25,
+)
+from app.utils.grade11_mathematics.finance_growth_decay_archetypes_26_50 import (
+    ARCHETYPE_BUILDERS_26_50,
+    timeline_svg,
+)
 
 TOPIC = "grade11_math_finance"
 LO = "math11_finance_growth_decay"
@@ -445,14 +452,17 @@ def _build_timeline_step_drill(r, difficulty: str) -> Dict[str, Any]:
         ),
     }
 
+    diag_svg = timeline_svg(
+        total_years=total_years,
+        intervals=[(0, n1, f"{num(r1, 1)}% monthly"), (n1, total_years, f"{num(r2, 1)}% quarterly")],
+        cash_flows=[(0, f"R {p_str}", "initial"), (n1, f"R {trans_str}", "deposit" if is_deposit else "withdrawal")],
+        title=f"{name}'s Investment Timeline",
+    )
     diag = {
-        "kind": "timeline_finance",
-        "total_years": total_years,
-        "events": [
-            {"year": 0, "label": f"Deposit: R {p_str}", "rate": f"{num(r1, 1)}% p.a. monthly"},
-            {"year": n1, "label": f"{trans_action.capitalize()}: R {trans_str}", "rate": f"Rate changes to {num(r2, 1)}% p.a. quarterly"},
-            {"year": total_years, "label": f"Final Balance: R {final_str}"},
-        ],
+        "kind": "inline_svg",
+        "svg": diag_svg,
+        "title": "Investment Timeline",
+        "diagram_role": "context",
     }
 
     return make_math_question(
@@ -656,16 +666,17 @@ def _build_compound_finance_exam(r, difficulty: str) -> Dict[str, Any]:
         ),
     }
 
+    diag_svg = timeline_svg(
+        total_years=t_final,
+        intervals=[(0, t_rate_change, f"{r1_str}% monthly"), (t_rate_change, t_final, f"{r2_str}% quarterly")],
+        cash_flows=[(0, f"R {p_inv_str}", "initial"), (t_dep, f"R {d_str}", "deposit"), (t_w, f"R {w_str}", "withdrawal")],
+        title="Investment Cash Flow Timeline",
+    )
     diag = {
-        "kind": "timeline_finance",
-        "total_years": t_final,
-        "events": [
-            {"year": 0, "label": f"P = R {p_inv_str}", "type": "initial_deposit", "rate": f"{r1_str}% p.a. monthly"},
-            {"year": t_dep, "label": f"+ Deposit R {d_str}", "type": "deposit", "rate": f"{r1_str}% p.a. monthly"},
-            {"year": t_rate_change, "label": "Rate change", "type": "rate_change", "rate": f"Becomes {r2_str}% p.a. quarterly"},
-            {"year": t_w, "label": f"- Withdrawal R {w_str}", "type": "withdrawal", "rate": f"{r2_str}% p.a. quarterly"},
-            {"year": t_final, "label": f"Final Balance = R {total_str}", "type": "balance"},
-        ],
+        "kind": "inline_svg",
+        "svg": diag_svg,
+        "title": "Investment Timeline",
+        "diagram_role": "context",
     }
 
     return make_math_question(
@@ -688,7 +699,7 @@ def _build_compound_finance_exam(r, difficulty: str) -> Dict[str, Any]:
             "added_instead_of_subtracted_withdrawal",
             "incorrect_compounding_periods",
         ],
-        keywords=["reducing balance", "straight-line depreciation", "effective interest", "timeline problem", "NSC Paper 1"],
+        keywords=["reducing balance", "straight-line depreciation", "effective interest", "timeline problem", "Paper 1"],
         term=3,
         caps_weight_percent=15,
         suggested_duration_mins=15,
@@ -698,34 +709,52 @@ def _build_compound_finance_exam(r, difficulty: str) -> Dict[str, Any]:
 
 
 # --------------------------------------------------------------------------- #
-# Public Dispatcher & API
+# Public Dispatcher & API (50-Archetype Contract)
 # --------------------------------------------------------------------------- #
-BUILDERS = {
-    "compound": _build_compound_finance_exam,
-    "elementary_depreciation": _build_depreciation_drill,
-    "elementary_effective_rate": _build_effective_rate_drill,
-    "elementary_timeline_step": _build_timeline_step_drill,
+ARCHETYPE_BUILDERS = {
+    **ARCHETYPE_BUILDERS_01_25,
+    **ARCHETYPE_BUILDERS_26_50,
 }
+ORDERED_SUBSKILLS = sorted(ARCHETYPE_BUILDERS.keys())
+SUBSKILLS = ORDERED_SUBSKILLS
+
+DISPATCH_TABLE = dict(ARCHETYPE_BUILDERS)
+DISPATCH_TABLE["compound"] = _build_compound_finance_exam
+DISPATCH_TABLE["elementary_depreciation"] = _build_depreciation_drill
+DISPATCH_TABLE["elementary_effective_rate"] = _build_effective_rate_drill
+DISPATCH_TABLE["elementary_timeline_step"] = _build_timeline_step_drill
+
+BUILDERS = DISPATCH_TABLE
+
+
+def get_subskills() -> List[str]:
+    """Returns the ordered list of all 50 semantic subskills."""
+    return list(ORDERED_SUBSKILLS)
 
 
 def generate(
     subskill: Optional[str] = None,
-    difficulty: str = "hard",
+    difficulty: str = "medium",
     count: int = 1,
     seed: Optional[int] = None,
-    mode: str = "compound",
+    mode: Optional[str] = None,
     **kwargs: Any,
 ) -> Dict[str, Any]:
     """Generates deterministic Grade 11 Finance questions meeting the 6-pillar contract."""
     base_seed = 42 if seed is None else int(seed)
-    chosen_mode = mode if mode in BUILDERS else ("compound" if subskill is None else subskill)
-    builder = BUILDERS.get(chosen_mode, _build_compound_finance_exam)
+
+    target = subskill or mode
+    if not target or target not in DISPATCH_TABLE:
+        target = ORDERED_SUBSKILLS[base_seed % len(ORDERED_SUBSKILLS)] if ORDERED_SUBSKILLS else "compound"
+
+    builder = DISPATCH_TABLE.get(target, _build_compound_finance_exam)
 
     questions = []
     for i in range(max(1, count)):
-        r = rng(base_seed * 1000 + i)
+        run_seed = base_seed * 1000 + i
+        r = rng(run_seed)
         q = builder(r, difficulty)
-        q["seed"] = base_seed * 1000 + i
+        q["seed"] = run_seed
         questions.append(q)
 
     return {"questions": questions}

@@ -268,8 +268,6 @@ from app.utils.grade10_mathematics.term_4 import (
 # Grade 11 Mathematics
 from app.utils import (
     grade11_analytical_geometry_generator as g11_math_analgeo,
-    grade11_equations_inequalities_generator as g11_math_eq,
-    grade11_exponents_surds_generator as g11_math_surds,
     grade11_patterns_sequences_generator as g11_math_pat,
 )
 from app.utils.grade10_mathematics.term_2 import (
@@ -283,11 +281,12 @@ from app.utils.grade11_mathematics import (
     statistics_summary_ogive_generator as g11_math_stat,
     linear_programming_generator as g11_math_lp,
     functions_graphs_generator as g11_math_func,
+    exponents_surds_generator as g11_math_surds,
+    equations_inequalities_generator as g11_math_eq,
 )
 
 # Grade 12 Mathematics
 from app.utils import (
-    grade12_finance_generator as g12_math_fin,
     grade12_functions_generator as g12_math_func,
     grade12_patterns_sequences_series_generator as g12_math_pat,
     grade12_trigonometry_generator as g12_math_trig,
@@ -375,6 +374,9 @@ from app.utils.grade12_mathematics import (
     bivariate_statistics_generator as g12_math_stat,
     sequences_series_generator as g12_math_seq,
     trigonometry_compound_angles_generator as g12_math_trig_comp,
+    functions_polynomials_generator as g12_math_func_poly,
+    euclidean_geometry_generator as g12_math_euclid,
+    finance_generator as g12_math_fin,
 )
 
 # Grade 12 Physical Sciences & Chemistry
@@ -832,7 +834,7 @@ GRADE10_MATH_GENERATORS = {
     "grade10_math_trigonometry": g10_math_trig.generate,
     "grade10_math_functions": g10_math_func.generate,
     "grade10_math_euclidean_geometry": g10_math_geom.generate,
-    "grade10_math_analytical_geometry": _adapt_single_item_generator(g10_math_analgeo.generate_analytical_geometry_question),
+    "grade10_math_analytical_geometry": g10_math_analgeo.generate,
     "grade10_math_measurements": g10_math_meas.generate,
     "grade10_math_finance": g10_math_fin.generate,
     "grade10_math_finance_growth": g10_math_fin.generate,
@@ -843,9 +845,9 @@ GRADE10_MATH_GENERATORS = {
 }
 
 GRADE11_MATH_GENERATORS = {
-    "grade11_math_analytical_geometry": _adapt_multi_item_generator(g11_math_analgeo.generate_questions),
-    "grade11_math_equations_inequalities": _adapt_single_item_generator(g11_math_eq.generate_grade11_equations_inequalities_question),
-    "grade11_math_exponents_surds": _adapt_single_item_generator(g11_math_surds.generate_grade11_exponents_surds_question),
+    "grade11_math_analytical_geometry": g11_math_analgeo.generate,
+    "grade11_math_equations_inequalities": g11_math_eq.generate,
+    "grade11_math_exponents_surds": g11_math_surds.generate,
     "grade11_math_patterns_sequences": _adapt_multi_item_generator(g11_math_pat.generate_questions),
     "grade11_math_circle_geometry": g11_math_circ.generate,
     "grade11_math_circle_geometry_theorems": g11_math_circ_theorems.generate,
@@ -870,15 +872,17 @@ GRADE11_MATH_GENERATORS = {
 }
 
 GRADE12_MATH_GENERATORS = {
-    "grade12_math_finance": _adapt_multi_item_generator(g12_math_fin.generate_questions),
-    "grade12_math_functions": _adapt_multi_item_generator(g12_math_func.generate_questions),
+    "grade12_math_finance": g12_math_fin.generate,
+    "grade12_math_functions": g12_math_func_poly.generate,
+    "grade12_math_polynomials": g12_math_func_poly.generate,
     "grade12_math_patterns_sequences_series": g12_math_seq.generate,
     "grade12_math_sequences_series": g12_math_seq.generate,
     "grade12_math_trigonometry": g12_math_trig_comp.generate,
     "grade12_math_trigonometry_compound": g12_math_trig_comp.generate,
     "grade12_math_differential_calculus": g12_math_calc.generate,
     "grade12_math_calculus": g12_math_calc.generate,
-    "grade12_math_analytical_geometry": g12_math_circles.generate,
+    "grade12_math_analytical_geometry": g12_math_euclid.generate,
+    "grade12_math_euclidean_geometry": g12_math_euclid.generate,
     "grade12_math_analytical_geometry_circles": g12_math_circles.generate,
     "grade12_math_circles": g12_math_circles.generate,
     "grade12_math_counting_probability": g12_math_prob.generate,

@@ -1,15 +1,15 @@
 """Circle Geometry Generator (Grade 11/12 Mathematics Paper 2).
 
-Curriculum: South African CAPS Mathematics, Grade 11 Term 3 & Grade 12 Revision.
+Curriculum: South African National Curriculum Standards for Mathematics, Grade 11 Term 3 & Grade 12 Revision.
 Zero-LLM deterministic generation using SymPy and structured Diagram Specs.
 
 Implements the Universal 6-Pillar Generator Architecture Contract:
-1. Calendar & Exam Metadata (Term 3, CAPS Weight 30%, 15 mins)
-2. Deconstructibility into Atomic Micro-Drills (elementary_* modes vs compound)
+1. Calendar & Exam Metadata (Term 3, Weight 30%, 15 mins)
+2. Deconstructibility into Atomic Micro-Drills (elementary_* modes vs compound) and 50 Semantic Archetypes
 3. Standardized Misconception Taxonomy (subtended_arc_confusion, etc.)
 4. Teacher-Editable Marking Schema (points, deductions, carry_forward_rule)
 5. Deterministic 3-Tier Pre-Baked Hints (Nudge -> Geometric Rule -> Worked Step)
-6. Modality-Appropriate Representation (KaTeX, South African comma decimals, JSXGraph Diagram Spec)
+6. Modality-Appropriate Representation (KaTeX, South African comma decimals, Inline SVG Diagram Spec)
 """
 
 # Diagram contract: all diagrams emitted specify diagram_role: "context" | "identify"
@@ -19,7 +19,6 @@ import math
 import random
 from typing import Any, Dict, List, Optional
 
-from app.utils.grade10_mathematics import _diagram
 from app.utils.grade10_mathematics._math_common import (
     build_generate,
     make_id,
@@ -29,11 +28,19 @@ from app.utils.grade10_mathematics._math_common import (
     solution,
     with_metadata,
 )
+from app.utils.grade11_mathematics.circle_geometry_archetypes_01_25 import (
+    ARCHETYPE_BUILDERS_01_25,
+    _pt_on_circle,
+    circle_geo_svg,
+)
+from app.utils.grade11_mathematics.circle_geometry_archetypes_26_50 import (
+    ARCHETYPE_BUILDERS_26_50,
+)
 
 TOPIC = "grade11_math_circle_geometry"
 LO = "math11_circle_geometry"
 
-# Standard South African CAPS Exam Geometric Reasons
+# Standard South African Exam Geometric Reasons
 REASONS = {
     "center_twice_circ": "[∠ at centre = 2 × ∠ at circ]",
     "opp_cyclic_quad": "[opp ∠s of cyclic quad]",
@@ -62,7 +69,6 @@ def _build_angle_at_center(r: random.Random, difficulty: str = "practice", mode:
     circ_angle = r.randint(28, 55)
     center_angle = circ_angle * 2
 
-    # Mode variation: find center angle OR find circumference angle
     find_center = r.choice([True, False])
 
     if find_center:
@@ -75,7 +81,7 @@ def _build_angle_at_center(r: random.Random, difficulty: str = "practice", mode:
         t1_hint = "Identify chord AB and trace the angles subtended at center O and circumference C."
         t2_hint = f"Theorem: The angle at the centre is twice the angle at the circumference {REASONS['center_twice_circ']}."
         t3_hint = f"Calculate: $x = 2 \\times {circ_angle}^\\circ = {center_angle}^\\circ$."
-        angle_labels = [{"at": "C", "arms": ["A", "C", "B"], "label": f"{circ_angle}°"}, {"at": "O", "arms": ["A", "O", "B"], "label": "x"}]
+        callouts = [(210, 95, f"∠C={circ_angle}°", "#1d4ed8"), (210, 182, "∠O=x", "#dc2626")]
     else:
         prompt_latex = (
             f"In the circle with centre $O$, $\\angle AOB = {center_angle}^\\circ$. "
@@ -86,15 +92,19 @@ def _build_angle_at_center(r: random.Random, difficulty: str = "practice", mode:
         t1_hint = "Notice that both ∠AOB and ∠ACB are subtended by the same arc AB."
         t2_hint = f"Theorem: The angle at the circumference is half the angle at the centre {REASONS['center_twice_circ']}."
         t3_hint = f"Calculate: $x = {center_angle}^\\circ / 2 = {circ_angle}^\\circ$."
-        angle_labels = [{"at": "O", "arms": ["A", "O", "B"], "label": f"{center_angle}°"}, {"at": "C", "arms": ["A", "C", "B"], "label": "x"}]
+        callouts = [(210, 182, f"∠O={center_angle}°", "#dc2626"), (210, 95, "∠C=x", "#1d4ed8")]
 
-    diagram = _diagram.circle_subtended_angle(
-        center="O",
-        radius=3.0,
-        angles=angle_labels,
-        show_radii=True,
-        show_chord=False,
-        caption="Circle with centre O and subtended angles ∠AOB and ∠ACB",
+    pts = {
+        "O": (210.0, 155.0),
+        "A": _pt_on_circle(135),
+        "B": _pt_on_circle(45),
+        "C": _pt_on_circle(270),
+    }
+    diagram = circle_geo_svg(
+        title=f"Circle Centre O with Subtended Angles ∠AOB and ∠ACB ({circ_angle}°)",
+        points=pts,
+        segments=[("O", "A"), ("O", "B"), ("C", "A"), ("C", "B")],
+        callouts=callouts,
     )
 
     canon_sol = solution(
@@ -159,8 +169,6 @@ def _build_cyclic_quad_opposite(r: random.Random, difficulty: str = "practice", 
     """Theorem: Opposite angles of a cyclic quadrilateral are supplementary."""
     angle_A = r.randint(75, 125)
     angle_C = 180 - angle_A
-    angle_B = r.randint(70, 115)
-    angle_D = 180 - angle_B
 
     prompt_latex = (
         f"Quadrilateral $ABCD$ is cyclic (all four vertices lie on the circle). "
@@ -169,15 +177,18 @@ def _build_cyclic_quad_opposite(r: random.Random, difficulty: str = "practice", 
     )
     answer_val = str(angle_C)
 
-    diagram = _diagram.circle_cyclic_quad(
-        center="O",
-        radius=3.0,
-        vertices=["A", "B", "C", "D"],
-        angles=[
-            {"arms": ["B", "A", "D"], "label": f"{angle_A}°", "radius": 0.6},
-            {"arms": ["B", "C", "D"], "label": "x", "radius": 0.6},
-        ],
-        caption="Cyclic quadrilateral ABCD",
+    pts = {
+        "A": _pt_on_circle(140),
+        "B": _pt_on_circle(55),
+        "C": _pt_on_circle(325),
+        "D": _pt_on_circle(220),
+    }
+    diagram = circle_geo_svg(
+        title=f"Cyclic Quadrilateral ABCD (∠A = {angle_A}°)",
+        points=pts,
+        segments=[("A", "B"), ("B", "C"), ("C", "D"), ("D", "A")],
+        show_center=False,
+        callouts=[(162, 200, f"∠A={angle_A}°", "#1d4ed8"), (260, 118, "∠C=x", "#dc2626")],
     )
 
     t1_hint = "Identify that all 4 vertices A, B, C, D touch the circle circumference, making ABCD a cyclic quadrilateral."
@@ -256,33 +267,25 @@ def _build_cyclic_quad_exterior(r: random.Random, difficulty: str = "practice", 
     int_opp_angle = r.randint(70, 120)
     answer_val = str(int_opp_angle)
 
-    # Point E extends line BC past C
-    pts = {
-        "O": [0.0, 0.0],
-        "A": [-1.8, 2.4],
-        "B": [-2.8, -1.0],
-        "C": [1.5, -2.6],
-        "D": [2.7, 1.3],
-        "E": [3.65, -3.4],  # extension of BC
-    }
-
     prompt_latex = (
         f"In cyclic quadrilateral $ABCD$, side $BC$ is produced to $E$. "
         f"If interior opposite angle $\\angle A = {int_opp_angle}^\\circ$, calculate the size of "
         f"exterior angle $\\angle DCE$ ($x$). State the reason."
     )
 
-    diagram = _diagram.circle_cyclic_quad(
-        center="O",
-        radius=3.0,
-        vertices=["A", "B", "C", "D"],
+    pts = {
+        "A": _pt_on_circle(145),
+        "B": _pt_on_circle(55),
+        "C": _pt_on_circle(330),
+        "D": _pt_on_circle(220),
+        "E": (355.0, 62.0),
+    }
+    diagram = circle_geo_svg(
+        title=f"Cyclic Quadrilateral ABCD with Side BC Produced to E (∠A = {int_opp_angle}°)",
         points=pts,
-        exterior_vertex="E",
-        angles=[
-            {"arms": ["B", "A", "D"], "label": f"{int_opp_angle}°", "radius": 0.6},
-            {"arms": ["D", "C", "E"], "label": "x", "radius": 0.6},
-        ],
-        caption="Cyclic quadrilateral ABCD with side BC produced to E",
+        segments=[("A", "B"), ("B", "C"), ("C", "D"), ("D", "A"), ("C", "E")],
+        show_center=False,
+        callouts=[(162, 198, f"∠A={int_opp_angle}°", "#1d4ed8"), (312, 95, "∠DCE=x", "#dc2626")],
     )
 
     t1_hint = "Identify the exterior angle ∠DCE formed by producing side BC, and look at the interior angle opposite to C."
@@ -360,15 +363,19 @@ def _build_tangent_chord(r: random.Random, difficulty: str = "practice", mode: s
         f"State the theorem used."
     )
 
-    diagram = _diagram.circle_tangent_secant(
-        center="O",
-        radius=3.0,
-        tangent_point="T",
-        angles=[
-            {"arms": ["Q", "T", "A"], "label": f"{tan_angle}°", "radius": 0.8},
-            {"arms": ["T", "B", "A"], "label": "x", "radius": 0.6},
-        ],
-        caption="Tangent PTQ at T with inscribed triangle TAB",
+    pts = {
+        "T": (210.0, 247.0),
+        "P": (95.0, 247.0),
+        "Q": (325.0, 247.0),
+        "A": _pt_on_circle(25),
+        "B": _pt_on_circle(215),
+    }
+    diagram = circle_geo_svg(
+        title=f"Tangent PTQ at T with Inscribed Triangle TAB (∠QTA = {tan_angle}°)",
+        points=pts,
+        segments=[("P", "Q"), ("T", "A"), ("A", "B"), ("B", "T")],
+        show_center=False,
+        callouts=[(265, 238, f"∠QTA={tan_angle}°", "#1d4ed8"), (162, 115, "∠TBA=x", "#dc2626")],
     )
 
     t1_hint = "Identify the tangent PTQ touching at T, chord TA, and triangle TAB."
@@ -445,25 +452,17 @@ def _build_tangent_radius(r: random.Random, difficulty: str = "practice", mode: 
     )
 
     pts = {
-        "O": [0.0, 0.0],
-        "T": [0.0, -3.0],
-        "P": [-4.5, -3.0],
-        "Q": [2.0, -3.0],
+        "O": (210.0, 155.0),
+        "T": (210.0, 247.0),
+        "P": (95.0, 247.0),
+        "Q": (325.0, 247.0),
     }
-
-    diagram = _diagram.circle_tangent_secant(
-        center="O",
-        radius=3.0,
-        tangent_point="T",
+    diagram = circle_geo_svg(
+        title=f"Radius OT Meeting Tangent PQ at Point of Contact T (∠POT = {angle_pot}°)",
         points=pts,
-        lines=[["P", "Q"], ["O", "T"], ["O", "P"]],
-        angles=[
-            {"arms": ["P", "O", "T"], "label": f"{angle_pot}°", "radius": 0.8},
-            {"arms": ["O", "P", "T"], "label": "x", "radius": 0.8},
-            {"arms": ["O", "T", "P"], "label": "90°", "radius": 0.4},
-        ],
-        show_radius_to_tangent=True,
-        caption="Radius OT meeting tangent PQ at point of contact T",
+        segments=[("P", "Q"), ("O", "T"), ("O", "P")],
+        right_angle_at=pts["T"],
+        callouts=[(192, 185, f"∠O={angle_pot}°", "#dc2626"), (135, 238, "∠P=x", "#1d4ed8")],
     )
 
     t1_hint = "Recall the relationship between the radius OT and tangent PQ at the point of contact T."
@@ -535,9 +534,16 @@ def _build_tangent_radius(r: random.Random, difficulty: str = "practice", mode: 
 
 
 # --------------------------------------------------------------------------- #
-# Dispatcher & Universal Generator Contract Interface
+# Dispatcher & Universal Generator Contract Interface (50-Archetype Contract)
 # --------------------------------------------------------------------------- #
-SUBSKILL_BUILDERS = {
+ARCHETYPE_BUILDERS = {
+    **ARCHETYPE_BUILDERS_01_25,
+    **ARCHETYPE_BUILDERS_26_50,
+}
+ORDERED_SUBSKILLS = sorted(ARCHETYPE_BUILDERS.keys())
+SUBSKILLS = ORDERED_SUBSKILLS
+
+LEGACY_BUILDERS = {
     "angle_at_center": _build_angle_at_center,
     "cyclic_quad_opposite": _build_cyclic_quad_opposite,
     "cyclic_quad_exterior": _build_cyclic_quad_exterior,
@@ -545,26 +551,49 @@ SUBSKILL_BUILDERS = {
     "tangent_radius": _build_tangent_radius,
 }
 
+DISPATCH_TABLE = {
+    **ARCHETYPE_BUILDERS,
+    **LEGACY_BUILDERS,
+}
+SUBSKILL_BUILDERS = DISPATCH_TABLE
+BUILDERS = DISPATCH_TABLE
+
+
+def get_subskills() -> List[str]:
+    """Returns the ordered list of all 50 semantic subskills."""
+    return list(ORDERED_SUBSKILLS)
+
 
 def generate(
-    subskill: str = "angle_at_center",
+    subskill: Optional[str] = None,
     seed: Optional[int] = None,
     mode: str = "scaffold",
     difficulty: str = "practice",
+    count: int = 1,
     **kwargs: Any,
 ) -> List[Dict[str, Any]]:
-    """Universal generator entrypoint implementing the 6-Pillar Contract."""
-    r = _rng(seed)
+    """Universal generator entrypoint implementing the 6-Pillar Contract and 50-Archetype Dispatch."""
+    base_seed = 42 if seed is None else int(seed)
 
-    # Deconstructibility support: elementary_* maps directly to individual subskill
-    if subskill.startswith("elementary_"):
-        actual_subskill = subskill.replace("elementary_", "")
+    target = subskill or mode
+    if target and target.startswith("elementary_") and target.replace("elementary_", "") in DISPATCH_TABLE:
+        actual_subskill = target.replace("elementary_", "")
+    elif target and target in DISPATCH_TABLE:
+        actual_subskill = target
     else:
-        actual_subskill = subskill
+        actual_subskill = ORDERED_SUBSKILLS[base_seed % len(ORDERED_SUBSKILLS)] if ORDERED_SUBSKILLS else "angle_at_center"
 
-    builder = SUBSKILL_BUILDERS.get(actual_subskill, _build_angle_at_center)
-    question = builder(r, difficulty=difficulty, mode=mode)
-    if seed is not None:
-        question["id"] = f"cg_{actual_subskill}_{seed}"
-    return [question]
-
+    results: List[Dict[str, Any]] = []
+    for i in range(max(1, count)):
+        run_seed = base_seed if i == 0 else base_seed * 1000 + i
+        r = _rng(run_seed)
+        if actual_subskill in ARCHETYPE_BUILDERS:
+            question = ARCHETYPE_BUILDERS[actual_subskill](r, difficulty)
+        else:
+            builder = LEGACY_BUILDERS.get(actual_subskill, _build_angle_at_center)
+            question = builder(r, difficulty=difficulty, mode=mode)
+        if seed is not None:
+            question["id"] = f"cg_{actual_subskill}_{run_seed}"
+            question["seed"] = run_seed
+        results.append(question)
+    return results

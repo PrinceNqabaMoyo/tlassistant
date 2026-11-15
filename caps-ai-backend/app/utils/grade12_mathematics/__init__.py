@@ -7,6 +7,7 @@ from app.utils.grade12_mathematics import (
     bivariate_statistics_generator,
     sequences_series_generator,
     trigonometry_compound_angles_generator,
+    finance_generator,
 )
 
 __all__ = [
@@ -16,4 +17,5 @@ __all__ = [
     "bivariate_statistics_generator",
     "sequences_series_generator",
     "trigonometry_compound_angles_generator",
+    "finance_generator",
 ]

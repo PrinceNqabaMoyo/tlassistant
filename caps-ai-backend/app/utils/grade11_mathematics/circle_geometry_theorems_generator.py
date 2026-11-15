@@ -1,11 +1,11 @@
 """Grade 11 Mathematics — Euclidean Circle Geometry Theorems (Deterministic 6-Pillar Generator).
-Covers official CAPS Examination standards (Paper 2 — 35 to 40 marks):
+Covers official South African National Curriculum Standards (Paper 2 — 35 to 40 marks):
 - Theorem: Angle at centre = 2 * angle at circumference (angle at centre = 2 * angle at circ)
 - Theorem: Angles in the same segment are equal (angles in same seg)
 - Theorem: Opposite angles of cyclic quad are supplementary (opp angles of cyclic quad)
 - Theorem: Exterior angle of cyclic quad = interior opposite angle (ext angle of cyclic quad)
 - Theorem: Tangent-chord theorem (tan chord theorem)
-Supports full compound exam questions and atomic elementary sub-drills for adaptive deconstruction.
+Supports full compound exam questions, atomic elementary sub-drills, and all 50 semantic archetypes.
 """
 
 # Diagram contract: all diagrams emitted specify diagram_role: "context" | "identify"
@@ -22,6 +22,14 @@ from app.utils.grade11_mathematics._math_common import (
     solution_graph,
     step,
 )
+from app.utils.grade11_mathematics.circle_geometry_archetypes_01_25 import (
+    ARCHETYPE_BUILDERS_01_25,
+    _pt_on_circle,
+    circle_geo_svg,
+)
+from app.utils.grade11_mathematics.circle_geometry_archetypes_26_50 import (
+    ARCHETYPE_BUILDERS_26_50,
+)
 
 TOPIC = "euclidean_circle_geometry"
 LO = "math11_circle_geometry"
@@ -30,42 +38,31 @@ LO = "math11_circle_geometry"
 # --------------------------------------------------------------------------- #
 # Sub-Drill: Angle at Centre = 2 * Angle at Circumference
 # --------------------------------------------------------------------------- #
-def _build_angle_at_centre(r, difficulty: str) -> Dict[str, Any]:
+def _build_angle_at_centre(r, difficulty: str = "easy") -> Dict[str, Any]:
     angle_circ = r.randint(28, 55)
     angle_centre = 2 * angle_circ
 
     prompt = (
         f"In the circle with centre $O$, points $A$, $B$, and $C$ lie on the circumference. "
-        f"If the inscribed angle $\\hat{{C}} = {angle_circ}^\\circ$, calculate the size of the reflex or obtuse angle "
+        f"If the inscribed angle $\\hat{{C}} = {angle_circ}^\\circ$, calculate the size of the angle "
         f"$\\hat{{O}}$ subtended by the same arc $AB$. State the complete geometric reason."
     )
 
     reason = r"\angle \text{ at centre } = 2\times \angle \text{ at circ}"
     sample = rf"\hat{{O}} = 2 \times \hat{{C}} = 2 \times {angle_circ}^\circ = {angle_centre}^\circ \quad ({reason})"
 
-    rad_span = math.radians(angle_centre / 2)
-    a_x = round(3.0 * math.sin(-rad_span), 2)
-    a_y = round(-3.0 * math.cos(-rad_span), 2)
-    b_x = round(3.0 * math.sin(rad_span), 2)
-    b_y = round(-3.0 * math.cos(rad_span), 2)
-    diag = {
-        "kind": "circle_subtended_angle",
-        "center": "O",
-        "radius": 3.0,
-        "points": {
-            "O": [0.0, 0.0],
-            "A": [a_x, a_y],
-            "B": [b_x, b_y],
-            "C": [0.0, 3.0],
-        },
-        "lines": [["O", "A"], ["O", "B"], ["C", "A"], ["C", "B"]],
-        "angles": [
-            {"arms": ["A", "C", "B"], "label": f"{angle_circ}°", "radius": 0.8},
-            {"arms": ["A", "O", "B"], "label": "O", "radius": 0.6},
-        ],
-        "vertex_labels": {"O": "O", "A": "A", "B": "B", "C": "C"},
-        "caption": f"Circle with centre O and inscribed angle C = {angle_circ}° subtending arc AB",
+    pts = {
+        "O": (210.0, 155.0),
+        "A": _pt_on_circle(135),
+        "B": _pt_on_circle(45),
+        "C": _pt_on_circle(270),
     }
+    diag = circle_geo_svg(
+        title=f"Circle Centre O with Inscribed ∠C = {angle_circ}° Subtending Arc AB",
+        points=pts,
+        segments=[("O", "A"), ("O", "B"), ("C", "A"), ("C", "B")],
+        callouts=[(210, 95, f"∠C = {angle_circ}°", "#1d4ed8"), (210, 182, "∠O = ?", "#dc2626")],
+    )
 
     return make_math_question(
         prefix="geo_cent",
@@ -82,7 +79,7 @@ def _build_angle_at_centre(r, difficulty: str) -> Dict[str, Any]:
             "total_marks": 2,
             "marking_points": [
                 {"id": "mp1", "desc": f"Correct value of angle: {angle_centre} deg", "marks": 1, "editable": True},
-                {"id": "mp2", "desc": "Correct CAPS reason (angle at centre = 2 * angle at circ)", "marks": 1, "editable": True},
+                {"id": "mp2", "desc": "Correct geometric reason (angle at centre = 2 * angle at circ)", "marks": 1, "editable": True},
             ],
             "deductions": [{"rule": "omitted_geometric_reason", "penalty": -1}],
             "carry_forward_rule": "strict",
@@ -105,19 +102,18 @@ def _build_angle_at_centre(r, difficulty: str) -> Dict[str, Any]:
 # --------------------------------------------------------------------------- #
 # Sub-Drill: Cyclic Quadrilateral Theorems
 # --------------------------------------------------------------------------- #
-def _build_cyclic_quad(r, difficulty: str) -> Dict[str, Any]:
+def _build_cyclic_quad(r, difficulty: str = "easy") -> Dict[str, Any]:
     angle_a = r.randint(72, 115)
     angle_c = 180 - angle_a
-    ext_angle = angle_a # exterior angle equals interior opposite angle
+    ext_angle = angle_a
 
     pts = {
-        "O": [0.0, 0.0],
-        "A": [-2.12, 2.12],   # 135 deg
-        "B": [-2.30, -1.93],  # 220 deg
-        "C": [1.93, -2.30],   # 310 deg
-        "D": [2.12, 2.12],    # 45 deg
+        "A": _pt_on_circle(140),
+        "B": _pt_on_circle(55),
+        "C": _pt_on_circle(325),
+        "D": _pt_on_circle(220),
     }
-    v_labels = {"O": "O", "A": "A", "B": "B", "C": "C", "D": "D"}
+
     use_opp = r.random() < 0.5
 
     if use_opp:
@@ -128,12 +124,8 @@ def _build_cyclic_quad(r, difficulty: str) -> Dict[str, Any]:
         ans = f"{angle_c}^\\circ"
         sample = rf"\hat{{C}} = 180^\circ - {angle_a}^\circ = {angle_c}^\circ \quad (\text{{opp }} \angle\text{{s of cyclic quad}})"
         reason = "opp angles of cyclic quad"
-        lines = [["A", "B"], ["B", "C"], ["C", "D"], ["D", "A"]]
-        angles = [
-            {"arms": ["B", "A", "D"], "label": f"{angle_a}°", "radius": 0.7},
-            {"arms": ["D", "C", "B"], "label": "C", "radius": 0.7},
-        ]
-        cap = f"Cyclic quadrilateral ABCD with angle A = {angle_a}°"
+        segs = [("A", "B"), ("B", "C"), ("C", "D"), ("D", "A")]
+        cap = f"Cyclic Quadrilateral ABCD with ∠A = {angle_a}°"
     else:
         prompt = (
             f"In cyclic quadrilateral $ABCD$, side $BC$ is produced to point $P$. "
@@ -142,27 +134,17 @@ def _build_cyclic_quad(r, difficulty: str) -> Dict[str, Any]:
         ans = f"{ext_angle}^\\circ"
         sample = rf"D\hat{{C}}P = \hat{{A}} = {angle_a}^\circ \quad (\text{{ext }} \angle \text{{ of cyclic quad}})"
         reason = "ext angle of cyclic quad"
-        p_x = round(1.93 + 0.5 * (1.93 - (-2.30)), 2)
-        p_y = round(-2.30 + 0.5 * (-2.30 - (-1.93)), 2)
-        pts["P"] = [p_x, p_y]
-        v_labels["P"] = "P"
-        lines = [["A", "B"], ["B", "C"], ["C", "D"], ["D", "A"], ["C", "P"]]
-        angles = [
-            {"arms": ["B", "A", "D"], "label": f"{angle_a}°", "radius": 0.7},
-            {"arms": ["P", "C", "D"], "label": "DCP", "radius": 0.7},
-        ]
-        cap = f"Cyclic quadrilateral ABCD with BC produced to P and angle A = {angle_a}°"
+        pts["P"] = (355.0, 62.0)
+        segs = [("A", "B"), ("B", "C"), ("C", "D"), ("D", "A"), ("C", "P")]
+        cap = f"Cyclic Quadrilateral ABCD with BC Produced to P and ∠A = {angle_a}°"
 
-    diag = {
-        "kind": "circle_cyclic_quad",
-        "center": "O",
-        "radius": 3.0,
-        "points": pts,
-        "lines": lines,
-        "angles": angles,
-        "vertex_labels": v_labels,
-        "caption": cap,
-    }
+    diag = circle_geo_svg(
+        title=cap,
+        points=pts,
+        segments=segs,
+        show_center=False,
+        callouts=[(162, 198, f"∠A={angle_a}°", "#1d4ed8")],
+    )
 
     return make_math_question(
         prefix="geo_cyc",
@@ -202,7 +184,7 @@ def _build_cyclic_quad(r, difficulty: str) -> Dict[str, Any]:
 # --------------------------------------------------------------------------- #
 # Sub-Drill: Tangent-Chord Theorem
 # --------------------------------------------------------------------------- #
-def _build_tan_chord(r, difficulty: str) -> Dict[str, Any]:
+def _build_tan_chord(r, difficulty: str = "easy") -> Dict[str, Any]:
     angle_alt = r.randint(34, 68)
 
     prompt = (
@@ -214,29 +196,20 @@ def _build_tan_chord(r, difficulty: str) -> Dict[str, Any]:
     ans = f"{angle_alt}^\\circ"
     sample = rf"T\hat{{A}}B = \hat{{C}} = {angle_alt}^\circ \quad (\text{{tan chord theorem}})"
 
-    rad_alt = math.radians(angle_alt)
-    b_x = round(3.0 * math.sin(2 * rad_alt), 2)
-    b_y = round(-3.0 * math.cos(2 * rad_alt), 2)
-    diag = {
-        "kind": "circle_tangent_secant",
-        "center": "O",
-        "radius": 3.0,
-        "points": {
-            "O": [0.0, 0.0],
-            "A": [0.0, -3.0],
-            "P": [-4.0, -3.0],
-            "T": [4.0, -3.0],
-            "B": [b_x, b_y],
-            "C": [0.0, 3.0],
-        },
-        "lines": [["P", "T"], ["A", "B"], ["A", "C"], ["C", "B"]],
-        "angles": [
-            {"arms": ["A", "C", "B"], "label": f"{angle_alt}°", "radius": 0.8},
-            {"arms": ["T", "A", "B"], "label": "TAB", "radius": 0.7},
-        ],
-        "vertex_labels": {"O": "O", "A": "A", "B": "B", "C": "C", "P": "P", "T": "T"},
-        "caption": f"Tangent PT at A, chord AB, and inscribed angle C = {angle_alt}° (not to scale)",
+    pts = {
+        "A": (210.0, 247.0),
+        "P": (95.0, 247.0),
+        "T": (325.0, 247.0),
+        "B": _pt_on_circle(25),
+        "C": _pt_on_circle(215),
     }
+    diag = circle_geo_svg(
+        title=f"Tangent PT at A, Chord AB, and Inscribed ∠C = {angle_alt}°",
+        points=pts,
+        segments=[("P", "T"), ("A", "B"), ("B", "C"), ("C", "A")],
+        show_center=False,
+        callouts=[(162, 115, f"∠C={angle_alt}°", "#1d4ed8"), (265, 238, "∠TAB=?", "#dc2626")],
+    )
 
     return make_math_question(
         prefix="geo_tanchord",
@@ -253,7 +226,7 @@ def _build_tan_chord(r, difficulty: str) -> Dict[str, Any]:
             "total_marks": 2,
             "marking_points": [
                 {"id": "mp1", "desc": f"Correct angle size: {angle_alt} deg", "marks": 1, "editable": True},
-                {"id": "mp2", "desc": "Correct CAPS reason (tan chord theorem)", "marks": 1, "editable": True},
+                {"id": "mp2", "desc": "Correct geometric reason (tan chord theorem)", "marks": 1, "editable": True},
             ],
             "deductions": [{"rule": "omitted_geometric_reason", "penalty": -1}],
             "carry_forward_rule": "strict",
@@ -276,14 +249,14 @@ def _build_tan_chord(r, difficulty: str) -> Dict[str, Any]:
 # --------------------------------------------------------------------------- #
 # Compound Level 3 & 4 Exam Question: Multi-Theorem Circle Geometry Rider
 # --------------------------------------------------------------------------- #
-def _build_compound_circle_rider(r, difficulty: str) -> Dict[str, Any]:
+def _build_compound_circle_rider(r, difficulty: str = "hard") -> Dict[str, Any]:
     ang_d = r.randint(35, 48)
     ang_centre = 2 * ang_d
     ang_b = 180 - ang_d
     ang_tanchord = ang_d
 
     prompt = (
-        f"In the diagram below, circle with centre $O$ passes through points $A$, $B$, $C$, and $D$.\n"
+        f"In the diagram, circle with centre $O$ passes through points $A$, $B$, $C$, and $D$.\n"
         f"A tangent line $PT$ touches the circle at point $A$.\n"
         f"It is given that $\\hat{{D}} = {ang_d}^\\circ$.\n\n"
         f"Determine, with complete geometric reasons, the size of:\n"
@@ -328,7 +301,7 @@ def _build_compound_circle_rider(r, difficulty: str) -> Dict[str, Any]:
             {"id": "mp4", "desc": "Reason for B (opp angles of cyclic quad)", "marks": 1, "editable": True},
             {"id": "mp5", "desc": f"Angle PAC = {ang_tanchord} deg", "marks": 1, "editable": True},
             {"id": "mp6", "desc": "Reason for PAC (tan chord theorem)", "marks": 1, "editable": True},
-            {"id": "mp7", "desc": "All reasons mathematically correct using CAPS nomenclature", "marks": 1, "editable": True},
+            {"id": "mp7", "desc": "All reasons mathematically correct using standard geometric nomenclature", "marks": 1, "editable": True},
         ],
         "deductions": [{"rule": "omitted_or_incorrect_reasons", "penalty": -2}],
         "carry_forward_rule": "consequential_accuracy",
@@ -336,7 +309,7 @@ def _build_compound_circle_rider(r, difficulty: str) -> Dict[str, Any]:
 
     hints = {
         "nudge": "Apply the angle at centre theorem for $\\hat{O}_1$, cyclic quad opposite angles for $\\hat{B}$, and the tan-chord theorem for $P\\hat{A}C$.",
-        "concept": "Every statement in Euclidean circle geometry MUST have an accepted CAPS abbreviation reason.",
+        "concept": "Every statement in Euclidean circle geometry must have an accepted geometric reason.",
         "breakdown": (
             f"1. $\\hat{{O}}_1 = 2({ang_d}^\\circ) = {ang_centre}^\\circ$ ($\\angle$ at centre $= 2\\angle$ at circ).\n"
             f"2. $\\hat{{B}} = 180^\\circ - {ang_d}^\\circ = {ang_b}^\\circ$ (opp $\\angle$s of cyclic quad).\n"
@@ -344,41 +317,21 @@ def _build_compound_circle_rider(r, difficulty: str) -> Dict[str, Any]:
         ),
     }
 
-    rad_d = math.radians(ang_d)
-    c_x = round(-3.0 * math.sin(2 * rad_d), 2)
-    c_y = round(-3.0 * math.cos(2 * rad_d), 2)
-    diag = {
-        "kind": "circle_tangent_secant",
-        "center": "O",
-        "radius": 3.0,
-        "points": {
-            "O": [0.0, 0.0],
-            "A": [0.0, -3.0],
-            "P": [-4.0, -3.0],
-            "T": [4.0, -3.0],
-            "C": [c_x, c_y],
-            "D": [0.0, 3.0],
-            "B": [2.82, -1.03],
-        },
-        "lines": [
-            ["P", "T"],
-            ["A", "C"],
-            ["O", "A"],
-            ["O", "C"],
-            ["A", "B"],
-            ["B", "C"],
-            ["C", "D"],
-            ["D", "A"],
-        ],
-        "angles": [
-            {"arms": ["A", "D", "C"], "label": f"{ang_d}°", "radius": 0.7},
-            {"arms": ["A", "O", "C"], "label": "O1", "radius": 0.6},
-            {"arms": ["A", "B", "C"], "label": "B", "radius": 0.7},
-            {"arms": ["P", "A", "C"], "label": "PAC", "radius": 0.7},
-        ],
-        "vertex_labels": {"O": "O", "A": "A", "B": "B", "C": "C", "D": "D", "P": "P", "T": "T"},
-        "caption": f"Circle with centre O, cyclic quad ABCD, chord AC, and tangent PT at A (not to scale)",
+    pts = {
+        "O": (210.0, 155.0),
+        "A": (210.0, 247.0),
+        "P": (95.0, 247.0),
+        "T": (325.0, 247.0),
+        "B": _pt_on_circle(25),
+        "C": _pt_on_circle(315),
+        "D": _pt_on_circle(215),
     }
+    diag = circle_geo_svg(
+        title=f"Circle Centre O, Cyclic Quad ABCD, and Tangent PT at A (∠D = {ang_d}°)",
+        points=pts,
+        segments=[("P", "T"), ("O", "A"), ("O", "C"), ("A", "C"), ("A", "B"), ("B", "C"), ("C", "D"), ("D", "A")],
+        callouts=[(162, 112, f"∠D={ang_d}°", "#1d4ed8"), (210, 292, "Find ∠O1, ∠B, and ∠PAC", "#dc2626")],
+    )
 
     return make_math_question(
         prefix="geo_circle_rider",
@@ -405,14 +358,28 @@ def _build_compound_circle_rider(r, difficulty: str) -> Dict[str, Any]:
 
 
 # --------------------------------------------------------------------------- #
-# Public Dispatcher
+# Public Dispatcher (50-Archetype Contract)
 # --------------------------------------------------------------------------- #
-BUILDERS = {
-    "compound": _build_compound_circle_rider,
-    "elementary_angle_at_centre": _build_angle_at_centre,
-    "elementary_cyclic_quad": _build_cyclic_quad,
-    "elementary_tan_chord": _build_tan_chord,
+ARCHETYPE_BUILDERS = {
+    **ARCHETYPE_BUILDERS_01_25,
+    **ARCHETYPE_BUILDERS_26_50,
 }
+ORDERED_SUBSKILLS = sorted(ARCHETYPE_BUILDERS.keys())
+SUBSKILLS = ORDERED_SUBSKILLS
+
+DISPATCH_TABLE = dict(ARCHETYPE_BUILDERS)
+DISPATCH_TABLE["compound"] = _build_compound_circle_rider
+DISPATCH_TABLE["elementary_angle_at_centre"] = _build_angle_at_centre
+DISPATCH_TABLE["elementary_cyclic_quad"] = _build_cyclic_quad
+DISPATCH_TABLE["elementary_tan_chord"] = _build_tan_chord
+
+BUILDERS = DISPATCH_TABLE
+SUBSKILL_BUILDERS = DISPATCH_TABLE
+
+
+def get_subskills() -> List[str]:
+    """Returns the ordered list of all 50 semantic subskills."""
+    return list(ORDERED_SUBSKILLS)
 
 
 def generate(
@@ -420,19 +387,22 @@ def generate(
     difficulty: str = "hard",
     count: int = 1,
     seed: Optional[int] = None,
-    mode: str = "compound",
+    mode: Optional[str] = None,
     **kwargs: Any,
 ) -> Dict[str, Any]:
     """Generates deterministic Grade 11 Circle Geometry questions."""
     base_seed = 42 if seed is None else int(seed)
-    target = subskill if (subskill and subskill in BUILDERS) else mode
-    builder = BUILDERS.get(target, _build_compound_circle_rider)
+    target = subskill or mode
+    if not target or target not in DISPATCH_TABLE:
+        target = ORDERED_SUBSKILLS[base_seed % len(ORDERED_SUBSKILLS)] if ORDERED_SUBSKILLS else "compound"
+    builder = DISPATCH_TABLE.get(target, _build_compound_circle_rider)
 
     questions = []
     for i in range(max(1, count)):
-        r = rng(base_seed * 1000 + i)
+        run_seed = base_seed * 1000 + i
+        r = rng(run_seed)
         q = builder(r, difficulty)
-        q["seed"] = base_seed * 1000 + i
+        q["seed"] = run_seed
         questions.append(q)
 
     return {"questions": questions}
