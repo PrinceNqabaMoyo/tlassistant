@@ -1,13 +1,14 @@
 """Grade 10–12 Technical Mathematics — Circles, Angles & Angular Movement Generator.
-Deterministic 6-pillar question generator covering Paper 2 (Term 3):
-- Radian and degree angle conversions: theta_rad = theta_deg * (pi / 180).
-- Arc length: s = r * theta (theta in radians).
-- Area of circular sector: Area = 1/2 * r^2 * theta (theta in radians).
-- Area of segment: Area = 1/2 * r^2 * (theta - sin(theta)).
-- Angular velocity: omega = theta / t = 2 * pi * n (where n is frequency in rev/s).
-- Circumferential / linear velocity: v = r * omega.
+Deterministic 6-pillar question generator covering Paper 2 (Term 3).
+100% Aligned with South African National Curriculum Standards for Technical Mathematics.
 
-Zero-Meta-Curriculum Invariant strictly enforced.
+Subskills:
+  01–25: Radian and degree conversions, arc lengths, circular sector perimeters and areas,
+         segment areas (minor and major), sagitta and chord lengths, annular rings (washers),
+         liquid levels in cylindrical tanks and pipes.
+  26–50: Angular velocity and rotational frequency (rpm, rps, rad/s), circumferential linear
+         speed (v = omega * r), belt-and-pulley transmission systems, meshed gear trains,
+         winch drums, vehicle wheel speed conversions, conveyors, diagnostic autopsy.
 """
 from __future__ import annotations
 
@@ -15,214 +16,124 @@ import math
 import random
 from typing import Any, Dict, List, Optional
 
-try:
-    from app.utils.physical_sciences.physical_sciences_builders import build_hydraulic_gears_belt_pulley_question
-except ImportError:
-    from ..physical_sciences.physical_sciences_builders import build_hydraulic_gears_belt_pulley_question
+from app.utils.technical_mathematics.circles_angular_movement_archetypes_01_25 import (
+    BUILDERS_01_25,
+)
+from app.utils.technical_mathematics.circles_angular_movement_archetypes_26_50 import (
+    ARCHETYPES_26_50,
+)
+
+TOPIC = "Circles, angles and angular movement"
+
+# Combine 50 semantic subskills
+ARCHETYPES: Dict[str, Any] = {
+    **BUILDERS_01_25,
+    **ARCHETYPES_26_50,
+}
+
+SUBSKILLS: List[str] = list(ARCHETYPES.keys())
+ORDERED_SUBSKILLS: List[str] = list(SUBSKILLS)
+AVAILABLE_SUBSKILLS: List[str] = list(SUBSKILLS)
+
+BUILDERS: Dict[str, Any] = {
+    **ARCHETYPES,
+}
+
+# Legacy fallback builders for backward compatibility
+def _legacy_arc_sector(r: random.Random, **kwargs: Any) -> Dict[str, Any]:
+    return ARCHETYPES["12_area_of_circular_sector_given_radians"](r)
+
+def _legacy_angular_velocity(r: random.Random, **kwargs: Any) -> Dict[str, Any]:
+    return ARCHETYPES["27_angular_velocity_from_rotational_frequency_rad_per_sec"](r)
+
+def _legacy_hydraulic_gears_pulleys(r: random.Random, **kwargs: Any) -> Dict[str, Any]:
+    return ARCHETYPES["36_belt_and_pulley_drive_equal_linear_speed_svg"](r)
+
+def _legacy_compound(r: random.Random, **kwargs: Any) -> Dict[str, Any]:
+    sub = r.choice([
+        "12_area_of_circular_sector_given_radians",
+        "31_circumferential_linear_velocity_from_radius_and_omega_svg",
+    ])
+    return ARCHETYPES[sub](r)
+
+LEGACY_BUILDERS: Dict[str, Any] = {
+    "compound": _legacy_compound,
+    "elementary_arc_sector": _legacy_arc_sector,
+    "elementary_angular_velocity": _legacy_angular_velocity,
+    "radian_sector": lambda r, **kw: ARCHETYPES["07_calculate_arc_length_given_radius_and_radians"](r),
+    "arc_sector": _legacy_arc_sector,
+    "sector": lambda r, **kw: ARCHETYPES["13_area_of_circular_sector_given_degrees"](r),
+    "angular_velocity": _legacy_angular_velocity,
+    "velocity": lambda r, **kw: ARCHETYPES["31_circumferential_linear_velocity_from_radius_and_omega_svg"](r),
+    "hydraulic_gears_belt_pulley": _legacy_hydraulic_gears_pulleys,
+    "gears_pulleys": lambda r, **kw: ARCHETYPES["41_meshed_spur_gears_velocity_ratio_and_teeth_count_svg"](r),
+    "gears": lambda r, **kw: ARCHETYPES["41_meshed_spur_gears_velocity_ratio_and_teeth_count_svg"](r),
+    "hydraulics": _legacy_hydraulic_gears_pulleys,
+}
 
 
-def _rng(seed: Optional[int] = None) -> random.Random:
-    r = random.Random()
+def get_subskills() -> List[str]:
+    """Return the list of all 50 semantic subskills."""
+    return list(SUBSKILLS)
+
+
+def generate_question(
+    subskill: Optional[str] = None,
+    seed: Optional[int] = None,
+    difficulty: str = "medium",
+    **kwargs: Any,
+) -> Dict[str, Any]:
+    """Generate a single deterministic question for a subskill."""
+    r = random.Random(seed if seed is not None else 42)
+    target = subskill or r.choice(SUBSKILLS)
+
+    builder = BUILDERS.get(target) or LEGACY_BUILDERS.get(target)
+    if not builder:
+        builder = ARCHETYPES.get(r.choice(SUBSKILLS))
+
+    try:
+        q = builder(r)
+    except TypeError:
+        q = builder(r, difficulty=difficulty)
+
     if seed is not None:
-        r.seed(int(seed))
-    return r
+        q["seed"] = seed
+    return q
 
 
-def _fmt_sa(val: float | int, places: int = 2) -> str:
-    if isinstance(val, int) or (isinstance(val, float) and val.is_integer()):
-        return str(int(val))
-    s = f"{val:.{places}f}".rstrip("0").rstrip(".")
-    return s.replace(".", ",")
+def generate(
+    subskill: Optional[str] = None,
+    difficulty: str = "medium",
+    count: int = 1,
+    seed: Optional[int] = None,
+    mode: Optional[str] = None,
+    **kwargs: Any,
+) -> Dict[str, Any]:
+    """Primary generator interface required by central generator registry and validation suite."""
+    base_seed = 42 if seed is None else int(seed)
+    chosen_target = subskill or mode
 
+    questions = []
+    for i in range(max(1, count)):
+        curr_seed = base_seed * 1000 + i
+        r = random.Random(curr_seed)
 
-def _build_arc_sector_drill(r: random.Random) -> Dict[str, Any]:
-    radius = r.choice([5.0, 6.0, 8.0, 10.0, 12.0, 14.0, 15.0])
-    deg_angle = r.choice([30, 45, 60, 90, 120, 135, 150])
+        target = chosen_target
+        if not target or (target not in BUILDERS and target not in LEGACY_BUILDERS):
+            target = SUBSKILLS[i % len(SUBSKILLS)]
 
-    rad_val = round(deg_angle * (math.pi / 180.0), 2)
-    arc_length = round(radius * (deg_angle * (math.pi / 180.0)), 2)
-    sector_area = round(0.5 * (radius**2) * (deg_angle * (math.pi / 180.0)), 2)
+        builder = BUILDERS.get(target) or LEGACY_BUILDERS.get(target)
+        if not builder:
+            builder = ARCHETYPES.get(SUBSKILLS[0])
 
-    prompt = (
-        f"Refer to the circular sector diagram with centre \\(O\\) and radius \\(r = {_fmt_sa(radius)}\\text{{ cm}}\\), "
-        f"subtending a central angle of \\(\\theta = {deg_angle}^\\circ\\).\n\n"
-        f"1. Convert the central angle of \\({deg_angle}^\\circ\\) to radians (rounded to two decimal places).\n"
-        f"2. Calculate the arc length (\\(s\\)) bounding the sector.\n"
-        f"3. Calculate the area (\\(A\\)) of the circular sector \\(OAB\\)."
-    )
+        try:
+            q = builder(r)
+        except TypeError:
+            q = builder(r, difficulty=difficulty)
 
-    sol = (
-        f"Step 1: Convert central angle θ from degrees to radians:\n"
-        f"θ = {deg_angle}° × (π ÷ 180°) = {_fmt_sa(rad_val)} rad\n\n"
-        f"Step 2: Calculate arc length s = r × θ:\n"
-        f"s = {_fmt_sa(radius)} × ({deg_angle} × π ÷ 180) = {_fmt_sa(arc_length)} cm\n\n"
-        f"Step 3: Calculate sector area A = 0,5 × r² × θ:\n"
-        f"Area = 0,5 × ({_fmt_sa(radius)})² × ({deg_angle} × π ÷ 180) = {_fmt_sa(sector_area)} cm²"
-    )
+        q["seed"] = curr_seed
+        questions.append(q)
 
-    rad_norm = 3.0
-    rad_rad = deg_angle * math.pi / 180.0
-    bx = round(rad_norm * math.cos(rad_rad), 2)
-    by = round(rad_norm * math.sin(rad_rad), 2)
-    diagram_spec = {
-        "kind": "radian_sector",
-        "radius": rad_norm,
-        "radius_label": _fmt_sa(radius),
-        "deg_angle": deg_angle,
-        "rad_label": "θ rad",
-        "arc_label": "s",
-        "unit": "cm",
-        "center": "O",
-        "points": {
-            "O": [0.0, 0.0],
-            "A": [rad_norm, 0.0],
-            "B": [bx, by],
-        },
-        "vertex_labels": {
-            "O": "O",
-            "A": "A",
-            "B": "B",
-        },
-        "chords": [["O", "A"], ["O", "B"]],
-        "angles": [
-            {"vertex": "O", "p1": "A", "p2": "B", "label": f"{deg_angle}°", "size": 1.0}
-        ],
-    }
-
-    return {
-        "id": f"tech_math_arc_sec_{r.randint(10000, 99999)}",
-        "type": "compound",
-        "modality": "diagram",
-        "diagram_spec": diagram_spec,
-        "prompt": prompt,
-        "correct_answer": sol,
-        "sample_answer": sol,
-        "worked_solution": sol,
-        "marking_schema": {
-            "total_marks": 5,
-            "marking_points": [
-                {"id": "mp1", "desc": "1a. Formula to convert degrees to radians: θ = deg × π ÷ 180", "marks": 1, "editable": True},
-                {"id": "mp2", "desc": f"1b. Angle in radians: θ = {_fmt_sa(rad_val)} rad", "marks": 1, "editable": True},
-                {"id": "mp3", "desc": f"2. Arc length s = r × θ = {_fmt_sa(arc_length)} cm", "marks": 1, "editable": True},
-                {"id": "mp4", "desc": "3a. Sector area formula: Area = 0,5 × r² × θ", "marks": 1, "editable": True},
-                {"id": "mp5", "desc": f"3b. Sector area = {_fmt_sa(sector_area)} cm²", "marks": 1, "editable": True},
-            ],
-            "deductions": [{"rule": "used_degrees_in_arc_length_formula", "penalty": -2}],
-            "carry_forward_rule": "consequential_accuracy",
-        },
-        "hints": {
-            "tier_1": "Angles must be converted to radians before calculating arc length (s = rθ) and sector area (A = 0,5 r² θ).",
-            "tier_2": "θ (rad) = degrees × π ÷ 180.",
-            "tier_3": f"θ = {_fmt_sa(rad_val)} rad; s = {_fmt_sa(arc_length)} cm; Area = {_fmt_sa(sector_area)} cm².",
-        },
-        "misconception_tags": ["used_degrees_in_arc_length_formula", "forgot_half_in_sector_area"],
-        "term": 3,
-        "caps_weight_percent": 15,
-        "suggested_duration_mins": 5,
-    }
-
-
-def _build_angular_velocity_drill(r: random.Random) -> Dict[str, Any]:
-    diameter = r.choice([0.4, 0.5, 0.6, 0.8, 1.0, 1.2])  # in meters
-    radius = diameter / 2.0
-    rpm = r.choice([300, 600, 900, 1200, 1500, 1800])  # rev / min
-
-    rps = rpm / 60.0  # rev / s
-    omega = round(2.0 * math.pi * rps, 2)  # rad / s
-    v_linear = round(radius * omega, 2)  # m / s
-
-    prompt = (
-        f"A circular milling machine blade has a diameter of \\({_fmt_sa(diameter)}\\text{{ m}}\\).\n"
-        f"The blade rotates at a constant rotational frequency of \\({rpm}\\text{{ r/min}}\\) (revolutions per minute).\n\n"
-        f"1. Calculate the rotational frequency (\\(n\\)) in revolutions per second (\\(\\text{{r/s}}\\)).\n"
-        f"2. Calculate the angular velocity (\\(\\omega\\)) of the blade in radians per second (\\(\\text{{rad}}\\cdot\\text{{s}}^{{-1}}\\)).\n"
-        f"3. Calculate the linear circumferential speed (\\(v\\)) of a cutting tooth on the outer rim of the blade."
-    )
-
-    sol = (
-        f"Step 1: Convert rotational frequency from r/min to r/s:\n"
-        f"n = {rpm} ÷ 60 = {_fmt_sa(rps)} r/s\n\n"
-        f"Step 2: Calculate angular velocity ω = 2πn:\n"
-        f"ω = 2 × π × {_fmt_sa(rps)} = {_fmt_sa(omega)} rad·s⁻¹\n\n"
-        f"Step 3: Calculate radius r and linear circumferential speed v = rω:\n"
-        f"r = {_fmt_sa(diameter)} ÷ 2 = {_fmt_sa(radius)} m\n"
-        f"v = {_fmt_sa(radius)} × {_fmt_sa(omega)} = {_fmt_sa(v_linear)} m·s⁻¹"
-    )
-
-    rad_norm = 3.0
-    deg_angle = 90
-    diagram_spec = {
-        "kind": "radian_sector",
-        "radius": rad_norm,
-        "radius_label": _fmt_sa(radius),
-        "deg_angle": deg_angle,
-        "rad_label": "θ rad",
-        "arc_label": "v = rω",
-        "unit": "m",
-        "center": "O",
-        "points": {
-            "O": [0.0, 0.0],
-            "P": [rad_norm, 0.0],
-            "Q": [0.0, rad_norm],
-        },
-        "vertex_labels": {
-            "O": "O (Center)",
-            "P": "P (Rim)",
-            "Q": "Q",
-        },
-        "chords": [["O", "P"]],
-        "angles": [
-            {"vertex": "O", "p1": "P", "p2": "Q", "label": "90°", "size": 0.8}
-        ],
-    }
-
-    return {
-        "id": f"tech_math_ang_vel_{r.randint(10000, 99999)}",
-        "type": "compound",
-        "modality": "diagram",
-        "diagram_spec": diagram_spec,
-        "prompt": prompt,
-        "correct_answer": sol,
-        "sample_answer": sol,
-        "worked_solution": sol,
-        "marking_schema": {
-            "total_marks": 5,
-            "marking_points": [
-                {"id": "mp1", "desc": f"1. Convert r/min to r/s: n = {rpm} ÷ 60 = {_fmt_sa(rps)} r/s", "marks": 1, "editable": True},
-                {"id": "mp2", "desc": "2a. Formula: ω = 2 × π × n", "marks": 1, "editable": True},
-                {"id": "mp3", "desc": f"2b. Calculate ω = {_fmt_sa(omega)} rad·s⁻¹", "marks": 1, "editable": True},
-                {"id": "mp4", "desc": f"3a. Calculate radius r = d ÷ 2 = {_fmt_sa(radius)} m", "marks": 1, "editable": True},
-                {"id": "mp5", "desc": f"3b. Calculate linear speed v = r × ω = {_fmt_sa(v_linear)} m·s⁻¹", "marks": 1, "editable": True},
-            ],
-            "deductions": [{"rule": "rpm_to_rps_conversion_error", "penalty": -1}],
-            "carry_forward_rule": "consequential_accuracy",
-        },
-        "hints": {
-            "tier_1": "Convert r/min to r/s by dividing by 60. Then ω = 2πn and v = rω.",
-            "tier_2": "Ensure diameter is halved to obtain radius before calculating linear speed.",
-            "tier_3": f"n = {_fmt_sa(rps)} r/s; ω = {_fmt_sa(omega)} rad·s⁻¹; v = {_fmt_sa(v_linear)} m·s⁻¹.",
-        },
-        "misconception_tags": ["rpm_to_rps_conversion_error", "confused_angular_and_linear_velocity"],
-        "term": 3,
-        "caps_weight_percent": 15,
-        "suggested_duration_mins": 5,
-    }
-
-
-def generate(seed: Optional[int] = None, mode: str = "compound", **kwargs) -> Dict[str, Any]:
-    """Main generator entrypoint adhering to 6-pillar contract."""
-    r = _rng(seed)
-    if mode == "elementary_arc_sector" or kwargs.get("subskill") in ("radian_sector", "arc_sector", "sector"):
-        return _build_arc_sector_drill(r)
-    elif mode == "elementary_angular_velocity" or kwargs.get("subskill") in ("angular_velocity", "velocity"):
-        return _build_angular_velocity_drill(r)
-    elif mode in ("hydraulic_gears_belt_pulley", "gears_pulleys") or kwargs.get("subskill") in ("hydraulic_gears_belt_pulley", "gears_pulleys", "gears", "hydraulics"):
-        return build_hydraulic_gears_belt_pulley_question(seed=r.randint(1000, 9999), grade=10)
-    else:
-        choice = r.choice(["arc_sec", "ang_vel"])
-        if choice == "arc_sec":
-            return _build_arc_sector_drill(r)
-        else:
-            return _build_angular_velocity_drill(r)
+    return {"questions": questions}
 
 # diagram_role: context (math / ems declarative context visualization)

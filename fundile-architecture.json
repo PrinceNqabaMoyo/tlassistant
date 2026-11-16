@@ -2,8 +2,8 @@
   "_meta": {
     "app": "Fundile",
     "tagline": "Adaptive learning aligned with South African National Curriculum Standards for Grades 7–12",
-    "lastUpdated": "2026-11-15",
-    "version": "0.9.36",
+    "lastUpdated": "2026-11-16",
+    "version": "0.9.37",
     "maintainedBy": "owner",
     "updateProtocol": "Update this file when a layer, service, route, data model, or external dependency is added or its build status changes. Do NOT update for internal function changes or bug fixes.",
     "agentInstruction": "Read this file at session start to understand the full system. Do not ask the owner to explain the architecture — it is here. Cross-reference planning documents for detail on planned items."
@@ -596,11 +596,28 @@
       {
         "subject": "Technical Mathematics",
         "grade": "10-12",
+        "status": "built",
+        "topics_count": 29,
+        "archetypes_count": 1478,
+        "note": "Batch 8 COMPLETE: All 29 Grade 10-12 Technical Mathematics topics across Terms 1-4 verified with >=50 distinct semantic archetypes each (1,478 total subskills, 0 synthetic shims, 0 diagram leaks, 100% AST Purity). Includes 29 Blender 5.2.3 3D solid models under BLENDER_3D_FOUNDRY policy gate for Mensuration, Argand diagram seed-102 binding for Complex Numbers, and mechanical gear/pulley kinematics.",
         "files": [
           "caps-ai-backend/app/utils/technical_mathematics/",
+          "caps-ai-backend/app/utils/technical_mathematics/circles_angular_movement_generator.py",
+          "caps-ai-backend/app/utils/technical_mathematics/circles_angular_movement_archetypes_01_25.py",
+          "caps-ai-backend/app/utils/technical_mathematics/circles_angular_movement_archetypes_26_50.py",
           "caps-ai-backend/app/utils/technical_mathematics/complex_numbers_generator.py",
+          "caps-ai-backend/app/utils/technical_mathematics/complex_numbers_archetypes_01_25.py",
+          "caps-ai-backend/app/utils/technical_mathematics/complex_numbers_archetypes_26_38.py",
+          "caps-ai-backend/app/utils/technical_mathematics/complex_numbers_archetypes_26_50.py",
+          "caps-ai-backend/app/utils/technical_mathematics/complex_numbers_archetypes_39_50.py",
           "caps-ai-backend/app/utils/technical_mathematics/mensuration_calculus_generator.py",
-          "caps-ai-backend/app/utils/technical_mathematics/circles_angular_movement_generator.py"
+          "caps-ai-backend/app/utils/technical_mathematics/mensuration_calculus_archetypes_01_25.py",
+          "caps-ai-backend/app/utils/technical_mathematics/mensuration_calculus_archetypes_26_38.py",
+          "caps-ai-backend/app/utils/technical_mathematics/mensuration_calculus_archetypes_26_50.py",
+          "caps-ai-backend/app/utils/technical_mathematics/mensuration_calculus_archetypes_39_50.py",
+          "caps-ai-backend/app/utils/technical_mathematics/polynomials_generator.py",
+          "caps-ai-backend/app/utils/technical_mathematics/polynomials_archetypes_01_25.py",
+          "caps-ai-backend/app/utils/technical_mathematics/polynomials_archetypes_26_50.py"
         ]
       },
       {
@@ -627,7 +644,9 @@
           "caps-ai-backend/app/utils/technical_mathematics/polynomials_generator.py",
           "caps-ai-backend/app/utils/technical_mathematics/complex_numbers_generator.py",
           "caps-ai-backend/app/utils/technical_mathematics/mensuration_calculus_generator.py"
-        ]
+        ],
+        "status": "built",
+        "note": "Covered under Batch 8 Technical Mathematics expansion (50 subskills in polynomials_generator.py and complex_numbers_generator.py)."
       },
       {
         "subject": "Life Sciences",
@@ -4020,8 +4039,8 @@
       "sizeKB": 12.4
     }
   ],
-  "lastUpdated": "2026-11-12T07:57:54.136008+00:00",
-  "version": "0.9.35",
+  "lastUpdated": "2026-11-16T02:30:44.744881+00:00",
+  "version": "0.9.37",
   "diagramArchetypesCatalog": {
     "totalDiagramMasters": 47,
     "totalCurriculumTracksTested": 55,

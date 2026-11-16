@@ -1037,8 +1037,8 @@ def build_15_cpj_single_material_costs_or_consumables_row(rng: random.Random) ->
     amt = _fmt_r(rng.randint(14, 42) * 100)
     custom_hdrs = ["Doc No", "Day", "Name of Payee", "Fol.", "Bank", "Material costs", "Stationery", "Sundry Amount", "Sundry Details"]
     prompt = (
-        f"A service business uses the CPJ columns provided in the table (including **Material costs** and **Stationery**). "
-        f"Record this payment for {ctx['biz_name']} ({ctx['month_full']}): "
+        f"The CPJ for {ctx['biz_name']} has analysis columns: **Material costs** and **Stationery** (instead of Wages). "
+        f"Record this payment for {ctx['month_full']}: "
         f"On Day {day}, paid {ctx['supplier']} {amt} (Cheque {doc}) for consumable supplies used directly in {ctx['svc_desc']}."
     )
     row_specs = [

@@ -1,13 +1,36 @@
-"""Grade 10–12 Technical Mathematics — Complex Numbers & Polar Form (Deterministic 6-Pillar Generator).
-Covers modulus, argument, rectangular to polar conversion, Argand plane coordinates,
-and polar multiplication/division (de Moivre's operations) for Paper 1 (Term 1).
+"""Grade 10–12 Technical Mathematics — Complex Numbers (Deterministic 6-Pillar Generator).
+
+100% Aligned with South African National Curriculum Standards.
+Grounded strictly in:
+- curriculum_docs_auto/TechnicalMathematics_Gr12/Term 1/01. Complex numbers.md
+
+Implements the Universal 50-Archetype Architecture Contract across all 50 distinct subskills:
+- 01–25: Powers of i, rectangular arithmetic, complex conjugates, division, complex equality,
+         Argand plane coordinates/vectors, modulus, argument, rectangular/polar conversion.
+- 26–38: Polar multiplication, polar division, de Moivre's theorem for positive/negative powers,
+         complex square/cube roots, regular polygon geometry, rectangular-to-polar de Moivre.
+- 39–50: Complex fourth roots, roots of unity, quadratic & cubic polynomial equations in C,
+         AC electrical impedance (inductive Z_L = jX_L, capacitive Z_C = -jX_C, series RL,
+         series RC, series RLC), phasor Ohm's law V = I*Z, and comprehensive technical synthesis.
 """
 from __future__ import annotations
 
 import math
 import random
-from typing import Any, Dict, List, Optional
+from typing import Any, Callable, Dict, List, Optional
 import sympy as sp
+
+from app.utils.technical_mathematics.complex_numbers_archetypes_01_25 import (
+    BUILDERS_01_25,
+    SUBSKILLS_01_25,
+)
+from app.utils.technical_mathematics.complex_numbers_archetypes_26_38 import (
+    _make_argand_svg,
+)
+from app.utils.technical_mathematics.complex_numbers_archetypes_26_50 import (
+    BUILDERS_26_50,
+    SUBSKILLS_26_50,
+)
 
 
 def _rng(seed: Optional[int] = None) -> random.Random:
@@ -25,7 +48,7 @@ def _fmt_sa(val: float | int, places: int = 1) -> str:
 
 
 # --------------------------------------------------------------------------- #
-# Sub-Drill: Modulus Calculation (|z|)
+# Legacy Elementary Sub-Drills (Preserved with Valid Inline SVG)
 # --------------------------------------------------------------------------- #
 def _build_modulus_drill(r: random.Random) -> Dict[str, Any]:
     a = r.choice([-8, -6, -5, -4, -3, 3, 4, 5, 6, 8])
@@ -41,7 +64,6 @@ def _build_modulus_drill(r: random.Random) -> Dict[str, Any]:
         f"Given the complex number $z = {z_str}$.\n\n"
         f"Calculate the modulus $|z|$ (or $r$). Leave your answer in simplest surd form."
     )
-
     ans_latex = rf"|z| = \sqrt{{({a})^2 + ({b})^2}} = \sqrt{{{r_sq}}} = {sp.latex(r_surd)}"
 
     marking_schema = {
@@ -60,12 +82,14 @@ def _build_modulus_drill(r: random.Random) -> Dict[str, Any]:
         "tier_3": f"Calculation: $|z| = \\sqrt{{{a}^2 + ({b})^2}} = \\sqrt{{{r_sq}}} = {sp.latex(r_surd)}$.",
     }
 
+    deg = math.degrees(math.atan2(b, a)) % 360
+    svg = _make_argand_svg([(math.hypot(a, b), deg, f"z={z_str}", "#2563eb")], seed=r.randint(100, 99999), max_r=math.hypot(a, b) * 1.3)
+
     return {
         "id": f"tech_cplx_mod_{r.randint(100000, 999999)}",
         "question_id": f"tech_cplx_mod_{r.randint(100000, 999999)}",
         "topic": "technical_mathematics_complex_numbers",
-        "diagram_spec": {
-        "diagram_role": "context","kind": "argand_diagram", "a": a, "b": b},
+        "diagram_spec": {"kind": "inline_svg", "svg": svg, "diagram_role": "context"},
         "subskill": "complex_modulus_elementary",
         "learning_objective_id": "techmath_complex_modulus",
         "prompt": prompt,
@@ -85,11 +109,7 @@ def _build_modulus_drill(r: random.Random) -> Dict[str, Any]:
     }
 
 
-# --------------------------------------------------------------------------- #
-# Sub-Drill: Argument Calculation (theta in degrees)
-# --------------------------------------------------------------------------- #
 def _build_argument_drill(r: random.Random) -> Dict[str, Any]:
-    # Select coordinates with clean or nice arguments
     coords = [
         (1, 1, 1, 45.0),
         (-1, 1, 2, 135.0),
@@ -118,7 +138,6 @@ def _build_argument_drill(r: random.Random) -> Dict[str, Any]:
         f"2. Reference angle: $\\alpha = \\tan^{{-1}}\\left(\\frac{{{abs_b}}}{{{abs(a)}}}\\right) = {_fmt_sa(ref_angle)}^\\circ$.\n"
         f"   Quadrant {quad} adjustment: $\\theta = {_fmt_sa(deg)}^\\circ$."
     )
-
     ans_latex = rf"\text{{Quadrant }} {quad}, \quad \theta = {_fmt_sa(deg)}^\circ"
 
     marking_schema = {
@@ -134,16 +153,17 @@ def _build_argument_drill(r: random.Random) -> Dict[str, Any]:
 
     hints = {
         "tier_1": "Plot the point $(a, b)$ on the Argand plane to determine the quadrant.",
-        "tier_2": "Calculate the reference angle $\\alpha = \\tan^{-1}(|b| / |a|)$. Then adjust: Quad 2 is $180^\\circ - \\alpha$, Quad 3 is $180^\\circ + \\alpha$, Quad 4 is $360^\\circ - \\alpha$.",
+        "tier_2": "Calculate reference angle $\\alpha = \\tan^{-1}(|b| / |a|)$. Quad 2: $180^\\circ - \\alpha$, Quad 3: $180^\\circ + \\alpha$, Quad 4: $360^\\circ - \\alpha$.",
         "tier_3": f"Quadrant {quad}: $\\theta = {_fmt_sa(deg)}^\\circ$.",
     }
+
+    svg = _make_argand_svg([(math.hypot(a, b), deg, f"z={z_str}", "#dc2626")], seed=r.randint(100, 99999), max_r=math.hypot(a, b) * 1.3)
 
     return {
         "id": f"tech_cplx_arg_{r.randint(100000, 999999)}",
         "question_id": f"tech_cplx_arg_{r.randint(100000, 999999)}",
         "topic": "technical_mathematics_complex_numbers",
-        "diagram_spec": {
-        "diagram_role": "context","kind": "argand_diagram", "a": a, "b": b},
+        "diagram_spec": {"kind": "inline_svg", "svg": svg, "diagram_role": "context"},
         "subskill": "complex_argument_elementary",
         "learning_objective_id": "techmath_complex_argument",
         "prompt": prompt,
@@ -163,9 +183,6 @@ def _build_argument_drill(r: random.Random) -> Dict[str, Any]:
     }
 
 
-# --------------------------------------------------------------------------- #
-# Sub-Drill: Polar Form Conversion (z = r cis theta)
-# --------------------------------------------------------------------------- #
 def _build_polar_conversion_drill(r: random.Random) -> Dict[str, Any]:
     a = r.choice([-4, -3, -2, -1, 1, 2, 3, 4])
     b = r.choice([-4, -3, -2, -1, 1, 2, 3, 4])
@@ -183,7 +200,6 @@ def _build_polar_conversion_drill(r: random.Random) -> Dict[str, Any]:
         f"Convert the complex number $z = {z_str}$ from rectangular form to polar form: "
         f"$z = r\\operatorname{{cis}}\\theta$ (where $0^\\circ \\le \\theta < 360^\\circ$)."
     )
-
     ans_latex = rf"z = {sp.latex(r_exact)}\operatorname{{cis}}({_fmt_sa(deg)}^\circ)"
 
     sample_answer = (
@@ -210,12 +226,13 @@ def _build_polar_conversion_drill(r: random.Random) -> Dict[str, Any]:
         "tier_3": f"Final answer: $z = {sp.latex(r_exact)}\\operatorname{{cis}}({_fmt_sa(deg)}^\\circ)$.",
     }
 
+    svg = _make_argand_svg([(math.hypot(a, b), deg, f"z={z_str}", "#16a34a")], seed=r.randint(100, 99999), max_r=math.hypot(a, b) * 1.3)
+
     return {
         "id": f"tech_cplx_pol_{r.randint(100000, 999999)}",
         "question_id": f"tech_cplx_pol_{r.randint(100000, 999999)}",
         "topic": "technical_mathematics_complex_numbers",
-        "diagram_spec": {
-        "diagram_role": "context","kind": "argand_diagram", "a": a, "b": b},
+        "diagram_spec": {"kind": "inline_svg", "svg": svg, "diagram_role": "context"},
         "subskill": "polar_form_elementary",
         "learning_objective_id": "techmath_polar_conversion",
         "prompt": prompt,
@@ -235,11 +252,7 @@ def _build_polar_conversion_drill(r: random.Random) -> Dict[str, Any]:
     }
 
 
-# --------------------------------------------------------------------------- #
-# Compound: Polar Multiplication & Division Operations (8 Marks Exam Standard)
-# --------------------------------------------------------------------------- #
 def _build_compound_polar_operations(r: random.Random) -> Dict[str, Any]:
-    # Nice angles: 30, 45, 60, 90, 120, 135, 150, 180, 210, 225, 240, 270, 300, 315, 330
     theta1 = r.choice([30, 45, 60, 90, 120, 135, 150])
     theta2 = r.choice([30, 45, 60, 90, 120])
     r1 = r.choice([2, 3, 4, 6])
@@ -250,7 +263,6 @@ def _build_compound_polar_operations(r: random.Random) -> Dict[str, Any]:
     if op == "multiply":
         r_res = r1 * r2
         theta_res = (theta1 + theta2) % 360
-        op_sym = r"\times"
         formula_note = r"r_1 r_2 \operatorname{cis}(\theta_1 + \theta_2)"
         prompt = (
             f"Given two complex numbers in polar form:\n"
@@ -261,11 +273,9 @@ def _build_compound_polar_operations(r: random.Random) -> Dict[str, Any]:
             f"3. State the quadrant of the Argand plane in which $z_1 \\cdot z_2$ lies."
         )
     else:
-        # ensure r1 is a multiple of r2
         r1_mult = r1 * r2
         r_res = r1
         theta_res = (theta1 - theta2) % 360
-        op_sym = r"\div"
         formula_note = r"\frac{r_1}{r_2} \operatorname{cis}(\theta_1 - \theta_2)"
         prompt = (
             f"Given two complex numbers in polar form:\n"
@@ -276,7 +286,6 @@ def _build_compound_polar_operations(r: random.Random) -> Dict[str, Any]:
             f"3. State the quadrant of the Argand plane in which $\\frac{{z_1}}{{z_2}}$ lies."
         )
 
-    # Convert to rectangular
     rad = math.radians(theta_res)
     a_val = round(r_res * math.cos(rad), 2)
     b_val = round(r_res * math.sin(rad), 2)
@@ -293,15 +302,11 @@ def _build_compound_polar_operations(r: random.Random) -> Dict[str, Any]:
 
     sample_answer = (
         f"1. Polar Operation ({formula_note}):\n"
-        f"   Modulus: $r = {r_res}$\n"
-        f"   Argument: $\\theta = {theta_res}^\\circ$\n"
-        f"   Result in Polar Form: $z = {r_res}\\operatorname{{cis}}({theta_res}^\\circ)$\n\n"
-        f"2. Conversion to Rectangular Form ($a = r\\cos\\theta, b = r\\sin\\theta$):\n"
-        f"   $a = {r_res}\\cos({theta_res}^\\circ) = {_fmt_sa(a_val)}$\n"
-        f"   $b = {r_res}\\sin({theta_res}^\\circ) = {_fmt_sa(b_val)}$\n"
-        f"   Rectangular Form: $z = {rect_str}$\n\n"
-        f"3. Argand Quadrant:\n"
-        f"   Since $a = {_fmt_sa(a_val)}$ and $b = {_fmt_sa(b_val)}$, $z$ lies in **Quadrant {quad}**."
+        f"   Modulus: $r = {r_res}, \\quad \\theta = {theta_res}^\\circ$\n"
+        f"   Result: $z = {r_res}\\operatorname{{cis}}({theta_res}^\\circ)$\n\n"
+        f"2. Rectangular Conversion: $a = {r_res}\\cos({theta_res}^\\circ) = {_fmt_sa(a_val)}$, "
+        f"$b = {r_res}\\sin({theta_res}^\\circ) = {_fmt_sa(b_val)} \\implies z = {rect_str}$\n\n"
+        f"3. Quadrant: Lies in **Quadrant {quad}**."
     )
 
     marking_schema = {
@@ -310,8 +315,8 @@ def _build_compound_polar_operations(r: random.Random) -> Dict[str, Any]:
             {"id": "mp1", "desc": "Multiply/divide moduli correctly", "marks": 2, "editable": True},
             {"id": "mp2", "desc": "Add/subtract arguments correctly", "marks": 2, "editable": True},
             {"id": "mp3", "desc": f"Correct polar result: {r_res} cis({theta_res} deg)", "marks": 1, "editable": True},
-            {"id": "mp4", "desc": f"Real part conversion a = {r_res} cos({theta_res}) = {_fmt_sa(a_val)}", "marks": 1, "editable": True},
-            {"id": "mp5", "desc": f"Imaginary part conversion b = {r_res} sin({theta_res}) = {_fmt_sa(b_val)}", "marks": 1, "editable": True},
+            {"id": "mp4", "desc": f"Real part conversion a = {_fmt_sa(a_val)}", "marks": 1, "editable": True},
+            {"id": "mp5", "desc": f"Imaginary part conversion b = {_fmt_sa(b_val)}", "marks": 1, "editable": True},
             {"id": "mp6", "desc": f"Correct quadrant identification (Quadrant {quad})", "marks": 1, "editable": True},
         ],
         "deductions": [{"rule": "subtracted_instead_of_added_arguments", "penalty": -1}],
@@ -319,48 +324,24 @@ def _build_compound_polar_operations(r: random.Random) -> Dict[str, Any]:
     }
 
     hints = {
-        "tier_1": "Recall: For multiplication, multiply the moduli ($r_1 \\times r_2$) and add the arguments ($\\theta_1 + \\theta_2$). For division, divide moduli ($r_1 / r_2$) and subtract arguments ($\\theta_1 - \\theta_2$).",
-        "tier_2": "To convert back to rectangular form, use $a = r\\cos\\theta$ and $b = r\\sin\\theta$.",
+        "tier_1": "For multiplication, multiply moduli and add arguments. For division, divide moduli and subtract arguments.",
+        "tier_2": "To convert to rectangular form, use $a = r\\cos\\theta$ and $b = r\\sin\\theta$.",
         "tier_3": f"Polar result: ${r_res}\\operatorname{{cis}}({theta_res}^\\circ)$. Rectangular: ${rect_str}$. Quadrant: {quad}.",
     }
 
-    sub_parts = [
-        {
-            "id": "part_1",
-            "label": "1. Result in polar form r cis(θ)",
-            "expected_answer": f"{r_res}cis({theta_res})",
-            "answer_latex": rf"{r_res}\operatorname{{cis}}({theta_res}^\circ)",
-            "marks": 3
-        },
-        {
-            "id": "part_2",
-            "label": "2. Rectangular form a + bi",
-            "expected_answer": rect_str,
-            "answer_latex": rect_str,
-            "marks": 3
-        },
-        {
-            "id": "part_3",
-            "label": "3. Quadrant in Argand plane",
-            "expected_answer": str(quad),
-            "answer_latex": str(quad),
-            "marks": 2
-        }
-    ]
+    svg = _make_argand_svg([(r_res, theta_res, f"z={rect_str}", "#9333ea")], seed=r.randint(100, 99999), max_r=r_res * 1.3)
 
     return {
         "id": f"tech_cplx_comp_{r.randint(100000, 999999)}",
         "question_id": f"tech_cplx_comp_{r.randint(100000, 999999)}",
         "topic": "technical_mathematics_complex_numbers",
-        "diagram_spec": {
-        "diagram_role": "context","kind": "argand_diagram", "a": a_val, "b": b_val},
+        "diagram_spec": {"kind": "inline_svg", "svg": svg, "diagram_role": "context"},
         "subskill": "complex_polar_operations_compound",
         "learning_objective_id": "techmath_polar_operations",
         "prompt": prompt,
         "prompt_latex": prompt,
         "answer_latex": ans_latex,
         "sample_answer": sample_answer,
-        "sub_parts": sub_parts,
         "marking_schema": marking_schema,
         "hints": hints,
         "misconception_tags": [
@@ -378,15 +359,35 @@ def _build_compound_polar_operations(r: random.Random) -> Dict[str, Any]:
     }
 
 
-# --------------------------------------------------------------------------- #
-# Public Dispatcher
-# --------------------------------------------------------------------------- #
-BUILDERS = {
+# ==============================================================================
+# 50-Archetype Registry & Dispatcher
+# ==============================================================================
+ARCHETYPE_BUILDERS: Dict[str, Callable[[random.Random], Dict[str, Any]]] = {
+    **BUILDERS_01_25,
+    **BUILDERS_26_50,
+}
+
+ORDERED_SUBSKILLS: List[str] = sorted(ARCHETYPE_BUILDERS.keys())
+SUBSKILLS: List[str] = ORDERED_SUBSKILLS
+
+LEGACY_BUILDERS: Dict[str, Callable[[random.Random], Dict[str, Any]]] = {
     "compound": _build_compound_polar_operations,
     "elementary_modulus_calc": _build_modulus_drill,
     "elementary_argument_quadrant": _build_argument_drill,
     "elementary_polar_conversion": _build_polar_conversion_drill,
 }
+
+DISPATCH_TABLE: Dict[str, Callable[[random.Random], Dict[str, Any]]] = {
+    **ARCHETYPE_BUILDERS,
+    **LEGACY_BUILDERS,
+}
+BUILDERS = DISPATCH_TABLE
+SUBSKILL_BUILDERS = DISPATCH_TABLE
+
+
+def get_subskills() -> List[str]:
+    """Returns the ordered list of all 50 semantic subskills."""
+    return list(ORDERED_SUBSKILLS)
 
 
 def generate(
@@ -399,14 +400,19 @@ def generate(
 ) -> Dict[str, Any]:
     """Generates deterministic Grade 10-12 Technical Mathematics Complex Numbers questions."""
     base_seed = 42 if seed is None else int(seed)
-    chosen_mode = mode if mode in BUILDERS else ("compound" if subskill is None else subskill)
-    builder = BUILDERS.get(chosen_mode, _build_compound_polar_operations)
+
+    target = subskill or mode
+    if not target or target not in DISPATCH_TABLE:
+        target = ORDERED_SUBSKILLS[base_seed % len(ORDERED_SUBSKILLS)] if ORDERED_SUBSKILLS else "compound"
+
+    builder = DISPATCH_TABLE.get(target, _build_compound_polar_operations)
 
     questions = []
     for i in range(max(1, count)):
-        r = _rng(base_seed * 1000 + i)
+        run_seed = base_seed * 1000 + i
+        r = _rng(run_seed)
         q = builder(r)
-        q["seed"] = base_seed * 1000 + i
+        q["seed"] = run_seed
         questions.append(q)
 
     return {"questions": questions}

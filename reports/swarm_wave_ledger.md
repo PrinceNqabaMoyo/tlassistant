@@ -138,16 +138,33 @@
 | `2026-11-15 21:21:33` | Gr 11 | Mathematics | Linear programming | `50/50` | `50/50` | `VECTOR_2D_OR_GRAPH` | `PASS (Exit Code 0)` |
 | `2026-11-15 21:16:24` | Gr 11 | Mathematics | investigation and projects | `50/50` | `50/50` | `VECTOR_2D_OR_GRAPH` | `PASS (Exit Code 0)` |
 | `2026-11-15 21:21:33` | Gr 12 | Mathematics | Analytical geometry | `50/50` | `50/50` | `VECTOR_2D_OR_GRAPH` | `PASS (Exit Code 0)` |
-| `2026-11-15 21:21:23` | Gr 10 | Technical Mathematics | Introduction | `50/50` | `50/50` | `VECTOR_2D_OR_GRAPH` | `PASS (Exit Code 0)` |
-| `2026-11-15 21:21:23` | Gr 10 | Technical Mathematics | Number Systems | `50/50` | `50/50` | `VECTOR_2D_OR_GRAPH` | `PASS (Exit Code 0)` |
-| `2026-11-15 21:21:24` | Gr 10 | Technical Mathematics | Algebraic expressions | `50/50` | `50/50` | `VECTOR_2D_OR_GRAPH` | `PASS (Exit Code 0)` |
-| `2026-11-15 21:21:24` | Gr 10 | Technical Mathematics | Equalities and inequalities | `50/50` | `50/50` | `VECTOR_2D_OR_GRAPH` | `PASS (Exit Code 0)` |
-| `2026-11-15 21:21:25` | Gr 10 | Technical Mathematics | Exponents | `50/50` | `50/50` | `VECTOR_2D_OR_GRAPH` | `PASS (Exit Code 0)` |
-| `2026-11-15 21:21:26` | Gr 10 | Technical Mathematics | Trigonometry | `50/50` | `50/50` | `VECTOR_2D_OR_GRAPH` | `PASS (Exit Code 0)` |
-| `2026-11-15 21:21:27` | Gr 10 | Technical Mathematics | Functions and graphs | `50/50` | `50/50` | `VECTOR_2D_OR_GRAPH` | `PASS (Exit Code 0)` |
+| `2026-11-16 02:26:05` | Gr 10 | Technical Mathematics | Introduction | `50/50` | `50/50` | `VECTOR_2D_OR_GRAPH` | `PASS (Exit Code 0)` |
+| `2026-11-16 02:26:06` | Gr 10 | Technical Mathematics | Number Systems | `50/50` | `50/50` | `VECTOR_2D_OR_GRAPH` | `PASS (Exit Code 0)` |
+| `2026-11-16 02:26:07` | Gr 10 | Technical Mathematics | Algebraic expressions | `50/50` | `50/50` | `VECTOR_2D_OR_GRAPH` | `PASS (Exit Code 0)` |
+| `2026-11-16 02:26:07` | Gr 10 | Technical Mathematics | Equalities and inequalities | `50/50` | `50/50` | `VECTOR_2D_OR_GRAPH` | `PASS (Exit Code 0)` |
+| `2026-11-16 02:26:07` | Gr 10 | Technical Mathematics | Exponents | `50/50` | `50/50` | `VECTOR_2D_OR_GRAPH` | `PASS (Exit Code 0)` |
+| `2026-11-16 02:26:07` | Gr 10 | Technical Mathematics | Trigonometry | `50/50` | `50/50` | `VECTOR_2D_OR_GRAPH` | `PASS (Exit Code 0)` |
+| `2026-11-16 02:26:07` | Gr 10 | Technical Mathematics | Functions and graphs | `50/50` | `50/50` | `VECTOR_2D_OR_GRAPH` | `PASS (Exit Code 0)` |
 | `2026-11-15 21:21:30` | Gr 10 | Mathematical Literacy | Probability | `52/50` | `52/52` | `VECTOR_2D_OR_GRAPH` | `PASS (Exit Code 0)` |
-| `2026-11-15 21:21:32` | Gr 11 | Technical Mathematics | Equations | `59/50` | `52/59` | `VECTOR_2D_OR_GRAPH` | `PASS (Exit Code 0)` |
-| `2026-11-15 21:21:33` | Gr 11 | Technical Mathematics | Exponents and surds | `58/50` | `58/58` | `VECTOR_2D_OR_GRAPH` | `PASS (Exit Code 0)` |
-| `2026-11-15 21:21:33` | Gr 11 | Technical Mathematics | Logarithms | `58/50` | `58/58` | `VECTOR_2D_OR_GRAPH` | `PASS (Exit Code 0)` |
-| `2026-11-15 21:21:35` | Gr 12 | Technical Mathematics | Differentiation | `50/50` | `50/50` | `VECTOR_2D_OR_GRAPH` | `PASS (Exit Code 0)` |
-| `2026-11-15 21:21:35` | Gr 12 | Technical Mathematics | Financial mathematics | `57/50` | `42/57` | `VECTOR_2D_OR_GRAPH` | `PASS (Exit Code 0)` |
+| `2026-11-16 02:26:16` | Gr 11 | Technical Mathematics | Equations | `59/50` | `52/59` | `VECTOR_2D_OR_GRAPH` | `PASS (Exit Code 0)` |
+| `2026-11-16 02:26:16` | Gr 11 | Technical Mathematics | Exponents and surds | `58/50` | `58/58` | `VECTOR_2D_OR_GRAPH` | `PASS (Exit Code 0)` |
+| `2026-11-16 02:26:16` | Gr 11 | Technical Mathematics | Logarithms | `58/50` | `58/58` | `VECTOR_2D_OR_GRAPH` | `PASS (Exit Code 0)` |
+| `2026-11-16 02:26:27` | Gr 12 | Technical Mathematics | Differentiation | `50/50` | `50/50` | `VECTOR_2D_OR_GRAPH` | `PASS (Exit Code 0)` |
+| `2026-11-16 02:26:28` | Gr 12 | Technical Mathematics | Financial mathematics | `57/50` | `42/57` | `VECTOR_2D_OR_GRAPH` | `PASS (Exit Code 0)` |
+| `2026-11-16 02:26:07` | Gr 10 | Technical Mathematics | Analytical Geometry | `50/50` | `50/50` | `VECTOR_2D_OR_GRAPH` | `PASS (Exit Code 0)` |
+| `2026-11-16 02:26:08` | Gr 10 | Technical Mathematics | Geometry | `54/50` | `54/54` | `VECTOR_2D_OR_GRAPH` | `PASS (Exit Code 0)` |
+| `2026-11-16 02:26:08` | Gr 10 | Technical Mathematics | Finance and Growth | `50/50` | `50/50` | `VECTOR_2D_OR_GRAPH` | `PASS (Exit Code 0)` |
+| `2026-11-16 02:26:17` | Gr 11 | Technical Mathematics | Trigonometry | `50/50` | `41/50` | `VECTOR_2D_OR_GRAPH` | `PASS (Exit Code 0)` |
+| `2026-11-16 02:26:17` | Gr 11 | Technical Mathematics | Functions and graphs | `50/50` | `45/50` | `VECTOR_2D_OR_GRAPH` | `PASS (Exit Code 0)` |
+| `2026-11-16 02:26:17` | Gr 11 | Technical Mathematics | Analytical geometry | `50/50` | `50/50` | `VECTOR_2D_OR_GRAPH` | `PASS (Exit Code 0)` |
+| `2026-11-16 02:26:19` | Gr 11 | Technical Mathematics | Finance growth and decays | `54/50` | `54/54` | `VECTOR_2D_OR_GRAPH` | `PASS (Exit Code 0)` |
+| `2026-11-16 02:26:19` | Gr 11 | Technical Mathematics | Euclidean geometry | `54/50` | `54/54` | `VECTOR_2D_OR_GRAPH` | `PASS (Exit Code 0)` |
+| `2026-11-16 02:26:27` | Gr 12 | Technical Mathematics | Trigonometry | `55/50` | `53/55` | `VECTOR_2D_OR_GRAPH` | `PASS (Exit Code 0)` |
+| `2026-11-16 02:26:28` | Gr 12 | Technical Mathematics | Analytical geometry | `50/50` | `50/50` | `VECTOR_2D_OR_GRAPH` | `PASS (Exit Code 0)` |
+| `2026-11-16 02:26:28` | Gr 12 | Technical Mathematics | Euclidean Geometry Proportionality and similarity | `54/50` | `54/54` | `VECTOR_2D_OR_GRAPH` | `PASS (Exit Code 0)` |
+| `2026-11-16 02:30:33` | Gr 12 | Technical Mathematics | Complex numbers | `54/50` | `54/54` | `VECTOR_2D_OR_GRAPH` | `PASS (Exit Code 0)` |
+| `2026-11-16 02:30:43` | Gr 12 | Technical Mathematics | Polynomials | `50/50` | `50/50` | `VECTOR_2D_OR_GRAPH` | `PASS (Exit Code 0)` |
+| `2026-11-16 02:29:08` | Gr 10 | Technical Mathematics | Circles, angles and angular movement | `50/50` | `50/50` | `VECTOR_2D_OR_GRAPH` | `PASS (Exit Code 0)` |
+| `2026-11-16 02:30:24` | Gr 11 | Technical Mathematics | Circles angles and angular movement | `50/50` | `50/50` | `VECTOR_2D_OR_GRAPH` | `PASS (Exit Code 0)` |
+| `2026-11-16 02:28:47` | Gr 11 | Technical Mathematics | Mensuration | `50/50` | `50/50` | `BLENDER_3D_FOUNDRY` | `PASS (Exit Code 0)` |
+| `2026-11-16 02:28:57` | Gr 12 | Technical Mathematics | Integration | `50/50` | `50/50` | `VECTOR_2D_OR_GRAPH` | `PASS (Exit Code 0)` |
