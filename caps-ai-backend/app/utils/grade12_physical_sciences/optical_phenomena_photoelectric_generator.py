@@ -1,128 +1,136 @@
-"""Grade 12 Physical Sciences — Optical Phenomena & Photoelectric Effect Generator.
-Deterministic 6-pillar CAPS question generator covering Paper 1 (Physics Term 3):
-- Dual particle-wave nature of light: Photoelectric effect as evidence for particle nature.
-- Work function (W0) and threshold (cut-off) frequency (f0): W0 = h * f0.
-- Einstein's photoelectric equation: E = W0 + Ek_max => hf = W0 + 1/2 m (v_max)^2.
-- Cut-off wavelength (lambda_0 = c / f0) and photon energy (E = hf = hc / lambda).
-- Effect of frequency vs intensity of incident light on emission rate and kinetic energy.
-- Emission and absorption line spectra.
+"""Grade 12 Physical Sciences — Optical Phenomena & Properties of Matter Dedicated Generator.
 
-Constants (from CAPS Physics Data Sheet):
-- Planck's constant: h = 6.63 x 10^-34 J.s
-- Speed of light in vacuum: c = 3.0 x 10^8 m/s
-- Mass of an electron: m_e = 9.11 x 10^-31 kg
-- Elementary charge: e = 1.6 x 10^-19 C
+Curriculum Grounding:
+- curriculum_docs_auto/PhysicalSciences_Gr12/Term 3/03. Optical phenomena and properties of matter.md
 
-Zero-Meta-Curriculum Invariant strictly enforced.
+Registered Topics in caps_term_registry_data.json:
+1. Optical phenomena and properties of matter (Grade 12 Term 3)
+
+Complies with the 6-Pillar Generator Contract:
+1. Term & Calendar Metadata: term=3, caps_weight_percent=15, suggested_duration_mins=5.
+2. 50 Distinct Semantic Subskills (01..50), 0 synthetic shims.
+3. Standardized Misconceptions.
+4. Teacher-Editable Marking Schema.
+5. Deterministic 3-Tier Pre-Baked Hints.
+6. South African comma decimal convention (",").
 """
+
 from __future__ import annotations
 
-import math
 import random
-from typing import Any, Dict, List, Optional
+from typing import Any, Callable, Dict, List, Optional
+
+from app.utils.grade12_physical_sciences.optical_phenomena_photoelectric_archetypes_01_25 import (
+    BUILDERS_01_25,
+    SUBSKILLS_01_25,
+)
+from app.utils.grade12_physical_sciences.optical_phenomena_photoelectric_archetypes_26_50 import (
+    BUILDERS_26_50,
+    SUBSKILLS_26_50,
+)
+
+TOPIC = "grade12_optical_phenomena"
+LO = "PS12.OPP"
+
+# Aggregate all 50 distinct semantic archetype builders
+BUILDERS: Dict[str, Callable[[random.Random], Dict[str, Any]]] = {
+    **BUILDERS_01_25,
+    **BUILDERS_26_50,
+}
+
+SUBSKILLS: List[str] = list(BUILDERS.keys())
+ORDERED_SUBSKILLS: List[str] = list(BUILDERS.keys())
+ARCHETYPES: List[str] = list(BUILDERS.keys())
+AVAILABLE_SUBSKILLS: List[str] = list(BUILDERS.keys())
+
+LEGACY_ALIASES: Dict[str, str] = {
+    "compound": "50_photoelectric_and_spectra_diagnostic_synthesis",
+    "concepts": "01_photoelectric_effect_definition_and_significance",
+    "scaffold": "03_photon_energy_from_frequency",
+    "work_function": "06_work_function_definition",
+    "threshold_frequency": "07_threshold_frequency_calculation",
+    "photoelectric_equation": "11_photoelectric_equation_maximum_kinetic_energy",
+    "photoelectron_speed": "13_maximum_speed_of_photoelectrons",
+    "stopping_potential": "22_stopping_potential_calculation_from_kinetic_energy",
+    "photocell": "24_photocell_retarding_circuit_diagram",
+    "kmax_graph": "33_kinetic_energy_vs_frequency_graph_planck_gradient",
+    "spectra": "38_line_emission_spectrum_definition_and_origin",
+    "bohr_transitions": "43_bohr_energy_level_transition_photon_emission",
+    "skills_for_science": "49_skills_for_science_plancks_constant_uncertainty",
+}
 
 
-def _rng(seed: Optional[int] = None) -> random.Random:
-    r = random.Random()
-    if seed is not None:
-        r.seed(int(seed))
-    return r
+def get_subskills() -> List[str]:
+    """Return ordered list of all 50 semantic subskill identifiers."""
+    return list(SUBSKILLS)
 
 
-def _fmt_sa(val: float | int, places: int = 2) -> str:
-    if isinstance(val, int) or (isinstance(val, float) and val.is_integer()):
-        return str(int(val))
-    s = f"{val:.{places}f}".rstrip("0").rstrip(".")
-    return s.replace(".", "{,}")
+def _resolve_builder(target: Optional[str]) -> Optional[Callable[[random.Random], Dict[str, Any]]]:
+    if not target or target in ("mixed", "all", "default"):
+        return None
+    if target in BUILDERS:
+        return BUILDERS[target]
+    if target in LEGACY_ALIASES and LEGACY_ALIASES[target] in BUILDERS:
+        return BUILDERS[LEGACY_ALIASES[target]]
+    t_low = str(target).strip().lower()
+    for k, b in BUILDERS.items():
+        if t_low == k.lower() or t_low in k.lower():
+            return b
+    return None
 
 
-METALS_DATA = [
-    {"name": "Sodium (Na)", "w0_joules": 3.65e-19, "w0_ev": 2.28},
-    {"name": "Potassium (K)", "w0_joules": 3.68e-19, "w0_ev": 2.30},
-    {"name": "Zinc (Zn)", "w0_joules": 6.88e-19, "w0_ev": 4.30},
-    {"name": "Platinum (Pt)", "w0_joules": 1.01e-18, "w0_ev": 6.35},
-    {"name": "Cesium (Cs)", "w0_joules": 3.42e-19, "w0_ev": 2.14},
-    {"name": "Copper (Cu)", "w0_joules": 7.52e-19, "w0_ev": 4.70},
-]
+def generate_question(
+    subskill: Optional[str] = None,
+    difficulty: str = "medium",
+    seed: Optional[int] = None,
+    **kwargs: Any,
+) -> Dict[str, Any]:
+    """Generate a single deterministic 6-pillar question for Grade 12 Optical Phenomena."""
+    base_seed = 42 if seed is None else int(seed)
+    r = random.Random(base_seed)
+    effective_target = subskill or kwargs.get("archetype") or kwargs.get("mode")
+    builder = _resolve_builder(effective_target)
+    if not builder:
+        chosen_subskill = SUBSKILLS[base_seed % len(SUBSKILLS)]
+        builder = BUILDERS[chosen_subskill]
 
-H = 6.63e-34
-C = 3.0e8
-ME = 9.11e-31
+    q = builder(r)
+    q["seed"] = base_seed
+    q["difficulty"] = difficulty
+    return q
 
 
-def _build_photoelectric_drill(r: random.Random) -> Dict[str, Any]:
-    metal = r.choice(METALS_DATA)
-    w0 = metal["w0_joules"]
-    f0 = w0 / H
-    lambda0 = (C / f0) * 1e9  # in nm
-
-    # Choose incident frequency above threshold: 1.25x to 2.2x f0
-    multiplier = round(r.uniform(1.3, 2.0), 2)
-    f_incident = f0 * multiplier
-    e_photon = H * f_incident
-    ek_max = e_photon - w0
-    v_max = math.sqrt((2 * ek_max) / ME)
-
-    prompt = (
-        f"In a photoelectric experiment, ultraviolet radiation of frequency "
-        f"**${f_incident:.2e}\\text{{ Hz}}$** is shone onto the clean surface of a **{metal['name']}** cathode.\n"
-        f"The work function of {metal['name']} is **${w0:.2e}\\text{{ J}}$**.\n\n"
-        f"1. Define the term *work function* ($W_0$) of a metal.\n"
-        f"2. Calculate the threshold frequency ($f_0$) of {metal['name']}.\n"
-        f"3. Calculate the maximum kinetic energy ($E_{{k,\\text{{max}}}}$) of the ejected photoelectrons.\n"
-        f"4. Calculate the maximum speed ($v_{{\\text{{max}}}}$) with which photoelectrons leave the cathode surface.\n"
-        f"5. State the effect on $E_{{k,\\text{{max}}}}$ if the intensity of the incident radiation is doubled while keeping the frequency constant."
+def generate(
+    subskill: str = "concepts",
+    difficulty: str = "medium",
+    count: int = 1,
+    grade: str = "12",
+    seed: Optional[int] = None,
+    mode: str = "compound",
+    **kwargs: Any,
+) -> List[Dict[str, Any]]:
+    """Master generation endpoint for Grade 12 Physical Sciences Optical Phenomena."""
+    base_seed = 42 if seed is None else int(seed)
+    effective_target = (
+        subskill
+        if (subskill and subskill not in ("concepts", "default", "mixed", "all"))
+        else (kwargs.get("archetype") or mode)
     )
 
-    sol = (
-        f"1. **Work function:** The minimum amount of energy needed to emit an electron from the surface of a metal.\n\n"
-        f"2. $W_0 = h f_0$\n"
-        f"   $f_0 = \\frac{{W_0}}{{h}} = \\frac{{{w0:.2e}}}{{6{{,}}63 \\times 10^{{-34}}}} = {f0:.2e}\\text{{ Hz}}$\n\n"
-        f"3. $E = W_0 + E_{{k,\\text{{max}}}}$\n"
-        f"   $h f = W_0 + E_{{k,\\text{{max}}}}$\n"
-        f"   $(6{{,}}63 \\times 10^{{-34}})({f_incident:.2e}) = {w0:.2e} + E_{{k,\\text{{max}}}}$\n"
-        f"   ${e_photon:.2e} = {w0:.2e} + E_{{k,\\text{{max}}}}$\n"
-        f"   $E_{{k,\\text{{max}}}} = {e_photon:.2e} - {w0:.2e} = {ek_max:.2e}\\text{{ J}}$\n\n"
-        f"4. $E_{{k,\\text{{max}}}} = \\frac{{1}}{{2}} m v_{{\\text{{max}}}}^2$\n"
-        f"   ${ek_max:.2e} = \\frac{{1}}{{2}} (9{{,}}11 \\times 10^{{-31}}) v_{{\\text{{max}}}}^2$\n"
-        f"   $v_{{\\text{{max}}}}^2 = \\frac{{2 \\times {ek_max:.2e}}}{{9{{,}}11 \\times 10^{{-31}}}} = {((2 * ek_max) / ME):.2e}$\n"
-        f"   $v_{{\\text{{max}}}} = {v_max:.2e}\\text{{ m}}\\cdot\\text{{s}}^{{-1}}$\n\n"
-        f"5. **No effect / Remains unchanged.** Increasing the intensity increases the number of photoelectrons emitted per second, but does not alter the energy of individual photons or $E_{{k,\\text{{max}}}}$."
-    )
+    questions: List[Dict[str, Any]] = []
+    for i in range(max(1, count)):
+        sub_seed = base_seed + i * 37
+        r = random.Random(sub_seed)
+        builder = _resolve_builder(effective_target)
+        if not builder:
+            chosen_subskill = SUBSKILLS[(base_seed + i) % len(SUBSKILLS)]
+            builder = BUILDERS[chosen_subskill]
 
-    return {
-        "id": f"g12_ps_photo_{r.randint(10000, 99999)}",
-        "type": "compound",
-        "prompt": prompt,
-        "correct_answer": f"f0={f0:.2e} Hz, Ek_max={ek_max:.2e} J, vmax={v_max:.2e} m/s",
-        "worked_solution": sol,
-        "marking_schema": {
-            "total_marks": 7,
-            "marking_points": [
-                {"id": "mp1", "desc": "Definition of work function: minimum energy required to emit an electron", "marks": 1, "editable": True},
-                {"id": "mp2", "desc": "Formula: W0 = h * f0", "marks": 1, "editable": True},
-                {"id": "mp3", "desc": f"Calculate f0 = {f0:.2e} Hz", "marks": 1, "editable": True},
-                {"id": "mp4", "desc": "Formula: E = W0 + Ek_max (or hf = W0 + Ek_max)", "marks": 1, "editable": True},
-                {"id": "mp5", "desc": f"Calculate Ek_max = {ek_max:.2e} J", "marks": 1, "editable": True},
-                {"id": "mp6", "desc": f"Calculate vmax = {v_max:.2e} m/s", "marks": 1, "editable": True},
-                {"id": "mp7", "desc": "Intensity effect: No effect on Ek_max (increases emission rate only)", "marks": 1, "editable": True},
-            ],
-            "deductions": [{"rule": "confused_intensity_and_frequency_effects", "penalty": -1}],
-            "carry_forward_rule": "consequential_accuracy",
-        },
-        "hints": {
-            "tier_1": "Apply Einstein's photoelectric equation: $E = W_0 + E_{k,\\text{max}}$ where $E = hf$.",
-            "tier_2": "Threshold frequency is calculated from $W_0 = h f_0$. Maximum velocity from $E_{k,\\text{max}} = \\frac{1}{2}m v_{\\text{max}}^2$.",
-            "tier_3": f"$f_0 = {w0:.2e} / 6{{,}}63 \\times 10^{{-34}} = {f0:.2e}\\text{{ Hz}}$. $E_{{k,\\text{{max}}}} = {ek_max:.2e}\\text{{ J}}$.",
-        },
-        "misconception_tags": ["confused_intensity_and_frequency_effects", "forgot_threshold_frequency_condition"],
-        "term": 3,
-        "caps_weight_percent": 15,
-        "suggested_duration_mins": 6,
-    }
+        q = builder(r)
+        q["seed"] = sub_seed
+        q["difficulty"] = difficulty
+        q["grade"] = str(grade)
+        q["mode"] = mode
+        questions.append(q)
 
-
-def generate(seed: Optional[int] = None, mode: str = "compound", **kwargs) -> Dict[str, Any]:
-    """Main generator entrypoint adhering to 6-pillar contract."""
-    r = _rng(seed)
-    return _build_photoelectric_drill(r)
+    return questions

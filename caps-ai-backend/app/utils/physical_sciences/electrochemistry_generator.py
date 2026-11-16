@@ -1,301 +1,114 @@
-"""Electrochemistry & Chemical Change Generator (Grades 9 & 12 Physical/Natural Sciences).
+"""Grade 11 Physical Sciences — Energy and Chemical Change (50-Archetype Generator Wrapper).
+Grounded strictly in curriculum_docs_auto/PhysicalSciences_Gr11/Term 3/02. Energy and chemical change.md.
 
-Complies with the 6-pillar South African CAPS contract:
-- Term & calendar metadata
-- Deconstructible compound and elementary sub-drills
-- Standardized misconception taxonomy
-- Teacher-editable marking schema with official [M] and [A] marks
-- Deterministic 3-tier pre-baked hints
-- South African comma decimal convention
+Complies with the 6-pillar South African curriculum contract:
+- 50 distinct semantic subskills (01_<name> .. 50_<name>), zero synthetic shims
+- Modular splits: electrochemistry_archetypes_01_25.py & electrochemistry_archetypes_26_50.py (< 2000 lines each)
+- Preserves Grade 9 / Grade 12 legacy dispatch when explicitly passed without a Grade 11 subskill
+- Zero-LLM: 100% deterministic Python with South African comma decimals and inline SVGs.
 """
+from __future__ import annotations
 
 import random
 from typing import Any, Dict, List, Optional
 
+from app.utils.physical_sciences.electrochemistry_archetypes_01_25 import (
+    BUILDERS_01_25,
+)
+from app.utils.physical_sciences.electrochemistry_archetypes_26_50 import (
+    BUILDERS_26_50,
+)
 
-def _fmt_sa(val: float, decimals: int = 2) -> str:
-    """Formats a float using South African comma decimal convention."""
-    if abs(val - round(val)) < 1e-6:
-        return str(int(round(val)))
-    s = f"{val:.{decimals}f}".rstrip("0").rstrip(".")
-    return s.replace(".", "{,}")
+TOPIC = "physical_sciences_electrochemistry"
+LO = "phys11_energy_chemical_change"
 
+ARCHETYPE_BUILDERS: Dict[str, Any] = {
+    **BUILDERS_01_25,
+    **BUILDERS_26_50,
+}
 
-def _make_id(prefix: str, seed: Optional[int], idx: int) -> str:
-    return f"{prefix}_{seed or 'rnd'}_{idx}"
+BUILDERS: Dict[str, Any] = ARCHETYPE_BUILDERS
+ARCHETYPES: Dict[str, Any] = ARCHETYPE_BUILDERS
 
+SUBSKILLS: List[str] = list(ARCHETYPE_BUILDERS.keys())
+ORDERED_SUBSKILLS: List[str] = list(SUBSKILLS)
+AVAILABLE_SUBSKILLS: List[str] = list(SUBSKILLS)
 
-STANDARD_REDUCTION_POTENTIALS = {
-    "Zn": {"symbol": "Zn", "half_rx": "\\text{Zn}^{2+} + 2e^- \\rightleftharpoons \\text{Zn}", "e0": -0.76, "name": "zinc"},
-    "Cu": {"symbol": "Cu", "half_rx": "\\text{Cu}^{2+} + 2e^- \\rightleftharpoons \\text{Cu}", "e0": 0.34, "name": "copper"},
-    "Mg": {"symbol": "Mg", "half_rx": "\\text{Mg}^{2+} + 2e^- \\rightleftharpoons \\text{Mg}", "e0": -2.37, "name": "magnesium"},
-    "Ag": {"symbol": "Ag", "half_rx": "\\text{Ag}^+ + e^- \\rightleftharpoons \\text{Ag}", "e0": 0.80, "name": "silver"},
-    "Pb": {"symbol": "Pb", "half_rx": "\\text{Pb}^{2+} + 2e^- \\rightleftharpoons \\text{Pb}", "e0": -0.13, "name": "lead"},
-    "Ni": {"symbol": "Ni", "half_rx": "\\text{Ni}^{2+} + 2e^- \\rightleftharpoons \\text{Ni}", "e0": -0.27, "name": "nickel"},
-    "Al": {"symbol": "Al", "half_rx": "\\text{Al}^{3+} + 3e^- \\rightleftharpoons \\text{Al}", "e0": -1.66, "name": "aluminium"},
+LEGACY_ALIASES: Dict[str, str] = {
+    "enthalpy": "01_chemical_system_and_enthalpy_definition",
+    "exothermic": "05_exothermic_energy_balance_criteria",
+    "endothermic": "06_endothermic_energy_balance_criteria",
+    "activation_energy": "28_exothermic_potential_energy_profile_reading",
+    "catalyst": "36_catalyst_effect_on_activation_energy",
+    "bond_energy": "22_bond_energy_enthalpy_combustion_hydrocarbons",
+    "compound": "50_energy_and_chemical_change_comprehensive_synthesis",
+    "concepts": "01_chemical_system_and_enthalpy_definition",
 }
 
 
-def _generate_gr9_acids_bases(r: random.Random, seed: Optional[int], idx: int, mode: str) -> Dict[str, Any]:
-    """Grade 9 Natural Sciences: Acids, bases, pH scale and neutralisation."""
-    acid_pairs = [
-        ("hydrochloric acid (HCl)", "sodium hydroxide (NaOH)", "sodium chloride (NaCl)", "water (H2O)"),
-        ("sulfuric acid (H2SO4)", "potassium hydroxide (KOH)", "potassium sulfate (K2SO4)", "water (H2O)"),
-        ("nitric acid (HNO3)", "sodium hydroxide (NaOH)", "sodium nitrate (NaNO3)", "water (H2O)"),
-    ]
-    acid, base, salt, water = r.choice(acid_pairs)
-    test_ph = r.choice([2, 4, 7, 9, 12])
+def get_subskills() -> List[str]:
+    """Return all 50 semantic subskills for Grade 11 Energy and chemical change."""
+    return list(SUBSKILLS)
 
-    qid = _make_id("ns9_acids_bases", seed, idx)
 
-    if mode == "elementary_ph_scale":
-        prompt = (
-            f"A learner tests the pH of an unknown clear household cleaning solution using a calibrated digital pH meter and records a value of ${_fmt_sa(test_ph)}.\n\n"
-            f"1. Classify the solution as acidic, neutral, or alkaline (basic).\n"
-            f"2. State what color bromothymol blue indicator would turn when added to this solution."
-        )
-        if test_ph < 7:
-            nature = "acidic"
-            indicator_color = "yellow"
-        elif test_ph == 7:
-            nature = "neutral"
-            indicator_color = "green"
-        else:
-            nature = "alkaline (basic)"
-            indicator_color = "blue"
+def generate_question(
+    subskill: Optional[str] = None,
+    seed: Optional[int] = None,
+    difficulty: str = "medium",
+    mode: Optional[str] = None,
+    **kwargs: Any,
+) -> Dict[str, Any]:
+    """Generate a single deterministic Grade 11 Energy and chemical change question."""
+    base_seed = seed if seed is not None else random.randint(1, 1_000_000)
+    rng = random.Random(base_seed)
 
-        ans_str = f"1. {nature}; 2. {indicator_color}"
-        memo = (
-            f"1. Classification [1]: pH {_fmt_sa(test_ph)} is {nature} (pH < 7 is acidic, pH = 7 is neutral, pH > 7 is alkaline). [1]\n"
-            f"2. Bromothymol blue color [1]: {indicator_color}. [1]"
-        )
-        hints = {
-            "tier_1": "Recall the pH scale from 0 to 14. 7 is neutral, below 7 is acidic, above 7 is basic.",
-            "tier_2": "Bromothymol blue is yellow in acid, green in neutral, and blue in base.",
-            "tier_3": f"pH = {test_ph} is {nature}. Indicator turns {indicator_color}.",
-        }
-        marks = 2
+    target = subskill or (mode if mode and mode in LEGACY_ALIASES else None)
+    if target and target not in ("mixed", "all", ""):
+        resolved = LEGACY_ALIASES.get(target, target)
+        builder = ARCHETYPE_BUILDERS.get(resolved)
+        if not builder:
+            matches = [s for s in ORDERED_SUBSKILLS if target.lower() in s.lower()]
+            builder = ARCHETYPE_BUILDERS[matches[0]] if matches else ARCHETYPE_BUILDERS[ORDERED_SUBSKILLS[0]]
     else:
-        prompt = (
-            f"A Grade 9 learner carries out a neutralisation reaction between {acid} and {base}.\n\n"
-            f"1. Define the term *neutralisation reaction*.\n"
-            f"2. Write a general word equation for the reaction between an acid and a metal hydroxide.\n"
-            f"3. Name the specific salt produced in this reaction.\n"
-            f"4. If equal amounts of concentrated {acid} and {base} react completely, what will the approximate pH of the resulting solution be?"
-        )
-        ans_str = (
-            f"1. Chemical reaction where an acid and a base react to form a salt and water; "
-            f"2. Acid + Base -> Salt + Water; "
-            f"3. {salt}; "
-            f"4. pH = 7"
-        )
-        memo = (
-            f"1. Definition [2]: A chemical reaction in which an acid reacts with a base to produce a salt and water (neutralising each other's properties). [2]\n"
-            f"2. General word equation [2]: $$\\text{{Acid}} + \\text{{Base (metal hydroxide)}} \\to \\text{{Salt}} + \\text{{Water}}$$ [2]\n"
-            f"3. Specific salt formed [1]: {salt}. [1]\n"
-            f"4. Resulting pH [1]: pH 7 (neutral solution). [1]"
-        )
-        hints = {
-            "tier_1": "Neutralisation produces two main products: a salt and water.",
-            "tier_2": "The metal from the base replaces hydrogen in the acid to form the salt.",
-            "tier_3": f"Salt: {salt}. Resulting pH is 7.",
-        }
-        marks = 6
+        chosen = rng.choice(ORDERED_SUBSKILLS)
+        builder = ARCHETYPE_BUILDERS[chosen]
 
-    return {
-        "id": qid,
-        "question_id": qid,
-        "term": 2,
-        "caps_weight_percent": 18,
-        "suggested_duration_mins": 6,
-        "mode": mode,
-        "question_type": "short_answer",
-        "question": prompt,
-        "correct_answer": ans_str,
-        "sample_answer": ans_str,
-        "worked_solution": memo,
-        "explanation": memo,
-        "marks": marks,
-        "hints": hints,
-        "misconception_tags": ["acid_base_salt_naming_error", "confused_indicator_color_ranges", "ph_scale_interpretation_error"],
-        "marking_schema": {
-            "total_marks": marks,
-            "marking_points": [
-                {"id": "mp_1", "desc": "Definition of neutralisation", "marks": 2, "editable": True},
-                {"id": "mp_2", "desc": "General word equation", "marks": 2, "editable": True},
-                {"id": "mp_3", "desc": "Specific salt identification and pH", "marks": 2, "editable": True},
-            ],
-            "deductions": [],
-            "carry_forward_rule": "consequential_accuracy",
-        },
-    }
-
-
-def _generate_gr12_galvanic_cell(r: random.Random, seed: Optional[int], idx: int, mode: str) -> Dict[str, Any]:
-    """Grade 12: Galvanic electrochemical cells, standard potentials, and cell notation."""
-    pairs = [
-        ("Zn", "Cu"),
-        ("Mg", "Cu"),
-        ("Al", "Cu"),
-        ("Pb", "Ag"),
-        ("Ni", "Ag"),
-        ("Zn", "Ag"),
-    ]
-    anode_key, cathode_key = r.choice(pairs)
-    anode_data = STANDARD_REDUCTION_POTENTIALS[anode_key]
-    cathode_data = STANDARD_REDUCTION_POTENTIALS[cathode_key]
-
-    e0_anode = anode_data["e0"]
-    e0_cathode = cathode_data["e0"]
-    e0_cell = round(e0_cathode - e0_anode, 2)
-
-    qid = _make_id("ps12_galvanic", seed, idx)
-    modality = "bio_diagram"
-    diagram_spec = {
-        "diagram_role": "identify" if locals().get("target_pin_letter") or locals().get("target_pin") else "context",
-        "image_type": "galvanic_cell",
-        "anode_metal": anode_key,
-        "cathode_metal": cathode_key,
-        "voltmeter_reading": f"{_fmt_sa(e0_cell)} V",
-        "labels": [
-            {"id": "A", "name": f"Anode Electrode ({anode_key})", "x": 22, "y": 38},
-            {"id": "B", "name": f"Cathode Electrode ({cathode_key})", "x": 78, "y": 38},
-            {"id": "C", "name": "Salt bridge (KNO₃ / KCl gel)", "x": 50, "y": 34},
-            {"id": "D", "name": f"Voltmeter ({_fmt_sa(e0_cell)} V)", "x": 50, "y": 12},
-            {"id": "E", "name": f"Anode electrolyte ({anode_key}²⁺ 1 mol·dm⁻³)", "x": 18, "y": 72},
-            {"id": "F", "name": f"Cathode electrolyte ({cathode_key}²⁺ 1 mol·dm⁻³)", "x": 82, "y": 72},
-            {"id": "G", "name": "Electron flow direction in external circuit (e⁻)", "x": 34, "y": 10},
-        ],
-    }
-
-    if mode == "elementary_galvanic_cell_potential":
-        prompt = (
-            f"The diagram represents a standard galvanic electrochemical cell consisting of a {anode_data['name']} half-cell "
-            f"($E^\\circ = {_fmt_sa(e0_anode)}\\text{{ V}}$) and a {cathode_data['name']} half-cell "
-            f"($E^\\circ = {_fmt_sa(e0_cathode)}\\text{{ V}}$).\n\n"
-            f"1. Identify which electrode (A or B) acts as the cathode.\n"
-            f"2. Calculate the standard cell potential ($E^\\circ_{{\\text{{cell}}}}$) of this cell."
-        )
-        ans_str = f"1. Cathode: {cathode_data['name']} ({cathode_key}) [Electrode B]; 2. E0_cell = {_fmt_sa(e0_cell)} V"
-        memo = (
-            f"1. Cathode identification [1]: {cathode_data['name']} ({cathode_key}) has the more positive standard reduction potential "
-            f"(${_fmt_sa(e0_cathode)}\\text{{ V}} > {_fmt_sa(e0_anode)}\\text{{ V}}$), hence it undergoes reduction at cathode B. [1]\n"
-            f"2. Cell potential calculation [2]:\n"
-            f"   $$E^\\circ_{{\\text{{cell}}}} = E^\\circ_{{\\text{{cathode}}}} - E^\\circ_{{\\text{{anode}}}} = ({_fmt_sa(e0_cathode)}) - ({_fmt_sa(e0_anode)}) = {_fmt_sa(e0_cell)}\\text{{ V}}$$ [M+A]"
-        )
-        hints = {
-            "tier_1": "The half-cell with the higher (more positive) reduction potential is the cathode.",
-            "tier_2": "Formula: E0_cell = E0_cathode - E0_anode.",
-            "tier_3": f"E0_cell = {e0_cathode} - ({e0_anode}) = {e0_cell:.2f} V.",
-        }
-        marks = 3
-    else:
-        # Full compound Grade 12 exam question
-        prompt = (
-            f"The diagram represents a standard galvanic electrochemical cell operating at $25^\\circ\\text{{C}}$.\n"
-            f"Electrode A ({anode_data['name']}) is dipped in a $1\\text{{ mol}}\\cdot\\text{{dm}}^{{-3}}$ {anode_key}$^{{2+}}$ electrolyte solution (E),\n"
-            f"and Electrode B ({cathode_data['name']}) is dipped in a $1\\text{{ mol}}\\cdot\\text{{dm}}^{{-3}}$ {cathode_key}$^{{2+}}$ electrolyte solution (F).\n"
-            f"Component C is a U-tube salt bridge connecting the two half-cells, and instrument D is a high-resistance voltmeter.\n\n"
-            f"1. State the TWO standard conditions applicable to solutions and temperature in this cell.\n"
-            f"2. Identify the ANODE (Electrode A or B) and write down the oxidation half-reaction taking place.\n"
-            f"3. Write down the reduction half-reaction taking place at the cathode.\n"
-            f"4. Write down the overall balanced net ionic cell reaction.\n"
-            f"5. Write down the cell notation for this galvanic cell.\n"
-            f"6. State TWO functions of the salt bridge (C).\n"
-            f"7. State the direction of electron flow in the external circuit (from A to B or B to A).\n"
-            f"8. Calculate the standard cell potential ($E^\\circ_{{\\text{{cell}}}}$)."
-        )
-        ans_str = (
-            f"1. Temp = 25 C (298 K), Concentration = 1 mol/dm3; "
-            f"2. Anode: Electrode A ({anode_key}), {anode_key} -> {anode_key}^(2+) + 2e-; "
-            f"3. {cathode_key}^(2+) + 2e- -> {cathode_key}; "
-            f"4. {anode_key}(s) + {cathode_key}^(2+)(aq) -> {anode_key}^(2+)(aq) + {cathode_key}(s); "
-            f"5. {anode_key}(s) | {anode_key}^(2+)(1 mol/dm3) || {cathode_key}^(2+)(1 mol/dm3) | {cathode_key}(s); "
-            f"6. Completes circuit, maintains electrical neutrality; "
-            f"7. From A to B (anode to cathode); "
-            f"8. E0_cell = {_fmt_sa(e0_cell)} V"
-        )
-        memo = (
-            f"1. Standard conditions [2]:\n"
-            f"   - Temperature: $25^\\circ\\text{{C}}$ (or $298\\text{{ K}}$) [1]\n"
-            f"   - Concentration of electrolytes: $1\\text{{ mol}}\\cdot\\text{{dm}}^{{-3}}$ [1]\n"
-            f"2. Anode & Oxidation half-reaction [2]:\n"
-            f"   - Anode: Electrode A ({anode_key}) (has lower reduction potential ${_fmt_sa(e0_anode)}\\text{{ V}}$) [1]\n"
-            f"   - Half-reaction: $$\\text{{{anode_key}(s)}} \\to \\text{{{anode_key}}}^{{2+}}\\text{{(aq)}} + 2e^-$$ [1]\n"
-            f"3. Cathode & Reduction half-reaction [1]:\n"
-            f"   $$\\text{{{cathode_key}}}^{{2+}}\\text{{(aq)}} + 2e^- \\to \\text{{{cathode_key}(s)}}$$ [1]\n"
-            f"4. Overall balanced net cell reaction [2]:\n"
-            f"   $$\\text{{{anode_key}(s)}} + \\text{{{cathode_key}}}^{{2+}}\\text{{(aq)}} \\to \\text{{{anode_key}}}^{{2+}}\\text{{(aq)}} + \\text{{{cathode_key}(s)}}$$ [2]\n"
-            f"5. Standard cell notation [2]:\n"
-            f"   $$\\text{{{anode_key}(s)}} \\mid \\text{{{anode_key}}}^{{2+}}\\text{{(aq, 1 mol}}\\cdot\\text{{dm}}^{{-3}}\\text{{)}} \\parallel \\text{{{cathode_key}}}^{{2+}}\\text{{(aq, 1 mol}}\\cdot\\text{{dm}}^{{-3}}\\text{{)}} \\mid \\text{{{cathode_key}(s)}}$$ [2]\n"
-            f"6. Functions of the salt bridge [2]:\n"
-            f"   - Completes the electric circuit [1]\n"
-            f"   - Maintains electrical neutrality in both half-cells by ion migration [1]\n"
-            f"7. Electron flow direction [1]: From Electrode A (anode) to Electrode B (cathode) through the external conducting wire [1]\n"
-            f"8. Cell potential calculation [2]:\n"
-            f"   $$E^\\circ_{{\\text{{cell}}}} = E^\\circ_{{\\text{{cathode}}}} - E^\\circ_{{\\text{{anode}}}} = ({_fmt_sa(e0_cathode)}) - ({_fmt_sa(e0_anode)}) = {_fmt_sa(e0_cell)}\\text{{ V}}$$ [M+A]"
-        )
-        hints = {
-            "tier_1": "Recall: Anode is oxidation (loss of electrons). Cathode is reduction (gain of electrons). Electrons travel from anode to cathode.",
-            "tier_2": "Cell notation is always written: Anode | Anode ion || Cathode ion | Cathode.",
-            "tier_3": f"E0_cell = {e0_cathode} - ({e0_anode}) = {e0_cell:.2f} V. Electrons flow from A to B.",
-        }
-        marks = 14
-
-    return {
-        "id": qid,
-        "question_id": qid,
-        "term": 3,
-        "caps_weight_percent": 18,
-        "suggested_duration_mins": 14,
-        "mode": mode,
-        "question_type": "short_answer",
-        "modality": modality,
-        "diagram_spec": diagram_spec,
-        "question": prompt,
-        "correct_answer": ans_str,
-        "sample_answer": ans_str,
-        "worked_solution": memo,
-        "explanation": memo,
-        "marks": marks,
-        "hints": hints,
-        "misconception_tags": [
-            "anode_cathode_inversion",
-            "sign_error_standard_potential",
-            "cell_notation_phase_boundary_inverted",
-            "salt_bridge_function_misunderstood",
-        ],
-        "marking_schema": {
-            "total_marks": marks,
-            "marking_points": [
-                {"id": "mp_1", "desc": "Standard conditions statements", "marks": 2, "editable": True},
-                {"id": "mp_2", "desc": "Anode and oxidation half-reaction", "marks": 2, "editable": True},
-                {"id": "mp_3", "desc": "Cathode reduction half-reaction", "marks": 1, "editable": True},
-                {"id": "mp_4", "desc": "Overall balanced net ionic equation", "marks": 2, "editable": True},
-                {"id": "mp_5", "desc": "Standard cell notation formatting", "marks": 2, "editable": True},
-                {"id": "mp_6", "desc": "Salt bridge dual functions", "marks": 2, "editable": True},
-                {"id": "mp_7", "desc": "Standard cell potential calculation", "marks": 2, "editable": True},
-            ],
-            "deductions": [{"rule": "omitted_cell_potential_unit_volt", "penalty": -1}],
-            "carry_forward_rule": "consequential_accuracy",
-        },
-    }
+    q = builder(rng)
+    if seed is not None:
+        q["seed"] = seed
+    return q
 
 
 def generate(
-    subskill: str = "concepts",
+    subskill: Optional[str] = None,
     difficulty: str = "medium",
     count: int = 1,
-    grade: str = "12",
+    grade: str = "11",
     seed: Optional[int] = None,
     mode: str = "compound",
     **kwargs: Any,
 ) -> List[Dict[str, Any]]:
-    """Master generation endpoint for Electrochemistry & Chemical Change."""
+    """Master generation endpoint for Energy & Chemical Change (Grade 11) with legacy Gr9/Gr12 routing."""
     gr_str = str(grade).strip()
-    if gr_str == "9":
-        from app.utils.natural_sciences.ns7_acids_bases_neutrals_generator import generate as ns_gen
-        return ns_gen(subskill=subskill, difficulty=difficulty, count=count, grade="9", seed=seed, mode=mode, **kwargs)
-    
-    from app.utils.physical_sciences.ps12_electrochemistry_galvanic_generator import generate as ps_gen
-    return ps_gen(subskill=subskill, difficulty=difficulty, count=count, grade="12", seed=seed, mode=mode, **kwargs)
+    is_gr11_sub = subskill in ARCHETYPE_BUILDERS or (subskill in LEGACY_ALIASES)
+
+    if not is_gr11_sub:
+        if gr_str == "9":
+            from app.utils.natural_sciences.ns7_acids_bases_neutrals_generator import generate as ns_gen
+            return ns_gen(subskill=subskill, difficulty=difficulty, count=count, grade="9", seed=seed, mode=mode, **kwargs)
+        if gr_str == "12":
+            from app.utils.physical_sciences.ps12_electrochemistry_galvanic_generator import generate as ps_gen
+            return ps_gen(subskill=subskill, difficulty=difficulty, count=count, grade="12", seed=seed, mode=mode, **kwargs)
+
+    base_seed = seed if seed is not None else random.randint(1, 1_000_000)
+    questions: List[Dict[str, Any]] = []
+    for i in range(max(1, count)):
+        curr_seed = base_seed + (i * 37)
+        if subskill and subskill not in ("mixed", "all", ""):
+            q = generate_question(subskill=subskill, seed=curr_seed, difficulty=difficulty, mode=mode, **kwargs)
+        else:
+            sub = ORDERED_SUBSKILLS[(base_seed + i) % len(ORDERED_SUBSKILLS)]
+            q = generate_question(subskill=sub, seed=curr_seed, difficulty=difficulty, mode=mode, **kwargs)
+        questions.append(q)
+
+    return questions

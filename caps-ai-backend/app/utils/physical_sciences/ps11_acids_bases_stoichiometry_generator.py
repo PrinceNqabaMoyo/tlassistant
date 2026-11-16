@@ -1,4 +1,4 @@
-"""Physical Sciences Grade 11 & 12 — Acids, Bases & Titration Stoichiometry Dedicated Generator.
+"""Physical Sciences Grade 11 & 12 — Acids, Bases, Titrations & Stoichiometry Generator.
 
 Curriculum Grounding:
 - curriculum_docs_auto/PhysicalSciences_Gr11/Term 3/03. Types of reaction.md
@@ -6,172 +6,90 @@ Curriculum Grounding:
 - curriculum_docs_auto/PhysicalSciences_Gr12/Term 2/03. Acids and bases.md
 
 Complies with the 6-Pillar Generator Contract:
-1. Term & Calendar Metadata: term=3 (Gr 11) / term=2 (Gr 12), caps_weight_percent=20, suggested_duration_mins=8.
-2. Deconstructible compound questions & atomic sub-drills.
+1. Term & Calendar Metadata: term=3 (Gr 11), caps_weight_percent=20, suggested_duration_mins=8.
+2. Deconstructible compound questions & atomic sub-drills across 50 semantic archetypes.
 3. Standardized Misconceptions.
 4. Teacher-Editable Marking Schema.
 5. Deterministic 3-Tier Hints.
 6. South African comma decimal convention (",").
 """
-
 from __future__ import annotations
 
-import math
 import random
-from typing import Any, Dict, List, Optional
+from typing import Any, Callable, Dict, List, Optional
 
-from app.utils.physical_sciences.physical_sciences_builders import build_titration_apparatus_question
+from app.utils.physical_sciences.ps11_acids_bases_stoichiometry_archetypes_01_25 import (
+    BUILDERS_01_25,
+)
+from app.utils.physical_sciences.ps11_acids_bases_stoichiometry_archetypes_26_50 import (
+    BUILDERS_26_50,
+)
 
-TOPIC = "grade11_acids_bases_stoichiometry"
+TOPIC = "grade11_physical_sciences_acids_bases_stoichiometry"
 
-TITRATION_PAIRS = [
-    {
-        "acid_name": "Hydrochloric acid",
-        "acid_formula": "\\text{HCl}",
-        "base_name": "Sodium hydroxide",
-        "base_formula": "\\text{NaOH}",
-        "salt_name": "Sodium chloride (NaCl)",
-        "salt_nature": "neutral",
-        "indicator": "Bromothymol blue",
-        "indicator_color": "green",
-        "na": 1,
-        "nb": 1,
-        "molar_mass_base": 40.0,
-    },
-    {
-        "acid_name": "Sulphuric acid",
-        "acid_formula": "\\text{H}_2\\text{SO}_4",
-        "base_name": "Sodium hydroxide",
-        "base_formula": "\\text{NaOH}",
-        "salt_name": "Sodium sulphate (Na2SO4)",
-        "salt_nature": "neutral",
-        "indicator": "Bromothymol blue",
-        "indicator_color": "green",
-        "na": 1,
-        "nb": 2,
-        "molar_mass_base": 40.0,
-    },
-    {
-        "acid_name": "Oxalic acid (ethanedioic acid)",
-        "acid_formula": "(\\text{COOH})_2",
-        "base_name": "Sodium hydroxide",
-        "base_formula": "\\text{NaOH}",
-        "salt_name": "Sodium oxalate",
-        "salt_nature": "basic (alkaline)",
-        "indicator": "Phenolphthalein",
-        "indicator_color": "pale pink",
-        "na": 1,
-        "nb": 2,
-        "molar_mass_base": 40.0,
-    },
-    {
-        "acid_name": "Hydrochloric acid",
-        "acid_formula": "\\text{HCl}",
-        "base_name": "Sodium carbonate",
-        "base_formula": "\\text{Na}_2\\text{CO}_3",
-        "salt_name": "Sodium chloride (NaCl)",
-        "salt_nature": "acidic/neutral",
-        "indicator": "Methyl orange",
-        "indicator_color": "orange",
-        "na": 2,
-        "nb": 1,
-        "molar_mass_base": 106.0,
-    },
-]
+BUILDERS: Dict[str, Callable[[random.Random], Dict[str, Any]]] = {
+    **BUILDERS_01_25,
+    **BUILDERS_26_50,
+}
+
+SUBSKILLS: List[str] = list(BUILDERS.keys())
+
+LEGACY_ALIASES: Dict[str, str] = {
+    "concepts": "01_arrhenius_acid_base_definitions",
+    "titration_apparatus_diagram": "11_titration_apparatus_identification",
+    "titration_apparatus": "11_titration_apparatus_identification",
+    "elementary_titration_stoichiometry": "16_titration_volumetric_calculation_monoprotic",
+    "titration_calc": "17_titration_volumetric_calculation_diprotic",
+    "moles_mass": "26_mole_and_avogadro_constant",
+    "molar_mass": "27_molar_mass_compound_calculations",
+    "gas_volume": "28_molar_gas_volume_stp_calculations",
+    "concentration": "29_molar_concentration_calculations",
+    "dilution": "30_solution_dilution_calculations",
+    "empirical_formula": "32_empirical_formula_from_percentage",
+    "molecular_formula": "34_molecular_formula_from_empirical",
+    "limiting_reagent": "41_limiting_reagent_mole_identification",
+    "percentage_yield": "45_percentage_yield_calculations",
+    "purity": "46_percentage_purity_of_reactants",
+    "back_titration": "48_back_titration_stoichiometry",
+}
 
 
-def _fmt_sa(val: float | int, decimals: int = 2) -> str:
-    if isinstance(val, int) or val == int(val):
-        return str(int(val))
-    s = f"{val:.{decimals}f}".rstrip("0").rstrip(".")
-    return s.replace(".", ",")
+def get_subskills() -> List[str]:
+    """Returns the ordered list of 50 semantic subskill identifiers."""
+    return list(SUBSKILLS)
 
 
-def _make_id(prefix: str, seed: Optional[int], idx: int) -> str:
-    s_val = seed if seed is not None else random.randint(1000, 9999)
-    return f"{prefix}_{s_val}_{idx}"
-
-
-def _generate_titration_calculation_question(
-    r: random.Random, seed: Optional[int], idx: int, mode: str, grade: int
+def generate_question(
+    subskill: Optional[str] = None,
+    seed: Optional[int] = None,
+    **kwargs: Any,
 ) -> Dict[str, Any]:
-    """Quantitative acid-base titration calculation: (ca * Va) / (cb * Vb) = na / nb."""
-    qid = _make_id(f"titration{grade}_calc", seed, idx)
-    pair = r.choice(TITRATION_PAIRS)
+    """Generates a single question dictionary from a specific subskill or random choice."""
+    rng = random.Random(seed)
+    chosen_sub = subskill or rng.choice(SUBSKILLS)
+    actual_sub = LEGACY_ALIASES.get(chosen_sub, chosen_sub)
+    builder = BUILDERS.get(actual_sub)
 
-    va_cm3 = r.choice([20.0, 22.5, 24.0, 25.0, 28.0])
-    vb_cm3 = r.choice([25.0, 20.0])
-    ca = r.choice([0.10, 0.12, 0.15, 0.20, 0.25])
+    if not builder:
+        builder = BUILDERS[SUBSKILLS[0]]
+        actual_sub = SUBSKILLS[0]
 
-    na = pair["na"]
-    nb = pair["nb"]
+    q = builder(rng)
+    # Ensure standard schema keys
+    if "question" not in q:
+        q["question"] = q.get("prompt", "")
+    if "worked_solution" not in q:
+        q["worked_solution"] = q.get("explanation") or q.get("sample_answer") or ""
+    if "explanation" not in q:
+        q["explanation"] = q["worked_solution"]
+    if "correct_answer" not in q:
+        q["correct_answer"] = q.get("sample_answer", "")
 
-    # cb = (ca * va * nb) / (vb * na)
-    cb = (ca * va_cm3 * nb) / (vb_cm3 * na)
-
-    prompt = (
-        f"In a volumetric titration experiment to determine the concentration of a {pair['base_name']} ({pair['base_formula']}) solution, "
-        f"a learner titrates exactly {_fmt_sa(vb_cm3)} cm³ of the base solution in an Erlenmeyer flask with a standard "
-        f"{pair['acid_name']} ({pair['acid_formula']}) solution of concentration {_fmt_sa(ca)} mol·dm⁻³ from a burette.\n"
-        f"An average volume of {_fmt_sa(va_cm3)} cm³ of acid is required to reach the equivalence endpoint.\n\n"
-        f"1. Define a *standard solution*.\n"
-        f"2. State suitable indicator for this titration and describe the distinct color change at the endpoint.\n"
-        f"3. Calculate the concentration of the {pair['base_name']} solution in mol·dm⁻³.\n"
-        f"4. State the function of the white tile placed beneath the conical flask."
-    )
-    ans_str = (
-        f"1. A solution of known concentration; "
-        f"2. Indicator: {pair['indicator']} (turns {pair['indicator_color']} at endpoint); "
-        f"3. cb = {_fmt_sa(cb, 3)} mol/dm3; "
-        f"4. Provides a white neutral contrast background to clearly observe the sharp color transition."
-    )
-    memo = (
-        f"1. Standard solution definition [2]: A solution of precisely known concentration. [2]\n"
-        f"2. Indicator selection [2]: {pair['indicator']} [1]; Endpoint color change: transitions to {pair['indicator_color']} at equivalence. [1]\n"
-        f"3. Titration concentration calculation [3]:\n"
-        f"   $$\\frac{{c_a \\cdot V_a}}{{c_b \\cdot V_b}} = \\frac{{n_a}}{{n_b}}$$ [1M]\n"
-        f"   $$\\frac{{({_fmt_sa(ca)})({_fmt_sa(va_cm3)})}}{{c_b \\cdot ({_fmt_sa(vb_cm3)})}} = \\frac{{{na}}}{{{nb}}}$$ [1M]\n"
-        f"   $$c_b = \\frac{{({_fmt_sa(ca)})({_fmt_sa(va_cm3)}) \\times {nb}}}{{({_fmt_sa(vb_cm3)}) \\times {na}}} = {_fmt_sa(cb, 3)}\\text{{ mol}}\\cdot\\text{{dm}}^{{-3}}$$ [1A]\n"
-        f"4. White tile function [1]: Provides a neutral, high-contrast reflective surface to detect the exact dropwise color change. [1]"
-    )
-    hints = {
-        "tier_1": "Use the mole ratio equation (ca * Va) / (cb * Vb) = na / nb.",
-        "tier_2": f"Here na = {na} and nb = {nb}. Solve for cb: cb = (ca * Va * nb) / (Vb * na).",
-        "tier_3": f"cb = {_fmt_sa(cb, 3)} mol·dm⁻³.",
-    }
-    term = 3 if grade == 11 else 2
-    return {
-        "id": qid,
-        "question_id": qid,
-        "term": term,
-        "caps_weight_percent": 18,
-        "suggested_duration_mins": 8,
-        "mode": mode,
-        "question_type": "short_answer",
-        "question": prompt,
-        "correct_answer": ans_str,
-        "sample_answer": ans_str,
-        "worked_solution": memo,
-        "explanation": memo,
-        "marks": 8,
-        "hints": hints,
-        "misconception_tags": ["stoichiometric_ratio_inversion", "titration_formula_volume_unit_error"],
-        "marking_schema": {
-            "total_marks": 8,
-            "marking_points": [
-                {"id": "mp_1", "desc": "Standard solution definition", "marks": 2, "editable": True},
-                {"id": "mp_2", "desc": "Indicator selection and color change", "marks": 2, "editable": True},
-                {"id": "mp_3", "desc": "Stoichiometric formula, substitution and answer", "marks": 3, "editable": True},
-                {"id": "mp_4", "desc": "White tile function", "marks": 1, "editable": True},
-            ],
-            "deductions": [],
-            "carry_forward_rule": "consequential_accuracy",
-        },
-    }
+    return q
 
 
 def generate(
-    subskill: str = "concepts",
+    subskill: Optional[str] = None,
     difficulty: str = "medium",
     count: int = 1,
     grade: str = "11",
@@ -179,25 +97,18 @@ def generate(
     mode: str = "compound",
     **kwargs: Any,
 ) -> List[Dict[str, Any]]:
-    """Master generation endpoint for Grade 11 & 12 Acids, Bases & Titrations."""
-    r = random.Random(seed)
-    questions = []
-    gr_int = 12 if str(grade).strip() == "12" else 11
+    """Master generation endpoint complying with CAPS Universal Generator Contract."""
+    base_seed = seed if seed is not None else random.randint(1000, 999999)
+    questions: List[Dict[str, Any]] = []
 
     for i in range(count):
-        sub_seed = (seed + i * 41) if seed is not None else random.randint(1000, 99999)
-
-        if mode == "scaffold" or subskill in ("titration_apparatus_diagram", "titration_apparatus"):
-            q = build_titration_apparatus_question(seed=sub_seed, grade=gr_int, mode=mode)
-        elif mode == "elementary_titration_stoichiometry":
-            q = _generate_titration_calculation_question(r, sub_seed, i, mode, gr_int)
-        else:
-            # Deterministic subskill cycling between visual apparatus inspection and quantitative titration
-            if (sub_seed + i) % 2 == 0:
-                q = build_titration_apparatus_question(seed=sub_seed, grade=gr_int, mode=mode)
-            else:
-                q = _generate_titration_calculation_question(r, sub_seed, i, mode, gr_int)
-
+        sub_seed = base_seed + i * 37
+        q = generate_question(subskill=subskill, seed=sub_seed, mode=mode, **kwargs)
         questions.append(q)
 
     return questions
+
+
+# Topic-specific convenience aliases
+generate_types_of_reaction = generate
+generate_quantitative_chemical_change = generate

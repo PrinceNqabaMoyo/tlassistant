@@ -1,10 +1,11 @@
 """Grade 12 Physical Sciences — Electrodynamics & Electric Circuits Generator.
-Deterministic 6-pillar CAPS question generator covering Paper 1 (Physics Term 3):
-- Electrical machines: AC and DC generators (alternators) vs electric motors.
-- Slip rings vs split-ring commutators, Fleming's rules, energy conversions.
-- Alternating current (AC) theory: Peak vs rms values (I_rms = I_max / sqrt(2), V_rms = V_max / sqrt(2)).
-- Average power dissipation: P_ave = V_rms * I_rms = I_rms^2 * R = V_rms^2 / R.
-- Internal resistance of batteries: emf = V_load + V_internal = I(R_ext + r), lost volts.
+Deterministic 6-pillar question generator covering Paper 1 (Physics Term 3):
+- Subskills 01–25: Electrodynamics (Magnetic flux, Faraday's Law, Lenz's Law, Fleming's rules,
+  AC alternator, DC generator, split-ring commutator, DC motor, AC peak vs rms).
+- Subskills 26–50: AC Power & Electric Circuits (Average power, domestic electricity cost,
+  emf definition, internal resistance r, lost volts Ir, terminal pd, graphical V vs I,
+  series & parallel resistor networks with r, circuit dynamics & bulb brightness,
+  transmission lines, and diagnostic autopsy).
 
 Zero-Meta-Curriculum Invariant strictly enforced.
 """
@@ -15,9 +16,27 @@ import random
 from typing import Any, Dict, List, Optional
 
 try:
-    from app.utils.physical_sciences.physical_sciences_builders import build_ac_dc_generator_motor_apparatus_question
+    from app.utils.physical_sciences.physical_sciences_builders import (
+        build_ac_dc_generator_motor_apparatus_question,
+    )
 except ImportError:
-    from ..physical_sciences.physical_sciences_builders import build_ac_dc_generator_motor_apparatus_question
+    try:
+        from ..physical_sciences.physical_sciences_builders import (
+            build_ac_dc_generator_motor_apparatus_question,
+        )
+    except Exception:
+        build_ac_dc_generator_motor_apparatus_question = None  # type: ignore
+
+try:
+    from app.utils.grade12_physical_sciences.electrodynamics_circuits_archetypes_01_25 import (
+        BUILDERS_01_25,
+    )
+    from app.utils.grade12_physical_sciences.electrodynamics_circuits_archetypes_26_50 import (
+        BUILDERS_26_50,
+    )
+except ImportError:
+    from .electrodynamics_circuits_archetypes_01_25 import BUILDERS_01_25
+    from .electrodynamics_circuits_archetypes_26_50 import BUILDERS_26_50
 
 
 def _rng(seed: Optional[int] = None) -> random.Random:
@@ -34,6 +53,19 @@ def _fmt_sa(val: float | int, places: int = 2) -> str:
     return s.replace(".", "{,}")
 
 
+# ============================================================================ #
+# 50 SEMANTIC ARCHETYPES EXPORT
+# ============================================================================ #
+ARCHETYPES: Dict[str, Any] = {**BUILDERS_01_25, **BUILDERS_26_50}
+SUBSKILLS: List[str] = list(ARCHETYPES.keys())
+ORDERED_SUBSKILLS: List[str] = list(ARCHETYPES.keys())
+AVAILABLE_SUBSKILLS: List[str] = list(ARCHETYPES.keys())
+BUILDERS: Dict[str, Any] = {**ARCHETYPES}
+
+
+# ============================================================================ #
+# LEGACY DRILL BUILDERS (Preserved for backwards compatibility)
+# ============================================================================ #
 def _build_ac_rms_drill(r: random.Random) -> Dict[str, Any]:
     v_rms = r.choice([220, 230, 240, 110, 120])
     p_ave = r.choice([1000, 1200, 1500, 1800, 2000, 2200, 2500])
@@ -234,53 +266,82 @@ def _build_internal_resistance_drill(r: random.Random) -> Dict[str, Any]:
     }
 
 
+# ============================================================================ #
+# TOPIC-SPECIFIC DISPATCHERS (ELECTRODYNAMICS & ELECTRIC CIRCUITS)
+# ============================================================================ #
+
 def generate_electrodynamics(seed: Optional[int] = None, mode: str = "compound", **kwargs) -> Dict[str, Any]:
     """Dedicated generator for Grade 12 Electrodynamics (Electrical machines & AC theory)."""
     r = _rng(seed)
+    subskill = kwargs.get("subskill")
+
+    # Direct semantic archetype hit
+    if subskill and subskill in ARCHETYPES:
+        return ARCHETYPES[subskill](r)
+
+    # Legacy mode handling
     if mode == "elementary_ac_rms":
         return _build_ac_rms_drill(r)
     elif mode == "elementary_generators_motors":
         return _build_machines_drill(r)
-    elif mode in ("ac_dc_generator_motor_apparatus", "generator_diagram") or kwargs.get("subskill") in ("ac_dc_generator_motor_apparatus", "generator", "motor", "apparatus"):
-        return build_ac_dc_generator_motor_apparatus_question(seed=int(seed) if seed is not None else r.randint(1000, 9999), grade=12)
-    else:
-        choice = r.choice(["machines", "diagram", "ac_rms"])
-        if choice == "diagram":
+    elif mode in ("ac_dc_generator_motor_apparatus", "generator_diagram") or subskill in ("ac_dc_generator_motor_apparatus", "generator", "motor", "apparatus"):
+        if build_ac_dc_generator_motor_apparatus_question:
             return build_ac_dc_generator_motor_apparatus_question(seed=int(seed) if seed is not None else r.randint(1000, 9999), grade=12)
-        elif choice == "machines":
-            return _build_machines_drill(r)
-        else:
-            return _build_ac_rms_drill(r)
+        return ARCHETYPES["06_ac_generator_components_and_functions"](r)
+
+    # If subskill is a key in ARCHETYPES (e.g. from validator loop)
+    if mode in ARCHETYPES:
+        return ARCHETYPES[mode](r)
+
+    # Default: Pick uniformly from the 50 semantic archetypes
+    chosen_subskill = r.choice(SUBSKILLS)
+    return ARCHETYPES[chosen_subskill](r)
 
 
 def generate_electric_circuits(seed: Optional[int] = None, mode: str = "compound", **kwargs) -> Dict[str, Any]:
     """Dedicated generator for Grade 12 Electric Circuits (Internal resistance & lost volts)."""
     r = _rng(seed)
-    return _build_internal_resistance_drill(r)
+    subskill = kwargs.get("subskill")
+
+    # Direct semantic archetype hit
+    if subskill and subskill in ARCHETYPES:
+        return ARCHETYPES[subskill](r)
+
+    # Legacy mode handling
+    if mode == "elementary_internal_resistance":
+        return _build_internal_resistance_drill(r)
+
+    if mode in ARCHETYPES:
+        return ARCHETYPES[mode](r)
+
+    # Default: Pick uniformly from the 50 semantic archetypes
+    chosen_subskill = r.choice(SUBSKILLS)
+    return ARCHETYPES[chosen_subskill](r)
+
+
+def generate_question(subskill: Optional[str] = None, seed: Optional[int] = None, difficulty: Optional[str] = None, **kwargs) -> Dict[str, Any]:
+    """Unified single-question generation entry point."""
+    r = _rng(seed)
+    if subskill and subskill in ARCHETYPES:
+        return ARCHETYPES[subskill](r)
+
+    chosen_subskill = r.choice(SUBSKILLS)
+    return ARCHETYPES[chosen_subskill](r)
 
 
 def generate(seed: Optional[int] = None, mode: str = "compound", **kwargs) -> Dict[str, Any]:
     """Main generator entrypoint adhering to 6-pillar contract."""
     topic = str(kwargs.get("topic") or "").lower()
+    subskill = kwargs.get("subskill")
+
+    if subskill and subskill in ARCHETYPES:
+        r = _rng(seed)
+        return ARCHETYPES[subskill](r)
+
     if any(k in topic for k in ("circuit", "internal", "resistance", "series", "parallel")):
         return generate_electric_circuits(seed=seed, mode=mode, **kwargs)
     elif any(k in topic for k in ("electro", "motor", "generator", "armature", "ac ", "alternat")):
         return generate_electrodynamics(seed=seed, mode=mode, **kwargs)
 
-    r = _rng(seed)
-    if mode == "elementary_ac_rms":
-        return _build_ac_rms_drill(r)
-    elif mode == "elementary_generators_motors":
-        return _build_machines_drill(r)
-    elif mode == "elementary_internal_resistance":
-        return _build_internal_resistance_drill(r)
-    elif mode in ("ac_dc_generator_motor_apparatus", "generator_diagram") or kwargs.get("subskill") in ("ac_dc_generator_motor_apparatus", "generator", "motor", "apparatus"):
-        return build_ac_dc_generator_motor_apparatus_question(seed=int(seed) if seed is not None else r.randint(1000, 9999), grade=12)
-    else:
-        choice = r.choice(["machines", "diagram", "ac_rms"])
-        if choice == "diagram":
-            return build_ac_dc_generator_motor_apparatus_question(seed=int(seed) if seed is not None else r.randint(1000, 9999), grade=12)
-        elif choice == "machines":
-            return _build_machines_drill(r)
-        else:
-            return _build_ac_rms_drill(r)
+    # Default to electrodynamics / circuits
+    return generate_electrodynamics(seed=seed, mode=mode, **kwargs)

@@ -1,31 +1,44 @@
-"""
-Grade 10-12 Physical Sciences - Mechanics & Equations of Motion Generator
-100% Deterministic & SymPy-backed. Produces infinite unique physics problems across:
-- Equations of 1D Motion (Kinematics)
-- Newton's 2nd Law (Fnet = ma)
-- Work, Energy & Power (Work-Energy Theorem)
-"""
+"""Grade 10 Physical Sciences - Mechanics & Vectors and Scalars Generator
+100% Deterministic & SymPy-backed. South African National Curriculum Standards aligned.
+Aggregates:
+- mechanics_archetypes_01_25.py (Subskills 01 to 25: Foundations of vectors & scalars, collinear addition, perpendicular resultant & Pythagoras)
+- mechanics_archetypes_26_50.py (Subskills 26 to 50: Component resolution, multi-vector addition, equilibrium, applied navigation, capstone synthesis)
 
+Also preserves legacy mechanics builders (kinematics, Newton's second law, inclined planes) for backwards compatibility.
+"""
 from __future__ import annotations
 
 import math
 import random
-from typing import Any, Dict, List, Optional
-import sympy as sp
+from typing import Any, Callable, Dict, List, Optional
+
+from app.utils.physical_sciences.mechanics_archetypes_01_25 import (
+    BUILDERS_01_25,
+    SUBSKILLS_01_25,
+    _fmt_sa,
+    _rng,
+)
+from app.utils.physical_sciences.mechanics_archetypes_26_50 import (
+    BUILDERS_26_50,
+    SUBSKILLS_26_50,
+)
+
+# Combine 50 semantic subskill builders
+ARCHETYPE_BUILDERS: Dict[str, Callable] = {
+    **BUILDERS_01_25,
+    **BUILDERS_26_50,
+}
+
+SUBSKILLS: List[str] = SUBSKILLS_01_25 + SUBSKILLS_26_50
+ORDERED_SUBSKILLS: List[str] = SUBSKILLS
+BUILDERS: Dict[str, Callable] = ARCHETYPE_BUILDERS
+SUBSKILL_BUILDERS: Dict[str, Callable] = ARCHETYPE_BUILDERS
+DISPATCH_TABLE: Dict[str, Callable] = ARCHETYPE_BUILDERS
 
 
-def _rng(seed: Optional[int] = None) -> random.Random:
-    r = random.Random()
-    if seed is not None:
-        r.seed(int(seed))
-    return r
-
-
-def _fmt_sa(val: float, places: int = 2) -> str:
-    """Format decimal number using South African comma decimal convention."""
-    s = f"{val:.{places}f}".rstrip('0').rstrip('.') if places > 0 else f"{int(val)}"
-    return s.replace('.', '{,}')
-
+# ============================================================================
+# LEGACY MECHANICS BUILDERS (PRESERVED FOR BACKWARDS COMPATIBILITY)
+# ============================================================================
 
 def generate_kinematics_question(r: random.Random, mode: str = "scaffold") -> Dict[str, Any]:
     """Generates 1D kinematic motion calculation (v_f = v_i + a*t or delta_x = v_i*t + 0.5*a*t^2)."""
@@ -38,7 +51,6 @@ def generate_kinematics_question(r: random.Random, mode: str = "scaffold") -> Di
     vf = vi + a * t       # final velocity in m/s
     dx = vi * t + 0.5 * a * (t ** 2) # displacement in m
     
-    # Randomly pick target unknown: vf or dx
     solve_for_dx = r.random() < 0.5
 
     if solve_for_dx:
@@ -87,7 +99,7 @@ def generate_kinematics_question(r: random.Random, mode: str = "scaffold") -> Di
         },
         "hints": {
             "1_nudge": f"Identify your known variables: v_i = {vi} m·s⁻¹, a = {a} m·s⁻², Δt = {t} s.",
-            "2_concept": f"Select the standard CAPS kinematic formula linking your knowns to the unknown: {formula_latex}.",
+            "2_concept": f"Select the standard kinematic formula linking your knowns to the unknown: {formula_latex}.",
             "3_breakdown": f"Substitute values into the equation: {calc_latex}."
         }
     }
@@ -120,7 +132,8 @@ def generate_newton_law_question(r: random.Random, mode: str = "scaffold") -> Di
         "diagram_spec": {
             "diagram_role": "context",
             "kind": "free_body_diagram",
-            "mass_kg": mass, "angle_deg": theta,
+            "mass_kg": mass,
+            "angle_deg": 0,
         },
         "fbd_spec": {
             "mass_kg": mass,
@@ -160,13 +173,12 @@ def generate_newton_law_question(r: random.Random, mode: str = "scaffold") -> Di
 
 
 def generate_inclined_plane_question(r: random.Random, mode: str = "compound") -> Dict[str, Any]:
-    """Generates authentic Grade 11/12 CAPS inclined plane problem with kinetic friction."""
-    g = 9.8 # standard CAPS gravitational acceleration
-    mass = r.randint(5, 25) # 5 kg to 25 kg
-    theta = r.choice([20, 25, 30, 35, 40, 45]) # degrees
+    """Generates authentic Grade 11/12 inclined plane problem with kinetic friction."""
+    g = 9.8
+    mass = r.randint(5, 25)
+    theta = r.choice([20, 25, 30, 35, 40, 45])
     theta_rad = math.radians(theta)
     
-    # Gravitational components
     fg_par = round(mass * g * math.sin(theta_rad), 2)
     fg_perp = round(mass * g * math.cos(theta_rad), 2)
     normal_force = fg_perp
@@ -174,80 +186,10 @@ def generate_inclined_plane_question(r: random.Random, mode: str = "compound") -
     mu_k = r.choice([0.15, 0.20, 0.25, 0.30])
     fk = round(mu_k * normal_force, 2)
     
-    # Applied force pulling UP the incline
     f_app = round(fg_par + fk + mass * r.uniform(1.0, 3.5), 1)
     f_net = round(f_app - fg_par - fk, 2)
     acc = round(f_net / mass, 2)
 
-    if mode == "elementary_normal_force_incline":
-        return {
-            "id": f"phys_norm_{r.randint(100000, 999999)}",
-            "topic": "Physical Sciences Mechanics",
-            "subskill": "elementary_normal_force_incline",
-            "mode": mode,
-            "term": 1,
-            "caps_weight_percent": 22,
-            "suggested_duration_mins": 4,
-            "prompt": (
-                f"A block of mass {_fmt_sa(mass)} kg rests on a rough plane inclined at {_fmt_sa(theta)}° to the horizontal. "
-                f"Taking g = 9,8 m·s⁻², calculate the magnitude of the normal force (F_N) acting on the block."
-            ),
-            "ideal_answer": f"{_fmt_sa(normal_force)} N",
-            "sample_answer": rf"F_N = mg \cos\theta = ({_fmt_sa(mass)})(9{{,}}8)\cos({theta}^\circ) = {_fmt_sa(normal_force)}\text{{ N}}",
-            "marks": 3,
-            "misconception_tags": ["confused_sin_cos_on_incline", "used_horizontal_normal_force"],
-            "marking_schema": {
-                "total_marks": 3,
-                "marking_points": [
-                    {"id": "mp1", "desc": "Formula F_N = mg cos(theta)", "marks": 1, "editable": True},
-                    {"id": "mp2", "desc": "Substitution of mass, g, and theta", "marks": 1, "editable": True},
-                    {"id": "mp3", "desc": "Final answer with unit (N)", "marks": 1, "editable": True}
-                ],
-                "deductions": [{"rule": "omitted_unit", "penalty": -1}],
-                "carry_forward_rule": "consequential_accuracy"
-            },
-            "hints": {
-                "1_nudge": "On an inclined plane, the normal force balances the perpendicular component of gravity.",
-                "2_concept": "F_N = F_{g\\perp} = m \\cdot g \\cdot \\cos(\\theta).",
-                "3_breakdown": f"F_N = ({mass})(9,8)\\cos({theta}^\\circ) = {_fmt_sa(normal_force)} N."
-            }
-        }
-
-    if mode == "elementary_parallel_gravity":
-        return {
-            "id": f"phys_fgpar_{r.randint(100000, 999999)}",
-            "topic": "Physical Sciences Mechanics",
-            "subskill": "elementary_parallel_gravity",
-            "mode": mode,
-            "term": 1,
-            "caps_weight_percent": 22,
-            "suggested_duration_mins": 4,
-            "prompt": (
-                f"A crate of mass {_fmt_sa(mass)} kg is on a ramp inclined at an angle of {_fmt_sa(theta)}° to the horizontal. "
-                f"Calculate the magnitude of the component of gravitational force parallel to the incline (F_g||)."
-            ),
-            "ideal_answer": f"{_fmt_sa(fg_par)} N",
-            "sample_answer": rf"F_{{g\parallel}} = mg \sin\theta = ({_fmt_sa(mass)})(9{{,}}8)\sin({theta}^\circ) = {_fmt_sa(fg_par)}\text{{ N}}",
-            "marks": 3,
-            "misconception_tags": ["confused_sin_cos_on_incline"],
-            "marking_schema": {
-                "total_marks": 3,
-                "marking_points": [
-                    {"id": "mp1", "desc": "Formula F_g|| = mg sin(theta)", "marks": 1, "editable": True},
-                    {"id": "mp2", "desc": "Substitution of mass, g, and angle", "marks": 1, "editable": True},
-                    {"id": "mp3", "desc": "Final answer with unit (N)", "marks": 1, "editable": True}
-                ],
-                "deductions": [{"rule": "omitted_unit", "penalty": -1}],
-                "carry_forward_rule": "consequential_accuracy"
-            },
-            "hints": {
-                "1_nudge": "The parallel component pulls down the slope: use sine of the incline angle.",
-                "2_concept": "F_{g\\parallel} = m \\cdot g \\cdot \\sin(\\theta).",
-                "3_breakdown": f"F_{{g\\parallel}} = ({mass})(9,8)\\sin({theta}^\\circ) = {_fmt_sa(fg_par)} N."
-            }
-        }
-
-    # Full Compound Level 3/4 Question
     prompt = (
         f"A block of mass {_fmt_sa(mass)} kg is pulled UP a rough plane inclined at {_fmt_sa(theta)}° to the horizontal "
         f"by a constant force of {_fmt_sa(f_app)} N applied parallel to the plane. "
@@ -275,7 +217,8 @@ def generate_inclined_plane_question(r: random.Random, mode: str = "compound") -
         "diagram_spec": {
             "diagram_role": "context",
             "kind": "free_body_diagram",
-            "mass_kg": mass, "angle_deg": theta,
+            "mass_kg": mass,
+            "angle_deg": theta,
         },
         "fbd_spec": {
             "mass_kg": mass,
@@ -308,39 +251,67 @@ def generate_inclined_plane_question(r: random.Random, mode: str = "compound") -
             "carry_forward_rule": "consequential_accuracy"
         },
         "hints": {
-            "1_nudge": "Resolve gravity into two perpendicular components: F_{g\\parallel} down the slope and F_{g\\perp} perpendicular to the slope.",
-            "2_concept": "Normal force equals F_{g\\perp} = mg\\cos\\theta. Kinetic friction is f_k = \\mu_k F_N. Net force along the slope is F_{app} - F_{g\\parallel} - f_k.",
-            "3_breakdown": f"f_k = {_fmt_sa(fk)} N. F_{{g\\parallel}} = {_fmt_sa(fg_par)} N. F_net = {_fmt_sa(f_net)} N. a = {_fmt_sa(acc)} m·s⁻²."
+            "1_nudge": "Resolve gravity into two perpendicular components: F_g|| down the slope and F_g_perp perpendicular to the slope.",
+            "2_concept": "Normal force equals F_g_perp = mg cos(θ). Kinetic friction is f_k = mu_k F_N. Net force along the slope is F_app - F_g|| - f_k.",
+            "3_breakdown": f"f_k = {_fmt_sa(fk)} N. F_g|| = {_fmt_sa(fg_par)} N. F_net = {_fmt_sa(f_net)} N. a = {_fmt_sa(acc)} m·s⁻²."
         }
     }
 
 
+# ============================================================================
+# UNIFIED GENERATE DISPATCHER & HELPER APIS
+# ============================================================================
+
+def get_subskills() -> List[str]:
+    """Returns the ordered list of all 50 semantic subskill IDs."""
+    return ORDERED_SUBSKILLS
+
+
+def generate_question(subskill: Optional[str] = None, seed: Optional[int] = None, mode: str = "compound", **kwargs) -> Dict[str, Any]:
+    """Generate a single question for a given subskill or random subskill."""
+    r = _rng(seed)
+    
+    if subskill in ARCHETYPE_BUILDERS:
+        builder = ARCHETYPE_BUILDERS[subskill]
+        return builder(seed=seed, mode=mode)
+    elif subskill == "newtons_second_law":
+        return generate_newton_law_question(r, mode=mode)
+    elif subskill in ("inclined_plane", "inclined_plane_newton"):
+        return generate_inclined_plane_question(r, mode=mode)
+    elif subskill == "kinematics_1d":
+        return generate_kinematics_question(r, mode=mode)
+    else:
+        # Default: select from 50 semantic subskills
+        chosen_id = r.choice(ORDERED_SUBSKILLS)
+        return ARCHETYPE_BUILDERS[chosen_id](seed=seed, mode=mode)
+
+
 def generate(subskill: str = "mixed", count: int = 1, mode: str = "compound", seed: Optional[int] = None, **kwargs) -> List[Dict[str, Any]]:
+    """Entrypoint conforming to the universal generator contract."""
     r = _rng(seed)
     questions = []
     
     for i in range(count):
         sub_seed = (seed + i * 37) if seed is not None else r.randint(1000, 999999)
-        if subskill in ("pulley_incline_masses_system", "two_body_pulley", "inclined_plane_pulley"):
+        
+        # Handle legacy or specific subskills
+        if subskill in ARCHETYPE_BUILDERS:
+            q = ARCHETYPE_BUILDERS[subskill](seed=sub_seed, mode=mode)
+        elif subskill in ("pulley_incline_masses_system", "two_body_pulley", "inclined_plane_pulley"):
             from app.utils.physical_sciences.physical_sciences_builders import build_pulley_incline_masses_system_question
             q = build_pulley_incline_masses_system_question(seed=sub_seed, grade=11, mode=mode)
-        elif subskill == "inclined_plane" or subskill == "inclined_plane_newton":
+        elif subskill in ("inclined_plane", "inclined_plane_newton"):
             q = generate_inclined_plane_question(r, mode=mode)
         elif subskill == "newtons_second_law":
             q = generate_newton_law_question(r, mode=mode)
         elif subskill == "kinematics_1d":
             q = generate_kinematics_question(r, mode=mode)
         else:
-            # Default / mixed rotation across mechanics subskills
-            rot = (sub_seed) % 3
-            if rot == 0:
-                from app.utils.physical_sciences.physical_sciences_builders import build_pulley_incline_masses_system_question
-                q = build_pulley_incline_masses_system_question(seed=sub_seed, grade=11, mode=mode)
-            elif rot == 1:
-                q = generate_inclined_plane_question(r, mode=mode)
-            else:
-                q = generate_kinematics_question(r, mode=mode)
+            # Deterministic round-robin / selection across the 50 semantic archetypes
+            idx = (sub_seed if seed is not None else i) % len(ORDERED_SUBSKILLS)
+            chosen_subskill = ORDERED_SUBSKILLS[idx]
+            q = ARCHETYPE_BUILDERS[chosen_subskill](seed=sub_seed, mode=mode)
+            
         questions.append(q)
         
     return questions
-

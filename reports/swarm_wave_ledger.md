@@ -168,3 +168,56 @@
 | `2026-11-16 02:30:24` | Gr 11 | Technical Mathematics | Circles angles and angular movement | `50/50` | `50/50` | `VECTOR_2D_OR_GRAPH` | `PASS (Exit Code 0)` |
 | `2026-11-16 02:28:47` | Gr 11 | Technical Mathematics | Mensuration | `50/50` | `50/50` | `BLENDER_3D_FOUNDRY` | `PASS (Exit Code 0)` |
 | `2026-11-16 02:28:57` | Gr 12 | Technical Mathematics | Integration | `50/50` | `50/50` | `VECTOR_2D_OR_GRAPH` | `PASS (Exit Code 0)` |
+| `2026-11-16 11:22:12` | Gr 11 | Physical Sciences | Intermolecular forces | `50/50` | `50/50` | `VECTOR_2D_OR_GRAPH` | `PASS (Exit Code 0)` |
+| `2026-11-16 11:16:42` | Gr 10 | Physical Sciences | Vectors and scalars | `50/50` | `47/50` | `VECTOR_2D_OR_GRAPH` | `PASS (Exit Code 0)` |
+| `2026-11-16 11:10:08` | Gr 10 | Physical Sciences | Classification of matter | `50/50` | `50/50` | `VECTOR_2D_OR_GRAPH` | `PASS (Exit Code 0)` |
+| `2026-11-16 11:16:29` | Gr 10 | Physical Sciences | Reaction in aqeuous solution | `50/50` | `50/50` | `VECTOR_2D_OR_GRAPH` | `PASS (Exit Code 0)` |
+| `2026-11-16 11:22:05` | Gr 11 | Physical Sciences | Atomic combinations | `50/50` | `50/50` | `VECTOR_2D_OR_GRAPH` | `PASS (Exit Code 0)` |
+| `2026-11-16 11:23:22` | Gr 11 | Physical Sciences | The lithosphere | `50/50` | `50/50` | `VECTOR_2D_OR_GRAPH` | `PASS (Exit Code 0)` |
+| `2026-11-16 11:10:42` | Gr 10 | Physical Sciences | The atom | `50/50` | `50/50` | `VECTOR_2D_OR_GRAPH` | `PASS (Exit Code 0)` |
+| `2026-11-16 11:10:49` | Gr 10 | Physical Sciences | The periodic table | `50/50` | `50/50` | `VECTOR_2D_OR_GRAPH` | `PASS (Exit Code 0)` |
+| `2026-11-16 11:10:54` | Gr 10 | Physical Sciences | Chemical bonding | `50/50` | `50/50` | `VECTOR_2D_OR_GRAPH` | `PASS (Exit Code 0)` |
+| `2026-11-16 11:11:38` | Gr 10 | Physical Sciences | The particles that substances are made of | `50/50` | `50/50` | `VECTOR_2D_OR_GRAPH` | `PASS (Exit Code 0)` |
+| `2026-11-16 11:17:07` | Gr 10 | Physical Sciences | Motion in one dimension | `50/50` | `50/50` | `VECTOR_2D_OR_GRAPH` | `PASS (Exit Code 0)` |
+| `2026-11-16 11:15:09` | Gr 10 | Physical Sciences | Electric circuits | `50/50` | `50/50` | `VECTOR_2D_OR_GRAPH` | `PASS (Exit Code 0)` |
+| `2026-11-16 11:17:22` | Gr 10 | Physical Sciences | The hydrosphere | `50/50` | `50/50` | `VECTOR_2D_OR_GRAPH` | `PASS (Exit Code 0)` |
+| `2026-11-16 11:17:11` | Gr 10 | Physical Sciences | Mechanical energy | `50/50` | `50/50` | `VECTOR_2D_OR_GRAPH` | `PASS (Exit Code 0)` |
+| `2026-11-16 11:10:02` | Gr 10 | Physical Sciences | Skills for science | `50/50` | `50/50` | `VECTOR_2D_OR_GRAPH` | `PASS (Exit Code 0)` |
+| `2026-11-16 11:17:29` | Gr 10 | Physical Sciences | Units of measurement applied | `50/50` | `50/50` | `VECTOR_2D_OR_GRAPH` | `PASS (Exit Code 0)` |
+| `2026-11-16 11:10:20` | Gr 10 | Physical Sciences | States of matter and the kinetic theory molecular theory | `50/50` | `50/50` | `VECTOR_2D_OR_GRAPH` | `PASS (Exit Code 0)` |
+| `2026-11-16 11:11:45` | Gr 10 | Physical Sciences | Physical and Chemical Changes | `50/50` | `50/50` | `VECTOR_2D_OR_GRAPH` | `PASS (Exit Code 0)` |
+| `2026-11-16 11:11:50` | Gr 10 | Physical Sciences | Representing chemical change | `50/50` | `50/50` | `VECTOR_2D_OR_GRAPH` | `PASS (Exit Code 0)` |
+| `2026-11-16 11:16:35` | Gr 10 | Physical Sciences | Quantitative aspects of chemical change | `50/50` | `50/50` | `VECTOR_2D_OR_GRAPH` | `PASS (Exit Code 0)` |
+| `2026-11-16 11:22:22` | Gr 11 | Physical Sciences | Ideal gases | `50/50` | `50/50` | `VECTOR_2D_OR_GRAPH` | `PASS (Exit Code 0)` |
+| `2026-11-16 11:11:21` | Gr 10 | Physical Sciences | Transverse pulses | `50/50` | `50/50` | `VECTOR_2D_OR_GRAPH` | `PASS (Exit Code 0)` |
+| `2026-11-16 11:11:23` | Gr 10 | Physical Sciences | Sound | `50/50` | `50/50` | `VECTOR_2D_OR_GRAPH` | `PASS (Exit Code 0)` |
+| `2026-11-16 11:11:32` | Gr 10 | Physical Sciences | Electromagnetic radiation | `50/50` | `50/50` | `VECTOR_2D_OR_GRAPH` | `PASS (Exit Code 0)` |
+| `2026-11-16 11:11:22` | Gr 10 | Physical Sciences | Transverse waves | `50/50` | `50/50` | `VECTOR_2D_OR_GRAPH` | `PASS (Exit Code 0)` |
+| `2026-11-16 11:11:22` | Gr 10 | Physical Sciences | Longitudinal waves | `50/50` | `50/50` | `VECTOR_2D_OR_GRAPH` | `PASS (Exit Code 0)` |
+| `2026-11-16 11:12:02` | Gr 10 | Physical Sciences | Electrostatics | `50/50` | `50/50` | `VECTOR_2D_OR_GRAPH` | `PASS (Exit Code 0)` |
+| `2026-11-16 11:22:47` | Gr 11 | Physical Sciences | Electrostatics | `50/50` | `50/50` | `VECTOR_2D_OR_GRAPH` | `PASS (Exit Code 0)` |
+| `2026-11-16 11:22:53` | Gr 11 | Physical Sciences | Electromagnetism | `50/50` | `50/50` | `VECTOR_2D_OR_GRAPH` | `PASS (Exit Code 0)` |
+| `2026-11-16 11:11:55` | Gr 10 | Physical Sciences | Magnetism | `50/50` | `50/50` | `VECTOR_2D_OR_GRAPH` | `PASS (Exit Code 0)` |
+| `2026-11-16 11:22:58` | Gr 11 | Physical Sciences | Electric circuits | `50/50` | `50/50` | `VECTOR_2D_OR_GRAPH` | `PASS (Exit Code 0)` |
+| `2026-11-16 11:23:03` | Gr 11 | Physical Sciences | Energy and chemical change | `50/50` | `50/50` | `VECTOR_2D_OR_GRAPH` | `PASS (Exit Code 0)` |
+| `2026-11-16 11:23:54` | Gr 12 | Physical Sciences | Work energy and power | `50/50` | `50/50` | `VECTOR_2D_OR_GRAPH` | `PASS (Exit Code 0)` |
+| `2026-11-16 11:21:40` | Gr 11 | Physical Sciences | Vectors in two dimensions | `50/50` | `50/50` | `VECTOR_2D_OR_GRAPH` | `PASS (Exit Code 0)` |
+| `2026-11-16 11:22:27` | Gr 11 | Physical Sciences | Newton's laws | `50/50` | `50/50` | `VECTOR_2D_OR_GRAPH` | `PASS (Exit Code 0)` |
+| `2026-11-16 11:23:27` | Gr 11 | Physical Sciences | Units applied | `50/50` | `50/50` | `VECTOR_2D_OR_GRAPH` | `PASS (Exit Code 0)` |
+| `2026-11-16 11:23:41` | Gr 12 | Physical Sciences | Vertical projectile motion in one dimension | `50/50` | `50/50` | `VECTOR_2D_OR_GRAPH` | `PASS (Exit Code 0)` |
+| `2026-11-16 11:25:51` | Gr 12 | Physical Sciences | Skills for science | `50/50` | `50/50` | `VECTOR_2D_OR_GRAPH` | `PASS (Exit Code 0)` |
+| `2026-11-16 11:23:33` | Gr 12 | Physical Sciences | Momentum and Impulse | `50/50` | `38/50` | `VECTOR_2D_OR_GRAPH` | `PASS (Exit Code 0)` |
+| `2026-11-16 11:25:25` | Gr 12 | Physical Sciences | Optical phenomena and properties of matter | `50/50` | `37/50` | `VECTOR_2D_OR_GRAPH` | `PASS (Exit Code 0)` |
+| `2026-11-16 11:25:02` | Gr 12 | Physical Sciences | Electrodynamics | `50/50` | `40/50` | `VECTOR_2D_OR_GRAPH` | `PASS (Exit Code 0)` |
+| `2026-11-16 11:24:54` | Gr 12 | Physical Sciences | The Doppler effect | `50/50` | `35/50` | `VECTOR_2D_OR_GRAPH` | `PASS (Exit Code 0)` |
+| `2026-11-16 11:25:18` | Gr 12 | Physical Sciences | Electric circuits | `50/50` | `40/50` | `VECTOR_2D_OR_GRAPH` | `PASS (Exit Code 0)` |
+| `2026-11-16 11:23:09` | Gr 11 | Physical Sciences | Types of reaction | `50/50` | `46/50` | `VECTOR_2D_OR_GRAPH` | `PASS (Exit Code 0)` |
+| `2026-11-16 11:23:15` | Gr 11 | Physical Sciences | Quantitative aspects of chemical change | `50/50` | `46/50` | `VECTOR_2D_OR_GRAPH` | `PASS (Exit Code 0)` |
+| `2026-11-16 11:24:02` | Gr 12 | Physical Sciences | Organic molecules | `50/50` | `50/50` | `VECTOR_2D_OR_GRAPH` | `PASS (Exit Code 0)` |
+| `2026-11-16 11:24:37` | Gr 12 | Physical Sciences | Acids and bases | `50/50` | `50/50` | `VECTOR_2D_OR_GRAPH` | `PASS (Exit Code 0)` |
+| `2026-11-16 11:24:12` | Gr 12 | Physical Sciences | Chemical equilibrium | `50/50` | `44/50` | `VECTOR_2D_OR_GRAPH` | `PASS (Exit Code 0)` |
+| `2026-11-16 11:24:08` | Gr 12 | Physical Sciences | Rate and Extent of Reaction | `50/50` | `44/50` | `VECTOR_2D_OR_GRAPH` | `PASS (Exit Code 0)` |
+| `2026-11-16 11:25:44` | Gr 12 | Physical Sciences | The chemical industry | `50/50` | `44/50` | `VECTOR_2D_OR_GRAPH` | `PASS (Exit Code 0)` |
+| `2026-11-16 11:22:35` | Gr 11 | Physical Sciences | Geometrical optics | `50/50` | `50/50` | `VECTOR_2D_OR_GRAPH` | `PASS (Exit Code 0)` |
+| `2026-11-16 11:25:34` | Gr 12 | Physical Sciences | Electrochemical reactions | `50/50` | `34/50` | `VECTOR_2D_OR_GRAPH` | `PASS (Exit Code 0)` |
+| `2026-11-16 11:22:42` | Gr 11 | Physical Sciences | 2D and 3D wavefronts | `50/50` | `50/50` | `VECTOR_2D_OR_GRAPH` | `PASS (Exit Code 0)` |

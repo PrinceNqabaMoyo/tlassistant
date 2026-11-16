@@ -1,18 +1,39 @@
 """Grade 10 Physical Sciences — Chemical Change & Quantitative Chemistry Generator.
-Deterministic 6-pillar CAPS question generator covering Paper 2 (Chemistry Term 2 & 3):
-- Conservation of atoms and mass in balanced equations.
-- The mole concept: n = m / M, n = N / NA (NA = 6.02 x 10^23 mol^-1).
-- Molar gas volume at STP: n = V / Vm (Vm = 22.4 dm^3/mol).
-- Concentration of solutions: c = n / V = m / (M * V).
-- Percentage composition of elements by mass in compounds.
-- Empirical formula and molecular formula calculations.
+Deterministic 6-pillar generator aggregating 50 distinct semantic archetypes across 4 topics:
+1. States of matter and the kinetic theory molecular theory (Term 1)
+2. Physical and Chemical Changes (Term 2)
+3. Representing chemical change (Term 2)
+4. Quantitative aspects of chemical change (Term 3)
 
-Zero-Meta-Curriculum Invariant strictly enforced.
+Complies with the 6-Pillar Generator Contract and Zero-Meta-Curriculum Invariant.
 """
 from __future__ import annotations
 
 import random
 from typing import Any, Dict, List, Optional
+
+from app.utils.grade10_physical_sciences.chemical_change_archetypes_01_25 import BUILDERS_01_25
+from app.utils.grade10_physical_sciences.chemical_change_archetypes_26_50 import ARCHETYPES_26_50
+
+TOPIC = "grade10_physical_sciences_chemical_change"
+
+BUILDERS: Dict[str, Any] = {
+    **BUILDERS_01_25,
+    **ARCHETYPES_26_50,
+}
+
+ARCHETYPES: Dict[str, Any] = BUILDERS
+SUBSKILLS: List[str] = list(BUILDERS.keys())
+ORDERED_SUBSKILLS: List[str] = list(SUBSKILLS)
+AVAILABLE_SUBSKILLS: List[str] = list(SUBSKILLS)
+
+LEGACY_ALIASES: Dict[str, str] = {
+    "compound": "50_stoichiometry_and_quantitative_chemistry_diagnostic_autopsy",
+    "elementary_empirical": "26_empirical_formula_from_percentage_composition",
+    "elementary_stoich": "42_stoichiometric_mass_to_gas_volume_at_stp",
+    "empirical": "26_empirical_formula_from_percentage_composition",
+    "stoich": "42_stoichiometric_mass_to_gas_volume_at_stp",
+}
 
 
 def _rng(seed: Optional[int] = None) -> random.Random:
@@ -22,180 +43,72 @@ def _rng(seed: Optional[int] = None) -> random.Random:
     return r
 
 
-def _fmt_sa(val: float | int, places: int = 2) -> str:
-    if isinstance(val, int) or (isinstance(val, float) and val.is_integer()):
-        return str(int(val))
-    s = f"{val:.{places}f}".rstrip("0").rstrip(".")
-    return s.replace(".", "{,}")
+def get_subskills() -> List[str]:
+    """Return ordered list of all 50 semantic subskill identifiers."""
+    return list(SUBSKILLS)
 
 
-NA = 6.02e23
-VM_STP = 22.4
+def _resolve_builder(target: Optional[str]):
+    if not target or target in ("mixed", "all", "default"):
+        return None
+    if target in BUILDERS:
+        return BUILDERS[target]
+    if target in LEGACY_ALIASES and LEGACY_ALIASES[target] in BUILDERS:
+        return BUILDERS[LEGACY_ALIASES[target]]
+    t_low = str(target).lower()
+    for k, b in BUILDERS.items():
+        if t_low in k.lower():
+            return b
+    return None
 
 
-EMPIRICAL_COMPOUNDS = [
-    {
-        "name": "Sulfur trioxide",
-        "elements": [("Sulfur (S)", 32.1, 40.05), ("Oxygen (O)", 16.0, 59.95)],
-        "ratio": "1 : 3",
-        "empirical": r"\text{SO}_3",
-        "molar_mass": 80.1,
-    },
-    {
-        "name": "Ethene derivative",
-        "elements": [("Carbon (C)", 12.0, 85.71), ("Hydrogen (H)", 1.0, 14.29)],
-        "ratio": "1 : 2",
-        "empirical": r"\text{CH}_2",
-        "molar_mass": 14.0,
-    },
-    {
-        "name": "Water / Hydrogen peroxide precursor",
-        "elements": [("Hydrogen (H)", 1.0, 5.88), ("Oxygen (O)", 16.0, 94.12)],
-        "ratio": "1 : 1",
-        "empirical": r"\text{HO}",
-        "molar_mass": 17.0,
-    },
-    {
-        "name": "Phosphorus pentoxide precursor",
-        "elements": [("Phosphorus (P)", 31.0, 43.66), ("Oxygen (O)", 16.0, 56.34)],
-        "ratio": "2 : 5",
-        "empirical": r"\text{P}_2\text{O}_5",
-        "molar_mass": 142.0,
-    },
-]
-
-
-def _build_empirical_drill(r: random.Random) -> Dict[str, Any]:
-    comp = r.choice(EMPIRICAL_COMPOUNDS)
-
-    el_desc = ", ".join([f"**{pct}% {name.split()[0]}**" for name, _, pct in comp["elements"]])
-
-    calc_steps = []
-    ratio_parts = []
-    for name, ar, pct in comp["elements"]:
-        n = round(pct / ar, 3)
-        calc_steps.append(f"$n({name.split()[0]}) = \\frac{{{pct}\\text{{ g}}}}{{{ar}\\text{{ g}}\\cdot\\text{{mol}}^{{-1}}}} = {n}\\text{{ mol}}$")
-        ratio_parts.append(n)
-
-    min_n = min(ratio_parts)
-    norm_ratio = [round(n / min_n, 1) for n in ratio_parts]
-
-    prompt = (
-        f"A chemical compound was analysed in a laboratory and found to contain {el_desc} by mass.\n\n"
-        f"1. Define the term *empirical formula*.\n"
-        f"2. Determine the empirical formula of the compound through step-by-step mole calculation."
-    )
-
-    sol = (
-        f"1. **Empirical formula:** The simplest whole-number ratio of the atoms of each element in a compound.\n\n"
-        f"2. Assume a $100\\text{{ g}}$ sample of the compound:\n"
-        + "\n".join([f"   - {step}" for step in calc_steps])
-        + f"\n   Divide by the smallest value ({min_n} mol):\n"
-        + f"   Mole ratio: **{comp['ratio']}**\n\n"
-        + f"   Therefore, the empirical formula is **${comp['empirical']}$**."
-    )
-
-    return {
-        "id": f"g10_ps_emp_form_{r.randint(10000, 99999)}",
-        "type": "compound",
-        "prompt": prompt,
-        "correct_answer": comp["empirical"],
-        "worked_solution": sol,
-        "marking_schema": {
-            "total_marks": 5,
-            "marking_points": [
-                {"id": "mp1", "desc": "Definition: Simplest whole-number ratio of atoms", "marks": 1, "editable": True},
-                {"id": "mp2", "desc": "Convert percentages to moles (n = m/M)", "marks": 2, "editable": True},
-                {"id": "mp3", "desc": f"Divide by smallest to get whole-number ratio: {comp['ratio']}", "marks": 1, "editable": True},
-                {"id": "mp4", "desc": f"State final empirical formula: {comp['empirical']}", "marks": 1, "editable": True},
-            ],
-            "deductions": [{"rule": "empirical_formula_ratio_rounding_error", "penalty": -1}],
-            "carry_forward_rule": "consequential_accuracy",
-        },
-        "hints": {
-            "tier_1": "Assume a 100 g sample, so % by mass equals grams of each element.",
-            "tier_2": "Calculate moles for each element using $n = m / M$, then divide each by the smallest mole value.",
-            "tier_3": f"Mole ratio is {comp['ratio']}. Empirical formula: ${comp['empirical']}$.",
-        },
-        "misconception_tags": ["empirical_formula_ratio_rounding_error", "confused_moles_and_mass"],
-        "term": 3,
-        "caps_weight_percent": 15,
-        "suggested_duration_mins": 5,
-    }
-
-
-def _build_stoich_stp_drill(r: random.Random) -> Dict[str, Any]:
-    # CaCO3 + 2HCl -> CaCl2 + H2O + CO2(g)
-    mass_caco3 = r.choice([5.0, 10.0, 15.0, 20.0, 25.0])
-    m_caco3 = 100.1  # g/mol
-
-    n_caco3 = round(mass_caco3 / m_caco3, 3)
-    # 1 mol CaCO3 produces 1 mol CO2
-    n_co2 = n_caco3
-    v_co2_dm3 = round(n_co2 * VM_STP, 2)
-    m_co2 = round(n_co2 * 44.0, 2)
-
-    prompt = (
-        f"A student heats **${_fmt_sa(mass_caco3)}\\text{{ g}}$** of calcium carbonate, $\\text{{CaCO}}_3$, "
-        f"which decomposes completely according to the balanced equation:\n\n"
-        f"$$\\text{{CaCO}}_3(\\text{{s}}) \\xrightarrow{{\\Delta}} \\text{{CaO}}(\\text{{s}}) + \\text{{CO}}_2(\\text{{g}})$$\n\n"
-        f"Molar masses: $M(\\text{{CaCO}}_3) = 100{{,}}1\\text{{ g}}\\cdot\\text{{mol}}^{{-1}}$, "
-        f"$M(\\text{{CO}}_2) = 44{{,}}0\\text{{ g}}\\cdot\\text{{mol}}^{{-1}}$.\n"
-        f"Molar volume of a gas at STP: $V_m = 22{{,}}4\\text{{ dm}}^3\\cdot\\text{{mol}}^{{-1}}$.\n\n"
-        f"1. Calculate the number of moles of $\\text{{CaCO}}_3$ reacted.\n"
-        f"2. Determine the number of moles of $\\text{{CO}}_2(\\text{{g}})$ gas produced.\n"
-        f"3. Calculate the volume (in $\\text{{dm}}^3$) of $\\text{{CO}}_2(\\text{{g}})$ collected at standard temperature and pressure (STP).\n"
-        f"4. Calculate the mass of $\\text{{CO}}_2(\\text{{g}})$ produced."
-    )
-
-    sol = (
-        f"1. $n(\\text{{CaCO}}_3) = \\frac{{m}}{{M}} = \\frac{{{_fmt_sa(mass_caco3)}}}{{100{{,}}1}} = {_fmt_sa(n_caco3)}\\text{{ mol}}$\n\n"
-        f"2. From the balanced equation, $n(\\text{{CO}}_2) : n(\\text{{CaCO}}_3) = 1 : 1$.\n"
-        f"   Therefore, $n(\\text{{CO}}_2) = {_fmt_sa(n_co2)}\\text{{ mol}}$.\n\n"
-        f"3. $V(\\text{{CO}}_2) = n \\times V_m = {_fmt_sa(n_co2)} \\times 22{{,}}4 = {_fmt_sa(v_co2_dm3)}\\text{{ dm}}^3$\n\n"
-        f"4. $m(\\text{{CO}}_2) = n \\times M = {_fmt_sa(n_co2)} \\times 44{{,}}0 = {_fmt_sa(m_co2)}\\text{{ g}}$"
-    )
-
-    return {
-        "id": f"g10_ps_stoich_stp_{r.randint(10000, 99999)}",
-        "type": "compound",
-        "prompt": prompt,
-        "correct_answer": f"n={_fmt_sa(n_caco3)} mol, V={_fmt_sa(v_co2_dm3)} dm3, m={_fmt_sa(m_co2)} g",
-        "worked_solution": sol,
-        "marking_schema": {
-            "total_marks": 5,
-            "marking_points": [
-                {"id": "mp1", "desc": "Formula: n = m / M", "marks": 1, "editable": True},
-                {"id": "mp2", "desc": f"Calculate n(CaCO3) = {_fmt_sa(n_caco3)} mol", "marks": 1, "editable": True},
-                {"id": "mp3", "desc": "Mole ratio 1:1 statement", "marks": 1, "editable": True},
-                {"id": "mp4", "desc": f"Calculate V(CO2) at STP = {_fmt_sa(v_co2_dm3)} dm3", "marks": 1, "editable": True},
-                {"id": "mp5", "desc": f"Calculate m(CO2) = {_fmt_sa(m_co2)} g", "marks": 1, "editable": True},
-            ],
-            "deductions": [{"rule": "forgot_stp_molar_volume_22_4", "penalty": -1}],
-            "carry_forward_rule": "consequential_accuracy",
-        },
-        "hints": {
-            "tier_1": "$n = \\frac{m}{M}$ and at STP $V = n \\times V_m$ where $V_m = 22{{,}}4\\text{ dm}^3\\cdot\\text{mol}^{-1}$.",
-            "tier_2": "The balanced chemical equation shows a 1:1 mole ratio between calcium carbonate and carbon dioxide.",
-            "tier_3": f"$n = {_fmt_sa(n_caco3)}\\text{{ mol}}$. $V = {_fmt_sa(v_co2_dm3)}\\text{{ dm}}^3$. Mass = {_fmt_sa(m_co2)}\\text{{ g}}.",
-        },
-        "misconception_tags": ["forgot_stp_molar_volume_22_4", "confused_moles_and_mass"],
-        "term": 3,
-        "caps_weight_percent": 15,
-        "suggested_duration_mins": 5,
-    }
-
-
-def generate(seed: Optional[int] = None, mode: str = "compound", **kwargs) -> Dict[str, Any]:
-    """Main generator entrypoint adhering to 6-pillar contract."""
+def generate_question(
+    subskill: Optional[str] = None,
+    seed: Optional[int] = None,
+    **kwargs: Any,
+) -> Dict[str, Any]:
+    """Generate a single deterministic 6-pillar question for Grade 10 Chemical Change."""
     r = _rng(seed)
-    if mode == "elementary_empirical":
-        return _build_empirical_drill(r)
-    elif mode == "elementary_stoich":
-        return _build_stoich_stp_drill(r)
-    else:
-        choice = r.choice(["empirical", "stoich"])
-        if choice == "empirical":
-            return _build_empirical_drill(r)
-        else:
-            return _build_stoich_stp_drill(r)
+    target = subskill or kwargs.get("subskill_id") or kwargs.get("archetype") or kwargs.get("mode")
+    builder = _resolve_builder(target)
+    if not builder:
+        chosen = r.choice(SUBSKILLS)
+        builder = BUILDERS[chosen]
+    q = builder(r)
+    if seed is not None:
+        q["seed"] = int(seed)
+    return q
+
+
+def generate(
+    subskill: Optional[str] = None,
+    difficulty: str = "medium",
+    count: int = 1,
+    seed: Optional[int] = None,
+    mode: str = "compound",
+    **kwargs: Any,
+) -> Dict[str, Any]:
+    """Main generator entrypoint adhering to the 6-pillar contract."""
+    base_seed = 42 if seed is None else int(seed)
+    effective_target = (
+        subskill
+        or kwargs.get("subskill_id")
+        or kwargs.get("archetype")
+        or (mode if mode != "compound" else None)
+    )
+
+    questions: List[Dict[str, Any]] = []
+    for i in range(max(1, count)):
+        item_seed = base_seed if count == 1 else (base_seed * 1000 + i)
+        r = _rng(item_seed)
+        builder = _resolve_builder(effective_target)
+        if not builder:
+            chosen = SUBSKILLS[(base_seed + i) % len(SUBSKILLS)]
+            builder = BUILDERS[chosen]
+        q = builder(r)
+        q["seed"] = item_seed
+        questions.append(q)
+
+    if count == 1 and questions:
+        return {"questions": questions, **questions[0]}
+    return {"questions": questions}
